@@ -1,0 +1,134 @@
+package expo.modules.v2.testdata
+
+@Record
+class Samples : Record {
+  val ints: IntArray
+    field = ints
+    get
+
+  val longs: LongArray
+    field = longs
+    get
+
+  val floats: FloatArray
+    field = floats
+    get
+
+  val doubles: DoubleArray
+    field = doubles
+    get
+
+  val bools: BooleanArray
+    field = bools
+    get
+
+  val bytes: ByteArray
+    field = bytes
+    get
+
+  val maybe: IntArray?
+    field = maybe
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Samples> {
+    private /* final field */ val type$0: TypeDescriptor = IntArray(isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = LongArray(isNullable = false)
+    private /* final field */ val type$2: TypeDescriptor = FloatArray(isNullable = false)
+    private /* final field */ val type$3: TypeDescriptor = DoubleArray(isNullable = false)
+    private /* final field */ val type$4: TypeDescriptor = BooleanArray(isNullable = false)
+    private /* final field */ val type$5: TypeDescriptor = ByteArray(isNullable = false)
+    private /* final field */ val type$6: TypeDescriptor = IntArray(isNullable = true)
+    override val recordClass: Class<Samples>
+      field = Samples::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Samples", bufferSafe = true, fields = [RecordField(name = "ints", type = <this>.#type$0, isOptional = false), RecordField(name = "longs", type = <this>.#type$1, isOptional = false), RecordField(name = "floats", type = <this>.#type$2, isOptional = false), RecordField(name = "doubles", type = <this>.#type$3, isOptional = false), RecordField(name = "bools", type = <this>.#type$4, isOptional = false), RecordField(name = "bytes", type = <this>.#type$5, isOptional = false), RecordField(name = "maybe", type = <this>.#type$6, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Samples {
+      return Samples(ints = reader.read<IntArray>(schema = <this>.#type$0), longs = reader.read<LongArray>(schema = <this>.#type$1), floats = reader.read<FloatArray>(schema = <this>.#type$2), doubles = reader.read<DoubleArray>(schema = <this>.#type$3), bools = reader.read<BooleanArray>(schema = <this>.#type$4), bytes = reader.read<ByteArray>(schema = <this>.#type$5), maybe = reader.read<IntArray?>(schema = <this>.#type$6))
+    }
+
+    override fun encode(value: Samples, writer: RecordWriter) {
+      writer.write(value = value.<get-ints>(), schema = <this>.#type$0)
+      writer.write(value = value.<get-longs>(), schema = <this>.#type$1)
+      writer.write(value = value.<get-floats>(), schema = <this>.#type$2)
+      writer.write(value = value.<get-doubles>(), schema = <this>.#type$3)
+      writer.write(value = value.<get-bools>(), schema = <this>.#type$4)
+      writer.write(value = value.<get-bytes>(), schema = <this>.#type$5)
+      writer.write(value = value.<get-maybe>(), schema = <this>.#type$6)
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Samples>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(ints: IntArray, longs: LongArray, floats: FloatArray, doubles: DoubleArray, bools: BooleanArray, bytes: ByteArray, maybe: IntArray?) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+fun box(): String {
+  val codec: RecordCodec<Samples> = codecFor<Samples>()
+  val fieldTypes: List<String> = codec.<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+    return it.<get-name>() + "=" + it.<get-type>()
+  }
+)
+  val expected: List<String> = listOf<String>(elements = ["ints=int_array", "longs=long_array", "floats=float_array", "doubles=double_array", "bools=boolean_array", "bytes=byte_array", "maybe=int_array?"])
+  when {
+    EQEQ(arg0 = fieldTypes, arg1 = expected).not() -> return "Fail: descriptors are " + fieldTypes
+  }
+  val samples: Samples = Samples(ints = intArrayOf(elements = [1, 2]), longs = longArrayOf(elements = [3L]), floats = floatArrayOf(elements = [4.5F]), doubles = doubleArrayOf(elements = [5.5]), bools = booleanArrayOf(elements = [true, false]), bytes = byteArrayOf(elements = [6B]), maybe = null)
+  val back: Samples = codec.fromMap(map = codec.toMap(value = samples))
+  when {
+    back.<get-ints>().contentEquals(other = samples.<get-ints>()).not() -> return "Fail: ints gave " + back.<get-ints>().toList()
+  }
+  when {
+    back.<get-longs>().contentEquals(other = samples.<get-longs>()).not() -> return "Fail: longs gave " + back.<get-longs>().toList()
+  }
+  when {
+    back.<get-floats>().contentEquals(other = samples.<get-floats>()).not() -> return "Fail: floats gave " + back.<get-floats>().toList()
+  }
+  when {
+    back.<get-doubles>().contentEquals(other = samples.<get-doubles>()).not() -> return "Fail: doubles gave " + back.<get-doubles>().toList()
+  }
+  when {
+    back.<get-bools>().contentEquals(other = samples.<get-bools>()).not() -> return "Fail: bools gave " + back.<get-bools>().toList()
+  }
+  when {
+    back.<get-bytes>().contentEquals(other = samples.<get-bytes>()).not() -> return "Fail: bytes gave " + back.<get-bytes>().toList()
+  }
+  when {
+    EQEQ(arg0 = back.<get-maybe>(), arg1 = null).not() -> return "Fail: maybe gave " + { // BLOCK
+      val tmp_0: IntArray? = back.<get-maybe>()
+      when {
+        EQEQ(arg0 = tmp_0, arg1 = null) -> null
+        else -> tmp_0.toList()
+      }
+    }
+  }
+  return "OK"
+}
+

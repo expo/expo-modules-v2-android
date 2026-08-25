@@ -1,0 +1,24 @@
+package expo.modules.v2.testdata
+
+@JS(name = "Instance")
+class DirectInstance : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "echo", argTypes = [AnyType(descriptor = Long, useBuffer = false)], returns = AnyType(descriptor = Long, useBuffer = false), methodName = "echo")
+    return "Instance"
+  }
+}
+
+@JS
+object Direct : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "add", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "add")
+    builder.function(jsName = "scale", argTypes = [AnyType(descriptor = DoubleArray(isNullable = false), useBuffer = false), AnyType(descriptor = Double, useBuffer = false)], returns = AnyType(descriptor = Double, useBuffer = false), methodName = "scale")
+    builder.function(jsName = "identity", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = false)], returns = AnyType(descriptor = #ANY_NULL, useBuffer = false), methodName = "identity")
+    builder.function(jsName = "renamed", argTypes = [AnyType(descriptor = Bool, useBuffer = false)], returns = AnyType(descriptor = Bool, useBuffer = false), methodName = "original")
+    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = Unit::class.<get-java>(), isNullable = false), useBuffer = false), methodName = "clear")
+    builder.property(jsName = "answer", type = AnyType(descriptor = Int, useBuffer = false), mutable = false, propertyName = "answer", setterType = AnyType(descriptor = Int, useBuffer = false))
+    builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = true, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false))
+    return "Direct"
+  }
+}
+

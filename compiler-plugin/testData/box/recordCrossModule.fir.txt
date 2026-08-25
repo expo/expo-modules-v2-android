@@ -1,0 +1,137 @@
+Module: producer
+FILE: producer.kt
+    package expo.modules.v2.testdata.producer
+
+    @R|expo/modules/v2/annotations/Record|() public final data class Shared : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(n: R|kotlin/Int|, label: R|kotlin/String?|): R|expo/modules/v2/testdata/producer/Shared| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val n: R|kotlin/Int| = R|<local>/n|
+            public get(): R|kotlin/Int|
+
+        public final val label: R|kotlin/String?| = R|<local>/label|
+            public get(): R|kotlin/String?|
+
+        public final operator fun component1(): R|kotlin/Int|
+
+        public final operator fun component2(): R|kotlin/String?|
+
+        public final fun copy(n: R|kotlin/Int| = this@R|expo/modules/v2/testdata/producer/Shared|.R|expo/modules/v2/testdata/producer/Shared.n|, label: R|kotlin/String?| = this@R|expo/modules/v2/testdata/producer/Shared|.R|expo/modules/v2/testdata/producer/Shared.label|): R|expo/modules/v2/testdata/producer/Shared|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/producer/Shared>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/producer/Shared>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/producer/Shared>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/producer/Shared|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/producer/Shared|
+
+            public constructor(): R|expo/modules/v2/testdata/producer/Shared.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/producer/Shared>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/producer/Shared>|
+
+            private constructor(): R|expo/modules/v2/testdata/producer/Shared.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+Module: consumer
+FILE: consumer.kt
+    package expo.modules.v2.testdata.consumer
+
+    @R|expo/modules/v2/annotations/Record|() public final data class Holder : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(shared: R|expo/modules/v2/testdata/producer/Shared|, more: R|kotlin/collections/List<expo/modules/v2/testdata/producer/Shared>|): R|expo/modules/v2/testdata/consumer/Holder| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val shared: R|expo/modules/v2/testdata/producer/Shared| = R|<local>/shared|
+            public get(): R|expo/modules/v2/testdata/producer/Shared|
+
+        public final val more: R|kotlin/collections/List<expo/modules/v2/testdata/producer/Shared>| = R|<local>/more|
+            public get(): R|kotlin/collections/List<expo/modules/v2/testdata/producer/Shared>|
+
+        public final operator fun component1(): R|expo/modules/v2/testdata/producer/Shared|
+
+        public final operator fun component2(): R|kotlin/collections/List<expo/modules/v2/testdata/producer/Shared>|
+
+        public final fun copy(shared: R|expo/modules/v2/testdata/producer/Shared| = this@R|expo/modules/v2/testdata/consumer/Holder|.R|expo/modules/v2/testdata/consumer/Holder.shared|, more: R|kotlin/collections/List<expo/modules/v2/testdata/producer/Shared>| = this@R|expo/modules/v2/testdata/consumer/Holder|.R|expo/modules/v2/testdata/consumer/Holder.more|): R|expo/modules/v2/testdata/consumer/Holder|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/consumer/Holder>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/consumer/Holder>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/consumer/Holder>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/consumer/Holder|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/consumer/Holder|
+
+            public constructor(): R|expo/modules/v2/testdata/consumer/Holder.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/consumer/Holder>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/consumer/Holder>|
+
+            private constructor(): R|expo/modules/v2/testdata/consumer/Holder.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        when () {
+            (R|expo/modules/v2/testdata/producer/Shared.Shared|(Int(1), String(a)) !is R|expo/modules/v2/records/Record|) ->  {
+                ^box String(Fail: the Record supertype did not cross modules)
+            }
+        }
+
+        lval shared: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/producer/Shared>| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/producer/Shared|>()
+        when () {
+            !=(R|<local>/shared|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|kotlin/collections/map|<R|expo/modules/v2/records/RecordField|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|expo/modules/v2/records/RecordField|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
+                ^ R|<local>/it|.R|expo/modules/v2/records/RecordField.name|
+            }
+            ), R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(n), String(label)))) ->  {
+                ^box <strcat>(String(Fail: Shared fields are ), R|<local>/shared|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|kotlin/collections/map|<R|expo/modules/v2/records/RecordField|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|expo/modules/v2/records/RecordField|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
+                    ^ R|<local>/it|.R|expo/modules/v2/records/RecordField.name|
+                }
+                ))
+            }
+        }
+
+        when () {
+            !=(R|<local>/shared|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/producer/Shared|>|(R|<local>/shared|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|expo/modules/v2/testdata/producer/Shared.Shared|(Int(1), String(a)))), R|expo/modules/v2/testdata/producer/Shared.Shared|(Int(1), String(a))) ->  {
+                ^box String(Fail: Shared round trip)
+            }
+        }
+
+        lval holder: R|expo/modules/v2/testdata/consumer/Holder| = R|expo/modules/v2/testdata/consumer/Holder.Holder|(R|expo/modules/v2/testdata/producer/Shared.Shared|(Int(2), Null(null)), R|kotlin/collections/listOf|<R|expo/modules/v2/testdata/producer/Shared|>(R|expo/modules/v2/testdata/producer/Shared.Shared|(Int(3), String(c))))
+        lval codec: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/consumer/Holder>| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/consumer/Holder|>()
+        lval map: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/holder|)
+        when () {
+            (R|<local>/map|.R|SubstitutionOverride<kotlin/collections/Map.get: R|kotlin/Any?|>|(String(shared)) !is R|kotlin/collections/Map<*, *>|) ->  {
+                ^box String(Fail: the cross-module record did not decompose)
+            }
+        }
+
+        when () {
+            !=(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/consumer/Holder|>|(R|<local>/map|), R|<local>/holder|) ->  {
+                ^box <strcat>(String(Fail: Holder round trip gave ), R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/consumer/Holder|>|(R|<local>/map|))
+            }
+        }
+
+        ^box String(OK)
+    }

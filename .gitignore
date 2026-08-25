@@ -1,0 +1,23 @@
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.kotlin/
+
+# Native build artifacts
+build-native/
+.cxx/
+**/.cxx/
+cmake-build-*/
+CMakeUserPresets.json
+
+# OS
+.DS_Store
+
+local.properties
+
+.claude

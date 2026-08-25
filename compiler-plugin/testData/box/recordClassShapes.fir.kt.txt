@@ -1,0 +1,383 @@
+package expo.modules.v2.testdata
+
+@Record
+class Empty : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Empty> {
+    override val recordClass: Class<Empty>
+      field = Empty::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Empty", bufferSafe = true, fields = [])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Empty {
+      return Empty()
+    }
+
+    override fun encode(value: Empty, writer: RecordWriter) {
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Empty>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor() /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+@Record
+class Explicit : Record {
+  val a: Int
+    field = a
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Explicit> {
+    override val recordClass: Class<Explicit>
+      field = Explicit::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Explicit", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Explicit {
+      return Explicit(a = reader.readInt())
+    }
+
+    override fun encode(value: Explicit, writer: RecordWriter) {
+      writer.write(value = value.<get-a>())
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Explicit>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(a: Int) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+@Record
+private class Hidden : Record {
+  val a: Int
+    field = a
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Hidden> {
+    override val recordClass: Class<Hidden>
+      field = Hidden::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Hidden", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Hidden {
+      return Hidden(a = reader.readInt())
+    }
+
+    override fun encode(value: Hidden, writer: RecordWriter) {
+      writer.write(value = value.<get-a>())
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Hidden>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(a: Int) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+class Host {
+  @Record
+  class Nested : Record {
+    val a: Int
+      field = a
+      get
+
+    private class RecordCodec$ExpoModulesV2 : RecordCodec<Nested> {
+      override val recordClass: Class<Nested>
+        field = Nested::class.<get-java>()
+        override get
+
+      override val schema: RecordSchema
+        field = RecordSchema(name = "Nested", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
+        override get
+
+      constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+
+        RecordRegistry.register(codec = <this>)
+      }
+
+      override fun decode(reader: RecordReader): Nested {
+        return Nested(a = reader.readInt())
+      }
+
+      override fun encode(value: Nested, writer: RecordWriter) {
+        writer.write(value = value.<get-a>())
+      }
+
+    }
+
+    companion object Companion {
+      val recordCodec$ExpoModulesV2: RecordCodec<Nested>
+        field = RecordCodec$ExpoModulesV2()
+        get
+
+      private constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+
+      }
+
+    }
+
+    constructor(a: Int) /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor() /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+@Record
+class Plain : Record {
+  val a: Int
+    field = a
+    get
+
+  val b: String
+    field = b
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Plain> {
+    override val recordClass: Class<Plain>
+      field = Plain::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Plain", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false), RecordField(name = "b", type = #STRING, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Plain {
+      return Plain(a = reader.readInt(), b = reader.read<String>(schema = #STRING))
+    }
+
+    override fun encode(value: Plain, writer: RecordWriter) {
+      writer.write(value = value.<get-a>())
+      writer.write(value = value.<get-b>(), schema = #STRING)
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Plain>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(a: Int, b: String) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+@Record
+class WithCompanion : Record {
+  val a: Int
+    field = a
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<WithCompanion> {
+    override val recordClass: Class<WithCompanion>
+      field = WithCompanion::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "WithCompanion", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): WithCompanion {
+      return WithCompanion(a = reader.readInt())
+    }
+
+    override fun encode(value: WithCompanion, writer: RecordWriter) {
+      writer.write(value = value.<get-a>())
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<WithCompanion>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+    fun make(a: Int): WithCompanion {
+      return WithCompanion(a = a)
+    }
+
+    const val LABEL: String
+      field = "with-companion"
+      get
+
+  }
+
+  constructor(a: Int) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+fun box(): String {
+  when {
+    EQEQ(arg0 = codecFor<Plain>().<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+      return it.<get-name>()
+    }
+), arg1 = listOf<String>(elements = ["a", "b"])).not() -> { // BLOCK
+      return "Fail: Plain fields are " + codecFor<Plain>().<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+        return it.<get-name>()
+      }
+)
+    }
+  }
+  when {
+    EQEQ(arg0 = codecFor<Plain>().fromMap(map = mapOf<String, Any>(pairs = ["a".to<String, Int>(that = 1), "b".to<String, String>(that = "s")])).<get-b>(), arg1 = "s").not() -> return "Fail: Plain round trip"
+  }
+  when {
+    EQEQ(arg0 = codecFor<Hidden>().<get-schema>().<get-name>(), arg1 = "Hidden").not() -> return "Fail: Hidden has no codec"
+  }
+  when {
+    Explicit(a = 1) !is Record -> return "Fail: Explicit lost the marker"
+  }
+  when {
+    EQEQ(arg0 = codecFor<Explicit>().<get-schema>().<get-fields>().<get-size>(), arg1 = 1).not() -> return "Fail: Explicit fields"
+  }
+  when {
+    EQEQ(arg0 = "with-companion", arg1 = "with-companion").not() -> return "Fail: user companion member disappeared"
+  }
+  when {
+    EQEQ(arg0 = Companion.make(a = 2).<get-a>(), arg1 = 2).not() -> return "Fail: user companion function disappeared"
+  }
+  when {
+    EQEQ(arg0 = codecFor<WithCompanion>().fromMap(map = mapOf<String, Int>(pair = "a".to<String, Int>(that = 3))).<get-a>(), arg1 = 3).not() -> return "Fail: WithCompanion round trip"
+  }
+  when {
+    EQEQ(arg0 = codecFor<Nested>().<get-schema>().<get-name>(), arg1 = "Nested").not() -> return "Fail: nested record has no codec"
+  }
+  val empty: RecordCodec<Empty> = codecFor<Empty>()
+  when {
+    empty.<get-schema>().<get-fields>().isNotEmpty<RecordField>() -> return "Fail: Empty has fields " + empty.<get-schema>().<get-fields>()
+  }
+  when {
+    empty.toMap(value = Empty()).isNotEmpty<String, Any?>() -> return "Fail: Empty toMap is " + empty.toMap(value = Empty())
+  }
+  return "OK"
+}
+

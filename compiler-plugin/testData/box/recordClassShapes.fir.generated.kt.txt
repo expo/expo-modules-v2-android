@@ -1,0 +1,214 @@
+package expo.modules.v2.testdata
+
+@Record
+class Empty : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Empty> {
+    override val recordClass: Class<Empty>
+      field = Empty::class.<get-java>()
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Empty", bufferSafe = true, fields = [])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Empty {
+      return Empty()
+    }
+
+    override fun encode(value: Empty, writer: RecordWriter) {
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Empty>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+@Record
+class Explicit : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Explicit> {
+    override val recordClass: Class<Explicit>
+      field = Explicit::class.<get-java>()
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Explicit", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Explicit {
+      return Explicit(a = reader.readInt())
+    }
+
+    override fun encode(value: Explicit, writer: RecordWriter) {
+      writer.write(value = value.<get-a>())
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Explicit>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+@Record
+private class Hidden : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Hidden> {
+    override val recordClass: Class<Hidden>
+      field = Hidden::class.<get-java>()
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Hidden", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Hidden {
+      return Hidden(a = reader.readInt())
+    }
+
+    override fun encode(value: Hidden, writer: RecordWriter) {
+      writer.write(value = value.<get-a>())
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Hidden>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+class Host {
+  @Record
+  class Nested : Record {
+    private class RecordCodec$ExpoModulesV2 : RecordCodec<Nested> {
+      override val recordClass: Class<Nested>
+        field = Nested::class.<get-java>()
+
+      override val schema: RecordSchema
+        field = RecordSchema(name = "Nested", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
+
+      constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+
+        RecordRegistry.register(codec = <this>)
+      }
+
+      override fun decode(reader: RecordReader): Nested {
+        return Nested(a = reader.readInt())
+      }
+
+      override fun encode(value: Nested, writer: RecordWriter) {
+        writer.write(value = value.<get-a>())
+      }
+    }
+
+    companion object Companion {
+      val recordCodec$ExpoModulesV2: RecordCodec<Nested>
+        field = RecordCodec$ExpoModulesV2()
+
+      private constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+      }
+    }
+  }
+}
+
+@Record
+class Plain : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Plain> {
+    override val recordClass: Class<Plain>
+      field = Plain::class.<get-java>()
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Plain", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false), RecordField(name = "b", type = #STRING, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Plain {
+      return Plain(a = reader.readInt(), b = reader.read<String>(schema = #STRING))
+    }
+
+    override fun encode(value: Plain, writer: RecordWriter) {
+      writer.write(value = value.<get-a>())
+      writer.write(value = value.<get-b>(), schema = #STRING)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Plain>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+@Record
+class WithCompanion : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<WithCompanion> {
+    override val recordClass: Class<WithCompanion>
+      field = WithCompanion::class.<get-java>()
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "WithCompanion", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): WithCompanion {
+      return WithCompanion(a = reader.readInt())
+    }
+
+    override fun encode(value: WithCompanion, writer: RecordWriter) {
+      writer.write(value = value.<get-a>())
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<WithCompanion>
+      field = RecordCodec$ExpoModulesV2()
+  }
+}

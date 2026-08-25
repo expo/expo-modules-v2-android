@@ -1,0 +1,129 @@
+package expo.modules.v2.testdata
+
+@Record(, bufferSafe = false)
+class Leaves : Record {
+  val duration: Duration
+    field = duration
+    get
+
+  val file: File
+    field = file
+    get
+
+  val url: URL
+    field = url
+    get
+
+  val uri: URI
+    field = uri
+    get
+
+  val path: Path
+    field = path
+    get
+
+  val maybe: Duration?
+    field = maybe
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Leaves> {
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = Simple(javaClass = File::class.<get-java>(), isNullable = false)
+    private /* final field */ val type$2: TypeDescriptor = Simple(javaClass = URL::class.<get-java>(), isNullable = false)
+    private /* final field */ val type$3: TypeDescriptor = Simple(javaClass = URI::class.<get-java>(), isNullable = false)
+    private /* final field */ val type$4: TypeDescriptor = Simple(javaClass = Path::class.<get-java>(), isNullable = false)
+    private /* final field */ val type$5: TypeDescriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = true)
+    override val recordClass: Class<Leaves>
+      field = Leaves::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Leaves", bufferSafe = false, fields = [RecordField(name = "duration", type = <this>.#type$0, isOptional = false), RecordField(name = "file", type = <this>.#type$1, isOptional = false), RecordField(name = "url", type = <this>.#type$2, isOptional = false), RecordField(name = "uri", type = <this>.#type$3, isOptional = false), RecordField(name = "path", type = <this>.#type$4, isOptional = false), RecordField(name = "maybe", type = <this>.#type$5, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Leaves {
+      return Leaves(duration = reader.read<Duration>(schema = <this>.#type$0), file = reader.read<File>(schema = <this>.#type$1), url = reader.read<URL>(schema = <this>.#type$2), uri = reader.read<URI>(schema = <this>.#type$3), path = reader.read<Path>(schema = <this>.#type$4), maybe = reader.read<Duration?>(schema = <this>.#type$5))
+    }
+
+    override fun encode(value: Leaves, writer: RecordWriter) {
+      writer.write(value = value.<get-duration>(), schema = <this>.#type$0)
+      writer.write(value = value.<get-file>(), schema = <this>.#type$1)
+      writer.write(value = value.<get-url>(), schema = <this>.#type$2)
+      writer.write(value = value.<get-uri>(), schema = <this>.#type$3)
+      writer.write(value = value.<get-path>(), schema = <this>.#type$4)
+      writer.write(value = value.<get-maybe>(), schema = <this>.#type$5)
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Leaves>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(duration: Duration, file: File, url: URL, uri: URI, path: Path, maybe: Duration?) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+fun box(): String {
+  val codec: RecordCodec<Leaves> = codecFor<Leaves>()
+  val fieldTypes: List<String> = codec.<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+    return it.<get-name>() + "=" + it.<get-type>()
+  }
+)
+  val expected: List<String> = listOf<String>(elements = ["duration=Duration", "file=File", "url=URL", "uri=URI", "path=Path", "maybe=Duration?"])
+  when {
+    EQEQ(arg0 = fieldTypes, arg1 = expected).not() -> return "Fail: descriptors are " + fieldTypes
+  }
+  val leaves: Leaves = Leaves(duration = (Companion, 3).<get-seconds>(), file = File(p0 = "/tmp/a"), url = URL(p0 = "https://example.com/a"), uri = URI(p0 = "https://example.com/b"), path = get(p0 = "/tmp/b") /*!! Path */, maybe = null)
+  val map: Map<String, Any?> = codec.toMap(value = leaves)
+  when {
+    EQEQ(arg0 = map.get(key = "duration"), arg1 = 3.0).not() -> return "Fail: duration crossed as " + map.get(key = "duration")
+  }
+  when {
+    EQEQ(arg0 = map.get(key = "file"), arg1 = "/tmp/a").not() -> return "Fail: file crossed as " + map.get(key = "file")
+  }
+  when {
+    EQEQ(arg0 = map.get(key = "maybe"), arg1 = null).not() -> return "Fail: maybe crossed as " + map.get(key = "maybe")
+  }
+  val back: Leaves = codec.fromMap(map = map)
+  when {
+    EQEQ(arg0 = back.<get-duration>(), arg1 = leaves.<get-duration>()).not() -> return "Fail: duration gave " + back.<get-duration>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-file>(), arg1 = leaves.<get-file>()).not() -> return "Fail: file gave " + back.<get-file>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-url>(), arg1 = leaves.<get-url>()).not() -> return "Fail: url gave " + back.<get-url>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-uri>(), arg1 = leaves.<get-uri>()).not() -> return "Fail: uri gave " + back.<get-uri>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-path>(), arg1 = leaves.<get-path>()).not() -> return "Fail: path gave " + back.<get-path>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-maybe>(), arg1 = null).not() -> return "Fail: maybe gave " + back.<get-maybe>()
+  }
+  return "OK"
+}
+

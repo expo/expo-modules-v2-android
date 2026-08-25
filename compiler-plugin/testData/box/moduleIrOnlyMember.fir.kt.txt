@@ -1,0 +1,110 @@
+package expo.modules.v2.testdata
+
+@JS(name = "Instance")
+class DirectInstance : Module {
+  constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "echo", argTypes = [AnyType(descriptor = Long, useBuffer = false)], returns = AnyType(descriptor = Long, useBuffer = false), methodName = "echo")
+    return "Instance"
+  }
+
+  @JS
+  fun echo(value: Long): Long {
+    return value
+  }
+
+}
+
+@JS
+object Direct : Module {
+  @JS
+  val answer: Int
+    field = 42
+    get
+
+  @JS
+  var count: Int
+    field = 1
+    get
+    set
+
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "add", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "add")
+    builder.function(jsName = "scale", argTypes = [AnyType(descriptor = DoubleArray(isNullable = false), useBuffer = false), AnyType(descriptor = Double, useBuffer = false)], returns = AnyType(descriptor = Double, useBuffer = false), methodName = "scale")
+    builder.function(jsName = "identity", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = false)], returns = AnyType(descriptor = #ANY_NULL, useBuffer = false), methodName = "identity")
+    builder.function(jsName = "renamed", argTypes = [AnyType(descriptor = Bool, useBuffer = false)], returns = AnyType(descriptor = Bool, useBuffer = false), methodName = "original")
+    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = Unit::class.<get-java>(), isNullable = false), useBuffer = false), methodName = "clear")
+    builder.property(jsName = "answer", type = AnyType(descriptor = Int, useBuffer = false), mutable = false, propertyName = "answer", setterType = AnyType(descriptor = Int, useBuffer = false))
+    builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = true, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false))
+    return "Direct"
+  }
+
+  @JS
+  fun add(a: Int, b: Int): Int {
+    return a.plus(other = b)
+  }
+
+  @JS
+  fun clear() {
+    return Unit
+  }
+
+  @JS
+  fun identity(value: Any?): Any? {
+    return value
+  }
+
+  fun internalHelper(): Int {
+    return 0
+  }
+
+  @JS(name = "renamed")
+  fun original(flag: Boolean): Boolean {
+    return flag.not()
+  }
+
+  @JS
+  fun scale(values: DoubleArray, by: Double): Double {
+    return values.sum().times(other = by)
+  }
+
+}
+
+fun box(): String {
+  val method: @FlexibleNullability Method? = Module::class.<get-java><Module>().getMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "expo.modules.v2.modules.ModuleBuilder")])
+  when {
+    EQEQ(arg0 = method.getDeclaringClass(), arg1 = Module::class.<get-java><Module>()).not() -> return "base lookup: " + method.getDeclaringClass()
+  }
+  val generated: @FlexibleNullability Method? = Direct::class.<get-java><Direct>().getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "expo.modules.v2.modules.ModuleBuilder")])
+  when {
+    EQEQ(arg0 = generated.getReturnType(), arg1 = String::class.<get-java><String>()).not() -> { // BLOCK
+      return "expected a String return, got " + generated.getReturnType()
+    }
+  }
+  Direct::class.<get-java><Direct>().getDeclaredMethod(p0 = "add", p1 = [Int::class.<get-javaPrimitiveType><Int>(), Int::class.<get-javaPrimitiveType><Int>()]) /*~> Unit */
+  Direct::class.<get-java><Direct>().getDeclaredMethod(p0 = "clear") /*~> Unit */
+  Direct::class.<get-java><Direct>().getDeclaredMethod(p0 = "getAnswer") /*~> Unit */
+  Direct::class.<get-java><Direct>().getDeclaredMethod(p0 = "setCount", p1 = [Int::class.<get-javaPrimitiveType><Int>()]) /*~> Unit */
+  DirectInstance::class.<get-java><DirectInstance>().getDeclaredMethod(p0 = "echo", p1 = [Long::class.<get-javaPrimitiveType><Long>()]) /*~> Unit */
+  when {
+    Direct::class.<get-java><Direct>().getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */.any<@FlexibleNullability Method?>(predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return it.getName() /*!! String */.contains(other = "__trampoline")
+    }
+) -> { // BLOCK
+      return "a direct-only module should have no trampolines"
+    }
+  }
+  return "OK"
+}
+

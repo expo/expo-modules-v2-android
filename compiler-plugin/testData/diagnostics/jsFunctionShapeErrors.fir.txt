@@ -1,0 +1,34 @@
+FILE: jsFunctionShapeErrors.kt
+    package expo.modules.v2.testdata
+
+    @R|expo/modules/v2/annotations/JS|() public final class BadFunctions : R|expo/modules/v2/modules/Module| {
+        public constructor(): R|expo/modules/v2/testdata/BadFunctions| {
+            super<R|expo/modules/v2/modules/Module|>()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun <T> generic(value: R|kotlin/Int|): R|kotlin/Int| {
+            ^generic R|<local>/value|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun R|kotlin/Int|.extension(): R|kotlin/Int| {
+            ^extension this@R|expo/modules/v2/testdata/BadFunctions.extension|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun withVararg(vararg values: R|kotlin/IntArray|): R|kotlin/Int| {
+            ^withVararg R|<local>/values|.R|kotlin/IntArray.size|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun withDefault(a: R|kotlin/Int|, b: R|kotlin/Int| = Int(2)): R|kotlin/Int| {
+            ^withDefault R|<local>/a|.R|kotlin/Int.plus|(R|<local>/b|)
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun tooManyArguments(a: R|kotlin/Int|, b: R|kotlin/Int|, c: R|kotlin/Int|, d: R|kotlin/Int|, e: R|kotlin/Int|, f: R|kotlin/Int|, g: R|kotlin/Int|, h: R|kotlin/Int|, i: R|kotlin/Int|): R|kotlin/Int| {
+            ^tooManyArguments R|<local>/a|.R|kotlin/Int.plus|(R|<local>/b|).R|kotlin/Int.plus|(R|<local>/c|).R|kotlin/Int.plus|(R|<local>/d|).R|kotlin/Int.plus|(R|<local>/e|).R|kotlin/Int.plus|(R|<local>/f|).R|kotlin/Int.plus|(R|<local>/g|).R|kotlin/Int.plus|(R|<local>/h|).R|kotlin/Int.plus|(R|<local>/i|)
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final val R|kotlin/Int|.extensionProperty: R|kotlin/Int|
+            public get(): R|kotlin/Int| {
+                ^ this@R|expo/modules/v2/testdata/BadFunctions.extensionProperty|
+            }
+
+    }

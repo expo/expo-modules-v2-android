@@ -1,0 +1,156 @@
+FILE: recordAnnotationArguments.kt
+    package expo.modules.v2.testdata
+
+    @R|expo/modules/v2/annotations/Record|(name = String(Half)) public final data class Renamed : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(x: R|kotlin/Double|, y: R|kotlin/Double|): R|expo/modules/v2/testdata/Renamed| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val x: R|kotlin/Double| = R|<local>/x|
+            public get(): R|kotlin/Double|
+
+        public final val y: R|kotlin/Double| = R|<local>/y|
+            public get(): R|kotlin/Double|
+
+        public final operator fun component1(): R|kotlin/Double|
+
+        public final operator fun component2(): R|kotlin/Double|
+
+        public final fun copy(x: R|kotlin/Double| = this@R|expo/modules/v2/testdata/Renamed|.R|expo/modules/v2/testdata/Renamed.x|, y: R|kotlin/Double| = this@R|expo/modules/v2/testdata/Renamed|.R|expo/modules/v2/testdata/Renamed.y|): R|expo/modules/v2/testdata/Renamed|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Renamed>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Renamed>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Renamed>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Renamed|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Renamed|
+
+            public constructor(): R|expo/modules/v2/testdata/Renamed.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Renamed>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Renamed>|
+
+            private constructor(): R|expo/modules/v2/testdata/Renamed.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|expo/modules/v2/annotations/Record|(bufferSafe = Boolean(false)) public final data class Unsafe : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(payload: R|kotlin/Any?|): R|expo/modules/v2/testdata/Unsafe| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val payload: R|kotlin/Any?| = R|<local>/payload|
+            public get(): R|kotlin/Any?|
+
+        public final operator fun component1(): R|kotlin/Any?|
+
+        public final fun copy(payload: R|kotlin/Any?| = this@R|expo/modules/v2/testdata/Unsafe|.R|expo/modules/v2/testdata/Unsafe.payload|): R|expo/modules/v2/testdata/Unsafe|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Unsafe>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Unsafe>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Unsafe>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Unsafe|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Unsafe|
+
+            public constructor(): R|expo/modules/v2/testdata/Unsafe.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Unsafe>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Unsafe>|
+
+            private constructor(): R|expo/modules/v2/testdata/Unsafe.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|expo/modules/v2/annotations/Record|(name = String(Both), bufferSafe = Boolean(false)) public final data class BothArguments : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(v: R|kotlin/String|): R|expo/modules/v2/testdata/BothArguments| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val v: R|kotlin/String| = R|<local>/v|
+            public get(): R|kotlin/String|
+
+        public final operator fun component1(): R|kotlin/String|
+
+        public final fun copy(v: R|kotlin/String| = this@R|expo/modules/v2/testdata/BothArguments|.R|expo/modules/v2/testdata/BothArguments.v|): R|expo/modules/v2/testdata/BothArguments|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/BothArguments>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/BothArguments>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/BothArguments>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/BothArguments|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/BothArguments|
+
+            public constructor(): R|expo/modules/v2/testdata/BothArguments.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/BothArguments>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/BothArguments>|
+
+            private constructor(): R|expo/modules/v2/testdata/BothArguments.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        when () {
+            !=(R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Renamed|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.name|, String(Half)) ->  {
+                ^box <strcat>(String(Fail: name is ), R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Renamed|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.name|)
+            }
+        }
+
+        when () {
+            R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Renamed|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.bufferSafe|.R|kotlin/Boolean.not|() ->  {
+                ^box String(Fail: Renamed lost its default bufferSafe)
+            }
+        }
+
+        when () {
+            R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Unsafe|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.bufferSafe| ->  {
+                ^box String(Fail: Unsafe is still bufferSafe)
+            }
+        }
+
+        when () {
+            !=(R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Unsafe|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.name|, String(Unsafe)) ->  {
+                ^box <strcat>(String(Fail: Unsafe name is ), R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Unsafe|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.name|)
+            }
+        }
+
+        lval both: R|expo/modules/v2/records/RecordSchema| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/BothArguments|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|
+        when () {
+            !=(R|<local>/both|.R|expo/modules/v2/records/RecordSchema.name|, String(Both)) || R|<local>/both|.R|expo/modules/v2/records/RecordSchema.bufferSafe| ->  {
+                ^box <strcat>(String(Fail: both gave ), R|<local>/both|.R|expo/modules/v2/records/RecordSchema.name|, String(/), R|<local>/both|.R|expo/modules/v2/records/RecordSchema.bufferSafe|)
+            }
+        }
+
+        ^box String(OK)
+    }

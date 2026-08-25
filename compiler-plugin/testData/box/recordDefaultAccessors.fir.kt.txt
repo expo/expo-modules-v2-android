@@ -1,0 +1,119 @@
+package expo.modules.v2.testdata
+
+@Record
+class Accessors : Record {
+  val fromPrivateTopLevel: Int
+    field = fromPrivateTopLevel
+    get
+
+  val fromPrivateConstant: String
+    field = fromPrivateConstant
+    get
+
+  val fromCompanion: Int
+    field = fromCompanion
+    get
+
+  val fromPrivateCompanion: Int
+    field = fromPrivateCompanion
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Accessors> {
+    override val recordClass: Class<Accessors>
+      field = Accessors::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Accessors", bufferSafe = true, fields = [RecordField(name = "fromPrivateTopLevel", type = Int, isOptional = true), RecordField(name = "fromPrivateConstant", type = #STRING, isOptional = true), RecordField(name = "fromCompanion", type = Int, isOptional = true), RecordField(name = "fromPrivateCompanion", type = Int, isOptional = true)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Accessors {
+      val fromPrivateTopLevel: Int = when {
+        reader.readIsPresent() -> reader.readInt()
+        else -> secret()
+      }
+      val fromPrivateConstant: String = when {
+        reader.readIsPresent() -> reader.read<String>(schema = #STRING)
+        else -> "const"
+      }
+      val fromCompanion: Int = when {
+        reader.readIsPresent() -> reader.readInt()
+        else -> Companion.<get-companionDefault>()
+      }
+      val fromPrivateCompanion: Int = when {
+        reader.readIsPresent() -> reader.readInt()
+        else -> 33
+      }
+      return Accessors(fromPrivateTopLevel = fromPrivateTopLevel, fromPrivateConstant = fromPrivateConstant, fromCompanion = fromCompanion, fromPrivateCompanion = fromPrivateCompanion)
+    }
+
+    override fun encode(value: Accessors, writer: RecordWriter) {
+      writer.write(value = value.<get-fromPrivateTopLevel>())
+      writer.write(value = value.<get-fromPrivateConstant>(), schema = #STRING)
+      writer.write(value = value.<get-fromCompanion>())
+      writer.write(value = value.<get-fromPrivateCompanion>())
+    }
+
+  }
+
+  companion object Companion {
+    val companionDefault: Int
+      field = 22
+      get
+
+    val recordCodec$ExpoModulesV2: RecordCodec<Accessors>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+    private const val privateCompanionDefault: Int
+      field = 33
+      private get
+
+  }
+
+  constructor(fromPrivateTopLevel: Int = secret(), fromPrivateConstant: String = "const", fromCompanion: Int = Companion.<get-companionDefault>(), fromPrivateCompanion: Int = 33) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+fun box(): String {
+  val decoded: Accessors = codecFor<Accessors>().fromMap(map = emptyMap<String, Any?>())
+  when {
+    EQEQ(arg0 = decoded.<get-fromPrivateTopLevel>(), arg1 = 11).not() -> return "Fail: private top-level gave " + decoded.<get-fromPrivateTopLevel>()
+  }
+  when {
+    EQEQ(arg0 = decoded.<get-fromPrivateConstant>(), arg1 = "const").not() -> return "Fail: private const gave " + decoded.<get-fromPrivateConstant>()
+  }
+  when {
+    EQEQ(arg0 = decoded.<get-fromCompanion>(), arg1 = 22).not() -> return "Fail: companion gave " + decoded.<get-fromCompanion>()
+  }
+  when {
+    EQEQ(arg0 = decoded.<get-fromPrivateCompanion>(), arg1 = 33).not() -> return "Fail: private companion gave " + decoded.<get-fromPrivateCompanion>()
+  }
+  return "OK"
+}
+
+private fun secret(): Int {
+  return 11
+}
+
+private const val SECRET_CONSTANT: String
+  field = "const"
+  private get
+

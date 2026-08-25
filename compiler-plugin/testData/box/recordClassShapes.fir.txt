@@ -1,0 +1,297 @@
+FILE: recordClassShapes.kt
+    package expo.modules.v2.testdata
+
+    @R|expo/modules/v2/annotations/Record|() public final class Plain : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(a: R|kotlin/Int|, b: R|kotlin/String|): R|expo/modules/v2/testdata/Plain| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val a: R|kotlin/Int| = R|<local>/a|
+            public get(): R|kotlin/Int|
+
+        public final val b: R|kotlin/String| = R|<local>/b|
+            public get(): R|kotlin/String|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Plain>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Plain>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Plain>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Plain|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Plain|
+
+            public constructor(): R|expo/modules/v2/testdata/Plain.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Plain>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Plain>|
+
+            private constructor(): R|expo/modules/v2/testdata/Plain.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|expo/modules/v2/annotations/Record|() private final class Hidden : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(a: R|kotlin/Int|): R|expo/modules/v2/testdata/Hidden| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val a: R|kotlin/Int| = R|<local>/a|
+            public get(): R|kotlin/Int|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Hidden>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Hidden>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Hidden>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Hidden|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Hidden|
+
+            public constructor(): R|expo/modules/v2/testdata/Hidden.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Hidden>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Hidden>|
+
+            private constructor(): R|expo/modules/v2/testdata/Hidden.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|expo/modules/v2/annotations/Record|() public final class Explicit : R|expo/modules/v2/records/Record| {
+        public constructor(a: R|kotlin/Int|): R|expo/modules/v2/testdata/Explicit| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val a: R|kotlin/Int| = R|<local>/a|
+            public get(): R|kotlin/Int|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Explicit>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Explicit>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Explicit>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Explicit|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Explicit|
+
+            public constructor(): R|expo/modules/v2/testdata/Explicit.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Explicit>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Explicit>|
+
+            private constructor(): R|expo/modules/v2/testdata/Explicit.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|expo/modules/v2/annotations/Record|() public final class WithCompanion : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(a: R|kotlin/Int|): R|expo/modules/v2/testdata/WithCompanion| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val a: R|kotlin/Int| = R|<local>/a|
+            public get(): R|kotlin/Int|
+
+        public final companion object Companion : R|kotlin/Any| {
+            private constructor(): R|expo/modules/v2/testdata/WithCompanion.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+            public final const val LABEL: R|kotlin/String| = String(with-companion)
+                public get(): R|kotlin/String|
+
+            public final fun make(a: R|kotlin/Int|): R|expo/modules/v2/testdata/WithCompanion| {
+                ^make R|expo/modules/v2/testdata/WithCompanion.WithCompanion|(R|<local>/a|)
+            }
+
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/WithCompanion>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/WithCompanion>|
+
+        }
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/WithCompanion>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/WithCompanion>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/WithCompanion>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/WithCompanion|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/WithCompanion|
+
+            public constructor(): R|expo/modules/v2/testdata/WithCompanion.RecordCodec$ExpoModulesV2|
+
+        }
+
+    }
+    public final class Host : R|kotlin/Any| {
+        public constructor(): R|expo/modules/v2/testdata/Host| {
+            super<R|kotlin/Any|>()
+        }
+
+        @R|expo/modules/v2/annotations/Record|() public final class Nested : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+            public constructor(a: R|kotlin/Int|): R|expo/modules/v2/testdata/Host.Nested| {
+                super<R|kotlin/Any|>()
+            }
+
+            public final val a: R|kotlin/Int| = R|<local>/a|
+                public get(): R|kotlin/Int|
+
+            private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Host.Nested>| {
+                public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Host.Nested>|
+                    public get(): R|java/lang/Class<expo/modules/v2/testdata/Host.Nested>|
+
+                public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                    public get(): R|expo/modules/v2/records/RecordSchema|
+
+                public final override fun encode(value: R|expo/modules/v2/testdata/Host.Nested|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+                public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Host.Nested|
+
+                public constructor(): R|expo/modules/v2/testdata/Host.Nested.RecordCodec$ExpoModulesV2|
+
+            }
+
+            public final companion object Companion : R|kotlin/Any| {
+                public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Host.Nested>|
+                    public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Host.Nested>|
+
+                private constructor(): R|expo/modules/v2/testdata/Host.Nested.Companion| {
+                    super<R|kotlin/Any|>()
+                }
+
+            }
+
+        }
+
+    }
+    @R|expo/modules/v2/annotations/Record|() public final class Empty : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(): R|expo/modules/v2/testdata/Empty| {
+            super<R|kotlin/Any|>()
+        }
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Empty>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Empty>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Empty>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Empty|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Empty|
+
+            public constructor(): R|expo/modules/v2/testdata/Empty.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Empty>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Empty>|
+
+            private constructor(): R|expo/modules/v2/testdata/Empty.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        when () {
+            !=(R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Plain|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|kotlin/collections/map|<R|expo/modules/v2/records/RecordField|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|expo/modules/v2/records/RecordField|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
+                ^ R|<local>/it|.R|expo/modules/v2/records/RecordField.name|
+            }
+            ), R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(a), String(b)))) ->  {
+                ^box <strcat>(String(Fail: Plain fields are ), R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Plain|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|kotlin/collections/map|<R|expo/modules/v2/records/RecordField|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|expo/modules/v2/records/RecordField|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
+                    ^ R|<local>/it|.R|expo/modules/v2/records/RecordField.name|
+                }
+                ))
+            }
+        }
+
+        when () {
+            !=(R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Plain|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Plain|>|(R|kotlin/collections/mapOf|<R|kotlin/String|, R|it(kotlin/Comparable<*> & java/io/Serializable)|>(vararg(String(a).R|kotlin/to|<R|kotlin/String|, R|kotlin/Int|>(Int(1)), String(b).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(s))))).R|expo/modules/v2/testdata/Plain.b|, String(s)) ->  {
+                ^box String(Fail: Plain round trip)
+            }
+        }
+
+        when () {
+            !=(R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Hidden|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.name|, String(Hidden)) ->  {
+                ^box String(Fail: Hidden has no codec)
+            }
+        }
+
+        when () {
+            (R|expo/modules/v2/testdata/Explicit.Explicit|(Int(1)) !is R|expo/modules/v2/records/Record|) ->  {
+                ^box String(Fail: Explicit lost the marker)
+            }
+        }
+
+        when () {
+            !=(R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Explicit|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|, Int(1)) ->  {
+                ^box String(Fail: Explicit fields)
+            }
+        }
+
+        when () {
+            !=(Q|expo/modules/v2/testdata/WithCompanion|.R|expo/modules/v2/testdata/WithCompanion.Companion.LABEL|, String(with-companion)) ->  {
+                ^box String(Fail: user companion member disappeared)
+            }
+        }
+
+        when () {
+            !=(Q|expo/modules/v2/testdata/WithCompanion|.R|expo/modules/v2/testdata/WithCompanion.Companion.make|(Int(2)).R|expo/modules/v2/testdata/WithCompanion.a|, Int(2)) ->  {
+                ^box String(Fail: user companion function disappeared)
+            }
+        }
+
+        when () {
+            !=(R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/WithCompanion|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/WithCompanion|>|(R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/Int|>(String(a).R|kotlin/to|<R|kotlin/String|, R|kotlin/Int|>(Int(3)))).R|expo/modules/v2/testdata/WithCompanion.a|, Int(3)) ->  {
+                ^box String(Fail: WithCompanion round trip)
+            }
+        }
+
+        when () {
+            !=(R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Host.Nested|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.name|, String(Nested)) ->  {
+                ^box String(Fail: nested record has no codec)
+            }
+        }
+
+        lval empty: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Empty>| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Empty|>()
+        when () {
+            R|<local>/empty|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|kotlin/collections/isNotEmpty|<R|expo/modules/v2/records/RecordField|>() ->  {
+                ^box <strcat>(String(Fail: Empty has fields ), R|<local>/empty|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|)
+            }
+        }
+
+        when () {
+            R|<local>/empty|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|expo/modules/v2/testdata/Empty.Empty|()).R|kotlin/collections/isNotEmpty|<R|kotlin/String|, R|kotlin/Any?|>() ->  {
+                ^box <strcat>(String(Fail: Empty toMap is ), R|<local>/empty|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|expo/modules/v2/testdata/Empty.Empty|()))
+            }
+        }
+
+        ^box String(OK)
+    }

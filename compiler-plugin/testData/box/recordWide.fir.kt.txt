@@ -1,0 +1,282 @@
+package expo.modules.v2.testdata
+
+@Record
+class Wide : Record {
+  val field0: Int
+    field = field0
+    get
+
+  val field1: Int
+    field = field1
+    get
+
+  val field2: Int
+    field = field2
+    get
+
+  val field3: Int
+    field = field3
+    get
+
+  val field4: Int
+    field = field4
+    get
+
+  val field5: Int
+    field = field5
+    get
+
+  val field6: Int
+    field = field6
+    get
+
+  val field7: Int
+    field = field7
+    get
+
+  val field8: Int
+    field = field8
+    get
+
+  val field9: Int
+    field = field9
+    get
+
+  val field10: Int
+    field = field10
+    get
+
+  val field11: Int
+    field = field11
+    get
+
+  val field12: Int
+    field = field12
+    get
+
+  val field13: Int
+    field = field13
+    get
+
+  val field14: Int
+    field = field14
+    get
+
+  val field15: Int
+    field = field15
+    get
+
+  val field16: Int
+    field = field16
+    get
+
+  val field17: Int
+    field = field17
+    get
+
+  val field18: Int
+    field = field18
+    get
+
+  val field19: Int
+    field = field19
+    get
+
+  val field20: Int
+    field = field20
+    get
+
+  val field21: Int
+    field = field21
+    get
+
+  val field22: Int
+    field = field22
+    get
+
+  val field23: Int
+    field = field23
+    get
+
+  val field24: Int
+    field = field24
+    get
+
+  val field25: Int
+    field = field25
+    get
+
+  val field26: Int
+    field = field26
+    get
+
+  val field27: Int
+    field = field27
+    get
+
+  val field28: Int
+    field = field28
+    get
+
+  val field29: Int
+    field = field29
+    get
+
+  val field30: Int
+    field = field30
+    get
+
+  val field31: Int
+    field = field31
+    get
+
+  val field32: Int
+    field = field32
+    get
+
+  val field33: Int
+    field = field33
+    get
+
+  val field34: Int
+    field = field34
+    get
+
+  val field35: Int
+    field = field35
+    get
+
+  val field36: Int
+    field = field36
+    get
+
+  val field37: Int
+    field = field37
+    get
+
+  val field38: Int
+    field = field38
+    get
+
+  val field39: Int
+    field = field39
+    get
+
+  val field40: Int
+    field = field40
+    get
+
+  val field41: Int
+    field = field41
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Wide> {
+    override val recordClass: Class<Wide>
+      field = Wide::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Wide", bufferSafe = true, fields = [RecordField(name = "field0", type = Int, isOptional = false), RecordField(name = "field1", type = Int, isOptional = false), RecordField(name = "field2", type = Int, isOptional = false), RecordField(name = "field3", type = Int, isOptional = false), RecordField(name = "field4", type = Int, isOptional = false), RecordField(name = "field5", type = Int, isOptional = false), RecordField(name = "field6", type = Int, isOptional = false), RecordField(name = "field7", type = Int, isOptional = false), RecordField(name = "field8", type = Int, isOptional = false), RecordField(name = "field9", type = Int, isOptional = false), RecordField(name = "field10", type = Int, isOptional = false), RecordField(name = "field11", type = Int, isOptional = false), RecordField(name = "field12", type = Int, isOptional = false), RecordField(name = "field13", type = Int, isOptional = false), RecordField(name = "field14", type = Int, isOptional = false), RecordField(name = "field15", type = Int, isOptional = false), RecordField(name = "field16", type = Int, isOptional = false), RecordField(name = "field17", type = Int, isOptional = false), RecordField(name = "field18", type = Int, isOptional = false), RecordField(name = "field19", type = Int, isOptional = false), RecordField(name = "field20", type = Int, isOptional = false), RecordField(name = "field21", type = Int, isOptional = false), RecordField(name = "field22", type = Int, isOptional = false), RecordField(name = "field23", type = Int, isOptional = false), RecordField(name = "field24", type = Int, isOptional = false), RecordField(name = "field25", type = Int, isOptional = false), RecordField(name = "field26", type = Int, isOptional = false), RecordField(name = "field27", type = Int, isOptional = false), RecordField(name = "field28", type = Int, isOptional = false), RecordField(name = "field29", type = Int, isOptional = false), RecordField(name = "field30", type = Int, isOptional = false), RecordField(name = "field31", type = Int, isOptional = false), RecordField(name = "field32", type = Int, isOptional = false), RecordField(name = "field33", type = Int, isOptional = false), RecordField(name = "field34", type = Int, isOptional = false), RecordField(name = "field35", type = Int, isOptional = false), RecordField(name = "field36", type = Int, isOptional = false), RecordField(name = "field37", type = Int, isOptional = false), RecordField(name = "field38", type = Int, isOptional = false), RecordField(name = "field39", type = Int, isOptional = false), RecordField(name = "field40", type = Int, isOptional = false), RecordField(name = "field41", type = Int, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Wide {
+      return Wide(field0 = reader.readInt(), field1 = reader.readInt(), field2 = reader.readInt(), field3 = reader.readInt(), field4 = reader.readInt(), field5 = reader.readInt(), field6 = reader.readInt(), field7 = reader.readInt(), field8 = reader.readInt(), field9 = reader.readInt(), field10 = reader.readInt(), field11 = reader.readInt(), field12 = reader.readInt(), field13 = reader.readInt(), field14 = reader.readInt(), field15 = reader.readInt(), field16 = reader.readInt(), field17 = reader.readInt(), field18 = reader.readInt(), field19 = reader.readInt(), field20 = reader.readInt(), field21 = reader.readInt(), field22 = reader.readInt(), field23 = reader.readInt(), field24 = reader.readInt(), field25 = reader.readInt(), field26 = reader.readInt(), field27 = reader.readInt(), field28 = reader.readInt(), field29 = reader.readInt(), field30 = reader.readInt(), field31 = reader.readInt(), field32 = reader.readInt(), field33 = reader.readInt(), field34 = reader.readInt(), field35 = reader.readInt(), field36 = reader.readInt(), field37 = reader.readInt(), field38 = reader.readInt(), field39 = reader.readInt(), field40 = reader.readInt(), field41 = reader.readInt())
+    }
+
+    override fun encode(value: Wide, writer: RecordWriter) {
+      writer.write(value = value.<get-field0>())
+      writer.write(value = value.<get-field1>())
+      writer.write(value = value.<get-field2>())
+      writer.write(value = value.<get-field3>())
+      writer.write(value = value.<get-field4>())
+      writer.write(value = value.<get-field5>())
+      writer.write(value = value.<get-field6>())
+      writer.write(value = value.<get-field7>())
+      writer.write(value = value.<get-field8>())
+      writer.write(value = value.<get-field9>())
+      writer.write(value = value.<get-field10>())
+      writer.write(value = value.<get-field11>())
+      writer.write(value = value.<get-field12>())
+      writer.write(value = value.<get-field13>())
+      writer.write(value = value.<get-field14>())
+      writer.write(value = value.<get-field15>())
+      writer.write(value = value.<get-field16>())
+      writer.write(value = value.<get-field17>())
+      writer.write(value = value.<get-field18>())
+      writer.write(value = value.<get-field19>())
+      writer.write(value = value.<get-field20>())
+      writer.write(value = value.<get-field21>())
+      writer.write(value = value.<get-field22>())
+      writer.write(value = value.<get-field23>())
+      writer.write(value = value.<get-field24>())
+      writer.write(value = value.<get-field25>())
+      writer.write(value = value.<get-field26>())
+      writer.write(value = value.<get-field27>())
+      writer.write(value = value.<get-field28>())
+      writer.write(value = value.<get-field29>())
+      writer.write(value = value.<get-field30>())
+      writer.write(value = value.<get-field31>())
+      writer.write(value = value.<get-field32>())
+      writer.write(value = value.<get-field33>())
+      writer.write(value = value.<get-field34>())
+      writer.write(value = value.<get-field35>())
+      writer.write(value = value.<get-field36>())
+      writer.write(value = value.<get-field37>())
+      writer.write(value = value.<get-field38>())
+      writer.write(value = value.<get-field39>())
+      writer.write(value = value.<get-field40>())
+      writer.write(value = value.<get-field41>())
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Wide>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(field0: Int, field1: Int, field2: Int, field3: Int, field4: Int, field5: Int, field6: Int, field7: Int, field8: Int, field9: Int, field10: Int, field11: Int, field12: Int, field13: Int, field14: Int, field15: Int, field16: Int, field17: Int, field18: Int, field19: Int, field20: Int, field21: Int, field22: Int, field23: Int, field24: Int, field25: Int, field26: Int, field27: Int, field28: Int, field29: Int, field30: Int, field31: Int, field32: Int, field33: Int, field34: Int, field35: Int, field36: Int, field37: Int, field38: Int, field39: Int, field40: Int, field41: Int) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+fun box(): String {
+  val codec: RecordCodec<Wide> = codecFor<Wide>()
+  when {
+    EQEQ(arg0 = codec.<get-schema>().<get-fields>().<get-size>(), arg1 = 42).not() -> return "Fail: " + codec.<get-schema>().<get-fields>().<get-size>() + " fields"
+  }
+  when {
+    EQEQ(arg0 = codec.<get-schema>().<get-fields>().get(index = 41).<get-name>(), arg1 = "field41").not() -> return "Fail: last field is " + codec.<get-schema>().<get-fields>().get(index = 41).<get-name>()
+  }
+  val wide: Wide = Wide(field0 = 0, field1 = 1, field2 = 2, field3 = 3, field4 = 4, field5 = 5, field6 = 6, field7 = 7, field8 = 8, field9 = 9, field10 = 10, field11 = 11, field12 = 12, field13 = 13, field14 = 14, field15 = 15, field16 = 16, field17 = 17, field18 = 18, field19 = 19, field20 = 20, field21 = 21, field22 = 22, field23 = 23, field24 = 24, field25 = 25, field26 = 26, field27 = 27, field28 = 28, field29 = 29, field30 = 30, field31 = 31, field32 = 32, field33 = 33, field34 = 34, field35 = 35, field36 = 36, field37 = 37, field38 = 38, field39 = 39, field40 = 40, field41 = 41)
+  val map: Map<String, Any?> = codec.toMap(value = wide)
+  when {
+    EQEQ(arg0 = map.<get-size>(), arg1 = 42).not() -> return "Fail: toMap gave " + map.<get-size>() + " keys"
+  }
+  when {
+    EQEQ(arg0 = map.get(key = "field41"), arg1 = 41).not() -> return "Fail: field41 crossed as " + map.get(key = "field41")
+  }
+  when {
+    EQEQ(arg0 = codec.fromMap(map = map).<get-field7>(), arg1 = 7).not() -> return "Fail: field7 gave " + codec.fromMap(map = map).<get-field7>()
+  }
+  return "OK"
+}
+

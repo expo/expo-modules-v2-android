@@ -1,0 +1,54 @@
+package expo.modules.v2.testdata
+
+@JS
+class AsyncShapes : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = Unit::class.<get-java>(), isNullable = false)
+  fun clear__trampoline$ExpoModulesV2(promise: Promise) {
+    promise.launch(type = #type$0, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.clear()
+    }
+)
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "scale", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "scale__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "greet", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "greet__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "repeat", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "repeat__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = Unit::class.<get-java>(), isNullable = false), useBuffer = false), methodName = "clear__trampoline$ExpoModulesV2", isAsync = true)
+    return "AsyncShapes"
+  }
+
+  fun greet__trampoline$ExpoModulesV2(payloadLength: Int, promise: Promise) {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    promise.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.greet(name = v0)
+    }
+)
+  }
+
+  fun repeat__trampoline$ExpoModulesV2(p0: Int, payloadLength: Int, promise: Promise) {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v1: String
+    try { // BLOCK
+      v1 = args.nextString()
+    }
+    finally args.finish()
+    promise.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.repeat(times = p0, value = v1)
+    }
+)
+  }
+
+  fun scale__trampoline$ExpoModulesV2(p0: Int, promise: Promise) {
+    promise.launch(type = Int, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.scale(value = p0)
+    }
+)
+  }
+}
+

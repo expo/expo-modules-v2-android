@@ -1,0 +1,51 @@
+package expo.modules.v2.testdata
+
+@Record
+class Accessors : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Accessors> {
+    override val recordClass: Class<Accessors>
+      field = Accessors::class.<get-java>()
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Accessors", bufferSafe = true, fields = [RecordField(name = "fromPrivateTopLevel", type = Int, isOptional = true), RecordField(name = "fromPrivateConstant", type = #STRING, isOptional = true), RecordField(name = "fromCompanion", type = Int, isOptional = true), RecordField(name = "fromPrivateCompanion", type = Int, isOptional = true)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Accessors {
+      val fromPrivateTopLevel: Int = when {
+        reader.readIsPresent() -> reader.readInt()
+        else -> secret()
+      }
+      val fromPrivateConstant: String = when {
+        reader.readIsPresent() -> reader.read<String>(schema = #STRING)
+        else -> "const"
+      }
+      val fromCompanion: Int = when {
+        reader.readIsPresent() -> reader.readInt()
+        else -> Companion.<get-companionDefault>()
+      }
+      val fromPrivateCompanion: Int = when {
+        reader.readIsPresent() -> reader.readInt()
+        else -> 33
+      }
+      return Accessors(fromPrivateTopLevel = fromPrivateTopLevel, fromPrivateConstant = fromPrivateConstant, fromCompanion = fromCompanion, fromPrivateCompanion = fromPrivateCompanion)
+    }
+
+    override fun encode(value: Accessors, writer: RecordWriter) {
+      writer.write(value = value.<get-fromPrivateTopLevel>())
+      writer.write(value = value.<get-fromPrivateConstant>(), schema = #STRING)
+      writer.write(value = value.<get-fromCompanion>())
+      writer.write(value = value.<get-fromPrivateCompanion>())
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Accessors>
+      field = RecordCodec$ExpoModulesV2()
+  }
+}

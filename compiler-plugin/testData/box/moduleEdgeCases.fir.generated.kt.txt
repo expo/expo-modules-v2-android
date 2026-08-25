@@ -1,0 +1,77 @@
+package expo.modules.v2.testdata
+
+abstract class BaseModule : Module {
+}
+
+@JS
+class WithNested : Module {
+  class Nested {
+  }
+
+  companion object Companion {
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "value", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "value")
+    return "WithNested"
+  }
+}
+
+@JS
+object Arity : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "none", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "none")
+    builder.function(jsName = "one", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "one")
+    builder.function(jsName = "eight", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "eight")
+    builder.function(jsName = "eightBuffered", argTypes = [AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "eightBuffered__trampoline$ExpoModulesV2")
+    return "Arity"
+  }
+
+  fun eightBuffered__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    var v1: String
+    var v2: String
+    var v3: String
+    var v4: String
+    var v5: String
+    var v6: String
+    var v7: String
+    try { // BLOCK
+      v0 = args.nextString()
+      v1 = args.nextString()
+      v2 = args.nextString()
+      v3 = args.nextString()
+      v4 = args.nextString()
+      v5 = args.nextString()
+      v6 = args.nextString()
+      v7 = args.nextString()
+    }
+    finally args.finish()
+    return <this>.eightBuffered(a = v0, b = v1, c = v2, d = v3, e = v4, f = v5, g = v6, h = v7)
+  }
+}
+
+@JS
+object Derived : BaseModule {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "own", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "own")
+    return "Derived"
+  }
+}
+
+@JS
+object Empty : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Empty"
+  }
+}
+
+@JS
+object Visibility : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "hidden", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "hidden")
+    builder.function(jsName = "visible", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "visible")
+    return "Visibility"
+  }
+}

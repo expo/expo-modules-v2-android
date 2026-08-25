@@ -1,0 +1,107 @@
+FILE: recordNullablePrimitives.kt
+    package expo.modules.v2.testdata
+
+    @R|expo/modules/v2/annotations/Record|() public final data class Boxes : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(i: R|kotlin/Int?|, l: R|kotlin/Long?|, f: R|kotlin/Float?|, d: R|kotlin/Double?|, b: R|kotlin/Boolean?|, s: R|kotlin/String?|): R|expo/modules/v2/testdata/Boxes| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val i: R|kotlin/Int?| = R|<local>/i|
+            public get(): R|kotlin/Int?|
+
+        public final val l: R|kotlin/Long?| = R|<local>/l|
+            public get(): R|kotlin/Long?|
+
+        public final val f: R|kotlin/Float?| = R|<local>/f|
+            public get(): R|kotlin/Float?|
+
+        public final val d: R|kotlin/Double?| = R|<local>/d|
+            public get(): R|kotlin/Double?|
+
+        public final val b: R|kotlin/Boolean?| = R|<local>/b|
+            public get(): R|kotlin/Boolean?|
+
+        public final val s: R|kotlin/String?| = R|<local>/s|
+            public get(): R|kotlin/String?|
+
+        public final operator fun component1(): R|kotlin/Int?|
+
+        public final operator fun component2(): R|kotlin/Long?|
+
+        public final operator fun component3(): R|kotlin/Float?|
+
+        public final operator fun component4(): R|kotlin/Double?|
+
+        public final operator fun component5(): R|kotlin/Boolean?|
+
+        public final operator fun component6(): R|kotlin/String?|
+
+        public final fun copy(i: R|kotlin/Int?| = this@R|expo/modules/v2/testdata/Boxes|.R|expo/modules/v2/testdata/Boxes.i|, l: R|kotlin/Long?| = this@R|expo/modules/v2/testdata/Boxes|.R|expo/modules/v2/testdata/Boxes.l|, f: R|kotlin/Float?| = this@R|expo/modules/v2/testdata/Boxes|.R|expo/modules/v2/testdata/Boxes.f|, d: R|kotlin/Double?| = this@R|expo/modules/v2/testdata/Boxes|.R|expo/modules/v2/testdata/Boxes.d|, b: R|kotlin/Boolean?| = this@R|expo/modules/v2/testdata/Boxes|.R|expo/modules/v2/testdata/Boxes.b|, s: R|kotlin/String?| = this@R|expo/modules/v2/testdata/Boxes|.R|expo/modules/v2/testdata/Boxes.s|): R|expo/modules/v2/testdata/Boxes|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Boxes>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Boxes>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Boxes>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Boxes|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Boxes|
+
+            public constructor(): R|expo/modules/v2/testdata/Boxes.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Boxes>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Boxes>|
+
+            private constructor(): R|expo/modules/v2/testdata/Boxes.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval codec: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Boxes>| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Boxes|>()
+        lval full: R|expo/modules/v2/testdata/Boxes| = R|expo/modules/v2/testdata/Boxes.Boxes|(Int(1), Long(2), Float(3.5), Double(4.5), Boolean(true), String(s))
+        lval fullMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/full|)
+        when () {
+            !=(R|<local>/fullMap|, R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/Any?|>(vararg(String(i).R|kotlin/to|<R|kotlin/String|, R|kotlin/Int|>(Int(1)), String(l).R|kotlin/to|<R|kotlin/String|, R|kotlin/Long|>(Long(2)), String(f).R|kotlin/to|<R|kotlin/String|, R|kotlin/Float|>(Float(3.5)), String(d).R|kotlin/to|<R|kotlin/String|, R|kotlin/Double|>(Double(4.5)), String(b).R|kotlin/to|<R|kotlin/String|, R|kotlin/Boolean|>(Boolean(true)), String(s).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(s))))) ->  {
+                ^box <strcat>(String(Fail: toMap gave ), R|<local>/fullMap|)
+            }
+        }
+
+        when () {
+            !=(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Boxes|>|(R|<local>/fullMap|), R|<local>/full|) ->  {
+                ^box <strcat>(String(Fail: fromMap gave ), R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Boxes|>|(R|<local>/fullMap|))
+            }
+        }
+
+        lval empty: R|expo/modules/v2/testdata/Boxes| = R|expo/modules/v2/testdata/Boxes.Boxes|(Null(null), Null(null), Null(null), Null(null), Null(null), Null(null))
+        lval emptyMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/empty|)
+        when () {
+            !=(R|<local>/emptyMap|.R|SubstitutionOverride<kotlin/collections/Map.size: R|kotlin/Int|>|, Int(6)) ->  {
+                ^box <strcat>(String(Fail: nulls dropped keys, got ), R|<local>/emptyMap|)
+            }
+        }
+
+        when () {
+            R|<local>/emptyMap|.R|SubstitutionOverride<kotlin/collections/Map.values: R|kotlin/collections/Collection<kotlin/Any?>|>|.R|kotlin/collections/any|<R|kotlin/Any?|>(<L> = any@fun <anonymous>(it: R|kotlin/Any?|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+                ^ !=(R|<local>/it|, Null(null))
+            }
+            ) ->  {
+                ^box <strcat>(String(Fail: nulls did not cross, got ), R|<local>/emptyMap|)
+            }
+        }
+
+        when () {
+            !=(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Boxes|>|(R|<local>/emptyMap|), R|<local>/empty|) ->  {
+                ^box <strcat>(String(Fail: fromMap gave ), R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Boxes|>|(R|<local>/emptyMap|))
+            }
+        }
+
+        ^box String(OK)
+    }

@@ -1,0 +1,416 @@
+package expo.modules.v2.testdata
+
+@Record(, bufferSafe = false)
+data class Holder : Record {
+  val value: Any?
+    field = value
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Holder> {
+    override val recordClass: Class<Holder>
+      field = Holder::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Holder", bufferSafe = false, fields = [RecordField(name = "value", type = #ANY_NULL, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Holder {
+      return Holder(value = reader.read<Any?>(schema = #ANY_NULL))
+    }
+
+    override fun encode(value: Holder, writer: RecordWriter) {
+      writer.write(value = value.<get-value>(), schema = #ANY_NULL)
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Holder>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(value: Any?) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Any? {
+    return <this>.#value
+  }
+
+  fun copy(value: Any? = <this>.#value): Holder {
+    return Holder(value = value)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Holder -> return false
+    }
+    val tmp_0: Holder = other as Holder
+    when {
+      EQEQ(arg0 = <this>.#value, arg1 = tmp_0.#value).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    return when {
+      EQEQ(arg0 = <this>.#value, arg1 = null) -> 0
+      else -> <this>.#value.hashCode()
+    }
+  }
+
+  override fun toString(): String {
+    return "Holder(" + "value=" + <this>.#value + ")"
+  }
+
+}
+
+@Record
+data class Point : Record {
+  val x: Double
+    field = x
+    get
+
+  val y: Double
+    field = y
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Point> {
+    override val recordClass: Class<Point>
+      field = Point::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Point", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Point {
+      return Point(x = reader.readDouble(), y = reader.readDouble())
+    }
+
+    override fun encode(value: Point, writer: RecordWriter) {
+      writer.write(value = value.<get-x>())
+      writer.write(value = value.<get-y>())
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Point>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(x: Double, y: Double) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Double {
+    return <this>.#x
+  }
+
+  operator fun component2(): Double {
+    return <this>.#y
+  }
+
+  fun copy(x: Double = <this>.#x, y: Double = <this>.#y): Point {
+    return Point(x = x, y = y)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Point -> return false
+    }
+    val tmp_1: Point = other as Point
+    when {
+      EQEQ(arg0 = <this>.#x, arg1 = tmp_1.#x).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#y, arg1 = tmp_1.#y).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result: Int = <this>.#x.hashCode()
+    result = result.times(other = 31).plus(other = <this>.#y.hashCode())
+    return result
+  }
+
+  override fun toString(): String {
+    return "Point(" + "x=" + <this>.#x + ", " + "y=" + <this>.#y + ")"
+  }
+
+}
+
+@JS
+object Values : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = Map<K, V>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))
+  private /* static final field */ val type$2: TypeDescriptor = Parametrized(javaClass = Set<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  private /* static final field */ val type$3: TypeDescriptor = Parametrized(javaClass = Array<String>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  private /* static final field */ val type$4: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL]))
+  private /* static final field */ val type$5: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = true, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+  private /* static final field */ val type$6: TypeDescriptor = Simple(javaClass = Point::class.<get-java>(), isNullable = false)
+  private /* static final field */ val type$7: TypeDescriptor = Simple(javaClass = Holder::class.<get-java>(), isNullable = false)
+  private /* static final field */ val type$8: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Point::class.<get-java>(), isNullable = false)]))
+  private /* static final field */ val type$9: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Holder::class.<get-java>(), isNullable = false)]))
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  fun containers__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: List<String>
+    var v1: Map<String, Int>
+    var v2: Set<String>
+    var v3: Array<String>
+    try { // BLOCK
+      v0 = args.next<List<String>>(type = #type$0)
+      v1 = args.next<Map<String, Int>>(type = #type$1)
+      v2 = args.next<Set<String>>(type = #type$2)
+      v3 = args.next<Array<String>>(type = #type$3)
+    }
+    finally args.finish()
+    return <this>.containers(list = v0, map = v1, set = v2, array = v3)
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "nullableScalars", argTypes = [AnyType(descriptor = #INT_BOXED_NULL, useBuffer = true), AnyType(descriptor = #LONG_BOXED_NULL, useBuffer = true), AnyType(descriptor = #FLOAT_BOXED_NULL, useBuffer = true), AnyType(descriptor = #DOUBLE_BOXED_NULL, useBuffer = true), AnyType(descriptor = #BOOLEAN_BOXED_NULL, useBuffer = true)], returns = AnyType(descriptor = #INT_BOXED_NULL, useBuffer = true), methodName = "nullableScalars__trampoline$ExpoModulesV2")
+    builder.function(jsName = "unboxedScalars", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Long, useBuffer = false), AnyType(descriptor = Float, useBuffer = false), AnyType(descriptor = Double, useBuffer = false), AnyType(descriptor = Bool, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "unboxedScalars")
+    builder.function(jsName = "arrays", argTypes = [AnyType(descriptor = IntArray(isNullable = false), useBuffer = false), AnyType(descriptor = DoubleArray(isNullable = true), useBuffer = false), AnyType(descriptor = ByteArray(isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "arrays")
+    builder.function(jsName = "containers", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = Map<K, V>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = Set<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = Array<String>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "containers__trampoline$ExpoModulesV2")
+    builder.function(jsName = "nullableElements", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = true, params = arrayOf<ObjectLike>(elements = [#INT_BOXED])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "nullableElements__trampoline$ExpoModulesV2")
+    builder.function(jsName = "echoPoint", argTypes = [AnyType(descriptor = Simple(javaClass = Point::class.<get-java>(), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = Point::class.<get-java>(), isNullable = false), useBuffer = true), methodName = "echoPoint__trampoline$ExpoModulesV2")
+    builder.function(jsName = "echoHolder", argTypes = [AnyType(descriptor = Simple(javaClass = Holder::class.<get-java>(), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = Holder::class.<get-java>(), isNullable = false), useBuffer = false), methodName = "echoHolder__trampoline$ExpoModulesV2")
+    builder.function(jsName = "points", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Point::class.<get-java>(), isNullable = false)])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "points__trampoline$ExpoModulesV2")
+    builder.function(jsName = "holders", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Holder::class.<get-java>(), isNullable = false)])), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "holders__trampoline$ExpoModulesV2")
+    builder.function(jsName = "dynamic", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = false), AnyType(descriptor = Simple(javaClass = JavaScriptValue::class.<get-java>(), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "dynamic")
+    builder.function(jsName = "optedOut", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "optedOut")
+    builder.function(jsName = "optedIn", argTypes = [AnyType(descriptor = IntArray(isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "optedIn__trampoline$ExpoModulesV2")
+    return "Values"
+  }
+
+  fun echoHolder__trampoline$ExpoModulesV2(p0: Map<String, Any?>?): Map<String, Any?>? {
+    return Bridge.toJni(value = <this>.echoHolder(holder = Bridge.fromJni(value = p0, type = #type$7) as Holder), type = #type$7) as Map<String, Any?>?
+  }
+
+  fun echoPoint__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Point
+    try { // BLOCK
+      v0 = args.next<Point>(type = #type$6)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.echoPoint(point = v0), type = #type$6)
+  }
+
+  fun holders__trampoline$ExpoModulesV2(p0: List<Any?>?): Int {
+    return <this>.holders(values = Bridge.fromJni(value = p0, type = #type$9) as List<Holder>)
+  }
+
+  fun nullableElements__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: List<String?>
+    var v1: List<Int>?
+    try { // BLOCK
+      v0 = args.next<List<String?>>(type = #type$4)
+      v1 = args.next<List<Int>?>(type = #type$5)
+    }
+    finally args.finish()
+    return <this>.nullableElements(values = v0, nullableList = v1)
+  }
+
+  fun nullableScalars__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Int?
+    var v1: Long?
+    var v2: Float?
+    var v3: Double?
+    var v4: Boolean?
+    try { // BLOCK
+      v0 = args.nextIntOrNull()
+      v1 = args.nextLongOrNull()
+      v2 = args.nextFloatOrNull()
+      v3 = args.nextDoubleOrNull()
+      v4 = args.nextBooleanOrNull()
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.nullableScalars(a = v0, b = v1, c = v2, d = v3, e = v4), type = #INT_BOXED_NULL)
+  }
+
+  fun optedIn__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: IntArray
+    try { // BLOCK
+      v0 = args.nextIntArray()
+    }
+    finally args.finish()
+    return <this>.optedIn(values = v0)
+  }
+
+  fun points__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: List<Point>
+    try { // BLOCK
+      v0 = args.next<List<Point>>(type = #type$8)
+    }
+    finally args.finish()
+    return <this>.points(values = v0)
+  }
+
+  @JS
+  fun arrays(a: IntArray, b: DoubleArray?, c: ByteArray): Int {
+    return a.<get-size>()
+  }
+
+  @JS
+  fun containers(list: List<String>, map: Map<String, Int>, set: Set<String>, array: Array<String>): Int {
+    return list.<get-size>().plus(other = map.<get-size>()).plus(other = set.<get-size>()).plus(other = array.<get-size>())
+  }
+
+  @JS
+  fun dynamic(value: Any?, handle: JavaScriptValue): Int {
+    return handle.hashCode()
+  }
+
+  @JS
+  fun echoHolder(holder: Holder): Holder {
+    return holder
+  }
+
+  @JS
+  fun echoPoint(point: Point): Point {
+    return point
+  }
+
+  @JS
+  fun holders(values: List<Holder>): Int {
+    return values.<get-size>()
+  }
+
+  @JS
+  fun nullableElements(values: List<String?>, nullableList: List<Int>?): Int {
+    return values.<get-size>()
+  }
+
+  @JS
+  fun nullableScalars(a: Int?, b: Long?, c: Float?, d: Double?, e: Boolean?): Int? {
+    return a
+  }
+
+  @JS(, buffer = Buffer.YES)
+  fun optedIn(values: IntArray): Int {
+    return values.<get-size>()
+  }
+
+  @JS
+  fun optedOut(@JS(, buffer = Buffer.NO) values: List<String>): Int {
+    return values.<get-size>()
+  }
+
+  @JS
+  fun points(values: List<Point>): Int {
+    return values.<get-size>()
+  }
+
+  @JS
+  fun unboxedScalars(a: Int, b: Long, c: Float, d: Double, e: Boolean): Int {
+    return a
+  }
+
+}
+
+fun box(): String {
+  val suffix: String = "__trampoline$ExpoModulesV2"
+  val expected: Map<String, String> = mapOf<String, String>(pairs = ["nullableScalars" + suffix.to<String, String>(that = "(I)I"), "unboxedScalars" + suffix.to<String, String>(that = "<absent>"), "arrays" + suffix.to<String, String>(that = "<absent>"), "containers" + suffix.to<String, String>(that = "(I)I"), "nullableElements" + suffix.to<String, String>(that = "(I)I"), "echoPoint" + suffix.to<String, String>(that = "(I)I"), "echoHolder" + suffix.to<String, String>(that = "(Ljava/util/Map;)Ljava/util/Map;"), "points" + suffix.to<String, String>(that = "(I)I"), "holders" + suffix.to<String, String>(that = "(Ljava/util/List;)I"), "dynamic" + suffix.to<String, String>(that = "<absent>"), "optedOut" + suffix.to<String, String>(that = "<absent>"), "optedIn" + suffix.to<String, String>(that = "(I)I")])
+  { // BLOCK
+    val tmp_2: Iterator<Entry<String, String>> = expected.iterator<String, String>()
+    while (tmp_2.hasNext()) { // BLOCK
+      val tmp_3: Entry<String, String> = tmp_2.next()
+      val name: String = tmp_3.component1<String, String>()
+      val want: String = tmp_3.component2<String, String>()
+      { // BLOCK
+        val got: String = descriptorOf(name = name)
+        when {
+          EQEQ(arg0 = got, arg1 = want).not() -> return name + ": expected " + want + ", got " + got
+        }
+      }
+    }
+  }
+  return "OK"
+}
+
+private fun descriptor(type: Class<*>): String {
+  return when {
+    EQEQ(arg0 = type, arg1 = Int::class.<get-javaPrimitiveType><Int>()) -> "I"
+    EQEQ(arg0 = type, arg1 = Long::class.<get-javaPrimitiveType><Long>()) -> "J"
+    EQEQ(arg0 = type, arg1 = Float::class.<get-javaPrimitiveType><Float>()) -> "F"
+    EQEQ(arg0 = type, arg1 = Double::class.<get-javaPrimitiveType><Double>()) -> "D"
+    EQEQ(arg0 = type, arg1 = Boolean::class.<get-javaPrimitiveType><Boolean>()) -> "Z"
+    EQEQ(arg0 = type, arg1 = super<Void>.#TYPE) -> "V"
+    type.isArray() -> "[".plus(other = descriptor(type = type.getComponentType() /*!! Class<*> */))
+    else -> "L".plus(other = type.getName() /*!! String */.replace(oldChar = '.', newChar = '/')).plus(other = ";")
+  }
+}
+
+private fun descriptorOf(name: String): String {
+  val method: Method = { // BLOCK
+    val tmp_4: Method? = Values::class.<get-java><Values>().getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */.firstOrNull<@FlexibleNullability Method?>(predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return EQEQ(arg0 = it.getName(), arg1 = name)
+    }
+)
+    when {
+      EQEQ(arg0 = tmp_4, arg1 = null) -> return "<absent>"
+      else -> tmp_4
+    }
+  }
+  val parameters: String = method.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */.joinToString<@FlexibleNullability Class<*>?>(separator = "", transform = local fun <anonymous>(it: @FlexibleNullability Class<*>?): CharSequence {
+    return descriptor(type = it /*!! Class<*> */)
+  }
+)
+  return "(" + parameters + ")" + descriptor(type = method.getReturnType() /*!! Class<*> */)
+}
+

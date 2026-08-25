@@ -1,0 +1,128 @@
+FILE: recordDefaults.kt
+    package expo.modules.v2.testdata
+
+    @R|expo/modules/v2/annotations/Record|() public final data class Opts : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(tags: R|kotlin/collections/List<kotlin/String>|, count: R|kotlin/Int| = Int(5), label: R|kotlin/String?| = String(x), derived: R|kotlin/Int| = R|<local>/count|.R|kotlin/Int.plus|(Int(1)), trailing: R|kotlin/collections/List<kotlin/Int>| = R|kotlin/collections/listOf|<R|kotlin/Int|>(Int(9))): R|expo/modules/v2/testdata/Opts| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val tags: R|kotlin/collections/List<kotlin/String>| = R|<local>/tags|
+            public get(): R|kotlin/collections/List<kotlin/String>|
+
+        public final val count: R|kotlin/Int| = R|<local>/count|
+            public get(): R|kotlin/Int|
+
+        public final val label: R|kotlin/String?| = R|<local>/label|
+            public get(): R|kotlin/String?|
+
+        public final val derived: R|kotlin/Int| = R|<local>/derived|
+            public get(): R|kotlin/Int|
+
+        public final val trailing: R|kotlin/collections/List<kotlin/Int>| = R|<local>/trailing|
+            public get(): R|kotlin/collections/List<kotlin/Int>|
+
+        public final operator fun component1(): R|kotlin/collections/List<kotlin/String>|
+
+        public final operator fun component2(): R|kotlin/Int|
+
+        public final operator fun component3(): R|kotlin/String?|
+
+        public final operator fun component4(): R|kotlin/Int|
+
+        public final operator fun component5(): R|kotlin/collections/List<kotlin/Int>|
+
+        public final fun copy(tags: R|kotlin/collections/List<kotlin/String>| = this@R|expo/modules/v2/testdata/Opts|.R|expo/modules/v2/testdata/Opts.tags|, count: R|kotlin/Int| = this@R|expo/modules/v2/testdata/Opts|.R|expo/modules/v2/testdata/Opts.count|, label: R|kotlin/String?| = this@R|expo/modules/v2/testdata/Opts|.R|expo/modules/v2/testdata/Opts.label|, derived: R|kotlin/Int| = this@R|expo/modules/v2/testdata/Opts|.R|expo/modules/v2/testdata/Opts.derived|, trailing: R|kotlin/collections/List<kotlin/Int>| = this@R|expo/modules/v2/testdata/Opts|.R|expo/modules/v2/testdata/Opts.trailing|): R|expo/modules/v2/testdata/Opts|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Opts>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Opts>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Opts>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Opts|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Opts|
+
+            public constructor(): R|expo/modules/v2/testdata/Opts.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Opts>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Opts>|
+
+            private constructor(): R|expo/modules/v2/testdata/Opts.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval codec: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Opts>| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Opts|>()
+        lval optionality: R|kotlin/collections/List<kotlin/String>| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|kotlin/collections/map|<R|expo/modules/v2/records/RecordField|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|expo/modules/v2/records/RecordField|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
+            ^ <strcat>(R|<local>/it|.R|expo/modules/v2/records/RecordField.name|, String(=), R|<local>/it|.R|expo/modules/v2/records/RecordField.isOptional|)
+        }
+        )
+        lval expected: R|kotlin/collections/List<kotlin/String>| = R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(tags=false), String(count=true), String(label=true), String(derived=true), String(trailing=true)))
+        when () {
+            !=(R|<local>/optionality|, R|<local>/expected|) ->  {
+                ^box <strcat>(String(Fail: optionality is ), R|<local>/optionality|)
+            }
+        }
+
+        lval defaults: R|expo/modules/v2/testdata/Opts| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Opts|>|(R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/collections/List<kotlin/String>|>(String(tags).R|kotlin/to|<R|kotlin/String|, R|kotlin/collections/List<kotlin/String>|>(R|kotlin/collections/listOf|<R|kotlin/String|>(String(a)))))
+        when () {
+            !=(R|<local>/defaults|, R|expo/modules/v2/testdata/Opts.Opts|(R|kotlin/collections/listOf|<R|kotlin/String|>(String(a)))) ->  {
+                ^box <strcat>(String(Fail: defaults gave ), R|<local>/defaults|)
+            }
+        }
+
+        when () {
+            !=(R|<local>/defaults|.R|expo/modules/v2/testdata/Opts.derived|, Int(6)) ->  {
+                ^box <strcat>(String(Fail: derived default gave ), R|<local>/defaults|.R|expo/modules/v2/testdata/Opts.derived|)
+            }
+        }
+
+        when () {
+            !=(R|<local>/defaults|.R|expo/modules/v2/testdata/Opts.trailing|, R|kotlin/collections/listOf|<R|kotlin/Int|>(Int(9))) ->  {
+                ^box <strcat>(String(Fail: trailing default gave ), R|<local>/defaults|.R|expo/modules/v2/testdata/Opts.trailing|)
+            }
+        }
+
+        lval partial: R|expo/modules/v2/testdata/Opts| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Opts|>|(R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/Any|>(vararg(String(tags).R|kotlin/to|<R|kotlin/String|, R|kotlin/collections/List<kotlin/String>|>(R|kotlin/collections/listOf|<R|kotlin/String|>(String(a))), String(count).R|kotlin/to|<R|kotlin/String|, R|kotlin/Int|>(Int(41)))))
+        when () {
+            !=(R|<local>/partial|.R|expo/modules/v2/testdata/Opts.count|, Int(41)) ->  {
+                ^box <strcat>(String(Fail: count gave ), R|<local>/partial|.R|expo/modules/v2/testdata/Opts.count|)
+            }
+        }
+
+        when () {
+            !=(R|<local>/partial|.R|expo/modules/v2/testdata/Opts.derived|, Int(42)) ->  {
+                ^box <strcat>(String(Fail: derived gave ), R|<local>/partial|.R|expo/modules/v2/testdata/Opts.derived|)
+            }
+        }
+
+        lval nulled: R|expo/modules/v2/testdata/Opts| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Opts|>|(R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/collections/List<kotlin/String>?|>(vararg(String(tags).R|kotlin/to|<R|kotlin/String|, R|kotlin/collections/List<kotlin/String>|>(R|kotlin/collections/listOf|<R|kotlin/String|>(String(a))), String(label).R|kotlin/to|<R|kotlin/String|, R|kotlin/Nothing?|>(Null(null)))))
+        when () {
+            !=(R|<local>/nulled|.R|expo/modules/v2/testdata/Opts.label|, Null(null)) ->  {
+                ^box <strcat>(String(Fail: explicit null gave ), R|<local>/nulled|.R|expo/modules/v2/testdata/Opts.label|)
+            }
+        }
+
+        lval full: R|expo/modules/v2/testdata/Opts| = R|expo/modules/v2/testdata/Opts.Opts|(R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(a), String(b))), Int(1), Null(null), Int(2), R|kotlin/collections/listOf|<R|kotlin/Int|>(Int(3)))
+        when () {
+            !=(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Opts|>|(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/full|)), R|<local>/full|) ->  {
+                ^box String(Fail: symmetric round trip failed)
+            }
+        }
+
+        when () {
+            !=(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/full|).R|SubstitutionOverride<kotlin/collections/Map.keys: R|kotlin/collections/Set<kotlin/String>|>|, R|kotlin/collections/setOf|<R|kotlin/String|>(vararg(String(tags), String(count), String(label), String(derived), String(trailing)))) ->  {
+                ^box <strcat>(String(Fail: keys are ), R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/full|).R|SubstitutionOverride<kotlin/collections/Map.keys: R|kotlin/collections/Set<kotlin/String>|>|)
+            }
+        }
+
+        ^box String(OK)
+    }

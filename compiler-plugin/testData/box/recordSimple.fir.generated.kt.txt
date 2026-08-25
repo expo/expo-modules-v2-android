@@ -1,0 +1,38 @@
+package expo.modules.v2.testdata
+
+@Record
+data class Point : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Point> {
+    override val recordClass: Class<Point>
+      field = Point::class.<get-java>()
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Point", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Point {
+      return Point(x = reader.readDouble(), y = reader.readDouble())
+    }
+
+    override fun encode(value: Point, writer: RecordWriter) {
+      writer.write(value = value.<get-x>())
+      writer.write(value = value.<get-y>())
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Point>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}

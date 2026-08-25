@@ -1,0 +1,87 @@
+[versions]
+# https://github.com/expo/kolibri
+kolibri = "0.1.5"
+
+# https://github.com/JetBrains/kotlin
+kotlin = "2.1.20"
+
+# The desktop/no-React-Native Hermes host: it creates the `jsi::Runtime` this project attaches to,
+# and ships the one process-wide copy of JSI everything here links against. Built from the
+# hermes-tests-environment checkout next to this one and resolved from mavenLocal:
+#   (cd ../hermes-tests-environment && ./gradlew :runtime:publishToMavenLocal)
+hermes-env = "0.1.0-SNAPSHOT"
+
+# https://github.com/Kotlin/kotlinx.coroutines
+# The async bridge runs module bodies as coroutines. 1.10.2 is the last release built against
+# Kotlin 2.1.x; bump it together with `kotlin` above.
+kotlinx-coroutines = "1.10.2"
+
+# https://github.com/junit-team/junit4
+junit = "4.13.2"
+
+# https://github.com/gmazzo/gradle-buildconfig-plugin
+buildconfig = "5.5.1"
+
+# https://github.com/vanniktech/gradle-maven-publish-plugin
+# Publishes the compiler toolchain (:compiler-plugin and gradle-plugin) to Maven Central, so a
+# consuming app resolves them instead of building them.
+vanniktech-mavenPublish = "0.30.0"
+
+# https://developer.android.com/jetpack/androidx/releases/annotation
+androidx-annotation = "1.9.1"
+
+# https://developer.android.com/build/releases/gradle-plugin
+# The Android library module (:react) only. 8.10.1 is the newest AGP that
+# runs on the Gradle 8.11.1 in gradle/wrapper; kolibri pins the same pair.
+agp = "8.10.1"
+
+# https://github.com/facebook/react-native
+# React Native owns the `jsi::Runtime` :react attaches to, so the prefab `jsi` headers
+# this build compiles against and the `libjsi.so` the app loads must come from one version.
+# 0.86.2 is what Expo SDK 57 pins.
+react-native = "0.86.2"
+
+# https://github.com/Kotlin/kotlinx-benchmark
+# 0.4.16 is the last release that supports Kotlin 2.0+; 0.4.17 warns on every configuration that it
+# wants Kotlin 2.2.0 or higher. Bump it together with `kotlin` above.
+kotlinx-benchmark = "0.4.16"
+
+[libraries]
+kolibri-runtime = { module = "io.github.expo.kolibri:runtime", version.ref = "kolibri" }
+hermes-env-runtime = { module = "io.github.expo:hermes-test-environment", version.ref = "hermes-env" }
+
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-stdlib-jdk8 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit5 = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit5", version.ref = "kotlin" }
+kotlin-test-framework = { group = "org.jetbrains.kotlin", name = "kotlin-compiler-internal-test-framework", version.ref = "kotlin" }
+kotlin-annotations-jvm = { group = "org.jetbrains.kotlin", name = "kotlin-annotations-jvm", version.ref = "kotlin" }
+kotlin-compiler = { group = "org.jetbrains.kotlin", name = "kotlin-compiler", version.ref = "kotlin" }
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+kotlin-script-runtime = { group = "org.jetbrains.kotlin", name = "kotlin-script-runtime", version.ref = "kotlin" }
+kotlin-gradle-plugin-api = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin-api", version.ref = "kotlin" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+
+junit = { module = "junit:junit", version.ref = "junit" }
+
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
+react-android = { module = "com.facebook.react:react-android", version.ref = "react-native" }
+kotlinx-benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "kotlinx-benchmark" }
+
+[plugins]
+kolibri = { id = "io.github.expo.kolibri", version.ref = "kolibri" }
+
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
+vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-mavenPublish" }
+kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
+kotlinx-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlinx-benchmark" }
+
+gradle-java-test-fixtures = { id = "java-test-fixtures" }
+gradle-idea = { id = "idea" }
+gradle-plugin = { id = "java-gradle-plugin" }
+gradle-application = { id = "application" }

@@ -1,0 +1,147 @@
+FILE: moduleTrampolines.kt
+    package expo.modules.v2.testdata
+
+    @R|expo/modules/v2/annotations/JS|() public final object Converted : R|expo/modules/v2/modules/Module| {
+        private constructor(): R|expo/modules/v2/testdata/Converted| {
+            super<R|expo/modules/v2/modules/Module|>()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun total(a: R|kotlin/time/Duration|, b: R|kotlin/time/Duration|): R|kotlin/time/Duration| {
+            ^total R|<local>/a|.R|kotlin/time/Duration.plus|(R|<local>/b|)
+        }
+
+        @R|expo/modules/v2/annotations/JS|(buffer = Q|expo/modules/v2/annotations/Buffer|.R|expo/modules/v2/annotations/Buffer.NO|) public final fun host(url: R|java/net/URL|): R|kotlin/String| {
+            ^host R|<local>/url|.R|java/net/URL.host|
+        }
+
+        @R|expo/modules/v2/annotations/JS|(buffer = Q|expo/modules/v2/annotations/Buffer|.R|expo/modules/v2/annotations/Buffer.NO|) public final fun firstHost(urls: R|kotlin/collections/List<java/net/URL>|): R|kotlin/String| {
+            ^firstHost R|<local>/urls|.R|kotlin/collections/first|<R|java/net/URL|>().R|java/net/URL.host|
+        }
+
+    }
+    @R|expo/modules/v2/annotations/JS|() public final object Buffered : R|expo/modules/v2/modules/Module| {
+        private constructor(): R|expo/modules/v2/testdata/Buffered| {
+            super<R|expo/modules/v2/modules/Module|>()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun greet(name: R|kotlin/String|): R|kotlin/String| {
+            ^greet <strcat>(String(Hello, ), R|<local>/name|, String(!))
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun sum(values: R|kotlin/collections/List<kotlin/Int>|): R|kotlin/Int| {
+            ^sum R|<local>/values|.R|kotlin/collections/sum|()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun describe(prefix: R|kotlin/String|, count: R|kotlin/Int|): R|kotlin/String| {
+            ^describe <strcat>(R|<local>/prefix|, R|<local>/count|)
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun makeNames(count: R|kotlin/Int|): R|kotlin/collections/List<kotlin/String>| {
+            ^makeNames R|kotlin/collections/List|<R|kotlin/String|>(R|<local>/count|, <L> = List@fun <anonymous>(it: R|kotlin/Int|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
+                ^ <strcat>(String(n), R|<local>/it|)
+            }
+            )
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun scale(values: R|kotlin/DoubleArray|): R|kotlin/Double| {
+            ^scale R|<local>/values|.R|kotlin/collections/sum|()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final var motto: R|kotlin/String| = String(carpe diem)
+            public get(): R|kotlin/String|
+            public set(value: R|kotlin/String|): R|kotlin/Unit|
+
+        @R|expo/modules/v2/annotations/JS|() public final val isReady: R|kotlin/Boolean| = Boolean(true)
+            public get(): R|kotlin/Boolean|
+
+    }
+    private final fun descriptorOf(owner: R|java/lang/Class<*>|, name: R|kotlin/String|): R|kotlin/String| {
+        lval method: R|java/lang/reflect/Method| = R|<local>/owner|.R|java/lang/Class.declaredMethods|.R|kotlin/collections/firstOrNull|<R|java/lang/reflect/Method!|>(<L> = firstOrNull@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, R|<local>/name|)
+        }
+        ) ?: ^descriptorOf <strcat>(String(<no method ), R|<local>/name|, String(>))
+        lval parameters: R|kotlin/String| = R|<local>/method|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/joinToString|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(String(), <L> = joinToString@fun <anonymous>(it: R|ft<java/lang/Class<*>, java/lang/Class<*>?>|): R|kotlin/CharSequence| <inline=NoInline>  {
+            ^ R|expo/modules/v2/testdata/descriptor|(R|<local>/it|)
+        }
+        )
+        ^descriptorOf <strcat>(String((), R|<local>/parameters|, String()), R|expo/modules/v2/testdata/descriptor|(R|<local>/method|.R|java/lang/reflect/Method.returnType|))
+    }
+    private final fun descriptor(type: R|java/lang/Class<*>|): R|kotlin/String| {
+        ^descriptor when () {
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>) ->  {
+                String(I)
+            }
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Double|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Double|>) ->  {
+                String(D)
+            }
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Boolean|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Boolean|>) ->  {
+                String(Z)
+            }
+            ==(R|<local>/type|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                String(V)
+            }
+            R|<local>/type|.R|java/lang/Class.isArray| ->  {
+                String([).R|kotlin/String.plus|(R|expo/modules/v2/testdata/descriptor|(R|<local>/type|.R|java/lang/Class.componentType|))
+            }
+            else ->  {
+                String(L).R|kotlin/String.plus|(R|<local>/type|.R|java/lang/Class.name|.R|kotlin/text/replace|(Char(.), Char(/))).R|kotlin/String.plus|(String(;))
+            }
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval suffix: R|kotlin/String| = String(__trampoline$ExpoModulesV2)
+        lval total: R|kotlin/Double| = (<getClass>(Q|expo/modules/v2/testdata/Converted|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Converted|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(total), R|<local>/suffix|), vararg(<getClass>(Q|kotlin/Double|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Double|>, <getClass>(Q|kotlin/Double|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Double|>)).R|java/lang/reflect/Method.invoke|(Q|expo/modules/v2/testdata/Converted|, vararg(Double(1.5), Double(2.5))) as R|kotlin/Double|)
+        when () {
+            !=(R|<local>/total|, Double(4.0)) ->  {
+                ^box <strcat>(String(total: expected 4.0, got ), R|<local>/total|)
+            }
+        }
+
+        lval host: R|kotlin/String| = (<getClass>(Q|expo/modules/v2/testdata/Converted|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Converted|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(host), R|<local>/suffix|), vararg(<getClass>(Q|kotlin/String|).R|kotlin/jvm/java|<R|kotlin/String|>)).R|java/lang/reflect/Method.invoke|(Q|expo/modules/v2/testdata/Converted|, vararg(String(https://expo.dev/path))) as R|kotlin/String|)
+        when () {
+            !=(R|<local>/host|, String(expo.dev)) ->  {
+                ^box <strcat>(String(host: expected expo.dev, got ), R|<local>/host|)
+            }
+        }
+
+        lval firstHost: R|kotlin/String| = (<getClass>(Q|expo/modules/v2/testdata/Converted|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Converted|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(firstHost), R|<local>/suffix|), vararg(<getClass>(Q|kotlin/collections/List|).R|kotlin/jvm/java|<R|kotlin/collections/List<*>|>)).R|java/lang/reflect/Method.invoke|(Q|expo/modules/v2/testdata/Converted|, vararg(R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(https://a.example/x), String(https://b.example/y))))) as R|kotlin/String|)
+        when () {
+            !=(R|<local>/firstHost|, String(a.example)) ->  {
+                ^box <strcat>(String(firstHost: expected a.example, got ), R|<local>/firstHost|)
+            }
+        }
+
+        lval expected: R|kotlin/collections/Map<kotlin/String, kotlin/String>| = R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(greet), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)Ljava/lang/String;)), <strcat>(String(sum), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I)), <strcat>(String(describe), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((II)Ljava/lang/String;)), <strcat>(String(makeNames), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I)), <strcat>(String(scale), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(<strcat>(String(<no method scale), R|<local>/suffix|, String(>))), <strcat>(String(getMotto), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(()Ljava/lang/String;)), <strcat>(String(setMotto), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)V))))
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<kotlin/String, kotlin/String>>| = R|<local>/expected|.R|kotlin/collections/iterator|<R|kotlin/String|, R|kotlin/String|>()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval <destruct>: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>|>|()
+                lval name: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component1|<R|kotlin/String|, R|kotlin/String|>()
+                lval want: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component2|<R|kotlin/String|, R|kotlin/String|>()
+                 {
+                    lval got: R|kotlin/String| = R|expo/modules/v2/testdata/descriptorOf|(<getClass>(Q|expo/modules/v2/testdata/Buffered|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Buffered|>, R|<local>/name|)
+                    when () {
+                        !=(R|<local>/got|, R|<local>/want|) ->  {
+                            ^box <strcat>(R|<local>/name|, String(: expected ), R|<local>/want|, String(, got ), R|<local>/got|)
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        when () {
+            <getClass>(Q|expo/modules/v2/testdata/Buffered|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Buffered|>.R|java/lang/Class.declaredMethods|.R|kotlin/collections/any|<R|java/lang/reflect/Method!|>(<L> = any@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+                ^ R|<local>/it|.R|java/lang/reflect/Method.name|.R|kotlin/text/startsWith|(String(getReady))
+            }
+            ) ->  {
+                ^box String(isReady should not have a trampoline)
+            }
+        }
+
+        <getClass>(Q|expo/modules/v2/testdata/Buffered|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Buffered|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(isReady))
+        ^box String(OK)
+    }

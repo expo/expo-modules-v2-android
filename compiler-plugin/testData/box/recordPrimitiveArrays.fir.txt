@@ -1,0 +1,114 @@
+FILE: recordPrimitiveArrays.kt
+    package expo.modules.v2.testdata
+
+    @R|expo/modules/v2/annotations/Record|() public final class Samples : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(ints: R|kotlin/IntArray|, longs: R|kotlin/LongArray|, floats: R|kotlin/FloatArray|, doubles: R|kotlin/DoubleArray|, bools: R|kotlin/BooleanArray|, bytes: R|kotlin/ByteArray|, maybe: R|kotlin/IntArray?|): R|expo/modules/v2/testdata/Samples| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val ints: R|kotlin/IntArray| = R|<local>/ints|
+            public get(): R|kotlin/IntArray|
+
+        public final val longs: R|kotlin/LongArray| = R|<local>/longs|
+            public get(): R|kotlin/LongArray|
+
+        public final val floats: R|kotlin/FloatArray| = R|<local>/floats|
+            public get(): R|kotlin/FloatArray|
+
+        public final val doubles: R|kotlin/DoubleArray| = R|<local>/doubles|
+            public get(): R|kotlin/DoubleArray|
+
+        public final val bools: R|kotlin/BooleanArray| = R|<local>/bools|
+            public get(): R|kotlin/BooleanArray|
+
+        public final val bytes: R|kotlin/ByteArray| = R|<local>/bytes|
+            public get(): R|kotlin/ByteArray|
+
+        public final val maybe: R|kotlin/IntArray?| = R|<local>/maybe|
+            public get(): R|kotlin/IntArray?|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Samples>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Samples>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Samples>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Samples|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Samples|
+
+            public constructor(): R|expo/modules/v2/testdata/Samples.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Samples>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Samples>|
+
+            private constructor(): R|expo/modules/v2/testdata/Samples.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval codec: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Samples>| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Samples|>()
+        lval fieldTypes: R|kotlin/collections/List<kotlin/String>| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|kotlin/collections/map|<R|expo/modules/v2/records/RecordField|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|expo/modules/v2/records/RecordField|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
+            ^ <strcat>(R|<local>/it|.R|expo/modules/v2/records/RecordField.name|, String(=), R|<local>/it|.R|expo/modules/v2/records/RecordField.type|)
+        }
+        )
+        lval expected: R|kotlin/collections/List<kotlin/String>| = R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(ints=int_array), String(longs=long_array), String(floats=float_array), String(doubles=double_array), String(bools=boolean_array), String(bytes=byte_array), String(maybe=int_array?)))
+        when () {
+            !=(R|<local>/fieldTypes|, R|<local>/expected|) ->  {
+                ^box <strcat>(String(Fail: descriptors are ), R|<local>/fieldTypes|)
+            }
+        }
+
+        lval samples: R|expo/modules/v2/testdata/Samples| = R|expo/modules/v2/testdata/Samples.Samples|(R|kotlin/intArrayOf|(vararg(Int(1), Int(2))), R|kotlin/longArrayOf|(vararg(Long(3))), R|kotlin/floatArrayOf|(vararg(Float(4.5))), R|kotlin/doubleArrayOf|(vararg(Double(5.5))), R|kotlin/booleanArrayOf|(vararg(Boolean(true), Boolean(false))), R|kotlin/byteArrayOf|(vararg(Byte(6))), Null(null))
+        lval back: R|expo/modules/v2/testdata/Samples| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Samples|>|(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/samples|))
+        when () {
+            R|<local>/back|.R|expo/modules/v2/testdata/Samples.ints|.R|kotlin/collections/contentEquals|(R|<local>/samples|.R|expo/modules/v2/testdata/Samples.ints|).R|kotlin/Boolean.not|() ->  {
+                ^box <strcat>(String(Fail: ints gave ), R|<local>/back|.R|expo/modules/v2/testdata/Samples.ints|.R|kotlin/collections/toList|())
+            }
+        }
+
+        when () {
+            R|<local>/back|.R|expo/modules/v2/testdata/Samples.longs|.R|kotlin/collections/contentEquals|(R|<local>/samples|.R|expo/modules/v2/testdata/Samples.longs|).R|kotlin/Boolean.not|() ->  {
+                ^box <strcat>(String(Fail: longs gave ), R|<local>/back|.R|expo/modules/v2/testdata/Samples.longs|.R|kotlin/collections/toList|())
+            }
+        }
+
+        when () {
+            R|<local>/back|.R|expo/modules/v2/testdata/Samples.floats|.R|kotlin/collections/contentEquals|(R|<local>/samples|.R|expo/modules/v2/testdata/Samples.floats|).R|kotlin/Boolean.not|() ->  {
+                ^box <strcat>(String(Fail: floats gave ), R|<local>/back|.R|expo/modules/v2/testdata/Samples.floats|.R|kotlin/collections/toList|())
+            }
+        }
+
+        when () {
+            R|<local>/back|.R|expo/modules/v2/testdata/Samples.doubles|.R|kotlin/collections/contentEquals|(R|<local>/samples|.R|expo/modules/v2/testdata/Samples.doubles|).R|kotlin/Boolean.not|() ->  {
+                ^box <strcat>(String(Fail: doubles gave ), R|<local>/back|.R|expo/modules/v2/testdata/Samples.doubles|.R|kotlin/collections/toList|())
+            }
+        }
+
+        when () {
+            R|<local>/back|.R|expo/modules/v2/testdata/Samples.bools|.R|kotlin/collections/contentEquals|(R|<local>/samples|.R|expo/modules/v2/testdata/Samples.bools|).R|kotlin/Boolean.not|() ->  {
+                ^box <strcat>(String(Fail: bools gave ), R|<local>/back|.R|expo/modules/v2/testdata/Samples.bools|.R|kotlin/collections/toList|())
+            }
+        }
+
+        when () {
+            R|<local>/back|.R|expo/modules/v2/testdata/Samples.bytes|.R|kotlin/collections/contentEquals|(R|<local>/samples|.R|expo/modules/v2/testdata/Samples.bytes|).R|kotlin/Boolean.not|() ->  {
+                ^box <strcat>(String(Fail: bytes gave ), R|<local>/back|.R|expo/modules/v2/testdata/Samples.bytes|.R|kotlin/collections/toList|())
+            }
+        }
+
+        when () {
+            !=(R|<local>/back|.R|expo/modules/v2/testdata/Samples.maybe|, Null(null)) ->  {
+                ^box <strcat>(String(Fail: maybe gave ), R|<local>/back|.R|expo/modules/v2/testdata/Samples.maybe|?.{ $subj$.R|kotlin/collections/toList|() })
+            }
+        }
+
+        ^box String(OK)
+    }

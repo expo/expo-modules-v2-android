@@ -1,0 +1,543 @@
+FILE fqName:expo.modules.v2.testdata fileName:/recordPrimitiveArrays.kt
+  CLASS CLASS name:Samples modality:FINAL visibility:public superTypes:[kotlin.Any; expo.modules.v2.records.Record]
+    annotations:
+      Record(name = <null>, bufferSafe = <null>)
+    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Samples
+    PROPERTY name:ints visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:ints type:kotlin.IntArray visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'ints: kotlin.IntArray declared in expo.modules.v2.testdata.Samples.<init>' type=kotlin.IntArray origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-ints> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples) returnType:kotlin.IntArray
+        correspondingProperty: PROPERTY name:ints visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-ints> (): kotlin.IntArray declared in expo.modules.v2.testdata.Samples'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:ints type:kotlin.IntArray visibility:private [final]' type=kotlin.IntArray origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.<get-ints>' type=expo.modules.v2.testdata.Samples origin=null
+    PROPERTY name:longs visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:longs type:kotlin.LongArray visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'longs: kotlin.LongArray declared in expo.modules.v2.testdata.Samples.<init>' type=kotlin.LongArray origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-longs> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples) returnType:kotlin.LongArray
+        correspondingProperty: PROPERTY name:longs visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-longs> (): kotlin.LongArray declared in expo.modules.v2.testdata.Samples'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:longs type:kotlin.LongArray visibility:private [final]' type=kotlin.LongArray origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.<get-longs>' type=expo.modules.v2.testdata.Samples origin=null
+    PROPERTY name:floats visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:floats type:kotlin.FloatArray visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'floats: kotlin.FloatArray declared in expo.modules.v2.testdata.Samples.<init>' type=kotlin.FloatArray origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-floats> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples) returnType:kotlin.FloatArray
+        correspondingProperty: PROPERTY name:floats visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-floats> (): kotlin.FloatArray declared in expo.modules.v2.testdata.Samples'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:floats type:kotlin.FloatArray visibility:private [final]' type=kotlin.FloatArray origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.<get-floats>' type=expo.modules.v2.testdata.Samples origin=null
+    PROPERTY name:doubles visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:doubles type:kotlin.DoubleArray visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'doubles: kotlin.DoubleArray declared in expo.modules.v2.testdata.Samples.<init>' type=kotlin.DoubleArray origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-doubles> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples) returnType:kotlin.DoubleArray
+        correspondingProperty: PROPERTY name:doubles visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-doubles> (): kotlin.DoubleArray declared in expo.modules.v2.testdata.Samples'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:doubles type:kotlin.DoubleArray visibility:private [final]' type=kotlin.DoubleArray origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.<get-doubles>' type=expo.modules.v2.testdata.Samples origin=null
+    PROPERTY name:bools visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:bools type:kotlin.BooleanArray visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'bools: kotlin.BooleanArray declared in expo.modules.v2.testdata.Samples.<init>' type=kotlin.BooleanArray origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-bools> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples) returnType:kotlin.BooleanArray
+        correspondingProperty: PROPERTY name:bools visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-bools> (): kotlin.BooleanArray declared in expo.modules.v2.testdata.Samples'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:bools type:kotlin.BooleanArray visibility:private [final]' type=kotlin.BooleanArray origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.<get-bools>' type=expo.modules.v2.testdata.Samples origin=null
+    PROPERTY name:bytes visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:bytes type:kotlin.ByteArray visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'bytes: kotlin.ByteArray declared in expo.modules.v2.testdata.Samples.<init>' type=kotlin.ByteArray origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-bytes> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples) returnType:kotlin.ByteArray
+        correspondingProperty: PROPERTY name:bytes visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-bytes> (): kotlin.ByteArray declared in expo.modules.v2.testdata.Samples'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:bytes type:kotlin.ByteArray visibility:private [final]' type=kotlin.ByteArray origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.<get-bytes>' type=expo.modules.v2.testdata.Samples origin=null
+    PROPERTY name:maybe visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:maybe type:kotlin.IntArray? visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'maybe: kotlin.IntArray? declared in expo.modules.v2.testdata.Samples.<init>' type=kotlin.IntArray? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-maybe> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples) returnType:kotlin.IntArray?
+        correspondingProperty: PROPERTY name:maybe visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-maybe> (): kotlin.IntArray? declared in expo.modules.v2.testdata.Samples'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:maybe type:kotlin.IntArray? visibility:private [final]' type=kotlin.IntArray? origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.<get-maybe>' type=expo.modules.v2.testdata.Samples origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples>]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.IntArray' type=expo.modules.v2.types.TypeDescriptor.IntArray origin=null
+            isNullable: CONST Boolean type=kotlin.Boolean value=false
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$1 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.LongArray' type=expo.modules.v2.types.TypeDescriptor.LongArray origin=null
+            isNullable: CONST Boolean type=kotlin.Boolean value=false
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$2 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.FloatArray' type=expo.modules.v2.types.TypeDescriptor.FloatArray origin=null
+            isNullable: CONST Boolean type=kotlin.Boolean value=false
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$3 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.DoubleArray' type=expo.modules.v2.types.TypeDescriptor.DoubleArray origin=null
+            isNullable: CONST Boolean type=kotlin.Boolean value=false
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$4 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.BooleanArray' type=expo.modules.v2.types.TypeDescriptor.BooleanArray origin=null
+            isNullable: CONST Boolean type=kotlin.Boolean value=false
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$5 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.ByteArray' type=expo.modules.v2.types.TypeDescriptor.ByteArray origin=null
+            isNullable: CONST Boolean type=kotlin.Boolean value=false
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$6 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.IntArray' type=expo.modules.v2.types.TypeDescriptor.IntArray origin=null
+            isNullable: CONST Boolean type=kotlin.Boolean value=true
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+        overridden:
+          public abstract recordClass: java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Samples> visibility:private [final]
+          EXPRESSION_BODY
+            CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Samples> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS CLASS name:Samples modality:FINAL visibility:public superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2) returnType:java.lang.Class<expo.modules.v2.testdata.Samples>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-recordClass> (): java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<expo.modules.v2.testdata.Samples> declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Samples> visibility:private [final]' type=java.lang.Class<expo.modules.v2.testdata.Samples> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.<get-recordClass>' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+        overridden:
+          public abstract schema: expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: expo.modules.v2.records.RecordField) declared in expo.modules.v2.records.RecordSchema' type=expo.modules.v2.records.RecordSchema origin=null
+              name: CONST String type=kotlin.String value="Samples"
+              bufferSafe: CONST Boolean type=kotlin.Boolean value=true
+              fields: VARARG type=kotlin.Array<expo.modules.v2.records.RecordField> varargElementType=expo.modules.v2.records.RecordField
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="ints"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="longs"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$1 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="floats"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$2 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="doubles"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$3 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="bools"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$4 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="bytes"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$5 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="maybe"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$6 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2) returnType:expo.modules.v2.records.RecordSchema
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]' type=expo.modules.v2.records.RecordSchema origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.<get-schema>' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:public <> () returnType:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples>]' type=kotlin.Unit
+          CALL 'public final fun register (codec: expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
+            $this: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.records.RecordRegistry
+            codec: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples>, map:kotlin.collections.Map<kotlin.String, kotlin.Any?>) returnType:expo.modules.v2.testdata.Samples [fake_override]
+        overridden:
+          public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples>
+        VALUE_PARAMETER name:map index:0 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples>, value:expo.modules.v2.testdata.Samples) returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
+        overridden:
+          public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples>
+        VALUE_PARAMETER name:value index:0 type:expo.modules.v2.testdata.Samples
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2, reader:expo.modules.v2.records.readers.RecordReader) returnType:expo.modules.v2.testdata.Samples
+        overridden:
+          public abstract fun decode (reader: expo.modules.v2.records.readers.RecordReader): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:reader index:0 type:expo.modules.v2.records.readers.RecordReader
+        BLOCK_BODY
+          RETURN type=expo.modules.v2.testdata.Samples from='public final fun decode (reader: expo.modules.v2.records.readers.RecordReader): expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2'
+            CONSTRUCTOR_CALL 'public constructor <init> (ints: kotlin.IntArray, longs: kotlin.LongArray, floats: kotlin.FloatArray, doubles: kotlin.DoubleArray, bools: kotlin.BooleanArray, bytes: kotlin.ByteArray, maybe: kotlin.IntArray?) declared in expo.modules.v2.testdata.Samples' type=expo.modules.v2.testdata.Samples origin=null
+              ints: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.IntArray origin=null
+                <T>: kotlin.IntArray
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+              longs: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.LongArray origin=null
+                <T>: kotlin.LongArray
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$1 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+              floats: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.FloatArray origin=null
+                <T>: kotlin.FloatArray
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$2 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+              doubles: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.DoubleArray origin=null
+                <T>: kotlin.DoubleArray
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$3 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+              bools: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.BooleanArray origin=null
+                <T>: kotlin.BooleanArray
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$4 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+              bytes: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.ByteArray origin=null
+                <T>: kotlin.ByteArray
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$5 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+              maybe: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.IntArray? origin=null
+                <T>: kotlin.IntArray?
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$6 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2, value:expo.modules.v2.testdata.Samples, writer:expo.modules.v2.records.writers.RecordWriter) returnType:kotlin.Unit
+        overridden:
+          public abstract fun encode (value: T of expo.modules.v2.records.RecordCodec, writer: expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:value index:0 type:expo.modules.v2.testdata.Samples
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:writer index:1 type:expo.modules.v2.records.writers.RecordWriter
+        BLOCK_BODY
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-ints> (): kotlin.IntArray declared in expo.modules.v2.testdata.Samples' type=kotlin.IntArray origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-longs> (): kotlin.LongArray declared in expo.modules.v2.testdata.Samples' type=kotlin.LongArray origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$1 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-floats> (): kotlin.FloatArray declared in expo.modules.v2.testdata.Samples' type=kotlin.FloatArray origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$2 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-doubles> (): kotlin.DoubleArray declared in expo.modules.v2.testdata.Samples' type=kotlin.DoubleArray origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$3 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-bools> (): kotlin.BooleanArray declared in expo.modules.v2.testdata.Samples' type=kotlin.BooleanArray origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$4 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-bytes> (): kotlin.ByteArray declared in expo.modules.v2.testdata.Samples' type=kotlin.ByteArray origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$5 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-maybe> (): kotlin.IntArray? declared in expo.modules.v2.testdata.Samples' type=kotlin.IntArray? origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$6 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Samples.Companion
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Samples.RecordCodec$ExpoModulesV2 origin=null
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Samples.Companion) returnType:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Samples.Companion
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> declared in expo.modules.v2.testdata.Samples.Companion'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> visibility:private [final]' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Samples.Companion declared in expo.modules.v2.testdata.Samples.Companion.<get-recordCodec$ExpoModulesV2>' type=expo.modules.v2.testdata.Samples.Companion origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:private <> () returnType:expo.modules.v2.testdata.Samples.Companion [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+    CONSTRUCTOR visibility:public <> (ints:kotlin.IntArray, longs:kotlin.LongArray, floats:kotlin.FloatArray, doubles:kotlin.DoubleArray, bools:kotlin.BooleanArray, bytes:kotlin.ByteArray, maybe:kotlin.IntArray?) returnType:expo.modules.v2.testdata.Samples [primary]
+      VALUE_PARAMETER name:ints index:0 type:kotlin.IntArray
+      VALUE_PARAMETER name:longs index:1 type:kotlin.LongArray
+      VALUE_PARAMETER name:floats index:2 type:kotlin.FloatArray
+      VALUE_PARAMETER name:doubles index:3 type:kotlin.DoubleArray
+      VALUE_PARAMETER name:bools index:4 type:kotlin.BooleanArray
+      VALUE_PARAMETER name:bytes index:5 type:kotlin.ByteArray
+      VALUE_PARAMETER name:maybe index:6 type:kotlin.IntArray?
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Samples modality:FINAL visibility:public superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.Unit
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+        public open fun toString (): kotlin.String declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+  FUN name:box visibility:public modality:FINAL <> () returnType:kotlin.String
+    BLOCK_BODY
+      VAR name:codec type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> [val]
+        CALL 'public final fun codecFor <T> (): expo.modules.v2.records.RecordCodec<T of expo.modules.v2.records.codecFor> declared in expo.modules.v2.records' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> origin=null
+          <T>: expo.modules.v2.testdata.Samples
+      VAR name:fieldTypes type:kotlin.collections.List<kotlin.String> [val]
+        CALL 'public final fun map <T, R> (transform: kotlin.Function1<T of kotlin.collections.map, R of kotlin.collections.map>): kotlin.collections.List<R of kotlin.collections.map> declared in kotlin.collections' type=kotlin.collections.List<kotlin.String> origin=null
+          <T>: expo.modules.v2.records.RecordField
+          <R>: kotlin.String
+          $receiver: CALL 'public final fun <get-fields> (): kotlin.collections.List<expo.modules.v2.records.RecordField> declared in expo.modules.v2.records.RecordSchema' type=kotlin.collections.List<expo.modules.v2.records.RecordField> origin=GET_PROPERTY
+            $this: CALL 'public abstract fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.records.RecordSchema origin=GET_PROPERTY
+              $this: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> origin=null
+          transform: FUN_EXPR type=kotlin.Function1<expo.modules.v2.records.RecordField, kotlin.String> origin=LAMBDA
+            FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> (it:expo.modules.v2.records.RecordField) returnType:kotlin.String
+              VALUE_PARAMETER name:it index:0 type:expo.modules.v2.records.RecordField
+              BLOCK_BODY
+                RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: expo.modules.v2.records.RecordField): kotlin.String declared in expo.modules.v2.testdata.box'
+                  STRING_CONCATENATION type=kotlin.String
+                    CALL 'public final fun <get-name> (): kotlin.String declared in expo.modules.v2.records.RecordField' type=kotlin.String origin=GET_PROPERTY
+                      $this: GET_VAR 'it: expo.modules.v2.records.RecordField declared in expo.modules.v2.testdata.box.<anonymous>' type=expo.modules.v2.records.RecordField origin=null
+                    CONST String type=kotlin.String value="="
+                    CALL 'public final fun <get-type> (): expo.modules.v2.types.TypeDescriptor declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.types.TypeDescriptor origin=GET_PROPERTY
+                      $this: GET_VAR 'it: expo.modules.v2.records.RecordField declared in expo.modules.v2.testdata.box.<anonymous>' type=expo.modules.v2.records.RecordField origin=null
+      VAR name:expected type:kotlin.collections.List<kotlin.String> [val]
+        CALL 'public final fun listOf <T> (vararg elements: T of kotlin.collections.listOf): kotlin.collections.List<T of kotlin.collections.listOf> declared in kotlin.collections' type=kotlin.collections.List<kotlin.String> origin=null
+          <T>: kotlin.String
+          elements: VARARG type=kotlin.Array<out kotlin.String> varargElementType=kotlin.String
+            CONST String type=kotlin.String value="ints=int_array"
+            CONST String type=kotlin.String value="longs=long_array"
+            CONST String type=kotlin.String value="floats=float_array"
+            CONST String type=kotlin.String value="doubles=double_array"
+            CONST String type=kotlin.String value="bools=boolean_array"
+            CONST String type=kotlin.String value="bytes=byte_array"
+            CONST String type=kotlin.String value="maybe=int_array?"
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              arg0: GET_VAR 'val fieldTypes: kotlin.collections.List<kotlin.String> declared in expo.modules.v2.testdata.box' type=kotlin.collections.List<kotlin.String> origin=null
+              arg1: GET_VAR 'val expected: kotlin.collections.List<kotlin.String> declared in expo.modules.v2.testdata.box' type=kotlin.collections.List<kotlin.String> origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: descriptors are "
+              GET_VAR 'val fieldTypes: kotlin.collections.List<kotlin.String> declared in expo.modules.v2.testdata.box' type=kotlin.collections.List<kotlin.String> origin=null
+      VAR name:samples type:expo.modules.v2.testdata.Samples [val]
+        CONSTRUCTOR_CALL 'public constructor <init> (ints: kotlin.IntArray, longs: kotlin.LongArray, floats: kotlin.FloatArray, doubles: kotlin.DoubleArray, bools: kotlin.BooleanArray, bytes: kotlin.ByteArray, maybe: kotlin.IntArray?) declared in expo.modules.v2.testdata.Samples' type=expo.modules.v2.testdata.Samples origin=null
+          ints: CALL 'public final fun intArrayOf (vararg elements: kotlin.Int): kotlin.IntArray declared in kotlin' type=kotlin.IntArray origin=null
+            elements: VARARG type=kotlin.IntArray varargElementType=kotlin.Int
+              CONST Int type=kotlin.Int value=1
+              CONST Int type=kotlin.Int value=2
+          longs: CALL 'public final fun longArrayOf (vararg elements: kotlin.Long): kotlin.LongArray declared in kotlin' type=kotlin.LongArray origin=null
+            elements: VARARG type=kotlin.LongArray varargElementType=kotlin.Long
+              CONST Long type=kotlin.Long value=3
+          floats: CALL 'public final fun floatArrayOf (vararg elements: kotlin.Float): kotlin.FloatArray declared in kotlin' type=kotlin.FloatArray origin=null
+            elements: VARARG type=kotlin.FloatArray varargElementType=kotlin.Float
+              CONST Float type=kotlin.Float value=4.5
+          doubles: CALL 'public final fun doubleArrayOf (vararg elements: kotlin.Double): kotlin.DoubleArray declared in kotlin' type=kotlin.DoubleArray origin=null
+            elements: VARARG type=kotlin.DoubleArray varargElementType=kotlin.Double
+              CONST Double type=kotlin.Double value=5.5
+          bools: CALL 'public final fun booleanArrayOf (vararg elements: kotlin.Boolean): kotlin.BooleanArray declared in kotlin' type=kotlin.BooleanArray origin=null
+            elements: VARARG type=kotlin.BooleanArray varargElementType=kotlin.Boolean
+              CONST Boolean type=kotlin.Boolean value=true
+              CONST Boolean type=kotlin.Boolean value=false
+          bytes: CALL 'public final fun byteArrayOf (vararg elements: kotlin.Byte): kotlin.ByteArray declared in kotlin' type=kotlin.ByteArray origin=null
+            elements: VARARG type=kotlin.ByteArray varargElementType=kotlin.Byte
+              CONST Byte type=kotlin.Byte value=6
+          maybe: CONST Null type=kotlin.Nothing? value=null
+      VAR name:back type:expo.modules.v2.testdata.Samples [val]
+        CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.testdata.Samples origin=null
+          $this: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> origin=null
+          map: CALL 'public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+            $this: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Samples> origin=null
+            value: GET_VAR 'val samples: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+            $this: CALL 'public final fun contentEquals (other: kotlin.IntArray?): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+              $receiver: CALL 'public final fun <get-ints> (): kotlin.IntArray declared in expo.modules.v2.testdata.Samples' type=kotlin.IntArray origin=GET_PROPERTY
+                $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+              other: CALL 'public final fun <get-ints> (): kotlin.IntArray declared in expo.modules.v2.testdata.Samples' type=kotlin.IntArray origin=GET_PROPERTY
+                $this: GET_VAR 'val samples: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: ints gave "
+              CALL 'public final fun toList (): kotlin.collections.List<kotlin.Int> declared in kotlin.collections' type=kotlin.collections.List<kotlin.Int> origin=null
+                $receiver: CALL 'public final fun <get-ints> (): kotlin.IntArray declared in expo.modules.v2.testdata.Samples' type=kotlin.IntArray origin=GET_PROPERTY
+                  $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+            $this: CALL 'public final fun contentEquals (other: kotlin.LongArray?): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+              $receiver: CALL 'public final fun <get-longs> (): kotlin.LongArray declared in expo.modules.v2.testdata.Samples' type=kotlin.LongArray origin=GET_PROPERTY
+                $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+              other: CALL 'public final fun <get-longs> (): kotlin.LongArray declared in expo.modules.v2.testdata.Samples' type=kotlin.LongArray origin=GET_PROPERTY
+                $this: GET_VAR 'val samples: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: longs gave "
+              CALL 'public final fun toList (): kotlin.collections.List<kotlin.Long> declared in kotlin.collections' type=kotlin.collections.List<kotlin.Long> origin=null
+                $receiver: CALL 'public final fun <get-longs> (): kotlin.LongArray declared in expo.modules.v2.testdata.Samples' type=kotlin.LongArray origin=GET_PROPERTY
+                  $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+            $this: CALL 'public final fun contentEquals (other: kotlin.FloatArray?): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+              $receiver: CALL 'public final fun <get-floats> (): kotlin.FloatArray declared in expo.modules.v2.testdata.Samples' type=kotlin.FloatArray origin=GET_PROPERTY
+                $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+              other: CALL 'public final fun <get-floats> (): kotlin.FloatArray declared in expo.modules.v2.testdata.Samples' type=kotlin.FloatArray origin=GET_PROPERTY
+                $this: GET_VAR 'val samples: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: floats gave "
+              CALL 'public final fun toList (): kotlin.collections.List<kotlin.Float> declared in kotlin.collections' type=kotlin.collections.List<kotlin.Float> origin=null
+                $receiver: CALL 'public final fun <get-floats> (): kotlin.FloatArray declared in expo.modules.v2.testdata.Samples' type=kotlin.FloatArray origin=GET_PROPERTY
+                  $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+            $this: CALL 'public final fun contentEquals (other: kotlin.DoubleArray?): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+              $receiver: CALL 'public final fun <get-doubles> (): kotlin.DoubleArray declared in expo.modules.v2.testdata.Samples' type=kotlin.DoubleArray origin=GET_PROPERTY
+                $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+              other: CALL 'public final fun <get-doubles> (): kotlin.DoubleArray declared in expo.modules.v2.testdata.Samples' type=kotlin.DoubleArray origin=GET_PROPERTY
+                $this: GET_VAR 'val samples: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: doubles gave "
+              CALL 'public final fun toList (): kotlin.collections.List<kotlin.Double> declared in kotlin.collections' type=kotlin.collections.List<kotlin.Double> origin=null
+                $receiver: CALL 'public final fun <get-doubles> (): kotlin.DoubleArray declared in expo.modules.v2.testdata.Samples' type=kotlin.DoubleArray origin=GET_PROPERTY
+                  $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+            $this: CALL 'public final fun contentEquals (other: kotlin.BooleanArray?): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+              $receiver: CALL 'public final fun <get-bools> (): kotlin.BooleanArray declared in expo.modules.v2.testdata.Samples' type=kotlin.BooleanArray origin=GET_PROPERTY
+                $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+              other: CALL 'public final fun <get-bools> (): kotlin.BooleanArray declared in expo.modules.v2.testdata.Samples' type=kotlin.BooleanArray origin=GET_PROPERTY
+                $this: GET_VAR 'val samples: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: bools gave "
+              CALL 'public final fun toList (): kotlin.collections.List<kotlin.Boolean> declared in kotlin.collections' type=kotlin.collections.List<kotlin.Boolean> origin=null
+                $receiver: CALL 'public final fun <get-bools> (): kotlin.BooleanArray declared in expo.modules.v2.testdata.Samples' type=kotlin.BooleanArray origin=GET_PROPERTY
+                  $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+            $this: CALL 'public final fun contentEquals (other: kotlin.ByteArray?): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+              $receiver: CALL 'public final fun <get-bytes> (): kotlin.ByteArray declared in expo.modules.v2.testdata.Samples' type=kotlin.ByteArray origin=GET_PROPERTY
+                $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+              other: CALL 'public final fun <get-bytes> (): kotlin.ByteArray declared in expo.modules.v2.testdata.Samples' type=kotlin.ByteArray origin=GET_PROPERTY
+                $this: GET_VAR 'val samples: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: bytes gave "
+              CALL 'public final fun toList (): kotlin.collections.List<kotlin.Byte> declared in kotlin.collections' type=kotlin.collections.List<kotlin.Byte> origin=null
+                $receiver: CALL 'public final fun <get-bytes> (): kotlin.ByteArray declared in expo.modules.v2.testdata.Samples' type=kotlin.ByteArray origin=GET_PROPERTY
+                  $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              arg0: CALL 'public final fun <get-maybe> (): kotlin.IntArray? declared in expo.modules.v2.testdata.Samples' type=kotlin.IntArray? origin=GET_PROPERTY
+                $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+              arg1: CONST Null type=kotlin.Nothing? value=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: maybe gave "
+              BLOCK type=kotlin.collections.List<kotlin.Int>? origin=SAFE_CALL
+                VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:kotlin.IntArray? [val]
+                  CALL 'public final fun <get-maybe> (): kotlin.IntArray? declared in expo.modules.v2.testdata.Samples' type=kotlin.IntArray? origin=GET_PROPERTY
+                    $this: GET_VAR 'val back: expo.modules.v2.testdata.Samples declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Samples origin=null
+                WHEN type=kotlin.collections.List<kotlin.Int>? origin=null
+                  BRANCH
+                    if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                      arg0: GET_VAR 'val tmp_0: kotlin.IntArray? declared in expo.modules.v2.testdata.box' type=kotlin.IntArray? origin=null
+                      arg1: CONST Null type=kotlin.Nothing? value=null
+                    then: CONST Null type=kotlin.Nothing? value=null
+                  BRANCH
+                    if: CONST Boolean type=kotlin.Boolean value=true
+                    then: CALL 'public final fun toList (): kotlin.collections.List<kotlin.Int> declared in kotlin.collections' type=kotlin.collections.List<kotlin.Int> origin=null
+                      $receiver: GET_VAR 'val tmp_0: kotlin.IntArray? declared in expo.modules.v2.testdata.box' type=kotlin.IntArray? origin=null
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+        CONST String type=kotlin.String value="OK"

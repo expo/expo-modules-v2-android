@@ -1,0 +1,92 @@
+FILE: jsPropertyShapeErrors.kt
+    package expo.modules.v2.testdata
+
+    @R|expo/modules/v2/annotations/JS|() public final class CompanionMembers : R|expo/modules/v2/modules/Module| {
+        public constructor(): R|expo/modules/v2/testdata/CompanionMembers| {
+            super<R|expo/modules/v2/modules/Module|>()
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            private constructor(): R|expo/modules/v2/testdata/CompanionMembers.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+            @R|expo/modules/v2/annotations/JS|() public final val fromCompanion: R|kotlin/Int| = Int(1)
+                public get(): R|kotlin/Int|
+
+        }
+
+    }
+    @R|expo/modules/v2/annotations/JS|() public final class NestedContainer : R|expo/modules/v2/modules/Module| {
+        public constructor(): R|expo/modules/v2/testdata/NestedContainer| {
+            super<R|expo/modules/v2/modules/Module|>()
+        }
+
+        public final class Inner : R|kotlin/Any| {
+            public constructor(): R|expo/modules/v2/testdata/NestedContainer.Inner| {
+                super<R|kotlin/Any|>()
+            }
+
+            @R|expo/modules/v2/annotations/JS|() public final val fromNested: R|kotlin/Int| = Int(1)
+                public get(): R|kotlin/Int|
+
+        }
+
+    }
+    public final fun localVariable(): R|kotlin/Unit| {
+        @R|expo/modules/v2/annotations/JS|() lval local: R|kotlin/Int| = Int(1)
+    }
+    @R|expo/modules/v2/annotations/JS|() public final class ExtensionProperties : R|expo/modules/v2/modules/Module| {
+        public constructor(): R|expo/modules/v2/testdata/ExtensionProperties| {
+            super<R|expo/modules/v2/modules/Module|>()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final val R|kotlin/Int|.received: R|kotlin/Int|
+            public get(): R|kotlin/Int| {
+                ^ this@R|expo/modules/v2/testdata/ExtensionProperties.received|
+            }
+
+        @R|expo/modules/v2/annotations/JS|() internal final val R|kotlin/Int|.internalAndReceived: R|kotlin/Int|
+            internal get(): R|kotlin/Int| {
+                ^ this@R|expo/modules/v2/testdata/ExtensionProperties.internalAndReceived|
+            }
+
+    }
+    @R|expo/modules/v2/annotations/JS|() public final class GoodProperties : R|expo/modules/v2/modules/Module| {
+        public constructor(): R|expo/modules/v2/testdata/GoodProperties| {
+            super<R|expo/modules/v2/modules/Module|>()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final val readOnly: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        @R|expo/modules/v2/annotations/JS|() public final var mutable: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+            public set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+        @R|expo/modules/v2/annotations/JS|() public final val computed: R|kotlin/Int|
+            public get(): R|kotlin/Int| {
+                ^ Int(1)
+            }
+
+        @R|expo/modules/v2/annotations/JS|(name = String(renamed)) public final val original: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        @R|expo/modules/v2/annotations/JS|() private final val hidden: R|kotlin/Int| = Int(1)
+            private get(): R|kotlin/Int|
+
+        public final val R|kotlin/Int|.notExported: R|kotlin/Int|
+            public get(): R|kotlin/Int| {
+                ^ this@R|expo/modules/v2/testdata/GoodProperties.notExported|
+            }
+
+    }
+    @R|expo/modules/v2/annotations/JS|() public final object GoodObjectProperties : R|expo/modules/v2/modules/Module| {
+        private constructor(): R|expo/modules/v2/testdata/GoodObjectProperties| {
+            super<R|expo/modules/v2/modules/Module|>()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final val fromObject: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+    }

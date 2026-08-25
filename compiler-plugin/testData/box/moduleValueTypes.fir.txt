@@ -1,0 +1,203 @@
+FILE: moduleValueTypes.kt
+    package expo.modules.v2.testdata
+
+    @R|expo/modules/v2/annotations/Record|() public final data class Point : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(x: R|kotlin/Double|, y: R|kotlin/Double|): R|expo/modules/v2/testdata/Point| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val x: R|kotlin/Double| = R|<local>/x|
+            public get(): R|kotlin/Double|
+
+        public final val y: R|kotlin/Double| = R|<local>/y|
+            public get(): R|kotlin/Double|
+
+        public final operator fun component1(): R|kotlin/Double|
+
+        public final operator fun component2(): R|kotlin/Double|
+
+        public final fun copy(x: R|kotlin/Double| = this@R|expo/modules/v2/testdata/Point|.R|expo/modules/v2/testdata/Point.x|, y: R|kotlin/Double| = this@R|expo/modules/v2/testdata/Point|.R|expo/modules/v2/testdata/Point.y|): R|expo/modules/v2/testdata/Point|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Point>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Point>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Point>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Point|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Point|
+
+            public constructor(): R|expo/modules/v2/testdata/Point.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Point>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Point>|
+
+            private constructor(): R|expo/modules/v2/testdata/Point.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|expo/modules/v2/annotations/Record|(bufferSafe = Boolean(false)) public final data class Holder : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
+        public constructor(value: R|kotlin/Any?|): R|expo/modules/v2/testdata/Holder| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val value: R|kotlin/Any?| = R|<local>/value|
+            public get(): R|kotlin/Any?|
+
+        public final operator fun component1(): R|kotlin/Any?|
+
+        public final fun copy(value: R|kotlin/Any?| = this@R|expo/modules/v2/testdata/Holder|.R|expo/modules/v2/testdata/Holder.value|): R|expo/modules/v2/testdata/Holder|
+
+        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Holder>| {
+            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Holder>|
+                public get(): R|java/lang/Class<expo/modules/v2/testdata/Holder>|
+
+            public final override val schema: R|expo/modules/v2/records/RecordSchema|
+                public get(): R|expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|expo/modules/v2/testdata/Holder|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Holder|
+
+            public constructor(): R|expo/modules/v2/testdata/Holder.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Holder>|
+                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Holder>|
+
+            private constructor(): R|expo/modules/v2/testdata/Holder.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|expo/modules/v2/annotations/JS|() public final object Values : R|expo/modules/v2/modules/Module| {
+        private constructor(): R|expo/modules/v2/testdata/Values| {
+            super<R|expo/modules/v2/modules/Module|>()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun nullableScalars(a: R|kotlin/Int?|, b: R|kotlin/Long?|, c: R|kotlin/Float?|, d: R|kotlin/Double?|, e: R|kotlin/Boolean?|): R|kotlin/Int?| {
+            ^nullableScalars R|<local>/a|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun unboxedScalars(a: R|kotlin/Int|, b: R|kotlin/Long|, c: R|kotlin/Float|, d: R|kotlin/Double|, e: R|kotlin/Boolean|): R|kotlin/Int| {
+            ^unboxedScalars R|<local>/a|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun arrays(a: R|kotlin/IntArray|, b: R|kotlin/DoubleArray?|, c: R|kotlin/ByteArray|): R|kotlin/Int| {
+            ^arrays R|<local>/a|.R|kotlin/IntArray.size|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun containers(list: R|kotlin/collections/List<kotlin/String>|, map: R|kotlin/collections/Map<kotlin/String, kotlin/Int>|, set: R|kotlin/collections/Set<kotlin/String>|, array: R|kotlin/Array<kotlin/String>|): R|kotlin/Int| {
+            ^containers R|<local>/list|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|.R|kotlin/Int.plus|(R|<local>/map|.R|SubstitutionOverride<kotlin/collections/Map.size: R|kotlin/Int|>|).R|kotlin/Int.plus|(R|<local>/set|.R|SubstitutionOverride<kotlin/collections/Set.size: R|kotlin/Int|>|).R|kotlin/Int.plus|(R|<local>/array|.R|SubstitutionOverride<kotlin/Array.size: R|kotlin/Int|>|)
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun nullableElements(values: R|kotlin/collections/List<kotlin/String?>|, nullableList: R|kotlin/collections/List<kotlin/Int>?|): R|kotlin/Int| {
+            ^nullableElements R|<local>/values|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun echoPoint(point: R|expo/modules/v2/testdata/Point|): R|expo/modules/v2/testdata/Point| {
+            ^echoPoint R|<local>/point|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun echoHolder(holder: R|expo/modules/v2/testdata/Holder|): R|expo/modules/v2/testdata/Holder| {
+            ^echoHolder R|<local>/holder|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun points(values: R|kotlin/collections/List<expo/modules/v2/testdata/Point>|): R|kotlin/Int| {
+            ^points R|<local>/values|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun holders(values: R|kotlin/collections/List<expo/modules/v2/testdata/Holder>|): R|kotlin/Int| {
+            ^holders R|<local>/values|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun dynamic(value: R|kotlin/Any?|, handle: R|expo/modules/v2/jsi/JavaScriptValue|): R|kotlin/Int| {
+            ^dynamic R|<local>/handle|.R|kotlin/Any.hashCode|()
+        }
+
+        @R|expo/modules/v2/annotations/JS|() public final fun optedOut(@R|expo/modules/v2/annotations/JS|(buffer = Q|expo/modules/v2/annotations/Buffer|.R|expo/modules/v2/annotations/Buffer.NO|) values: R|kotlin/collections/List<kotlin/String>|): R|kotlin/Int| {
+            ^optedOut R|<local>/values|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|
+        }
+
+        @R|expo/modules/v2/annotations/JS|(buffer = Q|expo/modules/v2/annotations/Buffer|.R|expo/modules/v2/annotations/Buffer.YES|) public final fun optedIn(values: R|kotlin/IntArray|): R|kotlin/Int| {
+            ^optedIn R|<local>/values|.R|kotlin/IntArray.size|
+        }
+
+    }
+    private final fun descriptorOf(name: R|kotlin/String|): R|kotlin/String| {
+        lval method: R|java/lang/reflect/Method| = <getClass>(Q|expo/modules/v2/testdata/Values|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Values|>.R|java/lang/Class.declaredMethods|.R|kotlin/collections/firstOrNull|<R|java/lang/reflect/Method!|>(<L> = firstOrNull@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, R|<local>/name|)
+        }
+        ) ?: ^descriptorOf String(<absent>)
+        lval parameters: R|kotlin/String| = R|<local>/method|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/joinToString|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(String(), <L> = joinToString@fun <anonymous>(it: R|ft<java/lang/Class<*>, java/lang/Class<*>?>|): R|kotlin/CharSequence| <inline=NoInline>  {
+            ^ R|expo/modules/v2/testdata/descriptor|(R|<local>/it|)
+        }
+        )
+        ^descriptorOf <strcat>(String((), R|<local>/parameters|, String()), R|expo/modules/v2/testdata/descriptor|(R|<local>/method|.R|java/lang/reflect/Method.returnType|))
+    }
+    private final fun descriptor(type: R|java/lang/Class<*>|): R|kotlin/String| {
+        ^descriptor when () {
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>) ->  {
+                String(I)
+            }
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Long|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Long|>) ->  {
+                String(J)
+            }
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Float|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Float|>) ->  {
+                String(F)
+            }
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Double|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Double|>) ->  {
+                String(D)
+            }
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Boolean|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Boolean|>) ->  {
+                String(Z)
+            }
+            ==(R|<local>/type|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                String(V)
+            }
+            R|<local>/type|.R|java/lang/Class.isArray| ->  {
+                String([).R|kotlin/String.plus|(R|expo/modules/v2/testdata/descriptor|(R|<local>/type|.R|java/lang/Class.componentType|))
+            }
+            else ->  {
+                String(L).R|kotlin/String.plus|(R|<local>/type|.R|java/lang/Class.name|.R|kotlin/text/replace|(Char(.), Char(/))).R|kotlin/String.plus|(String(;))
+            }
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval suffix: R|kotlin/String| = String(__trampoline$ExpoModulesV2)
+        lval expected: R|kotlin/collections/Map<kotlin/String, kotlin/String>| = R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(nullableScalars), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I)), <strcat>(String(unboxedScalars), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)), <strcat>(String(arrays), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)), <strcat>(String(containers), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I)), <strcat>(String(nullableElements), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I)), <strcat>(String(echoPoint), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I)), <strcat>(String(echoHolder), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((Ljava/util/Map;)Ljava/util/Map;)), <strcat>(String(points), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I)), <strcat>(String(holders), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((Ljava/util/List;)I)), <strcat>(String(dynamic), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)), <strcat>(String(optedOut), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)), <strcat>(String(optedIn), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I))))
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<kotlin/String, kotlin/String>>| = R|<local>/expected|.R|kotlin/collections/iterator|<R|kotlin/String|, R|kotlin/String|>()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval <destruct>: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>|>|()
+                lval name: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component1|<R|kotlin/String|, R|kotlin/String|>()
+                lval want: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component2|<R|kotlin/String|, R|kotlin/String|>()
+                 {
+                    lval got: R|kotlin/String| = R|expo/modules/v2/testdata/descriptorOf|(R|<local>/name|)
+                    when () {
+                        !=(R|<local>/got|, R|<local>/want|) ->  {
+                            ^box <strcat>(R|<local>/name|, String(: expected ), R|<local>/want|, String(, got ), R|<local>/got|)
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        ^box String(OK)
+    }

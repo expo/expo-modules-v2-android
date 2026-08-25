@@ -1,0 +1,1288 @@
+FILE fqName:expo.modules.v2.testdata fileName:/recordNested.kt
+  CLASS CLASS name:Inner modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]
+    annotations:
+      Record(name = <null>, bufferSafe = <null>)
+    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Inner
+    PROPERTY name:n visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'n: kotlin.Int declared in expo.modules.v2.testdata.Inner.<init>' type=kotlin.Int origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-n> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Inner) returnType:kotlin.Int
+        correspondingProperty: PROPERTY name:n visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-n> (): kotlin.Int declared in expo.modules.v2.testdata.Inner'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.<get-n>' type=expo.modules.v2.testdata.Inner origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner>]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+        overridden:
+          public abstract recordClass: java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Inner> visibility:private [final]
+          EXPRESSION_BODY
+            CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Inner> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS CLASS name:Inner modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2) returnType:java.lang.Class<expo.modules.v2.testdata.Inner>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-recordClass> (): java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<expo.modules.v2.testdata.Inner> declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Inner> visibility:private [final]' type=java.lang.Class<expo.modules.v2.testdata.Inner> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2.<get-recordClass>' type=expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2 origin=null
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+        overridden:
+          public abstract schema: expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: expo.modules.v2.records.RecordField) declared in expo.modules.v2.records.RecordSchema' type=expo.modules.v2.records.RecordSchema origin=null
+              name: CONST String type=kotlin.String value="Inner"
+              bufferSafe: CONST Boolean type=kotlin.Boolean value=true
+              fields: VARARG type=kotlin.Array<expo.modules.v2.records.RecordField> varargElementType=expo.modules.v2.records.RecordField
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="n"
+                  type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2) returnType:expo.modules.v2.records.RecordSchema
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]' type=expo.modules.v2.records.RecordSchema origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2.<get-schema>' type=expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2 origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:public <> () returnType:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2 [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner>]' type=kotlin.Unit
+          CALL 'public final fun register (codec: expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
+            $this: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.records.RecordRegistry
+            codec: GET_VAR '<this>: expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2 origin=null
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner>, map:kotlin.collections.Map<kotlin.String, kotlin.Any?>) returnType:expo.modules.v2.testdata.Inner [fake_override]
+        overridden:
+          public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner>
+        VALUE_PARAMETER name:map index:0 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner>, value:expo.modules.v2.testdata.Inner) returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
+        overridden:
+          public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner>
+        VALUE_PARAMETER name:value index:0 type:expo.modules.v2.testdata.Inner
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2, reader:expo.modules.v2.records.readers.RecordReader) returnType:expo.modules.v2.testdata.Inner
+        overridden:
+          public abstract fun decode (reader: expo.modules.v2.records.readers.RecordReader): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:reader index:0 type:expo.modules.v2.records.readers.RecordReader
+        BLOCK_BODY
+          RETURN type=expo.modules.v2.testdata.Inner from='public final fun decode (reader: expo.modules.v2.records.readers.RecordReader): expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2'
+            CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int) declared in expo.modules.v2.testdata.Inner' type=expo.modules.v2.testdata.Inner origin=null
+              n: CALL 'public abstract fun readInt (): kotlin.Int declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Int origin=null
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2, value:expo.modules.v2.testdata.Inner, writer:expo.modules.v2.records.writers.RecordWriter) returnType:kotlin.Unit
+        overridden:
+          public abstract fun encode (value: T of expo.modules.v2.records.RecordCodec, writer: expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:value index:0 type:expo.modules.v2.testdata.Inner
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:writer index:1 type:expo.modules.v2.records.writers.RecordWriter
+        BLOCK_BODY
+          CALL 'public abstract fun write (value: kotlin.Int): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-n> (): kotlin.Int declared in expo.modules.v2.testdata.Inner' type=kotlin.Int origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Inner origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Inner.Companion
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner> visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Inner.RecordCodec$ExpoModulesV2 origin=null
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Inner.Companion) returnType:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner.Companion
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner> declared in expo.modules.v2.testdata.Inner.Companion'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner> visibility:private [final]' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Inner> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Inner.Companion declared in expo.modules.v2.testdata.Inner.Companion.<get-recordCodec$ExpoModulesV2>' type=expo.modules.v2.testdata.Inner.Companion origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:private <> () returnType:expo.modules.v2.testdata.Inner.Companion [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+    CONSTRUCTOR visibility:public <> (n:kotlin.Int) returnType:expo.modules.v2.testdata.Inner [primary]
+      VALUE_PARAMETER name:n index:0 type:kotlin.Int
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Inner modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.Unit
+    FUN GENERATED_DATA_CLASS_MEMBER name:component1 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Inner) returnType:kotlin.Int [operator]
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component1 (): kotlin.Int declared in expo.modules.v2.testdata.Inner'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.component1' type=expo.modules.v2.testdata.Inner origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Inner, n:kotlin.Int) returnType:expo.modules.v2.testdata.Inner
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner
+      VALUE_PARAMETER name:n index:0 type:kotlin.Int
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.copy' type=expo.modules.v2.testdata.Inner origin=null
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun copy (n: kotlin.Int): expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner'
+          CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int) declared in expo.modules.v2.testdata.Inner' type=expo.modules.v2.testdata.Inner origin=null
+            n: GET_VAR 'n: kotlin.Int declared in expo.modules.v2.testdata.Inner.copy' type=kotlin.Int origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:equals visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.Inner, other:kotlin.Any?) returnType:kotlin.Boolean [operator]
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner
+      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      BLOCK_BODY
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun EQEQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQEQ
+              arg0: GET_VAR '<this>: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.equals' type=expo.modules.v2.testdata.Inner origin=null
+              arg1: GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.Inner.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Inner'
+              CONST Boolean type=kotlin.Boolean value=true
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=expo.modules.v2.testdata.Inner
+              GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.Inner.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Inner'
+              CONST Boolean type=kotlin.Boolean value=false
+        VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:expo.modules.v2.testdata.Inner [val]
+          TYPE_OP type=expo.modules.v2.testdata.Inner origin=CAST typeOperand=expo.modules.v2.testdata.Inner
+            GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.Inner.equals' type=kotlin.Any? origin=null
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.equals' type=expo.modules.v2.testdata.Inner origin=null
+                arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                  receiver: GET_VAR 'val tmp_0: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.equals' type=expo.modules.v2.testdata.Inner origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Inner'
+              CONST Boolean type=kotlin.Boolean value=false
+        RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Inner'
+          CONST Boolean type=kotlin.Boolean value=true
+    FUN GENERATED_DATA_CLASS_MEMBER name:hashCode visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.Inner) returnType:kotlin.Int
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.Inner'
+          CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+            $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.hashCode' type=expo.modules.v2.testdata.Inner origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:toString visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.Inner) returnType:kotlin.String
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+        public open fun toString (): kotlin.String declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Inner
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public open fun toString (): kotlin.String declared in expo.modules.v2.testdata.Inner'
+          STRING_CONCATENATION type=kotlin.String
+            CONST String type=kotlin.String value="Inner("
+            CONST String type=kotlin.String value="n="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Inner.toString' type=expo.modules.v2.testdata.Inner origin=null
+            CONST String type=kotlin.String value=")"
+  CLASS CLASS name:LoopA modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]
+    annotations:
+      Record(name = <null>, bufferSafe = <null>)
+    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.LoopA
+    PROPERTY name:n visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'n: kotlin.Int declared in expo.modules.v2.testdata.LoopA.<init>' type=kotlin.Int origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-n> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA) returnType:kotlin.Int
+        correspondingProperty: PROPERTY name:n visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-n> (): kotlin.Int declared in expo.modules.v2.testdata.LoopA'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.<get-n>' type=expo.modules.v2.testdata.LoopA origin=null
+    PROPERTY name:b visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:b type:expo.modules.v2.testdata.LoopB? visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'b: expo.modules.v2.testdata.LoopB? declared in expo.modules.v2.testdata.LoopA.<init>' type=expo.modules.v2.testdata.LoopB? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-b> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA) returnType:expo.modules.v2.testdata.LoopB?
+        correspondingProperty: PROPERTY name:b visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-b> (): expo.modules.v2.testdata.LoopB? declared in expo.modules.v2.testdata.LoopA'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:expo.modules.v2.testdata.LoopB? visibility:private [final]' type=expo.modules.v2.testdata.LoopB? origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.<get-b>' type=expo.modules.v2.testdata.LoopA origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA>]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.Simple' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            javaClass: CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.LoopB> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS CLASS name:LoopB modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+            isNullable: CONST Boolean type=kotlin.Boolean value=true
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+        overridden:
+          public abstract recordClass: java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.LoopA> visibility:private [final]
+          EXPRESSION_BODY
+            CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.LoopA> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS CLASS name:LoopA modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2) returnType:java.lang.Class<expo.modules.v2.testdata.LoopA>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-recordClass> (): java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<expo.modules.v2.testdata.LoopA> declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.LoopA> visibility:private [final]' type=java.lang.Class<expo.modules.v2.testdata.LoopA> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.<get-recordClass>' type=expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 origin=null
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+        overridden:
+          public abstract schema: expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: expo.modules.v2.records.RecordField) declared in expo.modules.v2.records.RecordSchema' type=expo.modules.v2.records.RecordSchema origin=null
+              name: CONST String type=kotlin.String value="LoopA"
+              bufferSafe: CONST Boolean type=kotlin.Boolean value=true
+              fields: VARARG type=kotlin.Array<expo.modules.v2.records.RecordField> varargElementType=expo.modules.v2.records.RecordField
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="n"
+                  type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="b"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2) returnType:expo.modules.v2.records.RecordSchema
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]' type=expo.modules.v2.records.RecordSchema origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.<get-schema>' type=expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:public <> () returnType:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA>]' type=kotlin.Unit
+          CALL 'public final fun register (codec: expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
+            $this: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.records.RecordRegistry
+            codec: GET_VAR '<this>: expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 origin=null
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA>, map:kotlin.collections.Map<kotlin.String, kotlin.Any?>) returnType:expo.modules.v2.testdata.LoopA [fake_override]
+        overridden:
+          public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA>
+        VALUE_PARAMETER name:map index:0 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA>, value:expo.modules.v2.testdata.LoopA) returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
+        overridden:
+          public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA>
+        VALUE_PARAMETER name:value index:0 type:expo.modules.v2.testdata.LoopA
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2, reader:expo.modules.v2.records.readers.RecordReader) returnType:expo.modules.v2.testdata.LoopA
+        overridden:
+          public abstract fun decode (reader: expo.modules.v2.records.readers.RecordReader): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:reader index:0 type:expo.modules.v2.records.readers.RecordReader
+        BLOCK_BODY
+          RETURN type=expo.modules.v2.testdata.LoopA from='public final fun decode (reader: expo.modules.v2.records.readers.RecordReader): expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2'
+            CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int, b: expo.modules.v2.testdata.LoopB?) declared in expo.modules.v2.testdata.LoopA' type=expo.modules.v2.testdata.LoopA origin=null
+              n: CALL 'public abstract fun readInt (): kotlin.Int declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Int origin=null
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+              b: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=expo.modules.v2.testdata.LoopB? origin=null
+                <T>: expo.modules.v2.testdata.LoopB?
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 origin=null
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2, value:expo.modules.v2.testdata.LoopA, writer:expo.modules.v2.records.writers.RecordWriter) returnType:kotlin.Unit
+        overridden:
+          public abstract fun encode (value: T of expo.modules.v2.records.RecordCodec, writer: expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:value index:0 type:expo.modules.v2.testdata.LoopA
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:writer index:1 type:expo.modules.v2.records.writers.RecordWriter
+        BLOCK_BODY
+          CALL 'public abstract fun write (value: kotlin.Int): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-n> (): kotlin.Int declared in expo.modules.v2.testdata.LoopA' type=kotlin.Int origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.LoopA origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-b> (): expo.modules.v2.testdata.LoopB? declared in expo.modules.v2.testdata.LoopA' type=expo.modules.v2.testdata.LoopB? origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.LoopA origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.LoopA.Companion
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.LoopA.RecordCodec$ExpoModulesV2 origin=null
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA.Companion) returnType:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA.Companion
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> declared in expo.modules.v2.testdata.LoopA.Companion'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> visibility:private [final]' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA.Companion declared in expo.modules.v2.testdata.LoopA.Companion.<get-recordCodec$ExpoModulesV2>' type=expo.modules.v2.testdata.LoopA.Companion origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:private <> () returnType:expo.modules.v2.testdata.LoopA.Companion [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+    CONSTRUCTOR visibility:public <> (n:kotlin.Int, b:expo.modules.v2.testdata.LoopB?) returnType:expo.modules.v2.testdata.LoopA [primary]
+      VALUE_PARAMETER name:n index:0 type:kotlin.Int
+      VALUE_PARAMETER name:b index:1 type:expo.modules.v2.testdata.LoopB?
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:LoopA modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.Unit
+    FUN GENERATED_DATA_CLASS_MEMBER name:component1 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA) returnType:kotlin.Int [operator]
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component1 (): kotlin.Int declared in expo.modules.v2.testdata.LoopA'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.component1' type=expo.modules.v2.testdata.LoopA origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:component2 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA) returnType:expo.modules.v2.testdata.LoopB? [operator]
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component2 (): expo.modules.v2.testdata.LoopB? declared in expo.modules.v2.testdata.LoopA'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:expo.modules.v2.testdata.LoopB? visibility:private [final]' type=expo.modules.v2.testdata.LoopB? origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.component2' type=expo.modules.v2.testdata.LoopA origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopA, n:kotlin.Int, b:expo.modules.v2.testdata.LoopB?) returnType:expo.modules.v2.testdata.LoopA
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA
+      VALUE_PARAMETER name:n index:0 type:kotlin.Int
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.copy' type=expo.modules.v2.testdata.LoopA origin=null
+      VALUE_PARAMETER name:b index:1 type:expo.modules.v2.testdata.LoopB?
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:expo.modules.v2.testdata.LoopB? visibility:private [final]' type=expo.modules.v2.testdata.LoopB? origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.copy' type=expo.modules.v2.testdata.LoopA origin=null
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun copy (n: kotlin.Int, b: expo.modules.v2.testdata.LoopB?): expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA'
+          CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int, b: expo.modules.v2.testdata.LoopB?) declared in expo.modules.v2.testdata.LoopA' type=expo.modules.v2.testdata.LoopA origin=null
+            n: GET_VAR 'n: kotlin.Int declared in expo.modules.v2.testdata.LoopA.copy' type=kotlin.Int origin=null
+            b: GET_VAR 'b: expo.modules.v2.testdata.LoopB? declared in expo.modules.v2.testdata.LoopA.copy' type=expo.modules.v2.testdata.LoopB? origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:equals visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.LoopA, other:kotlin.Any?) returnType:kotlin.Boolean [operator]
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA
+      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      BLOCK_BODY
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun EQEQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQEQ
+              arg0: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.equals' type=expo.modules.v2.testdata.LoopA origin=null
+              arg1: GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.LoopA.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopA'
+              CONST Boolean type=kotlin.Boolean value=true
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=expo.modules.v2.testdata.LoopA
+              GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.LoopA.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopA'
+              CONST Boolean type=kotlin.Boolean value=false
+        VAR IR_TEMPORARY_VARIABLE name:tmp_1 type:expo.modules.v2.testdata.LoopA [val]
+          TYPE_OP type=expo.modules.v2.testdata.LoopA origin=CAST typeOperand=expo.modules.v2.testdata.LoopA
+            GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.LoopA.equals' type=kotlin.Any? origin=null
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.equals' type=expo.modules.v2.testdata.LoopA origin=null
+                arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                  receiver: GET_VAR 'val tmp_1: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.equals' type=expo.modules.v2.testdata.LoopA origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopA'
+              CONST Boolean type=kotlin.Boolean value=false
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:expo.modules.v2.testdata.LoopB? visibility:private [final]' type=expo.modules.v2.testdata.LoopB? origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.equals' type=expo.modules.v2.testdata.LoopA origin=null
+                arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:expo.modules.v2.testdata.LoopB? visibility:private [final]' type=expo.modules.v2.testdata.LoopB? origin=null
+                  receiver: GET_VAR 'val tmp_1: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.equals' type=expo.modules.v2.testdata.LoopA origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopA'
+              CONST Boolean type=kotlin.Boolean value=false
+        RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopA'
+          CONST Boolean type=kotlin.Boolean value=true
+    FUN GENERATED_DATA_CLASS_MEMBER name:hashCode visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.LoopA) returnType:kotlin.Int
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA
+      BLOCK_BODY
+        VAR name:result type:kotlin.Int [var]
+          CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+            $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.hashCode' type=expo.modules.v2.testdata.LoopA origin=null
+        SET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.LoopA.hashCode' type=kotlin.Unit origin=EQ
+          CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+            $this: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+              $this: GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.LoopA.hashCode' type=kotlin.Int origin=null
+              other: CONST Int type=kotlin.Int value=31
+            other: WHEN type=kotlin.Int origin=null
+              BRANCH
+                if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                  arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:expo.modules.v2.testdata.LoopB? visibility:private [final]' type=expo.modules.v2.testdata.LoopB? origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.hashCode' type=expo.modules.v2.testdata.LoopA origin=null
+                  arg1: CONST Null type=kotlin.Nothing? value=null
+                then: CONST Int type=kotlin.Int value=0
+              BRANCH
+                if: CONST Boolean type=kotlin.Boolean value=true
+                then: CALL 'public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.LoopB' type=kotlin.Int origin=null
+                  $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:expo.modules.v2.testdata.LoopB? visibility:private [final]' type=expo.modules.v2.testdata.LoopB? origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.hashCode' type=expo.modules.v2.testdata.LoopA origin=null
+        RETURN type=kotlin.Nothing from='public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.LoopA'
+          GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.LoopA.hashCode' type=kotlin.Int origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:toString visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.LoopA) returnType:kotlin.String
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+        public open fun toString (): kotlin.String declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopA
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public open fun toString (): kotlin.String declared in expo.modules.v2.testdata.LoopA'
+          STRING_CONCATENATION type=kotlin.String
+            CONST String type=kotlin.String value="LoopA("
+            CONST String type=kotlin.String value="n="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.toString' type=expo.modules.v2.testdata.LoopA origin=null
+            CONST String type=kotlin.String value=", "
+            CONST String type=kotlin.String value="b="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:expo.modules.v2.testdata.LoopB? visibility:private [final]' type=expo.modules.v2.testdata.LoopB? origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.LoopA.toString' type=expo.modules.v2.testdata.LoopA origin=null
+            CONST String type=kotlin.String value=")"
+  CLASS CLASS name:LoopB modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]
+    annotations:
+      Record(name = <null>, bufferSafe = <null>)
+    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.LoopB
+    PROPERTY name:n visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'n: kotlin.Int declared in expo.modules.v2.testdata.LoopB.<init>' type=kotlin.Int origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-n> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB) returnType:kotlin.Int
+        correspondingProperty: PROPERTY name:n visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-n> (): kotlin.Int declared in expo.modules.v2.testdata.LoopB'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.<get-n>' type=expo.modules.v2.testdata.LoopB origin=null
+    PROPERTY name:a visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:a type:expo.modules.v2.testdata.LoopA? visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'a: expo.modules.v2.testdata.LoopA? declared in expo.modules.v2.testdata.LoopB.<init>' type=expo.modules.v2.testdata.LoopA? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-a> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB) returnType:expo.modules.v2.testdata.LoopA?
+        correspondingProperty: PROPERTY name:a visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-a> (): expo.modules.v2.testdata.LoopA? declared in expo.modules.v2.testdata.LoopB'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:expo.modules.v2.testdata.LoopA? visibility:private [final]' type=expo.modules.v2.testdata.LoopA? origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.<get-a>' type=expo.modules.v2.testdata.LoopB origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB>]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.Simple' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            javaClass: CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.LoopA> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS CLASS name:LoopA modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+            isNullable: CONST Boolean type=kotlin.Boolean value=true
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+        overridden:
+          public abstract recordClass: java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.LoopB> visibility:private [final]
+          EXPRESSION_BODY
+            CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.LoopB> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS CLASS name:LoopB modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2) returnType:java.lang.Class<expo.modules.v2.testdata.LoopB>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-recordClass> (): java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<expo.modules.v2.testdata.LoopB> declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.LoopB> visibility:private [final]' type=java.lang.Class<expo.modules.v2.testdata.LoopB> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.<get-recordClass>' type=expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 origin=null
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+        overridden:
+          public abstract schema: expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: expo.modules.v2.records.RecordField) declared in expo.modules.v2.records.RecordSchema' type=expo.modules.v2.records.RecordSchema origin=null
+              name: CONST String type=kotlin.String value="LoopB"
+              bufferSafe: CONST Boolean type=kotlin.Boolean value=true
+              fields: VARARG type=kotlin.Array<expo.modules.v2.records.RecordField> varargElementType=expo.modules.v2.records.RecordField
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="n"
+                  type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="a"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2) returnType:expo.modules.v2.records.RecordSchema
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]' type=expo.modules.v2.records.RecordSchema origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.<get-schema>' type=expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:public <> () returnType:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB>]' type=kotlin.Unit
+          CALL 'public final fun register (codec: expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
+            $this: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.records.RecordRegistry
+            codec: GET_VAR '<this>: expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 origin=null
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB>, map:kotlin.collections.Map<kotlin.String, kotlin.Any?>) returnType:expo.modules.v2.testdata.LoopB [fake_override]
+        overridden:
+          public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB>
+        VALUE_PARAMETER name:map index:0 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB>, value:expo.modules.v2.testdata.LoopB) returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
+        overridden:
+          public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB>
+        VALUE_PARAMETER name:value index:0 type:expo.modules.v2.testdata.LoopB
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2, reader:expo.modules.v2.records.readers.RecordReader) returnType:expo.modules.v2.testdata.LoopB
+        overridden:
+          public abstract fun decode (reader: expo.modules.v2.records.readers.RecordReader): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:reader index:0 type:expo.modules.v2.records.readers.RecordReader
+        BLOCK_BODY
+          RETURN type=expo.modules.v2.testdata.LoopB from='public final fun decode (reader: expo.modules.v2.records.readers.RecordReader): expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2'
+            CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int, a: expo.modules.v2.testdata.LoopA?) declared in expo.modules.v2.testdata.LoopB' type=expo.modules.v2.testdata.LoopB origin=null
+              n: CALL 'public abstract fun readInt (): kotlin.Int declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Int origin=null
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+              a: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=expo.modules.v2.testdata.LoopA? origin=null
+                <T>: expo.modules.v2.testdata.LoopA?
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 origin=null
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2, value:expo.modules.v2.testdata.LoopB, writer:expo.modules.v2.records.writers.RecordWriter) returnType:kotlin.Unit
+        overridden:
+          public abstract fun encode (value: T of expo.modules.v2.records.RecordCodec, writer: expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:value index:0 type:expo.modules.v2.testdata.LoopB
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:writer index:1 type:expo.modules.v2.records.writers.RecordWriter
+        BLOCK_BODY
+          CALL 'public abstract fun write (value: kotlin.Int): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-n> (): kotlin.Int declared in expo.modules.v2.testdata.LoopB' type=kotlin.Int origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.LoopB origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-a> (): expo.modules.v2.testdata.LoopA? declared in expo.modules.v2.testdata.LoopB' type=expo.modules.v2.testdata.LoopA? origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.LoopB origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.LoopB.Companion
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB> visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.LoopB.RecordCodec$ExpoModulesV2 origin=null
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB.Companion) returnType:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB.Companion
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB> declared in expo.modules.v2.testdata.LoopB.Companion'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB> visibility:private [final]' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopB> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB.Companion declared in expo.modules.v2.testdata.LoopB.Companion.<get-recordCodec$ExpoModulesV2>' type=expo.modules.v2.testdata.LoopB.Companion origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:private <> () returnType:expo.modules.v2.testdata.LoopB.Companion [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+    CONSTRUCTOR visibility:public <> (n:kotlin.Int, a:expo.modules.v2.testdata.LoopA?) returnType:expo.modules.v2.testdata.LoopB [primary]
+      VALUE_PARAMETER name:n index:0 type:kotlin.Int
+      VALUE_PARAMETER name:a index:1 type:expo.modules.v2.testdata.LoopA?
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:LoopB modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.Unit
+    FUN GENERATED_DATA_CLASS_MEMBER name:component1 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB) returnType:kotlin.Int [operator]
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component1 (): kotlin.Int declared in expo.modules.v2.testdata.LoopB'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.component1' type=expo.modules.v2.testdata.LoopB origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:component2 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB) returnType:expo.modules.v2.testdata.LoopA? [operator]
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component2 (): expo.modules.v2.testdata.LoopA? declared in expo.modules.v2.testdata.LoopB'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:expo.modules.v2.testdata.LoopA? visibility:private [final]' type=expo.modules.v2.testdata.LoopA? origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.component2' type=expo.modules.v2.testdata.LoopB origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.LoopB, n:kotlin.Int, a:expo.modules.v2.testdata.LoopA?) returnType:expo.modules.v2.testdata.LoopB
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB
+      VALUE_PARAMETER name:n index:0 type:kotlin.Int
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.copy' type=expo.modules.v2.testdata.LoopB origin=null
+      VALUE_PARAMETER name:a index:1 type:expo.modules.v2.testdata.LoopA?
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:expo.modules.v2.testdata.LoopA? visibility:private [final]' type=expo.modules.v2.testdata.LoopA? origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.copy' type=expo.modules.v2.testdata.LoopB origin=null
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun copy (n: kotlin.Int, a: expo.modules.v2.testdata.LoopA?): expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB'
+          CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int, a: expo.modules.v2.testdata.LoopA?) declared in expo.modules.v2.testdata.LoopB' type=expo.modules.v2.testdata.LoopB origin=null
+            n: GET_VAR 'n: kotlin.Int declared in expo.modules.v2.testdata.LoopB.copy' type=kotlin.Int origin=null
+            a: GET_VAR 'a: expo.modules.v2.testdata.LoopA? declared in expo.modules.v2.testdata.LoopB.copy' type=expo.modules.v2.testdata.LoopA? origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:equals visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.LoopB, other:kotlin.Any?) returnType:kotlin.Boolean [operator]
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB
+      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      BLOCK_BODY
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun EQEQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQEQ
+              arg0: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.equals' type=expo.modules.v2.testdata.LoopB origin=null
+              arg1: GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.LoopB.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopB'
+              CONST Boolean type=kotlin.Boolean value=true
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=expo.modules.v2.testdata.LoopB
+              GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.LoopB.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopB'
+              CONST Boolean type=kotlin.Boolean value=false
+        VAR IR_TEMPORARY_VARIABLE name:tmp_2 type:expo.modules.v2.testdata.LoopB [val]
+          TYPE_OP type=expo.modules.v2.testdata.LoopB origin=CAST typeOperand=expo.modules.v2.testdata.LoopB
+            GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.LoopB.equals' type=kotlin.Any? origin=null
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.equals' type=expo.modules.v2.testdata.LoopB origin=null
+                arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+                  receiver: GET_VAR 'val tmp_2: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.equals' type=expo.modules.v2.testdata.LoopB origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopB'
+              CONST Boolean type=kotlin.Boolean value=false
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:expo.modules.v2.testdata.LoopA? visibility:private [final]' type=expo.modules.v2.testdata.LoopA? origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.equals' type=expo.modules.v2.testdata.LoopB origin=null
+                arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:expo.modules.v2.testdata.LoopA? visibility:private [final]' type=expo.modules.v2.testdata.LoopA? origin=null
+                  receiver: GET_VAR 'val tmp_2: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.equals' type=expo.modules.v2.testdata.LoopB origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopB'
+              CONST Boolean type=kotlin.Boolean value=false
+        RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.LoopB'
+          CONST Boolean type=kotlin.Boolean value=true
+    FUN GENERATED_DATA_CLASS_MEMBER name:hashCode visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.LoopB) returnType:kotlin.Int
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB
+      BLOCK_BODY
+        VAR name:result type:kotlin.Int [var]
+          CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+            $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.hashCode' type=expo.modules.v2.testdata.LoopB origin=null
+        SET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.LoopB.hashCode' type=kotlin.Unit origin=EQ
+          CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+            $this: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+              $this: GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.LoopB.hashCode' type=kotlin.Int origin=null
+              other: CONST Int type=kotlin.Int value=31
+            other: WHEN type=kotlin.Int origin=null
+              BRANCH
+                if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                  arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:expo.modules.v2.testdata.LoopA? visibility:private [final]' type=expo.modules.v2.testdata.LoopA? origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.hashCode' type=expo.modules.v2.testdata.LoopB origin=null
+                  arg1: CONST Null type=kotlin.Nothing? value=null
+                then: CONST Int type=kotlin.Int value=0
+              BRANCH
+                if: CONST Boolean type=kotlin.Boolean value=true
+                then: CALL 'public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.LoopA' type=kotlin.Int origin=null
+                  $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:expo.modules.v2.testdata.LoopA? visibility:private [final]' type=expo.modules.v2.testdata.LoopA? origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.hashCode' type=expo.modules.v2.testdata.LoopB origin=null
+        RETURN type=kotlin.Nothing from='public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.LoopB'
+          GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.LoopB.hashCode' type=kotlin.Int origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:toString visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.LoopB) returnType:kotlin.String
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+        public open fun toString (): kotlin.String declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.LoopB
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public open fun toString (): kotlin.String declared in expo.modules.v2.testdata.LoopB'
+          STRING_CONCATENATION type=kotlin.String
+            CONST String type=kotlin.String value="LoopB("
+            CONST String type=kotlin.String value="n="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.toString' type=expo.modules.v2.testdata.LoopB origin=null
+            CONST String type=kotlin.String value=", "
+            CONST String type=kotlin.String value="a="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:expo.modules.v2.testdata.LoopA? visibility:private [final]' type=expo.modules.v2.testdata.LoopA? origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.LoopB declared in expo.modules.v2.testdata.LoopB.toString' type=expo.modules.v2.testdata.LoopB origin=null
+            CONST String type=kotlin.String value=")"
+  CLASS CLASS name:Outer modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]
+    annotations:
+      Record(name = <null>, bufferSafe = <null>)
+    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Outer
+    PROPERTY name:inner visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:inner type:expo.modules.v2.testdata.Inner visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'inner: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Outer.<init>' type=expo.modules.v2.testdata.Inner origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-inner> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer) returnType:expo.modules.v2.testdata.Inner
+        correspondingProperty: PROPERTY name:inner visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-inner> (): expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Outer'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:inner type:expo.modules.v2.testdata.Inner visibility:private [final]' type=expo.modules.v2.testdata.Inner origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.<get-inner>' type=expo.modules.v2.testdata.Outer origin=null
+    PROPERTY name:list visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:list type:kotlin.collections.List<expo.modules.v2.testdata.Inner> visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'list: kotlin.collections.List<expo.modules.v2.testdata.Inner> declared in expo.modules.v2.testdata.Outer.<init>' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-list> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer) returnType:kotlin.collections.List<expo.modules.v2.testdata.Inner>
+        correspondingProperty: PROPERTY name:list visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-list> (): kotlin.collections.List<expo.modules.v2.testdata.Inner> declared in expo.modules.v2.testdata.Outer'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:list type:kotlin.collections.List<expo.modules.v2.testdata.Inner> visibility:private [final]' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.<get-list>' type=expo.modules.v2.testdata.Outer origin=null
+    PROPERTY name:maybe visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:maybe type:expo.modules.v2.testdata.Inner? visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'maybe: expo.modules.v2.testdata.Inner? declared in expo.modules.v2.testdata.Outer.<init>' type=expo.modules.v2.testdata.Inner? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-maybe> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer) returnType:expo.modules.v2.testdata.Inner?
+        correspondingProperty: PROPERTY name:maybe visibility:public modality:FINAL [val]
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-maybe> (): expo.modules.v2.testdata.Inner? declared in expo.modules.v2.testdata.Outer'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:maybe type:expo.modules.v2.testdata.Inner? visibility:private [final]' type=expo.modules.v2.testdata.Inner? origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.<get-maybe>' type=expo.modules.v2.testdata.Outer origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer>]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.Simple' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            javaClass: CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Inner> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS CLASS name:Inner modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+            isNullable: CONST Boolean type=kotlin.Boolean value=false
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$1 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean, params: kotlin.Array<out expo.modules.v2.types.TypeDescriptor.ObjectLike>) declared in expo.modules.v2.types.TypeDescriptor.Parametrized' type=expo.modules.v2.types.TypeDescriptor.Parametrized origin=null
+            javaClass: CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.collections.List<E of kotlin.collections.List>> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB INTERFACE name:List modality:ABSTRACT visibility:public superTypes:[kotlin.collections.Collection<E of kotlin.collections.List>]' type=kotlin.reflect.KClass<*>
+            isNullable: CONST Boolean type=kotlin.Boolean value=false
+            params: CALL 'public final fun arrayOf <T> (vararg elements: T of kotlin.arrayOf): kotlin.Array<T of kotlin.arrayOf> declared in kotlin' type=kotlin.Array<expo.modules.v2.types.TypeDescriptor.ObjectLike> origin=null
+              <T>: expo.modules.v2.types.TypeDescriptor.ObjectLike
+              elements: VARARG type=kotlin.Array<expo.modules.v2.types.TypeDescriptor.ObjectLike> varargElementType=expo.modules.v2.types.TypeDescriptor.ObjectLike
+                CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.Simple' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  javaClass: CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Inner> origin=null
+                    $receiver: CLASS_REFERENCE 'CLASS CLASS name:Inner modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+                  isNullable: CONST Boolean type=kotlin.Boolean value=false
+      FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$2 type:expo.modules.v2.types.TypeDescriptor visibility:private [final]
+        EXPRESSION_BODY
+          CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.Simple' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            javaClass: CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Inner> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS CLASS name:Inner modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+            isNullable: CONST Boolean type=kotlin.Boolean value=true
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+        overridden:
+          public abstract recordClass: java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Outer> visibility:private [final]
+          EXPRESSION_BODY
+            CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Outer> origin=null
+              $receiver: CLASS_REFERENCE 'CLASS CLASS name:Outer modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2) returnType:java.lang.Class<expo.modules.v2.testdata.Outer>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-recordClass> (): java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<expo.modules.v2.testdata.Outer> declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Outer> visibility:private [final]' type=java.lang.Class<expo.modules.v2.testdata.Outer> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.<get-recordClass>' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+        overridden:
+          public abstract schema: expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: expo.modules.v2.records.RecordField) declared in expo.modules.v2.records.RecordSchema' type=expo.modules.v2.records.RecordSchema origin=null
+              name: CONST String type=kotlin.String value="Outer"
+              bufferSafe: CONST Boolean type=kotlin.Boolean value=true
+              fields: VARARG type=kotlin.Array<expo.modules.v2.records.RecordField> varargElementType=expo.modules.v2.records.RecordField
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="inner"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="list"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$1 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                  name: CONST String type=kotlin.String value="maybe"
+                  type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$2 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+                  isOptional: CONST Boolean type=kotlin.Boolean value=false
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2) returnType:expo.modules.v2.records.RecordSchema
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]' type=expo.modules.v2.records.RecordSchema origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.<get-schema>' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:public <> () returnType:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer>]' type=kotlin.Unit
+          CALL 'public final fun register (codec: expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
+            $this: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.records.RecordRegistry
+            codec: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer>, map:kotlin.collections.Map<kotlin.String, kotlin.Any?>) returnType:expo.modules.v2.testdata.Outer [fake_override]
+        overridden:
+          public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer>
+        VALUE_PARAMETER name:map index:0 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer>, value:expo.modules.v2.testdata.Outer) returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
+        overridden:
+          public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer>
+        VALUE_PARAMETER name:value index:0 type:expo.modules.v2.testdata.Outer
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2, reader:expo.modules.v2.records.readers.RecordReader) returnType:expo.modules.v2.testdata.Outer
+        overridden:
+          public abstract fun decode (reader: expo.modules.v2.records.readers.RecordReader): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:reader index:0 type:expo.modules.v2.records.readers.RecordReader
+        BLOCK_BODY
+          RETURN type=expo.modules.v2.testdata.Outer from='public final fun decode (reader: expo.modules.v2.records.readers.RecordReader): expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2'
+            CONSTRUCTOR_CALL 'public constructor <init> (inner: expo.modules.v2.testdata.Inner, list: kotlin.collections.List<expo.modules.v2.testdata.Inner>, maybe: expo.modules.v2.testdata.Inner?) declared in expo.modules.v2.testdata.Outer' type=expo.modules.v2.testdata.Outer origin=null
+              inner: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=expo.modules.v2.testdata.Inner origin=null
+                <T>: expo.modules.v2.testdata.Inner
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+              list: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+                <T>: kotlin.collections.List<expo.modules.v2.testdata.Inner>
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$1 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+              maybe: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=expo.modules.v2.testdata.Inner? origin=null
+                <T>: expo.modules.v2.testdata.Inner?
+                $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$2 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2, value:expo.modules.v2.testdata.Outer, writer:expo.modules.v2.records.writers.RecordWriter) returnType:kotlin.Unit
+        overridden:
+          public abstract fun encode (value: T of expo.modules.v2.records.RecordCodec, writer: expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in expo.modules.v2.records.RecordCodec
+        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:value index:0 type:expo.modules.v2.testdata.Outer
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:writer index:1 type:expo.modules.v2.records.writers.RecordWriter
+        BLOCK_BODY
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-inner> (): expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Outer' type=expo.modules.v2.testdata.Inner origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Outer origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-list> (): kotlin.collections.List<expo.modules.v2.testdata.Inner> declared in expo.modules.v2.testdata.Outer' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Outer origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$1 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            value: CALL 'public final fun <get-maybe> (): expo.modules.v2.testdata.Inner? declared in expo.modules.v2.testdata.Outer' type=expo.modules.v2.testdata.Inner? origin=null
+              $this: GET_VAR 'value: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Outer origin=null
+            schema: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.RecordKey] name:type$2 type:expo.modules.v2.types.TypeDescriptor visibility:private [final] declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.types.TypeDescriptor origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
+      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Outer.Companion
+      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Outer.RecordCodec$ExpoModulesV2 origin=null
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer.Companion) returnType:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer>
+          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer.Companion
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> declared in expo.modules.v2.testdata.Outer.Companion'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> visibility:private [final]' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer.Companion declared in expo.modules.v2.testdata.Outer.Companion.<get-recordCodec$ExpoModulesV2>' type=expo.modules.v2.testdata.Outer.Companion origin=null
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:private <> () returnType:expo.modules.v2.testdata.Outer.Companion [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+        overridden:
+          public open fun toString (): kotlin.String declared in kotlin.Any
+        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+    CONSTRUCTOR visibility:public <> (inner:expo.modules.v2.testdata.Inner, list:kotlin.collections.List<expo.modules.v2.testdata.Inner>, maybe:expo.modules.v2.testdata.Inner?) returnType:expo.modules.v2.testdata.Outer [primary]
+      VALUE_PARAMETER name:inner index:0 type:expo.modules.v2.testdata.Inner
+      VALUE_PARAMETER name:list index:1 type:kotlin.collections.List<expo.modules.v2.testdata.Inner>
+      VALUE_PARAMETER name:maybe index:2 type:expo.modules.v2.testdata.Inner?
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Outer modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.Unit
+    FUN GENERATED_DATA_CLASS_MEMBER name:component1 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer) returnType:expo.modules.v2.testdata.Inner [operator]
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component1 (): expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Outer'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:inner type:expo.modules.v2.testdata.Inner visibility:private [final]' type=expo.modules.v2.testdata.Inner origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.component1' type=expo.modules.v2.testdata.Outer origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:component2 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer) returnType:kotlin.collections.List<expo.modules.v2.testdata.Inner> [operator]
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component2 (): kotlin.collections.List<expo.modules.v2.testdata.Inner> declared in expo.modules.v2.testdata.Outer'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:list type:kotlin.collections.List<expo.modules.v2.testdata.Inner> visibility:private [final]' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.component2' type=expo.modules.v2.testdata.Outer origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:component3 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer) returnType:expo.modules.v2.testdata.Inner? [operator]
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component3 (): expo.modules.v2.testdata.Inner? declared in expo.modules.v2.testdata.Outer'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:maybe type:expo.modules.v2.testdata.Inner? visibility:private [final]' type=expo.modules.v2.testdata.Inner? origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.component3' type=expo.modules.v2.testdata.Outer origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Outer, inner:expo.modules.v2.testdata.Inner, list:kotlin.collections.List<expo.modules.v2.testdata.Inner>, maybe:expo.modules.v2.testdata.Inner?) returnType:expo.modules.v2.testdata.Outer
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+      VALUE_PARAMETER name:inner index:0 type:expo.modules.v2.testdata.Inner
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:inner type:expo.modules.v2.testdata.Inner visibility:private [final]' type=expo.modules.v2.testdata.Inner origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.copy' type=expo.modules.v2.testdata.Outer origin=null
+      VALUE_PARAMETER name:list index:1 type:kotlin.collections.List<expo.modules.v2.testdata.Inner>
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:list type:kotlin.collections.List<expo.modules.v2.testdata.Inner> visibility:private [final]' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.copy' type=expo.modules.v2.testdata.Outer origin=null
+      VALUE_PARAMETER name:maybe index:2 type:expo.modules.v2.testdata.Inner?
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:maybe type:expo.modules.v2.testdata.Inner? visibility:private [final]' type=expo.modules.v2.testdata.Inner? origin=null
+            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.copy' type=expo.modules.v2.testdata.Outer origin=null
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun copy (inner: expo.modules.v2.testdata.Inner, list: kotlin.collections.List<expo.modules.v2.testdata.Inner>, maybe: expo.modules.v2.testdata.Inner?): expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer'
+          CONSTRUCTOR_CALL 'public constructor <init> (inner: expo.modules.v2.testdata.Inner, list: kotlin.collections.List<expo.modules.v2.testdata.Inner>, maybe: expo.modules.v2.testdata.Inner?) declared in expo.modules.v2.testdata.Outer' type=expo.modules.v2.testdata.Outer origin=null
+            inner: GET_VAR 'inner: expo.modules.v2.testdata.Inner declared in expo.modules.v2.testdata.Outer.copy' type=expo.modules.v2.testdata.Inner origin=null
+            list: GET_VAR 'list: kotlin.collections.List<expo.modules.v2.testdata.Inner> declared in expo.modules.v2.testdata.Outer.copy' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+            maybe: GET_VAR 'maybe: expo.modules.v2.testdata.Inner? declared in expo.modules.v2.testdata.Outer.copy' type=expo.modules.v2.testdata.Inner? origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:equals visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.Outer, other:kotlin.Any?) returnType:kotlin.Boolean [operator]
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+      BLOCK_BODY
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun EQEQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQEQ
+              arg0: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.equals' type=expo.modules.v2.testdata.Outer origin=null
+              arg1: GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.Outer.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Outer'
+              CONST Boolean type=kotlin.Boolean value=true
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=expo.modules.v2.testdata.Outer
+              GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.Outer.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Outer'
+              CONST Boolean type=kotlin.Boolean value=false
+        VAR IR_TEMPORARY_VARIABLE name:tmp_3 type:expo.modules.v2.testdata.Outer [val]
+          TYPE_OP type=expo.modules.v2.testdata.Outer origin=CAST typeOperand=expo.modules.v2.testdata.Outer
+            GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.Outer.equals' type=kotlin.Any? origin=null
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:inner type:expo.modules.v2.testdata.Inner visibility:private [final]' type=expo.modules.v2.testdata.Inner origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.equals' type=expo.modules.v2.testdata.Outer origin=null
+                arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:inner type:expo.modules.v2.testdata.Inner visibility:private [final]' type=expo.modules.v2.testdata.Inner origin=null
+                  receiver: GET_VAR 'val tmp_3: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.equals' type=expo.modules.v2.testdata.Outer origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Outer'
+              CONST Boolean type=kotlin.Boolean value=false
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:list type:kotlin.collections.List<expo.modules.v2.testdata.Inner> visibility:private [final]' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.equals' type=expo.modules.v2.testdata.Outer origin=null
+                arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:list type:kotlin.collections.List<expo.modules.v2.testdata.Inner> visibility:private [final]' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+                  receiver: GET_VAR 'val tmp_3: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.equals' type=expo.modules.v2.testdata.Outer origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Outer'
+              CONST Boolean type=kotlin.Boolean value=false
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:maybe type:expo.modules.v2.testdata.Inner? visibility:private [final]' type=expo.modules.v2.testdata.Inner? origin=null
+                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.equals' type=expo.modules.v2.testdata.Outer origin=null
+                arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:maybe type:expo.modules.v2.testdata.Inner? visibility:private [final]' type=expo.modules.v2.testdata.Inner? origin=null
+                  receiver: GET_VAR 'val tmp_3: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.equals' type=expo.modules.v2.testdata.Outer origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Outer'
+              CONST Boolean type=kotlin.Boolean value=false
+        RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Outer'
+          CONST Boolean type=kotlin.Boolean value=true
+    FUN GENERATED_DATA_CLASS_MEMBER name:hashCode visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.Outer) returnType:kotlin.Int
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+      BLOCK_BODY
+        VAR name:result type:kotlin.Int [var]
+          CALL 'public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.Inner' type=kotlin.Int origin=null
+            $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:inner type:expo.modules.v2.testdata.Inner visibility:private [final]' type=expo.modules.v2.testdata.Inner origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.hashCode' type=expo.modules.v2.testdata.Outer origin=null
+        SET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Outer.hashCode' type=kotlin.Unit origin=EQ
+          CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+            $this: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+              $this: GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Outer.hashCode' type=kotlin.Int origin=null
+              other: CONST Int type=kotlin.Int value=31
+            other: CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.collections.List' type=kotlin.Int origin=null
+              $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:list type:kotlin.collections.List<expo.modules.v2.testdata.Inner> visibility:private [final]' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.hashCode' type=expo.modules.v2.testdata.Outer origin=null
+        SET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Outer.hashCode' type=kotlin.Unit origin=EQ
+          CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+            $this: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+              $this: GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Outer.hashCode' type=kotlin.Int origin=null
+              other: CONST Int type=kotlin.Int value=31
+            other: WHEN type=kotlin.Int origin=null
+              BRANCH
+                if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                  arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:maybe type:expo.modules.v2.testdata.Inner? visibility:private [final]' type=expo.modules.v2.testdata.Inner? origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.hashCode' type=expo.modules.v2.testdata.Outer origin=null
+                  arg1: CONST Null type=kotlin.Nothing? value=null
+                then: CONST Int type=kotlin.Int value=0
+              BRANCH
+                if: CONST Boolean type=kotlin.Boolean value=true
+                then: CALL 'public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.Inner' type=kotlin.Int origin=null
+                  $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:maybe type:expo.modules.v2.testdata.Inner? visibility:private [final]' type=expo.modules.v2.testdata.Inner? origin=null
+                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.hashCode' type=expo.modules.v2.testdata.Outer origin=null
+        RETURN type=kotlin.Nothing from='public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.Outer'
+          GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Outer.hashCode' type=kotlin.Int origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:toString visibility:public modality:OPEN <> ($this:expo.modules.v2.testdata.Outer) returnType:kotlin.String
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+        public open fun toString (): kotlin.String declared in expo.modules.v2.records.Record
+      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Outer
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public open fun toString (): kotlin.String declared in expo.modules.v2.testdata.Outer'
+          STRING_CONCATENATION type=kotlin.String
+            CONST String type=kotlin.String value="Outer("
+            CONST String type=kotlin.String value="inner="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:inner type:expo.modules.v2.testdata.Inner visibility:private [final]' type=expo.modules.v2.testdata.Inner origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.toString' type=expo.modules.v2.testdata.Outer origin=null
+            CONST String type=kotlin.String value=", "
+            CONST String type=kotlin.String value="list="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:list type:kotlin.collections.List<expo.modules.v2.testdata.Inner> visibility:private [final]' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.toString' type=expo.modules.v2.testdata.Outer origin=null
+            CONST String type=kotlin.String value=", "
+            CONST String type=kotlin.String value="maybe="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:maybe type:expo.modules.v2.testdata.Inner? visibility:private [final]' type=expo.modules.v2.testdata.Inner? origin=null
+              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.Outer.toString' type=expo.modules.v2.testdata.Outer origin=null
+            CONST String type=kotlin.String value=")"
+  FUN name:box visibility:public modality:FINAL <> () returnType:kotlin.String
+    BLOCK_BODY
+      VAR name:codec type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> [val]
+        CALL 'public final fun codecFor <T> (): expo.modules.v2.records.RecordCodec<T of expo.modules.v2.records.codecFor> declared in expo.modules.v2.records' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> origin=null
+          <T>: expo.modules.v2.testdata.Outer
+      VAR name:outer type:expo.modules.v2.testdata.Outer [val]
+        CONSTRUCTOR_CALL 'public constructor <init> (inner: expo.modules.v2.testdata.Inner, list: kotlin.collections.List<expo.modules.v2.testdata.Inner>, maybe: expo.modules.v2.testdata.Inner?) declared in expo.modules.v2.testdata.Outer' type=expo.modules.v2.testdata.Outer origin=null
+          inner: CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int) declared in expo.modules.v2.testdata.Inner' type=expo.modules.v2.testdata.Inner origin=null
+            n: CONST Int type=kotlin.Int value=1
+          list: CALL 'public final fun listOf <T> (vararg elements: T of kotlin.collections.listOf): kotlin.collections.List<T of kotlin.collections.listOf> declared in kotlin.collections' type=kotlin.collections.List<expo.modules.v2.testdata.Inner> origin=null
+            <T>: expo.modules.v2.testdata.Inner
+            elements: VARARG type=kotlin.Array<out expo.modules.v2.testdata.Inner> varargElementType=expo.modules.v2.testdata.Inner
+              CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int) declared in expo.modules.v2.testdata.Inner' type=expo.modules.v2.testdata.Inner origin=null
+                n: CONST Int type=kotlin.Int value=2
+              CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int) declared in expo.modules.v2.testdata.Inner' type=expo.modules.v2.testdata.Inner origin=null
+                n: CONST Int type=kotlin.Int value=3
+          maybe: CONST Null type=kotlin.Nothing? value=null
+      VAR name:map type:kotlin.collections.Map<kotlin.String, kotlin.Any?> [val]
+        CALL 'public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+          $this: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> origin=null
+          value: GET_VAR 'val outer: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Outer origin=null
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=kotlin.collections.Map<*, *>
+            CALL 'public abstract fun get (key: K of kotlin.collections.Map): V of kotlin.collections.Map? declared in kotlin.collections.Map' type=kotlin.Any? origin=GET_ARRAY_ELEMENT
+              $this: GET_VAR 'val map: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+              key: CONST String type=kotlin.String value="inner"
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: nested record did not decompose, got "
+              CALL 'public abstract fun get (key: K of kotlin.collections.Map): V of kotlin.collections.Map? declared in kotlin.collections.Map' type=kotlin.Any? origin=GET_ARRAY_ELEMENT
+                $this: GET_VAR 'val map: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+                key: CONST String type=kotlin.String value="inner"
+      VAR name:list type:kotlin.collections.List<*> [val]
+        TYPE_OP type=kotlin.collections.List<*> origin=CAST typeOperand=kotlin.collections.List<*>
+          CALL 'public abstract fun get (key: K of kotlin.collections.Map): V of kotlin.collections.Map? declared in kotlin.collections.Map' type=kotlin.Any? origin=GET_ARRAY_ELEMENT
+            $this: GET_VAR 'val map: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+            key: CONST String type=kotlin.String value="list"
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun any <T> (predicate: kotlin.Function1<T of kotlin.collections.any, kotlin.Boolean>): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+            <T>: kotlin.Any?
+            $receiver: GET_VAR 'val list: kotlin.collections.List<*> declared in expo.modules.v2.testdata.box' type=kotlin.collections.List<*> origin=null
+            predicate: FUN_EXPR type=kotlin.Function1<kotlin.Any?, kotlin.Boolean> origin=LAMBDA
+              FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> (it:kotlin.Any?) returnType:kotlin.Boolean
+                VALUE_PARAMETER name:it index:0 type:kotlin.Any?
+                BLOCK_BODY
+                  RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.box'
+                    TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=kotlin.collections.Map<*, *>
+                      GET_VAR 'it: kotlin.Any? declared in expo.modules.v2.testdata.box.<anonymous>' type=kotlin.Any? origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: list elements did not decompose, got "
+              GET_VAR 'val list: kotlin.collections.List<*> declared in expo.modules.v2.testdata.box' type=kotlin.collections.List<*> origin=null
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              arg0: CALL 'public abstract fun get (key: K of kotlin.collections.Map): V of kotlin.collections.Map? declared in kotlin.collections.Map' type=kotlin.Any? origin=GET_ARRAY_ELEMENT
+                $this: GET_VAR 'val map: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+                key: CONST String type=kotlin.String value="maybe"
+              arg1: CONST Null type=kotlin.Nothing? value=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: maybe is "
+              CALL 'public abstract fun get (key: K of kotlin.collections.Map): V of kotlin.collections.Map? declared in kotlin.collections.Map' type=kotlin.Any? origin=GET_ARRAY_ELEMENT
+                $this: GET_VAR 'val map: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+                key: CONST String type=kotlin.String value="maybe"
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              arg0: CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.testdata.Outer origin=null
+                $this: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> origin=null
+                map: GET_VAR 'val map: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+              arg1: GET_VAR 'val outer: expo.modules.v2.testdata.Outer declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Outer origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: round trip gave "
+              CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.testdata.Outer origin=null
+                $this: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Outer> origin=null
+                map: GET_VAR 'val map: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+      VAR name:loop type:expo.modules.v2.testdata.LoopA [val]
+        CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int, b: expo.modules.v2.testdata.LoopB?) declared in expo.modules.v2.testdata.LoopA' type=expo.modules.v2.testdata.LoopA origin=null
+          n: CONST Int type=kotlin.Int value=1
+          b: CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int, a: expo.modules.v2.testdata.LoopA?) declared in expo.modules.v2.testdata.LoopB' type=expo.modules.v2.testdata.LoopB origin=null
+            n: CONST Int type=kotlin.Int value=2
+            a: CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int, b: expo.modules.v2.testdata.LoopB?) declared in expo.modules.v2.testdata.LoopA' type=expo.modules.v2.testdata.LoopA origin=null
+              n: CONST Int type=kotlin.Int value=3
+              b: CONST Null type=kotlin.Nothing? value=null
+      VAR name:loopCodec type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> [val]
+        CALL 'public final fun codecFor <T> (): expo.modules.v2.records.RecordCodec<T of expo.modules.v2.records.codecFor> declared in expo.modules.v2.records' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> origin=null
+          <T>: expo.modules.v2.testdata.LoopA
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              arg0: CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.testdata.LoopA origin=null
+                $this: GET_VAR 'val loopCodec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> origin=null
+                map: CALL 'public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+                  $this: GET_VAR 'val loopCodec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.LoopA> origin=null
+                  value: GET_VAR 'val loop: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.LoopA origin=null
+              arg1: GET_VAR 'val loop: expo.modules.v2.testdata.LoopA declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.LoopA origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            CONST String type=kotlin.String value="Fail: cycle round trip failed"
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+        CONST String type=kotlin.String value="OK"

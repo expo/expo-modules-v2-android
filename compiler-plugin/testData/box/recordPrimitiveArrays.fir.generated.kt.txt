@@ -1,0 +1,50 @@
+package expo.modules.v2.testdata
+
+@Record
+class Samples : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Samples> {
+    private /* final field */ val type$0: TypeDescriptor = IntArray(isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = LongArray(isNullable = false)
+    private /* final field */ val type$2: TypeDescriptor = FloatArray(isNullable = false)
+    private /* final field */ val type$3: TypeDescriptor = DoubleArray(isNullable = false)
+    private /* final field */ val type$4: TypeDescriptor = BooleanArray(isNullable = false)
+    private /* final field */ val type$5: TypeDescriptor = ByteArray(isNullable = false)
+    private /* final field */ val type$6: TypeDescriptor = IntArray(isNullable = true)
+    override val recordClass: Class<Samples>
+      field = Samples::class.<get-java>()
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Samples", bufferSafe = true, fields = [RecordField(name = "ints", type = <this>.#type$0, isOptional = false), RecordField(name = "longs", type = <this>.#type$1, isOptional = false), RecordField(name = "floats", type = <this>.#type$2, isOptional = false), RecordField(name = "doubles", type = <this>.#type$3, isOptional = false), RecordField(name = "bools", type = <this>.#type$4, isOptional = false), RecordField(name = "bytes", type = <this>.#type$5, isOptional = false), RecordField(name = "maybe", type = <this>.#type$6, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Samples {
+      return Samples(ints = reader.read<IntArray>(schema = <this>.#type$0), longs = reader.read<LongArray>(schema = <this>.#type$1), floats = reader.read<FloatArray>(schema = <this>.#type$2), doubles = reader.read<DoubleArray>(schema = <this>.#type$3), bools = reader.read<BooleanArray>(schema = <this>.#type$4), bytes = reader.read<ByteArray>(schema = <this>.#type$5), maybe = reader.read<IntArray?>(schema = <this>.#type$6))
+    }
+
+    override fun encode(value: Samples, writer: RecordWriter) {
+      writer.write(value = value.<get-ints>(), schema = <this>.#type$0)
+      writer.write(value = value.<get-longs>(), schema = <this>.#type$1)
+      writer.write(value = value.<get-floats>(), schema = <this>.#type$2)
+      writer.write(value = value.<get-doubles>(), schema = <this>.#type$3)
+      writer.write(value = value.<get-bools>(), schema = <this>.#type$4)
+      writer.write(value = value.<get-bytes>(), schema = <this>.#type$5)
+      writer.write(value = value.<get-maybe>(), schema = <this>.#type$6)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Samples>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}

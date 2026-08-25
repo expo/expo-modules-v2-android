@@ -1,0 +1,42 @@
+package expo.modules.v2.testdata
+
+@Record
+data class Boxes : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Boxes> {
+    override val recordClass: Class<Boxes>
+      field = Boxes::class.<get-java>()
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Boxes", bufferSafe = true, fields = [RecordField(name = "i", type = #INT_BOXED_NULL, isOptional = false), RecordField(name = "l", type = #LONG_BOXED_NULL, isOptional = false), RecordField(name = "f", type = #FLOAT_BOXED_NULL, isOptional = false), RecordField(name = "d", type = #DOUBLE_BOXED_NULL, isOptional = false), RecordField(name = "b", type = #BOOLEAN_BOXED_NULL, isOptional = false), RecordField(name = "s", type = #STRING_NULL, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Boxes {
+      return Boxes(i = reader.readIntOrNull(), l = reader.readLongOrNull(), f = reader.readFloatOrNull(), d = reader.readDoubleOrNull(), b = reader.readBooleanOrNull(), s = reader.read<String?>(schema = #STRING_NULL))
+    }
+
+    override fun encode(value: Boxes, writer: RecordWriter) {
+      writer.write(value = value.<get-i>())
+      writer.write(value = value.<get-l>())
+      writer.write(value = value.<get-f>())
+      writer.write(value = value.<get-d>())
+      writer.write(value = value.<get-b>())
+      writer.write(value = value.<get-s>(), schema = #STRING_NULL)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Boxes>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}

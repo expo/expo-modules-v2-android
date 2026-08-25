@@ -1,0 +1,136 @@
+package expo.modules.v2.testdata
+
+@Record
+data class Point : Record {
+  val x: Double
+    field = x
+    get
+
+  val y: Double
+    field = y
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Point> {
+    override val recordClass: Class<Point>
+      field = Point::class.<get-java>()
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Point", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Point {
+      return Point(x = reader.readDouble(), y = reader.readDouble())
+    }
+
+    override fun encode(value: Point, writer: RecordWriter) {
+      writer.write(value = value.<get-x>())
+      writer.write(value = value.<get-y>())
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Point>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(x: Double, y: Double) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Double {
+    return <this>.#x
+  }
+
+  operator fun component2(): Double {
+    return <this>.#y
+  }
+
+  fun copy(x: Double = <this>.#x, y: Double = <this>.#y): Point {
+    return Point(x = x, y = y)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Point -> return false
+    }
+    val tmp_0: Point = other as Point
+    when {
+      EQEQ(arg0 = <this>.#x, arg1 = tmp_0.#x).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#y, arg1 = tmp_0.#y).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result: Int = <this>.#x.hashCode()
+    result = result.times(other = 31).plus(other = <this>.#y.hashCode())
+    return result
+  }
+
+  override fun toString(): String {
+    return "Point(" + "x=" + <this>.#x + ", " + "y=" + <this>.#y + ")"
+  }
+
+}
+
+fun box(): String {
+  val point: Point = Point(x = 1.5, y = 2.5.unaryMinus())
+  when {
+    point !is Record -> return "Fail: Point did not get the Record supertype"
+  }
+  val codec: RecordCodec<Point> = codecFor<Point>()
+  when {
+    EQEQ(arg0 = codec.<get-recordClass>(), arg1 = Point::class.<get-java><Point>()).not() -> return "Fail: recordClass is " + codec.<get-recordClass>()
+  }
+  val schema: RecordSchema = codec.<get-schema>()
+  when {
+    EQEQ(arg0 = schema.<get-name>(), arg1 = "Point").not() -> return "Fail: schema name is " + schema.<get-name>()
+  }
+  when {
+    schema.<get-bufferSafe>().not() -> return "Fail: schema is not bufferSafe"
+  }
+  when {
+    EQEQ(arg0 = schema.<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+      return it.<get-name>()
+    }
+), arg1 = listOf<String>(elements = ["x", "y"])).not() -> { // BLOCK
+      return "Fail: fields are " + schema.<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+        return it.<get-name>()
+      }
+)
+    }
+  }
+  val map: Map<String, Any?> = codec.toMap(value = point)
+  when {
+    EQEQ(arg0 = map, arg1 = mapOf<String, Double>(pairs = ["x".to<String, Double>(that = 1.5), "y".to<String, Double>(that = 2.5.unaryMinus())])).not() -> return "Fail: toMap gave " + map
+  }
+  when {
+    EQEQ(arg0 = codec.fromMap(map = map), arg1 = point).not() -> return "Fail: fromMap gave " + codec.fromMap(map = map)
+  }
+  return "OK"
+}
+
