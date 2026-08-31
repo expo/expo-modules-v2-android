@@ -8,14 +8,16 @@ plugins {
   // inside a subproject instead, it gets its own classloader scope and the Kotlin Gradle plugin —
   // which comes from this one — cannot see `com.android.build.gradle.api.BaseVariant`.
   alias(libs.plugins.android.library) apply false
-  // The compiler toolchain publishes to Maven Central with this; see `gradle/publishing.md`.
+  // AGP must sit on the same classpath as the publish plugin so it can detect the AGP version.
   alias(libs.plugins.vanniktech.mavenPublish) apply false
   base
 }
 
+val expoModulesV2Version: String = libs.versions.expo.modules.v2.get()
+
 allprojects {
   group = "expo.modules.v2"
-  version = "0.1.0-SNAPSHOT"
+  version = expoModulesV2Version
 }
 
 subprojects {
@@ -35,15 +37,6 @@ val publishToolchainToMavenCentral by tasks.registering {
   dependsOn(":compiler-plugin:publishToMavenCentral", ":gradle-plugin:publishToMavenCentral")
 }
 
-/**
- * Central Portal publishing for whichever modules apply `com.vanniktech.maven.publish`.
- *
- * Only the compiler toolchain does: `:compiler-plugin` and the `gradle-plugin` included build are
- * the two artifacts a consuming app must *not* compile, because they are pure JVM and have to be
- * prebuilt. Everything else here is built from source in that app, against the `jsi` binary it
- * ships, and keeps the plain `maven-publish` it already had.
- *
- */
 fun Project.configureCentralPublishing() {
   plugins.withId("com.vanniktech.maven.publish") {
     // The Central Portal "bundle" is nothing but this build's staging directory, zipped verbatim, so
@@ -74,9 +67,6 @@ fun Project.configureCentralPublishing() {
 
       pom {
         name = project.name
-        description = "Expo Modules API v2 compiler toolchain: the Kotlin compiler plugin that " +
-          "turns @JS and @Record declarations into bridge code, and the Gradle plugin that " +
-          "registers it"
         inceptionYear = "2026"
         url = "https://github.com/expo/expo-modules-android-v2"
         licenses {

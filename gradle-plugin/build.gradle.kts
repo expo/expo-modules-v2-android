@@ -15,6 +15,11 @@ mavenPublishing {
   // what makes `id("expo.modules.v2") version "<v>"` resolve for a consumer. The empty javadoc jar
   // is there because Central's validator demands one.
   configure(GradlePlugin(JavadocJar.Empty(), sourcesJar = true))
+
+  pom {
+    description = "The Gradle plugin that registers the Expo Modules API v2 Kotlin compiler " +
+      "plugin on a project's Kotlin compilations"
+  }
 }
 
 sourceSets {

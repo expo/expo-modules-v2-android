@@ -18,6 +18,10 @@ mavenPublishing {
   // jar has to be published even though this project renders no API docs. `JavadocJar.Empty()`
   // ships an empty one, which satisfies the validator.
   configure(KotlinJvm(JavadocJar.Empty(), sourcesJar = true))
+
+  pom {
+    description = "The Expo Modules API v2 Kotlin compiler plugin"
+  }
 }
 
 // `java-test-fixtures` wires its variants into the `java` component, so the test-fixtures jar and

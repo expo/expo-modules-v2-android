@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+
 plugins {
   alias(libs.plugins.android.library)
   // No version: the Kotlin Gradle plugin is already on this build's classpath (the JVM modules
@@ -7,11 +9,23 @@ plugins {
   // because this is an Android project — the kolibri-android Prefab AAR plus prefab consumption, so
   // the CMake build below can `find_package(kolibri-android)`.
   alias(libs.plugins.kolibri)
-  `maven-publish`
+  // This is the one artifact a consuming app depends on rather than builds. The POM boilerplate,
+  // signing and checksum pruning come from the root build.
+  alias(libs.plugins.vanniktech.mavenPublish)
 }
 
-group = "expo.modules.v2"
-version = "0.1.0-SNAPSHOT"
+mavenPublishing {
+  // `release` only — a consumer never wants the debug variant, and every published file counts
+  // against Maven Central's per-organization file-count limit. Central's validator rejects a
+  // deployment with no `-javadoc.jar`, so `publishJavadocJar` stays on; AGP generates it from this
+  // variant's sources.
+  configure(AndroidSingleVariantLibrary("release", sourcesJar = true, publishJavadocJar = true))
+
+  pom {
+    description = "Expo Modules API v2 for React Native on Android: the Kotlin bridge plus, as a " +
+      "`cpp` classifier zip, the C++ the consuming app compiles against the `jsi` it ships"
+  }
+}
 
 // This module compiles :api's sources rather than copying them: one Kotlin surface and one C++
 // bridge, two host shapes. Only the pieces that differ — attaching to a runtime the host owns, and
@@ -74,10 +88,6 @@ android {
       )
     }
   }
-
-  publishing {
-    singleVariant("release")
-  }
 }
 
 kotlin {
@@ -110,16 +120,9 @@ val cppSourcesZip by tasks.registering(Zip::class) {
   }
 }
 
-afterEvaluate {
-  publishing {
-    publications {
-      create<MavenPublication>("release") {
-        from(components["release"])
-        artifact(cppSourcesZip)
-      }
-    }
-  }
-}
+publishing.publications.withType<MavenPublication>()
+  .matching { it.name == "maven" }
+  .configureEach { artifact(cppSourcesZip) }
 
 // The compiler plugin, registered straight onto every Kotlin compilation here.
 //

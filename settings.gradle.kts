@@ -77,16 +77,12 @@ run {
   }
 }
 
+
 include("api")
-// The React Native integration: :api's Kotlin and C++ compiled for Android, attaching to the
-// `jsi::Runtime` React Native created instead of creating one. Published to mavenLocal for an app
-// to consume, alongside the compiler toolchain below.
 include("react")
-// The compiler toolchain. Both are published, because a consuming app must not build them: they are
-// pure JVM, while everything else here is compiled from source in that app against the `jsi` binary
-// it ships. Publish with `./gradlew publishToolchainToMavenLocal`.
 include("compiler-plugin")
 include("gradle-plugin")
+
 include("test-app")
 include("test-support")
 include("benchmark")

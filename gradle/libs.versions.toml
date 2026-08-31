@@ -1,4 +1,6 @@
 [versions]
+expo-modules-v2 = "0.1.0"
+
 # https://github.com/expo/kolibri
 kolibri = "0.1.6"
 
@@ -23,8 +25,6 @@ junit = "4.13.2"
 buildconfig = "5.5.1"
 
 # https://github.com/vanniktech/gradle-maven-publish-plugin
-# Publishes the compiler toolchain (:compiler-plugin and gradle-plugin) to Maven Central, so a
-# consuming app resolves them instead of building them.
 vanniktech-mavenPublish = "0.30.0"
 
 # https://developer.android.com/jetpack/androidx/releases/annotation
