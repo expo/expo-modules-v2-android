@@ -172,7 +172,7 @@ class Wide : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Wide> {
     override val recordClass: Class<Wide>
-      field = Wide::class.<get-java>()
+      field = <get-java>(/* $receiver = Wide::class */)
       override get
 
     override val schema: RecordSchema

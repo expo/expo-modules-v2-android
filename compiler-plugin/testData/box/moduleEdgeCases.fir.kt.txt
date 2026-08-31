@@ -183,10 +183,10 @@ object Visibility : Module {
 
 fun box(): String {
   val builder: @FlexibleNullability Class<*>? = forName(p0 = "expo.modules.v2.modules.ModuleBuilder")
-  Empty::class.<get-java><Empty>().getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder]) /*~> Unit */
+  <get-java><Empty>(/* <this> = Empty::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder]) /*~> Unit */
   when {
-    names(owner = Empty::class.<get-java><Empty>()).any<String>(predicate = local fun <anonymous>(it: String): Boolean {
-      return it.contains(other = "__trampoline")
+    any<String>(/* <this> = names(owner = <get-java><Empty>(/* <this> = Empty::class */)), */ predicate = local fun <anonymous>(it: String): Boolean {
+      return contains(/* <this> = it, */ other = "__trampoline")
     }
 ) -> { // BLOCK
       return "an empty module should generate no trampolines"
@@ -198,42 +198,42 @@ fun box(): String {
       val name: String = tmp_0.next()
       { // BLOCK
         when {
-          names(owner = Arity::class.<get-java><Arity>()).contains(element = name + "__trampoline$ExpoModulesV2") -> { // BLOCK
+          names(owner = <get-java><Arity>(/* <this> = Arity::class */)).contains(element = name + "__trampoline$ExpoModulesV2") -> { // BLOCK
             return name + " should not have a trampoline"
           }
         }
       }
     }
   }
-  val eightBuffered: @FlexibleNullability Method? = Arity::class.<get-java><Arity>().getDeclaredMethod(p0 = "eightBuffered__trampoline$ExpoModulesV2", p1 = [Int::class.<get-javaPrimitiveType><Int>()])
+  val eightBuffered: @FlexibleNullability Method? = <get-java><Arity>(/* <this> = Arity::class */).getDeclaredMethod(p0 = "eightBuffered__trampoline$ExpoModulesV2", p1 = [<get-javaPrimitiveType><Int>(/* <this> = Int::class */)])
   when {
-    EQEQ(arg0 = eightBuffered.getReturnType(), arg1 = Int::class.<get-javaPrimitiveType><Int>()).not() -> { // BLOCK
+    EQEQ(arg0 = eightBuffered.getReturnType(), arg1 = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)).not() -> { // BLOCK
       return "eightBuffered: expected an int return, got " + eightBuffered.getReturnType()
     }
   }
-  val hidden: @FlexibleNullability Method? = Visibility::class.<get-java><Visibility>().getDeclaredMethod(p0 = "hidden", p1 = [Int::class.<get-javaPrimitiveType><Int>()])
+  val hidden: @FlexibleNullability Method? = <get-java><Visibility>(/* <this> = Visibility::class */).getDeclaredMethod(p0 = "hidden", p1 = [<get-javaPrimitiveType><Int>(/* <this> = Int::class */)])
   hidden.setAccessible(p0 = true)
   val doubled: Int = hidden.invoke(p0 = Visibility, p1 = [21]) as Int
   when {
     EQEQ(arg0 = doubled, arg1 = 42).not() -> return "hidden(21) gave " + doubled
   }
   when {
-    names(owner = Visibility::class.<get-java><Visibility>()).none<String>(predicate = local fun <anonymous>(it: String): Boolean {
+    none<String>(/* <this> = names(owner = <get-java><Visibility>(/* <this> = Visibility::class */)), */ predicate = local fun <anonymous>(it: String): Boolean {
       return EQEQ(arg0 = it, arg1 = "visible")
     }
 ) -> return "visible is missing"
   }
-  val derived: @FlexibleNullability Method? = Derived::class.<get-java><Derived>().getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder])
+  val derived: @FlexibleNullability Method? = <get-java><Derived>(/* <this> = Derived::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder])
   when {
-    EQEQ(arg0 = derived.getReturnType(), arg1 = String::class.<get-java><String>()).not() -> return "derived define: " + derived.getReturnType()
+    EQEQ(arg0 = derived.getReturnType(), arg1 = <get-java><String>(/* <this> = String::class */)).not() -> return "derived define: " + derived.getReturnType()
   }
   when {
     EQEQ(arg0 = Derived.own(a = 1), arg1 = 2).not() -> return "derived own() is broken"
   }
-  WithNested::class.<get-java><WithNested>().getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder]) /*~> Unit */
+  <get-java><WithNested>(/* <this> = WithNested::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder]) /*~> Unit */
   when {
-    names(owner = WithNested::class.<get-java><WithNested>()).any<String>(predicate = local fun <anonymous>(it: String): Boolean {
-      return it.contains(other = "__trampoline")
+    any<String>(/* <this> = names(owner = <get-java><WithNested>(/* <this> = WithNested::class */)), */ predicate = local fun <anonymous>(it: String): Boolean {
+      return contains(/* <this> = it, */ other = "__trampoline")
     }
 ) -> { // BLOCK
       return "WithNested should generate no trampolines"
@@ -243,8 +243,9 @@ fun box(): String {
 }
 
 private fun names(owner: Class<*>): Set<String> {
-  return owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */.map<@FlexibleNullability Method?, @FlexibleNullability String?>(transform = local fun <anonymous>(it: @FlexibleNullability Method?): @FlexibleNullability String? {
+  return toSet<@FlexibleNullability String?>(/* <this> = map<@FlexibleNullability Method?, @FlexibleNullability String?>(/* <this> = owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ transform = local fun <anonymous>(it: @FlexibleNullability Method?): @FlexibleNullability String? {
     return it.getName()
   }
-).toSet<@FlexibleNullability String?>()
+) */)
 }
+

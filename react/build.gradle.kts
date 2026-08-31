@@ -31,7 +31,6 @@ android {
     minSdk = 24
 
     ndk {
-      // The only ABI built for now: every extra one is another full native build.
       abiFilters += listOf("arm64-v8a")
     }
 
@@ -41,6 +40,7 @@ android {
           // The STL kolibri-android's prefab metadata demands, and the one React Native uses.
           "-DANDROID_STL=c++_shared",
           "-DEXPO_API_CPP_DIR=${apiCppDir.asFile.path}",
+          "-DEXPO_MODULES_V2_WERROR=ON",
         )
         targets += "expo-kolibri"
       }
@@ -67,10 +67,11 @@ android {
 
   packaging {
     jniLibs {
-      // These two land in the AAR only because prefab hands CMake the shared libraries it links
-      // against. React Native already ships both into the app, and a second copy fails the
-      // jniLibs merge with a duplicate-path error.
-      excludes += listOf("**/libjsi.so", "**/libc++_shared.so")
+      excludes += listOf(
+        "**/libjsi.so",
+        "**/libc++_shared.so",
+        "**/libexpo-kolibri.so",
+      )
     }
   }
 
@@ -94,6 +95,19 @@ dependencies {
   // module's CMake links against) and the ReactContext the scheduler posts to. `compileOnly` is not
   // an option — prefab only sees runtime/implementation dependencies.
   implementation(libs.react.android)
+
+  api(libs.kolibri.android)
+}
+
+val cppSourcesZip by tasks.registering(Zip::class) {
+  archiveClassifier = "cpp"
+
+  from(apiCppDir) {
+    include("expo-modules-v2/**", "expo-jsi/**")
+  }
+  from(layout.projectDirectory.dir("src/main/cpp")) {
+    include("expo-modules-v2-react/**", "CMakeLists.txt")
+  }
 }
 
 afterEvaluate {
@@ -101,6 +115,7 @@ afterEvaluate {
     publications {
       create<MavenPublication>("release") {
         from(components["release"])
+        artifact(cppSourcesZip)
       }
     }
   }

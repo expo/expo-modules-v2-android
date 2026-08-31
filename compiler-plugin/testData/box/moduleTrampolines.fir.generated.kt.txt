@@ -2,13 +2,13 @@ package expo.modules.v2.testdata
 
 @JS
 object Buffered : Module {
-  private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
-  private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+  private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "greet", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "greet__trampoline$ExpoModulesV2")
-    builder.function(jsName = "sum", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "sum__trampoline$ExpoModulesV2")
+    builder.function(jsName = "sum", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "sum__trampoline$ExpoModulesV2")
     builder.function(jsName = "describe", argTypes = [AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "describe__trampoline$ExpoModulesV2")
-    builder.function(jsName = "makeNames", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), methodName = "makeNames__trampoline$ExpoModulesV2")
+    builder.function(jsName = "makeNames", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), methodName = "makeNames__trampoline$ExpoModulesV2")
     builder.function(jsName = "scale", argTypes = [AnyType(descriptor = DoubleArray(isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Double, useBuffer = false), methodName = "scale")
     builder.property(jsName = "motto", type = AnyType(descriptor = #STRING, useBuffer = false), mutable = true, propertyName = "motto__trampoline$ExpoModulesV2", setterType = AnyType(descriptor = #STRING, useBuffer = true))
     builder.property(jsName = "isReady", type = AnyType(descriptor = Bool, useBuffer = false), mutable = false, propertyName = "isReady", setterType = AnyType(descriptor = Bool, useBuffer = false))
@@ -66,13 +66,13 @@ object Buffered : Module {
 
 @JS
 object Converted : Module {
-  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = false)
-  private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = URL::class.<get-java>(), isNullable = false)
-  private /* static final field */ val type$2: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = URL::class.<get-java>(), isNullable = false)]))
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false)
+  private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)
+  private /* static final field */ val type$2: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)]))
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
-    builder.function(jsName = "total", argTypes = [AnyType(descriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = false), useBuffer = false), AnyType(descriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = false), useBuffer = false), methodName = "total__trampoline$ExpoModulesV2")
-    builder.function(jsName = "host", argTypes = [AnyType(descriptor = Simple(javaClass = URL::class.<get-java>(), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "host__trampoline$ExpoModulesV2")
-    builder.function(jsName = "firstHost", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = URL::class.<get-java>(), isNullable = false)])), useBuffer = false)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "firstHost__trampoline$ExpoModulesV2")
+    builder.function(jsName = "total", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false), useBuffer = false), AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false), useBuffer = false), methodName = "total__trampoline$ExpoModulesV2")
+    builder.function(jsName = "host", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "host__trampoline$ExpoModulesV2")
+    builder.function(jsName = "firstHost", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)])), useBuffer = false)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "firstHost__trampoline$ExpoModulesV2")
     return "Converted"
   }
 

@@ -8,7 +8,7 @@ data class Inner : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Inner> {
     override val recordClass: Class<Inner>
-      field = Inner::class.<get-java>()
+      field = <get-java>(/* $receiver = Inner::class */)
       override get
 
     override val schema: RecordSchema
@@ -94,9 +94,9 @@ data class LoopA : Record {
     get
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<LoopA> {
-    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = LoopB::class.<get-java>(), isNullable = true)
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = LoopB::class */), isNullable = true)
     override val recordClass: Class<LoopA>
-      field = LoopA::class.<get-java>()
+      field = <get-java>(/* $receiver = LoopA::class */)
       override get
 
     override val schema: RecordSchema
@@ -195,9 +195,9 @@ data class LoopB : Record {
     get
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<LoopB> {
-    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = LoopA::class.<get-java>(), isNullable = true)
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = LoopA::class */), isNullable = true)
     override val recordClass: Class<LoopB>
-      field = LoopB::class.<get-java>()
+      field = <get-java>(/* $receiver = LoopB::class */)
       override get
 
     override val schema: RecordSchema
@@ -300,11 +300,11 @@ data class Outer : Record {
     get
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Outer> {
-    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = Inner::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Inner::class.<get-java>(), isNullable = false)]))
-    private /* final field */ val type$2: TypeDescriptor = Simple(javaClass = Inner::class.<get-java>(), isNullable = true)
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Inner::class */), isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Inner::class */), isNullable = false)]))
+    private /* final field */ val type$2: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Inner::class */), isNullable = true)
     override val recordClass: Class<Outer>
-      field = Outer::class.<get-java>()
+      field = <get-java>(/* $receiver = Outer::class */)
       override get
 
     override val schema: RecordSchema
@@ -410,7 +410,7 @@ fun box(): String {
   }
   val list: List<*> = map.get(key = "list") as List<*>
   when {
-    list.any<Any?>(predicate = local fun <anonymous>(it: Any?): Boolean {
+    any<Any?>(/* <this> = list, */ predicate = local fun <anonymous>(it: Any?): Boolean {
       return it !is Map<*, *>
     }
 ) -> return "Fail: list elements did not decompose, got " + list

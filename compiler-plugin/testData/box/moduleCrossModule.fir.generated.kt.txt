@@ -6,7 +6,7 @@ package expo.modules.v2.testdata.producer
 data class Shared : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Shared> {
     override val recordClass: Class<Shared>
-      field = Shared::class.<get-java>()
+      field = <get-java>(/* $receiver = Shared::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Shared", bufferSafe = true, fields = [RecordField(name = "n", type = Int, isOptional = false), RecordField(name = "label", type = #STRING_NULL, isOptional = false)])
@@ -41,7 +41,7 @@ data class Shared : Record {
 
 @JS(name = "Producer")
 object ProducerModule : Module {
-  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false)
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
   fun bump__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: Shared
@@ -53,7 +53,7 @@ object ProducerModule : Module {
   }
 
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
-    builder.function(jsName = "bump", argTypes = [AnyType(descriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false), useBuffer = true), methodName = "bump__trampoline$ExpoModulesV2")
+    builder.function(jsName = "bump", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true), methodName = "bump__trampoline$ExpoModulesV2")
     builder.function(jsName = "name", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "name__trampoline$ExpoModulesV2")
     builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = true, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false))
     return "Producer"
@@ -76,9 +76,9 @@ package expo.modules.v2.testdata.consumer
 
 @JS(name = "Consumer")
 object ConsumerModule : Module {
-  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false)
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
-    builder.function(jsName = "forward", argTypes = [AnyType(descriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false), useBuffer = true), methodName = "forward__trampoline$ExpoModulesV2")
+    builder.function(jsName = "forward", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true), methodName = "forward__trampoline$ExpoModulesV2")
     return "Consumer"
   }
 

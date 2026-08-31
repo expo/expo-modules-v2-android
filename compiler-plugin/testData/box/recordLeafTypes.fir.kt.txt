@@ -1,6 +1,6 @@
 package expo.modules.v2.testdata
 
-@Record(, bufferSafe = false)
+@Record(bufferSafe = false)
 class Leaves : Record {
   val duration: Duration
     field = duration
@@ -27,14 +27,14 @@ class Leaves : Record {
     get
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Leaves> {
-    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$1: TypeDescriptor = Simple(javaClass = File::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$2: TypeDescriptor = Simple(javaClass = URL::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$3: TypeDescriptor = Simple(javaClass = URI::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$4: TypeDescriptor = Simple(javaClass = Path::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$5: TypeDescriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = true)
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = File::class */), isNullable = false)
+    private /* final field */ val type$2: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)
+    private /* final field */ val type$3: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = URI::class */), isNullable = false)
+    private /* final field */ val type$4: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Path::class */), isNullable = false)
+    private /* final field */ val type$5: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = true)
     override val recordClass: Class<Leaves>
-      field = Leaves::class.<get-java>()
+      field = <get-java>(/* $receiver = Leaves::class */)
       override get
 
     override val schema: RecordSchema
@@ -86,7 +86,7 @@ class Leaves : Record {
 
 fun box(): String {
   val codec: RecordCodec<Leaves> = codecFor<Leaves>()
-  val fieldTypes: List<String> = codec.<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+  val fieldTypes: List<String> = map<RecordField, String>(/* <this> = codec.<get-schema>().<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
     return it.<get-name>() + "=" + it.<get-type>()
   }
 )
@@ -94,7 +94,7 @@ fun box(): String {
   when {
     EQEQ(arg0 = fieldTypes, arg1 = expected).not() -> return "Fail: descriptors are " + fieldTypes
   }
-  val leaves: Leaves = Leaves(duration = (Companion, 3).<get-seconds>(), file = File(p0 = "/tmp/a"), url = URL(p0 = "https://example.com/a"), uri = URI(p0 = "https://example.com/b"), path = get(p0 = "/tmp/b") /*!! Path */, maybe = null)
+  val leaves: Leaves = Leaves(duration = Companion.<get-seconds>(/* <this> = 3 */), file = File(p0 = "/tmp/a"), url = URL(p0 = "https://example.com/a"), uri = URI(p0 = "https://example.com/b"), path = get(p0 = "/tmp/b") /*!! Path */, maybe = null)
   val map: Map<String, Any?> = codec.toMap(value = leaves)
   when {
     EQEQ(arg0 = map.get(key = "duration"), arg1 = 3.0).not() -> return "Fail: duration crossed as " + map.get(key = "duration")

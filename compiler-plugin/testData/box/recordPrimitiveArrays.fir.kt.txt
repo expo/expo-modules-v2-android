@@ -39,7 +39,7 @@ class Samples : Record {
     private /* final field */ val type$5: TypeDescriptor = ByteArray(isNullable = false)
     private /* final field */ val type$6: TypeDescriptor = IntArray(isNullable = true)
     override val recordClass: Class<Samples>
-      field = Samples::class.<get-java>()
+      field = <get-java>(/* $receiver = Samples::class */)
       override get
 
     override val schema: RecordSchema
@@ -92,7 +92,7 @@ class Samples : Record {
 
 fun box(): String {
   val codec: RecordCodec<Samples> = codecFor<Samples>()
-  val fieldTypes: List<String> = codec.<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+  val fieldTypes: List<String> = map<RecordField, String>(/* <this> = codec.<get-schema>().<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
     return it.<get-name>() + "=" + it.<get-type>()
   }
 )
@@ -103,29 +103,29 @@ fun box(): String {
   val samples: Samples = Samples(ints = intArrayOf(elements = [1, 2]), longs = longArrayOf(elements = [3L]), floats = floatArrayOf(elements = [4.5F]), doubles = doubleArrayOf(elements = [5.5]), bools = booleanArrayOf(elements = [true, false]), bytes = byteArrayOf(elements = [6B]), maybe = null)
   val back: Samples = codec.fromMap(map = codec.toMap(value = samples))
   when {
-    back.<get-ints>().contentEquals(other = samples.<get-ints>()).not() -> return "Fail: ints gave " + back.<get-ints>().toList()
+    contentEquals(/* <this> = back.<get-ints>(), */ other = samples.<get-ints>()).not() -> return "Fail: ints gave " + toList(/* <this> = back.<get-ints>() */)
   }
   when {
-    back.<get-longs>().contentEquals(other = samples.<get-longs>()).not() -> return "Fail: longs gave " + back.<get-longs>().toList()
+    contentEquals(/* <this> = back.<get-longs>(), */ other = samples.<get-longs>()).not() -> return "Fail: longs gave " + toList(/* <this> = back.<get-longs>() */)
   }
   when {
-    back.<get-floats>().contentEquals(other = samples.<get-floats>()).not() -> return "Fail: floats gave " + back.<get-floats>().toList()
+    contentEquals(/* <this> = back.<get-floats>(), */ other = samples.<get-floats>()).not() -> return "Fail: floats gave " + toList(/* <this> = back.<get-floats>() */)
   }
   when {
-    back.<get-doubles>().contentEquals(other = samples.<get-doubles>()).not() -> return "Fail: doubles gave " + back.<get-doubles>().toList()
+    contentEquals(/* <this> = back.<get-doubles>(), */ other = samples.<get-doubles>()).not() -> return "Fail: doubles gave " + toList(/* <this> = back.<get-doubles>() */)
   }
   when {
-    back.<get-bools>().contentEquals(other = samples.<get-bools>()).not() -> return "Fail: bools gave " + back.<get-bools>().toList()
+    contentEquals(/* <this> = back.<get-bools>(), */ other = samples.<get-bools>()).not() -> return "Fail: bools gave " + toList(/* <this> = back.<get-bools>() */)
   }
   when {
-    back.<get-bytes>().contentEquals(other = samples.<get-bytes>()).not() -> return "Fail: bytes gave " + back.<get-bytes>().toList()
+    contentEquals(/* <this> = back.<get-bytes>(), */ other = samples.<get-bytes>()).not() -> return "Fail: bytes gave " + toList(/* <this> = back.<get-bytes>() */)
   }
   when {
     EQEQ(arg0 = back.<get-maybe>(), arg1 = null).not() -> return "Fail: maybe gave " + { // BLOCK
       val tmp_0: IntArray? = back.<get-maybe>()
       when {
         EQEQ(arg0 = tmp_0, arg1 = null) -> null
-        else -> tmp_0.toList()
+        else -> toList(/* <this> = tmp_0 */)
       }
     }
   }

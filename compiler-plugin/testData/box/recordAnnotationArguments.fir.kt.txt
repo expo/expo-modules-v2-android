@@ -8,7 +8,7 @@ data class BothArguments : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<BothArguments> {
     override val recordClass: Class<BothArguments>
-      field = BothArguments::class.<get-java>()
+      field = <get-java>(/* $receiver = BothArguments::class */)
       override get
 
     override val schema: RecordSchema
@@ -95,7 +95,7 @@ data class Renamed : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Renamed> {
     override val recordClass: Class<Renamed>
-      field = Renamed::class.<get-java>()
+      field = <get-java>(/* $receiver = Renamed::class */)
       override get
 
     override val schema: RecordSchema
@@ -180,7 +180,7 @@ data class Renamed : Record {
 
 }
 
-@Record(, bufferSafe = false)
+@Record(bufferSafe = false)
 data class Unsafe : Record {
   val payload: Any?
     field = payload
@@ -188,7 +188,7 @@ data class Unsafe : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Unsafe> {
     override val recordClass: Class<Unsafe>
-      field = Unsafe::class.<get-java>()
+      field = <get-java>(/* $receiver = Unsafe::class */)
       override get
 
     override val schema: RecordSchema

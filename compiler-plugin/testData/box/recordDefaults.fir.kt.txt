@@ -23,10 +23,10 @@ data class Opts : Record {
     get
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Opts> {
-    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
-    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
     override val recordClass: Class<Opts>
-      field = Opts::class.<get-java>()
+      field = <get-java>(/* $receiver = Opts::class */)
       override get
 
     override val schema: RecordSchema
@@ -160,7 +160,7 @@ data class Opts : Record {
 
 fun box(): String {
   val codec: RecordCodec<Opts> = codecFor<Opts>()
-  val optionality: List<String> = codec.<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+  val optionality: List<String> = map<RecordField, String>(/* <this> = codec.<get-schema>().<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
     return it.<get-name>() + "=" + it.<get-isOptional>()
   }
 )
@@ -168,7 +168,7 @@ fun box(): String {
   when {
     EQEQ(arg0 = optionality, arg1 = expected).not() -> return "Fail: optionality is " + optionality
   }
-  val defaults: Opts = codec.fromMap(map = mapOf<String, List<String>>(pair = "tags".to<String, List<String>>(that = listOf<String>(element = "a"))))
+  val defaults: Opts = codec.fromMap(map = mapOf<String, List<String>>(pair = to<String, List<String>>(/* <this> = "tags", */ that = listOf<String>(element = "a"))))
   when {
     EQEQ(arg0 = defaults, arg1 = Opts(tags = listOf<String>(element = "a"))).not() -> return "Fail: defaults gave " + defaults
   }
@@ -178,14 +178,14 @@ fun box(): String {
   when {
     EQEQ(arg0 = defaults.<get-trailing>(), arg1 = listOf<Int>(element = 9)).not() -> return "Fail: trailing default gave " + defaults.<get-trailing>()
   }
-  val partial: Opts = codec.fromMap(map = mapOf<String, Any>(pairs = ["tags".to<String, List<String>>(that = listOf<String>(element = "a")), "count".to<String, Int>(that = 41)]))
+  val partial: Opts = codec.fromMap(map = mapOf<String, Any>(pairs = [to<String, List<String>>(/* <this> = "tags", */ that = listOf<String>(element = "a")), to<String, Int>(/* <this> = "count", */ that = 41)]))
   when {
     EQEQ(arg0 = partial.<get-count>(), arg1 = 41).not() -> return "Fail: count gave " + partial.<get-count>()
   }
   when {
     EQEQ(arg0 = partial.<get-derived>(), arg1 = 42).not() -> return "Fail: derived gave " + partial.<get-derived>()
   }
-  val nulled: Opts = codec.fromMap(map = mapOf<String, List<String>?>(pairs = ["tags".to<String, List<String>>(that = listOf<String>(element = "a")), "label".to<String, Nothing?>(that = null)]))
+  val nulled: Opts = codec.fromMap(map = mapOf<String, List<String>?>(pairs = [to<String, List<String>>(/* <this> = "tags", */ that = listOf<String>(element = "a")), to<String, Nothing?>(/* <this> = "label", */ that = null)]))
   when {
     EQEQ(arg0 = nulled.<get-label>(), arg1 = null).not() -> return "Fail: explicit null gave " + nulled.<get-label>()
   }

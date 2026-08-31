@@ -12,4 +12,8 @@ set_target_properties(expo-jsi PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_include_directories(expo-jsi PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(expo-jsi PUBLIC jsi)
 
-target_compile_options(expo-jsi PRIVATE -Wall -Wextra -Wpedantic -Werror)
+if (NOT DEFINED EXPO_MODULES_V2_WARNINGS)
+  set(EXPO_MODULES_V2_WARNINGS -Wall -Wextra -Wpedantic -Werror)
+endif ()
+
+target_compile_options(expo-jsi PRIVATE ${EXPO_MODULES_V2_WARNINGS})

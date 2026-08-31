@@ -4,7 +4,7 @@ package expo.modules.v2.testdata
 class Empty : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Empty> {
     override val recordClass: Class<Empty>
-      field = Empty::class.<get-java>()
+      field = <get-java>(/* $receiver = Empty::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Empty", bufferSafe = true, fields = [])
@@ -39,7 +39,7 @@ class Empty : Record {
 class Explicit : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Explicit> {
     override val recordClass: Class<Explicit>
-      field = Explicit::class.<get-java>()
+      field = <get-java>(/* $receiver = Explicit::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Explicit", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
@@ -75,7 +75,7 @@ class Explicit : Record {
 private class Hidden : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Hidden> {
     override val recordClass: Class<Hidden>
-      field = Hidden::class.<get-java>()
+      field = <get-java>(/* $receiver = Hidden::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Hidden", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
@@ -112,7 +112,7 @@ class Host {
   class Nested : Record {
     private class RecordCodec$ExpoModulesV2 : RecordCodec<Nested> {
       override val recordClass: Class<Nested>
-        field = Nested::class.<get-java>()
+        field = <get-java>(/* $receiver = Nested::class */)
 
       override val schema: RecordSchema
         field = RecordSchema(name = "Nested", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
@@ -149,7 +149,7 @@ class Host {
 class Plain : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Plain> {
     override val recordClass: Class<Plain>
-      field = Plain::class.<get-java>()
+      field = <get-java>(/* $receiver = Plain::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Plain", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false), RecordField(name = "b", type = #STRING, isOptional = false)])
@@ -186,7 +186,7 @@ class Plain : Record {
 class WithCompanion : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<WithCompanion> {
     override val recordClass: Class<WithCompanion>
-      field = WithCompanion::class.<get-java>()
+      field = <get-java>(/* $receiver = WithCompanion::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "WithCompanion", bufferSafe = true, fields = [RecordField(name = "a", type = Int, isOptional = false)])
@@ -212,3 +212,4 @@ class WithCompanion : Record {
       field = RecordCodec$ExpoModulesV2()
   }
 }
+

@@ -2,7 +2,7 @@ package expo.modules.v2.testdata
 
 @JS
 class AsyncShapes : Module {
-  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = Unit::class.<get-java>(), isNullable = false)
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false)
   constructor() /* primary */ {
     super/*Module*/()
     /* <init>() */
@@ -20,7 +20,7 @@ class AsyncShapes : Module {
     builder.function(jsName = "scale", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "scale__trampoline$ExpoModulesV2", isAsync = true)
     builder.function(jsName = "greet", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "greet__trampoline$ExpoModulesV2", isAsync = true)
     builder.function(jsName = "repeat", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "repeat__trampoline$ExpoModulesV2", isAsync = true)
-    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = Unit::class.<get-java>(), isNullable = false), useBuffer = false), methodName = "clear__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "clear__trampoline$ExpoModulesV2", isAsync = true)
     return "AsyncShapes"
   }
 
@@ -68,11 +68,11 @@ class AsyncShapes : Module {
   }
 
   @JS
-  suspend fun repeat(@JS(, buffer = Buffer.NO) times: Int, value: String): String {
-    return value.repeat(n = times)
+  suspend fun repeat(@JS(buffer = Buffer.NO) times: Int, value: String): String {
+    return repeat(/* <this> = value, */ n = times)
   }
 
-  @JS(, buffer = Buffer.NO)
+  @JS(buffer = Buffer.NO)
   suspend fun scale(value: Int): Int {
     delay(timeMillis = 1L)
     return value.times(other = 2)
@@ -81,8 +81,8 @@ class AsyncShapes : Module {
 }
 
 fun box(): String {
-  val clazz: Class<AsyncShapes> = AsyncShapes::class.<get-java><AsyncShapes>()
-  val int: Class<Int>? = Int::class.<get-javaPrimitiveType><Int>()
+  val clazz: Class<AsyncShapes> = <get-java><AsyncShapes>(/* <this> = AsyncShapes::class */)
+  val int: Class<Int>? = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)
   val promise: @FlexibleNullability Class<*>? = forName(p0 = "expo.modules.v2.async.Promise")
   val scale: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "scale" + "__trampoline$ExpoModulesV2", p1 = [int, promise])
   when {
@@ -99,11 +99,11 @@ fun box(): String {
   }
   val continuation: @FlexibleNullability Class<*>? = forName(p0 = "kotlin.coroutines.Continuation")
   clazz.getDeclaredMethod(p0 = "scale", p1 = [int, continuation]) /*~> Unit */
-  clazz.getDeclaredMethod(p0 = "greet", p1 = [String::class.<get-java><String>(), continuation]) /*~> Unit */
+  clazz.getDeclaredMethod(p0 = "greet", p1 = [<get-java><String>(/* <this> = String::class */), continuation]) /*~> Unit */
   when {
-    clazz.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */.any<@FlexibleNullability Method?>(predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+    any<@FlexibleNullability Method?>(/* <this> = clazz.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
       return when {
-        EQEQ(arg0 = it.getName(), arg1 = "scale") -> it.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */.contains<@FlexibleNullability Class<*>?>(element = promise)
+        EQEQ(arg0 = it.getName(), arg1 = "scale") -> contains<@FlexibleNullability Class<*>?>(/* <this> = it.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ element = promise)
         else -> false
       }
     }

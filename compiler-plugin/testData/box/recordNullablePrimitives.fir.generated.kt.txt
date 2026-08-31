@@ -4,7 +4,7 @@ package expo.modules.v2.testdata
 data class Boxes : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Boxes> {
     override val recordClass: Class<Boxes>
-      field = Boxes::class.<get-java>()
+      field = <get-java>(/* $receiver = Boxes::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Boxes", bufferSafe = true, fields = [RecordField(name = "i", type = #INT_BOXED_NULL, isOptional = false), RecordField(name = "l", type = #LONG_BOXED_NULL, isOptional = false), RecordField(name = "f", type = #FLOAT_BOXED_NULL, isOptional = false), RecordField(name = "d", type = #DOUBLE_BOXED_NULL, isOptional = false), RecordField(name = "b", type = #BOOLEAN_BOXED_NULL, isOptional = false), RecordField(name = "s", type = #STRING_NULL, isOptional = false)])
@@ -40,3 +40,4 @@ data class Boxes : Record {
     }
   }
 }
+

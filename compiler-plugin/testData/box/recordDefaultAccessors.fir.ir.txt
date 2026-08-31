@@ -2,14 +2,14 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordDefaultAccessors.kt
   CLASS CLASS name:Accessors modality:FINAL visibility:public superTypes:[kotlin.Any; expo.modules.v2.records.Record]
     annotations:
       Record(name = <null>, bufferSafe = <null>)
-    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Accessors
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Accessors
     PROPERTY name:fromPrivateTopLevel visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:fromPrivateTopLevel type:kotlin.Int visibility:private [final]
         EXPRESSION_BODY
           GET_VAR 'fromPrivateTopLevel: kotlin.Int declared in expo.modules.v2.testdata.Accessors.<init>' type=kotlin.Int origin=INITIALIZE_PROPERTY_FROM_PARAMETER
-      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-fromPrivateTopLevel> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors) returnType:kotlin.Int
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-fromPrivateTopLevel> visibility:public modality:FINAL returnType:kotlin.Int
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors
         correspondingProperty: PROPERTY name:fromPrivateTopLevel visibility:public modality:FINAL [val]
-        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-fromPrivateTopLevel> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:fromPrivateTopLevel type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
@@ -18,9 +18,9 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordDefaultAccessors.kt
       FIELD PROPERTY_BACKING_FIELD name:fromPrivateConstant type:kotlin.String visibility:private [final]
         EXPRESSION_BODY
           GET_VAR 'fromPrivateConstant: kotlin.String declared in expo.modules.v2.testdata.Accessors.<init>' type=kotlin.String origin=INITIALIZE_PROPERTY_FROM_PARAMETER
-      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-fromPrivateConstant> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors) returnType:kotlin.String
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-fromPrivateConstant> visibility:public modality:FINAL returnType:kotlin.String
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors
         correspondingProperty: PROPERTY name:fromPrivateConstant visibility:public modality:FINAL [val]
-        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-fromPrivateConstant> (): kotlin.String declared in expo.modules.v2.testdata.Accessors'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:fromPrivateConstant type:kotlin.String visibility:private [final]' type=kotlin.String origin=null
@@ -29,9 +29,9 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordDefaultAccessors.kt
       FIELD PROPERTY_BACKING_FIELD name:fromCompanion type:kotlin.Int visibility:private [final]
         EXPRESSION_BODY
           GET_VAR 'fromCompanion: kotlin.Int declared in expo.modules.v2.testdata.Accessors.<init>' type=kotlin.Int origin=INITIALIZE_PROPERTY_FROM_PARAMETER
-      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-fromCompanion> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors) returnType:kotlin.Int
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-fromCompanion> visibility:public modality:FINAL returnType:kotlin.Int
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors
         correspondingProperty: PROPERTY name:fromCompanion visibility:public modality:FINAL [val]
-        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-fromCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:fromCompanion type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
@@ -40,27 +40,27 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordDefaultAccessors.kt
       FIELD PROPERTY_BACKING_FIELD name:fromPrivateCompanion type:kotlin.Int visibility:private [final]
         EXPRESSION_BODY
           GET_VAR 'fromPrivateCompanion: kotlin.Int declared in expo.modules.v2.testdata.Accessors.<init>' type=kotlin.Int origin=INITIALIZE_PROPERTY_FROM_PARAMETER
-      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-fromPrivateCompanion> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors) returnType:kotlin.Int
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-fromPrivateCompanion> visibility:public modality:FINAL returnType:kotlin.Int
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors
         correspondingProperty: PROPERTY name:fromPrivateCompanion visibility:public modality:FINAL [val]
-        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-fromPrivateCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:fromPrivateCompanion type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
               receiver: GET_VAR '<this>: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.<get-fromPrivateCompanion>' type=expo.modules.v2.testdata.Accessors origin=null
     CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>]
-      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
       PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
         overridden:
           public abstract recordClass: java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
         FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Accessors> visibility:private [final]
           EXPRESSION_BODY
-            CALL 'public final fun <get-java> (): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Accessors> origin=null
-              $receiver: CLASS_REFERENCE 'CLASS CLASS name:Accessors modality:FINAL visibility:public superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
-        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2) returnType:java.lang.Class<expo.modules.v2.testdata.Accessors>
+            CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Accessors> origin=null
+              ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Accessors modality:FINAL visibility:public superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL returnType:java.lang.Class<expo.modules.v2.testdata.Accessors>
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
           correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
           overridden:
             public abstract fun <get-recordClass> (): java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
-          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
           BLOCK_BODY
             RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<expo.modules.v2.testdata.Accessors> declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2'
               GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Accessors> visibility:private [final]' type=java.lang.Class<expo.modules.v2.testdata.Accessors> origin=null
@@ -71,77 +71,77 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordDefaultAccessors.kt
         FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]
           EXPRESSION_BODY
             CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: expo.modules.v2.records.RecordField) declared in expo.modules.v2.records.RecordSchema' type=expo.modules.v2.records.RecordSchema origin=null
-              name: CONST String type=kotlin.String value="Accessors"
-              bufferSafe: CONST Boolean type=kotlin.Boolean value=true
-              fields: VARARG type=kotlin.Array<expo.modules.v2.records.RecordField> varargElementType=expo.modules.v2.records.RecordField
+              ARG name: CONST String type=kotlin.String value="Accessors"
+              ARG bufferSafe: CONST Boolean type=kotlin.Boolean value=true
+              ARG fields: VARARG type=kotlin.Array<expo.modules.v2.records.RecordField> varargElementType=expo.modules.v2.records.RecordField
                 CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
-                  name: CONST String type=kotlin.String value="fromPrivateTopLevel"
-                  type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-                  isOptional: CONST Boolean type=kotlin.Boolean value=true
+                  ARG name: CONST String type=kotlin.String value="fromPrivateTopLevel"
+                  ARG type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+                  ARG isOptional: CONST Boolean type=kotlin.Boolean value=true
                 CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
-                  name: CONST String type=kotlin.String value="fromPrivateConstant"
-                  type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-                  isOptional: CONST Boolean type=kotlin.Boolean value=true
+                  ARG name: CONST String type=kotlin.String value="fromPrivateConstant"
+                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  ARG isOptional: CONST Boolean type=kotlin.Boolean value=true
                 CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
-                  name: CONST String type=kotlin.String value="fromCompanion"
-                  type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-                  isOptional: CONST Boolean type=kotlin.Boolean value=true
+                  ARG name: CONST String type=kotlin.String value="fromCompanion"
+                  ARG type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+                  ARG isOptional: CONST Boolean type=kotlin.Boolean value=true
                 CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
-                  name: CONST String type=kotlin.String value="fromPrivateCompanion"
-                  type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-                  isOptional: CONST Boolean type=kotlin.Boolean value=true
-        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2) returnType:expo.modules.v2.records.RecordSchema
+                  ARG name: CONST String type=kotlin.String value="fromPrivateCompanion"
+                  ARG type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+                  ARG isOptional: CONST Boolean type=kotlin.Boolean value=true
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL returnType:expo.modules.v2.records.RecordSchema
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
           correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
           overridden:
             public abstract fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
-          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
           BLOCK_BODY
             RETURN type=kotlin.Nothing from='public final fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2'
               GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]' type=expo.modules.v2.records.RecordSchema origin=null
                 receiver: GET_VAR '<this>: expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.<get-schema>' type=expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2 origin=null
-      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:public <> () returnType:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2 [primary]
+      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:public returnType:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2 [primary]
         BLOCK_BODY
           DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
           INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>]' type=kotlin.Unit
           CALL 'public final fun register (codec: expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
-            $this: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.records.RecordRegistry
-            codec: GET_VAR '<this>: expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2 origin=null
-      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.records.RecordRegistry
+            ARG codec: GET_VAR '<this>: expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2 origin=null
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
         overridden:
           public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.RecordCodec
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>, map:kotlin.collections.Map<kotlin.String, kotlin.Any?>) returnType:expo.modules.v2.testdata.Accessors [fake_override]
+      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN returnType:expo.modules.v2.testdata.Accessors [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>
+        VALUE_PARAMETER kind:Regular name:map index:1 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
         overridden:
           public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
-        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>
-        VALUE_PARAMETER name:map index:0 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
-      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
           public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.RecordCodec
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN <> ($this:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>, value:expo.modules.v2.testdata.Accessors) returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
+      FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>
+        VALUE_PARAMETER kind:Regular name:value index:1 type:expo.modules.v2.testdata.Accessors
         overridden:
           public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec
-        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>
-        VALUE_PARAMETER name:value index:0 type:expo.modules.v2.testdata.Accessors
-      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
           public open fun toString (): kotlin.String declared in expo.modules.v2.records.RecordCodec
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2, reader:expo.modules.v2.records.readers.RecordReader) returnType:expo.modules.v2.testdata.Accessors
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL returnType:expo.modules.v2.testdata.Accessors
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] kind:Regular name:reader index:1 type:expo.modules.v2.records.readers.RecordReader
         overridden:
           public abstract fun decode (reader: expo.modules.v2.records.readers.RecordReader): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
-        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
-        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:reader index:0 type:expo.modules.v2.records.readers.RecordReader
         BLOCK_BODY
           VAR name:fromPrivateTopLevel type:kotlin.Int [val]
             WHEN type=kotlin.Int origin=null
               BRANCH
                 if: CALL 'public abstract fun readIsPresent (): kotlin.Boolean declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Boolean origin=null
-                  $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                  ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
                 then: CALL 'public abstract fun readInt (): kotlin.Int declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Int origin=null
-                  $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                  ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
               BRANCH
                 if: CONST Boolean type=kotlin.Boolean value=true
                 then: CALL 'private final fun secret (): kotlin.Int declared in expo.modules.v2.testdata' type=kotlin.Int origin=null
@@ -149,11 +149,11 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordDefaultAccessors.kt
             WHEN type=kotlin.String origin=null
               BRANCH
                 if: CALL 'public abstract fun readIsPresent (): kotlin.Boolean declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Boolean origin=null
-                  $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                  ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
                 then: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.String origin=null
-                  <T>: kotlin.String
-                  $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
-                  schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  TYPE_ARG T: kotlin.String
+                  ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                  ARG schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
               BRANCH
                 if: CONST Boolean type=kotlin.Boolean value=true
                 then: CONST String type=kotlin.String value="const"
@@ -161,62 +161,62 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordDefaultAccessors.kt
             WHEN type=kotlin.Int origin=null
               BRANCH
                 if: CALL 'public abstract fun readIsPresent (): kotlin.Boolean declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Boolean origin=null
-                  $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                  ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
                 then: CALL 'public abstract fun readInt (): kotlin.Int declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Int origin=null
-                  $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                  ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
               BRANCH
                 if: CONST Boolean type=kotlin.Boolean value=true
                 then: CALL 'public final fun <get-companionDefault> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors.Companion' type=kotlin.Int origin=GET_PROPERTY
-                  $this: GET_OBJECT 'CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=expo.modules.v2.testdata.Accessors.Companion
+                  ARG <this>: GET_OBJECT 'CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=expo.modules.v2.testdata.Accessors.Companion
           VAR name:fromPrivateCompanion type:kotlin.Int [val]
             WHEN type=kotlin.Int origin=null
               BRANCH
                 if: CALL 'public abstract fun readIsPresent (): kotlin.Boolean declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Boolean origin=null
-                  $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                  ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
                 then: CALL 'public abstract fun readInt (): kotlin.Int declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Int origin=null
-                  $this: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
+                  ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
               BRANCH
                 if: CONST Boolean type=kotlin.Boolean value=true
                 then: CONST Int type=kotlin.Int value=33
           RETURN type=expo.modules.v2.testdata.Accessors from='public final fun decode (reader: expo.modules.v2.records.readers.RecordReader): expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2'
             CONSTRUCTOR_CALL 'public constructor <init> (fromPrivateTopLevel: kotlin.Int, fromPrivateConstant: kotlin.String, fromCompanion: kotlin.Int, fromPrivateCompanion: kotlin.Int) declared in expo.modules.v2.testdata.Accessors' type=expo.modules.v2.testdata.Accessors origin=null
-              fromPrivateTopLevel: GET_VAR 'val fromPrivateTopLevel: kotlin.Int declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=kotlin.Int origin=null
-              fromPrivateConstant: GET_VAR 'val fromPrivateConstant: kotlin.String declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=kotlin.String origin=null
-              fromCompanion: GET_VAR 'val fromCompanion: kotlin.Int declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=kotlin.Int origin=null
-              fromPrivateCompanion: GET_VAR 'val fromPrivateCompanion: kotlin.Int declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=kotlin.Int origin=null
-      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2, value:expo.modules.v2.testdata.Accessors, writer:expo.modules.v2.records.writers.RecordWriter) returnType:kotlin.Unit
+              ARG fromPrivateTopLevel: GET_VAR 'val fromPrivateTopLevel: kotlin.Int declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=kotlin.Int origin=null
+              ARG fromPrivateConstant: GET_VAR 'val fromPrivateConstant: kotlin.String declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=kotlin.String origin=null
+              ARG fromCompanion: GET_VAR 'val fromCompanion: kotlin.Int declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=kotlin.Int origin=null
+              ARG fromPrivateCompanion: GET_VAR 'val fromPrivateCompanion: kotlin.Int declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.decode' type=kotlin.Int origin=null
+      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL returnType:kotlin.Unit
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] kind:Regular name:value index:1 type:expo.modules.v2.testdata.Accessors
+        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] kind:Regular name:writer index:2 type:expo.modules.v2.records.writers.RecordWriter
         overridden:
           public abstract fun encode (value: T of expo.modules.v2.records.RecordCodec, writer: expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in expo.modules.v2.records.RecordCodec
-        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2
-        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:value index:0 type:expo.modules.v2.testdata.Accessors
-        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] name:writer index:1 type:expo.modules.v2.records.writers.RecordWriter
         BLOCK_BODY
           CALL 'public abstract fun write (value: kotlin.Int): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            value: CALL 'public final fun <get-fromPrivateTopLevel> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=null
-              $this: GET_VAR 'value: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Accessors origin=null
+            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-fromPrivateTopLevel> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=null
+              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Accessors origin=null
           CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            value: CALL 'public final fun <get-fromPrivateConstant> (): kotlin.String declared in expo.modules.v2.testdata.Accessors' type=kotlin.String origin=null
-              $this: GET_VAR 'value: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Accessors origin=null
-            schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-fromPrivateConstant> (): kotlin.String declared in expo.modules.v2.testdata.Accessors' type=kotlin.String origin=null
+              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Accessors origin=null
+            ARG schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
           CALL 'public abstract fun write (value: kotlin.Int): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            value: CALL 'public final fun <get-fromCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=null
-              $this: GET_VAR 'value: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Accessors origin=null
+            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-fromCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=null
+              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Accessors origin=null
           CALL 'public abstract fun write (value: kotlin.Int): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            $this: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            value: CALL 'public final fun <get-fromPrivateCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=null
-              $this: GET_VAR 'value: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Accessors origin=null
+            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-fromPrivateCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=null
+              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Accessors origin=null
     CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
-      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Accessors.Companion
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Accessors.Companion
       PROPERTY name:companionDefault visibility:public modality:FINAL [val]
         FIELD PROPERTY_BACKING_FIELD name:companionDefault type:kotlin.Int visibility:private [final]
           EXPRESSION_BODY
             CONST Int type=kotlin.Int value=22
-        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-companionDefault> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors.Companion) returnType:kotlin.Int
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-companionDefault> visibility:public modality:FINAL returnType:kotlin.Int
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors.Companion
           correspondingProperty: PROPERTY name:companionDefault visibility:public modality:FINAL [val]
-          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors.Companion
           BLOCK_BODY
             RETURN type=kotlin.Nothing from='public final fun <get-companionDefault> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors.Companion'
               GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:companionDefault type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
@@ -225,134 +225,134 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordDefaultAccessors.kt
         FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors> visibility:private [final]
           EXPRESSION_BODY
             CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Accessors.RecordCodec$ExpoModulesV2 origin=null
-        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors.Companion) returnType:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL returnType:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors>
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors.Companion
           correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
-          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors.Companion
           BLOCK_BODY
             RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors> declared in expo.modules.v2.testdata.Accessors.Companion'
               GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors> visibility:private [final]' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors> origin=null
                 receiver: GET_VAR '<this>: expo.modules.v2.testdata.Accessors.Companion declared in expo.modules.v2.testdata.Accessors.Companion.<get-recordCodec$ExpoModulesV2>' type=expo.modules.v2.testdata.Accessors.Companion origin=null
-      CONSTRUCTOR visibility:private <> () returnType:expo.modules.v2.testdata.Accessors.Companion [primary]
+      CONSTRUCTOR visibility:private returnType:expo.modules.v2.testdata.Accessors.Companion [primary]
         BLOCK_BODY
           DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
           INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
-      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
         overridden:
           public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
           public open fun hashCode (): kotlin.Int declared in kotlin.Any
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
           public open fun toString (): kotlin.String declared in kotlin.Any
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
       PROPERTY name:privateCompanionDefault visibility:private modality:FINAL [const,val]
         FIELD PROPERTY_BACKING_FIELD name:privateCompanionDefault type:kotlin.Int visibility:private [final]
           EXPRESSION_BODY
             CONST Int type=kotlin.Int value=33
-        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-privateCompanionDefault> visibility:private modality:FINAL <> ($this:expo.modules.v2.testdata.Accessors.Companion) returnType:kotlin.Int
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-privateCompanionDefault> visibility:private modality:FINAL returnType:kotlin.Int
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Accessors.Companion
           correspondingProperty: PROPERTY name:privateCompanionDefault visibility:private modality:FINAL [const,val]
-          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Accessors.Companion
           BLOCK_BODY
             RETURN type=kotlin.Nothing from='private final fun <get-privateCompanionDefault> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors.Companion'
               GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:privateCompanionDefault type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
                 receiver: GET_VAR '<this>: expo.modules.v2.testdata.Accessors.Companion declared in expo.modules.v2.testdata.Accessors.Companion.<get-privateCompanionDefault>' type=expo.modules.v2.testdata.Accessors.Companion origin=null
-    CONSTRUCTOR visibility:public <> (fromPrivateTopLevel:kotlin.Int, fromPrivateConstant:kotlin.String, fromCompanion:kotlin.Int, fromPrivateCompanion:kotlin.Int) returnType:expo.modules.v2.testdata.Accessors [primary]
-      VALUE_PARAMETER name:fromPrivateTopLevel index:0 type:kotlin.Int
+    CONSTRUCTOR visibility:public returnType:expo.modules.v2.testdata.Accessors [primary]
+      VALUE_PARAMETER kind:Regular name:fromPrivateTopLevel index:0 type:kotlin.Int
         EXPRESSION_BODY
           CALL 'private final fun secret (): kotlin.Int declared in expo.modules.v2.testdata' type=kotlin.Int origin=null
-      VALUE_PARAMETER name:fromPrivateConstant index:1 type:kotlin.String
+      VALUE_PARAMETER kind:Regular name:fromPrivateConstant index:1 type:kotlin.String
         EXPRESSION_BODY
           CONST String type=kotlin.String value="const"
-      VALUE_PARAMETER name:fromCompanion index:2 type:kotlin.Int
+      VALUE_PARAMETER kind:Regular name:fromCompanion index:2 type:kotlin.Int
         EXPRESSION_BODY
           CALL 'public final fun <get-companionDefault> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors.Companion' type=kotlin.Int origin=GET_PROPERTY
-            $this: GET_OBJECT 'CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=expo.modules.v2.testdata.Accessors.Companion
-      VALUE_PARAMETER name:fromPrivateCompanion index:3 type:kotlin.Int
+            ARG <this>: GET_OBJECT 'CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=expo.modules.v2.testdata.Accessors.Companion
+      VALUE_PARAMETER kind:Regular name:fromPrivateCompanion index:3 type:kotlin.Int
         EXPRESSION_BODY
           CONST Int type=kotlin.Int value=33
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
         INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Accessors modality:FINAL visibility:public superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.Unit
-    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
         public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
         public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.Record
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun hashCode (): kotlin.Int declared in kotlin.Any
         public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.Record
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun toString (): kotlin.String declared in kotlin.Any
         public open fun toString (): kotlin.String declared in expo.modules.v2.records.Record
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-  FUN name:box visibility:public modality:FINAL <> () returnType:kotlin.String
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
     BLOCK_BODY
       VAR name:decoded type:expo.modules.v2.testdata.Accessors [val]
         CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.testdata.Accessors origin=null
-          $this: CALL 'public final fun codecFor <T> (): expo.modules.v2.records.RecordCodec<T of expo.modules.v2.records.codecFor> declared in expo.modules.v2.records' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors> origin=null
-            <T>: expo.modules.v2.testdata.Accessors
-          map: CALL 'public final fun emptyMap <K, V> (): kotlin.collections.Map<K of kotlin.collections.emptyMap, V of kotlin.collections.emptyMap> declared in kotlin.collections' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
-            <K>: kotlin.String
-            <V>: kotlin.Any?
+          ARG <this>: CALL 'public final fun codecFor <T> (): expo.modules.v2.records.RecordCodec<T of expo.modules.v2.records.codecFor> declared in expo.modules.v2.records' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Accessors> origin=null
+            TYPE_ARG T: expo.modules.v2.testdata.Accessors
+          ARG map: CALL 'public final fun emptyMap <K, V> (): kotlin.collections.Map<K of kotlin.collections.emptyMap, V of kotlin.collections.emptyMap> declared in kotlin.collections' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+            TYPE_ARG K: kotlin.String
+            TYPE_ARG V: kotlin.Any?
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
-            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              arg0: CALL 'public final fun <get-fromPrivateTopLevel> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=GET_PROPERTY
-                $this: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
-              arg1: CONST Int type=kotlin.Int value=11
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'public final fun <get-fromPrivateTopLevel> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
+              ARG arg1: CONST Int type=kotlin.Int value=11
           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="Fail: private top-level gave "
               CALL 'public final fun <get-fromPrivateTopLevel> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=GET_PROPERTY
-                $this: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
+                ARG <this>: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
-            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              arg0: CALL 'public final fun <get-fromPrivateConstant> (): kotlin.String declared in expo.modules.v2.testdata.Accessors' type=kotlin.String origin=GET_PROPERTY
-                $this: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
-              arg1: CONST String type=kotlin.String value="const"
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'public final fun <get-fromPrivateConstant> (): kotlin.String declared in expo.modules.v2.testdata.Accessors' type=kotlin.String origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
+              ARG arg1: CONST String type=kotlin.String value="const"
           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="Fail: private const gave "
               CALL 'public final fun <get-fromPrivateConstant> (): kotlin.String declared in expo.modules.v2.testdata.Accessors' type=kotlin.String origin=GET_PROPERTY
-                $this: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
+                ARG <this>: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
-            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              arg0: CALL 'public final fun <get-fromCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=GET_PROPERTY
-                $this: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
-              arg1: CONST Int type=kotlin.Int value=22
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'public final fun <get-fromCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
+              ARG arg1: CONST Int type=kotlin.Int value=22
           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="Fail: companion gave "
               CALL 'public final fun <get-fromCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=GET_PROPERTY
-                $this: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
+                ARG <this>: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
-            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              arg0: CALL 'public final fun <get-fromPrivateCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=GET_PROPERTY
-                $this: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
-              arg1: CONST Int type=kotlin.Int value=33
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'public final fun <get-fromPrivateCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
+              ARG arg1: CONST Int type=kotlin.Int value=33
           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="Fail: private companion gave "
               CALL 'public final fun <get-fromPrivateCompanion> (): kotlin.Int declared in expo.modules.v2.testdata.Accessors' type=kotlin.Int origin=GET_PROPERTY
-                $this: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
+                ARG <this>: GET_VAR 'val decoded: expo.modules.v2.testdata.Accessors declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Accessors origin=null
       RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
         CONST String type=kotlin.String value="OK"
-  FUN name:secret visibility:private modality:FINAL <> () returnType:kotlin.Int
+  FUN name:secret visibility:private modality:FINAL returnType:kotlin.Int
     BLOCK_BODY
       RETURN type=kotlin.Nothing from='private final fun secret (): kotlin.Int declared in expo.modules.v2.testdata'
         CONST Int type=kotlin.Int value=11
@@ -360,7 +360,7 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordDefaultAccessors.kt
     FIELD PROPERTY_BACKING_FIELD name:SECRET_CONSTANT type:kotlin.String visibility:private [final,static]
       EXPRESSION_BODY
         CONST String type=kotlin.String value="const"
-    FUN DEFAULT_PROPERTY_ACCESSOR name:<get-SECRET_CONSTANT> visibility:private modality:FINAL <> () returnType:kotlin.String
+    FUN DEFAULT_PROPERTY_ACCESSOR name:<get-SECRET_CONSTANT> visibility:private modality:FINAL returnType:kotlin.String
       correspondingProperty: PROPERTY name:SECRET_CONSTANT visibility:private modality:FINAL [const,val]
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='private final fun <get-SECRET_CONSTANT> (): kotlin.String declared in expo.modules.v2.testdata'

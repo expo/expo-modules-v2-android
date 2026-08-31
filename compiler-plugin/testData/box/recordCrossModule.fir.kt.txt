@@ -14,7 +14,7 @@ data class Shared : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Shared> {
     override val recordClass: Class<Shared>
-      field = Shared::class.<get-java>()
+      field = <get-java>(/* $receiver = Shared::class */)
       override get
 
     override val schema: RecordSchema
@@ -117,10 +117,10 @@ data class Holder : Record {
     get
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Holder> {
-    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Shared::class.<get-java>(), isNullable = false)]))
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)]))
     override val recordClass: Class<Holder>
-      field = Holder::class.<get-java>()
+      field = <get-java>(/* $receiver = Holder::class */)
       override get
 
     override val schema: RecordSchema
@@ -211,11 +211,11 @@ fun box(): String {
   }
   val shared: RecordCodec<Shared> = codecFor<Shared>()
   when {
-    EQEQ(arg0 = shared.<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+    EQEQ(arg0 = map<RecordField, String>(/* <this> = shared.<get-schema>().<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
       return it.<get-name>()
     }
 ), arg1 = listOf<String>(elements = ["n", "label"])).not() -> { // BLOCK
-      return "Fail: Shared fields are " + shared.<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+      return "Fail: Shared fields are " + map<RecordField, String>(/* <this> = shared.<get-schema>().<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
         return it.<get-name>()
       }
 )

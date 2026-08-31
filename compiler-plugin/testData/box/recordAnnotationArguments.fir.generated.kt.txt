@@ -4,7 +4,7 @@ package expo.modules.v2.testdata
 data class BothArguments : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<BothArguments> {
     override val recordClass: Class<BothArguments>
-      field = BothArguments::class.<get-java>()
+      field = <get-java>(/* $receiver = BothArguments::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Both", bufferSafe = false, fields = [RecordField(name = "v", type = #STRING, isOptional = false)])
@@ -40,7 +40,7 @@ data class BothArguments : Record {
 data class Renamed : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Renamed> {
     override val recordClass: Class<Renamed>
-      field = Renamed::class.<get-java>()
+      field = <get-java>(/* $receiver = Renamed::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Half", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
@@ -73,11 +73,11 @@ data class Renamed : Record {
   }
 }
 
-@Record(, bufferSafe = false)
+@Record(bufferSafe = false)
 data class Unsafe : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Unsafe> {
     override val recordClass: Class<Unsafe>
-      field = Unsafe::class.<get-java>()
+      field = <get-java>(/* $receiver = Unsafe::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Unsafe", bufferSafe = false, fields = [RecordField(name = "payload", type = #ANY_NULL, isOptional = false)])
@@ -108,3 +108,4 @@ data class Unsafe : Record {
     }
   }
 }
+

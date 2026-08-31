@@ -3,10 +3,10 @@ package expo.modules.v2.testdata
 @Record
 data class Opts : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Opts> {
-    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
-    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
     override val recordClass: Class<Opts>
-      field = Opts::class.<get-java>()
+      field = <get-java>(/* $receiver = Opts::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Opts", bufferSafe = true, fields = [RecordField(name = "tags", type = <this>.#type$0, isOptional = false), RecordField(name = "count", type = Int, isOptional = true), RecordField(name = "label", type = #STRING_NULL, isOptional = true), RecordField(name = "derived", type = Int, isOptional = true), RecordField(name = "trailing", type = <this>.#type$1, isOptional = true)])
@@ -58,3 +58,4 @@ data class Opts : Record {
     }
   }
 }
+

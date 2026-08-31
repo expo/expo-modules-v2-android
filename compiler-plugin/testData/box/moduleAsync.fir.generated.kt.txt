@@ -2,7 +2,7 @@ package expo.modules.v2.testdata
 
 @JS
 class AsyncShapes : Module {
-  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = Unit::class.<get-java>(), isNullable = false)
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false)
   fun clear__trampoline$ExpoModulesV2(promise: Promise) {
     promise.launch(type = #type$0, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.clear()
@@ -14,7 +14,7 @@ class AsyncShapes : Module {
     builder.function(jsName = "scale", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "scale__trampoline$ExpoModulesV2", isAsync = true)
     builder.function(jsName = "greet", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "greet__trampoline$ExpoModulesV2", isAsync = true)
     builder.function(jsName = "repeat", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "repeat__trampoline$ExpoModulesV2", isAsync = true)
-    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = Unit::class.<get-java>(), isNullable = false), useBuffer = false), methodName = "clear__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "clear__trampoline$ExpoModulesV2", isAsync = true)
     return "AsyncShapes"
   }
 

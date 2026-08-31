@@ -48,8 +48,11 @@ class RecordKotlinLikeDumpHandler(
     if (DUMP_KT_IR !in module.directives || SKIP_KT_DUMP in module.directives) return
 
     val irFiles = info.irModuleFragment.files
-      .groupWithTestFiles(module, ordered = true)
-      .filterNot { (testFile, _) -> testFile != null && (EXTERNAL_FILE in testFile.directives || testFile.isAdditional) }
+      .groupWithTestFiles(testServices, ordered = true)
+      .filterNot { (owner, _) ->
+        val testFile = owner?.second ?: return@filterNot false
+        owner.first != module || EXTERNAL_FILE in testFile.directives || testFile.isAdditional
+      }
       .map { it.second }
 
     val options = KotlinLikeDumpOptions(

@@ -6,7 +6,7 @@ package expo.modules.v2.testdata.producer
 data class Shared : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Shared> {
     override val recordClass: Class<Shared>
-      field = Shared::class.<get-java>()
+      field = <get-java>(/* $receiver = Shared::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Shared", bufferSafe = true, fields = [RecordField(name = "n", type = Int, isOptional = false), RecordField(name = "label", type = #STRING_NULL, isOptional = false)])
@@ -46,10 +46,10 @@ package expo.modules.v2.testdata.consumer
 @Record
 data class Holder : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Holder> {
-    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Shared::class.<get-java>(), isNullable = false)]))
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)]))
     override val recordClass: Class<Holder>
-      field = Holder::class.<get-java>()
+      field = <get-java>(/* $receiver = Holder::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Holder", bufferSafe = true, fields = [RecordField(name = "shared", type = <this>.#type$0, isOptional = false), RecordField(name = "more", type = <this>.#type$1, isOptional = false)])
@@ -81,3 +81,4 @@ data class Holder : Record {
     }
   }
 }
+

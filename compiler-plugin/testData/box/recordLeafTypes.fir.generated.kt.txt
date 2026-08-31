@@ -1,16 +1,16 @@
 package expo.modules.v2.testdata
 
-@Record(, bufferSafe = false)
+@Record(bufferSafe = false)
 class Leaves : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Leaves> {
-    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$1: TypeDescriptor = Simple(javaClass = File::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$2: TypeDescriptor = Simple(javaClass = URL::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$3: TypeDescriptor = Simple(javaClass = URI::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$4: TypeDescriptor = Simple(javaClass = Path::class.<get-java>(), isNullable = false)
-    private /* final field */ val type$5: TypeDescriptor = Simple(javaClass = Duration::class.<get-java>(), isNullable = true)
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = File::class */), isNullable = false)
+    private /* final field */ val type$2: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)
+    private /* final field */ val type$3: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = URI::class */), isNullable = false)
+    private /* final field */ val type$4: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Path::class */), isNullable = false)
+    private /* final field */ val type$5: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = true)
     override val recordClass: Class<Leaves>
-      field = Leaves::class.<get-java>()
+      field = <get-java>(/* $receiver = Leaves::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Leaves", bufferSafe = false, fields = [RecordField(name = "duration", type = <this>.#type$0, isOptional = false), RecordField(name = "file", type = <this>.#type$1, isOptional = false), RecordField(name = "url", type = <this>.#type$2, isOptional = false), RecordField(name = "uri", type = <this>.#type$3, isOptional = false), RecordField(name = "path", type = <this>.#type$4, isOptional = false), RecordField(name = "maybe", type = <this>.#type$5, isOptional = false)])
@@ -46,3 +46,4 @@ class Leaves : Record {
     }
   }
 }
+

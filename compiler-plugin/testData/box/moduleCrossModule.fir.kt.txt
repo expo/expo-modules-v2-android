@@ -14,7 +14,7 @@ data class Shared : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Shared> {
     override val recordClass: Class<Shared>
-      field = Shared::class.<get-java>()
+      field = <get-java>(/* $receiver = Shared::class */)
       override get
 
     override val schema: RecordSchema
@@ -104,7 +104,7 @@ data class Shared : Record {
 
 @JS(name = "Producer")
 object ProducerModule : Module {
-  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false)
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
   @JS
   var count: Int
     field = 1
@@ -128,7 +128,7 @@ object ProducerModule : Module {
   }
 
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
-    builder.function(jsName = "bump", argTypes = [AnyType(descriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false), useBuffer = true), methodName = "bump__trampoline$ExpoModulesV2")
+    builder.function(jsName = "bump", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true), methodName = "bump__trampoline$ExpoModulesV2")
     builder.function(jsName = "name", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "name__trampoline$ExpoModulesV2")
     builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = true, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false))
     return "Producer"
@@ -162,7 +162,7 @@ package expo.modules.v2.testdata.consumer
 
 @JS(name = "Consumer")
 object ConsumerModule : Module {
-  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false)
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
   private constructor() /* primary */ {
     super/*Module*/()
     /* <init>() */
@@ -170,7 +170,7 @@ object ConsumerModule : Module {
   }
 
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
-    builder.function(jsName = "forward", argTypes = [AnyType(descriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = Shared::class.<get-java>(), isNullable = false), useBuffer = true), methodName = "forward__trampoline$ExpoModulesV2")
+    builder.function(jsName = "forward", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true), methodName = "forward__trampoline$ExpoModulesV2")
     return "Consumer"
   }
 
@@ -193,26 +193,26 @@ object ConsumerModule : Module {
 
 fun box(): String {
   val suffix: String = "__trampoline$ExpoModulesV2"
-  val define: @FlexibleNullability Method? = ProducerModule::class.<get-java><ProducerModule>().getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "expo.modules.v2.modules.ModuleBuilder")])
+  val define: @FlexibleNullability Method? = <get-java><ProducerModule>(/* <this> = ProducerModule::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "expo.modules.v2.modules.ModuleBuilder")])
   when {
-    EQEQ(arg0 = define.getReturnType(), arg1 = String::class.<get-java><String>()).not() -> return "producer define: " + define.getReturnType()
+    EQEQ(arg0 = define.getReturnType(), arg1 = <get-java><String>(/* <this> = String::class */)).not() -> return "producer define: " + define.getReturnType()
   }
-  val producer: Map<String, String> = mapOf<String, String>(pairs = ["bump" + suffix.to<String, String>(that = "(I)I"), "name" + suffix.to<String, String>(that = "(I)Ljava/lang/String;"), "getCount".to<String, String>(that = "()I"), "setCount".to<String, String>(that = "(I)V")])
+  val producer: Map<String, String> = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "bump" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "name" + suffix, */ that = "(I)Ljava/lang/String;"), to<String, String>(/* <this> = "getCount", */ that = "()I"), to<String, String>(/* <this> = "setCount", */ that = "(I)V")])
   { // BLOCK
-    val tmp_0: Iterator<Entry<String, String>> = producer.iterator<String, String>()
+    val tmp_0: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = producer */)
     while (tmp_0.hasNext()) { // BLOCK
       val tmp_1: Entry<String, String> = tmp_0.next()
-      val name: String = tmp_1.component1<String, String>()
-      val want: String = tmp_1.component2<String, String>()
+      val name: String = component1<String, String>(/* <this> = tmp_1 */)
+      val want: String = component2<String, String>(/* <this> = tmp_1 */)
       { // BLOCK
-        val got: String = descriptorOf(owner = ProducerModule::class.<get-java><ProducerModule>(), name = name)
+        val got: String = descriptorOf(owner = <get-java><ProducerModule>(/* <this> = ProducerModule::class */), name = name)
         when {
           EQEQ(arg0 = got, arg1 = want).not() -> return "producer " + name + ": expected " + want + ", got " + got
         }
       }
     }
   }
-  val got: String = descriptorOf(owner = ConsumerModule::class.<get-java><ConsumerModule>(), name = "forward" + suffix)
+  val got: String = descriptorOf(owner = <get-java><ConsumerModule>(/* <this> = ConsumerModule::class */), name = "forward" + suffix)
   when {
     EQEQ(arg0 = got, arg1 = "(I)I").not() -> return "consumer forward: expected (I)I, got " + got
   }
@@ -225,15 +225,15 @@ fun box(): String {
 
 private fun descriptor(type: Class<*>): String {
   return when {
-    EQEQ(arg0 = type, arg1 = Int::class.<get-javaPrimitiveType><Int>()) -> "I"
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)) -> "I"
     EQEQ(arg0 = type, arg1 = super<Void>.#TYPE) -> "V"
-    else -> "L".plus(other = type.getName() /*!! String */.replace(oldChar = '.', newChar = '/')).plus(other = ";")
+    else -> "L".plus(other = replace(/* <this> = type.getName() /*!! String */, */ oldChar = '.', newChar = '/')).plus(other = ";")
   }
 }
 
 private fun descriptorOf(owner: Class<*>, name: String): String {
   val method: Method = { // BLOCK
-    val tmp_2: Method? = owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */.firstOrNull<@FlexibleNullability Method?>(predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+    val tmp_2: Method? = firstOrNull<@FlexibleNullability Method?>(/* <this> = owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
       return EQEQ(arg0 = it.getName(), arg1 = name)
     }
 )
@@ -242,7 +242,7 @@ private fun descriptorOf(owner: Class<*>, name: String): String {
       else -> tmp_2
     }
   }
-  val parameters: String = method.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */.joinToString<@FlexibleNullability Class<*>?>(separator = "", transform = local fun <anonymous>(it: @FlexibleNullability Class<*>?): CharSequence {
+  val parameters: String = joinToString<@FlexibleNullability Class<*>?>(/* <this> = method.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ separator = "", transform = local fun <anonymous>(it: @FlexibleNullability Class<*>?): CharSequence {
     return descriptor(type = it /*!! Class<*> */)
   }
 )

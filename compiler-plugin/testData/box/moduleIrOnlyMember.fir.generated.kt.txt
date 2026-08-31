@@ -15,7 +15,7 @@ object Direct : Module {
     builder.function(jsName = "scale", argTypes = [AnyType(descriptor = DoubleArray(isNullable = false), useBuffer = false), AnyType(descriptor = Double, useBuffer = false)], returns = AnyType(descriptor = Double, useBuffer = false), methodName = "scale")
     builder.function(jsName = "identity", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = false)], returns = AnyType(descriptor = #ANY_NULL, useBuffer = false), methodName = "identity")
     builder.function(jsName = "renamed", argTypes = [AnyType(descriptor = Bool, useBuffer = false)], returns = AnyType(descriptor = Bool, useBuffer = false), methodName = "original")
-    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = Unit::class.<get-java>(), isNullable = false), useBuffer = false), methodName = "clear")
+    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "clear")
     builder.property(jsName = "answer", type = AnyType(descriptor = Int, useBuffer = false), mutable = false, propertyName = "answer", setterType = AnyType(descriptor = Int, useBuffer = false))
     builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = true, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false))
     return "Direct"

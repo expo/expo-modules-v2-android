@@ -4,7 +4,7 @@ package expo.modules.v2.testdata
 data class Point : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Point> {
     override val recordClass: Class<Point>
-      field = Point::class.<get-java>()
+      field = <get-java>(/* $receiver = Point::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Point", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
@@ -36,3 +36,4 @@ data class Point : Record {
     }
   }
 }
+

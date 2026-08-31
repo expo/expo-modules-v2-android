@@ -20,7 +20,7 @@ class Accessors : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Accessors> {
     override val recordClass: Class<Accessors>
-      field = Accessors::class.<get-java>()
+      field = <get-java>(/* $receiver = Accessors::class */)
       override get
 
     override val schema: RecordSchema

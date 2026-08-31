@@ -4,7 +4,7 @@ package expo.modules.v2.testdata
 class Empty : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Empty> {
     override val recordClass: Class<Empty>
-      field = Empty::class.<get-java>()
+      field = <get-java>(/* $receiver = Empty::class */)
       override get
 
     override val schema: RecordSchema
@@ -56,7 +56,7 @@ class Explicit : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Explicit> {
     override val recordClass: Class<Explicit>
-      field = Explicit::class.<get-java>()
+      field = <get-java>(/* $receiver = Explicit::class */)
       override get
 
     override val schema: RecordSchema
@@ -109,7 +109,7 @@ private class Hidden : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Hidden> {
     override val recordClass: Class<Hidden>
-      field = Hidden::class.<get-java>()
+      field = <get-java>(/* $receiver = Hidden::class */)
       override get
 
     override val schema: RecordSchema
@@ -163,7 +163,7 @@ class Host {
 
     private class RecordCodec$ExpoModulesV2 : RecordCodec<Nested> {
       override val recordClass: Class<Nested>
-        field = Nested::class.<get-java>()
+        field = <get-java>(/* $receiver = Nested::class */)
         override get
 
       override val schema: RecordSchema
@@ -228,7 +228,7 @@ class Plain : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Plain> {
     override val recordClass: Class<Plain>
-      field = Plain::class.<get-java>()
+      field = <get-java>(/* $receiver = Plain::class */)
       override get
 
     override val schema: RecordSchema
@@ -282,7 +282,7 @@ class WithCompanion : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<WithCompanion> {
     override val recordClass: Class<WithCompanion>
-      field = WithCompanion::class.<get-java>()
+      field = <get-java>(/* $receiver = WithCompanion::class */)
       override get
 
     override val schema: RecordSchema
@@ -337,18 +337,18 @@ class WithCompanion : Record {
 
 fun box(): String {
   when {
-    EQEQ(arg0 = codecFor<Plain>().<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+    EQEQ(arg0 = map<RecordField, String>(/* <this> = codecFor<Plain>().<get-schema>().<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
       return it.<get-name>()
     }
 ), arg1 = listOf<String>(elements = ["a", "b"])).not() -> { // BLOCK
-      return "Fail: Plain fields are " + codecFor<Plain>().<get-schema>().<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+      return "Fail: Plain fields are " + map<RecordField, String>(/* <this> = codecFor<Plain>().<get-schema>().<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
         return it.<get-name>()
       }
 )
     }
   }
   when {
-    EQEQ(arg0 = codecFor<Plain>().fromMap(map = mapOf<String, Any>(pairs = ["a".to<String, Int>(that = 1), "b".to<String, String>(that = "s")])).<get-b>(), arg1 = "s").not() -> return "Fail: Plain round trip"
+    EQEQ(arg0 = codecFor<Plain>().fromMap(map = mapOf<String, Any>(pairs = [to<String, Int>(/* <this> = "a", */ that = 1), to<String, String>(/* <this> = "b", */ that = "s")])).<get-b>(), arg1 = "s").not() -> return "Fail: Plain round trip"
   }
   when {
     EQEQ(arg0 = codecFor<Hidden>().<get-schema>().<get-name>(), arg1 = "Hidden").not() -> return "Fail: Hidden has no codec"
@@ -366,17 +366,17 @@ fun box(): String {
     EQEQ(arg0 = Companion.make(a = 2).<get-a>(), arg1 = 2).not() -> return "Fail: user companion function disappeared"
   }
   when {
-    EQEQ(arg0 = codecFor<WithCompanion>().fromMap(map = mapOf<String, Int>(pair = "a".to<String, Int>(that = 3))).<get-a>(), arg1 = 3).not() -> return "Fail: WithCompanion round trip"
+    EQEQ(arg0 = codecFor<WithCompanion>().fromMap(map = mapOf<String, Int>(pair = to<String, Int>(/* <this> = "a", */ that = 3))).<get-a>(), arg1 = 3).not() -> return "Fail: WithCompanion round trip"
   }
   when {
     EQEQ(arg0 = codecFor<Nested>().<get-schema>().<get-name>(), arg1 = "Nested").not() -> return "Fail: nested record has no codec"
   }
   val empty: RecordCodec<Empty> = codecFor<Empty>()
   when {
-    empty.<get-schema>().<get-fields>().isNotEmpty<RecordField>() -> return "Fail: Empty has fields " + empty.<get-schema>().<get-fields>()
+    isNotEmpty<RecordField>(/* <this> = empty.<get-schema>().<get-fields>() */) -> return "Fail: Empty has fields " + empty.<get-schema>().<get-fields>()
   }
   when {
-    empty.toMap(value = Empty()).isNotEmpty<String, Any?>() -> return "Fail: Empty toMap is " + empty.toMap(value = Empty())
+    isNotEmpty<String, Any?>(/* <this> = empty.toMap(value = Empty()) */) -> return "Fail: Empty toMap is " + empty.toMap(value = Empty())
   }
   return "OK"
 }

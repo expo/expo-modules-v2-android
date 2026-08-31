@@ -12,7 +12,7 @@ data class Point : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Point> {
     override val recordClass: Class<Point>
-      field = Point::class.<get-java>()
+      field = <get-java>(/* $receiver = Point::class */)
       override get
 
     override val schema: RecordSchema
@@ -104,7 +104,7 @@ fun box(): String {
   }
   val codec: RecordCodec<Point> = codecFor<Point>()
   when {
-    EQEQ(arg0 = codec.<get-recordClass>(), arg1 = Point::class.<get-java><Point>()).not() -> return "Fail: recordClass is " + codec.<get-recordClass>()
+    EQEQ(arg0 = codec.<get-recordClass>(), arg1 = <get-java><Point>(/* <this> = Point::class */)).not() -> return "Fail: recordClass is " + codec.<get-recordClass>()
   }
   val schema: RecordSchema = codec.<get-schema>()
   when {
@@ -114,11 +114,11 @@ fun box(): String {
     schema.<get-bufferSafe>().not() -> return "Fail: schema is not bufferSafe"
   }
   when {
-    EQEQ(arg0 = schema.<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+    EQEQ(arg0 = map<RecordField, String>(/* <this> = schema.<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
       return it.<get-name>()
     }
 ), arg1 = listOf<String>(elements = ["x", "y"])).not() -> { // BLOCK
-      return "Fail: fields are " + schema.<get-fields>().map<RecordField, String>(transform = local fun <anonymous>(it: RecordField): String {
+      return "Fail: fields are " + map<RecordField, String>(/* <this> = schema.<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
         return it.<get-name>()
       }
 )
@@ -126,7 +126,7 @@ fun box(): String {
   }
   val map: Map<String, Any?> = codec.toMap(value = point)
   when {
-    EQEQ(arg0 = map, arg1 = mapOf<String, Double>(pairs = ["x".to<String, Double>(that = 1.5), "y".to<String, Double>(that = 2.5.unaryMinus())])).not() -> return "Fail: toMap gave " + map
+    EQEQ(arg0 = map, arg1 = mapOf<String, Double>(pairs = [to<String, Double>(/* <this> = "x", */ that = 1.5), to<String, Double>(/* <this> = "y", */ that = 2.5.unaryMinus())])).not() -> return "Fail: toMap gave " + map
   }
   when {
     EQEQ(arg0 = codec.fromMap(map = map), arg1 = point).not() -> return "Fail: fromMap gave " + codec.fromMap(map = map)

@@ -1,10 +1,10 @@
 package expo.modules.v2.testdata
 
-@Record(, bufferSafe = false)
+@Record(bufferSafe = false)
 data class Holder : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Holder> {
     override val recordClass: Class<Holder>
-      field = Holder::class.<get-java>()
+      field = <get-java>(/* $receiver = Holder::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Holder", bufferSafe = false, fields = [RecordField(name = "value", type = #ANY_NULL, isOptional = false)])
@@ -40,7 +40,7 @@ data class Holder : Record {
 data class Point : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Point> {
     override val recordClass: Class<Point>
-      field = Point::class.<get-java>()
+      field = <get-java>(/* $receiver = Point::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Point", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
@@ -75,16 +75,16 @@ data class Point : Record {
 
 @JS
 object Values : Module {
-  private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
-  private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = Map<K, V>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))
-  private /* static final field */ val type$2: TypeDescriptor = Parametrized(javaClass = Set<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
-  private /* static final field */ val type$3: TypeDescriptor = Parametrized(javaClass = Array<String>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
-  private /* static final field */ val type$4: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL]))
-  private /* static final field */ val type$5: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = true, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
-  private /* static final field */ val type$6: TypeDescriptor = Simple(javaClass = Point::class.<get-java>(), isNullable = false)
-  private /* static final field */ val type$7: TypeDescriptor = Simple(javaClass = Holder::class.<get-java>(), isNullable = false)
-  private /* static final field */ val type$8: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Point::class.<get-java>(), isNullable = false)]))
-  private /* static final field */ val type$9: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Holder::class.<get-java>(), isNullable = false)]))
+  private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<K, V>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))
+  private /* static final field */ val type$2: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Set<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  private /* static final field */ val type$3: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Array<String>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  private /* static final field */ val type$4: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL]))
+  private /* static final field */ val type$5: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+  private /* static final field */ val type$6: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false)
+  private /* static final field */ val type$7: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false)
+  private /* static final field */ val type$8: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false)]))
+  private /* static final field */ val type$9: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false)]))
   fun containers__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: List<String>
@@ -105,14 +105,14 @@ object Values : Module {
     builder.function(jsName = "nullableScalars", argTypes = [AnyType(descriptor = #INT_BOXED_NULL, useBuffer = true), AnyType(descriptor = #LONG_BOXED_NULL, useBuffer = true), AnyType(descriptor = #FLOAT_BOXED_NULL, useBuffer = true), AnyType(descriptor = #DOUBLE_BOXED_NULL, useBuffer = true), AnyType(descriptor = #BOOLEAN_BOXED_NULL, useBuffer = true)], returns = AnyType(descriptor = #INT_BOXED_NULL, useBuffer = true), methodName = "nullableScalars__trampoline$ExpoModulesV2")
     builder.function(jsName = "unboxedScalars", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Long, useBuffer = false), AnyType(descriptor = Float, useBuffer = false), AnyType(descriptor = Double, useBuffer = false), AnyType(descriptor = Bool, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "unboxedScalars")
     builder.function(jsName = "arrays", argTypes = [AnyType(descriptor = IntArray(isNullable = false), useBuffer = false), AnyType(descriptor = DoubleArray(isNullable = true), useBuffer = false), AnyType(descriptor = ByteArray(isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "arrays")
-    builder.function(jsName = "containers", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = Map<K, V>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = Set<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = Array<String>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "containers__trampoline$ExpoModulesV2")
-    builder.function(jsName = "nullableElements", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = true, params = arrayOf<ObjectLike>(elements = [#INT_BOXED])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "nullableElements__trampoline$ExpoModulesV2")
-    builder.function(jsName = "echoPoint", argTypes = [AnyType(descriptor = Simple(javaClass = Point::class.<get-java>(), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = Point::class.<get-java>(), isNullable = false), useBuffer = true), methodName = "echoPoint__trampoline$ExpoModulesV2")
-    builder.function(jsName = "echoHolder", argTypes = [AnyType(descriptor = Simple(javaClass = Holder::class.<get-java>(), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = Holder::class.<get-java>(), isNullable = false), useBuffer = false), methodName = "echoHolder__trampoline$ExpoModulesV2")
-    builder.function(jsName = "points", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Point::class.<get-java>(), isNullable = false)])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "points__trampoline$ExpoModulesV2")
-    builder.function(jsName = "holders", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = Holder::class.<get-java>(), isNullable = false)])), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "holders__trampoline$ExpoModulesV2")
-    builder.function(jsName = "dynamic", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = false), AnyType(descriptor = Simple(javaClass = JavaScriptValue::class.<get-java>(), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "dynamic")
-    builder.function(jsName = "optedOut", argTypes = [AnyType(descriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "optedOut")
+    builder.function(jsName = "containers", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<K, V>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Set<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Array<String>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "containers__trampoline$ExpoModulesV2")
+    builder.function(jsName = "nullableElements", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#INT_BOXED])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "nullableElements__trampoline$ExpoModulesV2")
+    builder.function(jsName = "echoPoint", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false), useBuffer = true), methodName = "echoPoint__trampoline$ExpoModulesV2")
+    builder.function(jsName = "echoHolder", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false), useBuffer = false), methodName = "echoHolder__trampoline$ExpoModulesV2")
+    builder.function(jsName = "points", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false)])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "points__trampoline$ExpoModulesV2")
+    builder.function(jsName = "holders", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false)])), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "holders__trampoline$ExpoModulesV2")
+    builder.function(jsName = "dynamic", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = false), AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = JavaScriptValue::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "dynamic")
+    builder.function(jsName = "optedOut", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "optedOut")
     builder.function(jsName = "optedIn", argTypes = [AnyType(descriptor = IntArray(isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "optedIn__trampoline$ExpoModulesV2")
     return "Values"
   }

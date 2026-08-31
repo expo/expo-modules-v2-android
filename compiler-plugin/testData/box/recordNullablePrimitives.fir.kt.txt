@@ -28,7 +28,7 @@ data class Boxes : Record {
 
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Boxes> {
     override val recordClass: Class<Boxes>
-      field = Boxes::class.<get-java>()
+      field = <get-java>(/* $receiver = Boxes::class */)
       override get
 
     override val schema: RecordSchema
@@ -172,7 +172,7 @@ fun box(): String {
   val full: Boxes = Boxes(i = 1, l = 2L, f = 3.5F, d = 4.5, b = true, s = "s")
   val fullMap: Map<String, Any?> = codec.toMap(value = full)
   when {
-    EQEQ(arg0 = fullMap, arg1 = mapOf<String, Any?>(pairs = ["i".to<String, Int>(that = 1), "l".to<String, Long>(that = 2L), "f".to<String, Float>(that = 3.5F), "d".to<String, Double>(that = 4.5), "b".to<String, Boolean>(that = true), "s".to<String, String>(that = "s")])).not() -> { // BLOCK
+    EQEQ(arg0 = fullMap, arg1 = mapOf<String, Any?>(pairs = [to<String, Int>(/* <this> = "i", */ that = 1), to<String, Long>(/* <this> = "l", */ that = 2L), to<String, Float>(/* <this> = "f", */ that = 3.5F), to<String, Double>(/* <this> = "d", */ that = 4.5), to<String, Boolean>(/* <this> = "b", */ that = true), to<String, String>(/* <this> = "s", */ that = "s")])).not() -> { // BLOCK
       return "Fail: toMap gave " + fullMap
     }
   }
@@ -185,7 +185,7 @@ fun box(): String {
     EQEQ(arg0 = emptyMap.<get-size>(), arg1 = 6).not() -> return "Fail: nulls dropped keys, got " + emptyMap
   }
   when {
-    emptyMap.<get-values>().any<Any?>(predicate = local fun <anonymous>(it: Any?): Boolean {
+    any<Any?>(/* <this> = emptyMap.<get-values>(), */ predicate = local fun <anonymous>(it: Any?): Boolean {
       return EQEQ(arg0 = it, arg1 = null).not()
     }
 ) -> return "Fail: nulls did not cross, got " + emptyMap

@@ -1,9 +1,9 @@
 [versions]
 # https://github.com/expo/kolibri
-kolibri = "0.1.5"
+kolibri = "0.1.6"
 
 # https://github.com/JetBrains/kotlin
-kotlin = "2.1.20"
+kotlin = "2.2.0"
 
 # The desktop/no-React-Native Hermes host: it creates the `jsi::Runtime` this project attaches to,
 # and ships the one process-wide copy of JSI everything here links against. Built from the
@@ -36,10 +36,7 @@ androidx-annotation = "1.9.1"
 agp = "8.10.1"
 
 # https://github.com/facebook/react-native
-# React Native owns the `jsi::Runtime` :react attaches to, so the prefab `jsi` headers
-# this build compiles against and the `libjsi.so` the app loads must come from one version.
-# 0.86.2 is what Expo SDK 57 pins.
-react-native = "0.86.2"
+react-native = "0.87.0"
 
 # https://github.com/Kotlin/kotlinx-benchmark
 # 0.4.16 is the last release that supports Kotlin 2.0+; 0.4.17 warns on every configuration that it
@@ -48,6 +45,7 @@ kotlinx-benchmark = "0.4.16"
 
 [libraries]
 kolibri-runtime = { module = "io.github.expo.kolibri:runtime", version.ref = "kolibri" }
+kolibri-android = { module = "io.github.expo.kolibri:kolibri-android", version.ref = "kolibri" }
 hermes-env-runtime = { module = "io.github.expo:hermes-test-environment", version.ref = "hermes-env" }
 
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }

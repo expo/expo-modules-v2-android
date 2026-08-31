@@ -3,19 +3,19 @@ package expo.modules.v2.testdata
 @Record
 class Bag : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Bag> {
-    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
-    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
-    private /* final field */ val type$2: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL]))
-    private /* final field */ val type$3: TypeDescriptor = Parametrized(javaClass = Set<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#LONG_BOXED]))
-    private /* final field */ val type$4: TypeDescriptor = Parametrized(javaClass = Map<K, V>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #ANY_NULL]))
-    private /* final field */ val type$5: TypeDescriptor = Parametrized(javaClass = Array<String>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
-    private /* final field */ val type$6: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))]))
-    private /* final field */ val type$7: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING]))
-    private /* final field */ val type$8: TypeDescriptor = Parametrized(javaClass = Array<String>?::class.<get-java>(), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING]))
-    private /* final field */ val type$9: TypeDescriptor = Parametrized(javaClass = List<E>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
-    private /* final field */ val type$10: TypeDescriptor = Parametrized(javaClass = Map<K, V>::class.<get-java>(), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))
+    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+    private /* final field */ val type$2: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL]))
+    private /* final field */ val type$3: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Set<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#LONG_BOXED]))
+    private /* final field */ val type$4: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<K, V>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #ANY_NULL]))
+    private /* final field */ val type$5: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Array<String>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$6: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))]))
+    private /* final field */ val type$7: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$8: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Array<String>?::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$9: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$10: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<K, V>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))
     override val recordClass: Class<Bag>
-      field = Bag::class.<get-java>()
+      field = <get-java>(/* $receiver = Bag::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Bag", bufferSafe = true, fields = [RecordField(name = "tags", type = <this>.#type$0, isOptional = false), RecordField(name = "counts", type = <this>.#type$1, isOptional = false), RecordField(name = "maybes", type = <this>.#type$2, isOptional = false), RecordField(name = "ids", type = <this>.#type$3, isOptional = false), RecordField(name = "meta", type = <this>.#type$4, isOptional = false), RecordField(name = "names", type = <this>.#type$5, isOptional = false), RecordField(name = "nested", type = <this>.#type$6, isOptional = false), RecordField(name = "absent", type = <this>.#type$7, isOptional = false), RecordField(name = "absentNames", type = <this>.#type$8, isOptional = false), RecordField(name = "mutableTags", type = <this>.#type$9, isOptional = false), RecordField(name = "mutableMeta", type = <this>.#type$10, isOptional = false)])
@@ -56,3 +56,4 @@ class Bag : Record {
     }
   }
 }
+

@@ -4,7 +4,7 @@ package expo.modules.v2.testdata
 class Accessors : Record {
   private class RecordCodec$ExpoModulesV2 : RecordCodec<Accessors> {
     override val recordClass: Class<Accessors>
-      field = Accessors::class.<get-java>()
+      field = <get-java>(/* $receiver = Accessors::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Accessors", bufferSafe = true, fields = [RecordField(name = "fromPrivateTopLevel", type = Int, isOptional = true), RecordField(name = "fromPrivateConstant", type = #STRING, isOptional = true), RecordField(name = "fromCompanion", type = Int, isOptional = true), RecordField(name = "fromPrivateCompanion", type = Int, isOptional = true)])
@@ -49,3 +49,4 @@ class Accessors : Record {
       field = RecordCodec$ExpoModulesV2()
   }
 }
+

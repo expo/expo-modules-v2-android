@@ -123,6 +123,12 @@ kotlin {
   compilerOptions {
     optIn.add("org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi")
     optIn.add("org.jetbrains.kotlin.ir.symbols.UnsafeDuringIrConstructionAPI")
+    // Kotlin 2.2 gated the checker, FIR-symbol and IR surfaces this plugin is built on behind
+    // these markers. They are still the only way to express what the plugin does, so opt in
+    // rather than chase replacements that are not settled yet.
+    optIn.add("org.jetbrains.kotlin.DeprecatedForRemovalCompilerApi")
+    optIn.add("org.jetbrains.kotlin.fir.declarations.DirectDeclarationsAccess")
+    optIn.add("org.jetbrains.kotlin.fir.symbols.SymbolInternals")
   }
 }
 

@@ -1,251 +1,251 @@
 FILE fqName:expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
   CLASS CLASS name:BaseModule modality:ABSTRACT visibility:public superTypes:[expo.modules.v2.modules.Module]
-    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.BaseModule
-    CONSTRUCTOR visibility:public <> () returnType:expo.modules.v2.testdata.BaseModule [primary]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.BaseModule
+    CONSTRUCTOR visibility:public returnType:expo.modules.v2.testdata.BaseModule [primary]
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.modules.Module'
         INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:BaseModule modality:ABSTRACT visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.Unit
-    FUN FAKE_OVERRIDE name:define$ExpoModulesV2 visibility:public modality:OPEN <> ($this:expo.modules.v2.modules.Module, builder:expo.modules.v2.modules.ModuleBuilder) returnType:kotlin.String? [fake_override]
+    FUN FAKE_OVERRIDE name:define$ExpoModulesV2 visibility:public modality:OPEN returnType:kotlin.String? [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.modules.Module
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:expo.modules.v2.modules.ModuleBuilder
       overridden:
         public open fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.modules.Module
-      VALUE_PARAMETER name:builder index:0 type:expo.modules.v2.modules.ModuleBuilder
-    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
         public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun hashCode (): kotlin.Int declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun toString (): kotlin.String declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN name:inherited visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.BaseModule) returnType:kotlin.Int
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.BaseModule
+    FUN name:inherited visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.BaseModule
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun inherited (): kotlin.Int declared in expo.modules.v2.testdata.BaseModule'
           CONST Int type=kotlin.Int value=1
   CLASS CLASS name:WithNested modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]
     annotations:
       JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.WithNested
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.WithNested
     CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[kotlin.Any]
-      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.WithNested.Nested
-      CONSTRUCTOR visibility:public <> () returnType:expo.modules.v2.testdata.WithNested.Nested [primary]
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.WithNested.Nested
+      CONSTRUCTOR visibility:public returnType:expo.modules.v2.testdata.WithNested.Nested [primary]
         BLOCK_BODY
           DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
           INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.Unit
-      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
         overridden:
           public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
           public open fun hashCode (): kotlin.Int declared in kotlin.Any
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
           public open fun toString (): kotlin.String declared in kotlin.Any
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      FUN name:ignored visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.WithNested.Nested) returnType:kotlin.Int
-        $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.WithNested.Nested
+      FUN name:ignored visibility:public modality:FINAL returnType:kotlin.Int
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.WithNested.Nested
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun ignored (): kotlin.Int declared in expo.modules.v2.testdata.WithNested.Nested'
             CONST Int type=kotlin.Int value=0
     CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
-      $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.WithNested.Companion
-      CONSTRUCTOR visibility:private <> () returnType:expo.modules.v2.testdata.WithNested.Companion [primary]
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.WithNested.Companion
+      CONSTRUCTOR visibility:private returnType:expo.modules.v2.testdata.WithNested.Companion [primary]
         BLOCK_BODY
           DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
           INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
-      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
         overridden:
           public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-        VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
           public open fun hashCode (): kotlin.Int declared in kotlin.Any
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
           public open fun toString (): kotlin.String declared in kotlin.Any
-        $this: VALUE_PARAMETER name:<this> type:kotlin.Any
       PROPERTY name:CONSTANT visibility:public modality:FINAL [const,val]
         FIELD PROPERTY_BACKING_FIELD name:CONSTANT type:kotlin.Int visibility:public [final]
           EXPRESSION_BODY
             CONST Int type=kotlin.Int value=5
-        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-CONSTANT> visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.WithNested.Companion) returnType:kotlin.Int
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-CONSTANT> visibility:public modality:FINAL returnType:kotlin.Int
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.WithNested.Companion
           correspondingProperty: PROPERTY name:CONSTANT visibility:public modality:FINAL [const,val]
-          $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.WithNested.Companion
           BLOCK_BODY
             RETURN type=kotlin.Nothing from='public final fun <get-CONSTANT> (): kotlin.Int declared in expo.modules.v2.testdata.WithNested.Companion'
               GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:CONSTANT type:kotlin.Int visibility:public [final]' type=kotlin.Int origin=null
                 receiver: GET_VAR '<this>: expo.modules.v2.testdata.WithNested.Companion declared in expo.modules.v2.testdata.WithNested.Companion.<get-CONSTANT>' type=expo.modules.v2.testdata.WithNested.Companion origin=null
-    CONSTRUCTOR visibility:public <> () returnType:expo.modules.v2.testdata.WithNested [primary]
+    CONSTRUCTOR visibility:public returnType:expo.modules.v2.testdata.WithNested [primary]
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.modules.Module'
         INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:WithNested modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.Unit
-    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
         public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun hashCode (): kotlin.Int declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun toString (): kotlin.String declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.WithNested, builder:expo.modules.v2.modules.ModuleBuilder) returnType:kotlin.String?
+    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.WithNested
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:expo.modules.v2.modules.ModuleBuilder
       overridden:
         public open fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.WithNested
-      VALUE_PARAMETER name:builder index:0 type:expo.modules.v2.modules.ModuleBuilder
       BLOCK_BODY
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          $this: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.WithNested.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
-          jsName: CONST String type=kotlin.String value="value"
-          argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
-          returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-            useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          methodName: CONST String type=kotlin.String value="value"
+          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.WithNested.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="value"
+          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="value"
         RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.testdata.WithNested'
           CONST String type=kotlin.String value="WithNested"
-    FUN name:value visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.WithNested) returnType:kotlin.Int
+    FUN name:value visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.WithNested
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.WithNested
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun value (): kotlin.Int declared in expo.modules.v2.testdata.WithNested'
           CONST Int type=kotlin.Int value=1
   CLASS OBJECT name:Arity modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]
     annotations:
       JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Arity
-    CONSTRUCTOR visibility:private <> () returnType:expo.modules.v2.testdata.Arity [primary]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Arity
+    CONSTRUCTOR visibility:private returnType:expo.modules.v2.testdata.Arity [primary]
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.modules.Module'
         INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Arity modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.Unit
-    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
         public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun hashCode (): kotlin.Int declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun toString (): kotlin.String declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Arity, builder:expo.modules.v2.modules.ModuleBuilder) returnType:kotlin.String?
+    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Arity
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:expo.modules.v2.modules.ModuleBuilder
       overridden:
         public open fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Arity
-      VALUE_PARAMETER name:builder index:0 type:expo.modules.v2.modules.ModuleBuilder
       BLOCK_BODY
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          $this: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Arity.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
-          jsName: CONST String type=kotlin.String value="none"
-          argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
-          returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-            useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          methodName: CONST String type=kotlin.String value="none"
+          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Arity.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="none"
+          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="none"
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          $this: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Arity.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
-          jsName: CONST String type=kotlin.String value="one"
-          argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
+          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Arity.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="one"
+          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-            useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          methodName: CONST String type=kotlin.String value="one"
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="one"
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          $this: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Arity.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
-          jsName: CONST String type=kotlin.String value="eight"
-          argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
+          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Arity.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="eight"
+          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-            useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          methodName: CONST String type=kotlin.String value="eight"
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="eight"
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          $this: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Arity.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
-          jsName: CONST String type=kotlin.String value="eightBuffered"
-          argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
+          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Arity.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="eightBuffered"
+          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-              useBuffer: CONST Boolean type=kotlin.Boolean value=true
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-              useBuffer: CONST Boolean type=kotlin.Boolean value=true
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-              useBuffer: CONST Boolean type=kotlin.Boolean value=true
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-              useBuffer: CONST Boolean type=kotlin.Boolean value=true
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-              useBuffer: CONST Boolean type=kotlin.Boolean value=true
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-              useBuffer: CONST Boolean type=kotlin.Boolean value=true
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-              useBuffer: CONST Boolean type=kotlin.Boolean value=true
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-              useBuffer: CONST Boolean type=kotlin.Boolean value=true
-          returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-            useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          methodName: CONST String type=kotlin.String value="eightBuffered__trampoline$ExpoModulesV2"
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="eightBuffered__trampoline$ExpoModulesV2"
         RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.testdata.Arity'
           CONST String type=kotlin.String value="Arity"
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:eightBuffered__trampoline$ExpoModulesV2 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Arity, payloadLength:kotlin.Int) returnType:kotlin.Int
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Arity
-      VALUE_PARAMETER name:payloadLength index:0 type:kotlin.Int
+    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:eightBuffered__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Arity
+      VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
       BLOCK_BODY
         VAR name:args type:expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.args.Trampoline' type=expo.modules.v2.args.TrampolineArguments origin=null
-            $this: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.args.Trampoline
-            payloadLength: GET_VAR 'payloadLength: kotlin.Int declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.args.Trampoline
+            ARG payloadLength: GET_VAR 'payloadLength: kotlin.Int declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
         VAR name:v0 type:kotlin.String [var]
         VAR name:v1 type:kotlin.String [var]
         VAR name:v2 type:kotlin.String [var]
@@ -258,333 +258,333 @@ FILE fqName:expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
           try: BLOCK type=kotlin.Unit origin=null
             SET_VAR 'var v0: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
               CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                $this: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
+                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
             SET_VAR 'var v1: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
               CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                $this: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
+                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
             SET_VAR 'var v2: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
               CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                $this: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
+                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
             SET_VAR 'var v3: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
               CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                $this: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
+                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
             SET_VAR 'var v4: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
               CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                $this: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
+                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
             SET_VAR 'var v5: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
               CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                $this: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
+                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
             SET_VAR 'var v6: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
               CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                $this: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
+                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
             SET_VAR 'var v7: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
               CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                $this: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
+                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
           finally: CALL 'public abstract fun finish (): kotlin.Unit declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.Unit origin=null
-            $this: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
+            ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
         RETURN type=kotlin.Nothing from='public final fun eightBuffered__trampoline$ExpoModulesV2 (payloadLength: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.Arity'
           CALL 'public final fun eightBuffered (a: kotlin.String, b: kotlin.String, c: kotlin.String, d: kotlin.String, e: kotlin.String, f: kotlin.String, g: kotlin.String, h: kotlin.String): kotlin.Int declared in expo.modules.v2.testdata.Arity' type=kotlin.Int origin=null
-            $this: GET_VAR '<this>: expo.modules.v2.testdata.Arity declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.testdata.Arity origin=null
-            a: GET_VAR 'var v0: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-            b: GET_VAR 'var v1: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-            c: GET_VAR 'var v2: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-            d: GET_VAR 'var v3: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-            e: GET_VAR 'var v4: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-            f: GET_VAR 'var v5: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-            g: GET_VAR 'var v6: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-            h: GET_VAR 'var v7: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-    FUN name:eight visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Arity, a:kotlin.Int, b:kotlin.Int, c:kotlin.Int, d:kotlin.Int, e:kotlin.Int, f:kotlin.Int, g:kotlin.Int, h:kotlin.Int) returnType:kotlin.Int
+            ARG <this>: GET_VAR '<this>: expo.modules.v2.testdata.Arity declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=expo.modules.v2.testdata.Arity origin=null
+            ARG a: GET_VAR 'var v0: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+            ARG b: GET_VAR 'var v1: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+            ARG c: GET_VAR 'var v2: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+            ARG d: GET_VAR 'var v3: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+            ARG e: GET_VAR 'var v4: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+            ARG f: GET_VAR 'var v5: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+            ARG g: GET_VAR 'var v6: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+            ARG h: GET_VAR 'var v7: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+    FUN name:eight visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Arity
+      VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
+      VALUE_PARAMETER kind:Regular name:b index:2 type:kotlin.Int
+      VALUE_PARAMETER kind:Regular name:c index:3 type:kotlin.Int
+      VALUE_PARAMETER kind:Regular name:d index:4 type:kotlin.Int
+      VALUE_PARAMETER kind:Regular name:e index:5 type:kotlin.Int
+      VALUE_PARAMETER kind:Regular name:f index:6 type:kotlin.Int
+      VALUE_PARAMETER kind:Regular name:g index:7 type:kotlin.Int
+      VALUE_PARAMETER kind:Regular name:h index:8 type:kotlin.Int
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Arity
-      VALUE_PARAMETER name:a index:0 type:kotlin.Int
-      VALUE_PARAMETER name:b index:1 type:kotlin.Int
-      VALUE_PARAMETER name:c index:2 type:kotlin.Int
-      VALUE_PARAMETER name:d index:3 type:kotlin.Int
-      VALUE_PARAMETER name:e index:4 type:kotlin.Int
-      VALUE_PARAMETER name:f index:5 type:kotlin.Int
-      VALUE_PARAMETER name:g index:6 type:kotlin.Int
-      VALUE_PARAMETER name:h index:7 type:kotlin.Int
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun eight (a: kotlin.Int, b: kotlin.Int, c: kotlin.Int, d: kotlin.Int, e: kotlin.Int, f: kotlin.Int, g: kotlin.Int, h: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.Arity'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-            $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-              $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                  $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                    $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                      $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                        $this: GET_VAR 'a: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
-                        other: GET_VAR 'b: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
-                      other: GET_VAR 'c: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
-                    other: GET_VAR 'd: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
-                  other: GET_VAR 'e: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
-                other: GET_VAR 'f: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
-              other: GET_VAR 'g: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
-            other: GET_VAR 'h: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
-    FUN name:eightBuffered visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Arity, a:kotlin.String, b:kotlin.String, c:kotlin.String, d:kotlin.String, e:kotlin.String, f:kotlin.String, g:kotlin.String, h:kotlin.String) returnType:kotlin.Int
+            ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+              ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                  ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                    ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                      ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                        ARG <this>: GET_VAR 'a: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
+                        ARG other: GET_VAR 'b: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
+                      ARG other: GET_VAR 'c: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
+                    ARG other: GET_VAR 'd: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
+                  ARG other: GET_VAR 'e: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
+                ARG other: GET_VAR 'f: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
+              ARG other: GET_VAR 'g: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
+            ARG other: GET_VAR 'h: kotlin.Int declared in expo.modules.v2.testdata.Arity.eight' type=kotlin.Int origin=null
+    FUN name:eightBuffered visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Arity
+      VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.String
+      VALUE_PARAMETER kind:Regular name:b index:2 type:kotlin.String
+      VALUE_PARAMETER kind:Regular name:c index:3 type:kotlin.String
+      VALUE_PARAMETER kind:Regular name:d index:4 type:kotlin.String
+      VALUE_PARAMETER kind:Regular name:e index:5 type:kotlin.String
+      VALUE_PARAMETER kind:Regular name:f index:6 type:kotlin.String
+      VALUE_PARAMETER kind:Regular name:g index:7 type:kotlin.String
+      VALUE_PARAMETER kind:Regular name:h index:8 type:kotlin.String
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Arity
-      VALUE_PARAMETER name:a index:0 type:kotlin.String
-      VALUE_PARAMETER name:b index:1 type:kotlin.String
-      VALUE_PARAMETER name:c index:2 type:kotlin.String
-      VALUE_PARAMETER name:d index:3 type:kotlin.String
-      VALUE_PARAMETER name:e index:4 type:kotlin.String
-      VALUE_PARAMETER name:f index:5 type:kotlin.String
-      VALUE_PARAMETER name:g index:6 type:kotlin.String
-      VALUE_PARAMETER name:h index:7 type:kotlin.String
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun eightBuffered (a: kotlin.String, b: kotlin.String, c: kotlin.String, d: kotlin.String, e: kotlin.String, f: kotlin.String, g: kotlin.String, h: kotlin.String): kotlin.Int declared in expo.modules.v2.testdata.Arity'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-            $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-              $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                  $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                    $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                      $this: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-                        $this: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
-                          $this: GET_VAR 'a: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
-                        other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
-                          $this: GET_VAR 'b: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
-                      other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
-                        $this: GET_VAR 'c: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
-                    other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
-                      $this: GET_VAR 'd: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
-                  other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
-                    $this: GET_VAR 'e: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
-                other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
-                  $this: GET_VAR 'f: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
-              other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
-                $this: GET_VAR 'g: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
-            other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
-              $this: GET_VAR 'h: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
-    FUN name:none visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Arity) returnType:kotlin.Int
+            ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+              ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                  ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                    ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                      ARG <this>: CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
+                        ARG <this>: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
+                          ARG <this>: GET_VAR 'a: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
+                        ARG other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
+                          ARG <this>: GET_VAR 'b: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
+                      ARG other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
+                        ARG <this>: GET_VAR 'c: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
+                    ARG other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
+                      ARG <this>: GET_VAR 'd: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
+                  ARG other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
+                    ARG <this>: GET_VAR 'e: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
+                ARG other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
+                  ARG <this>: GET_VAR 'f: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
+              ARG other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'g: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
+            ARG other: CALL 'public open fun <get-length> (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=GET_PROPERTY
+              ARG <this>: GET_VAR 'h: kotlin.String declared in expo.modules.v2.testdata.Arity.eightBuffered' type=kotlin.String origin=null
+    FUN name:none visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Arity
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Arity
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun none (): kotlin.Int declared in expo.modules.v2.testdata.Arity'
           CONST Int type=kotlin.Int value=0
-    FUN name:one visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Arity, a:kotlin.Int) returnType:kotlin.Int
+    FUN name:one visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Arity
+      VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Arity
-      VALUE_PARAMETER name:a index:0 type:kotlin.Int
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun one (a: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.Arity'
           GET_VAR 'a: kotlin.Int declared in expo.modules.v2.testdata.Arity.one' type=kotlin.Int origin=null
   CLASS OBJECT name:Derived modality:FINAL visibility:public superTypes:[expo.modules.v2.testdata.BaseModule]
     annotations:
       JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Derived
-    CONSTRUCTOR visibility:private <> () returnType:expo.modules.v2.testdata.Derived [primary]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Derived
+    CONSTRUCTOR visibility:private returnType:expo.modules.v2.testdata.Derived [primary]
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.testdata.BaseModule'
         INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Derived modality:FINAL visibility:public superTypes:[expo.modules.v2.testdata.BaseModule]' type=kotlin.Unit
-    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
         public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.BaseModule
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.BaseModule
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN FAKE_OVERRIDE name:inherited visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.BaseModule) returnType:kotlin.Int [fake_override]
+    FUN FAKE_OVERRIDE name:inherited visibility:public modality:FINAL returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.BaseModule
       overridden:
         public final fun inherited (): kotlin.Int declared in expo.modules.v2.testdata.BaseModule
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.BaseModule
-    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun toString (): kotlin.String declared in expo.modules.v2.testdata.BaseModule
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Derived, builder:expo.modules.v2.modules.ModuleBuilder) returnType:kotlin.String?
+    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Derived
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:expo.modules.v2.modules.ModuleBuilder
       overridden:
         public open fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Derived
-      VALUE_PARAMETER name:builder index:0 type:expo.modules.v2.modules.ModuleBuilder
       BLOCK_BODY
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          $this: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Derived.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
-          jsName: CONST String type=kotlin.String value="own"
-          argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
+          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Derived.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="own"
+          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-            useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          methodName: CONST String type=kotlin.String value="own"
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="own"
         RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.testdata.Derived'
           CONST String type=kotlin.String value="Derived"
-    FUN name:own visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Derived, a:kotlin.Int) returnType:kotlin.Int
+    FUN name:own visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Derived
+      VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Derived
-      VALUE_PARAMETER name:a index:0 type:kotlin.Int
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun own (a: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.Derived'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-            $this: GET_VAR 'a: kotlin.Int declared in expo.modules.v2.testdata.Derived.own' type=kotlin.Int origin=null
-            other: CONST Int type=kotlin.Int value=1
+            ARG <this>: GET_VAR 'a: kotlin.Int declared in expo.modules.v2.testdata.Derived.own' type=kotlin.Int origin=null
+            ARG other: CONST Int type=kotlin.Int value=1
   CLASS OBJECT name:Empty modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]
     annotations:
       JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Empty
-    CONSTRUCTOR visibility:private <> () returnType:expo.modules.v2.testdata.Empty [primary]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Empty
+    CONSTRUCTOR visibility:private returnType:expo.modules.v2.testdata.Empty [primary]
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.modules.Module'
         INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Empty modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.Unit
-    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
         public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun hashCode (): kotlin.Int declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun toString (): kotlin.String declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Empty, builder:expo.modules.v2.modules.ModuleBuilder) returnType:kotlin.String?
+    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Empty
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:expo.modules.v2.modules.ModuleBuilder
       overridden:
         public open fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Empty
-      VALUE_PARAMETER name:builder index:0 type:expo.modules.v2.modules.ModuleBuilder
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.testdata.Empty'
           CONST String type=kotlin.String value="Empty"
   CLASS OBJECT name:Visibility modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]
     annotations:
       JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-    $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:expo.modules.v2.testdata.Visibility
-    CONSTRUCTOR visibility:private <> () returnType:expo.modules.v2.testdata.Visibility [primary]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Visibility
+    CONSTRUCTOR visibility:private returnType:expo.modules.v2.testdata.Visibility [primary]
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.modules.Module'
         INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Visibility modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.Unit
-    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
         public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-      VALUE_PARAMETER name:other index:0 type:kotlin.Any?
-    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun hashCode (): kotlin.Int declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
         public open fun toString (): kotlin.String declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:kotlin.Any
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Visibility, builder:expo.modules.v2.modules.ModuleBuilder) returnType:kotlin.String?
+    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Visibility
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:expo.modules.v2.modules.ModuleBuilder
       overridden:
         public open fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.modules.Module
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Visibility
-      VALUE_PARAMETER name:builder index:0 type:expo.modules.v2.modules.ModuleBuilder
       BLOCK_BODY
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          $this: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Visibility.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
-          jsName: CONST String type=kotlin.String value="hidden"
-          argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
+          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Visibility.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="hidden"
+          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-            useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          methodName: CONST String type=kotlin.String value="hidden"
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="hidden"
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          $this: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Visibility.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
-          jsName: CONST String type=kotlin.String value="visible"
-          argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
+          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.Visibility.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="visible"
+          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-              useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
-            useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          methodName: CONST String type=kotlin.String value="visible"
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="visible"
         RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.testdata.Visibility'
           CONST String type=kotlin.String value="Visibility"
-    FUN name:hidden visibility:private modality:FINAL <> ($this:expo.modules.v2.testdata.Visibility, a:kotlin.Int) returnType:kotlin.Int
+    FUN name:hidden visibility:private modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Visibility
+      VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Visibility
-      VALUE_PARAMETER name:a index:0 type:kotlin.Int
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='private final fun hidden (a: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.Visibility'
           CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=MUL
-            $this: GET_VAR 'a: kotlin.Int declared in expo.modules.v2.testdata.Visibility.hidden' type=kotlin.Int origin=null
-            other: CONST Int type=kotlin.Int value=2
-    FUN name:visible visibility:public modality:FINAL <> ($this:expo.modules.v2.testdata.Visibility, a:kotlin.Int) returnType:kotlin.Int
+            ARG <this>: GET_VAR 'a: kotlin.Int declared in expo.modules.v2.testdata.Visibility.hidden' type=kotlin.Int origin=null
+            ARG other: CONST Int type=kotlin.Int value=2
+    FUN name:visible visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Visibility
+      VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-      $this: VALUE_PARAMETER name:<this> type:expo.modules.v2.testdata.Visibility
-      VALUE_PARAMETER name:a index:0 type:kotlin.Int
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun visible (a: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.Visibility'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-            $this: GET_VAR 'a: kotlin.Int declared in expo.modules.v2.testdata.Visibility.visible' type=kotlin.Int origin=null
-            other: CONST Int type=kotlin.Int value=1
-  FUN name:box visibility:public modality:FINAL <> () returnType:kotlin.String
+            ARG <this>: GET_VAR 'a: kotlin.Int declared in expo.modules.v2.testdata.Visibility.visible' type=kotlin.Int origin=null
+            ARG other: CONST Int type=kotlin.Int value=1
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
     BLOCK_BODY
       VAR name:builder type:@[FlexibleNullability] java.lang.Class<*>? [val]
         CALL 'public open fun forName (p0: @[FlexibleNullability] kotlin.String?): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
-          p0: CONST String type=kotlin.String value="expo.modules.v2.modules.ModuleBuilder"
+          ARG p0: CONST String type=kotlin.String value="expo.modules.v2.modules.ModuleBuilder"
       TYPE_OP type=kotlin.Unit origin=IMPLICIT_COERCION_TO_UNIT typeOperand=kotlin.Unit
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          $this: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Empty> origin=GET_PROPERTY
-            <T>: expo.modules.v2.testdata.Empty
-            $receiver: CLASS_REFERENCE 'CLASS OBJECT name:Empty modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Empty>
-          p0: CONST String type=kotlin.String value="define$ExpoModulesV2"
-          p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
+          ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Empty> origin=GET_PROPERTY
+            TYPE_ARG T: expo.modules.v2.testdata.Empty
+            ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Empty modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Empty>
+          ARG p0: CONST String type=kotlin.String value="define$ExpoModulesV2"
+          ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
             GET_VAR 'val builder: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
-          if: CALL 'public final fun any <T> (predicate: kotlin.Function1<T of kotlin.collections.any, kotlin.Boolean>): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
-            <T>: kotlin.String
-            $receiver: CALL 'private final fun names (owner: java.lang.Class<*>): kotlin.collections.Set<kotlin.String> declared in expo.modules.v2.testdata' type=kotlin.collections.Set<kotlin.String> origin=null
-              owner: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Empty> origin=GET_PROPERTY
-                <T>: expo.modules.v2.testdata.Empty
-                $receiver: CLASS_REFERENCE 'CLASS OBJECT name:Empty modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Empty>
-            predicate: FUN_EXPR type=kotlin.Function1<kotlin.String, kotlin.Boolean> origin=LAMBDA
-              FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> (it:kotlin.String) returnType:kotlin.Boolean
-                VALUE_PARAMETER name:it index:0 type:kotlin.String
+          if: CALL 'public final fun any <T> (<this>: kotlin.collections.Iterable<T of kotlin.collections.any>, predicate: kotlin.Function1<T of kotlin.collections.any, kotlin.Boolean>): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+            TYPE_ARG T: kotlin.String
+            ARG <this>: CALL 'private final fun names (owner: java.lang.Class<*>): kotlin.collections.Set<kotlin.String> declared in expo.modules.v2.testdata' type=kotlin.collections.Set<kotlin.String> origin=null
+              ARG owner: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Empty> origin=GET_PROPERTY
+                TYPE_ARG T: expo.modules.v2.testdata.Empty
+                ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Empty modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Empty>
+            ARG predicate: FUN_EXPR type=kotlin.Function1<kotlin.String, kotlin.Boolean> origin=LAMBDA
+              FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Boolean
+                VALUE_PARAMETER kind:Regular name:it index:0 type:kotlin.String
                 BLOCK_BODY
                   RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: kotlin.String): kotlin.Boolean declared in expo.modules.v2.testdata.box'
-                    CALL 'public final fun contains (other: kotlin.CharSequence, ignoreCase: kotlin.Boolean): kotlin.Boolean declared in kotlin.text' type=kotlin.Boolean origin=null
-                      $receiver: GET_VAR 'it: kotlin.String declared in expo.modules.v2.testdata.box.<anonymous>' type=kotlin.String origin=null
-                      other: CONST String type=kotlin.String value="__trampoline"
+                    CALL 'public final fun contains (<this>: kotlin.CharSequence, other: kotlin.CharSequence, ignoreCase: kotlin.Boolean): kotlin.Boolean declared in kotlin.text' type=kotlin.Boolean origin=null
+                      ARG <this>: GET_VAR 'it: kotlin.String declared in expo.modules.v2.testdata.box.<anonymous>' type=kotlin.String origin=null
+                      ARG other: CONST String type=kotlin.String value="__trampoline"
           then: BLOCK type=kotlin.Unit origin=null
             RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
               CONST String type=kotlin.String value="an empty module should generate no trampolines"
       BLOCK type=kotlin.Unit origin=FOR_LOOP
         VAR FOR_LOOP_ITERATOR name:tmp_0 type:kotlin.collections.Iterator<kotlin.String> [val]
           CALL 'public abstract fun iterator (): kotlin.collections.Iterator<E of kotlin.collections.List> declared in kotlin.collections.List' type=kotlin.collections.Iterator<kotlin.String> origin=FOR_LOOP_ITERATOR
-            $this: CALL 'public final fun listOf <T> (vararg elements: T of kotlin.collections.listOf): kotlin.collections.List<T of kotlin.collections.listOf> declared in kotlin.collections' type=kotlin.collections.List<kotlin.String> origin=null
-              <T>: kotlin.String
-              elements: VARARG type=kotlin.Array<out kotlin.String> varargElementType=kotlin.String
+            ARG <this>: CALL 'public final fun listOf <T> (vararg elements: T of kotlin.collections.listOf): kotlin.collections.List<T of kotlin.collections.listOf> declared in kotlin.collections' type=kotlin.collections.List<kotlin.String> origin=null
+              TYPE_ARG T: kotlin.String
+              ARG elements: VARARG type=kotlin.Array<out kotlin.String> varargElementType=kotlin.String
                 CONST String type=kotlin.String value="none"
                 CONST String type=kotlin.String value="one"
                 CONST String type=kotlin.String value="eight"
         WHILE label=null origin=FOR_LOOP_INNER_WHILE
           condition: CALL 'public abstract fun hasNext (): kotlin.Boolean declared in kotlin.collections.Iterator' type=kotlin.Boolean origin=FOR_LOOP_HAS_NEXT
-            $this: GET_VAR 'val tmp_0: kotlin.collections.Iterator<kotlin.String> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.String> origin=null
+            ARG <this>: GET_VAR 'val tmp_0: kotlin.collections.Iterator<kotlin.String> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.String> origin=null
           body: BLOCK type=kotlin.Unit origin=FOR_LOOP_INNER_WHILE
             VAR FOR_LOOP_VARIABLE name:name type:kotlin.String [val]
               CALL 'public abstract fun next (): T of kotlin.collections.Iterator declared in kotlin.collections.Iterator' type=kotlin.String origin=FOR_LOOP_NEXT
-                $this: GET_VAR 'val tmp_0: kotlin.collections.Iterator<kotlin.String> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.String> origin=null
+                ARG <this>: GET_VAR 'val tmp_0: kotlin.collections.Iterator<kotlin.String> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.String> origin=null
             BLOCK type=kotlin.Unit origin=null
               WHEN type=kotlin.Unit origin=IF
                 BRANCH
                   if: CALL 'public abstract fun contains (element: E of kotlin.collections.Set): kotlin.Boolean declared in kotlin.collections.Set' type=kotlin.Boolean origin=null
-                    $this: CALL 'private final fun names (owner: java.lang.Class<*>): kotlin.collections.Set<kotlin.String> declared in expo.modules.v2.testdata' type=kotlin.collections.Set<kotlin.String> origin=null
-                      owner: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Arity> origin=GET_PROPERTY
-                        <T>: expo.modules.v2.testdata.Arity
-                        $receiver: CLASS_REFERENCE 'CLASS OBJECT name:Arity modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Arity>
-                    element: STRING_CONCATENATION type=kotlin.String
+                    ARG <this>: CALL 'private final fun names (owner: java.lang.Class<*>): kotlin.collections.Set<kotlin.String> declared in expo.modules.v2.testdata' type=kotlin.collections.Set<kotlin.String> origin=null
+                      ARG owner: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Arity> origin=GET_PROPERTY
+                        TYPE_ARG T: expo.modules.v2.testdata.Arity
+                        ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Arity modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Arity>
+                    ARG element: STRING_CONCATENATION type=kotlin.String
                       GET_VAR 'val name: kotlin.String declared in expo.modules.v2.testdata.box' type=kotlin.String origin=null
                       CONST String type=kotlin.String value="__trampoline$ExpoModulesV2"
                   then: BLOCK type=kotlin.Unit origin=null
@@ -594,154 +594,154 @@ FILE fqName:expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
                         CONST String type=kotlin.String value=" should not have a trampoline"
       VAR name:eightBuffered type:@[FlexibleNullability] java.lang.reflect.Method? [val]
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          $this: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Arity> origin=GET_PROPERTY
-            <T>: expo.modules.v2.testdata.Arity
-            $receiver: CLASS_REFERENCE 'CLASS OBJECT name:Arity modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Arity>
-          p0: CONST String type=kotlin.String value="eightBuffered__trampoline$ExpoModulesV2"
-          p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
-            CALL 'public final fun <get-javaPrimitiveType> <T> (): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
-              <T>: kotlin.Int
-              $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Int modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Int>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Int>
+          ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Arity> origin=GET_PROPERTY
+            TYPE_ARG T: expo.modules.v2.testdata.Arity
+            ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Arity modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Arity>
+          ARG p0: CONST String type=kotlin.String value="eightBuffered__trampoline$ExpoModulesV2"
+          ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
+            CALL 'public final fun <get-javaPrimitiveType> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-javaPrimitiveType>>): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
+              TYPE_ARG T: kotlin.Int
+              ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Int modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Int>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Int>
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
-            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              arg0: CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                $this: GET_VAR 'val eightBuffered: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-              arg1: CALL 'public final fun <get-javaPrimitiveType> <T> (): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
-                <T>: kotlin.Int
-                $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Int modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Int>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Int>
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'val eightBuffered: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+              ARG arg1: CALL 'public final fun <get-javaPrimitiveType> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-javaPrimitiveType>>): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
+                TYPE_ARG T: kotlin.Int
+                ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Int modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Int>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Int>
           then: BLOCK type=kotlin.Unit origin=null
             RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
               STRING_CONCATENATION type=kotlin.String
                 CONST String type=kotlin.String value="eightBuffered: expected an int return, got "
                 CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                  $this: GET_VAR 'val eightBuffered: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                  ARG <this>: GET_VAR 'val eightBuffered: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
       VAR name:hidden type:@[FlexibleNullability] java.lang.reflect.Method? [val]
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          $this: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Visibility> origin=GET_PROPERTY
-            <T>: expo.modules.v2.testdata.Visibility
-            $receiver: CLASS_REFERENCE 'CLASS OBJECT name:Visibility modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Visibility>
-          p0: CONST String type=kotlin.String value="hidden"
-          p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
-            CALL 'public final fun <get-javaPrimitiveType> <T> (): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
-              <T>: kotlin.Int
-              $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Int modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Int>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Int>
+          ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Visibility> origin=GET_PROPERTY
+            TYPE_ARG T: expo.modules.v2.testdata.Visibility
+            ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Visibility modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Visibility>
+          ARG p0: CONST String type=kotlin.String value="hidden"
+          ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
+            CALL 'public final fun <get-javaPrimitiveType> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-javaPrimitiveType>>): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
+              TYPE_ARG T: kotlin.Int
+              ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Int modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Int>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Int>
       CALL 'public open fun setAccessible (p0: kotlin.Boolean): kotlin.Unit declared in java.lang.reflect.Method' type=kotlin.Unit origin=EQ
-        $this: GET_VAR 'val hidden: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-        p0: CONST Boolean type=kotlin.Boolean value=true
+        ARG <this>: GET_VAR 'val hidden: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+        ARG p0: CONST Boolean type=kotlin.Boolean value=true
       VAR name:doubled type:kotlin.Int [val]
         TYPE_OP type=kotlin.Int origin=CAST typeOperand=kotlin.Int
           CALL 'public open fun invoke (p0: @[FlexibleNullability] kotlin.Any?, vararg p1: @[FlexibleNullability] kotlin.Any?): @[FlexibleNullability] kotlin.Any? declared in java.lang.reflect.Method' type=@[FlexibleNullability] kotlin.Any? origin=null
-            $this: GET_VAR 'val hidden: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-            p0: GET_OBJECT 'CLASS OBJECT name:Visibility modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=expo.modules.v2.testdata.Visibility
-            p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] kotlin.Any?>? varargElementType=@[FlexibleNullability] kotlin.Any?
+            ARG <this>: GET_VAR 'val hidden: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+            ARG p0: GET_OBJECT 'CLASS OBJECT name:Visibility modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=expo.modules.v2.testdata.Visibility
+            ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] kotlin.Any?>? varargElementType=@[FlexibleNullability] kotlin.Any?
               CONST Int type=kotlin.Int value=21
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
-            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              arg0: GET_VAR 'val doubled: kotlin.Int declared in expo.modules.v2.testdata.box' type=kotlin.Int origin=null
-              arg1: CONST Int type=kotlin.Int value=42
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: GET_VAR 'val doubled: kotlin.Int declared in expo.modules.v2.testdata.box' type=kotlin.Int origin=null
+              ARG arg1: CONST Int type=kotlin.Int value=42
           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="hidden(21) gave "
               GET_VAR 'val doubled: kotlin.Int declared in expo.modules.v2.testdata.box' type=kotlin.Int origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
-          if: CALL 'public final fun none <T> (predicate: kotlin.Function1<T of kotlin.collections.none, kotlin.Boolean>): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
-            <T>: kotlin.String
-            $receiver: CALL 'private final fun names (owner: java.lang.Class<*>): kotlin.collections.Set<kotlin.String> declared in expo.modules.v2.testdata' type=kotlin.collections.Set<kotlin.String> origin=null
-              owner: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Visibility> origin=GET_PROPERTY
-                <T>: expo.modules.v2.testdata.Visibility
-                $receiver: CLASS_REFERENCE 'CLASS OBJECT name:Visibility modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Visibility>
-            predicate: FUN_EXPR type=kotlin.Function1<kotlin.String, kotlin.Boolean> origin=LAMBDA
-              FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> (it:kotlin.String) returnType:kotlin.Boolean
-                VALUE_PARAMETER name:it index:0 type:kotlin.String
+          if: CALL 'public final fun none <T> (<this>: kotlin.collections.Iterable<T of kotlin.collections.none>, predicate: kotlin.Function1<T of kotlin.collections.none, kotlin.Boolean>): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+            TYPE_ARG T: kotlin.String
+            ARG <this>: CALL 'private final fun names (owner: java.lang.Class<*>): kotlin.collections.Set<kotlin.String> declared in expo.modules.v2.testdata' type=kotlin.collections.Set<kotlin.String> origin=null
+              ARG owner: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Visibility> origin=GET_PROPERTY
+                TYPE_ARG T: expo.modules.v2.testdata.Visibility
+                ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Visibility modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Visibility>
+            ARG predicate: FUN_EXPR type=kotlin.Function1<kotlin.String, kotlin.Boolean> origin=LAMBDA
+              FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Boolean
+                VALUE_PARAMETER kind:Regular name:it index:0 type:kotlin.String
                 BLOCK_BODY
                   RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: kotlin.String): kotlin.Boolean declared in expo.modules.v2.testdata.box'
                     CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
-                      arg0: GET_VAR 'it: kotlin.String declared in expo.modules.v2.testdata.box.<anonymous>' type=kotlin.String origin=null
-                      arg1: CONST String type=kotlin.String value="visible"
+                      ARG arg0: GET_VAR 'it: kotlin.String declared in expo.modules.v2.testdata.box.<anonymous>' type=kotlin.String origin=null
+                      ARG arg1: CONST String type=kotlin.String value="visible"
           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
             CONST String type=kotlin.String value="visible is missing"
       VAR name:derived type:@[FlexibleNullability] java.lang.reflect.Method? [val]
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          $this: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Derived> origin=GET_PROPERTY
-            <T>: expo.modules.v2.testdata.Derived
-            $receiver: CLASS_REFERENCE 'CLASS OBJECT name:Derived modality:FINAL visibility:public superTypes:[expo.modules.v2.testdata.BaseModule]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Derived>
-          p0: CONST String type=kotlin.String value="define$ExpoModulesV2"
-          p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
+          ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Derived> origin=GET_PROPERTY
+            TYPE_ARG T: expo.modules.v2.testdata.Derived
+            ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Derived modality:FINAL visibility:public superTypes:[expo.modules.v2.testdata.BaseModule]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.Derived>
+          ARG p0: CONST String type=kotlin.String value="define$ExpoModulesV2"
+          ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
             GET_VAR 'val builder: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
-            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              arg0: CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                $this: GET_VAR 'val derived: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-              arg1: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<kotlin.String> origin=GET_PROPERTY
-                <T>: kotlin.String
-                $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:String modality:FINAL visibility:public superTypes:[kotlin.Comparable<kotlin.String>; kotlin.CharSequence; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.String>
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'val derived: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+              ARG arg1: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<kotlin.String> origin=GET_PROPERTY
+                TYPE_ARG T: kotlin.String
+                ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:String modality:FINAL visibility:public superTypes:[kotlin.Comparable<kotlin.String>; kotlin.CharSequence; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.String>
           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="derived define: "
               CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                $this: GET_VAR 'val derived: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                ARG <this>: GET_VAR 'val derived: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
-            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              arg0: CALL 'public final fun own (a: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.Derived' type=kotlin.Int origin=null
-                $this: GET_OBJECT 'CLASS OBJECT name:Derived modality:FINAL visibility:public superTypes:[expo.modules.v2.testdata.BaseModule]' type=expo.modules.v2.testdata.Derived
-                a: CONST Int type=kotlin.Int value=1
-              arg1: CONST Int type=kotlin.Int value=2
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'public final fun own (a: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.Derived' type=kotlin.Int origin=null
+                ARG <this>: GET_OBJECT 'CLASS OBJECT name:Derived modality:FINAL visibility:public superTypes:[expo.modules.v2.testdata.BaseModule]' type=expo.modules.v2.testdata.Derived
+                ARG a: CONST Int type=kotlin.Int value=1
+              ARG arg1: CONST Int type=kotlin.Int value=2
           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
             CONST String type=kotlin.String value="derived own() is broken"
       TYPE_OP type=kotlin.Unit origin=IMPLICIT_COERCION_TO_UNIT typeOperand=kotlin.Unit
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          $this: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.WithNested> origin=GET_PROPERTY
-            <T>: expo.modules.v2.testdata.WithNested
-            $receiver: CLASS_REFERENCE 'CLASS CLASS name:WithNested modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.WithNested>
-          p0: CONST String type=kotlin.String value="define$ExpoModulesV2"
-          p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
+          ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.WithNested> origin=GET_PROPERTY
+            TYPE_ARG T: expo.modules.v2.testdata.WithNested
+            ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:WithNested modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.WithNested>
+          ARG p0: CONST String type=kotlin.String value="define$ExpoModulesV2"
+          ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
             GET_VAR 'val builder: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
-          if: CALL 'public final fun any <T> (predicate: kotlin.Function1<T of kotlin.collections.any, kotlin.Boolean>): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
-            <T>: kotlin.String
-            $receiver: CALL 'private final fun names (owner: java.lang.Class<*>): kotlin.collections.Set<kotlin.String> declared in expo.modules.v2.testdata' type=kotlin.collections.Set<kotlin.String> origin=null
-              owner: CALL 'public final fun <get-java> <T> (): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.WithNested> origin=GET_PROPERTY
-                <T>: expo.modules.v2.testdata.WithNested
-                $receiver: CLASS_REFERENCE 'CLASS CLASS name:WithNested modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.WithNested>
-            predicate: FUN_EXPR type=kotlin.Function1<kotlin.String, kotlin.Boolean> origin=LAMBDA
-              FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> (it:kotlin.String) returnType:kotlin.Boolean
-                VALUE_PARAMETER name:it index:0 type:kotlin.String
+          if: CALL 'public final fun any <T> (<this>: kotlin.collections.Iterable<T of kotlin.collections.any>, predicate: kotlin.Function1<T of kotlin.collections.any, kotlin.Boolean>): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
+            TYPE_ARG T: kotlin.String
+            ARG <this>: CALL 'private final fun names (owner: java.lang.Class<*>): kotlin.collections.Set<kotlin.String> declared in expo.modules.v2.testdata' type=kotlin.collections.Set<kotlin.String> origin=null
+              ARG owner: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.WithNested> origin=GET_PROPERTY
+                TYPE_ARG T: expo.modules.v2.testdata.WithNested
+                ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:WithNested modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.WithNested>
+            ARG predicate: FUN_EXPR type=kotlin.Function1<kotlin.String, kotlin.Boolean> origin=LAMBDA
+              FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Boolean
+                VALUE_PARAMETER kind:Regular name:it index:0 type:kotlin.String
                 BLOCK_BODY
                   RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: kotlin.String): kotlin.Boolean declared in expo.modules.v2.testdata.box'
-                    CALL 'public final fun contains (other: kotlin.CharSequence, ignoreCase: kotlin.Boolean): kotlin.Boolean declared in kotlin.text' type=kotlin.Boolean origin=null
-                      $receiver: GET_VAR 'it: kotlin.String declared in expo.modules.v2.testdata.box.<anonymous>' type=kotlin.String origin=null
-                      other: CONST String type=kotlin.String value="__trampoline"
+                    CALL 'public final fun contains (<this>: kotlin.CharSequence, other: kotlin.CharSequence, ignoreCase: kotlin.Boolean): kotlin.Boolean declared in kotlin.text' type=kotlin.Boolean origin=null
+                      ARG <this>: GET_VAR 'it: kotlin.String declared in expo.modules.v2.testdata.box.<anonymous>' type=kotlin.String origin=null
+                      ARG other: CONST String type=kotlin.String value="__trampoline"
           then: BLOCK type=kotlin.Unit origin=null
             RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
               CONST String type=kotlin.String value="WithNested should generate no trampolines"
       RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
         CONST String type=kotlin.String value="OK"
-  FUN name:names visibility:private modality:FINAL <> (owner:java.lang.Class<*>) returnType:kotlin.collections.Set<kotlin.String>
-    VALUE_PARAMETER name:owner index:0 type:java.lang.Class<*>
+  FUN name:names visibility:private modality:FINAL returnType:kotlin.collections.Set<kotlin.String>
+    VALUE_PARAMETER kind:Regular name:owner index:0 type:java.lang.Class<*>
     BLOCK_BODY
       RETURN type=kotlin.Nothing from='private final fun names (owner: java.lang.Class<*>): kotlin.collections.Set<kotlin.String> declared in expo.modules.v2.testdata'
-        CALL 'public final fun toSet <T> (): kotlin.collections.Set<T of kotlin.collections.toSet> declared in kotlin.collections' type=kotlin.collections.Set<@[FlexibleNullability] kotlin.String?> origin=null
-          <T>: @[FlexibleNullability] kotlin.String?
-          $receiver: CALL 'public final fun map <T, R> (transform: kotlin.Function1<T of kotlin.collections.map, R of kotlin.collections.map>): kotlin.collections.List<R of kotlin.collections.map> declared in kotlin.collections' type=kotlin.collections.List<@[FlexibleNullability] kotlin.String?> origin=null
-            <T>: @[FlexibleNullability] java.lang.reflect.Method?
-            <R>: @[FlexibleNullability] kotlin.String?
-            $receiver: TYPE_OP type=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?> origin=IMPLICIT_NOTNULL typeOperand=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>
+        CALL 'public final fun toSet <T> (<this>: kotlin.collections.Iterable<T of kotlin.collections.toSet>): kotlin.collections.Set<T of kotlin.collections.toSet> declared in kotlin.collections' type=kotlin.collections.Set<@[FlexibleNullability] kotlin.String?> origin=null
+          TYPE_ARG T: @[FlexibleNullability] kotlin.String?
+          ARG <this>: CALL 'public final fun map <T, R> (<this>: kotlin.Array<out T of kotlin.collections.map>, transform: kotlin.Function1<T of kotlin.collections.map, R of kotlin.collections.map>): kotlin.collections.List<R of kotlin.collections.map> declared in kotlin.collections' type=kotlin.collections.List<@[FlexibleNullability] kotlin.String?> origin=null
+            TYPE_ARG T: @[FlexibleNullability] java.lang.reflect.Method?
+            TYPE_ARG R: @[FlexibleNullability] kotlin.String?
+            ARG <this>: TYPE_OP type=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?> origin=IMPLICIT_NOTNULL typeOperand=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>
               CALL 'public open fun getDeclaredMethods (): @[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>? declared in java.lang.Class' type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>? origin=GET_PROPERTY
-                $this: GET_VAR 'owner: java.lang.Class<*> declared in expo.modules.v2.testdata.names' type=java.lang.Class<*> origin=null
-            transform: FUN_EXPR type=kotlin.Function1<@[FlexibleNullability] java.lang.reflect.Method?, @[FlexibleNullability] kotlin.String?> origin=LAMBDA
-              FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL <> (it:@[FlexibleNullability] java.lang.reflect.Method?) returnType:@[FlexibleNullability] kotlin.String?
-                VALUE_PARAMETER name:it index:0 type:@[FlexibleNullability] java.lang.reflect.Method?
+                ARG <this>: GET_VAR 'owner: java.lang.Class<*> declared in expo.modules.v2.testdata.names' type=java.lang.Class<*> origin=null
+            ARG transform: FUN_EXPR type=kotlin.Function1<@[FlexibleNullability] java.lang.reflect.Method?, @[FlexibleNullability] kotlin.String?> origin=LAMBDA
+              FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:@[FlexibleNullability] kotlin.String?
+                VALUE_PARAMETER kind:Regular name:it index:0 type:@[FlexibleNullability] java.lang.reflect.Method?
                 BLOCK_BODY
                   RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: @[FlexibleNullability] java.lang.reflect.Method?): @[FlexibleNullability] kotlin.String? declared in expo.modules.v2.testdata.names'
                     CALL 'public open fun getName (): @[FlexibleNullability] kotlin.String? declared in java.lang.reflect.Method' type=@[FlexibleNullability] kotlin.String? origin=GET_PROPERTY
-                      $this: GET_VAR 'it: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.names.<anonymous>' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                      ARG <this>: GET_VAR 'it: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.names.<anonymous>' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null

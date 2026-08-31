@@ -4,10 +4,19 @@ project(expo-modules-v2-android CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Gradle injects the path to :api's C++ tree (see react/build.gradle.kts). The fallback keeps
-# an IDE CMake sync, which passes no -D vars, working.
 if (NOT DEFINED EXPO_API_CPP_DIR)
-  set(EXPO_API_CPP_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../api/src/main/cpp")
+  if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/expo-modules-v2")
+    set(EXPO_API_CPP_DIR "${CMAKE_CURRENT_LIST_DIR}")
+  else ()
+    set(EXPO_API_CPP_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../api/src/main/cpp")
+  endif ()
+endif ()
+
+option(EXPO_MODULES_V2_WERROR "Treat warnings in Expo Modules v2 sources as errors" OFF)
+if (EXPO_MODULES_V2_WERROR)
+  set(EXPO_MODULES_V2_WARNINGS -Wall -Wextra -Wpedantic -Werror)
+else ()
+  set(EXPO_MODULES_V2_WARNINGS -Wall -Wextra -Wpedantic)
 endif ()
 
 # --- JSI (React Native's copy) ------------------------------------------------------------------
@@ -52,7 +61,7 @@ target_include_directories(expo-kolibri PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_compile_options(expo-kolibri PRIVATE -Wall -Wextra -Wpedantic -Werror)
+target_compile_options(expo-kolibri PRIVATE ${EXPO_MODULES_V2_WARNINGS})
 
 # `log` is for __android_log_print, the only place ExpoModulesCore.nativeLog can write on Android.
 # jsi is not listed: expo-jsi links it PUBLIC.

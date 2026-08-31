@@ -11,7 +11,7 @@ class Samples : Record {
     private /* final field */ val type$5: TypeDescriptor = ByteArray(isNullable = false)
     private /* final field */ val type$6: TypeDescriptor = IntArray(isNullable = true)
     override val recordClass: Class<Samples>
-      field = Samples::class.<get-java>()
+      field = <get-java>(/* $receiver = Samples::class */)
 
     override val schema: RecordSchema
       field = RecordSchema(name = "Samples", bufferSafe = true, fields = [RecordField(name = "ints", type = <this>.#type$0, isOptional = false), RecordField(name = "longs", type = <this>.#type$1, isOptional = false), RecordField(name = "floats", type = <this>.#type$2, isOptional = false), RecordField(name = "doubles", type = <this>.#type$3, isOptional = false), RecordField(name = "bools", type = <this>.#type$4, isOptional = false), RecordField(name = "bytes", type = <this>.#type$5, isOptional = false), RecordField(name = "maybe", type = <this>.#type$6, isOptional = false)])
@@ -48,3 +48,4 @@ class Samples : Record {
     }
   }
 }
+
