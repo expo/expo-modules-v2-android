@@ -20,6 +20,9 @@ dependencies {
 }
 
 // --- Native build (CMake + Ninja) ---------------------------------------------------------------
+
+val desktopNativeEnabled = OperatingSystem.current().isMacOsX &&
+  !providers.gradleProperty("skipDesktopNative").isPresent
 // The test/benchmark host functions (globalThis.ExpoTestSupport) live in their own library so the
 // :api bridge dylib ships pure library code: libexpo-test-support.dylib links against the :api
 // bridge (kolibri, jsi and converter symbols) and installs the suite into a runtime on demand.
@@ -39,7 +42,7 @@ val apiCppDir = project(":api").layout.projectDirectory.dir("src/main/cpp")
 val apiNativeLibsDir = project(":api").layout.buildDirectory.dir("native-libs")
 
 val configureNative by tasks.registering(Exec::class) {
-  onlyIf { OperatingSystem.current().isMacOsX }
+  onlyIf { desktopNativeEnabled }
   // The imported libexpo-kolibri.dylib must exist before CMake configures the imported target.
   dependsOn(
     ":api:copyNativeLibs",
@@ -68,7 +71,7 @@ val configureNative by tasks.registering(Exec::class) {
 }
 
 val buildNative by tasks.registering(Exec::class) {
-  onlyIf { OperatingSystem.current().isMacOsX }
+  onlyIf { desktopNativeEnabled }
   dependsOn(configureNative, ":api:copyNativeLibs", ":api:unpackKolibriCpp")
   inputs.dir(cppDir)
   inputs.property("nativeBuildType", nativeBuildType)
@@ -82,13 +85,15 @@ val buildNative by tasks.registering(Exec::class) {
 }
 
 val copyNativeLibs by tasks.registering(Copy::class) {
-  onlyIf { OperatingSystem.current().isMacOsX }
+  onlyIf { desktopNativeEnabled }
   dependsOn(buildNative)
   from(nativeBuildDir.map { it.file("libexpo-test-support.dylib") })
   into(nativeLibsDir)
 }
 
-tasks.named("classes") { dependsOn(copyNativeLibs) }
+if (desktopNativeEnabled) {
+  tasks.named("classes") { dependsOn(copyNativeLibs) }
+}
 
 // Expose the directory that holds the runtime .dylib so consumers (:test-app, :benchmark) can put
 // it on java.library.path, and the task that produces it.

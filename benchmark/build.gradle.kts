@@ -95,6 +95,9 @@ application {
 }
 
 // --- Native build (CMake + Ninja) ---------------------------------------------------------------
+
+val desktopNativeEnabled = OperatingSystem.current().isMacOsX &&
+  !providers.gradleProperty("skipDesktopNative").isPresent
 // The JNI-dispatch micro-benchmark (JniCallBenchmark.cpp) compares kolibri's JavaClass tokens
 // against fbjni, so it lives in its own small library: libexpo-benchmark.dylib links against the
 // :api bridge (kolibri symbols) and against the fbjni that hermes-test-environment ships.
@@ -114,7 +117,7 @@ val hermesEnvFbjniDir = project(":api").layout.buildDirectory.dir("hermes-env-fb
 val testSupportNativeLibsDir = project(":test-support").layout.buildDirectory.dir("native-libs")
 
 val configureNative by tasks.registering(Exec::class) {
-  onlyIf { OperatingSystem.current().isMacOsX }
+  onlyIf { desktopNativeEnabled }
   // The imported libexpo-kolibri.dylib and libfbjni.dylib must exist before CMake configures the
   // imported targets.
   dependsOn(
@@ -143,7 +146,7 @@ val configureNative by tasks.registering(Exec::class) {
 }
 
 val buildNative by tasks.registering(Exec::class) {
-  onlyIf { OperatingSystem.current().isMacOsX }
+  onlyIf { desktopNativeEnabled }
   dependsOn(
     configureNative,
     ":api:copyNativeLibs",
@@ -160,13 +163,15 @@ val buildNative by tasks.registering(Exec::class) {
 }
 
 val copyNativeLibs by tasks.registering(Copy::class) {
-  onlyIf { OperatingSystem.current().isMacOsX }
+  onlyIf { desktopNativeEnabled }
   dependsOn(buildNative)
   from(nativeBuildDir.map { it.file("libexpo-benchmark.dylib") })
   into(nativeLibsDir)
 }
 
-tasks.named("classes") { dependsOn(copyNativeLibs) }
+if (desktopNativeEnabled) {
+  tasks.named("classes") { dependsOn(copyNativeLibs) }
+}
 
 // --- Native runtime wiring (mirrors :test-app) --------------------------------------------------
 // The benchmarks load libhermes-test-env.dylib + libfbjni.dylib (the Hermes host),

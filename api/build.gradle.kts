@@ -99,8 +99,11 @@ tasks.named<Test>("test") {
 
 // --- Native build (CMake + Ninja) ---------------------------------------------------------------
 
+val desktopNativeEnabled = OperatingSystem.current().isMacOsX &&
+  !providers.gradleProperty("skipDesktopNative").isPresent
+
 val configureNative by tasks.registering(Exec::class) {
-  onlyIf { OperatingSystem.current().isMacOsX }
+  onlyIf { desktopNativeEnabled }
   dependsOn(unpackKolibriCpp, unpackHermesEnvJsi, unpackHermesEnvLibs)
   inputs.dir(cppDir)
   inputs.dir(kolibriCppDir)
@@ -124,7 +127,7 @@ val configureNative by tasks.registering(Exec::class) {
 }
 
 val buildNative by tasks.registering(Exec::class) {
-  onlyIf { OperatingSystem.current().isMacOsX }
+  onlyIf { desktopNativeEnabled }
   dependsOn(configureNative, unpackKolibriCpp, unpackHermesEnvJsi, unpackHermesEnvLibs)
   inputs.dir(cppDir)
   inputs.dir(kolibriCppDir)
@@ -138,14 +141,16 @@ val buildNative by tasks.registering(Exec::class) {
 }
 
 val copyNativeLibs by tasks.registering(Copy::class) {
-  onlyIf { OperatingSystem.current().isMacOsX }
+  onlyIf { desktopNativeEnabled }
   dependsOn(buildNative)
   from(nativeBuildDir.map { it.file("libexpo-kolibri.dylib") })
   into(nativeLibsDir)
 }
 
 // Make the native libraries available whenever the module is assembled/tested.
-tasks.named("classes") { dependsOn(copyNativeLibs) }
+if (desktopNativeEnabled) {
+  tasks.named("classes") { dependsOn(copyNativeLibs) }
+}
 
 // Expose the directories that hold the runtime .dylib files so consumers (e.g. :test-app) can put
 // them on java.library.path, and the tasks that produce them. The engine's library sits in its own
