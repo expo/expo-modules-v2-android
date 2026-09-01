@@ -16,7 +16,7 @@ plugins {
 val expoModulesV2Version: String = libs.versions.expo.modules.v2.get()
 
 allprojects {
-  group = "expo.modules.v2"
+  group = "io.github.expo"
   version = expoModulesV2Version
 }
 

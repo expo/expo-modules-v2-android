@@ -1,4 +1,4 @@
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
 @JS(name = "Instance")
 class DirectInstance : Module {

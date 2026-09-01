@@ -3,9 +3,9 @@
 
 // MODULE: producer
 // FILE: producer.kt
-package expo.modules.v2.testdata.producer
+package io.github.expo.modules.v2.testdata.producer
 
-import expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.annotations.Record
 
 // The supertype and the whole codec are written into this module's class files, so the consumer
 // below needs no plugin run of its own to see `Shared` as a record.
@@ -14,12 +14,12 @@ data class Shared(val n: Int, val label: String?)
 
 // MODULE: consumer(producer)
 // FILE: consumer.kt
-package expo.modules.v2.testdata.consumer
+package io.github.expo.modules.v2.testdata.consumer
 
-import expo.modules.v2.annotations.Record
-import expo.modules.v2.records.Record as RecordMarker
-import expo.modules.v2.records.codecFor
-import expo.modules.v2.testdata.producer.Shared
+import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.records.Record as RecordMarker
+import io.github.expo.modules.v2.records.codecFor
+import io.github.expo.modules.v2.testdata.producer.Shared
 
 // A record in this module whose field type is a record from the other one.
 @Record

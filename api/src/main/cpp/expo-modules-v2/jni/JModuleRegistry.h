@@ -12,7 +12,7 @@
 
 namespace expo::modules::v2 {
   struct JModuleRegistry : kolibri::JavaClass<JModuleRegistry> {
-    static constexpr std::string_view descriptor = "expo/modules/v2/modules/ModuleRegistry";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/modules/ModuleRegistry";
 
     struct Module {
       kolibri::Ref<> instance;

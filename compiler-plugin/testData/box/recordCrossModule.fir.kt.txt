@@ -1,6 +1,6 @@
 // MODULE: producer
 // FILE: producer.kt
-package expo.modules.v2.testdata.producer
+package io.github.expo.modules.v2.testdata.producer
 
 @Record
 data class Shared : Record {
@@ -104,7 +104,7 @@ data class Shared : Record {
 
 // MODULE: consumer
 // FILE: consumer.kt
-package expo.modules.v2.testdata.consumer
+package io.github.expo.modules.v2.testdata.consumer
 
 @Record
 data class Holder : Record {

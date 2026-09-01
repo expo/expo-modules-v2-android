@@ -1,4 +1,4 @@
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
 @JS
 class AsyncShapes : Module {
@@ -83,7 +83,7 @@ class AsyncShapes : Module {
 fun box(): String {
   val clazz: Class<AsyncShapes> = <get-java><AsyncShapes>(/* <this> = AsyncShapes::class */)
   val int: Class<Int>? = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)
-  val promise: @FlexibleNullability Class<*>? = forName(p0 = "expo.modules.v2.async.Promise")
+  val promise: @FlexibleNullability Class<*>? = forName(p0 = "io.github.expo.modules.v2.async.Promise")
   val scale: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "scale" + "__trampoline$ExpoModulesV2", p1 = [int, promise])
   when {
     EQEQ(arg0 = scale.getReturnType(), arg1 = super<Void>.#TYPE).not() -> return "scale returns " + scale.getReturnType()

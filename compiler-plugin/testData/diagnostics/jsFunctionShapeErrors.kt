@@ -1,11 +1,11 @@
 // RUN_PIPELINE_TILL: FRONTEND
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.jsi.JavaScriptObject
-import expo.modules.v2.jsi.JavaScriptValue
-import expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.jsi.JavaScriptObject
+import io.github.expo.modules.v2.jsi.JavaScriptValue
+import io.github.expo.modules.v2.modules.Module
 
 @JS
 class BadFunctions : Module() {

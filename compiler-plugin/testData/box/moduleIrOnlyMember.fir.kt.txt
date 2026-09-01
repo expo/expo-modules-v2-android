@@ -1,4 +1,4 @@
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
 @JS(name = "Instance")
 class DirectInstance : Module {
@@ -82,11 +82,11 @@ object Direct : Module {
 }
 
 fun box(): String {
-  val method: @FlexibleNullability Method? = <get-java><Module>(/* <this> = Module::class */).getMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "expo.modules.v2.modules.ModuleBuilder")])
+  val method: @FlexibleNullability Method? = <get-java><Module>(/* <this> = Module::class */).getMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "io.github.expo.modules.v2.modules.ModuleBuilder")])
   when {
     EQEQ(arg0 = method.getDeclaringClass(), arg1 = <get-java><Module>(/* <this> = Module::class */)).not() -> return "base lookup: " + method.getDeclaringClass()
   }
-  val generated: @FlexibleNullability Method? = <get-java><Direct>(/* <this> = Direct::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "expo.modules.v2.modules.ModuleBuilder")])
+  val generated: @FlexibleNullability Method? = <get-java><Direct>(/* <this> = Direct::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "io.github.expo.modules.v2.modules.ModuleBuilder")])
   when {
     EQEQ(arg0 = generated.getReturnType(), arg1 = <get-java><String>(/* <this> = String::class */)).not() -> { // BLOCK
       return "expected a String return, got " + generated.getReturnType()

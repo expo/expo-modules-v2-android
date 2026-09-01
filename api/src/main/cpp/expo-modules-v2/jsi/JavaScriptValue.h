@@ -23,7 +23,7 @@ namespace expo::modules::v2::jsi {
       Object = 7,
     };
 
-    static constexpr std::string_view descriptor = "expo/modules/v2/jsi/JavaScriptValue";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/jsi/JavaScriptValue";
 
     static constexpr Constructor<void(jlong)> constructor{};
 

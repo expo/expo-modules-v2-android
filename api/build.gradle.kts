@@ -166,10 +166,10 @@ extra["hermesEnvFbjniTask"] = unpackHermesEnvFbjni
 
 // The compiler plugin, registered straight onto every Kotlin compilation here.
 //
-// `id("expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin publishes — is
-// not available inside this build: a Gradle plugin built here is not on this build's own buildscript
-// classpath. Registering the jar plus switching incremental compilation off is the whole of what
-// that plugin does, so this is the same thing by hand.
+// `id("io.github.expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin
+// publishes — is not available inside this build: a Gradle plugin built here is not on this
+// build's own buildscript classpath. Registering the jar plus switching incremental compilation
+// off is the whole of what that plugin does, so this is the same thing by hand.
 configurations
   .matching { it.name.startsWith("kotlinCompilerPluginClasspath") }
   .configureEach { dependencies.add(project.dependencies.create(project(":compiler-plugin"))) }

@@ -1,9 +1,9 @@
 // DUMP_IR
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.modules.Module
 
 /**
  * The whole module generator adds members in the backend only, so this pins two things the rest
@@ -48,12 +48,12 @@ class DirectInstance : Module() {
 
 fun box(): String {
     // The generated override is reached through the base declaration, so plain virtual dispatch.
-    val method = Module::class.java.getMethod("define\$ExpoModulesV2", Class.forName("expo.modules.v2.modules.ModuleBuilder"))
+    val method = Module::class.java.getMethod("define\$ExpoModulesV2", Class.forName("io.github.expo.modules.v2.modules.ModuleBuilder"))
     if (method.declaringClass != Module::class.java) return "base lookup: ${method.declaringClass}"
 
     val generated = Direct::class.java.getDeclaredMethod(
         "define\$ExpoModulesV2",
-        Class.forName("expo.modules.v2.modules.ModuleBuilder"),
+        Class.forName("io.github.expo.modules.v2.modules.ModuleBuilder"),
     )
     if (generated.returnType != String::class.java) {
         return "expected a String return, got ${generated.returnType}"

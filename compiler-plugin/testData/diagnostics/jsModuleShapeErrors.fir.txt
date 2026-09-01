@@ -1,125 +1,125 @@
 FILE: jsModuleShapeErrors.kt
-    package expo.modules.v2.testdata
+    package io.github.expo.modules.v2.testdata
 
-    @R|expo/modules/v2/annotations/JS|() public abstract interface NotAClass : R|kotlin/Any| {
+    @R|io/github/expo/modules/v2/annotations/JS|() public abstract interface NotAClass : R|kotlin/Any| {
     }
-    @R|expo/modules/v2/annotations/JS|() public final enum class NotAnEnum : R|kotlin/Enum<expo/modules/v2/testdata/NotAnEnum>| {
-        private constructor(): R|expo/modules/v2/testdata/NotAnEnum| {
-            super<R|kotlin/Enum<expo/modules/v2/testdata/NotAnEnum>|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public final enum class NotAnEnum : R|kotlin/Enum<io/github/expo/modules/v2/testdata/NotAnEnum>| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/NotAnEnum| {
+            super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/NotAnEnum>|>()
         }
 
-        public final static enum entry A: R|expo/modules/v2/testdata/NotAnEnum|
-        public final static fun values(): R|kotlin/Array<expo/modules/v2/testdata/NotAnEnum>| {
+        public final static enum entry A: R|io/github/expo/modules/v2/testdata/NotAnEnum|
+        public final static fun values(): R|kotlin/Array<io/github/expo/modules/v2/testdata/NotAnEnum>| {
         }
 
-        public final static fun valueOf(value: R|kotlin/String|): R|expo/modules/v2/testdata/NotAnEnum| {
+        public final static fun valueOf(value: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/NotAnEnum| {
         }
 
-        public final static val entries: R|kotlin/enums/EnumEntries<expo/modules/v2/testdata/NotAnEnum>|
-            public get(): R|kotlin/enums/EnumEntries<expo/modules/v2/testdata/NotAnEnum>|
+        public final static val entries: R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/NotAnEnum>|
+            public get(): R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/NotAnEnum>|
 
     }
-    @R|expo/modules/v2/annotations/JS|() public final annotation class NotAnAnnotation : R|kotlin/Annotation| {
-        public constructor(): R|expo/modules/v2/testdata/NotAnAnnotation| {
+    @R|io/github/expo/modules/v2/annotations/JS|() public final annotation class NotAnAnnotation : R|kotlin/Annotation| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NotAnAnnotation| {
             super<R|kotlin/Any|>()
         }
 
     }
-    @R|expo/modules/v2/annotations/JS|() public abstract class NotAbstract : R|expo/modules/v2/modules/Module| {
-        public constructor(): R|expo/modules/v2/testdata/NotAbstract| {
-            super<R|expo/modules/v2/modules/Module|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public abstract class NotAbstract : R|io/github/expo/modules/v2/modules/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NotAbstract| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
     }
-    @R|expo/modules/v2/annotations/JS|() public sealed class NotSealed : R|expo/modules/v2/modules/Module| {
-        protected constructor(): R|expo/modules/v2/testdata/NotSealed| {
-            super<R|expo/modules/v2/modules/Module|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public sealed class NotSealed : R|io/github/expo/modules/v2/modules/Module| {
+        protected constructor(): R|io/github/expo/modules/v2/testdata/NotSealed| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
     }
-    @R|expo/modules/v2/annotations/JS|() public final class Generic<T> : R|expo/modules/v2/modules/Module| {
-        public constructor<T>(): R|expo/modules/v2/testdata/Generic<T>| {
-            super<R|expo/modules/v2/modules/Module|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public final class Generic<T> : R|io/github/expo/modules/v2/modules/Module| {
+        public constructor<T>(): R|io/github/expo/modules/v2/testdata/Generic<T>| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
     }
     public final class Outer : R|kotlin/Any| {
-        public constructor(): R|expo/modules/v2/testdata/Outer| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Outer| {
             super<R|kotlin/Any|>()
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final inner class NotInner : R|expo/modules/v2/modules/Module| {
-            public expo/modules/v2/testdata/Outer.constructor(): R|expo/modules/v2/testdata/Outer.NotInner| {
-                super<R|expo/modules/v2/modules/Module|>()
+        @R|io/github/expo/modules/v2/annotations/JS|() public final inner class NotInner : R|io/github/expo/modules/v2/modules/Module| {
+            public io/github/expo/modules/v2/testdata/Outer.constructor(): R|io/github/expo/modules/v2/testdata/Outer.NotInner| {
+                super<R|io/github/expo/modules/v2/modules/Module|>()
             }
 
         }
 
     }
     public final fun containingFunction(): R|kotlin/Unit| {
-        @R|expo/modules/v2/annotations/JS|() local final class NotLocal : R|expo/modules/v2/modules/Module| {
+        @R|io/github/expo/modules/v2/annotations/JS|() local final class NotLocal : R|io/github/expo/modules/v2/modules/Module| {
             public constructor(): R|<local>/NotLocal| {
-                super<R|expo/modules/v2/modules/Module|>()
+                super<R|io/github/expo/modules/v2/modules/Module|>()
             }
 
         }
 
     }
-    @R|expo/modules/v2/annotations/JS|() public final class NotAModule : R|kotlin/Any| {
-        public constructor(): R|expo/modules/v2/testdata/NotAModule| {
+    @R|io/github/expo/modules/v2/annotations/JS|() public final class NotAModule : R|kotlin/Any| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NotAModule| {
             super<R|kotlin/Any|>()
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun f(): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun f(): R|kotlin/Int| {
             ^f Int(1)
         }
 
     }
-    public final class ForgotTheClassAnnotation : R|expo/modules/v2/modules/Module| {
-        public constructor(): R|expo/modules/v2/testdata/ForgotTheClassAnnotation| {
-            super<R|expo/modules/v2/modules/Module|>()
+    public final class ForgotTheClassAnnotation : R|io/github/expo/modules/v2/modules/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ForgotTheClassAnnotation| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun f(): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun f(): R|kotlin/Int| {
             ^f Int(1)
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final val p: R|kotlin/Int| = Int(1)
+        @R|io/github/expo/modules/v2/annotations/JS|() public final val p: R|kotlin/Int| = Int(1)
             public get(): R|kotlin/Int|
 
     }
-    @R|expo/modules/v2/annotations/JS|() public final fun topLevel(): R|kotlin/Int| {
+    @R|io/github/expo/modules/v2/annotations/JS|() public final fun topLevel(): R|kotlin/Int| {
         ^topLevel Int(1)
     }
-    @R|expo/modules/v2/annotations/JS|() public final val topLevelProperty: R|kotlin/Int| = Int(1)
+    @R|io/github/expo/modules/v2/annotations/JS|() public final val topLevelProperty: R|kotlin/Int| = Int(1)
         public get(): R|kotlin/Int|
-    @R|expo/modules/v2/annotations/JS|() public final class InternalMembers : R|expo/modules/v2/modules/Module| {
-        public constructor(): R|expo/modules/v2/testdata/InternalMembers| {
-            super<R|expo/modules/v2/modules/Module|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public final class InternalMembers : R|io/github/expo/modules/v2/modules/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/InternalMembers| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
-        @R|expo/modules/v2/annotations/JS|() internal final fun hidden(): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() internal final fun hidden(): R|kotlin/Int| {
             ^hidden Int(1)
         }
 
-        @R|expo/modules/v2/annotations/JS|() internal final val hiddenProperty: R|kotlin/Int| = Int(1)
+        @R|io/github/expo/modules/v2/annotations/JS|() internal final val hiddenProperty: R|kotlin/Int| = Int(1)
             internal get(): R|kotlin/Int|
 
     }
-    @R|expo/modules/v2/annotations/JS|() public final class DuplicateNames : R|expo/modules/v2/modules/Module| {
-        public constructor(): R|expo/modules/v2/testdata/DuplicateNames| {
-            super<R|expo/modules/v2/modules/Module|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public final class DuplicateNames : R|io/github/expo/modules/v2/modules/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/DuplicateNames| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun value(): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun value(): R|kotlin/Int| {
             ^value Int(1)
         }
 
-        @R|expo/modules/v2/annotations/JS|(name = String(value)) public final fun renamedOntoValue(): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|(name = String(value)) public final fun renamedOntoValue(): R|kotlin/Int| {
             ^renamedOntoValue Int(2)
         }
 
-        @R|expo/modules/v2/annotations/JS|(name = String(value)) public final val alsoValue: R|kotlin/Int| = Int(3)
+        @R|io/github/expo/modules/v2/annotations/JS|(name = String(value)) public final val alsoValue: R|kotlin/Int| = Int(3)
             public get(): R|kotlin/Int|
 
     }

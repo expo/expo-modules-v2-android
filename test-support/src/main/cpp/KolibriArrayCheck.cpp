@@ -77,7 +77,7 @@ namespace expo::modules::v2 {
 
   void bindKolibriArrayFixture() {
     JNIEnv* env = kolibri::getEnv();
-    kolibri::registerNative(env, "expo/modules/v2/testapp/KolibriArrayFixture")
+    kolibri::registerNative(env, "io/github/expo/modules/v2/testapp/KolibriArrayFixture")
       .method<&fixtureSum>("sum")
       .method<&fixtureScale>("scale")
       .method<&fixtureFill>("fill")

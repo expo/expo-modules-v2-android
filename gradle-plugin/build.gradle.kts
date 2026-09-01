@@ -11,9 +11,13 @@ plugins {
 }
 
 mavenPublishing {
-  // `GradlePlugin(...)` publishes the jar and the `expo.modules.v2.gradle.plugin` marker, which is
-  // what makes `id("expo.modules.v2") version "<v>"` resolve for a consumer. The empty javadoc jar
-  // is there because Central's validator demands one.
+  // Prefixed for the same reason :react is — see there. Only the jar is renamed: Gradle derives the
+  // marker's coordinates from the plugin id, and the publish plugin leaves that publication alone.
+  coordinates(artifactId = "expo-modules-v2-gradle-plugin")
+
+  // `GradlePlugin(...)` publishes the jar and the `io.github.expo.modules.v2.gradle.plugin` marker,
+  // which is what makes `id("io.github.expo.modules.v2") version "<v>"` resolve for a consumer. The
+  // empty javadoc jar is there because Central's validator demands one.
   configure(GradlePlugin(JavadocJar.Empty(), sourcesJar = true))
 
   pom {
@@ -41,21 +45,24 @@ dependencies {
 }
 
 buildConfig {
-  packageName("expo.modules.v2.gradle")
+  packageName("io.github.expo.modules.v2.gradle")
 
-  buildConfigField("String", "KOTLIN_PLUGIN_ID", "\"expo.modules.v2.compiler\"")
+  buildConfigField("String", "KOTLIN_PLUGIN_ID", "\"io.github.expo.modules.v2.compiler\"")
   buildConfigField("String", "KOTLIN_PLUGIN_GROUP", "\"$group\"")
-  buildConfigField("String", "KOTLIN_PLUGIN_NAME", "\"compiler-plugin\"")
+  buildConfigField("String", "KOTLIN_PLUGIN_NAME", "\"expo-modules-v2-compiler-plugin\"")
   buildConfigField("String", "KOTLIN_PLUGIN_VERSION", "\"$version\"")
 }
 
 gradlePlugin {
   plugins {
     create("expoModulesV2") {
-      id = "expo.modules.v2"
+      // Gradle publishes a plugin marker under the plugin id as its Maven group, whatever the
+      // project's own group is. The id therefore has to sit inside the verified `io.github.expo`
+      // namespace too, or Central rejects the marker and `id(...) version "<v>"` never resolves.
+      id = "io.github.expo.modules.v2"
       displayName = "Expo Modules API v2 Gradle plugin"
       description = "Applies the Expo Modules v2 Kotlin compiler plugin (generated RecordCodecs)."
-      implementationClass = "expo.modules.v2.gradle.ExpoModulesV2GradlePlugin"
+      implementationClass = "io.github.expo.modules.v2.gradle.ExpoModulesV2GradlePlugin"
     }
   }
 }

@@ -1,8 +1,8 @@
 FILE: recordWide.kt
-    package expo.modules.v2.testdata
+    package io.github.expo.modules.v2.testdata
 
-    @R|expo/modules/v2/annotations/Record|() public final class Wide : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
-        public constructor(field0: R|kotlin/Int|, field1: R|kotlin/Int|, field2: R|kotlin/Int|, field3: R|kotlin/Int|, field4: R|kotlin/Int|, field5: R|kotlin/Int|, field6: R|kotlin/Int|, field7: R|kotlin/Int|, field8: R|kotlin/Int|, field9: R|kotlin/Int|, field10: R|kotlin/Int|, field11: R|kotlin/Int|, field12: R|kotlin/Int|, field13: R|kotlin/Int|, field14: R|kotlin/Int|, field15: R|kotlin/Int|, field16: R|kotlin/Int|, field17: R|kotlin/Int|, field18: R|kotlin/Int|, field19: R|kotlin/Int|, field20: R|kotlin/Int|, field21: R|kotlin/Int|, field22: R|kotlin/Int|, field23: R|kotlin/Int|, field24: R|kotlin/Int|, field25: R|kotlin/Int|, field26: R|kotlin/Int|, field27: R|kotlin/Int|, field28: R|kotlin/Int|, field29: R|kotlin/Int|, field30: R|kotlin/Int|, field31: R|kotlin/Int|, field32: R|kotlin/Int|, field33: R|kotlin/Int|, field34: R|kotlin/Int|, field35: R|kotlin/Int|, field36: R|kotlin/Int|, field37: R|kotlin/Int|, field38: R|kotlin/Int|, field39: R|kotlin/Int|, field40: R|kotlin/Int|, field41: R|kotlin/Int|): R|expo/modules/v2/testdata/Wide| {
+    @R|io/github/expo/modules/v2/annotations/Record|() public final class Wide : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        public constructor(field0: R|kotlin/Int|, field1: R|kotlin/Int|, field2: R|kotlin/Int|, field3: R|kotlin/Int|, field4: R|kotlin/Int|, field5: R|kotlin/Int|, field6: R|kotlin/Int|, field7: R|kotlin/Int|, field8: R|kotlin/Int|, field9: R|kotlin/Int|, field10: R|kotlin/Int|, field11: R|kotlin/Int|, field12: R|kotlin/Int|, field13: R|kotlin/Int|, field14: R|kotlin/Int|, field15: R|kotlin/Int|, field16: R|kotlin/Int|, field17: R|kotlin/Int|, field18: R|kotlin/Int|, field19: R|kotlin/Int|, field20: R|kotlin/Int|, field21: R|kotlin/Int|, field22: R|kotlin/Int|, field23: R|kotlin/Int|, field24: R|kotlin/Int|, field25: R|kotlin/Int|, field26: R|kotlin/Int|, field27: R|kotlin/Int|, field28: R|kotlin/Int|, field29: R|kotlin/Int|, field30: R|kotlin/Int|, field31: R|kotlin/Int|, field32: R|kotlin/Int|, field33: R|kotlin/Int|, field34: R|kotlin/Int|, field35: R|kotlin/Int|, field36: R|kotlin/Int|, field37: R|kotlin/Int|, field38: R|kotlin/Int|, field39: R|kotlin/Int|, field40: R|kotlin/Int|, field41: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Wide| {
             super<R|kotlin/Any|>()
         }
 
@@ -132,26 +132,26 @@ FILE: recordWide.kt
         public final val field41: R|kotlin/Int| = R|<local>/field41|
             public get(): R|kotlin/Int|
 
-        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Wide>| {
-            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Wide>|
-                public get(): R|java/lang/Class<expo/modules/v2/testdata/Wide>|
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Wide>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/Wide>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/Wide>|
 
-            public final override val schema: R|expo/modules/v2/records/RecordSchema|
-                public get(): R|expo/modules/v2/records/RecordSchema|
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
 
-            public final override fun encode(value: R|expo/modules/v2/testdata/Wide|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/Wide|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
 
-            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Wide|
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/Wide|
 
-            public constructor(): R|expo/modules/v2/testdata/Wide.RecordCodec$ExpoModulesV2|
+            public constructor(): R|io/github/expo/modules/v2/testdata/Wide.RecordCodec$ExpoModulesV2|
 
         }
 
         public final companion object Companion : R|kotlin/Any| {
-            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Wide>|
-                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Wide>|
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Wide>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Wide>|
 
-            private constructor(): R|expo/modules/v2/testdata/Wide.Companion| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/Wide.Companion| {
                 super<R|kotlin/Any|>()
             }
 
@@ -159,21 +159,21 @@ FILE: recordWide.kt
 
     }
     public final fun box(): R|kotlin/String| {
-        lval codec: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Wide>| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Wide|>()
+        lval codec: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Wide>| = R|io/github/expo/modules/v2/records/codecFor|<R|io/github/expo/modules/v2/testdata/Wide|>()
         when () {
-            !=(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|, Int(42)) ->  {
-                ^box <strcat>(String(Fail: ), R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|, String( fields))
+            !=(R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.schema: R|io/github/expo/modules/v2/records/RecordSchema|>|.R|io/github/expo/modules/v2/records/RecordSchema.fields|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|, Int(42)) ->  {
+                ^box <strcat>(String(Fail: ), R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.schema: R|io/github/expo/modules/v2/records/RecordSchema|>|.R|io/github/expo/modules/v2/records/RecordSchema.fields|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|, String( fields))
             }
         }
 
         when () {
-            !=(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|SubstitutionOverride<kotlin/collections/List.get: R|expo/modules/v2/records/RecordField|>|(Int(41)).R|expo/modules/v2/records/RecordField.name|, String(field41)) ->  {
-                ^box <strcat>(String(Fail: last field is ), R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|SubstitutionOverride<kotlin/collections/List.get: R|expo/modules/v2/records/RecordField|>|(Int(41)).R|expo/modules/v2/records/RecordField.name|)
+            !=(R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.schema: R|io/github/expo/modules/v2/records/RecordSchema|>|.R|io/github/expo/modules/v2/records/RecordSchema.fields|.R|SubstitutionOverride<kotlin/collections/List.get: R|io/github/expo/modules/v2/records/RecordField|>|(Int(41)).R|io/github/expo/modules/v2/records/RecordField.name|, String(field41)) ->  {
+                ^box <strcat>(String(Fail: last field is ), R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.schema: R|io/github/expo/modules/v2/records/RecordSchema|>|.R|io/github/expo/modules/v2/records/RecordSchema.fields|.R|SubstitutionOverride<kotlin/collections/List.get: R|io/github/expo/modules/v2/records/RecordField|>|(Int(41)).R|io/github/expo/modules/v2/records/RecordField.name|)
             }
         }
 
-        lval wide: R|expo/modules/v2/testdata/Wide| = R|expo/modules/v2/testdata/Wide.Wide|(Int(0), Int(1), Int(2), Int(3), Int(4), Int(5), Int(6), Int(7), Int(8), Int(9), Int(10), Int(11), Int(12), Int(13), Int(14), Int(15), Int(16), Int(17), Int(18), Int(19), Int(20), Int(21), Int(22), Int(23), Int(24), Int(25), Int(26), Int(27), Int(28), Int(29), Int(30), Int(31), Int(32), Int(33), Int(34), Int(35), Int(36), Int(37), Int(38), Int(39), Int(40), Int(41))
-        lval map: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/wide|)
+        lval wide: R|io/github/expo/modules/v2/testdata/Wide| = R|io/github/expo/modules/v2/testdata/Wide.Wide|(Int(0), Int(1), Int(2), Int(3), Int(4), Int(5), Int(6), Int(7), Int(8), Int(9), Int(10), Int(11), Int(12), Int(13), Int(14), Int(15), Int(16), Int(17), Int(18), Int(19), Int(20), Int(21), Int(22), Int(23), Int(24), Int(25), Int(26), Int(27), Int(28), Int(29), Int(30), Int(31), Int(32), Int(33), Int(34), Int(35), Int(36), Int(37), Int(38), Int(39), Int(40), Int(41))
+        lval map: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>| = R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/wide|)
         when () {
             !=(R|<local>/map|.R|SubstitutionOverride<kotlin/collections/Map.size: R|kotlin/Int|>|, Int(42)) ->  {
                 ^box <strcat>(String(Fail: toMap gave ), R|<local>/map|.R|SubstitutionOverride<kotlin/collections/Map.size: R|kotlin/Int|>|, String( keys))
@@ -187,8 +187,8 @@ FILE: recordWide.kt
         }
 
         when () {
-            !=(R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Wide|>|(R|<local>/map|).R|expo/modules/v2/testdata/Wide.field7|, Int(7)) ->  {
-                ^box <strcat>(String(Fail: field7 gave ), R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Wide|>|(R|<local>/map|).R|expo/modules/v2/testdata/Wide.field7|)
+            !=(R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.fromMap: R|io/github/expo/modules/v2/testdata/Wide|>|(R|<local>/map|).R|io/github/expo/modules/v2/testdata/Wide.field7|, Int(7)) ->  {
+                ^box <strcat>(String(Fail: field7 gave ), R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.fromMap: R|io/github/expo/modules/v2/testdata/Wide|>|(R|<local>/map|).R|io/github/expo/modules/v2/testdata/Wide.field7|)
             }
         }
 

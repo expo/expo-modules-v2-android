@@ -1,235 +1,235 @@
-FILE fqName:expo.modules.v2.testdata fileName:/recordNullablePrimitives.kt
-  CLASS CLASS name:Boxes modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]
+FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordNullablePrimitives.kt
+  CLASS CLASS name:Boxes modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
       Record(name = <null>, bufferSafe = <null>)
-    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Boxes
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Boxes
     PROPERTY name:i visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]
         EXPRESSION_BODY
-          GET_VAR 'i: kotlin.Int? declared in expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Int? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+          GET_VAR 'i: kotlin.Int? declared in io.github.expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Int? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
       FUN DEFAULT_PROPERTY_ACCESSOR name:<get-i> visibility:public modality:FINAL returnType:kotlin.Int?
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
         correspondingProperty: PROPERTY name:i visibility:public modality:FINAL [val]
         BLOCK_BODY
-          RETURN type=kotlin.Nothing from='public final fun <get-i> (): kotlin.Int? declared in expo.modules.v2.testdata.Boxes'
+          RETURN type=kotlin.Nothing from='public final fun <get-i> (): kotlin.Int? declared in io.github.expo.modules.v2.testdata.Boxes'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]' type=kotlin.Int? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.<get-i>' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.<get-i>' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     PROPERTY name:l visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:l type:kotlin.Long? visibility:private [final]
         EXPRESSION_BODY
-          GET_VAR 'l: kotlin.Long? declared in expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Long? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+          GET_VAR 'l: kotlin.Long? declared in io.github.expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Long? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
       FUN DEFAULT_PROPERTY_ACCESSOR name:<get-l> visibility:public modality:FINAL returnType:kotlin.Long?
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
         correspondingProperty: PROPERTY name:l visibility:public modality:FINAL [val]
         BLOCK_BODY
-          RETURN type=kotlin.Nothing from='public final fun <get-l> (): kotlin.Long? declared in expo.modules.v2.testdata.Boxes'
+          RETURN type=kotlin.Nothing from='public final fun <get-l> (): kotlin.Long? declared in io.github.expo.modules.v2.testdata.Boxes'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:l type:kotlin.Long? visibility:private [final]' type=kotlin.Long? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.<get-l>' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.<get-l>' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     PROPERTY name:f visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:f type:kotlin.Float? visibility:private [final]
         EXPRESSION_BODY
-          GET_VAR 'f: kotlin.Float? declared in expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Float? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+          GET_VAR 'f: kotlin.Float? declared in io.github.expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Float? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
       FUN DEFAULT_PROPERTY_ACCESSOR name:<get-f> visibility:public modality:FINAL returnType:kotlin.Float?
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
         correspondingProperty: PROPERTY name:f visibility:public modality:FINAL [val]
         BLOCK_BODY
-          RETURN type=kotlin.Nothing from='public final fun <get-f> (): kotlin.Float? declared in expo.modules.v2.testdata.Boxes'
+          RETURN type=kotlin.Nothing from='public final fun <get-f> (): kotlin.Float? declared in io.github.expo.modules.v2.testdata.Boxes'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:f type:kotlin.Float? visibility:private [final]' type=kotlin.Float? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.<get-f>' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.<get-f>' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     PROPERTY name:d visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:d type:kotlin.Double? visibility:private [final]
         EXPRESSION_BODY
-          GET_VAR 'd: kotlin.Double? declared in expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Double? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+          GET_VAR 'd: kotlin.Double? declared in io.github.expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Double? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
       FUN DEFAULT_PROPERTY_ACCESSOR name:<get-d> visibility:public modality:FINAL returnType:kotlin.Double?
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
         correspondingProperty: PROPERTY name:d visibility:public modality:FINAL [val]
         BLOCK_BODY
-          RETURN type=kotlin.Nothing from='public final fun <get-d> (): kotlin.Double? declared in expo.modules.v2.testdata.Boxes'
+          RETURN type=kotlin.Nothing from='public final fun <get-d> (): kotlin.Double? declared in io.github.expo.modules.v2.testdata.Boxes'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:d type:kotlin.Double? visibility:private [final]' type=kotlin.Double? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.<get-d>' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.<get-d>' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     PROPERTY name:b visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.Boolean? visibility:private [final]
         EXPRESSION_BODY
-          GET_VAR 'b: kotlin.Boolean? declared in expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Boolean? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+          GET_VAR 'b: kotlin.Boolean? declared in io.github.expo.modules.v2.testdata.Boxes.<init>' type=kotlin.Boolean? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
       FUN DEFAULT_PROPERTY_ACCESSOR name:<get-b> visibility:public modality:FINAL returnType:kotlin.Boolean?
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
         correspondingProperty: PROPERTY name:b visibility:public modality:FINAL [val]
         BLOCK_BODY
-          RETURN type=kotlin.Nothing from='public final fun <get-b> (): kotlin.Boolean? declared in expo.modules.v2.testdata.Boxes'
+          RETURN type=kotlin.Nothing from='public final fun <get-b> (): kotlin.Boolean? declared in io.github.expo.modules.v2.testdata.Boxes'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.Boolean? visibility:private [final]' type=kotlin.Boolean? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.<get-b>' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.<get-b>' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     PROPERTY name:s visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:s type:kotlin.String? visibility:private [final]
         EXPRESSION_BODY
-          GET_VAR 's: kotlin.String? declared in expo.modules.v2.testdata.Boxes.<init>' type=kotlin.String? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+          GET_VAR 's: kotlin.String? declared in io.github.expo.modules.v2.testdata.Boxes.<init>' type=kotlin.String? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
       FUN DEFAULT_PROPERTY_ACCESSOR name:<get-s> visibility:public modality:FINAL returnType:kotlin.String?
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
         correspondingProperty: PROPERTY name:s visibility:public modality:FINAL [val]
         BLOCK_BODY
-          RETURN type=kotlin.Nothing from='public final fun <get-s> (): kotlin.String? declared in expo.modules.v2.testdata.Boxes'
+          RETURN type=kotlin.Nothing from='public final fun <get-s> (): kotlin.String? declared in io.github.expo.modules.v2.testdata.Boxes'
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:s type:kotlin.String? visibility:private [final]' type=kotlin.String? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.<get-s>' type=expo.modules.v2.testdata.Boxes origin=null
-    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes>]
-      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
-      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.<get-s>' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+    CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes>]
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
+      PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
         overridden:
-          public abstract recordClass: java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
-        FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Boxes> visibility:private [final]
+          public abstract recordClass: java.lang.Class<T of io.github.expo.modules.v2.records.RecordCodec> declared in io.github.expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<io.github.expo.modules.v2.testdata.Boxes> visibility:private [final]
           EXPRESSION_BODY
-            CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.Boxes> origin=null
-              ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Boxes modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
-        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL returnType:java.lang.Class<expo.modules.v2.testdata.Boxes>
-          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
-          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+            CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Boxes> origin=null
+              ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Boxes modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL returnType:java.lang.Class<io.github.expo.modules.v2.testdata.Boxes>
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
+          correspondingProperty: PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
           overridden:
-            public abstract fun <get-recordClass> (): java.lang.Class<T of expo.modules.v2.records.RecordCodec> declared in expo.modules.v2.records.RecordCodec
+            public abstract fun <get-recordClass> (): java.lang.Class<T of io.github.expo.modules.v2.records.RecordCodec> declared in io.github.expo.modules.v2.records.RecordCodec
           BLOCK_BODY
-            RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<expo.modules.v2.testdata.Boxes> declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2'
-              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<expo.modules.v2.testdata.Boxes> visibility:private [final]' type=java.lang.Class<expo.modules.v2.testdata.Boxes> origin=null
-                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.<get-recordClass>' type=expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 origin=null
-      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+            RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<io.github.expo.modules.v2.testdata.Boxes> declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<io.github.expo.modules.v2.testdata.Boxes> visibility:private [final]' type=java.lang.Class<io.github.expo.modules.v2.testdata.Boxes> origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.<get-recordClass>' type=io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 origin=null
+      PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
         overridden:
-          public abstract schema: expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
-        FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]
+          public abstract schema: io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:schema type:io.github.expo.modules.v2.records.RecordSchema visibility:private [final]
           EXPRESSION_BODY
-            CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: expo.modules.v2.records.RecordField) declared in expo.modules.v2.records.RecordSchema' type=expo.modules.v2.records.RecordSchema origin=null
+            CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: io.github.expo.modules.v2.records.RecordField) declared in io.github.expo.modules.v2.records.RecordSchema' type=io.github.expo.modules.v2.records.RecordSchema origin=null
               ARG name: CONST String type=kotlin.String value="Boxes"
               ARG bufferSafe: CONST Boolean type=kotlin.Boolean value=true
-              ARG fields: VARARG type=kotlin.Array<expo.modules.v2.records.RecordField> varargElementType=expo.modules.v2.records.RecordField
-                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+              ARG fields: VARARG type=kotlin.Array<io.github.expo.modules.v2.records.RecordField> varargElementType=io.github.expo.modules.v2.records.RecordField
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: io.github.expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in io.github.expo.modules.v2.records.RecordField' type=io.github.expo.modules.v2.records.RecordField origin=null
                   ARG name: CONST String type=kotlin.String value="i"
-                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:INT_BOXED_NULL type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:INT_BOXED_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                   ARG isOptional: CONST Boolean type=kotlin.Boolean value=false
-                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: io.github.expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in io.github.expo.modules.v2.records.RecordField' type=io.github.expo.modules.v2.records.RecordField origin=null
                   ARG name: CONST String type=kotlin.String value="l"
-                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:LONG_BOXED_NULL type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:LONG_BOXED_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                   ARG isOptional: CONST Boolean type=kotlin.Boolean value=false
-                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: io.github.expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in io.github.expo.modules.v2.records.RecordField' type=io.github.expo.modules.v2.records.RecordField origin=null
                   ARG name: CONST String type=kotlin.String value="f"
-                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:FLOAT_BOXED_NULL type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:FLOAT_BOXED_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                   ARG isOptional: CONST Boolean type=kotlin.Boolean value=false
-                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: io.github.expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in io.github.expo.modules.v2.records.RecordField' type=io.github.expo.modules.v2.records.RecordField origin=null
                   ARG name: CONST String type=kotlin.String value="d"
-                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:DOUBLE_BOXED_NULL type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:DOUBLE_BOXED_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                   ARG isOptional: CONST Boolean type=kotlin.Boolean value=false
-                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: io.github.expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in io.github.expo.modules.v2.records.RecordField' type=io.github.expo.modules.v2.records.RecordField origin=null
                   ARG name: CONST String type=kotlin.String value="b"
-                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:BOOLEAN_BOXED_NULL type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:BOOLEAN_BOXED_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                   ARG isOptional: CONST Boolean type=kotlin.Boolean value=false
-                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in expo.modules.v2.records.RecordField' type=expo.modules.v2.records.RecordField origin=null
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: io.github.expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in io.github.expo.modules.v2.records.RecordField' type=io.github.expo.modules.v2.records.RecordField origin=null
                   ARG name: CONST String type=kotlin.String value="s"
-                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING_NULL type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                   ARG isOptional: CONST Boolean type=kotlin.Boolean value=false
-        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL returnType:expo.modules.v2.records.RecordSchema
-          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
-          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.records.RecordSchema
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
+          correspondingProperty: PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
           overridden:
-            public abstract fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.records.RecordCodec
+            public abstract fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec
           BLOCK_BODY
-            RETURN type=kotlin.Nothing from='public final fun <get-schema> (): expo.modules.v2.records.RecordSchema declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2'
-              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:expo.modules.v2.records.RecordSchema visibility:private [final]' type=expo.modules.v2.records.RecordSchema origin=null
-                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.<get-schema>' type=expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 origin=null
-      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:public returnType:expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 [primary]
+            RETURN type=kotlin.Nothing from='public final fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:io.github.expo.modules.v2.records.RecordSchema visibility:private [final]' type=io.github.expo.modules.v2.records.RecordSchema origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.<get-schema>' type=io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 origin=null
+      CONSTRUCTOR GENERATED[io.github.expo.modules.v2.compiler.RecordKey] visibility:public returnType:io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 [primary]
         BLOCK_BODY
           DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
-          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes>]' type=kotlin.Unit
-          CALL 'public final fun register (codec: expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
-            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.records.RecordRegistry
-            ARG codec: GET_VAR '<this>: expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 origin=null
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes>]' type=kotlin.Unit
+          CALL 'public final fun register (codec: io.github.expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in io.github.expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.records.RecordRegistry
+            ARG codec: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 origin=null
       FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
         overridden:
-          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.RecordCodec
-      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN returnType:expo.modules.v2.testdata.Boxes [fake_override]
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes>
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN returnType:io.github.expo.modules.v2.testdata.Boxes [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes>
         VALUE_PARAMETER kind:Regular name:map index:1 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
         overridden:
-          public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+          public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec
       FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
-          public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.RecordCodec
+          public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.records.RecordCodec
       FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes>
-        VALUE_PARAMETER kind:Regular name:value index:1 type:expo.modules.v2.testdata.Boxes
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes>
+        VALUE_PARAMETER kind:Regular name:value index:1 type:io.github.expo.modules.v2.testdata.Boxes
         overridden:
-          public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec
+          public open fun toMap (value: T of io.github.expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.records.RecordCodec
       FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
-          public open fun toString (): kotlin.String declared in expo.modules.v2.records.RecordCodec
-      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL returnType:expo.modules.v2.testdata.Boxes
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
-        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] kind:Regular name:reader index:1 type:expo.modules.v2.records.readers.RecordReader
+          public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Boxes
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[io.github.expo.modules.v2.compiler.RecordKey] kind:Regular name:reader index:1 type:io.github.expo.modules.v2.records.readers.RecordReader
         overridden:
-          public abstract fun decode (reader: expo.modules.v2.records.readers.RecordReader): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec
+          public abstract fun decode (reader: io.github.expo.modules.v2.records.readers.RecordReader): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec
         BLOCK_BODY
-          RETURN type=expo.modules.v2.testdata.Boxes from='public final fun decode (reader: expo.modules.v2.records.readers.RecordReader): expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2'
-            CONSTRUCTOR_CALL 'public constructor <init> (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?) declared in expo.modules.v2.testdata.Boxes' type=expo.modules.v2.testdata.Boxes origin=null
-              ARG i: CALL 'public abstract fun readIntOrNull (): kotlin.Int? declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Int? origin=null
-                ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
-              ARG l: CALL 'public abstract fun readLongOrNull (): kotlin.Long? declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Long? origin=null
-                ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
-              ARG f: CALL 'public abstract fun readFloatOrNull (): kotlin.Float? declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Float? origin=null
-                ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
-              ARG d: CALL 'public abstract fun readDoubleOrNull (): kotlin.Double? declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Double? origin=null
-                ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
-              ARG b: CALL 'public abstract fun readBooleanOrNull (): kotlin.Boolean? declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.Boolean? origin=null
-                ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
-              ARG s: CALL 'public abstract fun read <T> (schema: expo.modules.v2.types.TypeDescriptor): T of expo.modules.v2.records.readers.RecordReader.read declared in expo.modules.v2.records.readers.RecordReader' type=kotlin.String? origin=null
+          RETURN type=io.github.expo.modules.v2.testdata.Boxes from='public final fun decode (reader: io.github.expo.modules.v2.records.readers.RecordReader): io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2'
+            CONSTRUCTOR_CALL 'public constructor <init> (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?) declared in io.github.expo.modules.v2.testdata.Boxes' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+              ARG i: CALL 'public abstract fun readIntOrNull (): kotlin.Int? declared in io.github.expo.modules.v2.records.readers.RecordReader' type=kotlin.Int? origin=null
+                ARG <this>: GET_VAR 'reader: io.github.expo.modules.v2.records.readers.RecordReader declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=io.github.expo.modules.v2.records.readers.RecordReader origin=null
+              ARG l: CALL 'public abstract fun readLongOrNull (): kotlin.Long? declared in io.github.expo.modules.v2.records.readers.RecordReader' type=kotlin.Long? origin=null
+                ARG <this>: GET_VAR 'reader: io.github.expo.modules.v2.records.readers.RecordReader declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=io.github.expo.modules.v2.records.readers.RecordReader origin=null
+              ARG f: CALL 'public abstract fun readFloatOrNull (): kotlin.Float? declared in io.github.expo.modules.v2.records.readers.RecordReader' type=kotlin.Float? origin=null
+                ARG <this>: GET_VAR 'reader: io.github.expo.modules.v2.records.readers.RecordReader declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=io.github.expo.modules.v2.records.readers.RecordReader origin=null
+              ARG d: CALL 'public abstract fun readDoubleOrNull (): kotlin.Double? declared in io.github.expo.modules.v2.records.readers.RecordReader' type=kotlin.Double? origin=null
+                ARG <this>: GET_VAR 'reader: io.github.expo.modules.v2.records.readers.RecordReader declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=io.github.expo.modules.v2.records.readers.RecordReader origin=null
+              ARG b: CALL 'public abstract fun readBooleanOrNull (): kotlin.Boolean? declared in io.github.expo.modules.v2.records.readers.RecordReader' type=kotlin.Boolean? origin=null
+                ARG <this>: GET_VAR 'reader: io.github.expo.modules.v2.records.readers.RecordReader declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=io.github.expo.modules.v2.records.readers.RecordReader origin=null
+              ARG s: CALL 'public abstract fun read <T> (schema: io.github.expo.modules.v2.types.TypeDescriptor): T of io.github.expo.modules.v2.records.readers.RecordReader.read declared in io.github.expo.modules.v2.records.readers.RecordReader' type=kotlin.String? origin=null
                 TYPE_ARG T: kotlin.String?
-                ARG <this>: GET_VAR 'reader: expo.modules.v2.records.readers.RecordReader declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=expo.modules.v2.records.readers.RecordReader origin=null
-                ARG schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING_NULL type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-      FUN GENERATED[expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL returnType:kotlin.Unit
-        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
-        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] kind:Regular name:value index:1 type:expo.modules.v2.testdata.Boxes
-        VALUE_PARAMETER GENERATED[expo.modules.v2.compiler.RecordKey] kind:Regular name:writer index:2 type:expo.modules.v2.records.writers.RecordWriter
+                ARG <this>: GET_VAR 'reader: io.github.expo.modules.v2.records.readers.RecordReader declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.decode' type=io.github.expo.modules.v2.records.readers.RecordReader origin=null
+                ARG schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+      FUN GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL returnType:kotlin.Unit
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[io.github.expo.modules.v2.compiler.RecordKey] kind:Regular name:value index:1 type:io.github.expo.modules.v2.testdata.Boxes
+        VALUE_PARAMETER GENERATED[io.github.expo.modules.v2.compiler.RecordKey] kind:Regular name:writer index:2 type:io.github.expo.modules.v2.records.writers.RecordWriter
         overridden:
-          public abstract fun encode (value: T of expo.modules.v2.records.RecordCodec, writer: expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in expo.modules.v2.records.RecordCodec
+          public abstract fun encode (value: T of io.github.expo.modules.v2.records.RecordCodec, writer: io.github.expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in io.github.expo.modules.v2.records.RecordCodec
         BLOCK_BODY
-          CALL 'public abstract fun write (value: kotlin.Int?): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            ARG value: CALL 'public final fun <get-i> (): kotlin.Int? declared in expo.modules.v2.testdata.Boxes' type=kotlin.Int? origin=null
-              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Boxes origin=null
-          CALL 'public abstract fun write (value: kotlin.Long?): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            ARG value: CALL 'public final fun <get-l> (): kotlin.Long? declared in expo.modules.v2.testdata.Boxes' type=kotlin.Long? origin=null
-              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Boxes origin=null
-          CALL 'public abstract fun write (value: kotlin.Float?): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            ARG value: CALL 'public final fun <get-f> (): kotlin.Float? declared in expo.modules.v2.testdata.Boxes' type=kotlin.Float? origin=null
-              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Boxes origin=null
-          CALL 'public abstract fun write (value: kotlin.Double?): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            ARG value: CALL 'public final fun <get-d> (): kotlin.Double? declared in expo.modules.v2.testdata.Boxes' type=kotlin.Double? origin=null
-              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Boxes origin=null
-          CALL 'public abstract fun write (value: kotlin.Boolean?): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            ARG value: CALL 'public final fun <get-b> (): kotlin.Boolean? declared in expo.modules.v2.testdata.Boxes' type=kotlin.Boolean? origin=null
-              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Boxes origin=null
-          CALL 'public abstract fun write (value: kotlin.Any?, schema: expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
-            ARG <this>: GET_VAR 'writer: expo.modules.v2.records.writers.RecordWriter declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.records.writers.RecordWriter origin=null
-            ARG value: CALL 'public final fun <get-s> (): kotlin.String? declared in expo.modules.v2.testdata.Boxes' type=kotlin.String? origin=null
-              ARG <this>: GET_VAR 'value: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=expo.modules.v2.testdata.Boxes origin=null
-            ARG schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING_NULL type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
-    CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
-      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.Boxes.Companion
-      PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
-        FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> visibility:private [final]
+          CALL 'public abstract fun write (value: kotlin.Int?): kotlin.Unit declared in io.github.expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'writer: io.github.expo.modules.v2.records.writers.RecordWriter declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-i> (): kotlin.Int? declared in io.github.expo.modules.v2.testdata.Boxes' type=kotlin.Int? origin=null
+              ARG <this>: GET_VAR 'value: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+          CALL 'public abstract fun write (value: kotlin.Long?): kotlin.Unit declared in io.github.expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'writer: io.github.expo.modules.v2.records.writers.RecordWriter declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-l> (): kotlin.Long? declared in io.github.expo.modules.v2.testdata.Boxes' type=kotlin.Long? origin=null
+              ARG <this>: GET_VAR 'value: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+          CALL 'public abstract fun write (value: kotlin.Float?): kotlin.Unit declared in io.github.expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'writer: io.github.expo.modules.v2.records.writers.RecordWriter declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-f> (): kotlin.Float? declared in io.github.expo.modules.v2.testdata.Boxes' type=kotlin.Float? origin=null
+              ARG <this>: GET_VAR 'value: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+          CALL 'public abstract fun write (value: kotlin.Double?): kotlin.Unit declared in io.github.expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'writer: io.github.expo.modules.v2.records.writers.RecordWriter declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-d> (): kotlin.Double? declared in io.github.expo.modules.v2.testdata.Boxes' type=kotlin.Double? origin=null
+              ARG <this>: GET_VAR 'value: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+          CALL 'public abstract fun write (value: kotlin.Boolean?): kotlin.Unit declared in io.github.expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'writer: io.github.expo.modules.v2.records.writers.RecordWriter declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-b> (): kotlin.Boolean? declared in io.github.expo.modules.v2.testdata.Boxes' type=kotlin.Boolean? origin=null
+              ARG <this>: GET_VAR 'value: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: io.github.expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in io.github.expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'writer: io.github.expo.modules.v2.records.writers.RecordWriter declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-s> (): kotlin.String? declared in io.github.expo.modules.v2.testdata.Boxes' type=kotlin.String? origin=null
+              ARG <this>: GET_VAR 'value: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+            ARG schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+    CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Boxes.Companion
+      PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> visibility:private [final]
           EXPRESSION_BODY
-            CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2' type=expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 origin=null
-        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL returnType:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes>
-          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes.Companion
-          correspondingProperty: PROPERTY GENERATED[expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.Boxes.RecordCodec$ExpoModulesV2 origin=null
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes>
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes.Companion
+          correspondingProperty: PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
           BLOCK_BODY
-            RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> declared in expo.modules.v2.testdata.Boxes.Companion'
-              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> visibility:private [final]' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> origin=null
-                receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes.Companion declared in expo.modules.v2.testdata.Boxes.Companion.<get-recordCodec$ExpoModulesV2>' type=expo.modules.v2.testdata.Boxes.Companion origin=null
-      CONSTRUCTOR GENERATED[expo.modules.v2.compiler.RecordKey] visibility:private returnType:expo.modules.v2.testdata.Boxes.Companion [primary]
+            RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> declared in io.github.expo.modules.v2.testdata.Boxes.Companion'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> visibility:private [final]' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes.Companion declared in io.github.expo.modules.v2.testdata.Boxes.Companion.<get-recordCodec$ExpoModulesV2>' type=io.github.expo.modules.v2.testdata.Boxes.Companion origin=null
+      CONSTRUCTOR GENERATED[io.github.expo.modules.v2.compiler.RecordKey] visibility:private returnType:io.github.expo.modules.v2.testdata.Boxes.Companion [primary]
         BLOCK_BODY
           DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
-          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
       FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
@@ -243,7 +243,7 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordNullablePrimitives.kt
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
         overridden:
           public open fun toString (): kotlin.String declared in kotlin.Any
-    CONSTRUCTOR visibility:public returnType:expo.modules.v2.testdata.Boxes [primary]
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Boxes [primary]
       VALUE_PARAMETER kind:Regular name:i index:0 type:kotlin.Int?
       VALUE_PARAMETER kind:Regular name:l index:1 type:kotlin.Long?
       VALUE_PARAMETER kind:Regular name:f index:2 type:kotlin.Float?
@@ -252,309 +252,309 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordNullablePrimitives.kt
       VALUE_PARAMETER kind:Regular name:s index:5 type:kotlin.String?
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
-        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Boxes modality:FINAL visibility:public [data] superTypes:[kotlin.Any; expo.modules.v2.records.Record]' type=kotlin.Unit
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Boxes modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]' type=kotlin.Unit
     FUN GENERATED_DATA_CLASS_MEMBER name:component1 visibility:public modality:FINAL returnType:kotlin.Int? [operator]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun component1 (): kotlin.Int? declared in expo.modules.v2.testdata.Boxes'
+        RETURN type=kotlin.Nothing from='public final fun component1 (): kotlin.Int? declared in io.github.expo.modules.v2.testdata.Boxes'
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]' type=kotlin.Int? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.component1' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.component1' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     FUN GENERATED_DATA_CLASS_MEMBER name:component2 visibility:public modality:FINAL returnType:kotlin.Long? [operator]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun component2 (): kotlin.Long? declared in expo.modules.v2.testdata.Boxes'
+        RETURN type=kotlin.Nothing from='public final fun component2 (): kotlin.Long? declared in io.github.expo.modules.v2.testdata.Boxes'
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:l type:kotlin.Long? visibility:private [final]' type=kotlin.Long? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.component2' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.component2' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     FUN GENERATED_DATA_CLASS_MEMBER name:component3 visibility:public modality:FINAL returnType:kotlin.Float? [operator]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun component3 (): kotlin.Float? declared in expo.modules.v2.testdata.Boxes'
+        RETURN type=kotlin.Nothing from='public final fun component3 (): kotlin.Float? declared in io.github.expo.modules.v2.testdata.Boxes'
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:f type:kotlin.Float? visibility:private [final]' type=kotlin.Float? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.component3' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.component3' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     FUN GENERATED_DATA_CLASS_MEMBER name:component4 visibility:public modality:FINAL returnType:kotlin.Double? [operator]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun component4 (): kotlin.Double? declared in expo.modules.v2.testdata.Boxes'
+        RETURN type=kotlin.Nothing from='public final fun component4 (): kotlin.Double? declared in io.github.expo.modules.v2.testdata.Boxes'
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:d type:kotlin.Double? visibility:private [final]' type=kotlin.Double? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.component4' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.component4' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     FUN GENERATED_DATA_CLASS_MEMBER name:component5 visibility:public modality:FINAL returnType:kotlin.Boolean? [operator]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun component5 (): kotlin.Boolean? declared in expo.modules.v2.testdata.Boxes'
+        RETURN type=kotlin.Nothing from='public final fun component5 (): kotlin.Boolean? declared in io.github.expo.modules.v2.testdata.Boxes'
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.Boolean? visibility:private [final]' type=kotlin.Boolean? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.component5' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.component5' type=io.github.expo.modules.v2.testdata.Boxes origin=null
     FUN GENERATED_DATA_CLASS_MEMBER name:component6 visibility:public modality:FINAL returnType:kotlin.String? [operator]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun component6 (): kotlin.String? declared in expo.modules.v2.testdata.Boxes'
+        RETURN type=kotlin.Nothing from='public final fun component6 (): kotlin.String? declared in io.github.expo.modules.v2.testdata.Boxes'
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:s type:kotlin.String? visibility:private [final]' type=kotlin.String? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.component6' type=expo.modules.v2.testdata.Boxes origin=null
-    FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL returnType:expo.modules.v2.testdata.Boxes
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.component6' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       VALUE_PARAMETER kind:Regular name:i index:1 type:kotlin.Int?
         EXPRESSION_BODY
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]' type=kotlin.Int? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.copy' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=io.github.expo.modules.v2.testdata.Boxes origin=null
       VALUE_PARAMETER kind:Regular name:l index:2 type:kotlin.Long?
         EXPRESSION_BODY
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:l type:kotlin.Long? visibility:private [final]' type=kotlin.Long? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.copy' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=io.github.expo.modules.v2.testdata.Boxes origin=null
       VALUE_PARAMETER kind:Regular name:f index:3 type:kotlin.Float?
         EXPRESSION_BODY
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:f type:kotlin.Float? visibility:private [final]' type=kotlin.Float? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.copy' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=io.github.expo.modules.v2.testdata.Boxes origin=null
       VALUE_PARAMETER kind:Regular name:d index:4 type:kotlin.Double?
         EXPRESSION_BODY
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:d type:kotlin.Double? visibility:private [final]' type=kotlin.Double? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.copy' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=io.github.expo.modules.v2.testdata.Boxes origin=null
       VALUE_PARAMETER kind:Regular name:b index:5 type:kotlin.Boolean?
         EXPRESSION_BODY
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.Boolean? visibility:private [final]' type=kotlin.Boolean? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.copy' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=io.github.expo.modules.v2.testdata.Boxes origin=null
       VALUE_PARAMETER kind:Regular name:s index:6 type:kotlin.String?
         EXPRESSION_BODY
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:s type:kotlin.String? visibility:private [final]' type=kotlin.String? origin=null
-            receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.copy' type=expo.modules.v2.testdata.Boxes origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=io.github.expo.modules.v2.testdata.Boxes origin=null
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun copy (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?): expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes'
-          CONSTRUCTOR_CALL 'public constructor <init> (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?) declared in expo.modules.v2.testdata.Boxes' type=expo.modules.v2.testdata.Boxes origin=null
-            ARG i: GET_VAR 'i: kotlin.Int? declared in expo.modules.v2.testdata.Boxes.copy' type=kotlin.Int? origin=null
-            ARG l: GET_VAR 'l: kotlin.Long? declared in expo.modules.v2.testdata.Boxes.copy' type=kotlin.Long? origin=null
-            ARG f: GET_VAR 'f: kotlin.Float? declared in expo.modules.v2.testdata.Boxes.copy' type=kotlin.Float? origin=null
-            ARG d: GET_VAR 'd: kotlin.Double? declared in expo.modules.v2.testdata.Boxes.copy' type=kotlin.Double? origin=null
-            ARG b: GET_VAR 'b: kotlin.Boolean? declared in expo.modules.v2.testdata.Boxes.copy' type=kotlin.Boolean? origin=null
-            ARG s: GET_VAR 's: kotlin.String? declared in expo.modules.v2.testdata.Boxes.copy' type=kotlin.String? origin=null
+        RETURN type=kotlin.Nothing from='public final fun copy (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?): io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes'
+          CONSTRUCTOR_CALL 'public constructor <init> (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?) declared in io.github.expo.modules.v2.testdata.Boxes' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+            ARG i: GET_VAR 'i: kotlin.Int? declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=kotlin.Int? origin=null
+            ARG l: GET_VAR 'l: kotlin.Long? declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=kotlin.Long? origin=null
+            ARG f: GET_VAR 'f: kotlin.Float? declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=kotlin.Float? origin=null
+            ARG d: GET_VAR 'd: kotlin.Double? declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=kotlin.Double? origin=null
+            ARG b: GET_VAR 'b: kotlin.Boolean? declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=kotlin.Boolean? origin=null
+            ARG s: GET_VAR 's: kotlin.String? declared in io.github.expo.modules.v2.testdata.Boxes.copy' type=kotlin.String? origin=null
     FUN GENERATED_DATA_CLASS_MEMBER name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [operator]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
         public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
-        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.records.Record
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.records.Record
       BLOCK_BODY
         WHEN type=kotlin.Unit origin=null
           BRANCH
             if: CALL 'public final fun EQEQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQEQ
-              ARG arg0: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
-              ARG arg1: GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.Boxes.equals' type=kotlin.Any? origin=null
-            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Boxes'
+              ARG arg0: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+              ARG arg1: GET_VAR 'other: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Boxes'
               CONST Boolean type=kotlin.Boolean value=true
         WHEN type=kotlin.Unit origin=null
           BRANCH
-            if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=expo.modules.v2.testdata.Boxes
-              GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.Boxes.equals' type=kotlin.Any? origin=null
-            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Boxes'
+            if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=io.github.expo.modules.v2.testdata.Boxes
+              GET_VAR 'other: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Boxes'
               CONST Boolean type=kotlin.Boolean value=false
-        VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:expo.modules.v2.testdata.Boxes [val]
-          TYPE_OP type=expo.modules.v2.testdata.Boxes origin=CAST typeOperand=expo.modules.v2.testdata.Boxes
-            GET_VAR 'other: kotlin.Any? declared in expo.modules.v2.testdata.Boxes.equals' type=kotlin.Any? origin=null
+        VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:io.github.expo.modules.v2.testdata.Boxes [val]
+          TYPE_OP type=io.github.expo.modules.v2.testdata.Boxes origin=CAST typeOperand=io.github.expo.modules.v2.testdata.Boxes
+            GET_VAR 'other: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=kotlin.Any? origin=null
         WHEN type=kotlin.Unit origin=null
           BRANCH
             if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
               ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
                 ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]' type=kotlin.Int? origin=null
-                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                 ARG arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]' type=kotlin.Int? origin=null
-                  receiver: GET_VAR 'val tmp_0: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
-            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Boxes'
+                  receiver: GET_VAR 'val tmp_0: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Boxes'
               CONST Boolean type=kotlin.Boolean value=false
         WHEN type=kotlin.Unit origin=null
           BRANCH
             if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
               ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
                 ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:l type:kotlin.Long? visibility:private [final]' type=kotlin.Long? origin=null
-                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                 ARG arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:l type:kotlin.Long? visibility:private [final]' type=kotlin.Long? origin=null
-                  receiver: GET_VAR 'val tmp_0: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
-            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Boxes'
+                  receiver: GET_VAR 'val tmp_0: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Boxes'
               CONST Boolean type=kotlin.Boolean value=false
         WHEN type=kotlin.Unit origin=null
           BRANCH
             if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
               ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
                 ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:f type:kotlin.Float? visibility:private [final]' type=kotlin.Float? origin=null
-                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                 ARG arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:f type:kotlin.Float? visibility:private [final]' type=kotlin.Float? origin=null
-                  receiver: GET_VAR 'val tmp_0: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
-            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Boxes'
+                  receiver: GET_VAR 'val tmp_0: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Boxes'
               CONST Boolean type=kotlin.Boolean value=false
         WHEN type=kotlin.Unit origin=null
           BRANCH
             if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
               ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
                 ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:d type:kotlin.Double? visibility:private [final]' type=kotlin.Double? origin=null
-                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                 ARG arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:d type:kotlin.Double? visibility:private [final]' type=kotlin.Double? origin=null
-                  receiver: GET_VAR 'val tmp_0: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
-            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Boxes'
+                  receiver: GET_VAR 'val tmp_0: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Boxes'
               CONST Boolean type=kotlin.Boolean value=false
         WHEN type=kotlin.Unit origin=null
           BRANCH
             if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
               ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
                 ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.Boolean? visibility:private [final]' type=kotlin.Boolean? origin=null
-                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                 ARG arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.Boolean? visibility:private [final]' type=kotlin.Boolean? origin=null
-                  receiver: GET_VAR 'val tmp_0: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
-            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Boxes'
+                  receiver: GET_VAR 'val tmp_0: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Boxes'
               CONST Boolean type=kotlin.Boolean value=false
         WHEN type=kotlin.Unit origin=null
           BRANCH
             if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
               ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
                 ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:s type:kotlin.String? visibility:private [final]' type=kotlin.String? origin=null
-                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                 ARG arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:s type:kotlin.String? visibility:private [final]' type=kotlin.String? origin=null
-                  receiver: GET_VAR 'val tmp_0: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.equals' type=expo.modules.v2.testdata.Boxes origin=null
-            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Boxes'
+                  receiver: GET_VAR 'val tmp_0: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.equals' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Boxes'
               CONST Boolean type=kotlin.Boolean value=false
-        RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.Boxes'
+        RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Boxes'
           CONST Boolean type=kotlin.Boolean value=true
     FUN GENERATED_DATA_CLASS_MEMBER name:hashCode visibility:public modality:OPEN returnType:kotlin.Int
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       overridden:
         public open fun hashCode (): kotlin.Int declared in kotlin.Any
-        public open fun hashCode (): kotlin.Int declared in expo.modules.v2.records.Record
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.records.Record
       BLOCK_BODY
         VAR name:result type:kotlin.Int [var]
           WHEN type=kotlin.Int origin=null
             BRANCH
               if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
                 ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]' type=kotlin.Int? origin=null
-                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                 ARG arg1: CONST Null type=kotlin.Nothing? value=null
               then: CONST Int type=kotlin.Int value=0
             BRANCH
               if: CONST Boolean type=kotlin.Boolean value=true
               then: CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
                 ARG <this>: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]' type=kotlin.Int? origin=null
-                  receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
-        SET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+        SET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
             ARG <this>: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
-              ARG <this>: GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
+              ARG <this>: GET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
               ARG other: CONST Int type=kotlin.Int value=31
             ARG other: WHEN type=kotlin.Int origin=null
               BRANCH
                 if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
                   ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:l type:kotlin.Long? visibility:private [final]' type=kotlin.Long? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                   ARG arg1: CONST Null type=kotlin.Nothing? value=null
                 then: CONST Int type=kotlin.Int value=0
               BRANCH
                 if: CONST Boolean type=kotlin.Boolean value=true
                 then: CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Long' type=kotlin.Int origin=null
                   ARG <this>: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:l type:kotlin.Long? visibility:private [final]' type=kotlin.Long? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
-        SET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+        SET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
             ARG <this>: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
-              ARG <this>: GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
+              ARG <this>: GET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
               ARG other: CONST Int type=kotlin.Int value=31
             ARG other: WHEN type=kotlin.Int origin=null
               BRANCH
                 if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
                   ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:f type:kotlin.Float? visibility:private [final]' type=kotlin.Float? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                   ARG arg1: CONST Null type=kotlin.Nothing? value=null
                 then: CONST Int type=kotlin.Int value=0
               BRANCH
                 if: CONST Boolean type=kotlin.Boolean value=true
                 then: CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Float' type=kotlin.Int origin=null
                   ARG <this>: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:f type:kotlin.Float? visibility:private [final]' type=kotlin.Float? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
-        SET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+        SET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
             ARG <this>: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
-              ARG <this>: GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
+              ARG <this>: GET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
               ARG other: CONST Int type=kotlin.Int value=31
             ARG other: WHEN type=kotlin.Int origin=null
               BRANCH
                 if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
                   ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:d type:kotlin.Double? visibility:private [final]' type=kotlin.Double? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                   ARG arg1: CONST Null type=kotlin.Nothing? value=null
                 then: CONST Int type=kotlin.Int value=0
               BRANCH
                 if: CONST Boolean type=kotlin.Boolean value=true
                 then: CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Double' type=kotlin.Int origin=null
                   ARG <this>: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:d type:kotlin.Double? visibility:private [final]' type=kotlin.Double? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
-        SET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+        SET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
             ARG <this>: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
-              ARG <this>: GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
+              ARG <this>: GET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
               ARG other: CONST Int type=kotlin.Int value=31
             ARG other: WHEN type=kotlin.Int origin=null
               BRANCH
                 if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
                   ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.Boolean? visibility:private [final]' type=kotlin.Boolean? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                   ARG arg1: CONST Null type=kotlin.Nothing? value=null
                 then: CONST Int type=kotlin.Int value=0
               BRANCH
                 if: CONST Boolean type=kotlin.Boolean value=true
                 then: CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Boolean' type=kotlin.Int origin=null
                   ARG <this>: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.Boolean? visibility:private [final]' type=kotlin.Boolean? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
-        SET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+        SET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Unit origin=EQ
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
             ARG <this>: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
-              ARG <this>: GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
+              ARG <this>: GET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
               ARG other: CONST Int type=kotlin.Int value=31
             ARG other: WHEN type=kotlin.Int origin=null
               BRANCH
                 if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
                   ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:s type:kotlin.String? visibility:private [final]' type=kotlin.String? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
                   ARG arg1: CONST Null type=kotlin.Nothing? value=null
                 then: CONST Int type=kotlin.Int value=0
               BRANCH
                 if: CONST Boolean type=kotlin.Boolean value=true
                 then: CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.String' type=kotlin.Int origin=null
                   ARG <this>: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:s type:kotlin.String? visibility:private [final]' type=kotlin.String? origin=null
-                    receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.hashCode' type=expo.modules.v2.testdata.Boxes origin=null
-        RETURN type=kotlin.Nothing from='public open fun hashCode (): kotlin.Int declared in expo.modules.v2.testdata.Boxes'
-          GET_VAR 'var result: kotlin.Int declared in expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
+                    receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+        RETURN type=kotlin.Nothing from='public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes'
+          GET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Boxes.hashCode' type=kotlin.Int origin=null
     FUN GENERATED_DATA_CLASS_MEMBER name:toString visibility:public modality:OPEN returnType:kotlin.String
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.Boxes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Boxes
       overridden:
         public open fun toString (): kotlin.String declared in kotlin.Any
-        public open fun toString (): kotlin.String declared in expo.modules.v2.records.Record
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.records.Record
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public open fun toString (): kotlin.String declared in expo.modules.v2.testdata.Boxes'
+        RETURN type=kotlin.Nothing from='public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.testdata.Boxes'
           STRING_CONCATENATION type=kotlin.String
             CONST String type=kotlin.String value="Boxes("
             CONST String type=kotlin.String value="i="
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]' type=kotlin.Int? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.toString' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.toString' type=io.github.expo.modules.v2.testdata.Boxes origin=null
             CONST String type=kotlin.String value=", "
             CONST String type=kotlin.String value="l="
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:l type:kotlin.Long? visibility:private [final]' type=kotlin.Long? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.toString' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.toString' type=io.github.expo.modules.v2.testdata.Boxes origin=null
             CONST String type=kotlin.String value=", "
             CONST String type=kotlin.String value="f="
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:f type:kotlin.Float? visibility:private [final]' type=kotlin.Float? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.toString' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.toString' type=io.github.expo.modules.v2.testdata.Boxes origin=null
             CONST String type=kotlin.String value=", "
             CONST String type=kotlin.String value="d="
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:d type:kotlin.Double? visibility:private [final]' type=kotlin.Double? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.toString' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.toString' type=io.github.expo.modules.v2.testdata.Boxes origin=null
             CONST String type=kotlin.String value=", "
             CONST String type=kotlin.String value="b="
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:b type:kotlin.Boolean? visibility:private [final]' type=kotlin.Boolean? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.toString' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.toString' type=io.github.expo.modules.v2.testdata.Boxes origin=null
             CONST String type=kotlin.String value=", "
             CONST String type=kotlin.String value="s="
             GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:s type:kotlin.String? visibility:private [final]' type=kotlin.String? origin=null
-              receiver: GET_VAR '<this>: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.Boxes.toString' type=expo.modules.v2.testdata.Boxes origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.Boxes.toString' type=io.github.expo.modules.v2.testdata.Boxes origin=null
             CONST String type=kotlin.String value=")"
   FUN name:box visibility:public modality:FINAL returnType:kotlin.String
     BLOCK_BODY
-      VAR name:codec type:expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> [val]
-        CALL 'public final fun codecFor <T> (): expo.modules.v2.records.RecordCodec<T of expo.modules.v2.records.codecFor> declared in expo.modules.v2.records' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> origin=null
-          TYPE_ARG T: expo.modules.v2.testdata.Boxes
-      VAR name:full type:expo.modules.v2.testdata.Boxes [val]
-        CONSTRUCTOR_CALL 'public constructor <init> (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?) declared in expo.modules.v2.testdata.Boxes' type=expo.modules.v2.testdata.Boxes origin=null
+      VAR name:codec type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> [val]
+        CALL 'public final fun codecFor <T> (): io.github.expo.modules.v2.records.RecordCodec<T of io.github.expo.modules.v2.records.codecFor> declared in io.github.expo.modules.v2.records' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> origin=null
+          TYPE_ARG T: io.github.expo.modules.v2.testdata.Boxes
+      VAR name:full type:io.github.expo.modules.v2.testdata.Boxes [val]
+        CONSTRUCTOR_CALL 'public constructor <init> (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?) declared in io.github.expo.modules.v2.testdata.Boxes' type=io.github.expo.modules.v2.testdata.Boxes origin=null
           ARG i: CONST Int type=kotlin.Int value=1
           ARG l: CONST Long type=kotlin.Long value=2
           ARG f: CONST Float type=kotlin.Float value=3.5
@@ -562,14 +562,14 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordNullablePrimitives.kt
           ARG b: CONST Boolean type=kotlin.Boolean value=true
           ARG s: CONST String type=kotlin.String value="s"
       VAR name:fullMap type:kotlin.collections.Map<kotlin.String, kotlin.Any?> [val]
-        CALL 'public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
-          ARG <this>: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> origin=null
-          ARG value: GET_VAR 'val full: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Boxes origin=null
+        CALL 'public open fun toMap (value: T of io.github.expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.records.RecordCodec' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+          ARG <this>: GET_VAR 'val codec: io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> origin=null
+          ARG value: GET_VAR 'val full: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.testdata.Boxes origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
             ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              ARG arg0: GET_VAR 'val fullMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+              ARG arg0: GET_VAR 'val fullMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
               ARG arg1: CALL 'public final fun mapOf <K, V> (vararg pairs: kotlin.Pair<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf>): kotlin.collections.Map<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf> declared in kotlin.collections' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
                 TYPE_ARG K: kotlin.String
                 TYPE_ARG V: kotlin.Any?
@@ -605,26 +605,26 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordNullablePrimitives.kt
                     ARG <this>: CONST String type=kotlin.String value="s"
                     ARG that: CONST String type=kotlin.String value="s"
           then: BLOCK type=kotlin.Unit origin=null
-            RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
               STRING_CONCATENATION type=kotlin.String
                 CONST String type=kotlin.String value="Fail: toMap gave "
-                GET_VAR 'val fullMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+                GET_VAR 'val fullMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
             ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              ARG arg0: CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.testdata.Boxes origin=null
-                ARG <this>: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> origin=null
-                ARG map: GET_VAR 'val fullMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
-              ARG arg1: GET_VAR 'val full: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Boxes origin=null
-          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+              ARG arg0: CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+                ARG <this>: GET_VAR 'val codec: io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> origin=null
+                ARG map: GET_VAR 'val fullMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+              ARG arg1: GET_VAR 'val full: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="Fail: fromMap gave "
-              CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.testdata.Boxes origin=null
-                ARG <this>: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> origin=null
-                ARG map: GET_VAR 'val fullMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
-      VAR name:empty type:expo.modules.v2.testdata.Boxes [val]
-        CONSTRUCTOR_CALL 'public constructor <init> (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?) declared in expo.modules.v2.testdata.Boxes' type=expo.modules.v2.testdata.Boxes origin=null
+              CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+                ARG <this>: GET_VAR 'val codec: io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> origin=null
+                ARG map: GET_VAR 'val fullMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+      VAR name:empty type:io.github.expo.modules.v2.testdata.Boxes [val]
+        CONSTRUCTOR_CALL 'public constructor <init> (i: kotlin.Int?, l: kotlin.Long?, f: kotlin.Float?, d: kotlin.Double?, b: kotlin.Boolean?, s: kotlin.String?) declared in io.github.expo.modules.v2.testdata.Boxes' type=io.github.expo.modules.v2.testdata.Boxes origin=null
           ARG i: CONST Null type=kotlin.Nothing? value=null
           ARG l: CONST Null type=kotlin.Nothing? value=null
           ARG f: CONST Null type=kotlin.Nothing? value=null
@@ -632,52 +632,52 @@ FILE fqName:expo.modules.v2.testdata fileName:/recordNullablePrimitives.kt
           ARG b: CONST Null type=kotlin.Nothing? value=null
           ARG s: CONST Null type=kotlin.Nothing? value=null
       VAR name:emptyMap type:kotlin.collections.Map<kotlin.String, kotlin.Any?> [val]
-        CALL 'public open fun toMap (value: T of expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.records.RecordCodec' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
-          ARG <this>: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> origin=null
-          ARG value: GET_VAR 'val empty: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Boxes origin=null
+        CALL 'public open fun toMap (value: T of io.github.expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.records.RecordCodec' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+          ARG <this>: GET_VAR 'val codec: io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> origin=null
+          ARG value: GET_VAR 'val empty: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.testdata.Boxes origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
             ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
               ARG arg0: CALL 'public abstract fun <get-size> (): kotlin.Int declared in kotlin.collections.Map' type=kotlin.Int origin=GET_PROPERTY
-                ARG <this>: GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+                ARG <this>: GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
               ARG arg1: CONST Int type=kotlin.Int value=6
-          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="Fail: nulls dropped keys, got "
-              GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+              GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun any <T> (<this>: kotlin.collections.Iterable<T of kotlin.collections.any>, predicate: kotlin.Function1<T of kotlin.collections.any, kotlin.Boolean>): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
             TYPE_ARG T: kotlin.Any?
             ARG <this>: CALL 'public abstract fun <get-values> (): kotlin.collections.Collection<V of kotlin.collections.Map> declared in kotlin.collections.Map' type=kotlin.collections.Collection<kotlin.Any?> origin=GET_PROPERTY
-              ARG <this>: GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+              ARG <this>: GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
             ARG predicate: FUN_EXPR type=kotlin.Function1<kotlin.Any?, kotlin.Boolean> origin=LAMBDA
               FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Boolean
                 VALUE_PARAMETER kind:Regular name:it index:0 type:kotlin.Any?
                 BLOCK_BODY
-                  RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.testdata.box'
+                  RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.box'
                     CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
                       ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-                        ARG arg0: GET_VAR 'it: kotlin.Any? declared in expo.modules.v2.testdata.box.<anonymous>' type=kotlin.Any? origin=null
+                        ARG arg0: GET_VAR 'it: kotlin.Any? declared in io.github.expo.modules.v2.testdata.box.<anonymous>' type=kotlin.Any? origin=null
                         ARG arg1: CONST Null type=kotlin.Nothing? value=null
-          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="Fail: nulls did not cross, got "
-              GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+              GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
             ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
-              ARG arg0: CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.testdata.Boxes origin=null
-                ARG <this>: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> origin=null
-                ARG map: GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
-              ARG arg1: GET_VAR 'val empty: expo.modules.v2.testdata.Boxes declared in expo.modules.v2.testdata.box' type=expo.modules.v2.testdata.Boxes origin=null
-          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+              ARG arg0: CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+                ARG <this>: GET_VAR 'val codec: io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> origin=null
+                ARG map: GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+              ARG arg1: GET_VAR 'val empty: io.github.expo.modules.v2.testdata.Boxes declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="Fail: fromMap gave "
-              CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of expo.modules.v2.records.RecordCodec declared in expo.modules.v2.records.RecordCodec' type=expo.modules.v2.testdata.Boxes origin=null
-                ARG <this>: GET_VAR 'val codec: expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> declared in expo.modules.v2.testdata.box' type=expo.modules.v2.records.RecordCodec<expo.modules.v2.testdata.Boxes> origin=null
-                ARG map: GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
-      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+              CALL 'public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec' type=io.github.expo.modules.v2.testdata.Boxes origin=null
+                ARG <this>: GET_VAR 'val codec: io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Boxes> origin=null
+                ARG map: GET_VAR 'val emptyMap: kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.Any?> origin=null
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
         CONST String type=kotlin.String value="OK"

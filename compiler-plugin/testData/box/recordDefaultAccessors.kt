@@ -1,10 +1,10 @@
 // DUMP_IR
 // FIR_DUMP
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.Record
-import expo.modules.v2.records.codecFor
+import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.records.codecFor
 
 // Private in the file, so the JVM sees a private static on the file facade — the generated `decode`
 // lives in another class and needs a synthetic accessor to call it.

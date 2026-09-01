@@ -1,9 +1,9 @@
 // RUN_PIPELINE_TILL: FRONTEND
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.modules.Module
 
 // A plain `val` on a `@JS` class is the ordinary shape of an exported property, so the accepted
 // shapes are collected at the bottom of this file.

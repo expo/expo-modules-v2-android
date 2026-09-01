@@ -305,7 +305,7 @@ namespace expo::modules::v2 {
     suite.setProperty(rt, "__kolibriArrayCheck", std::move(kolibriArrayCheck));
 
     // Registers array-typed native methods (signatures derived from the C++ parameter types) on
-    // the Kotlin test fixture `expo.modules.v2.testapp.KolibriArrayFixture` — only meaningful on
+    // the Kotlin test fixture `io.github.expo.modules.v2.testapp.KolibriArrayFixture` — only meaningful on
     // the test-app test classpath.
     auto kolibriArrayBindFixture = facebook::jsi::Function::createFromHostFunction(
       rt,

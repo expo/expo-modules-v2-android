@@ -10,11 +10,11 @@
 
 namespace expo::modules::v2 {
   struct JPromise : kolibri::JavaClass<JPromise> {
-    static constexpr std::string_view descriptor = "expo/modules/v2/async/Promise";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/async/Promise";
   };
 
   struct JAsyncContext : kolibri::JavaClass<JAsyncContext> {
-    static constexpr std::string_view descriptor = "expo/modules/v2/async/AsyncContext";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/async/AsyncContext";
 
     static void registerNatives(JNIEnv* env);
 

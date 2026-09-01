@@ -16,7 +16,7 @@
 
 namespace expo::modules::v2 {
   struct JRecordSchemaData : kolibri::JavaClass<JRecordSchemaData> {
-    static constexpr std::string_view descriptor = "expo/modules/v2/records/RecordSchemaData";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/records/RecordSchemaData";
 
     struct Accessors : BaseAccessors {
       [[nodiscard]] std::string name(JNIEnv* env) const;

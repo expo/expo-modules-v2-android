@@ -1,13 +1,13 @@
 FILE: recordDefaultAccessors.kt
-    package expo.modules.v2.testdata
+    package io.github.expo.modules.v2.testdata
 
     private final fun secret(): R|kotlin/Int| {
         ^secret Int(11)
     }
     private final const val SECRET_CONSTANT: R|kotlin/String| = String(const)
         private get(): R|kotlin/String|
-    @R|expo/modules/v2/annotations/Record|() public final class Accessors : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
-        public constructor(fromPrivateTopLevel: R|kotlin/Int| = R|expo/modules/v2/testdata/secret|(), fromPrivateConstant: R|kotlin/String| = R|expo/modules/v2/testdata/SECRET_CONSTANT|, fromCompanion: R|kotlin/Int| = Q|expo/modules/v2/testdata/Accessors|.R|expo/modules/v2/testdata/Accessors.Companion.companionDefault|, fromPrivateCompanion: R|kotlin/Int| = this@R|expo/modules/v2/testdata/Accessors.Companion|.R|expo/modules/v2/testdata/Accessors.Companion.privateCompanionDefault|): R|expo/modules/v2/testdata/Accessors| {
+    @R|io/github/expo/modules/v2/annotations/Record|() public final class Accessors : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        public constructor(fromPrivateTopLevel: R|kotlin/Int| = R|io/github/expo/modules/v2/testdata/secret|(), fromPrivateConstant: R|kotlin/String| = R|io/github/expo/modules/v2/testdata/SECRET_CONSTANT|, fromCompanion: R|kotlin/Int| = Q|io/github/expo/modules/v2/testdata/Accessors|.R|io/github/expo/modules/v2/testdata/Accessors.Companion.companionDefault|, fromPrivateCompanion: R|kotlin/Int| = this@R|io/github/expo/modules/v2/testdata/Accessors.Companion|.R|io/github/expo/modules/v2/testdata/Accessors.Companion.privateCompanionDefault|): R|io/github/expo/modules/v2/testdata/Accessors| {
             super<R|kotlin/Any|>()
         }
 
@@ -24,7 +24,7 @@ FILE: recordDefaultAccessors.kt
             public get(): R|kotlin/Int|
 
         public final companion object Companion : R|kotlin/Any| {
-            private constructor(): R|expo/modules/v2/testdata/Accessors.Companion| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/Accessors.Companion| {
                 super<R|kotlin/Any|>()
             }
 
@@ -34,50 +34,50 @@ FILE: recordDefaultAccessors.kt
             private final const val privateCompanionDefault: R|kotlin/Int| = Int(33)
                 private get(): R|kotlin/Int|
 
-            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Accessors>|
-                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Accessors>|
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Accessors>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Accessors>|
 
         }
 
-        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Accessors>| {
-            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Accessors>|
-                public get(): R|java/lang/Class<expo/modules/v2/testdata/Accessors>|
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Accessors>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/Accessors>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/Accessors>|
 
-            public final override val schema: R|expo/modules/v2/records/RecordSchema|
-                public get(): R|expo/modules/v2/records/RecordSchema|
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
 
-            public final override fun encode(value: R|expo/modules/v2/testdata/Accessors|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/Accessors|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
 
-            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Accessors|
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/Accessors|
 
-            public constructor(): R|expo/modules/v2/testdata/Accessors.RecordCodec$ExpoModulesV2|
+            public constructor(): R|io/github/expo/modules/v2/testdata/Accessors.RecordCodec$ExpoModulesV2|
 
         }
 
     }
     public final fun box(): R|kotlin/String| {
-        lval decoded: R|expo/modules/v2/testdata/Accessors| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Accessors|>().R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Accessors|>|(R|kotlin/collections/emptyMap|<R|kotlin/String|, R|kotlin/Any?|>())
+        lval decoded: R|io/github/expo/modules/v2/testdata/Accessors| = R|io/github/expo/modules/v2/records/codecFor|<R|io/github/expo/modules/v2/testdata/Accessors|>().R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.fromMap: R|io/github/expo/modules/v2/testdata/Accessors|>|(R|kotlin/collections/emptyMap|<R|kotlin/String|, R|kotlin/Any?|>())
         when () {
-            !=(R|<local>/decoded|.R|expo/modules/v2/testdata/Accessors.fromPrivateTopLevel|, Int(11)) ->  {
-                ^box <strcat>(String(Fail: private top-level gave ), R|<local>/decoded|.R|expo/modules/v2/testdata/Accessors.fromPrivateTopLevel|)
+            !=(R|<local>/decoded|.R|io/github/expo/modules/v2/testdata/Accessors.fromPrivateTopLevel|, Int(11)) ->  {
+                ^box <strcat>(String(Fail: private top-level gave ), R|<local>/decoded|.R|io/github/expo/modules/v2/testdata/Accessors.fromPrivateTopLevel|)
             }
         }
 
         when () {
-            !=(R|<local>/decoded|.R|expo/modules/v2/testdata/Accessors.fromPrivateConstant|, String(const)) ->  {
-                ^box <strcat>(String(Fail: private const gave ), R|<local>/decoded|.R|expo/modules/v2/testdata/Accessors.fromPrivateConstant|)
+            !=(R|<local>/decoded|.R|io/github/expo/modules/v2/testdata/Accessors.fromPrivateConstant|, String(const)) ->  {
+                ^box <strcat>(String(Fail: private const gave ), R|<local>/decoded|.R|io/github/expo/modules/v2/testdata/Accessors.fromPrivateConstant|)
             }
         }
 
         when () {
-            !=(R|<local>/decoded|.R|expo/modules/v2/testdata/Accessors.fromCompanion|, Int(22)) ->  {
-                ^box <strcat>(String(Fail: companion gave ), R|<local>/decoded|.R|expo/modules/v2/testdata/Accessors.fromCompanion|)
+            !=(R|<local>/decoded|.R|io/github/expo/modules/v2/testdata/Accessors.fromCompanion|, Int(22)) ->  {
+                ^box <strcat>(String(Fail: companion gave ), R|<local>/decoded|.R|io/github/expo/modules/v2/testdata/Accessors.fromCompanion|)
             }
         }
 
         when () {
-            !=(R|<local>/decoded|.R|expo/modules/v2/testdata/Accessors.fromPrivateCompanion|, Int(33)) ->  {
-                ^box <strcat>(String(Fail: private companion gave ), R|<local>/decoded|.R|expo/modules/v2/testdata/Accessors.fromPrivateCompanion|)
+            !=(R|<local>/decoded|.R|io/github/expo/modules/v2/testdata/Accessors.fromPrivateCompanion|, Int(33)) ->  {
+                ^box <strcat>(String(Fail: private companion gave ), R|<local>/decoded|.R|io/github/expo/modules/v2/testdata/Accessors.fromPrivateCompanion|)
             }
         }
 

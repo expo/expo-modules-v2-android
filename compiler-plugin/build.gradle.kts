@@ -14,6 +14,10 @@ plugins {
 }
 
 mavenPublishing {
+  // Prefixed for the same reason :react is: `io.github.expo` is a namespace shared across Expo's
+  // releases, and `compiler-plugin` on its own says nothing about which project it belongs to.
+  coordinates(artifactId = "expo-modules-v2-compiler-plugin")
+
   // Maven Central rejects a deployment that has no `-javadoc.jar` next to the main artifact, so the
   // jar has to be published even though this project renders no API docs. `JavadocJar.Empty()`
   // ships an empty one, which satisfies the validator.
@@ -57,7 +61,7 @@ idea {
 
 val testArtifacts: Configuration by configurations.creating
 
-// The runtime the box tests compile against: `expo.modules.v2.records.*`, `@Record`, the
+// The runtime the box tests compile against: `io.github.expo.modules.v2.records.*`, `@Record`, the
 // TypeDescriptor hierarchy. :api never depends on :compiler-plugin, so this is not a cycle — the
 // Gradle plugin only injects the compiler jar into :api's *compile* classpath.
 val recordsRuntime: Configuration by configurations.creating
@@ -86,8 +90,8 @@ buildConfig {
     internalVisibility = true
   }
 
-  packageName("expo.modules.v2.compiler")
-  buildConfigField("String", "KOTLIN_PLUGIN_ID", "\"expo.modules.v2.compiler\"")
+  packageName("io.github.expo.modules.v2.compiler")
+  buildConfigField("String", "KOTLIN_PLUGIN_ID", "\"io.github.expo.modules.v2.compiler\"")
 }
 
 tasks.test {
@@ -144,7 +148,7 @@ val generateTests by tasks.registering(JavaExec::class) {
     .withPropertyName("generatedTests")
 
   classpath = sourceSets.testFixtures.get().runtimeClasspath
-  mainClass.set("expo.modules.v2.compiler.GenerateTestsKt")
+  mainClass.set("io.github.expo.modules.v2.compiler.GenerateTestsKt")
   workingDir = rootDir
   args(
     listOf(

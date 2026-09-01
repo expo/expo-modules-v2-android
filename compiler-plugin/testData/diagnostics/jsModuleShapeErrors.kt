@@ -1,9 +1,9 @@
 // RUN_PIPELINE_TILL: FRONTEND
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.modules.Module
 
 // An `object` is the ordinary shape of a module, so it is deliberately absent from this file.
 

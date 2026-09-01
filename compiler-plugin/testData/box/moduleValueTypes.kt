@@ -1,12 +1,12 @@
 // DUMP_IR
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.Buffer
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.annotations.Record
-import expo.modules.v2.jsi.JavaScriptValue
-import expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.annotations.Buffer
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.jsi.JavaScriptValue
+import io.github.expo.modules.v2.modules.Module
 
 @Record
 data class Point(val x: Double, val y: Double)

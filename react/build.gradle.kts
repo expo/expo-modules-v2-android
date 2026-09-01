@@ -15,6 +15,10 @@ plugins {
 }
 
 mavenPublishing {
+  // The project name alone would publish as `io.github.expo:react`. That namespace is shared with
+  // everything else Expo releases through it, so the artifact carries the project it belongs to.
+  coordinates(artifactId = "expo-modules-v2-react")
+
   // `release` only — a consumer never wants the debug variant, and every published file counts
   // against Maven Central's per-organization file-count limit. Central's validator rejects a
   // deployment with no `-javadoc.jar`, so `publishJavadocJar` stays on; AGP generates it from this
@@ -34,7 +38,7 @@ val apiKotlinDir = rootProject.layout.projectDirectory.dir("api/src/main/kotlin"
 val apiCppDir = rootProject.layout.projectDirectory.dir("api/src/main/cpp")
 
 android {
-  namespace = "expo.modules.v2.react"
+  namespace = "io.github.expo.modules.v2.react"
 
   // Matches what Expo SDK 57 / React Native 0.86 pin (react-native/gradle/libs.versions.toml), so
   // the AAR merges into a consuming app without forcing anything up.
@@ -126,10 +130,10 @@ publishing.publications.withType<MavenPublication>()
 
 // The compiler plugin, registered straight onto every Kotlin compilation here.
 //
-// `id("expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin publishes — is
-// not available inside this build: a Gradle plugin built here is not on this build's own buildscript
-// classpath. Registering the jar plus switching incremental compilation off is the whole of what
-// that plugin does, so this is the same thing by hand.
+// `id("io.github.expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin
+// publishes — is not available inside this build: a Gradle plugin built here is not on this
+// build's own buildscript classpath. Registering the jar plus switching incremental compilation
+// off is the whole of what that plugin does, so this is the same thing by hand.
 configurations
   .matching { it.name.startsWith("kotlinCompilerPluginClasspath") }
   .configureEach { dependencies.add(project.dependencies.create(project(":compiler-plugin"))) }

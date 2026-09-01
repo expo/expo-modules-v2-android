@@ -8,7 +8,7 @@
 namespace expo::modules::v2::jsi {
   /**
    * A JavaScriptRuntime attached to a `jsi::Runtime` somebody else created, exposed to the JVM as
-   * `expo.modules.v2.jsi.AttachedRuntime`.
+   * `io.github.expo.modules.v2.jsi.AttachedRuntime`.
    *
    * This is the only shape this library needs: it never creates a VM. The host does — React Native
    * in an app, `hermes-tests-environment` on the desktop and in an Android app without React
@@ -21,7 +21,7 @@ namespace expo::modules::v2::jsi {
   class AttachedRuntime : public JavaScriptRuntime {
   public:
     // The internal (binary) class name of the Kotlin handle; shadows the base's.
-    static constexpr std::string_view descriptor = "expo/modules/v2/jsi/AttachedRuntime";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/jsi/AttachedRuntime";
 
     // Registers `nativeCreate`. The inherited instance methods are registered against the Kotlin
     // base class by JNI_OnLoad. Call once from there.

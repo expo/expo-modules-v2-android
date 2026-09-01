@@ -11,7 +11,7 @@
 
 namespace expo::modules::v2 {
   struct JTrampoline : kolibri::JavaClass<JTrampoline> {
-    static constexpr std::string_view descriptor = "expo/modules/v2/args/Trampoline";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/args/Trampoline";
 
     static constexpr jint kOverflowArgumentsSentinel = -1;
 

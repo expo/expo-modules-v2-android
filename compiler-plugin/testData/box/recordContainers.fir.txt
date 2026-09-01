@@ -1,8 +1,8 @@
 FILE: recordContainers.kt
-    package expo.modules.v2.testdata
+    package io.github.expo.modules.v2.testdata
 
-    @R|expo/modules/v2/annotations/Record|() public final class Bag : R|kotlin/Any|, R|expo/modules/v2/records/Record| {
-        public constructor(tags: R|kotlin/collections/List<kotlin/String>|, counts: R|kotlin/collections/List<kotlin/Int>|, maybes: R|kotlin/collections/List<kotlin/String?>|, ids: R|kotlin/collections/Set<kotlin/Long>|, meta: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|, names: R|kotlin/Array<kotlin/String>|, nested: R|kotlin/collections/List<kotlin/collections/List<kotlin/Int>>|, absent: R|kotlin/collections/List<kotlin/String>?|, absentNames: R|kotlin/Array<kotlin/String>?|, mutableTags: R|kotlin/collections/MutableList<kotlin/String>|, mutableMeta: R|kotlin/collections/MutableMap<kotlin/String, kotlin/Int>|): R|expo/modules/v2/testdata/Bag| {
+    @R|io/github/expo/modules/v2/annotations/Record|() public final class Bag : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        public constructor(tags: R|kotlin/collections/List<kotlin/String>|, counts: R|kotlin/collections/List<kotlin/Int>|, maybes: R|kotlin/collections/List<kotlin/String?>|, ids: R|kotlin/collections/Set<kotlin/Long>|, meta: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|, names: R|kotlin/Array<kotlin/String>|, nested: R|kotlin/collections/List<kotlin/collections/List<kotlin/Int>>|, absent: R|kotlin/collections/List<kotlin/String>?|, absentNames: R|kotlin/Array<kotlin/String>?|, mutableTags: R|kotlin/collections/MutableList<kotlin/String>|, mutableMeta: R|kotlin/collections/MutableMap<kotlin/String, kotlin/Int>|): R|io/github/expo/modules/v2/testdata/Bag| {
             super<R|kotlin/Any|>()
         }
 
@@ -39,26 +39,26 @@ FILE: recordContainers.kt
         public final val mutableMeta: R|kotlin/collections/MutableMap<kotlin/String, kotlin/Int>| = R|<local>/mutableMeta|
             public get(): R|kotlin/collections/MutableMap<kotlin/String, kotlin/Int>|
 
-        private final class RecordCodec$ExpoModulesV2 : R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Bag>| {
-            public final override val recordClass: R|java/lang/Class<expo/modules/v2/testdata/Bag>|
-                public get(): R|java/lang/Class<expo/modules/v2/testdata/Bag>|
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Bag>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/Bag>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/Bag>|
 
-            public final override val schema: R|expo/modules/v2/records/RecordSchema|
-                public get(): R|expo/modules/v2/records/RecordSchema|
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
 
-            public final override fun encode(value: R|expo/modules/v2/testdata/Bag|, writer: R|expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/Bag|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
 
-            public final override fun decode(reader: R|expo/modules/v2/records/readers/RecordReader|): R|expo/modules/v2/testdata/Bag|
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/Bag|
 
-            public constructor(): R|expo/modules/v2/testdata/Bag.RecordCodec$ExpoModulesV2|
+            public constructor(): R|io/github/expo/modules/v2/testdata/Bag.RecordCodec$ExpoModulesV2|
 
         }
 
         public final companion object Companion : R|kotlin/Any| {
-            public final val recordCodec$ExpoModulesV2: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Bag>|
-                public get(): R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Bag>|
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Bag>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Bag>|
 
-            private constructor(): R|expo/modules/v2/testdata/Bag.Companion| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/Bag.Companion| {
                 super<R|kotlin/Any|>()
             }
 
@@ -66,9 +66,9 @@ FILE: recordContainers.kt
 
     }
     public final fun box(): R|kotlin/String| {
-        lval codec: R|expo/modules/v2/records/RecordCodec<expo/modules/v2/testdata/Bag>| = R|expo/modules/v2/records/codecFor|<R|expo/modules/v2/testdata/Bag|>()
-        lval fieldTypes: R|kotlin/collections/List<kotlin/String>| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.schema: R|expo/modules/v2/records/RecordSchema|>|.R|expo/modules/v2/records/RecordSchema.fields|.R|kotlin/collections/map|<R|expo/modules/v2/records/RecordField|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|expo/modules/v2/records/RecordField|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
-            ^ <strcat>(R|<local>/it|.R|expo/modules/v2/records/RecordField.name|, String(=), R|<local>/it|.R|expo/modules/v2/records/RecordField.type|)
+        lval codec: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Bag>| = R|io/github/expo/modules/v2/records/codecFor|<R|io/github/expo/modules/v2/testdata/Bag|>()
+        lval fieldTypes: R|kotlin/collections/List<kotlin/String>| = R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.schema: R|io/github/expo/modules/v2/records/RecordSchema|>|.R|io/github/expo/modules/v2/records/RecordSchema.fields|.R|kotlin/collections/map|<R|io/github/expo/modules/v2/records/RecordField|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|io/github/expo/modules/v2/records/RecordField|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
+            ^ <strcat>(R|<local>/it|.R|io/github/expo/modules/v2/records/RecordField.name|, String(=), R|<local>/it|.R|io/github/expo/modules/v2/records/RecordField.type|)
         }
         )
         lval expected: R|kotlin/collections/List<kotlin/String>| = R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(tags=List<String>), String(counts=List<Integer>), String(maybes=List<String?>), String(ids=Set<Long>), String(meta=Map<String, Object?>), String(names=String[]<String>), String(nested=List<List<Integer>>), String(absent=List<String>?), String(absentNames=String[]<String>?), String(mutableTags=List<String>), String(mutableMeta=Map<String, Integer>)))
@@ -78,8 +78,8 @@ FILE: recordContainers.kt
             }
         }
 
-        lval bag: R|expo/modules/v2/testdata/Bag| = R|expo/modules/v2/testdata/Bag.Bag|(R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(a), String(b))), R|kotlin/collections/listOf|<R|kotlin/Int|>(vararg(Int(1), Int(2))), R|kotlin/collections/listOf|<R|kotlin/String?|>(vararg(String(x), Null(null))), R|kotlin/collections/setOf|<R|kotlin/Long|>(Long(7)), R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/Int?|>(vararg(String(k).R|kotlin/to|<R|kotlin/String|, R|kotlin/Int|>(Int(1)), String(n).R|kotlin/to|<R|kotlin/String|, R|kotlin/Nothing?|>(Null(null)))), R|kotlin/arrayOf|<R|kotlin/String|>(vararg(String(n))), R|kotlin/collections/listOf|<R|kotlin/collections/List<kotlin/Int>|>(vararg(R|kotlin/collections/listOf|<R|kotlin/Int|>(Int(1)), R|kotlin/collections/listOf|<R|kotlin/Int|>(vararg(Int(2), Int(3))))), Null(null), Null(null), R|kotlin/collections/mutableListOf|<R|kotlin/String|>(vararg(String(m))), R|kotlin/collections/mutableMapOf|<R|kotlin/String|, R|kotlin/Int|>(vararg(String(k).R|kotlin/to|<R|kotlin/String|, R|kotlin/Int|>(Int(1)))))
-        lval map: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/bag|)
+        lval bag: R|io/github/expo/modules/v2/testdata/Bag| = R|io/github/expo/modules/v2/testdata/Bag.Bag|(R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(a), String(b))), R|kotlin/collections/listOf|<R|kotlin/Int|>(vararg(Int(1), Int(2))), R|kotlin/collections/listOf|<R|kotlin/String?|>(vararg(String(x), Null(null))), R|kotlin/collections/setOf|<R|kotlin/Long|>(Long(7)), R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/Int?|>(vararg(String(k).R|kotlin/to|<R|kotlin/String|, R|kotlin/Int|>(Int(1)), String(n).R|kotlin/to|<R|kotlin/String|, R|kotlin/Nothing?|>(Null(null)))), R|kotlin/arrayOf|<R|kotlin/String|>(vararg(String(n))), R|kotlin/collections/listOf|<R|kotlin/collections/List<kotlin/Int>|>(vararg(R|kotlin/collections/listOf|<R|kotlin/Int|>(Int(1)), R|kotlin/collections/listOf|<R|kotlin/Int|>(vararg(Int(2), Int(3))))), Null(null), Null(null), R|kotlin/collections/mutableListOf|<R|kotlin/String|>(vararg(String(m))), R|kotlin/collections/mutableMapOf|<R|kotlin/String|, R|kotlin/Int|>(vararg(String(k).R|kotlin/to|<R|kotlin/String|, R|kotlin/Int|>(Int(1)))))
+        lval map: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>| = R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.toMap: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|>|(R|<local>/bag|)
         when () {
             !=(R|<local>/map|.R|SubstitutionOverride<kotlin/collections/Map.get: R|kotlin/Any?|>|(String(tags)), R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(a), String(b)))) ->  {
                 ^box <strcat>(String(Fail: tags is ), R|<local>/map|.R|SubstitutionOverride<kotlin/collections/Map.get: R|kotlin/Any?|>|(String(tags)))
@@ -92,70 +92,70 @@ FILE: recordContainers.kt
             }
         }
 
-        lval back: R|expo/modules/v2/testdata/Bag| = R|<local>/codec|.R|SubstitutionOverride<expo/modules/v2/records/RecordCodec.fromMap: R|expo/modules/v2/testdata/Bag|>|(R|<local>/map|)
+        lval back: R|io/github/expo/modules/v2/testdata/Bag| = R|<local>/codec|.R|SubstitutionOverride<io/github/expo/modules/v2/records/RecordCodec.fromMap: R|io/github/expo/modules/v2/testdata/Bag|>|(R|<local>/map|)
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.tags|, R|<local>/bag|.R|expo/modules/v2/testdata/Bag.tags|) ->  {
-                ^box <strcat>(String(Fail: tags round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.tags|)
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.tags|, R|<local>/bag|.R|io/github/expo/modules/v2/testdata/Bag.tags|) ->  {
+                ^box <strcat>(String(Fail: tags round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.tags|)
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.counts|, R|<local>/bag|.R|expo/modules/v2/testdata/Bag.counts|) ->  {
-                ^box <strcat>(String(Fail: counts round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.counts|)
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.counts|, R|<local>/bag|.R|io/github/expo/modules/v2/testdata/Bag.counts|) ->  {
+                ^box <strcat>(String(Fail: counts round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.counts|)
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.maybes|, R|<local>/bag|.R|expo/modules/v2/testdata/Bag.maybes|) ->  {
-                ^box <strcat>(String(Fail: maybes round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.maybes|)
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.maybes|, R|<local>/bag|.R|io/github/expo/modules/v2/testdata/Bag.maybes|) ->  {
+                ^box <strcat>(String(Fail: maybes round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.maybes|)
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.ids|, R|<local>/bag|.R|expo/modules/v2/testdata/Bag.ids|) ->  {
-                ^box <strcat>(String(Fail: ids round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.ids|)
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.ids|, R|<local>/bag|.R|io/github/expo/modules/v2/testdata/Bag.ids|) ->  {
+                ^box <strcat>(String(Fail: ids round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.ids|)
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.meta|, R|<local>/bag|.R|expo/modules/v2/testdata/Bag.meta|) ->  {
-                ^box <strcat>(String(Fail: meta round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.meta|)
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.meta|, R|<local>/bag|.R|io/github/expo/modules/v2/testdata/Bag.meta|) ->  {
+                ^box <strcat>(String(Fail: meta round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.meta|)
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.names|.R|kotlin/collections/toList|<R|kotlin/String|>(), R|<local>/bag|.R|expo/modules/v2/testdata/Bag.names|.R|kotlin/collections/toList|<R|kotlin/String|>()) ->  {
-                ^box <strcat>(String(Fail: names round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.names|.R|kotlin/collections/toList|<R|kotlin/String|>())
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.names|.R|kotlin/collections/toList|<R|kotlin/String|>(), R|<local>/bag|.R|io/github/expo/modules/v2/testdata/Bag.names|.R|kotlin/collections/toList|<R|kotlin/String|>()) ->  {
+                ^box <strcat>(String(Fail: names round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.names|.R|kotlin/collections/toList|<R|kotlin/String|>())
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.nested|, R|<local>/bag|.R|expo/modules/v2/testdata/Bag.nested|) ->  {
-                ^box <strcat>(String(Fail: nested round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.nested|)
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.nested|, R|<local>/bag|.R|io/github/expo/modules/v2/testdata/Bag.nested|) ->  {
+                ^box <strcat>(String(Fail: nested round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.nested|)
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.absent|, Null(null)) ->  {
-                ^box <strcat>(String(Fail: absent round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.absent|)
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.absent|, Null(null)) ->  {
+                ^box <strcat>(String(Fail: absent round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.absent|)
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.absentNames|, Null(null)) ->  {
-                ^box <strcat>(String(Fail: absentNames round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.absentNames|?.{ $subj$.R|kotlin/collections/toList|<R|kotlin/String|>() })
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.absentNames|, Null(null)) ->  {
+                ^box <strcat>(String(Fail: absentNames round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.absentNames|?.{ $subj$.R|kotlin/collections/toList|<R|kotlin/String|>() })
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.mutableTags|, R|<local>/bag|.R|expo/modules/v2/testdata/Bag.mutableTags|) ->  {
-                ^box <strcat>(String(Fail: mutableTags round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.mutableTags|)
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.mutableTags|, R|<local>/bag|.R|io/github/expo/modules/v2/testdata/Bag.mutableTags|) ->  {
+                ^box <strcat>(String(Fail: mutableTags round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.mutableTags|)
             }
         }
 
         when () {
-            !=(R|<local>/back|.R|expo/modules/v2/testdata/Bag.mutableMeta|, R|<local>/bag|.R|expo/modules/v2/testdata/Bag.mutableMeta|) ->  {
-                ^box <strcat>(String(Fail: mutableMeta round trip gave ), R|<local>/back|.R|expo/modules/v2/testdata/Bag.mutableMeta|)
+            !=(R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.mutableMeta|, R|<local>/bag|.R|io/github/expo/modules/v2/testdata/Bag.mutableMeta|) ->  {
+                ^box <strcat>(String(Fail: mutableMeta round trip gave ), R|<local>/back|.R|io/github/expo/modules/v2/testdata/Bag.mutableMeta|)
             }
         }
 

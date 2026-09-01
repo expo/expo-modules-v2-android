@@ -1,9 +1,9 @@
 // DUMP_IR
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.modules.Module
 
 /** A module with nothing to export: `define` still has to name it, with an empty argument vararg. */
 @JS
@@ -83,7 +83,7 @@ private fun names(owner: Class<*>): Set<String> =
     owner.declaredMethods.map { it.name }.toSet()
 
 fun box(): String {
-    val builder = Class.forName("expo.modules.v2.modules.ModuleBuilder")
+    val builder = Class.forName("io.github.expo.modules.v2.modules.ModuleBuilder")
 
     // An export-free module still overrides define, and still names itself.
     Empty::class.java.getDeclaredMethod("define\$ExpoModulesV2", builder)

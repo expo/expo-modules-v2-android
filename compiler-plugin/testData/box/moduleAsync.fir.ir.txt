@@ -1,357 +1,357 @@
-FILE fqName:expo.modules.v2.testdata fileName:/moduleAsync.kt
-  CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]
+FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
+  CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
       JS(name = <null>, buffer = <null>, returnBuffer = <null>)
-    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:expo.modules.v2.testdata.AsyncShapes
-    FIELD GENERATED[expo.modules.v2.compiler.JSModuleKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.AsyncShapes
+    FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
-        CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.Simple' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+        CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.Unit> origin=null
             ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Unit modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
           ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
-    CONSTRUCTOR visibility:public returnType:expo.modules.v2.testdata.AsyncShapes [primary]
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.AsyncShapes [primary]
       BLOCK_BODY
-        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in expo.modules.v2.modules.Module'
-        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.Unit
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.Module'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.Unit
     FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
-        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in expo.modules.v2.modules.Module
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.modules.Module
     FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
-        public open fun hashCode (): kotlin.Int declared in expo.modules.v2.modules.Module
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.modules.Module
     FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
-        public open fun toString (): kotlin.String declared in expo.modules.v2.modules.Module
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:clear__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.AsyncShapes
-      VALUE_PARAMETER kind:Regular name:promise index:1 type:expo.modules.v2.async.Promise
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.modules.Module
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:clear__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
+      VALUE_PARAMETER kind:Regular name:promise index:1 type:io.github.expo.modules.v2.async.Promise
       BLOCK_BODY
-        CALL 'public final fun launch (type: expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
-          ARG <this>: GET_VAR 'promise: expo.modules.v2.async.Promise declared in expo.modules.v2.testdata.AsyncShapes.clear__trampoline$ExpoModulesV2' type=expo.modules.v2.async.Promise origin=null
-          ARG type: GET_FIELD 'FIELD GENERATED[expo.modules.v2.compiler.JSModuleKey] name:type$0 type:expo.modules.v2.types.TypeDescriptor visibility:private [final,static] declared in expo.modules.v2.testdata.AsyncShapes' type=expo.modules.v2.types.TypeDescriptor origin=null
+        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
+          ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.clear__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null
+          ARG type: GET_FIELD 'FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static] declared in io.github.expo.modules.v2.testdata.AsyncShapes' type=io.github.expo.modules.v2.types.TypeDescriptor origin=null
           ARG buffered: CONST Boolean type=kotlin.Boolean value=false
           ARG block: FUN_EXPR type=kotlin.coroutines.SuspendFunction0<kotlin.Any?> origin=LAMBDA
             FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Any? [suspend]
               BLOCK_BODY
-                RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any? declared in expo.modules.v2.testdata.AsyncShapes.clear__trampoline$ExpoModulesV2'
-                  CALL 'public final fun clear (): kotlin.Unit declared in expo.modules.v2.testdata.AsyncShapes' type=kotlin.Unit origin=null
-                    ARG <this>: GET_VAR '<this>: expo.modules.v2.testdata.AsyncShapes declared in expo.modules.v2.testdata.AsyncShapes.clear__trampoline$ExpoModulesV2' type=expo.modules.v2.testdata.AsyncShapes origin=null
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.AsyncShapes
-      VALUE_PARAMETER kind:Regular name:builder index:1 type:expo.modules.v2.modules.ModuleBuilder
+                RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any? declared in io.github.expo.modules.v2.testdata.AsyncShapes.clear__trampoline$ExpoModulesV2'
+                  CALL 'public final fun clear (): kotlin.Unit declared in io.github.expo.modules.v2.testdata.AsyncShapes' type=kotlin.Unit origin=null
+                    ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.AsyncShapes declared in io.github.expo.modules.v2.testdata.AsyncShapes.clear__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.AsyncShapes origin=null
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:io.github.expo.modules.v2.modules.ModuleBuilder
       overridden:
-        public open fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.modules.Module
+        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.modules.Module
       BLOCK_BODY
-        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.AsyncShapes.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.AsyncShapes.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
           ARG jsName: CONST String type=kotlin.String value="scale"
-          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
-            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
-          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="scale__trampoline$ExpoModulesV2"
           ARG isAsync: CONST Boolean type=kotlin.Boolean value=true
-        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.AsyncShapes.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.AsyncShapes.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
           ARG jsName: CONST String type=kotlin.String value="greet"
-          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
-            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
-          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="greet__trampoline$ExpoModulesV2"
           ARG isAsync: CONST Boolean type=kotlin.Boolean value=true
-        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.AsyncShapes.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.AsyncShapes.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
           ARG jsName: CONST String type=kotlin.String value="repeat"
-          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
-            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
-            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
-          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="repeat__trampoline$ExpoModulesV2"
           ARG isAsync: CONST Boolean type=kotlin.Boolean value=true
-        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: expo.modules.v2.types.AnyType, returns: expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
-          ARG <this>: GET_VAR 'builder: expo.modules.v2.modules.ModuleBuilder declared in expo.modules.v2.testdata.AsyncShapes.define$ExpoModulesV2' type=expo.modules.v2.modules.ModuleBuilder origin=null
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.AsyncShapes.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
           ARG jsName: CONST String type=kotlin.String value="clear"
-          ARG argTypes: VARARG type=kotlin.Array<expo.modules.v2.types.AnyType> varargElementType=expo.modules.v2.types.AnyType
-          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in expo.modules.v2.types.AnyType' type=expo.modules.v2.types.AnyType origin=null
-            ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in expo.modules.v2.types.TypeDescriptor.Simple' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
               ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.Unit> origin=null
                 ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Unit modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
               ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="clear__trampoline$ExpoModulesV2"
           ARG isAsync: CONST Boolean type=kotlin.Boolean value=true
-        RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in expo.modules.v2.testdata.AsyncShapes'
+        RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           CONST String type=kotlin.String value="AsyncShapes"
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:greet__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.AsyncShapes
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:greet__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
-      VALUE_PARAMETER kind:Regular name:promise index:2 type:expo.modules.v2.async.Promise
+      VALUE_PARAMETER kind:Regular name:promise index:2 type:io.github.expo.modules.v2.async.Promise
       BLOCK_BODY
-        VAR name:args type:expo.modules.v2.args.TrampolineArguments [val]
-          CALL 'public final fun arguments (payloadLength: kotlin.Int): expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.args.Trampoline' type=expo.modules.v2.args.TrampolineArguments origin=null
-            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.args.Trampoline
-            ARG payloadLength: GET_VAR 'payloadLength: kotlin.Int declared in expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
+        VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
+          CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.args.Trampoline
+            ARG payloadLength: GET_VAR 'payloadLength: kotlin.Int declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
         VAR name:v0 type:kotlin.String [var]
         TRY type=kotlin.Unit
           try: BLOCK type=kotlin.Unit origin=null
-            SET_VAR 'var v0: kotlin.String declared in expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
-              CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
-          finally: CALL 'public abstract fun finish (): kotlin.Unit declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.Unit origin=null
-            ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
-        CALL 'public final fun launch (type: expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
-          ARG <this>: GET_VAR 'promise: expo.modules.v2.async.Promise declared in expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=expo.modules.v2.async.Promise origin=null
-          ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            SET_VAR 'var v0: kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
+              CALL 'public abstract fun nextString (): kotlin.String declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
+                ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+          finally: CALL 'public abstract fun finish (): kotlin.Unit declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
+          ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null
+          ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG buffered: CONST Boolean type=kotlin.Boolean value=false
           ARG block: FUN_EXPR type=kotlin.coroutines.SuspendFunction0<kotlin.Any?> origin=LAMBDA
             FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Any? [suspend]
               BLOCK_BODY
-                RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any? declared in expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2'
-                  CALL 'public final fun greet (name: kotlin.String): kotlin.String declared in expo.modules.v2.testdata.AsyncShapes' type=kotlin.String origin=null
-                    ARG <this>: GET_VAR '<this>: expo.modules.v2.testdata.AsyncShapes declared in expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=expo.modules.v2.testdata.AsyncShapes origin=null
-                    ARG name: GET_VAR 'var v0: kotlin.String declared in expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:repeat__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.AsyncShapes
+                RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any? declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2'
+                  CALL 'public final fun greet (name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes' type=kotlin.String origin=null
+                    ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.AsyncShapes declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.AsyncShapes origin=null
+                    ARG name: GET_VAR 'var v0: kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:repeat__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.Int
       VALUE_PARAMETER kind:Regular name:payloadLength index:2 type:kotlin.Int
-      VALUE_PARAMETER kind:Regular name:promise index:3 type:expo.modules.v2.async.Promise
+      VALUE_PARAMETER kind:Regular name:promise index:3 type:io.github.expo.modules.v2.async.Promise
       BLOCK_BODY
-        VAR name:args type:expo.modules.v2.args.TrampolineArguments [val]
-          CALL 'public final fun arguments (payloadLength: kotlin.Int): expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.args.Trampoline' type=expo.modules.v2.args.TrampolineArguments origin=null
-            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=expo.modules.v2.args.Trampoline
-            ARG payloadLength: GET_VAR 'payloadLength: kotlin.Int declared in expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
+        VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
+          CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.args.Trampoline
+            ARG payloadLength: GET_VAR 'payloadLength: kotlin.Int declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
         VAR name:v1 type:kotlin.String [var]
         TRY type=kotlin.Unit
           try: BLOCK type=kotlin.Unit origin=null
-            SET_VAR 'var v1: kotlin.String declared in expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
-              CALL 'public abstract fun nextString (): kotlin.String declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
-                ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
-          finally: CALL 'public abstract fun finish (): kotlin.Unit declared in expo.modules.v2.args.TrampolineArguments' type=kotlin.Unit origin=null
-            ARG <this>: GET_VAR 'val args: expo.modules.v2.args.TrampolineArguments declared in expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=expo.modules.v2.args.TrampolineArguments origin=null
-        CALL 'public final fun launch (type: expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
-          ARG <this>: GET_VAR 'promise: expo.modules.v2.async.Promise declared in expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=expo.modules.v2.async.Promise origin=null
-          ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in expo.modules.v2.types.CommonDescriptors' type=expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            SET_VAR 'var v1: kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
+              CALL 'public abstract fun nextString (): kotlin.String declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
+                ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+          finally: CALL 'public abstract fun finish (): kotlin.Unit declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
+          ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null
+          ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG buffered: CONST Boolean type=kotlin.Boolean value=false
           ARG block: FUN_EXPR type=kotlin.coroutines.SuspendFunction0<kotlin.Any?> origin=LAMBDA
             FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Any? [suspend]
               BLOCK_BODY
-                RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any? declared in expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2'
-                  CALL 'public final fun repeat (times: kotlin.Int, value: kotlin.String): kotlin.String declared in expo.modules.v2.testdata.AsyncShapes' type=kotlin.String origin=null
-                    ARG <this>: GET_VAR '<this>: expo.modules.v2.testdata.AsyncShapes declared in expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=expo.modules.v2.testdata.AsyncShapes origin=null
-                    ARG times: GET_VAR 'p0: kotlin.Int declared in expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
-                    ARG value: GET_VAR 'var v1: kotlin.String declared in expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=kotlin.String origin=null
-    FUN GENERATED[expo.modules.v2.compiler.JSModuleKey] name:scale__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.AsyncShapes
+                RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any? declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2'
+                  CALL 'public final fun repeat (times: kotlin.Int, value: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes' type=kotlin.String origin=null
+                    ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.AsyncShapes declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.AsyncShapes origin=null
+                    ARG times: GET_VAR 'p0: kotlin.Int declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
+                    ARG value: GET_VAR 'var v1: kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:scale__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.Int
-      VALUE_PARAMETER kind:Regular name:promise index:2 type:expo.modules.v2.async.Promise
+      VALUE_PARAMETER kind:Regular name:promise index:2 type:io.github.expo.modules.v2.async.Promise
       BLOCK_BODY
-        CALL 'public final fun launch (type: expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
-          ARG <this>: GET_VAR 'promise: expo.modules.v2.async.Promise declared in expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2' type=expo.modules.v2.async.Promise origin=null
-          ARG type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[expo.modules.v2.types.TypeDescriptor.Primitive]' type=expo.modules.v2.types.TypeDescriptor.Int
+        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
+          ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null
+          ARG type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
           ARG buffered: CONST Boolean type=kotlin.Boolean value=false
           ARG block: FUN_EXPR type=kotlin.coroutines.SuspendFunction0<kotlin.Any?> origin=LAMBDA
             FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Any? [suspend]
               BLOCK_BODY
-                RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any? declared in expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2'
-                  CALL 'public final fun scale (value: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.AsyncShapes' type=kotlin.Int origin=null
-                    ARG <this>: GET_VAR '<this>: expo.modules.v2.testdata.AsyncShapes declared in expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2' type=expo.modules.v2.testdata.AsyncShapes origin=null
-                    ARG value: GET_VAR 'p0: kotlin.Int declared in expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
+                RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.Any? declared in io.github.expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2'
+                  CALL 'public final fun scale (value: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.AsyncShapes' type=kotlin.Int origin=null
+                    ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.AsyncShapes declared in io.github.expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.AsyncShapes origin=null
+                    ARG value: GET_VAR 'p0: kotlin.Int declared in io.github.expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
     FUN name:clear visibility:public modality:FINAL returnType:kotlin.Unit [suspend]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.AsyncShapes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun clear (): kotlin.Unit declared in expo.modules.v2.testdata.AsyncShapes'
+        RETURN type=kotlin.Nothing from='public final fun clear (): kotlin.Unit declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           CALL 'public final fun delay (timeMillis: kotlin.Long): kotlin.Unit declared in kotlinx.coroutines' type=kotlin.Unit origin=null
             ARG timeMillis: CONST Long type=kotlin.Long value=1
     FUN name:greet visibility:public modality:FINAL returnType:kotlin.String [suspend]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.AsyncShapes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:name index:1 type:kotlin.String
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun greet (name: kotlin.String): kotlin.String declared in expo.modules.v2.testdata.AsyncShapes'
+        RETURN type=kotlin.Nothing from='public final fun greet (name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           STRING_CONCATENATION type=kotlin.String
             CONST String type=kotlin.String value="Hello, "
-            GET_VAR 'name: kotlin.String declared in expo.modules.v2.testdata.AsyncShapes.greet' type=kotlin.String origin=null
+            GET_VAR 'name: kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet' type=kotlin.String origin=null
             CONST String type=kotlin.String value="!"
     FUN name:repeat visibility:public modality:FINAL returnType:kotlin.String [suspend]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.AsyncShapes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:times index:1 type:kotlin.Int
         annotations:
-          JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
+          JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
       VALUE_PARAMETER kind:Regular name:value index:2 type:kotlin.String
       annotations:
         JS(name = <null>, buffer = <null>, returnBuffer = <null>)
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun repeat (times: kotlin.Int, value: kotlin.String): kotlin.String declared in expo.modules.v2.testdata.AsyncShapes'
+        RETURN type=kotlin.Nothing from='public final fun repeat (times: kotlin.Int, value: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           CALL 'public final fun repeat (<this>: kotlin.CharSequence, n: kotlin.Int): kotlin.String declared in kotlin.text' type=kotlin.String origin=null
-            ARG <this>: GET_VAR 'value: kotlin.String declared in expo.modules.v2.testdata.AsyncShapes.repeat' type=kotlin.String origin=null
-            ARG n: GET_VAR 'times: kotlin.Int declared in expo.modules.v2.testdata.AsyncShapes.repeat' type=kotlin.Int origin=null
+            ARG <this>: GET_VAR 'value: kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat' type=kotlin.String origin=null
+            ARG n: GET_VAR 'times: kotlin.Int declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat' type=kotlin.Int origin=null
     FUN name:scale visibility:public modality:FINAL returnType:kotlin.Int [suspend]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:expo.modules.v2.testdata.AsyncShapes
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:value index:1 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
+        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
       BLOCK_BODY
         CALL 'public final fun delay (timeMillis: kotlin.Long): kotlin.Unit declared in kotlinx.coroutines' type=kotlin.Unit origin=null
           ARG timeMillis: CONST Long type=kotlin.Long value=1
-        RETURN type=kotlin.Nothing from='public final fun scale (value: kotlin.Int): kotlin.Int declared in expo.modules.v2.testdata.AsyncShapes'
+        RETURN type=kotlin.Nothing from='public final fun scale (value: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=MUL
-            ARG <this>: GET_VAR 'value: kotlin.Int declared in expo.modules.v2.testdata.AsyncShapes.scale' type=kotlin.Int origin=null
+            ARG <this>: GET_VAR 'value: kotlin.Int declared in io.github.expo.modules.v2.testdata.AsyncShapes.scale' type=kotlin.Int origin=null
             ARG other: CONST Int type=kotlin.Int value=2
   FUN name:box visibility:public modality:FINAL returnType:kotlin.String
     BLOCK_BODY
-      VAR name:clazz type:java.lang.Class<expo.modules.v2.testdata.AsyncShapes> [val]
-        CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<expo.modules.v2.testdata.AsyncShapes> origin=GET_PROPERTY
-          TYPE_ARG T: expo.modules.v2.testdata.AsyncShapes
-          ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<expo.modules.v2.testdata.AsyncShapes>
+      VAR name:clazz type:java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> [val]
+        CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=GET_PROPERTY
+          TYPE_ARG T: io.github.expo.modules.v2.testdata.AsyncShapes
+          ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.AsyncShapes>
       VAR name:int type:java.lang.Class<kotlin.Int>? [val]
         CALL 'public final fun <get-javaPrimitiveType> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-javaPrimitiveType>>): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
           TYPE_ARG T: kotlin.Int
           ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Int modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Int>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Int>
       VAR name:promise type:@[FlexibleNullability] java.lang.Class<*>? [val]
         CALL 'public open fun forName (p0: @[FlexibleNullability] kotlin.String?): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
-          ARG p0: CONST String type=kotlin.String value="expo.modules.v2.async.Promise"
+          ARG p0: CONST String type=kotlin.String value="io.github.expo.modules.v2.async.Promise"
       VAR name:scale type:@[FlexibleNullability] java.lang.reflect.Method? [val]
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          ARG <this>: GET_VAR 'val clazz: java.lang.Class<expo.modules.v2.testdata.AsyncShapes> declared in expo.modules.v2.testdata.box' type=java.lang.Class<expo.modules.v2.testdata.AsyncShapes> origin=null
+          ARG <this>: GET_VAR 'val clazz: java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=null
           ARG p0: STRING_CONCATENATION type=kotlin.String
             CONST String type=kotlin.String value="scale"
             CONST String type=kotlin.String value="__trampoline$ExpoModulesV2"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
-            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
-            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
+            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
             ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
               ARG arg0: CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                ARG <this>: GET_VAR 'val scale: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                ARG <this>: GET_VAR 'val scale: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
               ARG arg1: GET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:TYPE type:@[FlexibleNullability] java.lang.Class<@[FlexibleNullability] java.lang.Void?>? visibility:public [final,static] declared in java.lang.Void' type=@[FlexibleNullability] java.lang.Class<@[FlexibleNullability] java.lang.Void?>? superQualifierSymbol=java.lang.Void origin=null
-          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="scale returns "
               CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                ARG <this>: GET_VAR 'val scale: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                ARG <this>: GET_VAR 'val scale: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
       VAR name:greet type:@[FlexibleNullability] java.lang.reflect.Method? [val]
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          ARG <this>: GET_VAR 'val clazz: java.lang.Class<expo.modules.v2.testdata.AsyncShapes> declared in expo.modules.v2.testdata.box' type=java.lang.Class<expo.modules.v2.testdata.AsyncShapes> origin=null
+          ARG <this>: GET_VAR 'val clazz: java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=null
           ARG p0: STRING_CONCATENATION type=kotlin.String
             CONST String type=kotlin.String value="greet"
             CONST String type=kotlin.String value="__trampoline$ExpoModulesV2"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
-            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
-            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
+            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
             ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
               ARG arg0: CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                ARG <this>: GET_VAR 'val greet: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                ARG <this>: GET_VAR 'val greet: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
               ARG arg1: GET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:TYPE type:@[FlexibleNullability] java.lang.Class<@[FlexibleNullability] java.lang.Void?>? visibility:public [final,static] declared in java.lang.Void' type=@[FlexibleNullability] java.lang.Class<@[FlexibleNullability] java.lang.Void?>? superQualifierSymbol=java.lang.Void origin=null
-          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="greet returns "
               CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                ARG <this>: GET_VAR 'val greet: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                ARG <this>: GET_VAR 'val greet: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
       TYPE_OP type=kotlin.Unit origin=IMPLICIT_COERCION_TO_UNIT typeOperand=kotlin.Unit
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          ARG <this>: GET_VAR 'val clazz: java.lang.Class<expo.modules.v2.testdata.AsyncShapes> declared in expo.modules.v2.testdata.box' type=java.lang.Class<expo.modules.v2.testdata.AsyncShapes> origin=null
+          ARG <this>: GET_VAR 'val clazz: java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=null
           ARG p0: STRING_CONCATENATION type=kotlin.String
             CONST String type=kotlin.String value="repeat"
             CONST String type=kotlin.String value="__trampoline$ExpoModulesV2"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
-            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
-            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
-            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
+            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
+            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       VAR name:clear type:@[FlexibleNullability] java.lang.reflect.Method? [val]
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          ARG <this>: GET_VAR 'val clazz: java.lang.Class<expo.modules.v2.testdata.AsyncShapes> declared in expo.modules.v2.testdata.box' type=java.lang.Class<expo.modules.v2.testdata.AsyncShapes> origin=null
+          ARG <this>: GET_VAR 'val clazz: java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=null
           ARG p0: STRING_CONCATENATION type=kotlin.String
             CONST String type=kotlin.String value="clear"
             CONST String type=kotlin.String value="__trampoline$ExpoModulesV2"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
-            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
             ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
               ARG arg0: CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                ARG <this>: GET_VAR 'val clear: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                ARG <this>: GET_VAR 'val clear: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
               ARG arg1: GET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:TYPE type:@[FlexibleNullability] java.lang.Class<@[FlexibleNullability] java.lang.Void?>? visibility:public [final,static] declared in java.lang.Void' type=@[FlexibleNullability] java.lang.Class<@[FlexibleNullability] java.lang.Void?>? superQualifierSymbol=java.lang.Void origin=null
-          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="clear returns "
               CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
-                ARG <this>: GET_VAR 'val clear: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                ARG <this>: GET_VAR 'val clear: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
       VAR name:continuation type:@[FlexibleNullability] java.lang.Class<*>? [val]
         CALL 'public open fun forName (p0: @[FlexibleNullability] kotlin.String?): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
           ARG p0: CONST String type=kotlin.String value="kotlin.coroutines.Continuation"
       TYPE_OP type=kotlin.Unit origin=IMPLICIT_COERCION_TO_UNIT typeOperand=kotlin.Unit
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          ARG <this>: GET_VAR 'val clazz: java.lang.Class<expo.modules.v2.testdata.AsyncShapes> declared in expo.modules.v2.testdata.box' type=java.lang.Class<expo.modules.v2.testdata.AsyncShapes> origin=null
+          ARG <this>: GET_VAR 'val clazz: java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=null
           ARG p0: CONST String type=kotlin.String value="scale"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
-            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
-            GET_VAR 'val continuation: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
+            GET_VAR 'val continuation: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       TYPE_OP type=kotlin.Unit origin=IMPLICIT_COERCION_TO_UNIT typeOperand=kotlin.Unit
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-          ARG <this>: GET_VAR 'val clazz: java.lang.Class<expo.modules.v2.testdata.AsyncShapes> declared in expo.modules.v2.testdata.box' type=java.lang.Class<expo.modules.v2.testdata.AsyncShapes> origin=null
+          ARG <this>: GET_VAR 'val clazz: java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=null
           ARG p0: CONST String type=kotlin.String value="greet"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
             CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<kotlin.String> origin=GET_PROPERTY
               TYPE_ARG T: kotlin.String
               ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:String modality:FINAL visibility:public superTypes:[kotlin.Comparable<kotlin.String>; kotlin.CharSequence; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.String>
-            GET_VAR 'val continuation: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val continuation: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun any <T> (<this>: kotlin.Array<out T of kotlin.collections.any>, predicate: kotlin.Function1<T of kotlin.collections.any, kotlin.Boolean>): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
             TYPE_ARG T: @[FlexibleNullability] java.lang.reflect.Method?
             ARG <this>: TYPE_OP type=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?> origin=IMPLICIT_NOTNULL typeOperand=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>
               CALL 'public open fun getDeclaredMethods (): @[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>? declared in java.lang.Class' type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>? origin=GET_PROPERTY
-                ARG <this>: GET_VAR 'val clazz: java.lang.Class<expo.modules.v2.testdata.AsyncShapes> declared in expo.modules.v2.testdata.box' type=java.lang.Class<expo.modules.v2.testdata.AsyncShapes> origin=null
+                ARG <this>: GET_VAR 'val clazz: java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=null
             ARG predicate: FUN_EXPR type=kotlin.Function1<@[FlexibleNullability] java.lang.reflect.Method?, kotlin.Boolean> origin=LAMBDA
               FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Boolean
                 VALUE_PARAMETER kind:Regular name:it index:0 type:@[FlexibleNullability] java.lang.reflect.Method?
                 BLOCK_BODY
-                  RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: @[FlexibleNullability] java.lang.reflect.Method?): kotlin.Boolean declared in expo.modules.v2.testdata.box'
+                  RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: @[FlexibleNullability] java.lang.reflect.Method?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.box'
                     WHEN type=kotlin.Boolean origin=ANDAND
                       BRANCH
                         if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
                           ARG arg0: CALL 'public open fun getName (): @[FlexibleNullability] kotlin.String? declared in java.lang.reflect.Method' type=@[FlexibleNullability] kotlin.String? origin=GET_PROPERTY
-                            ARG <this>: GET_VAR 'it: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box.<anonymous>' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                            ARG <this>: GET_VAR 'it: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box.<anonymous>' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
                           ARG arg1: CONST String type=kotlin.String value="scale"
                         then: CALL 'public final fun contains <T> (<this>: kotlin.Array<out T of kotlin.collections.contains>, element: T of kotlin.collections.contains): kotlin.Boolean declared in kotlin.collections' type=kotlin.Boolean origin=null
                           TYPE_ARG T: @[FlexibleNullability] java.lang.Class<*>?
                           ARG <this>: TYPE_OP type=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?> origin=IMPLICIT_NOTNULL typeOperand=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>
                             CALL 'public open fun getParameterTypes (): @[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? origin=GET_PROPERTY
-                              ARG <this>: GET_VAR 'it: @[FlexibleNullability] java.lang.reflect.Method? declared in expo.modules.v2.testdata.box.<anonymous>' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-                          ARG element: GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+                              ARG <this>: GET_VAR 'it: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box.<anonymous>' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                          ARG element: GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
                       BRANCH
                         if: CONST Boolean type=kotlin.Boolean value=true
                         then: CONST Boolean type=kotlin.Boolean value=false
           then: BLOCK type=kotlin.Unit origin=null
-            RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+            RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
               CONST String type=kotlin.String value="the user's own method was rewritten"
-      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in expo.modules.v2.testdata'
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
         CONST String type=kotlin.String value="OK"
   PROPERTY name:TRAMPOLINE visibility:private modality:FINAL [const,val]
     FIELD PROPERTY_BACKING_FIELD name:TRAMPOLINE type:kotlin.String visibility:private [final,static]
@@ -360,5 +360,5 @@ FILE fqName:expo.modules.v2.testdata fileName:/moduleAsync.kt
     FUN DEFAULT_PROPERTY_ACCESSOR name:<get-TRAMPOLINE> visibility:private modality:FINAL returnType:kotlin.String
       correspondingProperty: PROPERTY name:TRAMPOLINE visibility:private modality:FINAL [const,val]
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='private final fun <get-TRAMPOLINE> (): kotlin.String declared in expo.modules.v2.testdata'
+        RETURN type=kotlin.Nothing from='private final fun <get-TRAMPOLINE> (): kotlin.String declared in io.github.expo.modules.v2.testdata'
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:TRAMPOLINE type:kotlin.String visibility:private [final,static]' type=kotlin.String origin=null

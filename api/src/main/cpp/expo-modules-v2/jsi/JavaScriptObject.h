@@ -15,7 +15,7 @@ namespace expo::modules::v2::jsi {
     friend ScopedNativeObject;
 
   public:
-    static constexpr std::string_view descriptor = "expo/modules/v2/jsi/JavaScriptObject";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/jsi/JavaScriptObject";
 
     static constexpr Constructor<void(jlong)> constructor{};
 

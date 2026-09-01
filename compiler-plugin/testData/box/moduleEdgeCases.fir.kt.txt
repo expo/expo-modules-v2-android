@@ -1,4 +1,4 @@
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
 abstract class BaseModule : Module {
   constructor() /* primary */ {
@@ -182,7 +182,7 @@ object Visibility : Module {
 }
 
 fun box(): String {
-  val builder: @FlexibleNullability Class<*>? = forName(p0 = "expo.modules.v2.modules.ModuleBuilder")
+  val builder: @FlexibleNullability Class<*>? = forName(p0 = "io.github.expo.modules.v2.modules.ModuleBuilder")
   <get-java><Empty>(/* <this> = Empty::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder]) /*~> Unit */
   when {
     any<String>(/* <this> = names(owner = <get-java><Empty>(/* <this> = Empty::class */)), */ predicate = local fun <anonymous>(it: String): Boolean {

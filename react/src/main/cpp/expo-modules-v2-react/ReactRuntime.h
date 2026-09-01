@@ -9,7 +9,7 @@
 namespace expo::modules::v2::react {
   /**
    * A JavaScriptRuntime attached to the `jsi::Runtime` React Native already created, exposed to the
-   * JVM as `expo.modules.v2.react.ReactRuntime`.
+   * JVM as `io.github.expo.modules.v2.react.ReactRuntime`.
    *
    * The desktop shape (`:hermes`) mints a VM and owns it. Here the host owns it: the app hands over
    * the address it read from `ReactContext.javaScriptContextHolder`, and this object only installs
@@ -19,7 +19,7 @@ namespace expo::modules::v2::react {
   class ReactRuntime : public ::expo::modules::v2::jsi::JavaScriptRuntime {
   public:
     // The internal (binary) class name of the Kotlin handle; shadows the base's.
-    static constexpr std::string_view descriptor = "expo/modules/v2/react/ReactRuntime";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/react/ReactRuntime";
 
     // Registers `nativeCreate`. The inherited instance methods are registered against the Kotlin
     // base class by this library's JNI_OnLoad. Call once from there.

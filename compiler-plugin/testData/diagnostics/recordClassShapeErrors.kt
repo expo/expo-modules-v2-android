@@ -1,14 +1,14 @@
 // RUN_PIPELINE_TILL: FRONTEND
 // FIR_DUMP
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.Record
-import expo.modules.v2.records.Record as RecordMarker
-import expo.modules.v2.records.RecordCodec
-import expo.modules.v2.records.RecordSchema
-import expo.modules.v2.records.readers.RecordReader
-import expo.modules.v2.records.writers.RecordWriter
+import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.records.Record as RecordMarker
+import io.github.expo.modules.v2.records.RecordCodec
+import io.github.expo.modules.v2.records.RecordSchema
+import io.github.expo.modules.v2.records.readers.RecordReader
+import io.github.expo.modules.v2.records.writers.RecordWriter
 
 <!RECORD_ON_UNSUPPORTED_DECLARATION!>@Record
 interface NotAClass<!>

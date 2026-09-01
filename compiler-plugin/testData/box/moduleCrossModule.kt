@@ -2,11 +2,11 @@
 
 // MODULE: producer
 // FILE: producer.kt
-package expo.modules.v2.testdata.producer
+package io.github.expo.modules.v2.testdata.producer
 
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.annotations.Record
-import expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.modules.Module
 
 @Record
 data class Shared(val n: Int, val label: String?)
@@ -29,12 +29,12 @@ object ProducerModule : Module() {
 
 // MODULE: consumer(producer)
 // FILE: consumer.kt
-package expo.modules.v2.testdata.consumer
+package io.github.expo.modules.v2.testdata.consumer
 
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.modules.Module
-import expo.modules.v2.testdata.producer.ProducerModule
-import expo.modules.v2.testdata.producer.Shared
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.testdata.producer.ProducerModule
+import io.github.expo.modules.v2.testdata.producer.Shared
 
 /** A module in this module whose signature names a record from the other one. */
 @JS(name = "Consumer")
@@ -60,7 +60,7 @@ fun box(): String {
 
     // The producer's generated members are ordinary compiled code here.
     val define = ProducerModule::class.java
-        .getDeclaredMethod("define\$ExpoModulesV2", Class.forName("expo.modules.v2.modules.ModuleBuilder"))
+        .getDeclaredMethod("define\$ExpoModulesV2", Class.forName("io.github.expo.modules.v2.modules.ModuleBuilder"))
     if (define.returnType != String::class.java) return "producer define: ${define.returnType}"
 
     val producer = mapOf(

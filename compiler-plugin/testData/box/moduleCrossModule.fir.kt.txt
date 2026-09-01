@@ -1,6 +1,6 @@
 // MODULE: producer
 // FILE: producer.kt
-package expo.modules.v2.testdata.producer
+package io.github.expo.modules.v2.testdata.producer
 
 @Record
 data class Shared : Record {
@@ -158,7 +158,7 @@ object ProducerModule : Module {
 
 // MODULE: consumer
 // FILE: consumer.kt
-package expo.modules.v2.testdata.consumer
+package io.github.expo.modules.v2.testdata.consumer
 
 @JS(name = "Consumer")
 object ConsumerModule : Module {
@@ -193,7 +193,7 @@ object ConsumerModule : Module {
 
 fun box(): String {
   val suffix: String = "__trampoline$ExpoModulesV2"
-  val define: @FlexibleNullability Method? = <get-java><ProducerModule>(/* <this> = ProducerModule::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "expo.modules.v2.modules.ModuleBuilder")])
+  val define: @FlexibleNullability Method? = <get-java><ProducerModule>(/* <this> = ProducerModule::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "io.github.expo.modules.v2.modules.ModuleBuilder")])
   when {
     EQEQ(arg0 = define.getReturnType(), arg1 = <get-java><String>(/* <this> = String::class */)).not() -> return "producer define: " + define.getReturnType()
   }

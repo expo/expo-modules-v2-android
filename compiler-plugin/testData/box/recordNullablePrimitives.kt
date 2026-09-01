@@ -1,10 +1,10 @@
 // DUMP_IR
 // FIR_DUMP
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.Record
-import expo.modules.v2.records.codecFor
+import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.records.codecFor
 
 // Nullable primitives box: the descriptor is the boxed CommonDescriptors singleton, and encode /
 // decode pick the `write(Int?)` / `readIntOrNull()` overloads.

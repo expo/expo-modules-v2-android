@@ -11,7 +11,7 @@
 
 namespace expo::modules::v2 {
   struct JDynamicTypes : kolibri::JavaClass<JDynamicTypes> {
-    static constexpr std::string_view descriptor = "expo/modules/v2/types/DynamicTypes";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/types/DynamicTypes";
 
     static CppType kindOf(JNIEnv* env, jobject obj);
 

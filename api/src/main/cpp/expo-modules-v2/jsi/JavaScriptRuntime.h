@@ -15,7 +15,7 @@ namespace expo::modules::v2::jsi {
 
   class JavaScriptRuntime : public kolibri::NativeObject<JavaScriptRuntime> {
   public:
-    static constexpr std::string_view descriptor = "expo/modules/v2/jsi/JavaScriptRuntime";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/jsi/JavaScriptRuntime";
 
     static void registerNatives(JNIEnv* env);
 

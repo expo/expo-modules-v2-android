@@ -13,7 +13,7 @@ namespace expo::modules::v2 {
 
   /**
    * Registers array-typed native methods on the Kotlin test fixture
-   * `expo.modules.v2.testapp.KolibriArrayFixture` (test-app test sources), deriving every JNI
+   * `io.github.expo.modules.v2.testapp.KolibriArrayFixture` (test-app test sources), deriving every JNI
    * signature from the C++ parameter types. Throws if the class is not on the classpath.
    */
   void bindKolibriArrayFixture();

@@ -91,7 +91,7 @@ benchmark {
 }
 
 application {
-  mainClass.set("expo.modules.v2.benchmark.NativeBenchmarkKt")
+  mainClass.set("io.github.expo.modules.v2.benchmark.NativeBenchmarkKt")
 }
 
 // --- Native build (CMake + Ninja) ---------------------------------------------------------------
@@ -198,14 +198,14 @@ tasks.withType<JavaExec>().configureEach {
 
 // Runs the JNI-dispatch report (NativeBenchmark.kt).
 tasks.register<JavaExec>("runNativeBenchmark") {
-  mainClass.set("expo.modules.v2.benchmark.NativeBenchmarkKt")
+  mainClass.set("io.github.expo.modules.v2.benchmark.NativeBenchmarkKt")
   classpath = sourceSets["main"].runtimeClasspath
 }
 
 // Runs the folly::dynamic comparison (FollyBenchmark.kt; needs :test-support's native build
 // configured with -DEXPO_FOLLY_BENCHMARK=ON).
 tasks.register<JavaExec>("runFollyBenchmark") {
-  mainClass.set("expo.modules.v2.benchmark.FollyBenchmarkKt")
+  mainClass.set("io.github.expo.modules.v2.benchmark.FollyBenchmarkKt")
   classpath = sourceSets["main"].runtimeClasspath
 }
 
@@ -221,7 +221,7 @@ val profileDataType = providers.gradleProperty("profileDataType").orElse("primit
 
 fun JavaExec.configureModulesProfileWorkload() {
   group = "benchmark"
-  mainClass.set("expo.modules.v2.benchmark.e2e.ModulesE2eProfileKt")
+  mainClass.set("io.github.expo.modules.v2.benchmark.e2e.ModulesE2eProfileKt")
   classpath = sourceSets["main"].runtimeClasspath
   doFirst {
     systemProperty("expo.profile.scenario", profileScenario.get())
@@ -283,10 +283,10 @@ tasks.register<JavaExec>("profileModulesAsync") {
 
 // The compiler plugin, registered straight onto every Kotlin compilation here.
 //
-// `id("expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin publishes — is
-// not available inside this build: a Gradle plugin built here is not on this build's own buildscript
-// classpath. Registering the jar plus switching incremental compilation off is the whole of what
-// that plugin does, so this is the same thing by hand.
+// `id("io.github.expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin
+// publishes — is not available inside this build: a Gradle plugin built here is not on this
+// build's own buildscript classpath. Registering the jar plus switching incremental compilation
+// off is the whole of what that plugin does, so this is the same thing by hand.
 configurations
   .matching { it.name.startsWith("kotlinCompilerPluginClasspath") }
   .configureEach { dependencies.add(project.dependencies.create(project(":compiler-plugin"))) }

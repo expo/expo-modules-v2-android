@@ -1,11 +1,11 @@
 // DUMP_IR
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.Buffer
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.async.Promise
-import expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.annotations.Buffer
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.async.Promise
+import io.github.expo.modules.v2.modules.Module
 import kotlinx.coroutines.delay
 
 /**
@@ -44,7 +44,7 @@ private const val TRAMPOLINE = "__trampoline\$ExpoModulesV2"
 fun box(): String {
     val clazz = AsyncShapes::class.java
     val int = Int::class.javaPrimitiveType
-    val promise = Class.forName("expo.modules.v2.async.Promise")
+    val promise = Class.forName("io.github.expo.modules.v2.async.Promise")
 
     // Every suspend export gets a trampoline, even one whose values would all cross unchanged.
     val scale = clazz.getDeclaredMethod("scale$TRAMPOLINE", int, promise)

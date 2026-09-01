@@ -12,7 +12,7 @@ namespace {
    * whose makeNativeMethod macro breaks kolibri's native_method.h.
    */
   struct JNativeBenchmarks : expo::kolibri::JavaClass<JNativeBenchmarks> {
-    static constexpr std::string_view descriptor = "expo/modules/v2/benchmark/NativeBenchmarks";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/benchmark/NativeBenchmarks";
 
     static void registerNatives(JNIEnv* env) {
       JavaClass::registerNatives(env)

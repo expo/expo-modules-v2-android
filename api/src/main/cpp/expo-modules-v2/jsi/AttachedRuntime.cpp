@@ -43,7 +43,7 @@ namespace expo::modules::v2::jsi {
     kolibri::registerNative<AttachedRuntime>(env)
       .method<&AttachedRuntime::nativeCreate>(
         "nativeCreate",
-        "(JLexpo/modules/v2/modules/ModuleRegistry;Lexpo/modules/v2/async/AsyncContext;"
+        "(JLio/github/expo/modules/v2/modules/ModuleRegistry;Lio/github/expo/modules/v2/async/AsyncContext;"
         "Ljava/lang/String;Ljava/lang/String;)J"
       )
       .commit();

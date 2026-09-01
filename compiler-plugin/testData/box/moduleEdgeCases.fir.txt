@@ -1,51 +1,51 @@
 FILE: moduleEdgeCases.kt
-    package expo.modules.v2.testdata
+    package io.github.expo.modules.v2.testdata
 
-    @R|expo/modules/v2/annotations/JS|() public final object Empty : R|expo/modules/v2/modules/Module| {
-        private constructor(): R|expo/modules/v2/testdata/Empty| {
-            super<R|expo/modules/v2/modules/Module|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public final object Empty : R|io/github/expo/modules/v2/modules/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/Empty| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
     }
-    @R|expo/modules/v2/annotations/JS|() public final object Arity : R|expo/modules/v2/modules/Module| {
-        private constructor(): R|expo/modules/v2/testdata/Arity| {
-            super<R|expo/modules/v2/modules/Module|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public final object Arity : R|io/github/expo/modules/v2/modules/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/Arity| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun none(): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun none(): R|kotlin/Int| {
             ^none Int(0)
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun one(a: R|kotlin/Int|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun one(a: R|kotlin/Int|): R|kotlin/Int| {
             ^one R|<local>/a|
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun eight(a: R|kotlin/Int|, b: R|kotlin/Int|, c: R|kotlin/Int|, d: R|kotlin/Int|, e: R|kotlin/Int|, f: R|kotlin/Int|, g: R|kotlin/Int|, h: R|kotlin/Int|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun eight(a: R|kotlin/Int|, b: R|kotlin/Int|, c: R|kotlin/Int|, d: R|kotlin/Int|, e: R|kotlin/Int|, f: R|kotlin/Int|, g: R|kotlin/Int|, h: R|kotlin/Int|): R|kotlin/Int| {
             ^eight R|<local>/a|.R|kotlin/Int.plus|(R|<local>/b|).R|kotlin/Int.plus|(R|<local>/c|).R|kotlin/Int.plus|(R|<local>/d|).R|kotlin/Int.plus|(R|<local>/e|).R|kotlin/Int.plus|(R|<local>/f|).R|kotlin/Int.plus|(R|<local>/g|).R|kotlin/Int.plus|(R|<local>/h|)
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun eightBuffered(a: R|kotlin/String|, b: R|kotlin/String|, c: R|kotlin/String|, d: R|kotlin/String|, e: R|kotlin/String|, f: R|kotlin/String|, g: R|kotlin/String|, h: R|kotlin/String|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun eightBuffered(a: R|kotlin/String|, b: R|kotlin/String|, c: R|kotlin/String|, d: R|kotlin/String|, e: R|kotlin/String|, f: R|kotlin/String|, g: R|kotlin/String|, h: R|kotlin/String|): R|kotlin/Int| {
             ^eightBuffered R|<local>/a|.R|kotlin/String.length|.R|kotlin/Int.plus|(R|<local>/b|.R|kotlin/String.length|).R|kotlin/Int.plus|(R|<local>/c|.R|kotlin/String.length|).R|kotlin/Int.plus|(R|<local>/d|.R|kotlin/String.length|).R|kotlin/Int.plus|(R|<local>/e|.R|kotlin/String.length|).R|kotlin/Int.plus|(R|<local>/f|.R|kotlin/String.length|).R|kotlin/Int.plus|(R|<local>/g|.R|kotlin/String.length|).R|kotlin/Int.plus|(R|<local>/h|.R|kotlin/String.length|)
         }
 
     }
-    @R|expo/modules/v2/annotations/JS|() public final object Visibility : R|expo/modules/v2/modules/Module| {
-        private constructor(): R|expo/modules/v2/testdata/Visibility| {
-            super<R|expo/modules/v2/modules/Module|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public final object Visibility : R|io/github/expo/modules/v2/modules/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/Visibility| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
-        @R|expo/modules/v2/annotations/JS|() private final fun hidden(a: R|kotlin/Int|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() private final fun hidden(a: R|kotlin/Int|): R|kotlin/Int| {
             ^hidden R|<local>/a|.R|kotlin/Int.times|(Int(2))
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun visible(a: R|kotlin/Int|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun visible(a: R|kotlin/Int|): R|kotlin/Int| {
             ^visible R|<local>/a|.R|kotlin/Int.plus|(Int(1))
         }
 
     }
-    public abstract class BaseModule : R|expo/modules/v2/modules/Module| {
-        public constructor(): R|expo/modules/v2/testdata/BaseModule| {
-            super<R|expo/modules/v2/modules/Module|>()
+    public abstract class BaseModule : R|io/github/expo/modules/v2/modules/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/BaseModule| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
         public final fun inherited(): R|kotlin/Int| {
@@ -53,27 +53,27 @@ FILE: moduleEdgeCases.kt
         }
 
     }
-    @R|expo/modules/v2/annotations/JS|() public final object Derived : R|expo/modules/v2/testdata/BaseModule| {
-        private constructor(): R|expo/modules/v2/testdata/Derived| {
-            super<R|expo/modules/v2/testdata/BaseModule|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public final object Derived : R|io/github/expo/modules/v2/testdata/BaseModule| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/Derived| {
+            super<R|io/github/expo/modules/v2/testdata/BaseModule|>()
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun own(a: R|kotlin/Int|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun own(a: R|kotlin/Int|): R|kotlin/Int| {
             ^own R|<local>/a|.R|kotlin/Int.plus|(Int(1))
         }
 
     }
-    @R|expo/modules/v2/annotations/JS|() public final class WithNested : R|expo/modules/v2/modules/Module| {
-        public constructor(): R|expo/modules/v2/testdata/WithNested| {
-            super<R|expo/modules/v2/modules/Module|>()
+    @R|io/github/expo/modules/v2/annotations/JS|() public final class WithNested : R|io/github/expo/modules/v2/modules/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/WithNested| {
+            super<R|io/github/expo/modules/v2/modules/Module|>()
         }
 
-        @R|expo/modules/v2/annotations/JS|() public final fun value(): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/annotations/JS|() public final fun value(): R|kotlin/Int| {
             ^value Int(1)
         }
 
         public final class Nested : R|kotlin/Any| {
-            public constructor(): R|expo/modules/v2/testdata/WithNested.Nested| {
+            public constructor(): R|io/github/expo/modules/v2/testdata/WithNested.Nested| {
                 super<R|kotlin/Any|>()
             }
 
@@ -84,7 +84,7 @@ FILE: moduleEdgeCases.kt
         }
 
         public final companion object Companion : R|kotlin/Any| {
-            private constructor(): R|expo/modules/v2/testdata/WithNested.Companion| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/WithNested.Companion| {
                 super<R|kotlin/Any|>()
             }
 
@@ -101,10 +101,10 @@ FILE: moduleEdgeCases.kt
         ).R|kotlin/collections/toSet|<R|kotlin/String!|>()
     }
     public final fun box(): R|kotlin/String| {
-        lval builder: R|ft<java/lang/Class<*>, java/lang/Class<*>?>| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(expo.modules.v2.modules.ModuleBuilder))
-        <getClass>(Q|expo/modules/v2/testdata/Empty|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Empty|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(define$ExpoModulesV2), vararg(R|<local>/builder|))
+        lval builder: R|ft<java/lang/Class<*>, java/lang/Class<*>?>| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.modules.ModuleBuilder))
+        <getClass>(Q|io/github/expo/modules/v2/testdata/Empty|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Empty|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(define$ExpoModulesV2), vararg(R|<local>/builder|))
         when () {
-            R|expo/modules/v2/testdata/names|(<getClass>(Q|expo/modules/v2/testdata/Empty|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Empty|>).R|kotlin/collections/any|<R|kotlin/String|>(<L> = any@fun <anonymous>(it: R|kotlin/String|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            R|io/github/expo/modules/v2/testdata/names|(<getClass>(Q|io/github/expo/modules/v2/testdata/Empty|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Empty|>).R|kotlin/collections/any|<R|kotlin/String|>(<L> = any@fun <anonymous>(it: R|kotlin/String|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
                 ^ R|<local>/it|.R|kotlin/text/contains|(String(__trampoline))
             }
             ) ->  {
@@ -118,7 +118,7 @@ FILE: moduleEdgeCases.kt
                 lval name: R|kotlin/String| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/String|>|()
                  {
                     when () {
-                        R|expo/modules/v2/testdata/names|(<getClass>(Q|expo/modules/v2/testdata/Arity|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Arity|>).R|SubstitutionOverride<kotlin/collections/Set.contains: R|kotlin/Boolean|>|(<strcat>(R|<local>/name|, String(__trampoline), String($), String(ExpoModulesV2))) ->  {
+                        R|io/github/expo/modules/v2/testdata/names|(<getClass>(Q|io/github/expo/modules/v2/testdata/Arity|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Arity|>).R|SubstitutionOverride<kotlin/collections/Set.contains: R|kotlin/Boolean|>|(<strcat>(R|<local>/name|, String(__trampoline), String($), String(ExpoModulesV2))) ->  {
                             ^box <strcat>(R|<local>/name|, String( should not have a trampoline))
                         }
                     }
@@ -129,16 +129,16 @@ FILE: moduleEdgeCases.kt
 
         }
 
-        lval eightBuffered: R|java/lang/reflect/Method!| = <getClass>(Q|expo/modules/v2/testdata/Arity|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Arity|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(eightBuffered__trampoline$ExpoModulesV2), vararg(<getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>))
+        lval eightBuffered: R|java/lang/reflect/Method!| = <getClass>(Q|io/github/expo/modules/v2/testdata/Arity|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Arity|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(eightBuffered__trampoline$ExpoModulesV2), vararg(<getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>))
         when () {
             !=(R|<local>/eightBuffered|.R|java/lang/reflect/Method.returnType|, <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>) ->  {
                 ^box <strcat>(String(eightBuffered: expected an int return, got ), R|<local>/eightBuffered|.R|java/lang/reflect/Method.returnType|)
             }
         }
 
-        lval hidden: R|java/lang/reflect/Method!| = <getClass>(Q|expo/modules/v2/testdata/Visibility|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Visibility|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(hidden), vararg(<getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>))
+        lval hidden: R|java/lang/reflect/Method!| = <getClass>(Q|io/github/expo/modules/v2/testdata/Visibility|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Visibility|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(hidden), vararg(<getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>))
         R|<local>/hidden|.R|java/lang/reflect/AccessibleObject.isAccessible| = Boolean(true)
-        lval doubled: R|kotlin/Int| = (R|<local>/hidden|.R|java/lang/reflect/Method.invoke|(Q|expo/modules/v2/testdata/Visibility|, vararg(Int(21))) as R|kotlin/Int|)
+        lval doubled: R|kotlin/Int| = (R|<local>/hidden|.R|java/lang/reflect/Method.invoke|(Q|io/github/expo/modules/v2/testdata/Visibility|, vararg(Int(21))) as R|kotlin/Int|)
         when () {
             !=(R|<local>/doubled|, Int(42)) ->  {
                 ^box <strcat>(String(hidden(21) gave ), R|<local>/doubled|)
@@ -146,7 +146,7 @@ FILE: moduleEdgeCases.kt
         }
 
         when () {
-            R|expo/modules/v2/testdata/names|(<getClass>(Q|expo/modules/v2/testdata/Visibility|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Visibility|>).R|kotlin/collections/none|<R|kotlin/String|>(<L> = none@fun <anonymous>(it: R|kotlin/String|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            R|io/github/expo/modules/v2/testdata/names|(<getClass>(Q|io/github/expo/modules/v2/testdata/Visibility|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Visibility|>).R|kotlin/collections/none|<R|kotlin/String|>(<L> = none@fun <anonymous>(it: R|kotlin/String|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
                 ^ ==(R|<local>/it|, String(visible))
             }
             ) ->  {
@@ -154,7 +154,7 @@ FILE: moduleEdgeCases.kt
             }
         }
 
-        lval derived: R|java/lang/reflect/Method!| = <getClass>(Q|expo/modules/v2/testdata/Derived|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/Derived|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(define$ExpoModulesV2), vararg(R|<local>/builder|))
+        lval derived: R|java/lang/reflect/Method!| = <getClass>(Q|io/github/expo/modules/v2/testdata/Derived|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Derived|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(define$ExpoModulesV2), vararg(R|<local>/builder|))
         when () {
             !=(R|<local>/derived|.R|java/lang/reflect/Method.returnType|, <getClass>(Q|kotlin/String|).R|kotlin/jvm/java|<R|kotlin/String|>) ->  {
                 ^box <strcat>(String(derived define: ), R|<local>/derived|.R|java/lang/reflect/Method.returnType|)
@@ -162,14 +162,14 @@ FILE: moduleEdgeCases.kt
         }
 
         when () {
-            !=(Q|expo/modules/v2/testdata/Derived|.R|expo/modules/v2/testdata/Derived.own|(Int(1)), Int(2)) ->  {
+            !=(Q|io/github/expo/modules/v2/testdata/Derived|.R|io/github/expo/modules/v2/testdata/Derived.own|(Int(1)), Int(2)) ->  {
                 ^box String(derived own() is broken)
             }
         }
 
-        <getClass>(Q|expo/modules/v2/testdata/WithNested|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/WithNested|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(define$ExpoModulesV2), vararg(R|<local>/builder|))
+        <getClass>(Q|io/github/expo/modules/v2/testdata/WithNested|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/WithNested|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(define$ExpoModulesV2), vararg(R|<local>/builder|))
         when () {
-            R|expo/modules/v2/testdata/names|(<getClass>(Q|expo/modules/v2/testdata/WithNested|).R|kotlin/jvm/java|<R|expo/modules/v2/testdata/WithNested|>).R|kotlin/collections/any|<R|kotlin/String|>(<L> = any@fun <anonymous>(it: R|kotlin/String|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            R|io/github/expo/modules/v2/testdata/names|(<getClass>(Q|io/github/expo/modules/v2/testdata/WithNested|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/WithNested|>).R|kotlin/collections/any|<R|kotlin/String|>(<L> = any@fun <anonymous>(it: R|kotlin/String|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
                 ^ R|<local>/it|.R|kotlin/text/contains|(String(__trampoline))
             }
             ) ->  {

@@ -40,7 +40,7 @@ namespace expo::modules::v2::react {
     kolibri::registerNative<ReactRuntime>(env)
       .method<&ReactRuntime::nativeCreate>(
         "nativeCreate",
-        "(JLexpo/modules/v2/modules/ModuleRegistry;Lexpo/modules/v2/async/AsyncContext;"
+        "(JLio/github/expo/modules/v2/modules/ModuleRegistry;Lio/github/expo/modules/v2/async/AsyncContext;"
         "Ljava/lang/String;)J"
       )
       .commit();

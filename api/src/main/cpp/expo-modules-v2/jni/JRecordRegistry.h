@@ -15,7 +15,7 @@
 
 namespace expo::modules::v2 {
   struct JRecordRegistry : kolibri::JavaClass<JRecordRegistry> {
-    static constexpr std::string_view descriptor = "expo/modules/v2/records/RecordRegistry";
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/records/RecordRegistry";
 
     static constexpr StaticMethod<"dynamicRecordToMap", kolibri::Ref<kolibri::JMap>(jobject)> dynamicRecordToMap{};
 

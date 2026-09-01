@@ -1,10 +1,10 @@
 // DUMP_IR
 
-package expo.modules.v2.testdata
+package io.github.expo.modules.v2.testdata
 
-import expo.modules.v2.annotations.Buffer
-import expo.modules.v2.annotations.JS
-import expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.annotations.Buffer
+import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.modules.Module
 import java.net.URI
 import java.net.URL
 import kotlin.time.Duration
