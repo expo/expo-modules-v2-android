@@ -1,6 +1,8 @@
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
 plugins {
   alias(libs.plugins.kotlin.jvm) apply false
@@ -21,6 +23,7 @@ allprojects {
 }
 
 subprojects {
+  configureJavaCompatibility()
   configureCentralPublishing()
 }
 
@@ -35,6 +38,20 @@ val publishToolchainToMavenCentral by tasks.registering {
   group = "publishing"
   description = "Publishes :compiler-plugin and :gradle-plugin to Maven Central."
   dependsOn(":compiler-plugin:publishToMavenCentral", ":gradle-plugin:publishToMavenCentral")
+}
+
+fun Project.configureJavaCompatibility() {
+  plugins.withId("org.jetbrains.kotlin.jvm") {
+    extensions.configure<KotlinJvmProjectExtension> {
+      jvmToolchain(17)
+      compilerOptions {
+        jvmTarget = JvmTarget.JVM_11
+      }
+    }
+    tasks.withType<JavaCompile>().configureEach {
+      options.release = 11
+    }
+  }
 }
 
 fun Project.configureCentralPublishing() {
