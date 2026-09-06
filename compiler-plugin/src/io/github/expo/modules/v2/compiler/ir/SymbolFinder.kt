@@ -35,6 +35,10 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `object RecordRegistry` */
     val recordRegistry: IrClassSymbol by lazy { clazz(Identifiers.Classes.RecordRegistry) }
 
+    val sharedObjectRegistry: IrClassSymbol by lazy {
+      clazz(Identifiers.Classes.SharedObjectRegistry)
+    }
+
     /** `interface RecordReader` */
     val recordReader: IrClassSymbol by lazy { clazz(Identifiers.Classes.RecordReader) }
 
@@ -62,6 +66,13 @@ class SymbolFinder(private val context: IrPluginContext) {
 
     /** `class ModuleBuilder` */
     val moduleBuilder: IrClassSymbol by lazy { clazz(Identifiers.Classes.ModuleBuilder) }
+
+
+    /** `abstract class SharedObject` */
+    val sharedObject: IrClassSymbol by lazy { clazz(Identifiers.Classes.SharedObject) }
+
+    /** `abstract class SharedRef<T : Any>(ref: T)` */
+    val sharedRef: IrClassSymbol by lazy { clazz(Identifiers.Classes.SharedRef) }
 
     /** `class AnyType(descriptor, useBuffer)` */
     val anyType: IrClassSymbol by lazy { clazz(Identifiers.Classes.AnyType) }
@@ -112,6 +123,13 @@ class SymbolFinder(private val context: IrPluginContext) {
 
   inner class Functions internal constructor() {
     /** `RecordRegistry.register(codec)` */
+    val registerSharedClass: IrSimpleFunctionSymbol by lazy {
+      classes.sharedObjectRegistry.functions.single {
+        it.owner.name == Identifiers.Names.REGISTER_SHARED_CLASS &&
+            it.owner.parameters.last().type.classOrNull == classes.moduleBuilder
+      }
+    }
+
     val register: IrSimpleFunctionSymbol by lazy {
       classes.recordRegistry.functions.single { it.owner.name == Identifiers.Names.REGISTER }
     }
@@ -164,6 +182,11 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `ModuleBuilder.property(jsName, type, mutable, propertyName, setterType)` */
     val builderProperty: IrSimpleFunctionSymbol by lazy {
       classes.moduleBuilder.functions.single { it.owner.name == Identifiers.Names.PROPERTY }
+    }
+
+    /** `ModuleBuilder.sharedClass(jsName, sharedClass, vararg argTypes)` */
+    val builderSharedClass: IrSimpleFunctionSymbol by lazy {
+      classes.moduleBuilder.functions.single { it.owner.name == Identifiers.Names.SHARED_CLASS }
     }
 
     /** `Trampoline.arguments(payloadLength): TrampolineArguments` */

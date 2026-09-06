@@ -1,5 +1,7 @@
 #include <expo-modules-v2/converter/decoders/JniDecoder.h>
 
+#include <expo-modules-v2/sharedobjects/SharedObjects.h>
+
 #include <memory>
 #include <vector>
 
@@ -73,6 +75,10 @@ namespace expo::modules::v2 {
       );
     }
     return result;
+  }
+
+  facebook::jsi::Value JniDecoder::operator()(const ExpectedType::SharedObject&) const {
+    return sharedobjects::SharedObjects::facadeFor(env, rt, object);
   }
 
   template<>

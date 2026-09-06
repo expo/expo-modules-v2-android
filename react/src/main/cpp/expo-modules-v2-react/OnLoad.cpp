@@ -3,6 +3,8 @@
 #include "ReactRuntime.h"
 
 #include <expo-modules-v2/jni/JAsyncContext.h>
+#include <expo-modules-v2/jni/JModuleRegistry.h>
+#include <expo-modules-v2/jni/JSharedObjectRegistry.h>
 #include <expo-modules-v2/jsi/AttachedRuntime.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
@@ -25,6 +27,8 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
   // creates the runtime; ReactRuntime below is the React Native path.
   expo::modules::v2::jsi::AttachedRuntime::registerNatives(env);
   expo::modules::v2::JAsyncContext::registerNatives(env);
+  expo::modules::v2::JSharedObjectRegistry::registerNatives(env);
+  expo::modules::v2::JModuleRegistry::registerNatives(env);
   expo::modules::v2::react::ReactRuntime::registerNatives(env);
   return JNI_VERSION_1_6;
 }

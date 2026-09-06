@@ -286,7 +286,7 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
             CONST String type=kotlin.String value=")"
   CLASS OBJECT name:ProducerModule modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = "Producer", buffer = <null>, returnBuffer = <null>)
+      JS(name = "Producer", buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.producer.ProducerModule
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
@@ -296,7 +296,7 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
           ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
     PROPERTY name:count visibility:public modality:FINAL [var]
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       FIELD PROPERTY_BACKING_FIELD name:count type:kotlin.Int visibility:private
         EXPRESSION_BODY
           CONST Int type=kotlin.Int value=1
@@ -429,7 +429,7 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.producer.ProducerModule
       VALUE_PARAMETER kind:Regular name:value index:1 type:io.github.expo.modules.v2.testdata.producer.Shared
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun bump (value: io.github.expo.modules.v2.testdata.producer.Shared): io.github.expo.modules.v2.testdata.producer.Shared declared in io.github.expo.modules.v2.testdata.producer.ProducerModule'
           CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int, label: kotlin.String?) declared in io.github.expo.modules.v2.testdata.producer.Shared' type=io.github.expo.modules.v2.testdata.producer.Shared origin=null
@@ -443,7 +443,7 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.producer.ProducerModule
       VALUE_PARAMETER kind:Regular name:prefix index:1 type:kotlin.String
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun name (prefix: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.producer.ProducerModule'
           STRING_CONCATENATION type=kotlin.String
@@ -453,7 +453,7 @@ Module: consumer
 FILE fqName:io.github.expo.modules.v2.testdata.consumer fileName:/consumer.kt
   CLASS OBJECT name:ConsumerModule modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = "Consumer", buffer = <null>, returnBuffer = <null>)
+      JS(name = "Consumer", buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.consumer.ConsumerModule
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
@@ -532,7 +532,7 @@ FILE fqName:io.github.expo.modules.v2.testdata.consumer fileName:/consumer.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.consumer.ConsumerModule
       VALUE_PARAMETER kind:Regular name:value index:1 type:io.github.expo.modules.v2.testdata.producer.Shared
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun forward (value: io.github.expo.modules.v2.testdata.producer.Shared): io.github.expo.modules.v2.testdata.producer.Shared declared in io.github.expo.modules.v2.testdata.consumer.ConsumerModule'
           CALL 'public final fun bump (value: io.github.expo.modules.v2.testdata.producer.Shared): io.github.expo.modules.v2.testdata.producer.Shared declared in io.github.expo.modules.v2.testdata.producer.ProducerModule' type=io.github.expo.modules.v2.testdata.producer.Shared origin=null

@@ -8,7 +8,8 @@
 
 #include <expo-modules-v2/async/AsyncRuntimeState.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
-#include <kolibri/native_method.h>
+#include <expo-modules-v2/jsi/ModulesHostObject.h>
+#include <expo-modules-v2/sharedobjects/SharedObjectRuntimeCache.h>
 
 namespace expo::modules::v2::jsi {
   class JavaScriptValue;
@@ -21,13 +22,8 @@ namespace expo::modules::v2::jsi {
 
     [[nodiscard]] facebook::jsi::Runtime& runtime() const;
 
-    /**
-     * Runs the engine's microtask queue until it is empty, so `.then` callbacks fire.
-     *
-     * Nothing drains it implicitly - `evaluate` deliberately does not, because draining
-     * re-enters JavaScript at a point no caller expects. Returns whether the queue is now
-     * empty.
-     */
+    [[nodiscard]] const std::shared_ptr<ModulesHostObject>& modules() const;
+
     jboolean drainMicrotasks() const;
 
     /** The promise table for this runtime, or null if async support failed to attach. */
@@ -95,5 +91,18 @@ namespace expo::modules::v2::jsi {
      * drops the pending `jsi::Function`s, which need the runtime still alive.
      */
     std::optional<async::AsyncRuntimeState> asyncState_;
+
+    /**
+     * This runtime's shared-object facades. Declared after `runtime_` for the same reason as
+     * `asyncState_`: it holds `jsi::WeakObject`s, which have to be dropped on this runtime's thread
+     * while the runtime is still alive.
+     */
+    std::optional<sharedobjects::SharedObjectRuntimeCache> sharedObjects_;
+
+    /**
+     * Shared with the JavaScript global that holds it. Declared after `runtime_` so it is released
+     * before the runtime: it caches `jsi::Object`s per module.
+     */
+    std::shared_ptr<ModulesHostObject> modules_;
   };
 } // namespace expo::modules::v2::jsi

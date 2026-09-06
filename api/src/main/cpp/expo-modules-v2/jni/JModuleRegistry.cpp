@@ -2,6 +2,7 @@
 
 #include <kolibri/binary/BinaryBuffer.h>
 #include <kolibri/binary/BinaryReader.h>
+#include <kolibri/native_method.h>
 
 namespace expo::modules::v2 {
   std::optional<JModuleRegistry::Module> JModuleRegistry::Accessors::encodeModule(
@@ -33,7 +34,7 @@ namespace expo::modules::v2 {
   }
 
   std::vector<std::string> JModuleRegistry::Accessors::encodeModuleNames(JNIEnv* env) const {
-    size_t payloadSize = callToken(env, Owner::encodeModuleNames);
+    const size_t payloadSize = callToken(env, Owner::encodeModuleNames);
 
     const kolibri::binary::BinaryBuffer::Claim claim;
     if (!claim) {

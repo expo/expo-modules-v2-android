@@ -2,6 +2,7 @@ package io.github.expo.modules.v2.binary
 
 import io.github.expo.modules.v2.modules.ModuleFunctionDefinition
 import io.github.expo.modules.v2.modules.ModulePropertyDefinition
+import io.github.expo.modules.v2.modules.ModuleSharedClassDefinition
 import io.github.expo.kolibri.binary.BinaryBuffer
 
 /**
@@ -27,29 +28,40 @@ import io.github.expo.kolibri.binary.BinaryBuffer
  *   [setterName: string]              // selected JVM setter
  *   [setterTypeCodes: intArray]       // how a write crosses, which need not match the read
  * }
+ * sharedClassCount: i32
+ * sharedClassCount x {
+ *   jsName: string                    // the constructable class's name on the module
+ *   classId: i32                      // SharedObjectRegistry's id for it
+ *   argCount: i32
+ *   argCount x { typeCodes: intArray }   // the constructor's parameters
+ * }
  * ```
  */
 internal object ModuleDescriptorEncoder {
   fun encode(
     functions: List<ModuleFunctionDefinition>,
     properties: List<ModulePropertyDefinition>,
-    buf: BinaryBuffer
+    buf: BinaryBuffer,
+    sharedClasses: List<ModuleSharedClassDefinition> = emptyList(),
   ): Int {
     return buf.encode(
       functions,
-      properties
+      properties,
+      sharedClasses
     )
   }
 
   private fun BinaryBuffer.encode(
     functions: List<ModuleFunctionDefinition>,
     properties: List<ModulePropertyDefinition>,
+    sharedClasses: List<ModuleSharedClassDefinition>,
   ): Int {
     val currentPosition = position
 
     putInt(0) // payloadEnd placeholder, patched below
     writeFunctions(functions)
     writeProperties(properties)
+    writeSharedClasses(sharedClasses)
 
     val payloadEnd = position
     position = currentPosition
@@ -69,6 +81,19 @@ internal object ModuleDescriptorEncoder {
         putIntArray(argType)
       }
       putIntArray(function.returnType)
+    }
+  }
+
+  private fun BinaryBuffer.writeSharedClasses(sharedClasses: List<ModuleSharedClassDefinition>) {
+    putInt(sharedClasses.size)
+    for (sharedClass in sharedClasses) {
+      putString(sharedClass.jsName)
+      putInt(sharedClass.classId)
+      putString(sharedClass.trampolineName)
+      putInt(sharedClass.argTypes.size)
+      for (argType in sharedClass.argTypes) {
+        putIntArray(argType)
+      }
     }
   }
 

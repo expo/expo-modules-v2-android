@@ -32,10 +32,12 @@ namespace expo::modules::v2 {
   ModuleNativeState::ModuleNativeState(
     kolibri::GlobalRef<> instance,
     std::vector<descriptor::HostFunctionSpec> functions,
-    std::vector<descriptor::HostPropertySpec> properties
+    std::vector<descriptor::HostPropertySpec> properties,
+    std::vector<descriptor::SharedClassSpec> sharedClasses
   ) : instance_(std::make_shared<kolibri::GlobalRef<>>(std::move(instance))),
       functionBinders_(makeFunctionBinders(instance_, std::move(functions))),
-      propertyBinders_(makePropertyBinders(instance_, std::move(properties))) {
+      propertyBinders_(makePropertyBinders(instance_, std::move(properties))),
+      sharedClasses_(std::move(sharedClasses)) {
   }
 
   ModuleNativeState::~ModuleNativeState() {
@@ -53,5 +55,9 @@ namespace expo::modules::v2 {
 
   std::span<const PropertyBinder> ModuleNativeState::propertyBinders() const {
     return propertyBinders_;
+  }
+
+  std::span<descriptor::SharedClassSpec> ModuleNativeState::sharedClasses() {
+    return sharedClasses_;
   }
 } // namespace expo::modules::v2

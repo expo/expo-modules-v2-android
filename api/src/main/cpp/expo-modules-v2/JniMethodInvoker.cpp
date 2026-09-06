@@ -17,12 +17,12 @@
 
 
 namespace expo::modules::v2 {
-  using descriptor::HostFunctionSpec;
+  using descriptor::FunctionSpec;
 
   namespace {
     [[noreturn]] void throwArgumentCountMismatch(
       facebook::jsi::Runtime& rt,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       const size_t count
     ) {
       throw facebook::jsi::JSError(
@@ -107,6 +107,20 @@ namespace expo::modules::v2 {
       );
     }
 
+    facebook::jsi::Value callStaticObject(const JniMethodCall& call) {
+      const kolibri::Ref<> result = kolibri::Ref<>::adopt(
+        call.env,
+        call.env->CallStaticObjectMethodA(call.declaringClass, call.method, call.args)
+      );
+      kolibri::checkAndThrowPending(call.env);
+      return decodeFromJni(
+        call.env,
+        call.rt,
+        result.get(),
+        call.returnType
+      );
+    }
+
     facebook::jsi::Value callBufferedPayload(const JniMethodCall& call) {
       const jint written = call.env->CallNonvirtualIntMethodA(
         call.receiver,
@@ -141,7 +155,7 @@ namespace expo::modules::v2 {
     size_t encodeOverflowArgs(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       const facebook::jsi::Value* args,
       jvalue* values
     ) {
@@ -173,12 +187,12 @@ namespace expo::modules::v2 {
     facebook::jsi::Value invokeWithOverflowArgs(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       jobject receiver,
       const facebook::jsi::Value* args
     ) {
-      std::array<jvalue, HostFunctionSpec::kMaxArgs> values{};
-      const kolibri::LocalFrame frame{env, HostFunctionSpec::kMaxArgs};
+      std::array<jvalue, FunctionSpec::kMaxArgs> values{};
+      const kolibri::LocalFrame frame{env, FunctionSpec::kMaxArgs};
 
       encodeOverflowArgs(rt, env, spec, args, values.data());
 
@@ -197,7 +211,7 @@ namespace expo::modules::v2 {
     size_t encodeDirectArgs(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       const facebook::jsi::Value* args,
       jvalue* values
     ) {
@@ -219,7 +233,7 @@ namespace expo::modules::v2 {
     size_t encodeBufferedArgs(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       const facebook::jsi::Value* args,
       jvalue* values
     ) {
@@ -249,11 +263,11 @@ namespace expo::modules::v2 {
     facebook::jsi::Value invokeWithDirectArgsBody(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       jobject receiver,
       const facebook::jsi::Value* args
     ) {
-      std::array<jvalue, HostFunctionSpec::kMaxArgs> values{};
+      std::array<jvalue, FunctionSpec::kMaxArgs> values{};
 
       encodeDirectArgs(rt, env, spec, args, values.data());
 
@@ -272,12 +286,12 @@ namespace expo::modules::v2 {
     facebook::jsi::Value invokeWithBufferedArgsBody(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       jobject receiver,
       const facebook::jsi::Value* args
     ) {
       // We need to encode size, so +1
-      std::array<jvalue, HostFunctionSpec::kMaxArgs + 1> values{};
+      std::array<jvalue, FunctionSpec::kMaxArgs + 1> values{};
 
       try {
         encodeBufferedArgs(rt, env, spec, args, values.data());
@@ -306,7 +320,7 @@ namespace expo::modules::v2 {
     facebook::jsi::Value invokeWithDirectArgs(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       jobject receiver,
       const facebook::jsi::Value* args
     ) {
@@ -314,7 +328,7 @@ namespace expo::modules::v2 {
         // The frame owns every local created by direct object conversions until the Java call
         // completes. Primitive-only signatures instantiate the other branch and pay no JNI frame
         // cost or runtime condition.
-        const kolibri::LocalFrame frame{env, HostFunctionSpec::kMaxArgs};
+        const kolibri::LocalFrame frame{env, FunctionSpec::kMaxArgs};
         return invokeWithDirectArgsBody<Method>(
           rt,
           env,
@@ -337,12 +351,12 @@ namespace expo::modules::v2 {
     facebook::jsi::Value invokeWithBufferedArgs(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       jobject receiver,
       const facebook::jsi::Value* args
     ) {
       if constexpr (NeedsLocalFrame) {
-        const kolibri::LocalFrame frame{env, HostFunctionSpec::kMaxArgs};
+        const kolibri::LocalFrame frame{env, FunctionSpec::kMaxArgs};
         return invokeWithBufferedArgsBody<Method>(
           rt,
           env,
@@ -365,7 +379,7 @@ namespace expo::modules::v2 {
     facebook::jsi::Value invokeFunction(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       jobject receiver,
       const facebook::jsi::Value* args,
       size_t count
@@ -407,7 +421,7 @@ namespace expo::modules::v2 {
     facebook::jsi::Value invokeAsyncFunction(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
-      const HostFunctionSpec& spec,
+      const FunctionSpec& spec,
       jobject receiver,
       const facebook::jsi::Value* args,
       size_t count
@@ -428,8 +442,8 @@ namespace expo::modules::v2 {
       const uint64_t id = state->beginCall(spec.returnType.clone());
 
       // +1 over the argument slots for the trailing Promise.
-      std::array<jvalue, HostFunctionSpec::kMaxArgs + 1> values{};
-      const kolibri::LocalFrame frame{env, HostFunctionSpec::kMaxArgs + 1};
+      std::array<jvalue, FunctionSpec::kMaxArgs + 1> values{};
+      const kolibri::LocalFrame frame{env, FunctionSpec::kMaxArgs + 1};
 
       size_t slot;
       try {
@@ -491,6 +505,20 @@ namespace expo::modules::v2 {
       return invokerForReturnKind<HasBufferedArgs, NeedsLocalFrame>(returnType.kind());
     }
   } // namespace
+
+  FunctionInvoker selectStaticObjectInvoker(
+    const bool hasBufferedArgs,
+    const bool needsLocalFrame
+  ) {
+    if (hasBufferedArgs) {
+      return needsLocalFrame
+               ? &invokeFunction<true, true, &callStaticObject>
+               : &invokeFunction<true, false, &callStaticObject>;
+    }
+    return needsLocalFrame
+             ? &invokeFunction<false, true, &callStaticObject>
+             : &invokeFunction<false, false, &callStaticObject>;
+  }
 
   FunctionInvoker selectFunctionInvoker(
     const ExpectedType& returnType,

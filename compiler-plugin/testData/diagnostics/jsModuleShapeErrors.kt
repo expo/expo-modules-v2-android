@@ -35,9 +35,9 @@ fun containingFunction() {
     <!JS_ON_UNSUPPORTED_DECLARATION!>class NotLocal<!> : Module()
 }
 
-// The registry registers a Module, and the bridge invokes methods on one.
+// Only a Module or a SharedObject carries exports; the bridge invokes methods on one of those.
 @JS
-<!JS_CLASS_IS_NOT_A_MODULE!>class NotAModule<!> {
+<!JS_CLASS_IS_NOT_EXPORTABLE!>class NotAModule<!> {
     @JS
     fun f(): Int = 1
 }

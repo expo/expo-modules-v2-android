@@ -19,6 +19,13 @@ namespace expo::modules::v2 {
       std::shared_ptr<kolibri::GlobalRef<>> instance
     );
 
+    PropertyBinder(
+      std::string name,
+      const std::shared_ptr<descriptor::HostFunctionSpec>& getter,
+      const std::shared_ptr<descriptor::HostFunctionSpec>& setter,
+      std::shared_ptr<kolibri::GlobalRef<>> instance
+    );
+
     [[nodiscard]] const std::string& name() const;
 
     [[nodiscard]] bool hasSetter() const;
@@ -26,6 +33,10 @@ namespace expo::modules::v2 {
     facebook::jsi::Function createGetter(facebook::jsi::Runtime& rt) const;
 
     facebook::jsi::Function createSetter(facebook::jsi::Runtime& rt) const;
+
+    [[nodiscard]] facebook::jsi::Value get(facebook::jsi::Runtime& rt) const;
+
+    void set(facebook::jsi::Runtime& rt, const facebook::jsi::Value& value) const;
 
   private:
     std::string name_;

@@ -326,4 +326,35 @@ namespace expo::modules::v2 {
 
     rt.global().setProperty(rt, "ExpoTestSupport", std::move(suite));
   }
+
+  void transplantHostObject(
+    facebook::jsi::Runtime& from,
+    facebook::jsi::Runtime& to,
+    const std::string& expression,
+    const std::string& globalName
+  ) {
+    const facebook::jsi::Value value = from.evaluateJavaScript(
+      std::make_shared<facebook::jsi::StringBuffer>(expression),
+      "<transplant>"
+    );
+    if (!value.isObject()) {
+      throw std::invalid_argument("transplantHostObject: '" + expression + "' is not an object");
+    }
+
+    const facebook::jsi::Object object = value.getObject(from);
+    if (!object.isHostObject(from)) {
+      throw std::invalid_argument(
+        "transplantHostObject: '" + expression + "' is not a host object"
+      );
+    }
+
+    // The whole of it: one shared_ptr, handed to a second runtime. No copying, no proxy — which is
+    // why a shared object survives the crossing with its methods and its native state intact.
+    std::shared_ptr<facebook::jsi::HostObject> hostObject = object.getHostObject(from);
+    to.global().setProperty(
+      to,
+      facebook::jsi::PropNameID::forUtf8(to, globalName),
+      facebook::jsi::Object::createFromHostObject(to, std::move(hostObject))
+    );
+  }
 } // namespace expo::modules::v2

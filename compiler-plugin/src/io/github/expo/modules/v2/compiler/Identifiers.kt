@@ -17,6 +17,7 @@ object Identifiers {
     val ARGS = FqName("io.github.expo.modules.v2.args")
     val JSI = FqName("io.github.expo.modules.v2.jsi")
     val ASYNC = FqName("io.github.expo.modules.v2.async")
+    val SHARED_OBJECTS = FqName("io.github.expo.modules.v2.sharedobjects")
   }
 
   object Classes {
@@ -40,6 +41,10 @@ object Identifiers {
 
     val Module = classId(Packages.MODULES, "Module")
     val ModuleBuilder = classId(Packages.MODULES, "ModuleBuilder")
+
+    val SharedObject = classId(Packages.SHARED_OBJECTS, "SharedObject")
+    val SharedRef = classId(Packages.SHARED_OBJECTS, "SharedRef")
+    val SharedObjectRegistry = classId(Packages.SHARED_OBJECTS, "SharedObjectRegistry")
 
     val Trampoline = classId(Packages.ARGS, "Trampoline")
     val TrampolineArguments = classId(Packages.ARGS, "TrampolineArguments")
@@ -76,8 +81,10 @@ object Identifiers {
 
     // Module members.
     val DEFINE_FUNCTION = Name.identifier(Literals.DEFINE_FUNCTION)
+    val REGISTER_SHARED_CLASS = Name.identifier("register")
     val FUNCTION = Name.identifier("function")
     val PROPERTY = Name.identifier("property")
+    val SHARED_CLASS = Name.identifier("sharedClass")
 
     // Trampoline members.
     val ARGUMENTS = Name.identifier("arguments")
@@ -93,6 +100,7 @@ object Identifiers {
     val ARG_BUFFER_SAFE = Name.identifier("bufferSafe")
     val ARG_BUFFER = Name.identifier("buffer")
     val ARG_RETURN_BUFFER = Name.identifier("returnBuffer")
+    val ARG_CLASSES = Name.identifier("classes")
   }
 
   object Literals {
@@ -100,7 +108,14 @@ object Identifiers {
     const val DEFINE_FUNCTION = "define\$ExpoModulesV2"
     const val DESCRIPTOR_FIELD_PREFIX = "type\$"
     const val TRAMPOLINE_SUFFIX = "__trampoline\$ExpoModulesV2"
+
+    const val CONSTRUCTOR_TRAMPOLINE = "__construct\$ExpoModulesV2"
     const val PROMISE_PARAMETER = "promise"
+    const val BUILDER_PARAMETER = "builder"
+
+    const val REGISTRATION_FIELD = "sharedClassId\$ExpoModulesV2"
+
+    const val REGISTER_FUNCTION = "register\$ExpoModulesV2"
 
     // Entry names of the `Buffer` enum, as spelled in the annotation.
     const val BUFFER_AUTO = "AUTO"

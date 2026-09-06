@@ -1,11 +1,14 @@
 package io.github.expo.modules.v2.modules
 
 import io.github.expo.modules.v2.args.Trampoline
+import io.github.expo.modules.v2.sharedobjects.SharedObject
+import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
 import io.github.expo.modules.v2.types.AnyType
 
-class ModuleBuilder internal constructor() {
+class ModuleBuilder {
   internal val functions = mutableListOf<ModuleFunctionDefinition>()
   internal val properties = mutableListOf<ModulePropertyDefinition>()
+  internal val sharedClasses = mutableListOf<ModuleSharedClassDefinition>()
 
   fun function(
     jsName: String,
@@ -71,8 +74,34 @@ class ModuleBuilder internal constructor() {
     )
   }
 
+  fun sharedClass(
+    jsName: String,
+    sharedClass: Class<out SharedObject>,
+    vararg argTypes: AnyType,
+    trampolineName: String,
+  ) {
+    require(argTypes.size <= Trampoline.MAX_ARGUMENTS) {
+      "Constructor of '$jsName' declares ${argTypes.size} arguments; at most " +
+        "${Trampoline.MAX_ARGUMENTS} are supported"
+    }
+    requireAvailableExportName(jsName)
+
+    sharedClasses.add(
+      ModuleSharedClassDefinition(
+        jsName = jsName,
+        classId = SharedObjectRegistry.classIdFor(sharedClass).value,
+        argTypes = Array(argTypes.size) { argTypes[it].codes.values },
+        trampolineName = trampolineName,
+      ),
+    )
+  }
+
   private fun requireAvailableExportName(name: String) {
-    require(functions.none { it.jsName == name } && properties.none { it.jsName == name }) {
+    require(
+      functions.none { it.jsName == name } &&
+        properties.none { it.jsName == name } &&
+        sharedClasses.none { it.jsName == name },
+    ) {
       "Export '$name' is already declared in this module or shared-object class"
     }
   }

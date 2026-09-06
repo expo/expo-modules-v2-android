@@ -3,6 +3,7 @@
 #include <kolibri/JavaClass.h>
 #include <kolibri/env.h>
 #include <kolibri/native_method.h>
+#include <kolibri/string_utils.h>
 
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
 #include "TestSupportObject.h"
@@ -25,6 +26,19 @@ namespace {
             auto* runtime =
                 reinterpret_cast<expo::modules::v2::jsi::JavaScriptRuntime*>(runtimePointer);
             expo::modules::v2::installTestSupport(runtime->runtime());
+          }
+        )
+        .method(
+          "nativeTransplantHostObject",
+          [](JNIEnv* env, jlong fromPointer, jlong toPointer, jstring expression, jstring globalName) {
+            auto* from = reinterpret_cast<expo::modules::v2::jsi::JavaScriptRuntime*>(fromPointer);
+            auto* to = reinterpret_cast<expo::modules::v2::jsi::JavaScriptRuntime*>(toPointer);
+            expo::modules::v2::transplantHostObject(
+              from->runtime(),
+              to->runtime(),
+              expo::kolibri::toStdString(env, expression),
+              expo::kolibri::toStdString(env, globalName)
+            );
           }
         )
         .commit();

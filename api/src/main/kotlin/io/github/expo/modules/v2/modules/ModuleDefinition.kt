@@ -26,3 +26,10 @@ internal class ModulePropertyDefinition(
   val getterType: IntArray,
   val setterType: IntArray?,
 )
+
+internal class ModuleSharedClassDefinition(
+  val jsName: String,
+  val classId: Int,
+  val argTypes: Array<IntArray>,
+  val trampolineName: String,
+)

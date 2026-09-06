@@ -500,7 +500,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
             CONST String type=kotlin.String value=")"
   CLASS OBJECT name:Values modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Values
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
@@ -1108,7 +1108,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:Regular name:b index:2 type:kotlin.DoubleArray?
       VALUE_PARAMETER kind:Regular name:c index:3 type:kotlin.ByteArray
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun arrays (a: kotlin.IntArray, b: kotlin.DoubleArray?, c: kotlin.ByteArray): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public final fun <get-size> (): kotlin.Int declared in kotlin.IntArray' type=kotlin.Int origin=GET_PROPERTY
@@ -1120,7 +1120,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:Regular name:set index:3 type:kotlin.collections.Set<kotlin.String>
       VALUE_PARAMETER kind:Regular name:array index:4 type:kotlin.Array<kotlin.String>
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun containers (list: kotlin.collections.List<kotlin.String>, map: kotlin.collections.Map<kotlin.String, kotlin.Int>, set: kotlin.collections.Set<kotlin.String>, array: kotlin.Array<kotlin.String>): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
@@ -1139,7 +1139,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:Regular name:value index:1 type:kotlin.Any?
       VALUE_PARAMETER kind:Regular name:handle index:2 type:io.github.expo.modules.v2.jsi.JavaScriptValue
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun dynamic (value: kotlin.Any?, handle: io.github.expo.modules.v2.jsi.JavaScriptValue): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.jsi.JavaScriptValue' type=kotlin.Int origin=null
@@ -1148,7 +1148,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:holder index:1 type:io.github.expo.modules.v2.testdata.Holder
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun echoHolder (holder: io.github.expo.modules.v2.testdata.Holder): io.github.expo.modules.v2.testdata.Holder declared in io.github.expo.modules.v2.testdata.Values'
           GET_VAR 'holder: io.github.expo.modules.v2.testdata.Holder declared in io.github.expo.modules.v2.testdata.Values.echoHolder' type=io.github.expo.modules.v2.testdata.Holder origin=null
@@ -1156,7 +1156,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:point index:1 type:io.github.expo.modules.v2.testdata.Point
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun echoPoint (point: io.github.expo.modules.v2.testdata.Point): io.github.expo.modules.v2.testdata.Point declared in io.github.expo.modules.v2.testdata.Values'
           GET_VAR 'point: io.github.expo.modules.v2.testdata.Point declared in io.github.expo.modules.v2.testdata.Values.echoPoint' type=io.github.expo.modules.v2.testdata.Point origin=null
@@ -1164,7 +1164,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.collections.List<io.github.expo.modules.v2.testdata.Holder>
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun holders (values: kotlin.collections.List<io.github.expo.modules.v2.testdata.Holder>): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public abstract fun <get-size> (): kotlin.Int declared in kotlin.collections.List' type=kotlin.Int origin=GET_PROPERTY
@@ -1174,7 +1174,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.collections.List<kotlin.String?>
       VALUE_PARAMETER kind:Regular name:nullableList index:2 type:kotlin.collections.List<kotlin.Int>?
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun nullableElements (values: kotlin.collections.List<kotlin.String?>, nullableList: kotlin.collections.List<kotlin.Int>?): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public abstract fun <get-size> (): kotlin.Int declared in kotlin.collections.List' type=kotlin.Int origin=GET_PROPERTY
@@ -1187,7 +1187,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:Regular name:d index:4 type:kotlin.Double?
       VALUE_PARAMETER kind:Regular name:e index:5 type:kotlin.Boolean?
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun nullableScalars (a: kotlin.Int?, b: kotlin.Long?, c: kotlin.Float?, d: kotlin.Double?, e: kotlin.Boolean?): kotlin.Int? declared in io.github.expo.modules.v2.testdata.Values'
           GET_VAR 'a: kotlin.Int? declared in io.github.expo.modules.v2.testdata.Values.nullableScalars' type=kotlin.Int? origin=null
@@ -1195,7 +1195,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.IntArray
       annotations:
-        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:YES' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
+        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:YES' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun optedIn (values: kotlin.IntArray): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public final fun <get-size> (): kotlin.Int declared in kotlin.IntArray' type=kotlin.Int origin=GET_PROPERTY
@@ -1204,9 +1204,9 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.collections.List<kotlin.String>
         annotations:
-          JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
+          JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun optedOut (values: kotlin.collections.List<kotlin.String>): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public abstract fun <get-size> (): kotlin.Int declared in kotlin.collections.List' type=kotlin.Int origin=GET_PROPERTY
@@ -1215,7 +1215,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.collections.List<io.github.expo.modules.v2.testdata.Point>
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun points (values: kotlin.collections.List<io.github.expo.modules.v2.testdata.Point>): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public abstract fun <get-size> (): kotlin.Int declared in kotlin.collections.List' type=kotlin.Int origin=GET_PROPERTY
@@ -1228,7 +1228,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:Regular name:d index:4 type:kotlin.Double
       VALUE_PARAMETER kind:Regular name:e index:5 type:kotlin.Boolean
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun unboxedScalars (a: kotlin.Int, b: kotlin.Long, c: kotlin.Float, d: kotlin.Double, e: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           GET_VAR 'a: kotlin.Int declared in io.github.expo.modules.v2.testdata.Values.unboxedScalars' type=kotlin.Int origin=null

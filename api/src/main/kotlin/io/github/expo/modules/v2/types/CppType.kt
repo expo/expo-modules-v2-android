@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.types
 
 import io.github.expo.modules.v2.records.SchemaId
+import io.github.expo.modules.v2.sharedobjects.SharedClassId
 
 @JvmInline
 value class CppType(val code: Int) {
@@ -20,6 +21,10 @@ value class CppType(val code: Int) {
 
   internal operator fun plus(schemaId: SchemaId): TypeCodes {
     return TypeCodes.of(code, schemaId.value)
+  }
+
+  internal operator fun plus(classId: SharedClassId): TypeCodes {
+    return TypeCodes.of(code, classId.value)
   }
 
   fun toTypeCodes(): TypeCodes =
@@ -56,6 +61,7 @@ value class CppType(val code: Int) {
       BOX_LONG -> "box_long"
       BOX_FLOAT -> "box_float"
       BOX_DOUBLE -> "box_double"
+      SHARED_OBJECT -> "shared_object"
       else -> "unknown(code=$code)"
     }
 
@@ -97,6 +103,8 @@ value class CppType(val code: Int) {
     val BOX_LONG = CppType(21)
     val BOX_FLOAT = CppType(22)
     val BOX_DOUBLE = CppType(23)
+
+    val SHARED_OBJECT = CppType(24)
     //@formatter:on
 
     const val NULLABLE = 0x100

@@ -979,32 +979,6 @@ private fun HermesRuntime.awaitSettled(script: String): String {
   return evaluateAsString(script)
 }
 
-/** Keeps string-oriented bridge tests concise while [JavaScriptRuntime.evaluate] returns a value handle. */
-private fun HermesRuntime.evaluateAsString(script: String, sourceURL: String = "<eval>"): String {
-  val value = evaluate(script, sourceURL)
-  return when {
-    value.isUndefined() -> "undefined"
-    value.isNull() -> "null"
-    value.isBool() -> value.getBool().toString()
-    value.isNumber() -> {
-      val number = value.getDouble()
-      when {
-        number.isNaN() -> "NaN"
-        number == Double.POSITIVE_INFINITY -> "Infinity"
-        number == Double.NEGATIVE_INFINITY -> "-Infinity"
-        number == 0.0 -> "0"
-        number % 1.0 == 0.0 && kotlin.math.abs(number) < 1e21 ->
-          java.math.BigDecimal.valueOf(number).toBigInteger().toString()
-        else -> number.toString().replace('E', 'e').let { result ->
-          if ("e" in result && "e-" !in result) result.replace("e", "e+") else result
-        }
-      }
-    }
-    value.isString() -> value.getString()
-    else -> error("Expected a primitive JavaScript result, got ${value.kind()}")
-  }
-}
-
 class HermesRuntimeTest {
   companion object {
     init {

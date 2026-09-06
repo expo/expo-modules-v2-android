@@ -31,6 +31,8 @@ namespace expo::modules::v2 {
     BOX_LONG = 21,
     BOX_FLOAT = 22,
     BOX_DOUBLE = 23,
+
+    SHARED_OBJECT = 24,
   };
 
   /**

@@ -23,6 +23,7 @@ import org.jetbrains.kotlin.ir.types.isMarkedNullable
 import org.jetbrains.kotlin.ir.types.starProjectedType
 import org.jetbrains.kotlin.ir.types.typeWith
 import org.jetbrains.kotlin.ir.util.defaultType
+import org.jetbrains.kotlin.ir.util.isSubclassOf
 import org.jetbrains.kotlin.ir.util.kotlinFqName
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -165,6 +166,8 @@ class TypeDescriptorPoet(
     isNullable: Boolean,
     fqName: String,
   ): IrExpression? {
+    sharedRefDescriptor(type)?.let { return it }
+
     val arguments = type.arguments
     val containerClass: IrClassSymbol = when (fqName) {
       "kotlin.collections.List", "kotlin.collections.MutableList" -> irBuiltIns.listClass
@@ -180,6 +183,20 @@ class TypeDescriptorPoet(
     }
 
     return parametrized(javaClass(containerClass.owner.defaultType), isNullable, parameters)
+  }
+
+  private fun sharedRefDescriptor(type: IrSimpleType): IrExpression? {
+    val owner = type.classOrNull?.owner ?: return null
+    if (!owner.isSubclassOf(symbols.classes.sharedRef.owner)) {
+      return null
+    }
+
+    val argument = type.arguments.singleOrNull() as? IrTypeProjection ?: return null
+    return parametrized(
+      javaClass(owner.defaultType),
+      type.isMarkedNullable(),
+      listOf(boxedDescriptorFor(argument.type)),
+    )
   }
 
   /**

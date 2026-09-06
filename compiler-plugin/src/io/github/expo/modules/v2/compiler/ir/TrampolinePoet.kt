@@ -8,6 +8,7 @@ import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.ir.IrStatement
 import org.jetbrains.kotlin.ir.builders.declarations.addValueParameter
 import org.jetbrains.kotlin.ir.declarations.IrClass
+import org.jetbrains.kotlin.ir.declarations.IrConstructor
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.declarations.IrProperty
@@ -116,13 +117,13 @@ internal class TrampolinePoet(
   }
 
   /**
-   * `promise.launch(<descriptor>, <buffered>) { <call> }` — the entire async half of the emitter.
+   * `promise.launch(<descriptor>, <buffered>) { <call> }` - the entire async half of the emitter.
    *
    * Every buffered argument has already been read into a local by the time this runs, which is what
    * makes the shared binary buffer safe: it is thread-local and reused per call, and the coroutine
    * may resume on another thread entirely.
    *
-   * The block is a real `suspend` lambda — an [IrFunctionExpressionImpl] over a function with
+   * The block is a real `suspend` lambda - an [IrFunctionExpressionImpl] over a function with
    * `isSuspend = true`. `IrGenerationExtension` runs before the JVM backend's coroutine lowering,
    * so the state machine is built for us. Its result type is `Any?`, so a primitive return boxes
    * here and `Promise` converts it with the descriptor it was handed.
@@ -163,7 +164,62 @@ internal class TrampolinePoet(
     )
   }
 
-  // --- properties ------------------------------------------------------------------------------
+  fun constructorTrampoline(
+    sharedClass: IrClass,
+    name: String,
+    constructor: IrConstructor,
+    arguments: List<ValuePlan>,
+  ): IrSimpleFunction {
+    val trampoline = declare(
+      sharedClass,
+      name,
+      sharedClass.defaultType,
+      isStatic = true,
+    )
+    val slots = arguments.filter { !it.buffered }.map { plan ->
+      trampoline.addValueParameter(
+        Name.identifier("p${arguments.indexOf(plan)}"),
+        plan.jniType,
+        IrDeclarationOrigin.DEFINED,
+      )
+    }
+    val payloadLength = if (arguments.any { it.buffered }) {
+      trampoline.addValueParameter(
+        Name.identifier("payloadLength"),
+        irBuiltIns.intType,
+        IrDeclarationOrigin.DEFINED,
+      )
+    } else {
+      null
+    }
+
+    val statements = mutableListOf<IrStatement>()
+    val locals = readBufferedArguments(
+      sharedClass, trampoline, arguments, payloadLength, statements,
+    )
+
+    // Rebuild the declared order: a buffered argument comes from its local, the rest from their slots.
+    var nextSlot = 0
+    val callArguments = arguments.map { plan ->
+      if (plan.buffered) {
+        locals.getValue(plan).get()
+      } else {
+        fromSlot(sharedClass, slots[nextSlot++], plan)
+      }
+    }
+
+    statements += IrSyntheticReturnImpl(
+      type = irBuiltIns.nothingType,
+      returnTargetSymbol = trampoline.symbol,
+      value = newInstance(constructor.symbol, callArguments, sharedClass.defaultType),
+    )
+
+    trampoline.body = context.irFactory.createSyntheticBlockBody().apply {
+      this.statements += statements
+    }
+    trampoline.patchDeclarationParents(sharedClass)
+    return trampoline
+  }
 
   fun propertyGetter(
     moduleClass: IrClass,
@@ -224,10 +280,13 @@ internal class TrampolinePoet(
     return setter
   }
 
-  // --- pieces ----------------------------------------------------------------------------------
-
-  private fun declare(moduleClass: IrClass, name: String, returnType: IrType): IrSimpleFunction {
-    val function = moduleClass.addSyntheticFunction {
+  private fun declare(
+    owner: IrClass,
+    name: String,
+    returnType: IrType,
+    isStatic: Boolean = false,
+  ): IrSimpleFunction {
+    val function = owner.addSyntheticFunction {
       this.name = Name.identifier(name)
       this.returnType = returnType
       // PUBLIC, never internal: the JVM mangles an internal name and GetMethodID would miss it.
@@ -235,7 +294,9 @@ internal class TrampolinePoet(
       modality = Modality.FINAL
       origin = IrDeclarationOrigin.GeneratedByPlugin(JSModuleKey)
     }
-    function.createDispatchReceiverParameter()
+    if (!isStatic) {
+      function.createDispatchReceiverParameter()
+    }
     return function
   }
 
@@ -380,13 +441,11 @@ internal class TrampolinePoet(
     statements += IrSyntheticReturnImpl(irBuiltIns.nothingType, owner.symbol, result)
   }
 
-  // --- helpers ---------------------------------------------------------------------------------
-
   private fun IrSimpleFunction.thisReceiver(): IrValueParameter =
     parameters.single { it.kind == IrParameterKind.DispatchReceiver }
 
   /**
-   * A cast to [target], emitted only when the expression is not already that exact type — which is
+   * A cast to [target], emitted only when the expression is not already that exact type - which is
    * the normal case for a `Bridge` result (`Any?`) and for a nullable slot feeding a non-null
    * declaration.
    */

@@ -20,6 +20,8 @@ namespace expo::modules::v2 {
     jobject operator()(const ExpectedType::Map& mapType) const;
 
     jobject operator()(const ExpectedType::Record& recordType) const;
+
+    jobject operator()(const ExpectedType::SharedObject& sharedType) const;
   };
 
   // clang-format off
@@ -50,7 +52,4 @@ namespace expo::modules::v2 {
   template<> jobject JniEncoder::operator()<CppType::JS_OBJECT>() const;
   template<> jobject JniEncoder::operator()<CppType::ANY>() const;
   // clang-format on
-
-  // No JS_VALUE: the caller resolves it - a handle wraps null/undefined too - so one reaching the
-  // visit hits the deleted primary and throws.
 } // namespace expo::modules::v2

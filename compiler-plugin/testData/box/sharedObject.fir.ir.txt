@@ -1,0 +1,955 @@
+FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
+  CLASS CLASS name:Listed modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]
+    annotations:
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Listed
+    PROPERTY name:n visibility:private modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'n: kotlin.Int declared in io.github.expo.modules.v2.testdata.Listed.<init>' type=kotlin.Int origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-n> visibility:private modality:FINAL returnType:kotlin.Int
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Listed
+        correspondingProperty: PROPERTY name:n visibility:private modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='private final fun <get-n> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Listed'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Listed declared in io.github.expo.modules.v2.testdata.Listed.<get-n>' type=io.github.expo.modules.v2.testdata.Listed origin=null
+    FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:sharedClassId$ExpoModulesV2 type:kotlin.Int visibility:private [final,static]
+      EXPRESSION_BODY
+        CALL 'private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Listed' type=kotlin.Int origin=null
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Listed [primary]
+      VALUE_PARAMETER kind:Regular name:n index:0 type:kotlin.Int
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.sharedobjects.SharedObject'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Listed modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.Unit
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:getAdditionalMemoryPressure visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+      overridden:
+        public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:sharedObjectDidRelease visibility:public modality:OPEN returnType:kotlin.Unit [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+      overridden:
+        public open fun sharedObjectDidRelease (): kotlin.Unit declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:__construct$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Listed
+      VALUE_PARAMETER kind:Regular name:p0 index:0 type:kotlin.Int
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun __construct$ExpoModulesV2 (p0: kotlin.Int): io.github.expo.modules.v2.testdata.Listed declared in io.github.expo.modules.v2.testdata.Listed'
+          CONSTRUCTOR_CALL 'public constructor <init> (n: kotlin.Int) declared in io.github.expo.modules.v2.testdata.Listed' type=io.github.expo.modules.v2.testdata.Listed origin=null
+            ARG n: GET_VAR 'p0: kotlin.Int declared in io.github.expo.modules.v2.testdata.Listed.__construct$ExpoModulesV2' type=kotlin.Int origin=null
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:Regular name:builder index:0 type:io.github.expo.modules.v2.modules.ModuleBuilder
+      BLOCK_BODY
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Listed.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="value"
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="value"
+        RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Listed'
+          CONST String type=kotlin.String value="Listed"
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int
+      BLOCK_BODY
+        VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
+          CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+        CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Listed' type=kotlin.String origin=null
+          ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Listed.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+        RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Listed'
+          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+            ARG jsName: CONST String type=kotlin.String value="Listed"
+            ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Listed> origin=null
+              ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Listed modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+            ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Listed.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+    FUN name:value visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Listed
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun value (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Listed'
+          CALL 'private final fun <get-n> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Listed' type=kotlin.Int origin=GET_PROPERTY
+            ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Listed declared in io.github.expo.modules.v2.testdata.Listed.value' type=io.github.expo.modules.v2.testdata.Listed origin=IMPLICIT_ARGUMENT
+  CLASS CLASS name:Owner modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
+    annotations:
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = [CLASS_REFERENCE 'CLASS CLASS name:Listed modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Listed>] type=kotlin.Array<kotlin.reflect.KClass<*>> varargElementType=kotlin.reflect.KClass<*>)
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Owner
+    CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Owner.Nested
+      PROPERTY name:text visibility:private modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:text type:kotlin.String visibility:private [final]
+          EXPRESSION_BODY
+            GET_VAR 'text: kotlin.String declared in io.github.expo.modules.v2.testdata.Owner.Nested.<init>' type=kotlin.String origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-text> visibility:private modality:FINAL returnType:kotlin.String
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Owner.Nested
+          correspondingProperty: PROPERTY name:text visibility:private modality:FINAL [val]
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='private final fun <get-text> (): kotlin.String declared in io.github.expo.modules.v2.testdata.Owner.Nested'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:text type:kotlin.String visibility:private [final]' type=kotlin.String origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Owner.Nested declared in io.github.expo.modules.v2.testdata.Owner.Nested.<get-text>' type=io.github.expo.modules.v2.testdata.Owner.Nested origin=null
+      FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:sharedClassId$ExpoModulesV2 type:kotlin.Int visibility:private [final,static]
+        EXPRESSION_BODY
+          CALL 'private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Owner.Nested' type=kotlin.Int origin=null
+      CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Owner.Nested [primary]
+        VALUE_PARAMETER kind:Regular name:text index:0 type:kotlin.String
+        annotations:
+          JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.sharedobjects.SharedObject'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.Unit
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN FAKE_OVERRIDE name:getAdditionalMemoryPressure visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+        overridden:
+          public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN FAKE_OVERRIDE name:sharedObjectDidRelease visibility:public modality:OPEN returnType:kotlin.Unit [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+        overridden:
+          public open fun sharedObjectDidRelease (): kotlin.Unit declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:__construct$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Owner.Nested
+        VALUE_PARAMETER kind:Regular name:payloadLength index:0 type:kotlin.Int
+        BLOCK_BODY
+          VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
+            CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+              ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.args.Trampoline
+              ARG payloadLength: GET_VAR 'payloadLength: kotlin.Int declared in io.github.expo.modules.v2.testdata.Owner.Nested.__construct$ExpoModulesV2' type=kotlin.Int origin=null
+          VAR name:v0 type:kotlin.String [var]
+          TRY type=kotlin.Unit
+            try: BLOCK type=kotlin.Unit origin=null
+              SET_VAR 'var v0: kotlin.String declared in io.github.expo.modules.v2.testdata.Owner.Nested.__construct$ExpoModulesV2' type=kotlin.Unit origin=null
+                CALL 'public abstract fun nextString (): kotlin.String declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
+                  ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.Owner.Nested.__construct$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+            finally: CALL 'public abstract fun finish (): kotlin.Unit declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.Unit origin=null
+              ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.Owner.Nested.__construct$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+          RETURN type=kotlin.Nothing from='public final fun __construct$ExpoModulesV2 (payloadLength: kotlin.Int): io.github.expo.modules.v2.testdata.Owner.Nested declared in io.github.expo.modules.v2.testdata.Owner.Nested'
+            CONSTRUCTOR_CALL 'public constructor <init> (text: kotlin.String) declared in io.github.expo.modules.v2.testdata.Owner.Nested' type=io.github.expo.modules.v2.testdata.Owner.Nested origin=null
+              ARG text: GET_VAR 'var v0: kotlin.String declared in io.github.expo.modules.v2.testdata.Owner.Nested.__construct$ExpoModulesV2' type=kotlin.String origin=null
+      FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+        VALUE_PARAMETER kind:Regular name:builder index:0 type:io.github.expo.modules.v2.modules.ModuleBuilder
+        BLOCK_BODY
+          CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.Nested.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+            ARG jsName: CONST String type=kotlin.String value="render"
+            ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+            ARG methodName: CONST String type=kotlin.String value="render"
+          RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Owner.Nested'
+            CONST String type=kotlin.String value="Nested"
+      FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int
+        BLOCK_BODY
+          VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Owner.Nested' type=kotlin.String origin=null
+            ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.Nested.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Owner.Nested'
+            CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+              ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+              ARG jsName: CONST String type=kotlin.String value="Nested"
+              ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Owner.Nested> origin=null
+                ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+              ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.Nested.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+      FUN name:render visibility:public modality:FINAL returnType:kotlin.String
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Owner.Nested
+        annotations:
+          JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun render (): kotlin.String declared in io.github.expo.modules.v2.testdata.Owner.Nested'
+            CALL 'private final fun <get-text> (): kotlin.String declared in io.github.expo.modules.v2.testdata.Owner.Nested' type=kotlin.String origin=GET_PROPERTY
+              ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Owner.Nested declared in io.github.expo.modules.v2.testdata.Owner.Nested.render' type=io.github.expo.modules.v2.testdata.Owner.Nested origin=IMPLICIT_ARGUMENT
+    CLASS CLASS name:NotConstructable modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Owner.NotConstructable
+      FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:sharedClassId$ExpoModulesV2 type:kotlin.Int visibility:private [final,static]
+        EXPRESSION_BODY
+          CALL 'private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable' type=kotlin.Int origin=null
+      CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Owner.NotConstructable [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.sharedobjects.SharedObject'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:NotConstructable modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.Unit
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN FAKE_OVERRIDE name:getAdditionalMemoryPressure visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+        overridden:
+          public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN FAKE_OVERRIDE name:sharedObjectDidRelease visibility:public modality:OPEN returnType:kotlin.Unit [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+        overridden:
+          public open fun sharedObjectDidRelease (): kotlin.Unit declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+      FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+        VALUE_PARAMETER kind:Regular name:builder index:0 type:io.github.expo.modules.v2.modules.ModuleBuilder
+        BLOCK_BODY
+          CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+            ARG jsName: CONST String type=kotlin.String value="name"
+            ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+            ARG methodName: CONST String type=kotlin.String value="name"
+          RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable'
+            CONST String type=kotlin.String value="NotConstructable"
+      FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int
+        BLOCK_BODY
+          VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable' type=kotlin.String origin=null
+            ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable'
+            CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+              ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+              ARG jsName: CONST String type=kotlin.String value="NotConstructable"
+              ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Owner.NotConstructable> origin=null
+                ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:NotConstructable modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+              ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+      FUN name:name visibility:public modality:FINAL returnType:kotlin.String
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Owner.NotConstructable
+        annotations:
+          JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun name (): kotlin.String declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable'
+            CONST String type=kotlin.String value="hidden"
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Owner [primary]
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.Module'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Owner modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.Unit
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.modules.Module
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.modules.Module
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.modules.Module
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Owner
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:io.github.expo.modules.v2.modules.ModuleBuilder
+      overridden:
+        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.modules.Module
+      BLOCK_BODY
+        CALL 'public final fun sharedClass (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>, vararg argTypes: io.github.expo.modules.v2.types.AnyType, trampolineName: kotlin.String): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="Nested"
+          ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Owner.Nested> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
+          ARG trampolineName: CONST String type=kotlin.String value="__construct$ExpoModulesV2"
+        CALL 'public final fun sharedClass (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>, vararg argTypes: io.github.expo.modules.v2.types.AnyType, trampolineName: kotlin.String): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="Listed"
+          ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Listed> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Listed modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG trampolineName: CONST String type=kotlin.String value="__construct$ExpoModulesV2"
+        RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Owner'
+          CONST String type=kotlin.String value="Owner"
+  CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]
+    annotations:
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Player
+    PROPERTY name:volume visibility:public modality:FINAL [var]
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      FIELD PROPERTY_BACKING_FIELD name:volume type:kotlin.Double visibility:private
+        EXPRESSION_BODY
+          CONST Double type=kotlin.Double value=1.0
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-volume> visibility:public modality:FINAL returnType:kotlin.Double
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Player
+        correspondingProperty: PROPERTY name:volume visibility:public modality:FINAL [var]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-volume> (): kotlin.Double declared in io.github.expo.modules.v2.testdata.Player'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:volume type:kotlin.Double visibility:private' type=kotlin.Double origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Player declared in io.github.expo.modules.v2.testdata.Player.<get-volume>' type=io.github.expo.modules.v2.testdata.Player origin=null
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<set-volume> visibility:public modality:FINAL returnType:kotlin.Unit
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Player
+        VALUE_PARAMETER kind:Regular name:<set-?> index:1 type:kotlin.Double
+        correspondingProperty: PROPERTY name:volume visibility:public modality:FINAL [var]
+        BLOCK_BODY
+          SET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:volume type:kotlin.Double visibility:private' type=kotlin.Unit origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Player declared in io.github.expo.modules.v2.testdata.Player.<set-volume>' type=io.github.expo.modules.v2.testdata.Player origin=null
+            value: GET_VAR '<set-?>: kotlin.Double declared in io.github.expo.modules.v2.testdata.Player.<set-volume>' type=kotlin.Double origin=null
+    FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:sharedClassId$ExpoModulesV2 type:kotlin.Int visibility:private [final,static]
+      EXPRESSION_BODY
+        CALL 'private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Player' type=kotlin.Int origin=null
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Player [primary]
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.sharedobjects.SharedObject'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.Unit
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:getAdditionalMemoryPressure visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+      overridden:
+        public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:sharedObjectDidRelease visibility:public modality:OPEN returnType:kotlin.Unit [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+      overridden:
+        public open fun sharedObjectDidRelease (): kotlin.Unit declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:Regular name:builder index:0 type:io.github.expo.modules.v2.modules.ModuleBuilder
+      BLOCK_BODY
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="play"
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="play"
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="volume"
+          ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Double modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Double
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG mutable: CONST Boolean type=kotlin.Boolean value=true
+          ARG propertyName: CONST String type=kotlin.String value="volume"
+          ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Double modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Double
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="rename"
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="rename__trampoline$ExpoModulesV2"
+        RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Player'
+          CONST String type=kotlin.String value="Player"
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int
+      BLOCK_BODY
+        VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
+          CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+        CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Player' type=kotlin.String origin=null
+          ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+        RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Player'
+          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+            ARG jsName: CONST String type=kotlin.String value="Player"
+            ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Player> origin=null
+              ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+            ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:rename__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Player
+      VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      BLOCK_BODY
+        VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
+          CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.args.Trampoline
+            ARG payloadLength: GET_VAR 'payloadLength: kotlin.Int declared in io.github.expo.modules.v2.testdata.Player.rename__trampoline$ExpoModulesV2' type=kotlin.Int origin=null
+        VAR name:v0 type:kotlin.String [var]
+        TRY type=kotlin.Unit
+          try: BLOCK type=kotlin.Unit origin=null
+            SET_VAR 'var v0: kotlin.String declared in io.github.expo.modules.v2.testdata.Player.rename__trampoline$ExpoModulesV2' type=kotlin.Unit origin=null
+              CALL 'public abstract fun nextString (): kotlin.String declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.String origin=null
+                ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.Player.rename__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+          finally: CALL 'public abstract fun finish (): kotlin.Unit declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.Player.rename__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
+        RETURN type=kotlin.Nothing from='public final fun rename__trampoline$ExpoModulesV2 (payloadLength: kotlin.Int): kotlin.String? declared in io.github.expo.modules.v2.testdata.Player'
+          TYPE_OP type=kotlin.String? origin=CAST typeOperand=kotlin.String?
+            CALL 'public final fun rename (name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.Player' type=kotlin.String origin=null
+              ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Player declared in io.github.expo.modules.v2.testdata.Player.rename__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.Player origin=null
+              ARG name: GET_VAR 'var v0: kotlin.String declared in io.github.expo.modules.v2.testdata.Player.rename__trampoline$ExpoModulesV2' type=kotlin.String origin=null
+    FUN name:play visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Player
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun play (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Player'
+          CONST Int type=kotlin.Int value=1
+    FUN name:rename visibility:public modality:FINAL returnType:kotlin.String
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Player
+      VALUE_PARAMETER kind:Regular name:name index:1 type:kotlin.String
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun rename (name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.Player'
+          GET_VAR 'name: kotlin.String declared in io.github.expo.modules.v2.testdata.Player.rename' type=kotlin.String origin=null
+  CLASS CLASS name:Players modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
+    annotations:
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Players
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Players [primary]
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.Module'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Players modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.Unit
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.modules.Module
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.modules.Module
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.modules.Module
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Players
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:io.github.expo.modules.v2.modules.ModuleBuilder
+      overridden:
+        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.modules.Module
+      BLOCK_BODY
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Players.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="create"
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Player> origin=null
+                ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+              ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="create"
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Players.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="volumeOf"
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Player> origin=null
+                  ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+                ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Double modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Double
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="volumeOf"
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Players.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="maybe"
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Player> origin=null
+                  ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+                ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="maybe"
+        RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Players'
+          CONST String type=kotlin.String value="Players"
+    FUN name:create visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Player
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Players
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun create (): io.github.expo.modules.v2.testdata.Player declared in io.github.expo.modules.v2.testdata.Players'
+          CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Player' type=io.github.expo.modules.v2.testdata.Player origin=null
+    FUN name:maybe visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Players
+      VALUE_PARAMETER kind:Regular name:player index:1 type:io.github.expo.modules.v2.testdata.Player?
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun maybe (player: io.github.expo.modules.v2.testdata.Player?): kotlin.Int declared in io.github.expo.modules.v2.testdata.Players'
+          WHEN type=kotlin.Int origin=IF
+            BRANCH
+              if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                ARG arg0: GET_VAR 'player: io.github.expo.modules.v2.testdata.Player? declared in io.github.expo.modules.v2.testdata.Players.maybe' type=io.github.expo.modules.v2.testdata.Player? origin=null
+                ARG arg1: CONST Null type=kotlin.Nothing? value=null
+              then: CONST Int type=kotlin.Int value=0
+            BRANCH
+              if: CONST Boolean type=kotlin.Boolean value=true
+              then: CONST Int type=kotlin.Int value=1
+    FUN name:volumeOf visibility:public modality:FINAL returnType:kotlin.Double
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Players
+      VALUE_PARAMETER kind:Regular name:player index:1 type:io.github.expo.modules.v2.testdata.Player
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun volumeOf (player: io.github.expo.modules.v2.testdata.Player): kotlin.Double declared in io.github.expo.modules.v2.testdata.Players'
+          CALL 'public final fun <get-volume> (): kotlin.Double declared in io.github.expo.modules.v2.testdata.Player' type=kotlin.Double origin=GET_PROPERTY
+            ARG <this>: GET_VAR 'player: io.github.expo.modules.v2.testdata.Player declared in io.github.expo.modules.v2.testdata.Players.volumeOf' type=io.github.expo.modules.v2.testdata.Player origin=null
+  CLASS CLASS name:Speaker modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]
+    annotations:
+      JS(name = "Renamed", buffer = <null>, returnBuffer = <null>, classes = <null>)
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Speaker
+    FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:sharedClassId$ExpoModulesV2 type:kotlin.Int visibility:private [final,static]
+      EXPRESSION_BODY
+        CALL 'private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Speaker' type=kotlin.Int origin=null
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Speaker [primary]
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.sharedobjects.SharedObject'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Speaker modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.Unit
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:getAdditionalMemoryPressure visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+      overridden:
+        public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:sharedObjectDidRelease visibility:public modality:OPEN returnType:kotlin.Unit [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.sharedobjects.SharedObject
+      overridden:
+        public open fun sharedObjectDidRelease (): kotlin.Unit declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.sharedobjects.SharedObject
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:Regular name:builder index:0 type:io.github.expo.modules.v2.modules.ModuleBuilder
+      BLOCK_BODY
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Speaker.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="mute"
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.Unit> origin=null
+                ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Unit modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
+              ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="mute"
+        RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Speaker'
+          CONST String type=kotlin.String value="Renamed"
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int
+      BLOCK_BODY
+        VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
+          CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+        CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Speaker' type=kotlin.String origin=null
+          ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Speaker.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+        RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Speaker'
+          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+            ARG jsName: CONST String type=kotlin.String value="Renamed"
+            ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Speaker> origin=null
+              ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Speaker modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<*>
+            ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Speaker.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+    FUN name:mute visibility:public modality:FINAL returnType:kotlin.Unit
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Speaker
+      annotations:
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun mute (): kotlin.Unit declared in io.github.expo.modules.v2.testdata.Speaker'
+          GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Unit modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.Unit
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    BLOCK_BODY
+      VAR name:suffix type:kotlin.String [val]
+        CONST String type=kotlin.String value="__trampoline$ExpoModulesV2"
+      VAR name:player type:kotlin.String [val]
+        CONST String type=kotlin.String value="Lio/github/expo/modules/v2/testdata/Player;"
+      BLOCK type=kotlin.Unit origin=FOR_LOOP
+        VAR FOR_LOOP_ITERATOR name:tmp_0 type:kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> [val]
+          CALL 'public abstract fun iterator (): kotlin.collections.Iterator<E of kotlin.collections.List> declared in kotlin.collections.List' type=kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> origin=FOR_LOOP_ITERATOR
+            ARG <this>: CALL 'public final fun listOf <T> (vararg elements: T of kotlin.collections.listOf): kotlin.collections.List<T of kotlin.collections.listOf> declared in kotlin.collections' type=kotlin.collections.List<java.lang.Class<out kotlin.Any>> origin=null
+              TYPE_ARG T: java.lang.Class<out kotlin.Any>
+              ARG elements: VARARG type=kotlin.Array<out java.lang.Class<out kotlin.Any>> varargElementType=java.lang.Class<out kotlin.Any>
+                CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Player> origin=GET_PROPERTY
+                  TYPE_ARG T: io.github.expo.modules.v2.testdata.Player
+                  ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Player>
+                CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Speaker> origin=GET_PROPERTY
+                  TYPE_ARG T: io.github.expo.modules.v2.testdata.Speaker
+                  ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Speaker modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Speaker>
+                CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Players> origin=GET_PROPERTY
+                  TYPE_ARG T: io.github.expo.modules.v2.testdata.Players
+                  ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Players modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Players>
+        WHILE label=null origin=FOR_LOOP_INNER_WHILE
+          condition: CALL 'public abstract fun hasNext (): kotlin.Boolean declared in kotlin.collections.Iterator' type=kotlin.Boolean origin=FOR_LOOP_HAS_NEXT
+            ARG <this>: GET_VAR 'val tmp_0: kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> origin=null
+          body: BLOCK type=kotlin.Unit origin=FOR_LOOP_INNER_WHILE
+            VAR FOR_LOOP_VARIABLE name:owner type:java.lang.Class<out kotlin.Any> [val]
+              CALL 'public abstract fun next (): T of kotlin.collections.Iterator declared in kotlin.collections.Iterator' type=java.lang.Class<out kotlin.Any> origin=FOR_LOOP_NEXT
+                ARG <this>: GET_VAR 'val tmp_0: kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> origin=null
+            BLOCK type=kotlin.Unit origin=null
+              WHEN type=kotlin.Unit origin=IF
+                BRANCH
+                  if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                    ARG arg0: CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+                      ARG owner: GET_VAR 'val owner: java.lang.Class<out kotlin.Any> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out kotlin.Any> origin=null
+                      ARG name: CONST String type=kotlin.String value="define$ExpoModulesV2"
+                    ARG arg1: CONST String type=kotlin.String value="<absent>"
+                  then: BLOCK type=kotlin.Unit origin=null
+                    RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+                      STRING_CONCATENATION type=kotlin.String
+                        CALL 'public open fun getSimpleName (): @[FlexibleNullability] kotlin.String? declared in java.lang.Class' type=@[FlexibleNullability] kotlin.String? origin=GET_PROPERTY
+                          ARG <this>: GET_VAR 'val owner: java.lang.Class<out kotlin.Any> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out kotlin.Any> origin=null
+                        CONST String type=kotlin.String value=": no generated define$ExpoModulesV2"
+      VAR name:expected type:kotlin.collections.Map<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> [val]
+        CALL 'public final fun mapOf <K, V> (vararg pairs: kotlin.Pair<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf>): kotlin.collections.Map<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf> declared in kotlin.collections' type=kotlin.collections.Map<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+          TYPE_ARG K: java.lang.Class<out kotlin.Any>
+          TYPE_ARG V: kotlin.collections.Map<kotlin.String, kotlin.String>
+          ARG pairs: VARARG type=kotlin.Array<out kotlin.Pair<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> varargElementType=kotlin.Pair<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>
+            CALL 'public final fun to <A, B> (<this>: A of kotlin.to, that: B of kotlin.to): kotlin.Pair<A of kotlin.to, B of kotlin.to> declared in kotlin' type=kotlin.Pair<java.lang.Class<io.github.expo.modules.v2.testdata.Players>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+              TYPE_ARG A: java.lang.Class<io.github.expo.modules.v2.testdata.Players>
+              TYPE_ARG B: kotlin.collections.Map<kotlin.String, kotlin.String>
+              ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Players> origin=GET_PROPERTY
+                TYPE_ARG T: io.github.expo.modules.v2.testdata.Players
+                ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Players modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Players>
+              ARG that: CALL 'public final fun mapOf <K, V> (vararg pairs: kotlin.Pair<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf>): kotlin.collections.Map<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf> declared in kotlin.collections' type=kotlin.collections.Map<kotlin.String, kotlin.String> origin=null
+                TYPE_ARG K: kotlin.String
+                TYPE_ARG V: kotlin.String
+                ARG pairs: VARARG type=kotlin.Array<out kotlin.Pair<kotlin.String, kotlin.String>> varargElementType=kotlin.Pair<kotlin.String, kotlin.String>
+                  CALL 'public final fun to <A, B> (<this>: A of kotlin.to, that: B of kotlin.to): kotlin.Pair<A of kotlin.to, B of kotlin.to> declared in kotlin' type=kotlin.Pair<kotlin.String, kotlin.String> origin=null
+                    TYPE_ARG A: kotlin.String
+                    TYPE_ARG B: kotlin.String
+                    ARG <this>: STRING_CONCATENATION type=kotlin.String
+                      CONST String type=kotlin.String value="volumeOf"
+                      GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                    ARG that: CONST String type=kotlin.String value="<absent>"
+                  CALL 'public final fun to <A, B> (<this>: A of kotlin.to, that: B of kotlin.to): kotlin.Pair<A of kotlin.to, B of kotlin.to> declared in kotlin' type=kotlin.Pair<kotlin.String, kotlin.String> origin=null
+                    TYPE_ARG A: kotlin.String
+                    TYPE_ARG B: kotlin.String
+                    ARG <this>: STRING_CONCATENATION type=kotlin.String
+                      CONST String type=kotlin.String value="maybe"
+                      GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                    ARG that: CONST String type=kotlin.String value="<absent>"
+                  CALL 'public final fun to <A, B> (<this>: A of kotlin.to, that: B of kotlin.to): kotlin.Pair<A of kotlin.to, B of kotlin.to> declared in kotlin' type=kotlin.Pair<kotlin.String, kotlin.String> origin=null
+                    TYPE_ARG A: kotlin.String
+                    TYPE_ARG B: kotlin.String
+                    ARG <this>: STRING_CONCATENATION type=kotlin.String
+                      CONST String type=kotlin.String value="create"
+                      GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                    ARG that: CONST String type=kotlin.String value="<absent>"
+            CALL 'public final fun to <A, B> (<this>: A of kotlin.to, that: B of kotlin.to): kotlin.Pair<A of kotlin.to, B of kotlin.to> declared in kotlin' type=kotlin.Pair<java.lang.Class<io.github.expo.modules.v2.testdata.Player>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+              TYPE_ARG A: java.lang.Class<io.github.expo.modules.v2.testdata.Player>
+              TYPE_ARG B: kotlin.collections.Map<kotlin.String, kotlin.String>
+              ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Player> origin=GET_PROPERTY
+                TYPE_ARG T: io.github.expo.modules.v2.testdata.Player
+                ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Player>
+              ARG that: CALL 'public final fun mapOf <K, V> (vararg pairs: kotlin.Pair<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf>): kotlin.collections.Map<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf> declared in kotlin.collections' type=kotlin.collections.Map<kotlin.String, kotlin.String> origin=null
+                TYPE_ARG K: kotlin.String
+                TYPE_ARG V: kotlin.String
+                ARG pairs: VARARG type=kotlin.Array<out kotlin.Pair<kotlin.String, kotlin.String>> varargElementType=kotlin.Pair<kotlin.String, kotlin.String>
+                  CALL 'public final fun to <A, B> (<this>: A of kotlin.to, that: B of kotlin.to): kotlin.Pair<A of kotlin.to, B of kotlin.to> declared in kotlin' type=kotlin.Pair<kotlin.String, kotlin.String> origin=null
+                    TYPE_ARG A: kotlin.String
+                    TYPE_ARG B: kotlin.String
+                    ARG <this>: STRING_CONCATENATION type=kotlin.String
+                      CONST String type=kotlin.String value="rename"
+                      GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                    ARG that: CONST String type=kotlin.String value="(I)Ljava/lang/String;"
+                  CALL 'public final fun to <A, B> (<this>: A of kotlin.to, that: B of kotlin.to): kotlin.Pair<A of kotlin.to, B of kotlin.to> declared in kotlin' type=kotlin.Pair<kotlin.String, kotlin.String> origin=null
+                    TYPE_ARG A: kotlin.String
+                    TYPE_ARG B: kotlin.String
+                    ARG <this>: STRING_CONCATENATION type=kotlin.String
+                      CONST String type=kotlin.String value="play"
+                      GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                    ARG that: CONST String type=kotlin.String value="<absent>"
+      BLOCK type=kotlin.Unit origin=FOR_LOOP
+        VAR FOR_LOOP_ITERATOR name:tmp_1 type:kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> [val]
+          CALL 'public final fun iterator <K, V> (<this>: kotlin.collections.Map<out K of kotlin.collections.iterator, V of kotlin.collections.iterator>): kotlin.collections.Iterator<kotlin.collections.Map.Entry<K of kotlin.collections.iterator, V of kotlin.collections.iterator>> declared in kotlin.collections' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> origin=FOR_LOOP_ITERATOR
+            TYPE_ARG K: java.lang.Class<out kotlin.Any>
+            TYPE_ARG V: kotlin.collections.Map<kotlin.String, kotlin.String>
+            ARG <this>: GET_VAR 'val expected: kotlin.collections.Map<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+        WHILE label=null origin=FOR_LOOP_INNER_WHILE
+          condition: CALL 'public abstract fun hasNext (): kotlin.Boolean declared in kotlin.collections.Iterator' type=kotlin.Boolean origin=FOR_LOOP_HAS_NEXT
+            ARG <this>: GET_VAR 'val tmp_1: kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> origin=null
+          body: BLOCK type=kotlin.Unit origin=FOR_LOOP_INNER_WHILE
+            VAR IR_TEMPORARY_VARIABLE name:tmp_2 type:kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> [val]
+              CALL 'public abstract fun next (): T of kotlin.collections.Iterator declared in kotlin.collections.Iterator' type=kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=FOR_LOOP_NEXT
+                ARG <this>: GET_VAR 'val tmp_1: kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> origin=null
+            VAR name:owner type:java.lang.Class<out kotlin.Any> [val]
+              CALL 'public final fun component1 <K, V> (<this>: kotlin.collections.Map.Entry<K of kotlin.collections.component1, V of kotlin.collections.component1>): K of kotlin.collections.component1 declared in kotlin.collections' type=java.lang.Class<out kotlin.Any> origin=COMPONENT_N(index=1)
+                TYPE_ARG K: java.lang.Class<out kotlin.Any>
+                TYPE_ARG V: kotlin.collections.Map<kotlin.String, kotlin.String>
+                ARG <this>: GET_VAR 'val tmp_2: kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+            VAR name:methods type:kotlin.collections.Map<kotlin.String, kotlin.String> [val]
+              CALL 'public final fun component2 <K, V> (<this>: kotlin.collections.Map.Entry<K of kotlin.collections.component2, V of kotlin.collections.component2>): V of kotlin.collections.component2 declared in kotlin.collections' type=kotlin.collections.Map<kotlin.String, kotlin.String> origin=COMPONENT_N(index=2)
+                TYPE_ARG K: java.lang.Class<out kotlin.Any>
+                TYPE_ARG V: kotlin.collections.Map<kotlin.String, kotlin.String>
+                ARG <this>: GET_VAR 'val tmp_2: kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+            BLOCK type=kotlin.Unit origin=null
+              BLOCK type=kotlin.Unit origin=FOR_LOOP
+                VAR FOR_LOOP_ITERATOR name:tmp_3 type:kotlin.collections.Iterator<kotlin.collections.Map.Entry<kotlin.String, kotlin.String>> [val]
+                  CALL 'public final fun iterator <K, V> (<this>: kotlin.collections.Map<out K of kotlin.collections.iterator, V of kotlin.collections.iterator>): kotlin.collections.Iterator<kotlin.collections.Map.Entry<K of kotlin.collections.iterator, V of kotlin.collections.iterator>> declared in kotlin.collections' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<kotlin.String, kotlin.String>> origin=FOR_LOOP_ITERATOR
+                    TYPE_ARG K: kotlin.String
+                    TYPE_ARG V: kotlin.String
+                    ARG <this>: GET_VAR 'val methods: kotlin.collections.Map<kotlin.String, kotlin.String> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<kotlin.String, kotlin.String> origin=null
+                WHILE label=null origin=FOR_LOOP_INNER_WHILE
+                  condition: CALL 'public abstract fun hasNext (): kotlin.Boolean declared in kotlin.collections.Iterator' type=kotlin.Boolean origin=FOR_LOOP_HAS_NEXT
+                    ARG <this>: GET_VAR 'val tmp_3: kotlin.collections.Iterator<kotlin.collections.Map.Entry<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<kotlin.String, kotlin.String>> origin=null
+                  body: BLOCK type=kotlin.Unit origin=FOR_LOOP_INNER_WHILE
+                    VAR IR_TEMPORARY_VARIABLE name:tmp_4 type:kotlin.collections.Map.Entry<kotlin.String, kotlin.String> [val]
+                      CALL 'public abstract fun next (): T of kotlin.collections.Iterator declared in kotlin.collections.Iterator' type=kotlin.collections.Map.Entry<kotlin.String, kotlin.String> origin=FOR_LOOP_NEXT
+                        ARG <this>: GET_VAR 'val tmp_3: kotlin.collections.Iterator<kotlin.collections.Map.Entry<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<kotlin.String, kotlin.String>> origin=null
+                    VAR name:name type:kotlin.String [val]
+                      CALL 'public final fun component1 <K, V> (<this>: kotlin.collections.Map.Entry<K of kotlin.collections.component1, V of kotlin.collections.component1>): K of kotlin.collections.component1 declared in kotlin.collections' type=kotlin.String origin=COMPONENT_N(index=1)
+                        TYPE_ARG K: kotlin.String
+                        TYPE_ARG V: kotlin.String
+                        ARG <this>: GET_VAR 'val tmp_4: kotlin.collections.Map.Entry<kotlin.String, kotlin.String> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map.Entry<kotlin.String, kotlin.String> origin=null
+                    VAR name:want type:kotlin.String [val]
+                      CALL 'public final fun component2 <K, V> (<this>: kotlin.collections.Map.Entry<K of kotlin.collections.component2, V of kotlin.collections.component2>): V of kotlin.collections.component2 declared in kotlin.collections' type=kotlin.String origin=COMPONENT_N(index=2)
+                        TYPE_ARG K: kotlin.String
+                        TYPE_ARG V: kotlin.String
+                        ARG <this>: GET_VAR 'val tmp_4: kotlin.collections.Map.Entry<kotlin.String, kotlin.String> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map.Entry<kotlin.String, kotlin.String> origin=null
+                    BLOCK type=kotlin.Unit origin=null
+                      VAR name:got type:kotlin.String [val]
+                        CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+                          ARG owner: GET_VAR 'val owner: java.lang.Class<out kotlin.Any> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out kotlin.Any> origin=null
+                          ARG name: GET_VAR 'val name: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                      WHEN type=kotlin.Unit origin=IF
+                        BRANCH
+                          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+                            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                              ARG arg0: GET_VAR 'val got: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                              ARG arg1: GET_VAR 'val want: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+                            STRING_CONCATENATION type=kotlin.String
+                              CALL 'public open fun getSimpleName (): @[FlexibleNullability] kotlin.String? declared in java.lang.Class' type=@[FlexibleNullability] kotlin.String? origin=GET_PROPERTY
+                                ARG <this>: GET_VAR 'val owner: java.lang.Class<out kotlin.Any> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out kotlin.Any> origin=null
+                              CONST String type=kotlin.String value="."
+                              GET_VAR 'val name: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                              CONST String type=kotlin.String value=": expected "
+                              GET_VAR 'val want: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                              CONST String type=kotlin.String value=", got "
+                              GET_VAR 'val got: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+      BLOCK type=kotlin.Unit origin=FOR_LOOP
+        VAR FOR_LOOP_ITERATOR name:tmp_5 type:kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>> [val]
+          CALL 'public abstract fun iterator (): kotlin.collections.Iterator<E of kotlin.collections.List> declared in kotlin.collections.List' type=kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>> origin=FOR_LOOP_ITERATOR
+            ARG <this>: CALL 'public final fun listOf <T> (vararg elements: T of kotlin.collections.listOf): kotlin.collections.List<T of kotlin.collections.listOf> declared in kotlin.collections' type=kotlin.collections.List<java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>> origin=null
+              TYPE_ARG T: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>
+              ARG elements: VARARG type=kotlin.Array<out java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>> varargElementType=java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>
+                CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Listed> origin=GET_PROPERTY
+                  TYPE_ARG T: io.github.expo.modules.v2.testdata.Listed
+                  ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Listed modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Listed>
+                CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Owner.Nested> origin=GET_PROPERTY
+                  TYPE_ARG T: io.github.expo.modules.v2.testdata.Owner.Nested
+                  ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Owner.Nested>
+                CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Owner.NotConstructable> origin=GET_PROPERTY
+                  TYPE_ARG T: io.github.expo.modules.v2.testdata.Owner.NotConstructable
+                  ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:NotConstructable modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.sharedobjects.SharedObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Owner.NotConstructable>
+        WHILE label=null origin=FOR_LOOP_INNER_WHILE
+          condition: CALL 'public abstract fun hasNext (): kotlin.Boolean declared in kotlin.collections.Iterator' type=kotlin.Boolean origin=FOR_LOOP_HAS_NEXT
+            ARG <this>: GET_VAR 'val tmp_5: kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>> origin=null
+          body: BLOCK type=kotlin.Unit origin=FOR_LOOP_INNER_WHILE
+            VAR FOR_LOOP_VARIABLE name:owner type:java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject> [val]
+              CALL 'public abstract fun next (): T of kotlin.collections.Iterator declared in kotlin.collections.Iterator' type=java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject> origin=FOR_LOOP_NEXT
+                ARG <this>: GET_VAR 'val tmp_5: kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject>> origin=null
+            BLOCK type=kotlin.Unit origin=null
+              WHEN type=kotlin.Unit origin=IF
+                BRANCH
+                  if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                    ARG arg0: CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+                      ARG owner: GET_VAR 'val owner: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject> origin=null
+                      ARG name: CONST String type=kotlin.String value="define$ExpoModulesV2"
+                    ARG arg1: CONST String type=kotlin.String value="<absent>"
+                  then: BLOCK type=kotlin.Unit origin=null
+                    RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+                      STRING_CONCATENATION type=kotlin.String
+                        CALL 'public open fun getSimpleName (): @[FlexibleNullability] kotlin.String? declared in java.lang.Class' type=@[FlexibleNullability] kotlin.String? origin=GET_PROPERTY
+                          ARG <this>: GET_VAR 'val owner: java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out io.github.expo.modules.v2.sharedobjects.SharedObject> origin=null
+                        CONST String type=kotlin.String value=": no generated define$ExpoModulesV2"
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+                ARG owner: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Players> origin=GET_PROPERTY
+                  TYPE_ARG T: io.github.expo.modules.v2.testdata.Players
+                  ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Players modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Players>
+                ARG name: CONST String type=kotlin.String value="volumeOf"
+              ARG arg1: STRING_CONCATENATION type=kotlin.String
+                CONST String type=kotlin.String value="("
+                GET_VAR 'val player: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                CONST String type=kotlin.String value=")D"
+          then: BLOCK type=kotlin.Unit origin=null
+            RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+              STRING_CONCATENATION type=kotlin.String
+                CONST String type=kotlin.String value="volumeOf: "
+                CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+                  ARG owner: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Players> origin=GET_PROPERTY
+                    TYPE_ARG T: io.github.expo.modules.v2.testdata.Players
+                    ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Players modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Players>
+                  ARG name: CONST String type=kotlin.String value="volumeOf"
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+                ARG owner: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Players> origin=GET_PROPERTY
+                  TYPE_ARG T: io.github.expo.modules.v2.testdata.Players
+                  ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Players modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Players>
+                ARG name: CONST String type=kotlin.String value="create"
+              ARG arg1: STRING_CONCATENATION type=kotlin.String
+                CONST String type=kotlin.String value="()"
+                GET_VAR 'val player: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+          then: BLOCK type=kotlin.Unit origin=null
+            RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+              STRING_CONCATENATION type=kotlin.String
+                CONST String type=kotlin.String value="create: "
+                CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+                  ARG owner: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Players> origin=GET_PROPERTY
+                    TYPE_ARG T: io.github.expo.modules.v2.testdata.Players
+                    ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Players modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Players>
+                  ARG name: CONST String type=kotlin.String value="create"
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+        CONST String type=kotlin.String value="OK"
+  FUN name:descriptor visibility:private modality:FINAL returnType:kotlin.String
+    VALUE_PARAMETER kind:Regular name:type index:0 type:java.lang.Class<*>
+    BLOCK_BODY
+      RETURN type=kotlin.Nothing from='private final fun descriptor (type: java.lang.Class<*>): kotlin.String declared in io.github.expo.modules.v2.testdata'
+        WHEN type=kotlin.String origin=WHEN
+          BRANCH
+            if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+              ARG arg0: GET_VAR 'type: java.lang.Class<*> declared in io.github.expo.modules.v2.testdata.descriptor' type=java.lang.Class<*> origin=null
+              ARG arg1: CALL 'public final fun <get-javaPrimitiveType> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-javaPrimitiveType>>): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
+                TYPE_ARG T: kotlin.Int
+                ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Int modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Int>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Int>
+            then: CONST String type=kotlin.String value="I"
+          BRANCH
+            if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+              ARG arg0: GET_VAR 'type: java.lang.Class<*> declared in io.github.expo.modules.v2.testdata.descriptor' type=java.lang.Class<*> origin=null
+              ARG arg1: CALL 'public final fun <get-javaPrimitiveType> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-javaPrimitiveType>>): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Double>? origin=GET_PROPERTY
+                TYPE_ARG T: kotlin.Double
+                ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Double modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Double>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Double>
+            then: CONST String type=kotlin.String value="D"
+          BRANCH
+            if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+              ARG arg0: GET_VAR 'type: java.lang.Class<*> declared in io.github.expo.modules.v2.testdata.descriptor' type=java.lang.Class<*> origin=null
+              ARG arg1: GET_FIELD 'FIELD IR_EXTERNAL_JAVA_DECLARATION_STUB name:TYPE type:@[FlexibleNullability] java.lang.Class<@[FlexibleNullability] java.lang.Void?>? visibility:public [final,static] declared in java.lang.Void' type=@[FlexibleNullability] java.lang.Class<@[FlexibleNullability] java.lang.Void?>? superQualifierSymbol=java.lang.Void origin=null
+            then: CONST String type=kotlin.String value="V"
+          BRANCH
+            if: CALL 'public open fun isArray (): kotlin.Boolean declared in java.lang.Class' type=kotlin.Boolean origin=GET_PROPERTY
+              ARG <this>: GET_VAR 'type: java.lang.Class<*> declared in io.github.expo.modules.v2.testdata.descriptor' type=java.lang.Class<*> origin=null
+            then: CALL 'public final fun plus (other: kotlin.Any?): kotlin.String declared in kotlin.String' type=kotlin.String origin=PLUS
+              ARG <this>: CONST String type=kotlin.String value="["
+              ARG other: CALL 'private final fun descriptor (type: java.lang.Class<*>): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+                ARG type: TYPE_OP type=java.lang.Class<*> origin=IMPLICIT_NOTNULL typeOperand=java.lang.Class<*>
+                  CALL 'public open fun getComponentType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
+                    ARG <this>: GET_VAR 'type: java.lang.Class<*> declared in io.github.expo.modules.v2.testdata.descriptor' type=java.lang.Class<*> origin=null
+          BRANCH
+            if: CONST Boolean type=kotlin.Boolean value=true
+            then: CALL 'public final fun plus (other: kotlin.Any?): kotlin.String declared in kotlin.String' type=kotlin.String origin=PLUS
+              ARG <this>: CALL 'public final fun plus (other: kotlin.Any?): kotlin.String declared in kotlin.String' type=kotlin.String origin=PLUS
+                ARG <this>: CONST String type=kotlin.String value="L"
+                ARG other: CALL 'public final fun replace (<this>: kotlin.String, oldChar: kotlin.Char, newChar: kotlin.Char, ignoreCase: kotlin.Boolean): kotlin.String declared in kotlin.text' type=kotlin.String origin=null
+                  ARG <this>: TYPE_OP type=kotlin.String origin=IMPLICIT_NOTNULL typeOperand=kotlin.String
+                    CALL 'public open fun getName (): @[FlexibleNullability] kotlin.String? declared in java.lang.Class' type=@[FlexibleNullability] kotlin.String? origin=GET_PROPERTY
+                      ARG <this>: GET_VAR 'type: java.lang.Class<*> declared in io.github.expo.modules.v2.testdata.descriptor' type=java.lang.Class<*> origin=null
+                  ARG oldChar: CONST Char type=kotlin.Char value='.'
+                  ARG newChar: CONST Char type=kotlin.Char value='/'
+              ARG other: CONST String type=kotlin.String value=";"
+  FUN name:descriptorOf visibility:private modality:FINAL returnType:kotlin.String
+    VALUE_PARAMETER kind:Regular name:owner index:0 type:java.lang.Class<*>
+    VALUE_PARAMETER kind:Regular name:name index:1 type:kotlin.String
+    BLOCK_BODY
+      VAR name:method type:java.lang.reflect.Method [val]
+        BLOCK type=java.lang.reflect.Method origin=ELVIS
+          VAR IR_TEMPORARY_VARIABLE name:tmp_6 type:java.lang.reflect.Method? [val]
+            CALL 'public final fun firstOrNull <T> (<this>: kotlin.Array<out T of kotlin.collections.firstOrNull>, predicate: kotlin.Function1<T of kotlin.collections.firstOrNull, kotlin.Boolean>): T of kotlin.collections.firstOrNull? declared in kotlin.collections' type=java.lang.reflect.Method? origin=null
+              TYPE_ARG T: @[FlexibleNullability] java.lang.reflect.Method?
+              ARG <this>: TYPE_OP type=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?> origin=IMPLICIT_NOTNULL typeOperand=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>
+                CALL 'public open fun getDeclaredMethods (): @[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>? declared in java.lang.Class' type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>? origin=GET_PROPERTY
+                  ARG <this>: GET_VAR 'owner: java.lang.Class<*> declared in io.github.expo.modules.v2.testdata.descriptorOf' type=java.lang.Class<*> origin=null
+              ARG predicate: FUN_EXPR type=kotlin.Function1<@[FlexibleNullability] java.lang.reflect.Method?, kotlin.Boolean> origin=LAMBDA
+                FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Boolean
+                  VALUE_PARAMETER kind:Regular name:it index:0 type:@[FlexibleNullability] java.lang.reflect.Method?
+                  BLOCK_BODY
+                    RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: @[FlexibleNullability] java.lang.reflect.Method?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.descriptorOf'
+                      CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                        ARG arg0: CALL 'public open fun getName (): @[FlexibleNullability] kotlin.String? declared in java.lang.reflect.Method' type=@[FlexibleNullability] kotlin.String? origin=GET_PROPERTY
+                          ARG <this>: GET_VAR 'it: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.descriptorOf.<anonymous>' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
+                        ARG arg1: GET_VAR 'name: kotlin.String declared in io.github.expo.modules.v2.testdata.descriptorOf' type=kotlin.String origin=null
+          WHEN type=java.lang.reflect.Method origin=null
+            BRANCH
+              if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                ARG arg0: GET_VAR 'val tmp_6: java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.descriptorOf' type=java.lang.reflect.Method? origin=null
+                ARG arg1: CONST Null type=kotlin.Nothing? value=null
+              then: RETURN type=kotlin.Nothing from='private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata'
+                CONST String type=kotlin.String value="<absent>"
+            BRANCH
+              if: CONST Boolean type=kotlin.Boolean value=true
+              then: GET_VAR 'val tmp_6: java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.descriptorOf' type=java.lang.reflect.Method? origin=null
+      VAR name:parameters type:kotlin.String [val]
+        CALL 'public final fun joinToString <T> (<this>: kotlin.Array<out T of kotlin.collections.joinToString>, separator: kotlin.CharSequence, prefix: kotlin.CharSequence, postfix: kotlin.CharSequence, limit: kotlin.Int, truncated: kotlin.CharSequence, transform: kotlin.Function1<T of kotlin.collections.joinToString, kotlin.CharSequence>?): kotlin.String declared in kotlin.collections' type=kotlin.String origin=null
+          TYPE_ARG T: @[FlexibleNullability] java.lang.Class<*>?
+          ARG <this>: TYPE_OP type=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?> origin=IMPLICIT_NOTNULL typeOperand=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>
+            CALL 'public open fun getParameterTypes (): @[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? origin=GET_PROPERTY
+              ARG <this>: GET_VAR 'val method: java.lang.reflect.Method declared in io.github.expo.modules.v2.testdata.descriptorOf' type=java.lang.reflect.Method origin=null
+          ARG separator: CONST String type=kotlin.String value=""
+          ARG transform: FUN_EXPR type=kotlin.Function1<@[FlexibleNullability] java.lang.Class<*>?, kotlin.CharSequence> origin=LAMBDA
+            FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.CharSequence
+              VALUE_PARAMETER kind:Regular name:it index:0 type:@[FlexibleNullability] java.lang.Class<*>?
+              BLOCK_BODY
+                RETURN type=kotlin.Nothing from='local final fun <anonymous> (it: @[FlexibleNullability] java.lang.Class<*>?): kotlin.CharSequence declared in io.github.expo.modules.v2.testdata.descriptorOf'
+                  CALL 'private final fun descriptor (type: java.lang.Class<*>): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+                    ARG type: TYPE_OP type=java.lang.Class<*> origin=IMPLICIT_NOTNULL typeOperand=java.lang.Class<*>
+                      GET_VAR 'it: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.descriptorOf.<anonymous>' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+      RETURN type=kotlin.Nothing from='private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata'
+        STRING_CONCATENATION type=kotlin.String
+          CONST String type=kotlin.String value="("
+          GET_VAR 'val parameters: kotlin.String declared in io.github.expo.modules.v2.testdata.descriptorOf' type=kotlin.String origin=null
+          CONST String type=kotlin.String value=")"
+          CALL 'private final fun descriptor (type: java.lang.Class<*>): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
+            ARG type: TYPE_OP type=java.lang.Class<*> origin=IMPLICIT_NOTNULL typeOperand=java.lang.Class<*>
+              CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'val method: java.lang.reflect.Method declared in io.github.expo.modules.v2.testdata.descriptorOf' type=java.lang.reflect.Method origin=null
