@@ -15,11 +15,11 @@ namespace expo::modules::v2::decoders {
     const bool async = (flags & descriptor::kFunctionFlagAsync) != 0;
 
     const size_t argsCount = reader.readCount();
-    if (argsCount > descriptor::HostFunctionSpec::kMaxArgs) {
+    if (argsCount > descriptor::FunctionSpec::kMaxArgs) {
       throw std::invalid_argument(
         "Function " + name + " declares " + std::to_string(argsCount) +
         " arguments; at most " +
-        std::to_string(descriptor::HostFunctionSpec::kMaxArgs) + " are supported"
+        std::to_string(descriptor::FunctionSpec::kMaxArgs) + " are supported"
       );
     }
     std::vector<ExpectedType> argTypes;
@@ -30,12 +30,14 @@ namespace expo::modules::v2::decoders {
 
     ExpectedType returnType = decodeExpectedType(reader, /* allowBufferedHead */ true);
 
-    return {
-      .name = std::move(name),
-      .methodName = std::move(methodName),
-      .argTypes = std::move(argTypes),
-      .returnType = std::move(returnType),
-      .async = async,
+    return descriptor::HostFunctionSpec{
+      descriptor::FunctionSpec{
+        .name = std::move(name),
+        .methodName = std::move(methodName),
+        .argTypes = std::move(argTypes),
+        .returnType = std::move(returnType),
+        .async = async,
+      },
     };
   }
 

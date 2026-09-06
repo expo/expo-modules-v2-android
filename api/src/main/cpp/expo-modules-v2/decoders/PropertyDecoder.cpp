@@ -21,18 +21,22 @@ namespace expo::modules::v2::decoders {
       std::vector<ExpectedType> argTypes;
       argTypes.push_back(decodeExpectedType(reader, /* allowBufferedHead */ true));
       setter = descriptor::HostFunctionSpec{
-        .name = "set " + name,
-        .methodName = std::move(setterName),
-        .argTypes = std::move(argTypes),
-        .returnType = ExpectedType(LeafType::UNIT),
+        descriptor::FunctionSpec{
+          .name = "set " + name,
+          .methodName = std::move(setterName),
+          .argTypes = std::move(argTypes),
+          .returnType = ExpectedType(LeafType::UNIT),
+        },
       };
     }
 
     descriptor::HostFunctionSpec getter{
-      .name = "get " + name,
-      .methodName = std::move(getterName),
-      .argTypes = {},
-      .returnType = std::move(getterType),
+      descriptor::FunctionSpec{
+        .name = "get " + name,
+        .methodName = std::move(getterName),
+        .argTypes = {},
+        .returnType = std::move(getterType),
+      },
     };
 
     return {

@@ -17,7 +17,7 @@ object JSDiagnostics {
   val JS_ON_UNSUPPORTED_DECLARATION by error1<KtClassLikeDeclaration, String>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
-  val JS_CLASS_IS_NOT_A_MODULE by error0<KtClassLikeDeclaration>(
+  val JS_CLASS_IS_NOT_EXPORTABLE by error0<KtClassLikeDeclaration>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
   val JS_CLASS_WITH_TYPE_PARAMETERS by error0<KtClassLikeDeclaration>(
@@ -35,6 +35,15 @@ object JSDiagnostics {
   val JS_DUPLICATE_EXPORT_NAME by error1<KtDeclaration, String>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
+  val JS_CONSTRUCTOR_ON_NON_SHARED_OBJECT by error0<KtDeclaration>(
+    SourceElementPositioningStrategies.DECLARATION_NAME,
+  )
+  val JS_DUPLICATE_CONSTRUCTOR by error0<KtDeclaration>(
+    SourceElementPositioningStrategies.DECLARATION_NAME,
+  )
+  val JS_UNEXPOSABLE_CLASS by error1<KtClassLikeDeclaration, String>(
+    SourceElementPositioningStrategies.DECLARATION_NAME,
+  )
 
   init {
     RootDiagnosticRendererFactory.registerFactory(JSDiagnosticMessages)
@@ -49,13 +58,14 @@ object JSDiagnosticMessages : BaseDiagnosticRendererFactory() {
       CommonRenderers.STRING,
     )
     put(
-      JSDiagnostics.JS_CLASS_IS_NOT_A_MODULE,
-      "A @JS class must extend io.github.expo.modules.v2.modules.Module - that is what the registry " +
-        "registers and what the bridge invokes methods on",
+      JSDiagnostics.JS_CLASS_IS_NOT_EXPORTABLE,
+      "A @JS class must extend io.github.expo.modules.v2.modules.Module or " +
+        "io.github.expo.modules.v2.sharedobjects.SharedObject - those are the two receivers the " +
+        "bridge knows how to invoke methods on",
     )
     put(
       JSDiagnostics.JS_CLASS_WITH_TYPE_PARAMETERS,
-      "@JS cannot be used on a generic class - a module is registered as one instance under one " +
+      "@JS cannot be used on a generic class - an exported class is described once under one " +
         "name, and JavaScript has no way to name a type argument",
     )
     put(
@@ -73,8 +83,23 @@ object JSDiagnosticMessages : BaseDiagnosticRendererFactory() {
       CommonRenderers.STRING,
     )
     put(
+      JSDiagnostics.JS_CONSTRUCTOR_ON_NON_SHARED_OBJECT,
+      "@JS on a constructor only means something on a SharedObject - a module is registered, never " +
+        "constructed from JavaScript",
+    )
+    put(
+      JSDiagnostics.JS_DUPLICATE_CONSTRUCTOR,
+      "A shared object can expose only one constructor to JavaScript - annotate just the one `new` " +
+        "should call",
+    )
+    put(
+      JSDiagnostics.JS_UNEXPOSABLE_CLASS,
+      "@JS(classes = [...]) cannot expose ''{0}''",
+      CommonRenderers.STRING,
+    )
+    put(
       JSDiagnostics.JS_DUPLICATE_EXPORT_NAME,
-      "Two exports of this module are both named ''{0}'' in JavaScript - rename one, or give it a " +
+      "Two exports of this class are both named ''{0}'' in JavaScript - rename one, or give it a " +
         "different @JS(name = \"...\")",
       CommonRenderers.STRING,
     )

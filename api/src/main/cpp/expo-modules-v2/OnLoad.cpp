@@ -1,6 +1,8 @@
 #include <jni.h>
 
 #include <expo-modules-v2/jni/JAsyncContext.h>
+#include <expo-modules-v2/jni/JModuleRegistry.h>
+#include <expo-modules-v2/jni/JSharedObjectRegistry.h>
 #include <expo-modules-v2/jsi/AttachedRuntime.h>
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>

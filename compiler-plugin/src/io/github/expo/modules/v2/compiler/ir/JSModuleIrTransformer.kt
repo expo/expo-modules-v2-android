@@ -4,22 +4,31 @@ import io.github.expo.modules.v2.compiler.BufferChoice
 import io.github.expo.modules.v2.compiler.Identifiers
 import io.github.expo.modules.v2.compiler.JSModuleKey
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
+import org.jetbrains.kotlin.descriptors.DescriptorVisibilities
 import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.ir.IrElement
+import org.jetbrains.kotlin.ir.builders.declarations.addValueParameter
 import org.jetbrains.kotlin.ir.declarations.IrClass
+import org.jetbrains.kotlin.ir.declarations.IrConstructor
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.declarations.IrProperty
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
 import org.jetbrains.kotlin.ir.expressions.IrExpression
+import org.jetbrains.kotlin.ir.types.makeNullable
 import org.jetbrains.kotlin.ir.types.typeWith
+import org.jetbrains.kotlin.ir.util.constructors
 import org.jetbrains.kotlin.ir.util.defaultType
 import org.jetbrains.kotlin.ir.util.getAnnotation
+import org.jetbrains.kotlin.ir.util.hasAnnotation
+import org.jetbrains.kotlin.ir.util.isSubclassOf
 import org.jetbrains.kotlin.ir.util.kotlinFqName
 import org.jetbrains.kotlin.ir.util.patchDeclarationParents
+import org.jetbrains.kotlin.ir.util.primaryConstructor
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
+import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
 
 /**
@@ -31,7 +40,7 @@ class JSModuleIrTransformer(
   private val poet: TypeDescriptorPoet,
 ) : IrVisitorVoid() {
   private val irBuiltIns = context.irBuiltIns
-  private val policy = TransportPolicy(context)
+  private val policy = TransportPolicy(context, symbols)
   private val trampolines = TrampolinePoet(context, symbols, poet)
 
   private sealed interface Exported {
@@ -52,6 +61,15 @@ class JSModuleIrTransformer(
 
     override val needsTrampoline: Boolean
       get() = isAsync || (arguments + result).any { it.buffered || !it.passthrough }
+  }
+
+  private class ExportedSharedClass(
+    val jsName: String,
+    val sharedClass: IrClass,
+    val arguments: List<ValuePlan>,
+  ) {
+    val trampolineName: String
+      get() = Identifiers.Literals.CONSTRUCTOR_TRAMPOLINE
   }
 
   private class ExportedProperty(
@@ -85,7 +103,80 @@ class JSModuleIrTransformer(
       ?: moduleClass.name.asString()
 
     generateTrampolines(moduleClass, exports)
-    generateDefine(moduleClass, jsName, exports)
+    if (moduleClass.isSubclassOf(symbols.classes.sharedObject.owner)) {
+      generateConstructorTrampoline(moduleClass)
+    }
+    generateDefine(moduleClass, jsName, exports, sharedClassesOf(moduleClass, annotation))
+    if (moduleClass.isSubclassOf(symbols.classes.sharedObject.owner)) {
+      generateRegistration(moduleClass, jsName)
+    }
+  }
+
+  private fun sharedClassesOf(
+    moduleClass: IrClass,
+    annotation: IrConstructorCall,
+  ): List<ExportedSharedClass> {
+    if (!moduleClass.isSubclassOf(symbols.classes.module.owner)) {
+      // A shared-object class exports no classes of its own.
+      return emptyList()
+    }
+
+    val nested = moduleClass.declarations
+      .filterIsInstance<IrClass>()
+      .filter { it.isSubclassOf(symbols.classes.sharedObject.owner) }
+
+    val listed = annotation.classReferenceArgument(Identifiers.Names.ARG_CLASSES)
+
+    return (nested + listed)
+      .distinct()
+      .filter { it.hasAnnotation(Identifiers.FqNames.JS_ANNOTATION) }
+      .mapNotNull(::exportedSharedClassOf)
+  }
+
+  private fun exportedConstructorOf(sharedClass: IrClass): IrConstructor? =
+    sharedClass.constructors.firstOrNull { it.hasAnnotation(Identifiers.FqNames.JS_ANNOTATION) }
+
+  private fun constructorArgumentsOf(
+    sharedClass: IrClass,
+    constructor: IrConstructor,
+  ): List<ValuePlan> {
+    val classChoice = sharedClass
+      .getAnnotation(Identifiers.FqNames.JS_ANNOTATION)
+      .bufferChoice(Identifiers.Names.ARG_BUFFER)
+
+    return constructor.parameters
+      .filter { it.kind == IrParameterKind.Regular }
+      .map { parameter ->
+        val own = parameter
+          .getAnnotation(Identifiers.FqNames.JS_ANNOTATION)
+          .bufferChoice(Identifiers.Names.ARG_BUFFER)
+        policy.plan(parameter.type, own.orElse(classChoice), Crossing.INBOUND)
+      }
+  }
+
+  private fun exportedSharedClassOf(sharedClass: IrClass): ExportedSharedClass? {
+    val constructor = exportedConstructorOf(sharedClass) ?: return null
+    val annotation = sharedClass.getAnnotation(Identifiers.FqNames.JS_ANNOTATION)
+
+    return ExportedSharedClass(
+      jsName = annotation
+        .stringArgument(Identifiers.Names.ARG_NAME)
+        ?.takeIf { it.isNotEmpty() }
+        ?: sharedClass.name.asString(),
+      sharedClass = sharedClass,
+      arguments = constructorArgumentsOf(sharedClass, constructor),
+    )
+  }
+
+  private fun generateConstructorTrampoline(sharedClass: IrClass) {
+    val constructor = exportedConstructorOf(sharedClass) ?: return
+
+    trampolines.constructorTrampoline(
+      sharedClass = sharedClass,
+      name = Identifiers.Literals.CONSTRUCTOR_TRAMPOLINE,
+      constructor = constructor,
+      arguments = constructorArgumentsOf(sharedClass, constructor),
+    )
   }
 
   private fun generateTrampolines(moduleClass: IrClass, exported: List<Exported>) {
@@ -223,9 +314,18 @@ class JSModuleIrTransformer(
   }
 
   /**
-   * Creates `define$ExpoModulesV2`
+   * Creates `define$ExpoModulesV2`.
+   *
+   * A module overrides the one it inherits, because a module is always registered as an instance. A
+   * shared-object class gets a fresh receiverless function instead, which the JVM emits as a static:
+   * its description has to be readable before any instance of it exists, since a declared parameter
+   * type names the class long before one does.
    */
   private fun makeDefineFunction(moduleClass: IrClass): IrSimpleFunction {
+    if (moduleClass.isSubclassOf(symbols.classes.sharedObject.owner)) {
+      return makeStaticDefineFunction(moduleClass)
+    }
+
     val define = moduleClass
       .declarations
       .filterIsInstance<IrSimpleFunction>()
@@ -233,17 +333,104 @@ class JSModuleIrTransformer(
       ?: error(
         "@JS: ${
           "${moduleClass.kotlinFqName} has no inherited ${Identifiers.Literals.DEFINE_FUNCTION}; " +
-            "the frontend should have rejected a @JS class that is not a Module"
+            "the frontend should have rejected a @JS class that is neither a Module nor a SharedObject"
         }"
       )
 
     define.isFakeOverride = false
     define.origin = IrDeclarationOrigin.GeneratedByPlugin(JSModuleKey)
     define.modality = Modality.FINAL
+    // Whichever base declared the hook: a shared-object class overrides SharedObject's, not
+    // Module's, even though both take the same builder.
     define.overriddenSymbols = listOf(symbols.functions.define)
     define.parameters
       .single { it.kind == IrParameterKind.DispatchReceiver }
       .type = moduleClass.defaultType
+    return define
+  }
+
+  private fun generateRegistration(sharedClass: IrClass, jsName: String) {
+    val define = sharedClass
+      .declarations
+      .filterIsInstance<IrSimpleFunction>()
+      .firstOrNull { it.name == Identifiers.Names.DEFINE_FUNCTION }
+      ?: return
+
+    val register = sharedClass.addSyntheticFunction {
+      name = Name.identifier(Identifiers.Literals.REGISTER_FUNCTION)
+      returnType = irBuiltIns.intType
+      visibility = DescriptorVisibilities.PRIVATE
+      modality = Modality.FINAL
+      origin = IrDeclarationOrigin.GeneratedByPlugin(JSModuleKey)
+    }
+
+    val builder = buildSyntheticVariable(
+      parent = register,
+      origin = IrDeclarationOrigin.DEFINED,
+      name = Name.identifier(Identifiers.Literals.BUILDER_PARAMETER),
+      type = symbols.classes.moduleBuilder.owner.defaultType,
+    ).apply {
+      initializer = newInstance(
+        symbols.classes.moduleBuilder.owner.primaryConstructor!!.symbol,
+        arguments = emptyList(),
+        type = symbols.classes.moduleBuilder.owner.defaultType,
+      )
+    }
+
+    register.body = context.irFactory.createSyntheticBlockBody().apply {
+      statements += builder
+      // The describer's own return value is the JavaScript name, which this function already has.
+      statements += IrSyntheticCallImpl(irBuiltIns.stringType, define.symbol).apply {
+        arguments[0] = builder.get()
+      }
+      statements += IrSyntheticReturnImpl(
+        type = irBuiltIns.nothingType,
+        returnTargetSymbol = register.symbol,
+        value = callStatic(
+          symbols.functions.registerSharedClass,
+          symbols.classes.sharedObjectRegistry,
+          arguments = listOf(
+            poet.string(jsName),
+            poet.javaClass(sharedClass.defaultType),
+            builder.get(),
+          ),
+          returnType = irBuiltIns.intType,
+        ),
+      )
+    }
+    register.patchDeclarationParents(sharedClass)
+
+    val field = context.irFactory.buildSyntheticField {
+      name = Name.identifier(Identifiers.Literals.REGISTRATION_FIELD)
+      type = irBuiltIns.intType
+      visibility = DescriptorVisibilities.PRIVATE
+      isFinal = true
+      isStatic = true
+      origin = IrDeclarationOrigin.GeneratedByPlugin(JSModuleKey)
+    }.apply {
+      parent = sharedClass
+      initializer = context.irFactory.createSyntheticExpressionBody(
+        IrSyntheticCallImpl(irBuiltIns.intType, register.symbol),
+      )
+    }
+    sharedClass.declarations += field
+  }
+
+  private fun makeStaticDefineFunction(sharedClass: IrClass): IrSimpleFunction {
+    val define = sharedClass.addSyntheticFunction {
+      name = Identifiers.Names.DEFINE_FUNCTION
+      returnType = irBuiltIns.stringType.makeNullable()
+      // PUBLIC, never internal: the JVM mangles an internal name and the registry looks it up by
+      // the name the plugin chose.
+      visibility = DescriptorVisibilities.PUBLIC
+      modality = Modality.FINAL
+      origin = IrDeclarationOrigin.GeneratedByPlugin(JSModuleKey)
+    }
+    define.addValueParameter(
+      Name.identifier(Identifiers.Literals.BUILDER_PARAMETER),
+      symbols.classes.moduleBuilder.owner.defaultType,
+      IrDeclarationOrigin.DEFINED,
+    )
     return define
   }
 
@@ -256,7 +443,12 @@ class JSModuleIrTransformer(
    * }
    * ```
    */
-  private fun generateDefine(moduleClass: IrClass, jsName: String, exported: List<Exported>) {
+  private fun generateDefine(
+    moduleClass: IrClass,
+    jsName: String,
+    exported: List<Exported>,
+    sharedClasses: List<ExportedSharedClass>,
+  ) {
     val define = makeDefineFunction(moduleClass)
     val builder = define.parameters.single { it.kind == IrParameterKind.Regular }
 
@@ -266,6 +458,9 @@ class JSModuleIrTransformer(
         is ExportedFunction -> declareFunction(e, builder.get())
         is ExportedProperty -> declareProperty(e, builder.get())
       }
+    }
+    for (sharedClass in sharedClasses) {
+      body.statements += declareSharedClass(sharedClass, builder.get())
     }
     body.statements += IrSyntheticReturnImpl(
       type = irBuiltIns.nothingType,
@@ -297,6 +492,29 @@ class JSModuleIrTransformer(
       function = symbols.functions.builderFunction,
       receiver = builder,
       arguments = arguments,
+      returnType = irBuiltIns.unitType,
+    )
+  }
+
+  /** `builder.sharedClass("Klass", Klass::class.java, AnyType(...), ...)` */
+  private fun declareSharedClass(
+    exported: ExportedSharedClass,
+    builder: IrExpression,
+  ): IrExpression {
+    val anyTypeType = symbols.classes.anyType.owner.defaultType
+    return callOn(
+      function = symbols.functions.builderSharedClass,
+      receiver = builder,
+      arguments = listOf(
+        poet.string(exported.jsName),
+        poet.javaClass(exported.sharedClass.defaultType),
+        IrSyntheticVarargImpl(
+          type = irBuiltIns.arrayClass.typeWith(anyTypeType),
+          varargElementType = anyTypeType,
+          elements = exported.arguments.map(::anyTypeOf),
+        ),
+        poet.string(exported.trampolineName),
+      ),
       returnType = irBuiltIns.unitType,
     )
   }

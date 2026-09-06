@@ -53,6 +53,14 @@ namespace expo::modules::v2::decoders {
           return type;
         }
 
+        if (kind == CppType::SHARED_OBJECT) {
+          // TODO(@lukmccall): remove check?
+          if (usesBuffer) {
+            throw std::invalid_argument("A shared object cannot carry kUsesBufferFlag");
+          }
+          return ExpectedType::sharedObject(read(), nullable);
+        }
+
         if (nullable && (
               kind == CppType::BOOLEAN || kind == CppType::INT || kind == CppType::LONG ||
               kind == CppType::FLOAT || kind == CppType::DOUBLE || kind == CppType::UNIT

@@ -26,6 +26,33 @@ object TestSupport {
     nativeInstall(runtime.nativePointer)
   }
 
+  /**
+   * Moves the host object [expression] evaluates to in [from] into [to], as
+   * `globalThis.<globalName>` — the same move `react-native-worklets` makes when a host object is
+   * passed into a worklet, so what worklets can and cannot carry is testable without an app.
+   *
+   * Throws when [expression] is not a host object. A shared object's façade is a plain object, so
+   * this is how the suite pins down that a façade does not cross a runtime boundary by reference.
+   *
+   * Both runtimes must be usable from the calling thread.
+   */
+  fun transplantHostObject(
+    from: JavaScriptRuntime,
+    to: JavaScriptRuntime,
+    expression: String,
+    globalName: String,
+  ) {
+    nativeTransplantHostObject(from.nativePointer, to.nativePointer, expression, globalName)
+  }
+
   @JvmStatic
   private external fun nativeInstall(runtimePointer: Long)
+
+  @JvmStatic
+  private external fun nativeTransplantHostObject(
+    fromPointer: Long,
+    toPointer: Long,
+    expression: String,
+    globalName: String,
+  )
 }

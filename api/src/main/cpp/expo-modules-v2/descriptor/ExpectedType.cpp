@@ -8,7 +8,9 @@
 #include <kolibri/box.h>
 
 #include <expo-modules-v2/utils/overloads.h>
+#include <expo-modules-v2/jni/JSharedObject.h>
 #include <expo-modules-v2/records/RecordRegistry.h>
+#include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 
@@ -71,6 +73,11 @@ namespace expo::modules::v2 {
     return ExpectedType(Record{schemaId}, nullable, usesBuffer);
   }
 
+  ExpectedType ExpectedType::sharedObject(const int classId, const bool nullable) {
+    // A reference cannot be flattened, so there is no usesBuffer parameter to pass.
+    return ExpectedType(SharedObject{classId}, nullable, /* usesBuffer = */ false);
+  }
+
   ExpectedType ExpectedType::clone() const {
     return std::visit(
       overloads{
@@ -94,6 +101,9 @@ namespace expo::modules::v2 {
         [this](const Record& record) {
           return ExpectedType(Shape(record), nullable_, usesBuffer_);
         },
+        [this](const SharedObject& shared) {
+          return ExpectedType(Shape(shared), nullable_, usesBuffer_);
+        },
       },
       shape_
     );
@@ -106,6 +116,7 @@ namespace expo::modules::v2 {
         [](const List&) { return CppType::LIST; },
         [](const Map&) { return CppType::MAP; },
         [](const Record&) { return CppType::RECORD; },
+        [](const SharedObject&) { return CppType::SHARED_OBJECT; },
       },
       shape_
     );
@@ -129,6 +140,10 @@ namespace expo::modules::v2 {
 
   int ExpectedType::recordSchemaId() const {
     return std::get<Record>(shape_).schemaId;
+  }
+
+  int ExpectedType::sharedClassId() const {
+    return std::get<SharedObject>(shape_).classId;
   }
 
   template<typename T>
@@ -190,6 +205,13 @@ namespace expo::modules::v2 {
         [](const List&) { return desc<kolibri::JList>(); },
         [](const Map&) { return desc<kolibri::JMap>(); },
         [](const Record&) { return desc<kolibri::JMap>(); },
+        // The declared class, not the base: an exported member is resolved by signature, and
+        // `SharedObject` would match no method at all.
+        [](const SharedObject& shared) {
+          const std::string& descriptor =
+            sharedobjects::SharedObjectClassRegistry::descriptorOf(shared.classId);
+          return descriptor.empty() ? desc<JSharedObject>() : descriptor;
+        },
       },
       shape_
     );
@@ -247,6 +269,7 @@ namespace expo::modules::v2 {
         return "<unregistered record #" + std::to_string(schemaId) + ">";
       }
     }
+
   } // namespace
 
   std::string ExpectedType::kotlinType() const {
@@ -262,6 +285,9 @@ namespace expo::modules::v2 {
         [](const List& list) { return "List<" + list.element->kotlinType() + ">"; },
         [](const Map& map) { return "Map<String, " + map.value->kotlinType() + ">"; },
         [](const Record& record) { return recordKotlinName(record.schemaId); },
+        [](const SharedObject& shared) {
+          return sharedobjects::SharedObjectClassRegistry::nameOf(shared.classId);
+        },
       },
       shape_
     );
@@ -288,7 +314,9 @@ namespace expo::modules::v2 {
         [](const Map& map) { return map.value->bufferSafe(); },
         [](const Record& record) {
           return RecordRegistry::get(record.schemaId).bufferSafe;
-        }
+        },
+        // A reference: it identifies a native object, so there is nothing to flatten.
+        [](const SharedObject&) { return false; },
       },
       shape_
     );

@@ -40,6 +40,7 @@ namespace expo::modules::v2::jsi {
     std::string_view globalName
   ) : ownedRuntime_(std::move(runtime)), runtime_(ownedRuntime_.get()) {
     asyncState_.emplace(env, *runtime_, asyncContext);
+    sharedObjects_.emplace(*runtime_);
     installExpoModulesHostObject(env, registry, engineName, globalName);
   }
 
@@ -52,6 +53,7 @@ namespace expo::modules::v2::jsi {
     std::string_view globalName
   ) : ownedRuntime_(nullptr), runtime_(&runtime) {
     asyncState_.emplace(env, *runtime_, asyncContext);
+    sharedObjects_.emplace(*runtime_);
     installExpoModulesHostObject(env, registry, engineName, globalName);
   }
 
@@ -60,6 +62,11 @@ namespace expo::modules::v2::jsi {
     // a half-destroyed runtime, and it drops every pending resolve/reject while `runtime_` is still
     // alive to destroy them against.
     asyncState_.reset();
+
+    // Also before the runtime goes: these hold `jsi` values belonging to this runtime, and this is
+    // its own thread.
+    sharedObjects_.reset();
+    modules_.reset();
 
     RecordPropertyCache::clearForRuntime(*runtime_);
     kolibri::invalidateScope(runtime_);
@@ -89,6 +96,10 @@ namespace expo::modules::v2::jsi {
     return *runtime_;
   }
 
+  const std::shared_ptr<ModulesHostObject>& JavaScriptRuntime::modules() const {
+    return modules_;
+  }
+
   jboolean JavaScriptRuntime::drainMicrotasks() const {
     return runtime_->drainMicrotasks();
   }
@@ -106,8 +117,12 @@ namespace expo::modules::v2::jsi {
       rt,
       facebook::jsi::PropNameID::forAscii(rt, "nativeLog"),
       1,
-      [](facebook::jsi::Runtime& rt, const facebook::jsi::Value&, const facebook::jsi::Value* args,
-      size_t count) -> facebook::jsi::Value {
+      [](
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Value&,
+      const facebook::jsi::Value* args,
+      size_t count
+    ) -> facebook::jsi::Value {
         if (count >= 1 && args[0].isString()) {
           logLine(args[0].getString(rt).utf8(rt));
         }
@@ -126,22 +141,18 @@ namespace expo::modules::v2::jsi {
   ) {
     facebook::jsi::Runtime& rt = *runtime_;
 
-    const std::string ns(globalName);
+    const std::string nameSpace(globalName);
+
+    modules_ = std::make_shared<ModulesHostObject>(env, registry);
 
     auto expoNamespace = facebook::jsi::Object(rt);
     expoNamespace.setProperty(
       rt,
       "modules",
-      facebook::jsi::Object::createFromHostObject(
-        rt,
-        std::make_shared<ModulesHostObject>(env, registry)
-      )
+      facebook::jsi::Object::createFromHostObject(rt, modules_)
     );
-    rt.global().setProperty(rt, ns.c_str(), std::move(expoNamespace));
+    rt.global().setProperty(rt, nameSpace.c_str(), std::move(expoNamespace));
 
-    // Not derived from `ns`: the core object's name is fixed, because nothing else in a host's
-    // runtime claims it — only the module namespace can collide (expo-modules-core owns `expo` in a
-    // React Native app).
     rt.global().setProperty(
       rt,
       "ExpoModulesCore",

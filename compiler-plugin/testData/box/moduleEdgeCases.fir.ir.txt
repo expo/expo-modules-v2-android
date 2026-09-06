@@ -30,7 +30,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
           CONST Int type=kotlin.Int value=1
   CLASS CLASS name:WithNested modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.WithNested
     CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[kotlin.Any]
       thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.WithNested.Nested
@@ -122,13 +122,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
     FUN name:value visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.WithNested
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun value (): kotlin.Int declared in io.github.expo.modules.v2.testdata.WithNested'
           CONST Int type=kotlin.Int value=1
   CLASS OBJECT name:Arity modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Arity
     CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.Arity [primary]
       BLOCK_BODY
@@ -304,7 +304,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:Regular name:g index:7 type:kotlin.Int
       VALUE_PARAMETER kind:Regular name:h index:8 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun eight (a: kotlin.Int, b: kotlin.Int, c: kotlin.Int, d: kotlin.Int, e: kotlin.Int, f: kotlin.Int, g: kotlin.Int, h: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Arity'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
@@ -333,7 +333,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:Regular name:g index:7 type:kotlin.String
       VALUE_PARAMETER kind:Regular name:h index:8 type:kotlin.String
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun eightBuffered (a: kotlin.String, b: kotlin.String, c: kotlin.String, d: kotlin.String, e: kotlin.String, f: kotlin.String, g: kotlin.String, h: kotlin.String): kotlin.Int declared in io.github.expo.modules.v2.testdata.Arity'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
@@ -362,7 +362,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
     FUN name:none visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Arity
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun none (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Arity'
           CONST Int type=kotlin.Int value=0
@@ -370,13 +370,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Arity
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun one (a: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Arity'
           GET_VAR 'a: kotlin.Int declared in io.github.expo.modules.v2.testdata.Arity.one' type=kotlin.Int origin=null
   CLASS OBJECT name:Derived modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.testdata.BaseModule]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Derived
     CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.Derived [primary]
       BLOCK_BODY
@@ -422,7 +422,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Derived
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun own (a: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Derived'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
@@ -430,7 +430,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
             ARG other: CONST Int type=kotlin.Int value=1
   CLASS OBJECT name:Empty modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Empty
     CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.Empty [primary]
       BLOCK_BODY
@@ -459,7 +459,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
           CONST String type=kotlin.String value="Empty"
   CLASS OBJECT name:Visibility modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Visibility
     CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.Visibility [primary]
       BLOCK_BODY
@@ -512,7 +512,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Visibility
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='private final fun hidden (a: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Visibility'
           CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=MUL
@@ -522,7 +522,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Visibility
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun visible (a: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Visibility'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS

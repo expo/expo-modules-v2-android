@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.ir.types.makeNullable
 import org.jetbrains.kotlin.ir.types.typeWith
 import org.jetbrains.kotlin.ir.util.getAnnotation
 import org.jetbrains.kotlin.ir.util.hasAnnotation
+import org.jetbrains.kotlin.ir.util.isSubclassOf
 import org.jetbrains.kotlin.ir.util.kotlinFqName
 import org.jetbrains.kotlin.ir.util.primaryConstructor
 import org.jetbrains.kotlin.name.Name
@@ -48,6 +49,8 @@ internal enum class ValueKind {
   SET,
   ARRAY,
   RECORD,
+
+  SHARED_OBJECT,
 }
 
 internal enum class Crossing {
@@ -71,7 +74,7 @@ internal class ValuePlan(
   val bufferReader: String?,
 )
 
-internal class TransportPolicy(context: IrPluginContext) {
+internal class TransportPolicy(context: IrPluginContext, private val symbols: SymbolFinder) {
   private val irBuiltIns = context.irBuiltIns
 
   fun plan(type: IrType, choice: BufferChoice, crossing: Crossing): ValuePlan {
@@ -121,12 +124,14 @@ internal class TransportPolicy(context: IrPluginContext) {
       "kotlin.collections.Map", "kotlin.collections.MutableMap" -> ValueKind.MAP
       "kotlin.collections.Set", "kotlin.collections.MutableSet" -> ValueKind.SET
       "kotlin.Array" -> ValueKind.ARRAY
-      else ->
-        if (type.classOrNull?.owner?.hasAnnotation(Identifiers.Classes.RecordAnnotation) == true) {
-          ValueKind.RECORD
-        } else {
-          unsupported(type)
+      else -> {
+        val owner = type.classOrNull?.owner
+        when {
+          owner?.hasAnnotation(Identifiers.Classes.RecordAnnotation) == true -> ValueKind.RECORD
+          owner?.isSubclassOf(symbols.classes.sharedObject.owner) == true -> ValueKind.SHARED_OBJECT
+          else -> unsupported(type)
         }
+      }
     }
   }
 
@@ -135,6 +140,10 @@ internal class TransportPolicy(context: IrPluginContext) {
       ValueKind.UNBOXED_SCALAR, ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.DYNAMIC,
       ValueKind.UNIT, ValueKind.PRIMITIVE_ARRAY, ValueKind.JS_HANDLE,
         -> true
+      // A shared object is its own bridge value, so nothing has to happen on the way through -
+      // except for a `SharedRef<T>` named by its type argument, where only Kotlin can see whether
+      // the ref carries a T. The JNI boundary sees every SharedRef as the same erased class.
+      ValueKind.SHARED_OBJECT -> !isTypedSharedRef(type)
       // A List or Map hands its elements straight through when they need no conversion themselves.
       ValueKind.LIST -> elementTypes(type).all { isPassthrough(kindOf(it), it) }
       ValueKind.MAP -> elementTypes(type).drop(1).all { isPassthrough(kindOf(it), it) }
@@ -147,7 +156,9 @@ internal class TransportPolicy(context: IrPluginContext) {
   /** Whether the wire format can carry this value on the buffer at all. */
   fun canBuffer(kind: ValueKind, type: IrType): Boolean =
     when (kind) {
-      ValueKind.UNBOXED_SCALAR, ValueKind.DYNAMIC, ValueKind.UNIT, ValueKind.JS_HANDLE -> false
+      ValueKind.UNBOXED_SCALAR, ValueKind.DYNAMIC, ValueKind.UNIT, ValueKind.JS_HANDLE,
+      ValueKind.SHARED_OBJECT,
+        -> false
       ValueKind.CONVERTED_TO_DOUBLE -> type.isMarkedNullable()
       ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.CONVERTED_TO_STRING -> true
       ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD ->
@@ -169,7 +180,9 @@ internal class TransportPolicy(context: IrPluginContext) {
 
   private fun isBufferSafe(type: IrType, visited: MutableSet<String>): Boolean {
     val kind = kindOf(type)
-    if (kind == ValueKind.DYNAMIC || kind == ValueKind.JS_HANDLE) {
+    if (kind == ValueKind.DYNAMIC || kind == ValueKind.JS_HANDLE ||
+      kind == ValueKind.SHARED_OBJECT
+    ) {
       return false
     }
     if (!elementTypes(type).all { isBufferSafe(it, visited) }) {
@@ -205,6 +218,11 @@ internal class TransportPolicy(context: IrPluginContext) {
       ?.map { it.type }
       ?: emptyList()
 
+  fun isTypedSharedRef(type: IrType): Boolean {
+    val owner = type.classOrNull?.owner ?: return false
+    return owner.isSubclassOf(symbols.classes.sharedRef.owner) && elementTypes(type).size == 1
+  }
+
   private fun elementTypes(type: IrType): List<IrType> =
     (type as? IrSimpleType)
       ?.arguments
@@ -214,8 +232,9 @@ internal class TransportPolicy(context: IrPluginContext) {
   private fun jniType(kind: ValueKind, type: IrType): IrType =
     when (kind) {
       ValueKind.UNBOXED_SCALAR, ValueKind.UNIT -> type
-      ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.JS_HANDLE ->
-        type.makeNullable()
+      ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.JS_HANDLE,
+      ValueKind.SHARED_OBJECT,
+        -> type.makeNullable()
 
       ValueKind.DYNAMIC -> irBuiltIns.anyType.makeNullable()
       ValueKind.CONVERTED_TO_DOUBLE ->

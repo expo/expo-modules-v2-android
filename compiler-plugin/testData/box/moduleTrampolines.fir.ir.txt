@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
   CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Buffered
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
@@ -25,7 +25,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
               GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
     PROPERTY name:motto visibility:public modality:FINAL [var]
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       FIELD PROPERTY_BACKING_FIELD name:motto type:kotlin.String visibility:private
         EXPRESSION_BODY
           CONST String type=kotlin.String value="carpe diem"
@@ -46,7 +46,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
             value: GET_VAR '<set-?>: kotlin.String declared in io.github.expo.modules.v2.testdata.Buffered.<set-motto>' type=kotlin.String origin=null
     PROPERTY name:isReady visibility:public modality:FINAL [val]
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       FIELD PROPERTY_BACKING_FIELD name:isReady type:kotlin.Boolean visibility:private [final]
         EXPRESSION_BODY
           CONST Boolean type=kotlin.Boolean value=true
@@ -285,7 +285,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:Regular name:prefix index:1 type:kotlin.String
       VALUE_PARAMETER kind:Regular name:count index:2 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun describe (prefix: kotlin.String, count: kotlin.Int): kotlin.String declared in io.github.expo.modules.v2.testdata.Buffered'
           STRING_CONCATENATION type=kotlin.String
@@ -295,7 +295,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Buffered
       VALUE_PARAMETER kind:Regular name:name index:1 type:kotlin.String
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun greet (name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.Buffered'
           STRING_CONCATENATION type=kotlin.String
@@ -306,7 +306,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Buffered
       VALUE_PARAMETER kind:Regular name:count index:1 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun makeNames (count: kotlin.Int): kotlin.collections.List<kotlin.String> declared in io.github.expo.modules.v2.testdata.Buffered'
           CALL 'public final fun List <T> (size: kotlin.Int, init: kotlin.Function1<@[ParameterName(name = "index")] kotlin.Int, T of kotlin.collections.List>): kotlin.collections.List<T of kotlin.collections.List> declared in kotlin.collections' type=kotlin.collections.List<kotlin.String> origin=null
@@ -324,7 +324,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Buffered
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.DoubleArray
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun scale (values: kotlin.DoubleArray): kotlin.Double declared in io.github.expo.modules.v2.testdata.Buffered'
           CALL 'public final fun sum (<this>: kotlin.DoubleArray): kotlin.Double declared in kotlin.collections' type=kotlin.Double origin=null
@@ -333,14 +333,14 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Buffered
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.collections.List<kotlin.Int>
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun sum (values: kotlin.collections.List<kotlin.Int>): kotlin.Int declared in io.github.expo.modules.v2.testdata.Buffered'
           CALL 'public final fun sum (<this>: kotlin.collections.Iterable<kotlin.Int>): kotlin.Int declared in kotlin.collections' type=kotlin.Int origin=null
             ARG <this>: GET_VAR 'values: kotlin.collections.List<kotlin.Int> declared in io.github.expo.modules.v2.testdata.Buffered.sum' type=kotlin.collections.List<kotlin.Int> origin=null
   CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Converted
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
@@ -502,7 +502,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Converted
       VALUE_PARAMETER kind:Regular name:urls index:1 type:kotlin.collections.List<java.net.URL>
       annotations:
-        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
+        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun firstHost (urls: kotlin.collections.List<java.net.URL>): kotlin.String declared in io.github.expo.modules.v2.testdata.Converted'
           TYPE_OP type=kotlin.String origin=IMPLICIT_NOTNULL typeOperand=kotlin.String
@@ -514,7 +514,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Converted
       VALUE_PARAMETER kind:Regular name:url index:1 type:java.net.URL
       annotations:
-        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
+        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun host (url: java.net.URL): kotlin.String declared in io.github.expo.modules.v2.testdata.Converted'
           TYPE_OP type=kotlin.String origin=IMPLICIT_NOTNULL typeOperand=kotlin.String
@@ -525,7 +525,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.time.Duration
       VALUE_PARAMETER kind:Regular name:b index:2 type:kotlin.time.Duration
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun total (a: kotlin.time.Duration, b: kotlin.time.Duration): kotlin.time.Duration declared in io.github.expo.modules.v2.testdata.Converted'
           CALL 'public final fun plus (other: kotlin.time.Duration): kotlin.time.Duration declared in kotlin.time.Duration' type=kotlin.time.Duration origin=PLUS

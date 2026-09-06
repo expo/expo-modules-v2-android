@@ -9,6 +9,7 @@
 #include <expo-modules-v2/decoders/ModuleDescriptorDecoder.h>
 #include <expo-modules-v2/modules/ModuleNativeState.h>
 #include <expo-modules-v2/binders/PropertyBinder.h>
+#include <expo-modules-v2/sharedobjects/SharedObjectClassObject.h>
 
 namespace expo::modules::v2::jsi {
   namespace {
@@ -71,13 +72,15 @@ namespace expo::modules::v2::jsi {
 
       auto& [instance, desc] = module.value();
 
-      auto state = std::make_shared<ModuleNativeState>(
+      const auto state = std::make_shared<ModuleNativeState>(
         kolibri::GlobalRef<>::make(env, instance.get()),
         std::move(desc.functions),
-        std::move(desc.properties)
+        std::move(desc.properties),
+        std::move(desc.sharedClasses)
       );
 
       facebook::jsi::Object moduleObject(rt);
+
       for (const FunctionBinder& binder: state->functionBinders()) {
         moduleObject.setProperty(
           rt,
@@ -88,6 +91,14 @@ namespace expo::modules::v2::jsi {
 
       for (const PropertyBinder& binder: state->propertyBinders()) {
         defineHostProperty(rt, moduleObject, binder);
+      }
+
+      for (auto& sharedClass: state->sharedClasses()) {
+        moduleObject.setProperty(
+          rt,
+          facebook::jsi::PropNameID::forUtf8(rt, sharedClass.jsName),
+          sharedobjects::createClassConstructor(rt, sharedClass)
+        );
       }
 
       expo::jsi::ChainedNativeState::attach(rt, moduleObject, state);

@@ -16,6 +16,9 @@ import org.jetbrains.kotlin.ir.expressions.IrTypeOperator
 import org.jetbrains.kotlin.ir.expressions.impl.IrBlockImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrBranchImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrCallImpl
+import org.jetbrains.kotlin.ir.declarations.IrClass
+import org.jetbrains.kotlin.ir.expressions.IrClassReference
+import org.jetbrains.kotlin.ir.expressions.IrVararg
 import org.jetbrains.kotlin.ir.expressions.impl.IrClassReferenceImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrConstImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrConstructorCallImpl
@@ -320,9 +323,32 @@ private fun buildCall(
   }
 }
 
+internal fun newInstance(
+  constructor: IrConstructorSymbol,
+  arguments: List<IrExpression>,
+  type: IrType,
+): IrExpression = IrSyntheticConstructorCallImpl(type, constructor).apply {
+  var next = 0
+  constructor.owner.parameters.forEach { parameter ->
+    if (parameter.kind == IrParameterKind.Regular) {
+      this.arguments[parameter.indexInParameters] = arguments.getOrNull(next++)
+    }
+  }
+}
+
 /** An annotation's `String` argument, or null when it is absent. */
 internal fun IrConstructorCall?.stringArgument(name: Name): String? =
   this?.argumentByName(name)?.let { (it as? IrConst)?.value as? String }
+
+/**
+ * The classes an annotation's `Array<KClass<*>>` argument names, or empty when it is absent.
+ */
+internal fun IrConstructorCall?.classReferenceArgument(name: Name): List<IrClass> {
+  val argument = this?.argumentByName(name) as? IrVararg ?: return emptyList()
+  return argument.elements.mapNotNull { element ->
+    (element as? IrClassReference)?.symbol?.owner as? IrClass
+  }
+}
 
 internal fun IrConstructorCall.argumentByName(name: Name): IrExpression? {
   val parameter = symbol.owner.parameters.firstOrNull {

@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
   CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.AsyncShapes
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
@@ -176,7 +176,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
     FUN name:clear visibility:public modality:FINAL returnType:kotlin.Unit [suspend]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun clear (): kotlin.Unit declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           CALL 'public final fun delay (timeMillis: kotlin.Long): kotlin.Unit declared in kotlinx.coroutines' type=kotlin.Unit origin=null
@@ -185,7 +185,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:name index:1 type:kotlin.String
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun greet (name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           STRING_CONCATENATION type=kotlin.String
@@ -196,10 +196,10 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:times index:1 type:kotlin.Int
         annotations:
-          JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
+          JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
       VALUE_PARAMETER kind:Regular name:value index:2 type:kotlin.String
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun repeat (times: kotlin.Int, value: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           CALL 'public final fun repeat (<this>: kotlin.CharSequence, n: kotlin.Int): kotlin.String declared in kotlin.text' type=kotlin.String origin=null
@@ -209,7 +209,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:value index:1 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>)
+        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         CALL 'public final fun delay (timeMillis: kotlin.Long): kotlin.Unit declared in kotlinx.coroutines' type=kotlin.Unit origin=null
           ARG timeMillis: CONST Long type=kotlin.Long value=1

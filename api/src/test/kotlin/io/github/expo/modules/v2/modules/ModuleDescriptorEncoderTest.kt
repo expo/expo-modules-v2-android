@@ -1,7 +1,9 @@
 package io.github.expo.modules.v2.modules
 
+import io.github.expo.modules.v2.annotations.JS
 import io.github.expo.modules.v2.annotations.Record
 import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
+import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.buffered
@@ -9,10 +11,18 @@ import io.github.expo.kolibri.binary.BinaryBuffer
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 import io.github.expo.modules.v2.types.TypeDescriptor
+
+private const val TRAMPOLINE = "__construct\$ExpoModulesV2"
 
 @Record
 private data class EncoderTestRecord(val x: Int) : io.github.expo.modules.v2.records.Record
+
+@JS
+private class EncoderTestSharedObject(
+  @Suppress("unused") val greeting: String,
+) : io.github.expo.modules.v2.sharedobjects.SharedObject()
 
 /**
  * Exercises the module-descriptor layout on a privately allocated buffer — no natives involved.
@@ -72,6 +82,7 @@ class ModuleDescriptorEncoderTest {
     assertEquals(listOf(CppType.STRING.code), reader.readIntArray())
 
     assertEquals(0, reader.getInt(), "no properties declared")
+    assertEquals(0, reader.getInt(), "no constructable shared classes declared")
 
     assertEquals(size, reader.position, "trailing bytes in the payload")
   }
@@ -119,6 +130,7 @@ class ModuleDescriptorEncoderTest {
       reader.readIntArray(),
       "the setter was declared buffered",
     )
+    assertEquals(0, reader.getInt(), "no constructable shared classes declared")
     assertEquals(size, reader.position)
   }
 
@@ -185,8 +197,87 @@ class ModuleDescriptorEncoderTest {
     val reader = buf.duplicateView()
     reader.limit = size
     assertEquals(size, reader.getInt(), "the leading i32 carries the payload size")
-    assertEquals(0, reader.getInt())
-    assertEquals(0, reader.getInt())
+    assertEquals(0, reader.getInt(), "no functions")
+    assertEquals(0, reader.getInt(), "no properties")
+    assertEquals(0, reader.getInt(), "no constructable shared classes")
+    assertEquals(size, reader.position, "trailing bytes in the payload")
+  }
+
+  @Test
+  fun `encodes a constructable shared class`() {
+    val definition = ModuleBuilder().apply {
+      sharedClass(
+        "Greeter",
+        EncoderTestSharedObject::class.java,
+        AnyType(TypeDescriptor.Simple(String::class.java, false)),
+        trampolineName = TRAMPOLINE,
+      )
+    }
+    val buf = BinaryBuffer.allocate(1024)
+
+    val size = ModuleDescriptorEncoder.encode(
+      definition.functions,
+      definition.properties,
+      buf,
+      definition.sharedClasses,
+    )
+
+    val reader = buf.duplicateView()
+    reader.limit = size
+    assertEquals(size, reader.getInt())
+    assertEquals(0, reader.getInt(), "no functions")
+    assertEquals(0, reader.getInt(), "no properties")
+    assertEquals(1, reader.getInt(), "one constructable class")
+
+    assertEquals("Greeter", reader.readString())
+    // The registry's id for the class, which the façade path keys on too.
+    assertEquals(
+      SharedObjectRegistry.classIdFor(EncoderTestSharedObject::class.java).value,
+      reader.getInt(),
+    )
+    assertEquals(TRAMPOLINE, reader.readString(), "the constructor trampoline")
+    assertEquals(1, reader.getInt(), "one constructor argument")
+    assertEquals(listOf(CppType.STRING.code), reader.readIntArray())
+    assertEquals(size, reader.position, "trailing bytes in the payload")
+  }
+
+  @Test
+  fun `encodes the trampoline of a shared class with a buffered constructor argument`() {
+    val definition = ModuleBuilder().apply {
+      sharedClass(
+        "Greeter",
+        EncoderTestSharedObject::class.java,
+        AnyType(TypeDescriptor.Simple(String::class.java, false)).buffered(),
+        trampolineName = TRAMPOLINE,
+      )
+    }
+    val buf = BinaryBuffer.allocate(1024)
+
+    val size = ModuleDescriptorEncoder.encode(
+      definition.functions,
+      definition.properties,
+      buf,
+      definition.sharedClasses,
+    )
+
+    val reader = buf.duplicateView()
+    reader.limit = size
+    assertEquals(size, reader.getInt())
+    assertEquals(0, reader.getInt(), "no functions")
+    assertEquals(0, reader.getInt(), "no properties")
+    assertEquals(1, reader.getInt(), "one constructable class")
+
+    assertEquals("Greeter", reader.readString())
+    assertEquals(
+      SharedObjectRegistry.classIdFor(EncoderTestSharedObject::class.java).value,
+      reader.getInt(),
+    )
+    assertEquals(TRAMPOLINE, reader.readString(), "the constructor trampoline")
+    assertEquals(1, reader.getInt(), "one constructor argument")
+    assertEquals(
+      listOf(CppType.STRING.code or CppType.USES_BUFFER),
+      reader.readIntArray(),
+    )
     assertEquals(size, reader.position, "trailing bytes in the payload")
   }
 

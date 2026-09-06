@@ -16,6 +16,8 @@ import io.github.expo.modules.v2.converters.MapConverter
 import io.github.expo.modules.v2.converters.PathConverter
 import io.github.expo.modules.v2.converters.RecordConverter
 import io.github.expo.modules.v2.converters.SetConverter
+import io.github.expo.modules.v2.converters.SharedObjectConverter
+import io.github.expo.modules.v2.converters.SharedRefConverter
 import io.github.expo.modules.v2.converters.StringConverter
 import io.github.expo.modules.v2.converters.TypeConverter
 import io.github.expo.modules.v2.converters.UnitConverter
@@ -25,6 +27,9 @@ import io.github.expo.modules.v2.converters.selectJsHandleConverter
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.records.RecordRegistry
+import io.github.expo.modules.v2.sharedobjects.SharedObject
+import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+import io.github.expo.modules.v2.sharedobjects.SharedRef
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -117,6 +122,16 @@ object TypeConverterRegistry {
       type,
       isNullable,
     ) {
+      if (SharedObject::class.java.isAssignableFrom(type)) {
+        @Suppress("UNCHECKED_CAST")
+        val sharedClass = type as Class<out SharedObject>
+        return@getOrPut SharedObjectConverter(
+          SharedObjectRegistry.classIdFor(sharedClass),
+          sharedClass,
+          isNullable,
+        )
+      }
+
       val recordType = RecordRegistry.typeFor(type)
       if (recordType != null) {
         RecordConverter(recordType, isNullable)
@@ -131,6 +146,21 @@ object TypeConverterRegistry {
 
   fun converter(typeDescriptor: TypeDescriptor.Parametrized): TypeConverter<*> {
     val (jClass) = typeDescriptor
+
+    if (SharedRef::class.java.isAssignableFrom(jClass)) {
+      @Suppress("UNCHECKED_CAST")
+      val sharedClass = jClass as Class<out SharedObject>
+      val refClass = (typeDescriptor.params.singleOrNull() as? TypeDescriptor.Simple)?.javaClass
+        ?: throw IllegalArgumentException(
+          "A SharedRef parameter must name the type it carries, as SharedRef<Something>",
+        )
+
+      return SharedRefConverter(
+        SharedObjectRegistry.classIdFor(sharedClass),
+        refClass,
+        typeDescriptor.isNullable,
+      )
+    }
 
     if (List::class.java.isAssignableFrom(jClass)) {
       return ListConverter(typeDescriptor)

@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
   CLASS CLASS name:DirectInstance modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = "Instance", buffer = <null>, returnBuffer = <null>)
+      JS(name = "Instance", buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.DirectInstance
     CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.DirectInstance [primary]
       BLOCK_BODY
@@ -43,17 +43,17 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.DirectInstance
       VALUE_PARAMETER kind:Regular name:value index:1 type:kotlin.Long
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun echo (value: kotlin.Long): kotlin.Long declared in io.github.expo.modules.v2.testdata.DirectInstance'
           GET_VAR 'value: kotlin.Long declared in io.github.expo.modules.v2.testdata.DirectInstance.echo' type=kotlin.Long origin=null
   CLASS OBJECT name:Direct modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Direct
     PROPERTY name:answer visibility:public modality:FINAL [val]
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       FIELD PROPERTY_BACKING_FIELD name:answer type:kotlin.Int visibility:private [final]
         EXPRESSION_BODY
           CONST Int type=kotlin.Int value=42
@@ -66,7 +66,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
               receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Direct declared in io.github.expo.modules.v2.testdata.Direct.<get-answer>' type=io.github.expo.modules.v2.testdata.Direct origin=null
     PROPERTY name:count visibility:public modality:FINAL [var]
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       FIELD PROPERTY_BACKING_FIELD name:count type:kotlin.Int visibility:private
         EXPRESSION_BODY
           CONST Int type=kotlin.Int value=1
@@ -199,7 +199,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       VALUE_PARAMETER kind:Regular name:b index:2 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun add (a: kotlin.Int, b: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Direct'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
@@ -208,7 +208,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
     FUN name:clear visibility:public modality:FINAL returnType:kotlin.Unit
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Direct
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun clear (): kotlin.Unit declared in io.github.expo.modules.v2.testdata.Direct'
           GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Unit modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.Unit
@@ -216,7 +216,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Direct
       VALUE_PARAMETER kind:Regular name:value index:1 type:kotlin.Any?
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun identity (value: kotlin.Any?): kotlin.Any? declared in io.github.expo.modules.v2.testdata.Direct'
           GET_VAR 'value: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Direct.identity' type=kotlin.Any? origin=null
@@ -229,7 +229,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Direct
       VALUE_PARAMETER kind:Regular name:flag index:1 type:kotlin.Boolean
       annotations:
-        JS(name = "renamed", buffer = <null>, returnBuffer = <null>)
+        JS(name = "renamed", buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun original (flag: kotlin.Boolean): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Direct'
           CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=null
@@ -239,7 +239,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.DoubleArray
       VALUE_PARAMETER kind:Regular name:by index:2 type:kotlin.Double
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>)
+        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun scale (values: kotlin.DoubleArray, by: kotlin.Double): kotlin.Double declared in io.github.expo.modules.v2.testdata.Direct'
           CALL 'public final fun times (other: kotlin.Double): kotlin.Double declared in kotlin.Double' type=kotlin.Double origin=MUL

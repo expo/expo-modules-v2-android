@@ -2,6 +2,7 @@ package io.github.expo.modules.v2.records
 
 import io.github.expo.modules.v2.cache.Cache
 import io.github.expo.kolibri.CalledFromNative
+import io.github.expo.modules.v2.loader.ExpoClassLoader
 
 object RecordRegistry {
   private val byClass = Cache<Class<*>, RecordType<*>>()
@@ -56,14 +57,7 @@ object RecordRegistry {
       return null
     }
 
-    // JVMS 5.5 step 3: when the current thread is already initializing this class the call returns
-    // immediately, so a record cycle degrades to a null result and the caller's existing error.
-    try {
-      Class.forName(clazz.name, /* initialize = */ true, clazz.classLoader)
-    } catch (_: ClassNotFoundException) {
-      // Cannot happen for a Class we already hold, but a broken class loader must not take the
-      // process down on a lookup miss.
-    }
+    ExpoClassLoader.loadAndInitializeClass(clazz)
 
     return byClass.get(clazz)
   }
