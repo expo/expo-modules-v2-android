@@ -1,10 +1,12 @@
 package io.github.expo.modules.v2.benchmark.jmh
 
-import io.github.expo.modules.v2.annotations.Buffer
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.testsupport.HermesRuntime
-import io.github.expo.modules.v2.modules.Module
 
 /**
  * The module under test for [ConversionTransportFastBenchmark] and friends: one registered method
@@ -21,7 +23,7 @@ import io.github.expo.modules.v2.modules.Module
  * because one function carries exactly one transport. `Buffer.NO` and `Buffer.YES` name the side that
  * differs from the default, so the declarations read as the comparison being measured.
  */
-@JS(name = "Bench")
+@ExpoModule(name = "Bench")
 class ConversionOps : Module() {
   // Dynamic containers can carry JSI handles, so they are never buffer-safe: JNI object slots.
   @JS
@@ -35,7 +37,8 @@ class ConversionOps : Module() {
   fun echoTyped(values: List<Double>): List<Double> = values
 
   /** The same typed list as a JList slot, which boxes every element. */
-  @JS(name = "echoTypedDirect", buffer = Buffer.NO)
+  @JS(name = "echoTypedDirect")
+  @BufferMode(Buffer.NO)
   fun echoTypedDirect(values: List<Double>): List<Double> = values
 
   @JS
@@ -45,19 +48,23 @@ class ConversionOps : Module() {
   fun sumTyped(values: List<Double>): Double = values.sum()
 
   /** The DoubleArray baseline: bulk JNI region copies both ways, and no payload limit. */
-  @JS(name = "echoArray", buffer = Buffer.NO)
+  @JS(name = "echoArray")
+  @BufferMode(Buffer.NO)
   fun echoArrayDirect(values: DoubleArray): DoubleArray = values
 
-  @JS(name = "echoArrayBuffered", buffer = Buffer.YES)
+  @JS(name = "echoArrayBuffered")
+  @BufferMode(Buffer.YES)
   fun echoArrayBuffered(values: DoubleArray): DoubleArray = values
 
-  @JS(name = "echoString", buffer = Buffer.NO)
+  @JS(name = "echoString")
+  @BufferMode(Buffer.NO)
   fun echoStringDirect(value: String): String = value
 
   @JS(name = "echoStringBuffered")
   fun echoStringBuffered(value: String): String = value
 
-  @JS(name = "echoBoxed", buffer = Buffer.NO)
+  @JS(name = "echoBoxed")
+  @BufferMode(Buffer.NO)
   fun echoBoxedDirect(value: Int?): Int? = value
 
   @JS(name = "echoBoxedBuffered")

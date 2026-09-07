@@ -1,0 +1,155 @@
+FILE: sharedObjectOverrides.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Counter : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Counter| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        public final var released: R|kotlin/Int| = Int(0)
+            public get(): R|kotlin/Int|
+            private set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+        public open override fun sharedObjectDidRelease(): R|kotlin/Unit| {
+             {
+                lval <unary>: R|kotlin/Int| = this@R|io/github/expo/modules/v2/testdata/Counter|.R|io/github/expo/modules/v2/testdata/Counter.released|
+                this@R|io/github/expo/modules/v2/testdata/Counter|.R|io/github/expo/modules/v2/testdata/Counter.released| = R|<local>/<unary>|.R|kotlin/Int.inc|()
+                R|<local>/<unary>|
+            }
+
+        }
+
+        public open override fun getAdditionalMemoryPressure(): R|kotlin/Int| {
+            ^getAdditionalMemoryPressure Int(42)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun value(): R|kotlin/Int| {
+            ^value this@R|io/github/expo/modules/v2/testdata/Counter|.R|io/github/expo/modules/v2/testdata/Counter.released|
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Pressured : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Pressured| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        public open override fun getAdditionalMemoryPressure(): R|kotlin/Int| {
+            ^getAdditionalMemoryPressure Int(7)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Delegating : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Delegating| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        public final var released: R|kotlin/Int| = Int(0)
+            public get(): R|kotlin/Int|
+            private set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+        public open override fun sharedObjectDidRelease(): R|kotlin/Unit| {
+            this@R|io/github/expo/modules/v2/testdata/Delegating|.super<R|io/github/expo/modules/v2/SharedObject|>.R|io/github/expo/modules/v2/SharedObject.sharedObjectDidRelease|()
+             {
+                lval <unary>: R|kotlin/Int| = this@R|io/github/expo/modules/v2/testdata/Delegating|.R|io/github/expo/modules/v2/testdata/Delegating.released|
+                this@R|io/github/expo/modules/v2/testdata/Delegating|.R|io/github/expo/modules/v2/testdata/Delegating.released| = R|<local>/<unary>|.R|kotlin/Int.inc|()
+                R|<local>/<unary>|
+            }
+
+        }
+
+        public open override fun getAdditionalMemoryPressure(): R|kotlin/Int| {
+            ^getAdditionalMemoryPressure this@R|io/github/expo/modules/v2/testdata/Delegating|.super<R|io/github/expo/modules/v2/SharedObject|>.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|().R|kotlin/Int.plus|(Int(5))
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class TextRef : R|io/github/expo/modules/v2/SharedRef<{kotlin/text/StringBuilder=} java/lang/StringBuilder>| {
+        public constructor(text: R|{kotlin/text/StringBuilder=} java/lang/StringBuilder|): R|io/github/expo/modules/v2/testdata/TextRef| {
+            super<R|io/github/expo/modules/v2/SharedRef<{kotlin/text/StringBuilder=} java/lang/StringBuilder>|>(R|<local>/text|)
+        }
+
+        public open override fun getAdditionalMemoryPressure(): R|kotlin/Int| {
+            ^getAdditionalMemoryPressure this@R|io/github/expo/modules/v2/testdata/TextRef|.R|SubstitutionOverride<io/github/expo/modules/v2/testdata/TextRef.ref: R|{kotlin/text/StringBuilder=} java/lang/StringBuilder|>|.R|java/lang/AbstractStringBuilder.length|
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Plain : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Plain| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval base: R|io/github/expo/modules/v2/SharedObject| = R|io/github/expo/modules/v2/testdata/Counter.Counter|()
+        when () {
+            !=(R|<local>/base|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|(), Int(42)) ->  {
+                ^box <strcat>(String(Counter.getAdditionalMemoryPressure: ), R|<local>/base|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|())
+            }
+        }
+
+        R|<local>/base|.R|io/github/expo/modules/v2/SharedObject.sharedObjectDidRelease|()
+        R|<local>/base|.R|io/github/expo/modules/v2/SharedObject.sharedObjectDidRelease|()
+        when () {
+            !=((R|<local>/base| as R|io/github/expo/modules/v2/testdata/Counter|).R|io/github/expo/modules/v2/testdata/Counter.released|, Int(2)) ->  {
+                ^box <strcat>(String(Counter.sharedObjectDidRelease ran ), R|<local>/base|.R|io/github/expo/modules/v2/testdata/Counter.released|, String( times))
+            }
+        }
+
+        lval pressured: R|io/github/expo/modules/v2/SharedObject| = R|io/github/expo/modules/v2/testdata/Pressured.Pressured|()
+        when () {
+            !=(R|<local>/pressured|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|(), Int(7)) ->  {
+                ^box <strcat>(String(Pressured: ), R|<local>/pressured|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|())
+            }
+        }
+
+        lval delegating: R|io/github/expo/modules/v2/SharedObject| = R|io/github/expo/modules/v2/testdata/Delegating.Delegating|()
+        when () {
+            !=(R|<local>/delegating|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|(), Int(5)) ->  {
+                ^box <strcat>(String(Delegating: ), R|<local>/delegating|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|())
+            }
+        }
+
+        R|<local>/delegating|.R|io/github/expo/modules/v2/SharedObject.sharedObjectDidRelease|()
+        when () {
+            !=((R|<local>/delegating| as R|io/github/expo/modules/v2/testdata/Delegating|).R|io/github/expo/modules/v2/testdata/Delegating.released|, Int(1)) ->  {
+                ^box <strcat>(String(Delegating.sharedObjectDidRelease ran ), R|<local>/delegating|.R|io/github/expo/modules/v2/testdata/Delegating.released|, String( times))
+            }
+        }
+
+        lval ref: R|io/github/expo/modules/v2/SharedObject| = R|io/github/expo/modules/v2/testdata/TextRef.TextRef|(R|java/lang/StringBuilder.StringBuilder|(String(abcd)))
+        when () {
+            !=(R|<local>/ref|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|(), Int(4)) ->  {
+                ^box <strcat>(String(TextRef: ), R|<local>/ref|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|())
+            }
+        }
+
+        lval plain: R|io/github/expo/modules/v2/SharedObject| = R|io/github/expo/modules/v2/testdata/Plain.Plain|()
+        when () {
+            !=(R|<local>/plain|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|(), Int(0)) ->  {
+                ^box <strcat>(String(Plain: ), R|<local>/plain|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|())
+            }
+        }
+
+        R|<local>/plain|.R|io/github/expo/modules/v2/SharedObject.sharedObjectDidRelease|()
+        lval declared: R|kotlin/collections/List<kotlin/String!>| = <getClass>(Q|io/github/expo/modules/v2/testdata/Counter|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Counter|>.R|java/lang/Class.declaredMethods|.R|kotlin/collections/map|<R|java/lang/reflect/Method!|, R|kotlin/String!|>(<L> = map@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/String!| <inline=Inline, kind=UNKNOWN>  {
+            ^ R|<local>/it|.R|java/lang/reflect/Method.name|
+        }
+        )
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<kotlin/String>| = R|kotlin/collections/listOf|<R|kotlin/String|>(vararg(String(sharedObjectDidRelease), String(getAdditionalMemoryPressure))).R|SubstitutionOverride<kotlin/collections/List.iterator: R|kotlin/collections/Iterator<kotlin/String>|>|()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval name: R|kotlin/String| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/String|>|()
+                 {
+                    when () {
+                        R|<local>/declared|.R|SubstitutionOverride<kotlin/collections/List.contains: R|kotlin/Boolean|>|(R|<local>/name|).R|kotlin/Boolean.not|() ->  {
+                            ^box <strcat>(String(Counter does not declare ), R|<local>/name|)
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        ^box String(OK)
+    }

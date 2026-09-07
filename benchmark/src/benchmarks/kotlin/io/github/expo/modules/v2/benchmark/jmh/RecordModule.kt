@@ -1,9 +1,11 @@
 package io.github.expo.modules.v2.benchmark.jmh
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.testsupport.HermesRuntime
-import io.github.expo.modules.v2.modules.Module
 
 /**
  * The module under test for [RecordPairFastBenchmark] and friends: the record path (data class
@@ -15,8 +17,8 @@ import io.github.expo.modules.v2.modules.Module
  * sizes the third path: a record whose schema contains a dynamic field crosses decomposed as a Map
  * object slot both ways.
  *
- * Every one of those transports is what `@JS` picks by default, so the declarations below say nothing
- * about transport and the measurement is of the generated trampolines themselves.
+ * Every one of those transports is what the plugin picks by default, so no declaration below
+ * carries a `@BufferMode` and the measurement is of the generated trampolines themselves.
  */
 @Record
 data class Item(val id: Int, val name: String, val x: Double, val flag: Boolean) : io.github.expo.modules.v2.records.Record
@@ -28,7 +30,7 @@ data class Order(val item: Item, val tags: List<String>) : io.github.expo.module
 @Record(bufferSafe = false)
 data class FlaggedItem(val id: Int, val name: String, val meta: Map<String, Any>) : io.github.expo.modules.v2.records.Record
 
-@JS(name = "Rec")
+@ExpoModule(name = "Rec")
 class RecordOps : Module() {
   @JS
   fun echoOne(value: Item): Item = value

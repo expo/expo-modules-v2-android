@@ -1,15 +1,15 @@
 FILE: recordClassShapeErrors.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public abstract interface NotAClass : R|kotlin/Any| {
+    @R|io/github/expo/modules/v2/Record|() public abstract interface NotAClass : R|kotlin/Any| {
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final object NotAnObject : R|kotlin/Any| {
+    @R|io/github/expo/modules/v2/Record|() public final object NotAnObject : R|kotlin/Any| {
         private constructor(): R|io/github/expo/modules/v2/testdata/NotAnObject| {
             super<R|kotlin/Any|>()
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final enum class NotAnEnum : R|kotlin/Enum<io/github/expo/modules/v2/testdata/NotAnEnum>| {
+    @R|io/github/expo/modules/v2/Record|() public final enum class NotAnEnum : R|kotlin/Enum<io/github/expo/modules/v2/testdata/NotAnEnum>| {
         private constructor(): R|io/github/expo/modules/v2/testdata/NotAnEnum| {
             super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/NotAnEnum>|>()
         }
@@ -25,13 +25,13 @@ FILE: recordClassShapeErrors.kt
             public get(): R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/NotAnEnum>|
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final annotation class NotAnAnnotation : R|kotlin/Annotation| {
+    @R|io/github/expo/modules/v2/Record|() public final annotation class NotAnAnnotation : R|kotlin/Annotation| {
         public constructor(): R|io/github/expo/modules/v2/testdata/NotAnAnnotation| {
             super<R|kotlin/Any|>()
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public abstract class NotAbstract : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public abstract class NotAbstract : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/NotAbstract| {
             super<R|kotlin/Any|>()
         }
@@ -65,7 +65,7 @@ FILE: recordClassShapeErrors.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public sealed class NotSealed : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public sealed class NotSealed : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         protected constructor(): R|io/github/expo/modules/v2/testdata/NotSealed| {
             super<R|kotlin/Any|>()
         }
@@ -96,7 +96,7 @@ FILE: recordClassShapeErrors.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class Generic<T> : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class Generic<T> : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor<T>(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Generic<T>| {
             super<R|kotlin/Any|>()
         }
@@ -110,7 +110,7 @@ FILE: recordClassShapeErrors.kt
             super<R|kotlin/Any|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/Record|() public final inner class NotInner : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        @R|io/github/expo/modules/v2/Record|() public final inner class NotInner : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
             public io/github/expo/modules/v2/testdata/Outer.constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Outer.NotInner| {
                 super<R|kotlin/Any|>()
             }
@@ -146,7 +146,7 @@ FILE: recordClassShapeErrors.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class NoPrimaryConstructor : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class NoPrimaryConstructor : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/NoPrimaryConstructor| {
             super<R|kotlin/Any|>()
         }
@@ -177,7 +177,7 @@ FILE: recordClassShapeErrors.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class NotAProperty : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class NotAProperty : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(a: R|kotlin/Int|, b: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/NotAProperty| {
             super<R|kotlin/Any|>()
         }
@@ -211,7 +211,7 @@ FILE: recordClassShapeErrors.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class OwnCodec : R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class OwnCodec : R|io/github/expo/modules/v2/records/Record| {
         public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/OwnCodec| {
             super<R|kotlin/Any|>()
         }

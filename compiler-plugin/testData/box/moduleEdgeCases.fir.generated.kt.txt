@@ -3,7 +3,7 @@ package io.github.expo.modules.v2.testdata
 abstract class BaseModule : Module {
 }
 
-@JS
+@ExpoModule
 class WithNested : Module {
   class Nested {
   }
@@ -17,7 +17,7 @@ class WithNested : Module {
   }
 }
 
-@JS
+@ExpoModule
 object Arity : Module {
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "none", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "none")
@@ -52,7 +52,7 @@ object Arity : Module {
   }
 }
 
-@JS
+@ExpoModule
 object Derived : BaseModule {
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "own", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "own")
@@ -60,14 +60,14 @@ object Derived : BaseModule {
   }
 }
 
-@JS
+@ExpoModule
 object Empty : Module {
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     return "Empty"
   }
 }
 
-@JS
+@ExpoModule
 object Visibility : Module {
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "hidden", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "hidden")
@@ -75,3 +75,4 @@ object Visibility : Module {
     return "Visibility"
   }
 }
+

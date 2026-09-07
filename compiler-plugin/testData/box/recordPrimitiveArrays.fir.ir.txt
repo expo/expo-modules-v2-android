@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordPrimitiveArrays.kt
   CLASS CLASS name:Samples modality:FINAL visibility:public superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Samples
     PROPERTY name:ints visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:ints type:kotlin.IntArray visibility:private [final]

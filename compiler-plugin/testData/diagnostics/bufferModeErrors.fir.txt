@@ -1,0 +1,61 @@
+FILE: bufferModeErrors.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final class NotExported : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NotExported| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class UnexportedMembers : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/UnexportedMembers| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final fun plain(): R|kotlin/Int| {
+            ^plain Int(1)
+        }
+
+        @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final val plainProperty: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        public final fun plainArgument(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) value: R|kotlin/String|): R|kotlin/Int| {
+            ^plainArgument Int(1)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class NotConstructable : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) text: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/NotConstructable| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|, returns = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES|) public final class ClassReturns : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ClassReturns| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class ArgumentReturns : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ArgumentReturns| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun f(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|, returns = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES|) value: R|kotlin/String|): R|kotlin/Int| {
+            ^f Int(1)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final class Accepted : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Accepted| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES|, returns = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final fun f(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES|) value: R|kotlin/String|): R|kotlin/Int| {
+            ^f Int(1)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final val p: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+    }

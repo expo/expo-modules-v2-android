@@ -2,15 +2,16 @@
 
 package io.github.expo.modules.v2.testdata
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
 
 /** A module with nothing to export: `define` still has to name it, with an empty argument vararg. */
-@JS
+@ExpoModule
 object Empty : Module()
 
 /** The argument-count boundary the bridge enforces: Trampoline.MAX_ARGUMENTS is 8. */
-@JS
+@ExpoModule
 object Arity : Module() {
     @JS
     fun none(): Int = 0
@@ -40,7 +41,7 @@ object Arity : Module() {
  * A private member is exported too. `GetMethodID` resolves a private method, and unlike `internal`
  * the JVM does not mangle its name — which is why the checker rejects only `internal`.
  */
-@JS
+@ExpoModule
 object Visibility : Module() {
     @JS
     private fun hidden(a: Int): Int = a * 2
@@ -58,14 +59,14 @@ abstract class BaseModule : Module() {
     fun inherited(): Int = 1
 }
 
-@JS
+@ExpoModule
 object Derived : BaseModule() {
     @JS
     fun own(a: Int): Int = a + 1
 }
 
 /** A companion object and a nested class are not exports, and must not confuse discovery. */
-@JS
+@ExpoModule
 class WithNested : Module() {
     @JS
     fun value(): Int = 1

@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.react
 
 import com.facebook.react.bridge.ReactContext
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.async.JSScheduler
 
 /**

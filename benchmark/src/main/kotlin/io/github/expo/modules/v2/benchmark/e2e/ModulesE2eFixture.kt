@@ -1,9 +1,10 @@
 package io.github.expo.modules.v2.benchmark.e2e
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.testsupport.HermesRuntime
-import io.github.expo.modules.v2.modules.Module
 
 const val E2E_FIRST_WORKFLOW_RESULT = 688.52
 
@@ -33,7 +34,7 @@ data class E2eResult(
   val summary: String,
 ) : io.github.expo.modules.v2.records.Record
 
-@JS(name = "E2eProcessor")
+@ExpoModule(name = "E2eProcessor")
 class E2eProcessorModule : Module() {
   @JS
   val revision: Int = 2
@@ -58,7 +59,7 @@ class E2eProcessorModule : Module() {
   }
 }
 
-@JS(name = "E2eMetrics")
+@ExpoModule(name = "E2eMetrics")
 class E2eMetricsModule : Module() {
   private var batches = 0
 

@@ -2,10 +2,10 @@ package io.github.expo.modules.v2.async
 
 import io.github.expo.modules.v2.async.Promise.Companion.SETTLED
 import io.github.expo.modules.v2.types.TypeDescriptor
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater
 
 class Promise internal constructor(
   private val id: Long,

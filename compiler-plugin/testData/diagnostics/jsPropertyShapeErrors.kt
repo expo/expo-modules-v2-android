@@ -2,14 +2,15 @@
 
 package io.github.expo.modules.v2.testdata
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
 
-// A plain `val` on a `@JS` class is the ordinary shape of an exported property, so the accepted
-// shapes are collected at the bottom of this file.
+// A plain `val` on an `@ExpoModule` class is the ordinary shape of an exported property, so the
+// accepted shapes are collected at the bottom of this file.
 
-// The container is the companion object, and the companion carries no `@JS`.
-@JS
+// The container is the companion object, and the companion carries no `@ExpoModule`.
+@ExpoModule
 class CompanionMembers : Module() {
     companion object {
         @JS
@@ -17,8 +18,8 @@ class CompanionMembers : Module() {
     }
 }
 
-// A nested class is its own container, and it carries no `@JS` either.
-@JS
+// A nested class is its own container, and it carries no `@ExpoModule` either.
+@ExpoModule
 class NestedContainer : Module() {
     class Inner {
         @JS
@@ -33,7 +34,7 @@ fun localVariable() {
 }
 
 // The bridge reads a property off the module instance, so there is no receiver to bind.
-@JS
+@ExpoModule
 class ExtensionProperties : Module() {
     @JS
     val Int.<!JS_UNSUPPORTED_FUNCTION_SHAPE!>received<!>: Int get() = this
@@ -44,7 +45,7 @@ class ExtensionProperties : Module() {
 }
 
 // Accepted shapes: none of these report.
-@JS
+@ExpoModule
 class GoodProperties : Module() {
     @JS
     val readOnly: Int = 1
@@ -66,7 +67,7 @@ class GoodProperties : Module() {
     val Int.notExported: Int get() = this
 }
 
-@JS
+@ExpoModule
 object GoodObjectProperties : Module() {
     @JS
     val fromObject: Int = 1

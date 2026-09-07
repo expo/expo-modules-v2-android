@@ -1,7 +1,8 @@
 package io.github.expo.modules.v2.benchmark.jmh
 
-import io.github.expo.modules.v2.testsupport.HermesRuntime
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.jsi.JavaScriptValue
+import io.github.expo.modules.v2.testsupport.HermesRuntime
 
 /**
  * The harness for benchmarks whose measured op happens inside JavaScript.

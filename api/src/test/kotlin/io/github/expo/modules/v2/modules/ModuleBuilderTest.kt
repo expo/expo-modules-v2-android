@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.modules
 
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.codecFor
 import io.github.expo.modules.v2.types.AnyType
@@ -19,7 +19,7 @@ import io.github.expo.modules.v2.jsi.JavaScriptObject
 @Record
 private data class PlainRec(val n: Int) : io.github.expo.modules.v2.records.Record
 
-@Record(name = "FlaggedRecB", bufferSafe = false)
+@Record(bufferSafe = false)
 private class FlaggedRec(val h: JavaScriptObject) : io.github.expo.modules.v2.records.Record
 
 /**

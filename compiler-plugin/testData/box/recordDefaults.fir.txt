@@ -1,7 +1,7 @@
 FILE: recordDefaults.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class Opts : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class Opts : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(tags: R|kotlin/collections/List<kotlin/String>|, count: R|kotlin/Int| = Int(5), label: R|kotlin/String?| = String(x), derived: R|kotlin/Int| = R|<local>/count|.R|kotlin/Int.plus|(Int(1)), trailing: R|kotlin/collections/List<kotlin/Int>| = R|kotlin/collections/listOf|<R|kotlin/Int|>(Int(9))): R|io/github/expo/modules/v2/testdata/Opts| {
             super<R|kotlin/Any|>()
         }

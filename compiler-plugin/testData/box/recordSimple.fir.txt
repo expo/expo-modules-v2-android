@@ -1,7 +1,7 @@
 FILE: recordSimple.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class Point : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class Point : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(x: R|kotlin/Double|, y: R|kotlin/Double|): R|io/github/expo/modules/v2/testdata/Point| {
             super<R|kotlin/Any|>()
         }

@@ -1,24 +1,26 @@
 package io.github.expo.modules.v2.testapp
 
-import io.github.expo.modules.v2.annotations.Buffer
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.args.Trampoline
-import io.github.expo.modules.v2.testsupport.ExpoHermes
-import io.github.expo.modules.v2.testsupport.HermesRuntime
+import io.github.expo.modules.v2.converters.UrlConverter
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptRuntime
 import io.github.expo.modules.v2.jsi.JavaScriptValue
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.modules.ModuleRegistry
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.codecFor
+import io.github.expo.modules.v2.testsupport.ExpoHermes
+import io.github.expo.modules.v2.testsupport.HermesRuntime
 import io.github.expo.modules.v2.testsupport.TestSupport
-import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.AnyType
-import io.github.expo.modules.v2.types.buffered
+import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeDescriptor
-import io.github.expo.modules.v2.converters.UrlConverter
+import io.github.expo.modules.v2.types.buffered
 import java.net.URI
 import java.net.URL
 import kotlin.test.Test
@@ -201,7 +203,7 @@ private data class Defaults(
 ) : io.github.expo.modules.v2.records.Record
 
 /** Both crossing shapes for [Defaults]: the binary payload and the `Map` bridge. */
-@JS(name = "Defaults")
+@ExpoModule(name = "Defaults")
 private class DefaultsModule : Module() {
   /** Buffered: native writes a presence byte per optional field. */
   @JS
@@ -213,7 +215,8 @@ private class DefaultsModule : Module() {
    * an absent optional field is simply a key native left out — one Kotlin function per transport,
    * because a single one has exactly one.
    */
-  @JS(name = "describeMap", buffer = Buffer.NO)
+  @JS(name = "describeMap")
+  @BufferMode(Buffer.NO)
   fun describeMapped(value: Defaults): String = describe(value)
 }
 
@@ -271,7 +274,7 @@ private data class Wide(
   val field41: Int,
 ) : io.github.expo.modules.v2.records.Record
 
-@JS(name = "Wide")
+@ExpoModule(name = "Wide")
 private class WideModule : Module() {
   @JS
   fun echo(value: Wide): Wide = Wide(value.field0 + 1, value.field1 + 1, value.field2 + 1, value.field3 + 1, value.field4 + 1, value.field5 + 1, value.field6 + 1, value.field7 + 1, value.field8 + 1, value.field9 + 1, value.field10 + 1, value.field11 + 1, value.field12 + 1, value.field13 + 1, value.field14 + 1, value.field15 + 1, value.field16 + 1, value.field17 + 1, value.field18 + 1, value.field19 + 1, value.field20 + 1, value.field21 + 1, value.field22 + 1, value.field23 + 1, value.field24 + 1, value.field25 + 1, value.field26 + 1, value.field27 + 1, value.field28 + 1, value.field29 + 1, value.field30 + 1, value.field31 + 1, value.field32 + 1, value.field33 + 1, value.field34 + 1, value.field35 + 1, value.field36 + 1, value.field37 + 1, value.field38 + 1, value.field39 + 1, value.field40 + 1, value.field41 + 1)
@@ -281,7 +284,7 @@ private class WideModule : Module() {
 private data class Pulled(val n: Int, val tag: String, val note: String?) : io.github.expo.modules.v2.records.Record
 
 /** Fixture for the pull path: this codec's schema reaches native through [RecordRegistry.fetchSchema]. */
-@JS(name = "Pull")
+@ExpoModule(name = "Pull")
 private class PulledModule : Module() {
   @JS
   fun echo(value: Pulled): Pulled = Pulled(value.n + 1, value.tag, value.note)
@@ -297,7 +300,7 @@ private class PulledModule : Module() {
 @Record
 private data class Sticker(val id: Int, val label: String) : io.github.expo.modules.v2.records.Record
 
-@JS(name = "Dyn")
+@ExpoModule(name = "Dyn")
 private class DynamicRecordModule : Module() {
   @JS
   fun make(): Any = mapOf("kind" to "sticker", "value" to Sticker(7, "seven"))
@@ -307,7 +310,7 @@ private class DynamicRecordModule : Module() {
 @Record
 private data class Rogue(val n: Int) : io.github.expo.modules.v2.records.Record
 
-@JS(name = "Late")
+@ExpoModule(name = "Late")
 private class LateRegistrationModule : Module() {
   // A lazy list constructs Rogue for the FIRST time while the result is already being converted
   // element-wise. The ANY object-slot path decomposes records with a Kotlin up-call and never
@@ -395,7 +398,7 @@ private class HandleRecordModule : Module() {
 }
 
 /** Dynamic (`Any`) values carrying live handles: pure JNI object slots, no trampoline at all. */
-@JS(name = "DynH")
+@ExpoModule(name = "DynH")
 private class DynamicHandleModule : Module() {
   @JS
   fun wrap(obj: JavaScriptObject): Any = mapOf("original" to obj, "n" to 1)
@@ -409,7 +412,7 @@ private class DynamicHandleModule : Module() {
  * method receives a [JavaScriptValue]/[JavaScriptObject] handle over plain JNI (no trampoline,
  * no payload) and can hand one back, where it unwraps to the same underlying JS value.
  */
-@JS(name = "Js")
+@ExpoModule(name = "Js")
 private class JsHandleModule : Module() {
   @JS
   fun kindOf(value: JavaScriptValue): String = value.kind().name
@@ -515,20 +518,24 @@ private val nullableDurationType = AnyType(nullableDurationDescriptor)
  * Built-in converted-type fixture: user methods take/return `URL` and `Duration`, while JS and the
  * JNI signatures only ever see their bridge types.
  */
-@JS(name = "Conv")
+@ExpoModule(name = "Conv")
 private class ConvertedModule : Module() {
   // Pinned to JNI slots: every bridge value stays in its own slot, so these trampolines take no
   // payloadLength and have no argument-overflow branch — the conversion happens inline.
-  @JS(buffer = Buffer.NO)
+  @JS
+  @BufferMode(Buffer.NO)
   fun host(url: URL): String = url.host
 
-  @JS(buffer = Buffer.NO)
+  @JS
+  @BufferMode(Buffer.NO)
   fun home(): URL = URI("https://expo.dev/home").toURL()
 
-  @JS(buffer = Buffer.NO)
+  @JS
+  @BufferMode(Buffer.NO)
   fun total(a: Duration, b: Duration): Duration = a + b
 
-  @JS(buffer = Buffer.NO)
+  @JS
+  @BufferMode(Buffer.NO)
   fun describe(url: URL?): String = url?.host ?: "none"
 
   // Left on the defaults, which mixes both: the record rides the payload while the Duration bridges
@@ -646,7 +653,7 @@ private class BufferedLeafModule : Module() {
  * take. [PropertyModule] is the hand-written equivalent; this is the same contract reached through
  * generated trampolines.
  */
-@JS(name = "GenProps")
+@ExpoModule(name = "GenProps")
 private class GeneratedPropertyModule : Module() {
   /** A read in a JNI slot, which is where a String is fastest on the way out. A `val` has no setter. */
   @JS
@@ -741,7 +748,7 @@ private class UnannotatedModule : Module()
  * reader — `nextIntOrNull`, `nextStringOrNull`, `nextIntArray` and friends — which is the fast path
  * the plugin picks over the descriptor-driven `next(schema)`.
  */
-@JS(name = "GenLeaves")
+@ExpoModule(name = "GenLeaves")
 private class GeneratedLeafModule : Module() {
   @JS
   fun echoInt(value: Int?): Int? = value
@@ -762,10 +769,12 @@ private class GeneratedLeafModule : Module() {
   fun echoNullableString(value: String?): String? = value
 
   /** `Buffer.YES` on the one shape the default declines, because a bulk region copy usually wins. */
-  @JS(buffer = Buffer.YES)
+  @JS
+  @BufferMode(Buffer.YES)
   fun sumBuffered(values: IntArray): Int = values.sum()
 
-  @JS(buffer = Buffer.YES)
+  @JS
+  @BufferMode(Buffer.YES)
   fun echoBufferedDoubles(values: DoubleArray): DoubleArray = values
 
   /** Eight buffered arguments in one payload, read back in declared order. */
@@ -790,7 +799,7 @@ private class GeneratedLeafModule : Module() {
  * A nullable record through a generated trampoline. The runtime has always supported the shape; no
  * generated code exercised it until now.
  */
-@JS(name = "GenNullableRecord")
+@ExpoModule(name = "GenNullableRecord")
 private class GeneratedNullableRecordModule : Module() {
   @JS
   fun echo(value: Sticker?): Sticker? = value
@@ -857,7 +866,7 @@ private class PropertyModule : Module() {
 }
 
 /** Stateful, non-singleton receiver for the native-state pinning test. */
-@JS(name = "Counter")
+@ExpoModule(name = "Counter")
 private class CounterFixture : Module() {
   private var count = 0
 
@@ -869,7 +878,7 @@ private class CounterFixture : Module() {
 }
 
 /** Exercised by the primitive-array signature test (bulk JNI copies, zero boxing). */
-@JS(name = "Arr")
+@ExpoModule(name = "Arr")
 private class PrimitiveArrayModule : Module() {
   @JS
   fun echoDoubles(values: DoubleArray): DoubleArray = values
@@ -887,7 +896,7 @@ private class PrimitiveArrayModule : Module() {
   fun flags(values: BooleanArray): BooleanArray = values
 }
 
-@JS(name = "Units")
+@ExpoModule(name = "Units")
 private class UnitModule : Module() {
   private val unitList = AnyType(
     TypeDescriptor.Parametrized(List::class.java, false, arrayOf(TypeDescriptor.Simple(Unit::class.java, false))),
@@ -906,7 +915,8 @@ private class UnitModule : Module() {
   fun echo(values: List<Unit>): List<Unit> = values
 }
 
-@JS(name = "NullableScalars", buffer = Buffer.NO)
+@ExpoModule(name = "NullableScalars")
+@BufferMode(Buffer.NO)
 private class NullableScalarModule : Module() {
   @JS
   var count: Int? = null
@@ -927,7 +937,7 @@ private class NullableScalarModule : Module() {
  * `suspend` exports, covering the three ways a body can finish: inline, after a real suspension, and
  * by throwing. Everything here is generated by `@JS` — the trampolines, the promise, the transport.
  */
-@JS(name = "Async")
+@ExpoModule(name = "Async")
 private class AsyncModule : Module() {
   @JS
   suspend fun immediate(value: Int): String = "immediate:$value"
@@ -950,7 +960,8 @@ private class AsyncModule : Module() {
   }
 
   /** A scalar pinned to a JNI slot, so the result crosses boxed rather than on the buffer. */
-  @JS(returnBuffer = Buffer.NO)
+  @JS
+  @BufferMode(returns = Buffer.NO)
   suspend fun twice(value: Int): Int = value * 2
 
   @JS

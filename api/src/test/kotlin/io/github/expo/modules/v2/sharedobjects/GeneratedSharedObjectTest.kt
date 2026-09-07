@@ -1,8 +1,12 @@
 package io.github.expo.modules.v2.sharedobjects
 
-import io.github.expo.modules.v2.annotations.Buffer
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.ExpoSharedObject
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.modules.ModuleBuilder
 import io.github.expo.modules.v2.types.CppType
 import kotlin.test.Test
@@ -12,14 +16,14 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNull
 
 /**
- * Pins what the `@JS` plugin generates for a shared-object class, and for a module that passes one
- * around.
+ * Pins what the plugin generates for a `@ExpoSharedObject` class, and for an `@ExpoModule` that
+ * passes one around.
  *
  * A shared object is a reference, so the two rules under test are: it never rides the binary buffer,
  * and its codes carry the class id the native encoder type-checks against.
  */
 class GeneratedSharedObjectTest {
-  @JS
+  @ExpoSharedObject
   private class Player : SharedObject() {
     @JS fun play(): Int = 1
 
@@ -28,12 +32,12 @@ class GeneratedSharedObjectTest {
     @JS fun rename(name: String): String = name
   }
 
-  @JS(name = "Renamed")
+  @ExpoSharedObject(name = "Renamed")
   private class Speaker : SharedObject() {
     @JS fun mute() = Unit
   }
 
-  @JS
+  @ExpoModule
   private class Players : Module() {
     @JS fun create(): Player = Player()
 
@@ -41,7 +45,7 @@ class GeneratedSharedObjectTest {
 
     @JS fun maybe(player: Player?): Int = if (player == null) 0 else 1
 
-    @JS(buffer = Buffer.YES) fun optedIn(player: Player): Int = 0
+    @JS @BufferMode(Buffer.YES) fun optedIn(player: Player): Int = 0
   }
 
   private fun describe(sharedClass: Class<out SharedObject>) =

@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.modules
 
 import io.github.expo.modules.v2.args.Trampoline
-import io.github.expo.modules.v2.sharedobjects.SharedObject
+import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
 import io.github.expo.modules.v2.types.AnyType
 

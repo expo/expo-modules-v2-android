@@ -6,7 +6,7 @@ FILE: recordDefaultAccessors.kt
     }
     private final const val SECRET_CONSTANT: R|kotlin/String| = String(const)
         private get(): R|kotlin/String|
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class Accessors : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class Accessors : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(fromPrivateTopLevel: R|kotlin/Int| = R|io/github/expo/modules/v2/testdata/secret|(), fromPrivateConstant: R|kotlin/String| = R|io/github/expo/modules/v2/testdata/SECRET_CONSTANT|, fromCompanion: R|kotlin/Int| = Q|io/github/expo/modules/v2/testdata/Accessors|.R|io/github/expo/modules/v2/testdata/Accessors.Companion.companionDefault|, fromPrivateCompanion: R|kotlin/Int| = this@R|io/github/expo/modules/v2/testdata/Accessors.Companion|.R|io/github/expo/modules/v2/testdata/Accessors.Companion.privateCompanionDefault|): R|io/github/expo/modules/v2/testdata/Accessors| {
             super<R|kotlin/Any|>()
         }

@@ -7,7 +7,6 @@ import org.jetbrains.kotlin.fir.extensions.FirExtensionSessionComponent
 import org.jetbrains.kotlin.fir.extensions.predicate.DeclarationPredicate
 import org.jetbrains.kotlin.fir.extensions.predicateBasedProvider
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
-import org.jetbrains.kotlin.fir.symbols.impl.FirClassSymbol
 
 class JSPredicates(session: FirSession): FirExtensionSessionComponent(session) {
   val predicate: DeclarationPredicate = DeclarationPredicate.create {
@@ -21,8 +20,6 @@ class JSPredicates(session: FirSession): FirExtensionSessionComponent(session) {
 
 val FirSession.jsPredicates: JSPredicates by FirSession.sessionComponentAccessor<JSPredicates>()
 
-fun FirClassSymbol<*>.hasJsAnnotation(session: FirSession): Boolean =
-  session.predicateBasedProvider.matches(session.jsPredicates.predicate, this)
-
+/** Whether this member is declared `@JS`. */
 fun FirBasedSymbol<*>.hasJsAnnotation(session: FirSession): Boolean =
   session.predicateBasedProvider.matches(session.jsPredicates.predicate, this)

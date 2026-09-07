@@ -1,8 +1,11 @@
 package io.github.expo.modules.v2.modules
 
-import io.github.expo.modules.v2.annotations.Buffer
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.types.CppType
 import java.net.URL
@@ -20,7 +23,7 @@ private data class Pt(val x: Double, val y: Double) : io.github.expo.modules.v2.
 private data class Tainted(val value: Any?) : io.github.expo.modules.v2.records.Record
 
 /**
- * Pins the transport the `@JS` plugin picks for every value shape, as the code stream the registry
+ * Pins the transport the compiler plugin picks for every value shape, as the code stream the registry
  * actually ships to C++.
  *
  * The rule under test is one sentence: buffer a value whenever the wire format allows it, except a
@@ -31,7 +34,7 @@ class GeneratedModuleTest {
   private val buffered = CppType.USES_BUFFER
   private val nullable = CppType.NULLABLE
 
-  @JS(name = "Shapes")
+  @ExpoModule(name = "Shapes")
   private class Shapes : Module() {
     @JS fun unboxed(a: Int, b: Long, c: Float, d: Double, e: Boolean): Int = a
     @JS fun boxed(a: Int?, b: Double?, c: Boolean?): Int? = a
@@ -46,9 +49,9 @@ class GeneratedModuleTest {
     @JS fun converted(a: URL, b: Duration, c: Duration?): String = a.host
     @JS fun records(a: Pt, b: Tainted): Int = 0
     @JS fun recordLists(a: List<Pt>, b: List<Tainted>): Int = a.size
-    @JS(buffer = Buffer.NO) fun optedOut(a: String, b: List<Int>): Int = a.length
-    @JS fun optedIn(@JS(buffer = Buffer.YES) a: IntArray): Int = a.size
-    @JS(returnBuffer = Buffer.NO) fun plainReturn(a: Int): String = "$a"
+    @JS @BufferMode(Buffer.NO) fun optedOut(a: String, b: List<Int>): Int = a.length
+    @JS fun optedIn(@BufferMode(Buffer.YES) a: IntArray): Int = a.size
+    @JS @BufferMode(returns = Buffer.NO) fun plainReturn(a: Int): String = "$a"
   }
 
   private val definition = ModuleBuilder().also { Shapes().`define$ExpoModulesV2`(it) }
@@ -213,12 +216,12 @@ class GeneratedModuleTest {
   }
 
   @Test
-  fun `returnBuffer overrides the return value alone`() {
+  fun `BufferMode returns overrides the return value alone`() {
     assertContentEquals(intArrayOf(CppType.INT.code).toList(), args("plainReturn").single().toList())
     assertContentEquals(intArrayOf(CppType.STRING.code).toList(), returns("plainReturn").toList())
   }
 
-  @JS(name = "Props")
+  @ExpoModule(name = "Props")
   private class Props : Module() {
     @JS val version: String = "1.0"
     @JS var label: String = "expo"

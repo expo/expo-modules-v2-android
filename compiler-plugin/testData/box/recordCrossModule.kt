@@ -5,7 +5,7 @@
 // FILE: producer.kt
 package io.github.expo.modules.v2.testdata.producer
 
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Record
 
 // The supertype and the whole codec are written into this module's class files, so the consumer
 // below needs no plugin run of its own to see `Shared` as a record.
@@ -16,7 +16,7 @@ data class Shared(val n: Int, val label: String?)
 // FILE: consumer.kt
 package io.github.expo.modules.v2.testdata.consumer
 
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.records.Record as RecordMarker
 import io.github.expo.modules.v2.records.codecFor
 import io.github.expo.modules.v2.testdata.producer.Shared

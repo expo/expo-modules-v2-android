@@ -6,9 +6,13 @@ class ExpoModulesV2FirRegistrar : FirExtensionRegistrar() {
   override fun ExtensionRegistrarContext.configurePlugin() {
     +::RecordPredicates
     +::JSPredicates
+    +::SharedObjectPredicates
     +::RecordSupertypeGenerator
     +::RecordCodecGenerator
     +::RecordCheckers
     +::JSCheckers
+    +::ExpoModuleCheckers
+    +::BufferModeCheckers
+    +::SharedObjectCheckers
   }
 }

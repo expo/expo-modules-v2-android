@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.async
 
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineDispatcher
 
 /**
  * A [CoroutineDispatcher] that runs on the JS thread, for a module body that has to get back there

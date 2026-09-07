@@ -10,6 +10,7 @@ class ExpoModulesV2IrGenerationExtension : IrGenerationExtension {
     val symbols = SymbolFinder(pluginContext)
     val poet = TypeDescriptorPoet(pluginContext, symbols, moduleFragment)
     moduleFragment.acceptChildrenVoid(RecordCodecIrTransformer(pluginContext, symbols, poet))
-    moduleFragment.acceptChildrenVoid(JSModuleIrTransformer(pluginContext, symbols, poet))
+    moduleFragment.acceptChildrenVoid(ExpoModuleIrTransformer(symbols, pluginContext, poet))
+    moduleFragment.acceptChildrenVoid(ExpoSharedObjectIrTransformer(pluginContext, symbols, poet))
   }
 }

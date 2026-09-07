@@ -1,10 +1,11 @@
 package io.github.expo.modules.v2.modules
 
+import io.github.expo.kolibri.CalledFromNative
+import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
 import io.github.expo.modules.v2.binary.newSharedView
 import io.github.expo.modules.v2.core.ExpoModulesV2
-import io.github.expo.kolibri.CalledFromNative
-import io.github.expo.kolibri.binary.BinaryBuffer
 import java.nio.BufferOverflowException
 
 class ModuleRegistry {
@@ -22,7 +23,7 @@ class ModuleRegistry {
   }
 
   /**
-   * Registers a module that declares its exports with [io.github.expo.modules.v2.annotations.JS]. The name and
+   * Registers a module that declares its exports with [io.github.expo.modules.v2.JS]. The name and
    * every export come from the definition the compiler plugin generated on [module].
    */
   fun register(module: Module) {

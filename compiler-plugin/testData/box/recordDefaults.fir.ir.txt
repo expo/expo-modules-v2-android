@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordDefaults.kt
   CLASS CLASS name:Opts modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Opts
     PROPERTY name:tags visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:tags type:kotlin.collections.List<kotlin.String> visibility:private [final]

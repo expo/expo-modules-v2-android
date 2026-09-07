@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordNested.kt
   CLASS CLASS name:Inner modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Inner
     PROPERTY name:n visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]
@@ -216,7 +216,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordNested.kt
             CONST String type=kotlin.String value=")"
   CLASS CLASS name:LoopA modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.LoopA
     PROPERTY name:n visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]
@@ -509,7 +509,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordNested.kt
             CONST String type=kotlin.String value=")"
   CLASS CLASS name:LoopB modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.LoopB
     PROPERTY name:n visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]
@@ -802,7 +802,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordNested.kt
             CONST String type=kotlin.String value=")"
   CLASS CLASS name:Outer modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Outer
     PROPERTY name:inner visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:inner type:io.github.expo.modules.v2.testdata.Inner visibility:private [final]

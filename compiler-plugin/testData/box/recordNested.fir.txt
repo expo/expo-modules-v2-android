@@ -1,7 +1,7 @@
 FILE: recordNested.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class Inner : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class Inner : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(n: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Inner| {
             super<R|kotlin/Any|>()
         }
@@ -39,7 +39,7 @@ FILE: recordNested.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class Outer : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class Outer : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(inner: R|io/github/expo/modules/v2/testdata/Inner|, list: R|kotlin/collections/List<io/github/expo/modules/v2/testdata/Inner>|, maybe: R|io/github/expo/modules/v2/testdata/Inner?|): R|io/github/expo/modules/v2/testdata/Outer| {
             super<R|kotlin/Any|>()
         }
@@ -87,7 +87,7 @@ FILE: recordNested.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class LoopA : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class LoopA : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(n: R|kotlin/Int|, b: R|io/github/expo/modules/v2/testdata/LoopB?|): R|io/github/expo/modules/v2/testdata/LoopA| {
             super<R|kotlin/Any|>()
         }
@@ -130,7 +130,7 @@ FILE: recordNested.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class LoopB : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class LoopB : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(n: R|kotlin/Int|, a: R|io/github/expo/modules/v2/testdata/LoopA?|): R|io/github/expo/modules/v2/testdata/LoopB| {
             super<R|kotlin/Any|>()
         }

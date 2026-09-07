@@ -1,13 +1,12 @@
 package io.github.expo.modules.v2.testdata
 
-@JS
+@ExpoSharedObject
 class Listed : SharedObject {
   private val n: Int
     field = n
     private get
 
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
-  @JS
   constructor(n: Int) /* primary */ {
     super/*SharedObject*/()
     /* <init>() */
@@ -36,16 +35,15 @@ class Listed : SharedObject {
 
 }
 
-@JS(classes = [Listed::class])
+@ExpoModule(classes = [Listed::class])
 class Owner : Module {
-  @JS
+  @ExpoSharedObject
   class Nested : SharedObject {
     private val text: String
       field = text
       private get
 
     private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
-    @JS
     constructor(text: String) /* primary */ {
       super/*SharedObject*/()
       /* <init>() */
@@ -80,10 +78,10 @@ class Owner : Module {
 
   }
 
-  @JS
+  @ExpoSharedObject
   class NotConstructable : SharedObject {
     private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
-    constructor() /* primary */ {
+    private constructor() /* primary */ {
       super/*SharedObject*/()
       /* <init>() */
 
@@ -121,7 +119,7 @@ class Owner : Module {
 
 }
 
-@JS
+@ExpoSharedObject
 class Player : SharedObject {
   @JS
   var volume: Double
@@ -134,6 +132,10 @@ class Player : SharedObject {
     super/*SharedObject*/()
     /* <init>() */
 
+  }
+
+  /* static */ fun __construct$ExpoModulesV2(): Player {
+    return Player()
   }
 
   /* static */ fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
@@ -171,7 +173,7 @@ class Player : SharedObject {
 
 }
 
-@JS
+@ExpoModule
 class Players : Module {
   constructor() /* primary */ {
     super/*Module*/()
@@ -206,13 +208,17 @@ class Players : Module {
 
 }
 
-@JS(name = "Renamed")
+@ExpoSharedObject(name = "Renamed")
 class Speaker : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
   constructor() /* primary */ {
     super/*SharedObject*/()
     /* <init>() */
 
+  }
+
+  /* static */ fun __construct$ExpoModulesV2(): Speaker {
+    return Speaker()
   }
 
   /* static */ fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
@@ -233,6 +239,33 @@ class Speaker : SharedObject {
 
 }
 
+@ExpoSharedObject
+class TextRef : SharedRef<StringBuilder> {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor(text: StringBuilder) /* primary */ {
+    super/*SharedRef*/<StringBuilder>(ref = text)
+    /* <init>() */
+
+  }
+
+  /* static */ fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "length", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "length")
+    return "TextRef"
+  }
+
+  private /* static */ fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)
+  }
+
+  @JS
+  fun length(): Int {
+    return <this>.<get-ref>().<get-length>()
+  }
+
+}
+
 fun box(): String {
   val suffix: String = "__trampoline$ExpoModulesV2"
   val player: String = "Lio/github/expo/modules/v2/testdata/Player;"
@@ -249,20 +282,39 @@ fun box(): String {
       }
     }
   }
+  val base: Class<SharedObject> = <get-java><SharedObject>(/* <this> = SharedObject::class */)
+  { // BLOCK
+    val tmp_1: Iterator<Class<out SharedObject>> = listOf<Class<out SharedObject>>(elements = [<get-java><Player>(/* <this> = Player::class */), <get-java><Speaker>(/* <this> = Speaker::class */), <get-java><Listed>(/* <this> = Listed::class */), <get-java><TextRef>(/* <this> = TextRef::class */)]).iterator()
+    while (tmp_1.hasNext()) { // BLOCK
+      val owner: Class<out SharedObject> = tmp_1.next()
+      { // BLOCK
+        when {
+          base.isAssignableFrom(p0 = owner).not() -> { // BLOCK
+            return owner.getSimpleName() + ": not a ExpoSharedObject"
+          }
+        }
+      }
+    }
+  }
+  when {
+    EQEQ(arg0 = <get-java><TextRef>(/* <this> = TextRef::class */).getSuperclass(), arg1 = <get-java><SharedRef<*>>(/* <this> = SharedRef<*>::class */)).not() -> { // BLOCK
+      return "TextRef: declared base replaced by " + <get-java><TextRef>(/* <this> = TextRef::class */).getSuperclass()
+    }
+  }
   val expected: Map<Class<out Any>, Map<String, String>> = mapOf<Class<out Any>, Map<String, String>>(pairs = [to<Class<Players>, Map<String, String>>(/* <this> = <get-java><Players>(/* <this> = Players::class */), */ that = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "volumeOf" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "maybe" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "create" + suffix, */ that = "<absent>")])), to<Class<Player>, Map<String, String>>(/* <this> = <get-java><Player>(/* <this> = Player::class */), */ that = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "rename" + suffix, */ that = "(I)Ljava/lang/String;"), to<String, String>(/* <this> = "play" + suffix, */ that = "<absent>")]))])
   { // BLOCK
-    val tmp_1: Iterator<Entry<Class<out Any>, Map<String, String>>> = iterator<Class<out Any>, Map<String, String>>(/* <this> = expected */)
-    while (tmp_1.hasNext()) { // BLOCK
-      val tmp_2: Entry<Class<out Any>, Map<String, String>> = tmp_1.next()
-      val owner: Class<out Any> = component1<Class<out Any>, Map<String, String>>(/* <this> = tmp_2 */)
-      val methods: Map<String, String> = component2<Class<out Any>, Map<String, String>>(/* <this> = tmp_2 */)
+    val tmp_2: Iterator<Entry<Class<out Any>, Map<String, String>>> = iterator<Class<out Any>, Map<String, String>>(/* <this> = expected */)
+    while (tmp_2.hasNext()) { // BLOCK
+      val tmp_3: Entry<Class<out Any>, Map<String, String>> = tmp_2.next()
+      val owner: Class<out Any> = component1<Class<out Any>, Map<String, String>>(/* <this> = tmp_3 */)
+      val methods: Map<String, String> = component2<Class<out Any>, Map<String, String>>(/* <this> = tmp_3 */)
       { // BLOCK
         { // BLOCK
-          val tmp_3: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = methods */)
-          while (tmp_3.hasNext()) { // BLOCK
-            val tmp_4: Entry<String, String> = tmp_3.next()
-            val name: String = component1<String, String>(/* <this> = tmp_4 */)
-            val want: String = component2<String, String>(/* <this> = tmp_4 */)
+          val tmp_4: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = methods */)
+          while (tmp_4.hasNext()) { // BLOCK
+            val tmp_5: Entry<String, String> = tmp_4.next()
+            val name: String = component1<String, String>(/* <this> = tmp_5 */)
+            val want: String = component2<String, String>(/* <this> = tmp_5 */)
             { // BLOCK
               val got: String = descriptorOf(owner = owner, name = name)
               when {
@@ -275,9 +327,9 @@ fun box(): String {
     }
   }
   { // BLOCK
-    val tmp_5: Iterator<Class<out SharedObject>> = listOf<Class<out SharedObject>>(elements = [<get-java><Listed>(/* <this> = Listed::class */), <get-java><Nested>(/* <this> = Nested::class */), <get-java><NotConstructable>(/* <this> = NotConstructable::class */)]).iterator()
-    while (tmp_5.hasNext()) { // BLOCK
-      val owner: Class<out SharedObject> = tmp_5.next()
+    val tmp_6: Iterator<Class<out SharedObject>> = listOf<Class<out SharedObject>>(elements = [<get-java><Listed>(/* <this> = Listed::class */), <get-java><Nested>(/* <this> = Nested::class */), <get-java><NotConstructable>(/* <this> = NotConstructable::class */)]).iterator()
+    while (tmp_6.hasNext()) { // BLOCK
+      val owner: Class<out SharedObject> = tmp_6.next()
       { // BLOCK
         when {
           EQEQ(arg0 = descriptorOf(owner = owner, name = "define$ExpoModulesV2"), arg1 = "<absent>") -> { // BLOCK
@@ -312,13 +364,13 @@ private fun descriptor(type: Class<*>): String {
 
 private fun descriptorOf(owner: Class<*>, name: String): String {
   val method: Method = { // BLOCK
-    val tmp_6: Method? = firstOrNull<@FlexibleNullability Method?>(/* <this> = owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+    val tmp_7: Method? = firstOrNull<@FlexibleNullability Method?>(/* <this> = owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
       return EQEQ(arg0 = it.getName(), arg1 = name)
     }
 )
     when {
-      EQEQ(arg0 = tmp_6, arg1 = null) -> return "<absent>"
-      else -> tmp_6
+      EQEQ(arg0 = tmp_7, arg1 = null) -> return "<absent>"
+      else -> tmp_7
     }
   }
   val parameters: String = joinToString<@FlexibleNullability Class<*>?>(/* <this> = method.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ separator = "", transform = local fun <anonymous>(it: @FlexibleNullability Class<*>?): CharSequence {

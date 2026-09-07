@@ -77,6 +77,13 @@ internal class ValuePlan(
 internal class TransportPolicy(context: IrPluginContext, private val symbols: SymbolFinder) {
   private val irBuiltIns = context.irBuiltIns
 
+  fun supports(type: IrType): Boolean = try {
+    plan(type, BufferChoice.AUTO, Crossing.INBOUND)
+    true
+  } catch (_: IllegalStateException) {
+    false
+  }
+
   fun plan(type: IrType, choice: BufferChoice, crossing: Crossing): ValuePlan {
     val kind = kindOf(type)
     val buffered = when (choice) {

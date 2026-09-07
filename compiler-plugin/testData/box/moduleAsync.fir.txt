@@ -1,25 +1,25 @@
 FILE: moduleAsync.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/JS|() public final class AsyncShapes : R|io/github/expo/modules/v2/modules/Module| {
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class AsyncShapes : R|io/github/expo/modules/v2/Module| {
         public constructor(): R|io/github/expo/modules/v2/testdata/AsyncShapes| {
-            super<R|io/github/expo/modules/v2/modules/Module|>()
+            super<R|io/github/expo/modules/v2/Module|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|(buffer = Q|io/github/expo/modules/v2/annotations/Buffer|.R|io/github/expo/modules/v2/annotations/Buffer.NO|) public final suspend fun scale(value: R|kotlin/Int|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final suspend fun scale(value: R|kotlin/Int|): R|kotlin/Int| {
             R|kotlinx/coroutines/delay|(Long(1))
             ^scale R|<local>/value|.R|kotlin/Int.times|(Int(2))
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final suspend fun greet(name: R|kotlin/String|): R|kotlin/String| {
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun greet(name: R|kotlin/String|): R|kotlin/String| {
             ^greet <strcat>(String(Hello, ), R|<local>/name|, String(!))
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final suspend fun repeat(@R|io/github/expo/modules/v2/annotations/JS|(buffer = Q|io/github/expo/modules/v2/annotations/Buffer|.R|io/github/expo/modules/v2/annotations/Buffer.NO|) times: R|kotlin/Int|, value: R|kotlin/String|): R|kotlin/String| {
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun repeat(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) times: R|kotlin/Int|, value: R|kotlin/String|): R|kotlin/String| {
             ^repeat R|<local>/value|.R|kotlin/text/repeat|(R|<local>/times|)
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final suspend fun clear(): R|kotlin/Unit| {
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun clear(): R|kotlin/Unit| {
             ^clear R|kotlinx/coroutines/delay|(Long(1))
         }
 

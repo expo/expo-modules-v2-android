@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.testdata
 
-@JS
+@ExpoModule
 object Buffered : Module {
   private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
   private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
@@ -110,7 +110,7 @@ object Buffered : Module {
 
 }
 
-@JS
+@ExpoModule
 object Converted : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false)
   private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)
@@ -140,12 +140,14 @@ object Converted : Module {
     return Bridge.toJni(value = <this>.total(a = Bridge.fromJni(value = p0, type = #type$0) as Duration, b = Bridge.fromJni(value = p1, type = #type$0) as Duration), type = #type$0) as Double
   }
 
-  @JS(buffer = Buffer.NO)
+  @JS
+  @BufferMode(value = Buffer.NO)
   fun firstHost(urls: List<URL>): String {
     return first<URL>(/* <this> = urls */).getHost() /*!! String */
   }
 
-  @JS(buffer = Buffer.NO)
+  @JS
+  @BufferMode(value = Buffer.NO)
   fun host(url: URL): String {
     return url.getHost() /*!! String */
   }

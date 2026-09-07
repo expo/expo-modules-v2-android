@@ -1,7 +1,7 @@
 FILE: recordContainers.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class Bag : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class Bag : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(tags: R|kotlin/collections/List<kotlin/String>|, counts: R|kotlin/collections/List<kotlin/Int>|, maybes: R|kotlin/collections/List<kotlin/String?>|, ids: R|kotlin/collections/Set<kotlin/Long>|, meta: R|kotlin/collections/Map<kotlin/String, kotlin/Any?>|, names: R|kotlin/Array<kotlin/String>|, nested: R|kotlin/collections/List<kotlin/collections/List<kotlin/Int>>|, absent: R|kotlin/collections/List<kotlin/String>?|, absentNames: R|kotlin/Array<kotlin/String>?|, mutableTags: R|kotlin/collections/MutableList<kotlin/String>|, mutableMeta: R|kotlin/collections/MutableMap<kotlin/String, kotlin/Int>|): R|io/github/expo/modules/v2/testdata/Bag| {
             super<R|kotlin/Any|>()
         }

@@ -1,11 +1,13 @@
 package io.github.expo.modules.v2.testapp
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
-import io.github.expo.modules.v2.modules.Module
-import io.github.expo.modules.v2.sharedobjects.SharedObject
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.ExpoSharedObject
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
-import io.github.expo.modules.v2.sharedobjects.SharedRef
+import io.github.expo.modules.v2.SharedRef
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
 import io.github.expo.modules.v2.testsupport.TestSupport
@@ -25,7 +27,7 @@ import kotlin.test.assertTrue
  * Described by hand here, in the shape the compiler plugin will generate — the same arrangement
  * [HermesRuntimeTest]'s trampoline fixtures use.
  */
-private class Counter : SharedObject() {
+private class Counter : io.github.expo.modules.v2.SharedObject() {
   private var count: Int = 0
 
   var releaseCount: Int = 0
@@ -45,7 +47,7 @@ private class Counter : SharedObject() {
 }
 
 /** A second class, so a declared parameter type can be shown to reject the wrong one. */
-private class Tag : SharedObject() {
+private class Tag : io.github.expo.modules.v2.SharedObject() {
   fun label(): String = "tag"
 }
 
@@ -71,54 +73,62 @@ private class TagModule : Module() {
   fun create(): Tag = Tag()
 }
 
-@JS
-private class Greeter @JS constructor(private val text: String) : SharedObject() {
+@ExpoSharedObject
+private class Greeter(private val text: String) : SharedObject() {
   @JS fun greet(name: String): String = "$text, $name!"
 
   @JS val greeting: String get() = text
 }
 
 /**
- * The declarative form: a `@JS` shared-object class nested inside a module is exposed on it without
+ * The declarative form: a `@ExpoSharedObject` class nested inside a module is exposed on it without
  * being listed, because nesting already says which module owns it.
  */
-@JS
+@ExpoModule
 private class Widgets : Module() {
-  @JS
-  class Label @JS constructor(private val text: String) : SharedObject() {
+  @ExpoSharedObject
+  class Label(private val text: String) : SharedObject() {
     @JS
     fun render(): String = "[$text]"
   }
 
-  /** Nested and shared, but with no constructor for JavaScript, so not constructable there. */
-  @JS
-  class Hidden : SharedObject() {
+  /**
+   * Nested and shared, but its only constructor is private, so JavaScript gets no class object.
+   * That is how a shared object opts out of `new` now that a sole public constructor is taken as
+   * the one to expose.
+   */
+  @ExpoSharedObject
+  class Hidden private constructor() : SharedObject() {
     @JS
     fun name(): String = "hidden"
+
+    companion object {
+      fun create(): Hidden = Hidden()
+    }
   }
 
   @JS
   fun renderOf(label: Label): String = label.render()
 
   @JS
-  fun hidden(): Hidden = Hidden()
+  fun hidden(): Hidden = Hidden.create()
 }
 
 /** Declared outside any module, so the module has to list it. */
-@JS(name = "Renamed")
-private class Badge @JS constructor(private val n: Int) : SharedObject() {
+@ExpoSharedObject(name = "Renamed")
+private class Badge(private val n: Int) : SharedObject() {
   @JS
   fun value(): Int = n
 }
 
-@JS(classes = [Badge::class])
+@ExpoModule(classes = [Badge::class])
 private class Badges : Module()
 
 @Record
 private data class Origin(val x: Int, val y: Int) : io.github.expo.modules.v2.records.Record
 
-@JS
-private class Marker @JS constructor(
+@ExpoSharedObject
+private class Marker(
   private val count: Int,
   private val origin: Origin,
   private val tags: List<String>,
@@ -127,22 +137,22 @@ private class Marker @JS constructor(
   fun describe(): String = "$count@${origin.x},${origin.y}:${tags.joinToString("|")}"
 }
 
-@JS(classes = [Marker::class])
+@ExpoModule(classes = [Marker::class])
 private class Markers : Module() {
   @JS
   fun describeOf(marker: Marker): String = marker.describe()
 }
 
-@JS
-private class Window @JS constructor(private val span: kotlin.time.Duration) : SharedObject() {
+@ExpoSharedObject
+private class Window(private val span: kotlin.time.Duration) : SharedObject() {
   @JS
   fun millis(): Int = span.inWholeMilliseconds.toInt()
 }
 
-@JS(classes = [Window::class])
+@ExpoModule(classes = [Window::class])
 private class Windows : Module()
 
-@JS(classes = [Greeter::class])
+@ExpoModule(classes = [Greeter::class])
 private class Greeters : Module() {
   private var last: Greeter? = null
 
@@ -159,10 +169,11 @@ private class Greeters : Module() {
 }
 
 /**
- * The same thing again, declared with `@JS` instead of by hand — what an author actually writes.
- * The plugin fills the same [io.github.expo.modules.v2.modules.ModuleBuilder] for both bases.
+ * The same thing again, declared with `@ExpoSharedObject` instead of by hand — what an author actually
+ * writes. The plugin fills the same [io.github.expo.modules.v2.modules.ModuleBuilder] for both
+ * bases, and adds the `ExpoSharedObject` supertype this class never names.
  */
-@JS
+@ExpoSharedObject
 private class Timer : SharedObject() {
   @JS var seconds: Int = 0
 
@@ -172,16 +183,16 @@ private class Timer : SharedObject() {
 }
 
 /** A `SharedRef`: an opaque handle to a native value, exposing nothing of the value itself. */
-@JS
+@ExpoSharedObject
 private class TextRef(text: StringBuilder) : SharedRef<StringBuilder>(text) {
   @JS fun length(): Int = ref.length
 }
 
-@JS
+@ExpoSharedObject
 private class NumberRef(number: java.util.concurrent.atomic.AtomicInteger) :
   SharedRef<java.util.concurrent.atomic.AtomicInteger>(number)
 
-@JS
+@ExpoModule
 private class Refs : Module() {
   @JS fun text(value: String): TextRef = TextRef(StringBuilder(value))
 
@@ -194,7 +205,7 @@ private class Refs : Module() {
   @JS fun readAny(ref: SharedRef<StringBuilder>): String = ref.ref.toString()
 }
 
-@JS
+@ExpoModule
 private class Timers : Module() {
   private var last: Timer? = null
 
@@ -747,7 +758,7 @@ class SharedObjectTest {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register(Badges())
 
-      // `Badge` carries @JS(name = "Renamed"), so that is the name the class object takes — the
+      // `Badge` carries @ExpoSharedObject(name = "Renamed"), so that is the name the class object takes — the
       // same rule every other export follows.
       assertEquals(
         "7",
@@ -807,12 +818,12 @@ class SharedObjectTest {
   }
 
   @Test
-  fun `a nested shared class with no annotated constructor is not exposed`() {
+  fun `a nested shared class with no public constructor is not exposed`() {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register(Widgets())
 
-      // `Hidden` is a nested @JS shared object, but nothing marked a constructor for JavaScript,
-      // so there is nothing to construct and no class object is installed.
+      // `Hidden`'s only constructor is private, so there is nothing for `new` to reach and no
+      // class object is installed.
       assertEquals("undefined", runtime.evaluateAsString("typeof expo.modules.Widgets.Hidden"))
       // It still works as a shared object when Kotlin hands one over.
       assertEquals("hidden", runtime.evaluateAsString("expo.modules.Widgets.hidden().name()"))

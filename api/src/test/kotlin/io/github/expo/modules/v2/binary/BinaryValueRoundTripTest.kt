@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.binary
 
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeDescriptor

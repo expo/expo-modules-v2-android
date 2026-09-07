@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.testdata
 
-@JS(name = "Instance")
+@ExpoModule(name = "Instance")
 class DirectInstance : Module {
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "echo", argTypes = [AnyType(descriptor = Long, useBuffer = false)], returns = AnyType(descriptor = Long, useBuffer = false), methodName = "echo")
@@ -8,7 +8,7 @@ class DirectInstance : Module {
   }
 }
 
-@JS
+@ExpoModule
 object Direct : Module {
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "add", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "add")

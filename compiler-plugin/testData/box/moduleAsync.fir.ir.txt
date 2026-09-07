@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
-  CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
+  CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      ExpoModule(name = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.AsyncShapes
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
@@ -11,21 +11,21 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
           ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
     CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.AsyncShapes [primary]
       BLOCK_BODY
-        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.Module'
-        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.Unit
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.Module'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.Unit
     FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
-        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.modules.Module
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.Module
     FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
-        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.modules.Module
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.Module
     FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
-        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.modules.Module
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.Module
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:clear__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:promise index:1 type:io.github.expo.modules.v2.async.Promise
@@ -44,7 +44,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:builder index:1 type:io.github.expo.modules.v2.modules.ModuleBuilder
       overridden:
-        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.modules.Module
+        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.Module
       BLOCK_BODY
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
           ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.AsyncShapes.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
@@ -176,7 +176,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
     FUN name:clear visibility:public modality:FINAL returnType:kotlin.Unit [suspend]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun clear (): kotlin.Unit declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           CALL 'public final fun delay (timeMillis: kotlin.Long): kotlin.Unit declared in kotlinx.coroutines' type=kotlin.Unit origin=null
@@ -185,7 +185,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:name index:1 type:kotlin.String
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun greet (name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           STRING_CONCATENATION type=kotlin.String
@@ -196,10 +196,10 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:times index:1 type:kotlin.Int
         annotations:
-          JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
+          BufferMode(value = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.Buffer, returns = <null>)
       VALUE_PARAMETER kind:Regular name:value index:2 type:kotlin.String
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun repeat (times: kotlin.Int, value: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.AsyncShapes'
           CALL 'public final fun repeat (<this>: kotlin.CharSequence, n: kotlin.Int): kotlin.String declared in kotlin.text' type=kotlin.String origin=null
@@ -209,7 +209,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:value index:1 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
+        BufferMode(value = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.Buffer, returns = <null>)
       BLOCK_BODY
         CALL 'public final fun delay (timeMillis: kotlin.Long): kotlin.Unit declared in kotlinx.coroutines' type=kotlin.Unit origin=null
           ARG timeMillis: CONST Long type=kotlin.Long value=1
@@ -222,7 +223,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VAR name:clazz type:java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> [val]
         CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=GET_PROPERTY
           TYPE_ARG T: io.github.expo.modules.v2.testdata.AsyncShapes
-          ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.AsyncShapes>
+          ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:AsyncShapes modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.AsyncShapes>
       VAR name:int type:java.lang.Class<kotlin.Int>? [val]
         CALL 'public final fun <get-javaPrimitiveType> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-javaPrimitiveType>>): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
           TYPE_ARG T: kotlin.Int

@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.testdata
 
-@JS
+@ExpoModule
 class AsyncShapes : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false)
   fun clear__trampoline$ExpoModulesV2(promise: Promise) {

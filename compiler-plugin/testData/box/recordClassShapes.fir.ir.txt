@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordClassShapes.kt
   CLASS CLASS name:Empty modality:FINAL visibility:public superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Empty
     CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Empty>]
       thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Empty.RecordCodec$ExpoModulesV2
@@ -136,7 +136,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordClassShapes.kt
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.records.Record
   CLASS CLASS name:Explicit modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Explicit
     PROPERTY name:a visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]
@@ -290,7 +290,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordClassShapes.kt
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.records.Record
   CLASS CLASS name:Hidden modality:FINAL visibility:private superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Hidden
     PROPERTY name:a visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]
@@ -449,7 +449,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordClassShapes.kt
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Host
     CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
       annotations:
-        Record(name = <null>, bufferSafe = <null>)
+        Record(bufferSafe = <null>)
       thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Host.Nested
       PROPERTY name:a visibility:public modality:FINAL [val]
         FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]
@@ -623,7 +623,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordClassShapes.kt
         public open fun toString (): kotlin.String declared in kotlin.Any
   CLASS CLASS name:Plain modality:FINAL visibility:public superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Plain
     PROPERTY name:a visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]
@@ -805,7 +805,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordClassShapes.kt
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.records.Record
   CLASS CLASS name:WithCompanion modality:FINAL visibility:public superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.WithCompanion
     PROPERTY name:a visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.Int visibility:private [final]

@@ -7,6 +7,6 @@
 namespace expo::modules::v2 {
   struct JSharedObject : kolibri::JavaClass<JSharedObject> {
     static constexpr std::string_view descriptor =
-      "io/github/expo/modules/v2/sharedobjects/SharedObject";
+      "io/github/expo/modules/v2/SharedObject";
   };
 } // namespace expo::modules::v2

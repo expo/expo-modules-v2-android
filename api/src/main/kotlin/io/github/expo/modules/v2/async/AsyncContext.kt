@@ -1,10 +1,10 @@
 package io.github.expo.modules.v2.async
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.args.Bridge
 import io.github.expo.modules.v2.args.Trampoline
 import io.github.expo.modules.v2.core.ExpoModulesV2
 import io.github.expo.modules.v2.types.TypeDescriptor
-import io.github.expo.kolibri.CalledFromNative
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope

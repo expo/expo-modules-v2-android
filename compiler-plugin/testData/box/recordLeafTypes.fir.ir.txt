@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordLeafTypes.kt
   CLASS CLASS name:Leaves modality:FINAL visibility:public superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = false)
+      Record(bufferSafe = false)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Leaves
     PROPERTY name:duration visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:duration type:kotlin.time.Duration visibility:private [final]

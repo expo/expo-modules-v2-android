@@ -2,15 +2,19 @@
 
 package io.github.expo.modules.v2.testdata
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.modules.Module
-import io.github.expo.modules.v2.sharedobjects.SharedObject
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.ExpoSharedObject
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.SharedRef
 
 /**
- * The other `@JS` base. A shared-object class declares the same shapes a module does and fills the
- * same builder, so the plugin treats the two alike from `define$ExpoModulesV2` down.
+ * The other export base. A `@ExpoSharedObject` class declares the same shapes a module does and fills
+ * the same builder, so the plugin treats the two alike from `define$ExpoModulesV2` down. The base
+ * class itself is added by the plugin, so the class body below names only `@ExpoSharedObject`.
  */
-@JS
+@ExpoSharedObject
 class Player : SharedObject() {
     @JS
     fun play(): Int = 1
@@ -23,39 +27,46 @@ class Player : SharedObject() {
     fun rename(name: String): String = name
 }
 
-@JS(name = "Renamed")
+@ExpoSharedObject(name = "Renamed")
 class Speaker : SharedObject() {
     @JS
     fun mute() = Unit
+}
+
+/** A `SharedRef` declares its own base, so the plugin adds nothing to the supertype list. */
+@ExpoSharedObject
+class TextRef(text: StringBuilder) : SharedRef<StringBuilder>(text) {
+    @JS
+    fun length(): Int = ref.length
 }
 
 /**
  * The two ways a class reaches a module. `Nested` is found because it lives inside the module —
  * nesting already says which module owns it — and `Listed` has to be named, being declared outside.
  */
-@JS
-class Listed @JS constructor(private val n: Int) : SharedObject() {
+@ExpoSharedObject
+class Listed(private val n: Int) : SharedObject() {
     @JS
     fun value(): Int = n
 }
 
-@JS(classes = [Listed::class])
+@ExpoModule(classes = [Listed::class])
 class Owner : Module() {
-    @JS
-    class Nested @JS constructor(private val text: String) : SharedObject() {
+    @ExpoSharedObject
+    class Nested(private val text: String) : SharedObject() {
         @JS
         fun render(): String = text
     }
 
-    /** Nested and shared, but with no constructor for JavaScript, so not constructable there. */
-    @JS
-    class NotConstructable : SharedObject() {
+    /** A private sole constructor: nothing for `new` to reach, so no class object is built. */
+    @ExpoSharedObject
+    class NotConstructable private constructor() : SharedObject() {
         @JS
         fun name(): String = "hidden"
     }
 }
 
-@JS
+@ExpoModule
 class Players : Module() {
     @JS
     fun create(): Player = Player()
@@ -97,6 +108,18 @@ fun box(): String {
         }
     }
 
+    // The plugin puts the base class in place of `Any`, so an annotated class *is* a shared object
+    // even though it never named one.
+    val base = io.github.expo.modules.v2.SharedObject::class.java
+    for (owner in listOf(Player::class.java, Speaker::class.java, Listed::class.java, TextRef::class.java)) {
+        if (!base.isAssignableFrom(owner)) {
+            return "${owner.simpleName}: not a ExpoSharedObject"
+        }
+    }
+    if (TextRef::class.java.superclass != SharedRef::class.java) {
+        return "TextRef: declared base replaced by ${TextRef::class.java.superclass}"
+    }
+
     val expected = mapOf(
         // No conversion and nothing to buffer either way, so the bridge calls these directly.
         Players::class.java to mapOf(
@@ -118,8 +141,8 @@ fun box(): String {
         }
     }
 
-    // Both discovery routes reach `define$ExpoModulesV2`, and a nested class without an annotated
-    // constructor is left out of it. What each route emits is pinned by the generated-code dump
+    // Both discovery routes reach `define$ExpoModulesV2`, and a nested class with no constructor
+    // JavaScript can call is left out of it. What each route emits is pinned by the generated-code dump
     // beside this file; here we only check the classes themselves compiled as shared objects.
     for (owner in listOf(Listed::class.java, Owner.Nested::class.java, Owner.NotConstructable::class.java)) {
         if (descriptorOf(owner, "define\$ExpoModulesV2") == "<absent>") {

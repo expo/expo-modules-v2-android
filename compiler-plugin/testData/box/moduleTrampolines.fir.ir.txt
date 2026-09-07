@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
-  CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
+  CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      ExpoModule(name = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Buffered
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
@@ -25,7 +25,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
               GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
     PROPERTY name:motto visibility:public modality:FINAL [var]
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       FIELD PROPERTY_BACKING_FIELD name:motto type:kotlin.String visibility:private
         EXPRESSION_BODY
           CONST String type=kotlin.String value="carpe diem"
@@ -46,7 +46,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
             value: GET_VAR '<set-?>: kotlin.String declared in io.github.expo.modules.v2.testdata.Buffered.<set-motto>' type=kotlin.String origin=null
     PROPERTY name:isReady visibility:public modality:FINAL [val]
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       FIELD PROPERTY_BACKING_FIELD name:isReady type:kotlin.Boolean visibility:private [final]
         EXPRESSION_BODY
           CONST Boolean type=kotlin.Boolean value=true
@@ -59,26 +59,26 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
               receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Buffered declared in io.github.expo.modules.v2.testdata.Buffered.<get-isReady>' type=io.github.expo.modules.v2.testdata.Buffered origin=null
     CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.Buffered [primary]
       BLOCK_BODY
-        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.Module'
-        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.Unit
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.Module'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.Unit
     FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
-        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.modules.Module
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.Module
     FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
-        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.modules.Module
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.Module
     FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
-        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.modules.Module
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.Module
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Buffered
       VALUE_PARAMETER kind:Regular name:builder index:1 type:io.github.expo.modules.v2.modules.ModuleBuilder
       overridden:
-        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.modules.Module
+        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.Module
       BLOCK_BODY
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
           ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Buffered.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
@@ -285,7 +285,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:Regular name:prefix index:1 type:kotlin.String
       VALUE_PARAMETER kind:Regular name:count index:2 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun describe (prefix: kotlin.String, count: kotlin.Int): kotlin.String declared in io.github.expo.modules.v2.testdata.Buffered'
           STRING_CONCATENATION type=kotlin.String
@@ -295,7 +295,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Buffered
       VALUE_PARAMETER kind:Regular name:name index:1 type:kotlin.String
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun greet (name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata.Buffered'
           STRING_CONCATENATION type=kotlin.String
@@ -306,7 +306,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Buffered
       VALUE_PARAMETER kind:Regular name:count index:1 type:kotlin.Int
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun makeNames (count: kotlin.Int): kotlin.collections.List<kotlin.String> declared in io.github.expo.modules.v2.testdata.Buffered'
           CALL 'public final fun List <T> (size: kotlin.Int, init: kotlin.Function1<@[ParameterName(name = "index")] kotlin.Int, T of kotlin.collections.List>): kotlin.collections.List<T of kotlin.collections.List> declared in kotlin.collections' type=kotlin.collections.List<kotlin.String> origin=null
@@ -324,7 +324,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Buffered
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.DoubleArray
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun scale (values: kotlin.DoubleArray): kotlin.Double declared in io.github.expo.modules.v2.testdata.Buffered'
           CALL 'public final fun sum (<this>: kotlin.DoubleArray): kotlin.Double declared in kotlin.collections' type=kotlin.Double origin=null
@@ -333,14 +333,14 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Buffered
       VALUE_PARAMETER kind:Regular name:values index:1 type:kotlin.collections.List<kotlin.Int>
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun sum (values: kotlin.collections.List<kotlin.Int>): kotlin.Int declared in io.github.expo.modules.v2.testdata.Buffered'
           CALL 'public final fun sum (<this>: kotlin.collections.Iterable<kotlin.Int>): kotlin.Int declared in kotlin.collections' type=kotlin.Int origin=null
             ARG <this>: GET_VAR 'values: kotlin.collections.List<kotlin.Int> declared in io.github.expo.modules.v2.testdata.Buffered.sum' type=kotlin.collections.List<kotlin.Int> origin=null
-  CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]
+  CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]
     annotations:
-      JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+      ExpoModule(name = <null>, classes = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Converted
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
@@ -369,26 +369,26 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
                 ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
     CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.Converted [primary]
       BLOCK_BODY
-        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.Module'
-        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.Unit
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.Module'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.Unit
     FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
-        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.modules.Module
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.Module
     FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
-        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.modules.Module
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.Module
     FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
-        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.modules.Module
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.Module
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Converted
       VALUE_PARAMETER kind:Regular name:builder index:1 type:io.github.expo.modules.v2.modules.ModuleBuilder
       overridden:
-        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.modules.Module
+        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.Module
       BLOCK_BODY
         CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
           ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Converted.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
@@ -502,7 +502,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Converted
       VALUE_PARAMETER kind:Regular name:urls index:1 type:kotlin.collections.List<java.net.URL>
       annotations:
-        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
+        BufferMode(value = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.Buffer, returns = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun firstHost (urls: kotlin.collections.List<java.net.URL>): kotlin.String declared in io.github.expo.modules.v2.testdata.Converted'
           TYPE_OP type=kotlin.String origin=IMPLICIT_NOTNULL typeOperand=kotlin.String
@@ -514,7 +515,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Converted
       VALUE_PARAMETER kind:Regular name:url index:1 type:java.net.URL
       annotations:
-        JS(name = <null>, buffer = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.annotations.Buffer, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
+        BufferMode(value = GET_ENUM 'ENUM_ENTRY IR_EXTERNAL_DECLARATION_STUB name:NO' type=io.github.expo.modules.v2.Buffer, returns = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun host (url: java.net.URL): kotlin.String declared in io.github.expo.modules.v2.testdata.Converted'
           TYPE_OP type=kotlin.String origin=IMPLICIT_NOTNULL typeOperand=kotlin.String
@@ -525,7 +527,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.time.Duration
       VALUE_PARAMETER kind:Regular name:b index:2 type:kotlin.time.Duration
       annotations:
-        JS(name = <null>, buffer = <null>, returnBuffer = <null>, classes = <null>)
+        JS(name = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun total (a: kotlin.time.Duration, b: kotlin.time.Duration): kotlin.time.Duration declared in io.github.expo.modules.v2.testdata.Converted'
           CALL 'public final fun plus (other: kotlin.time.Duration): kotlin.time.Duration declared in kotlin.time.Duration' type=kotlin.time.Duration origin=PLUS
@@ -541,7 +543,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
             ARG <this>: CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
               ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Converted> origin=GET_PROPERTY
                 TYPE_ARG T: io.github.expo.modules.v2.testdata.Converted
-                ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Converted>
+                ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Converted>
               ARG p0: STRING_CONCATENATION type=kotlin.String
                 CONST String type=kotlin.String value="total"
                 GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
@@ -552,7 +554,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
                 CALL 'public final fun <get-javaPrimitiveType> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-javaPrimitiveType>>): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Double>? origin=GET_PROPERTY
                   TYPE_ARG T: kotlin.Double
                   ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Double modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Double>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Double>
-            ARG p0: GET_OBJECT 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=io.github.expo.modules.v2.testdata.Converted
+            ARG p0: GET_OBJECT 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=io.github.expo.modules.v2.testdata.Converted
             ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] kotlin.Any?>? varargElementType=@[FlexibleNullability] kotlin.Any?
               CONST Double type=kotlin.Double value=1.5
               CONST Double type=kotlin.Double value=2.5
@@ -572,7 +574,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
             ARG <this>: CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
               ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Converted> origin=GET_PROPERTY
                 TYPE_ARG T: io.github.expo.modules.v2.testdata.Converted
-                ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Converted>
+                ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Converted>
               ARG p0: STRING_CONCATENATION type=kotlin.String
                 CONST String type=kotlin.String value="host"
                 GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
@@ -580,7 +582,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
                 CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<kotlin.String> origin=GET_PROPERTY
                   TYPE_ARG T: kotlin.String
                   ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:String modality:FINAL visibility:public superTypes:[kotlin.Comparable<kotlin.String>; kotlin.CharSequence; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.String>
-            ARG p0: GET_OBJECT 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=io.github.expo.modules.v2.testdata.Converted
+            ARG p0: GET_OBJECT 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=io.github.expo.modules.v2.testdata.Converted
             ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] kotlin.Any?>? varargElementType=@[FlexibleNullability] kotlin.Any?
               CONST String type=kotlin.String value="https://expo.dev/path"
       WHEN type=kotlin.Unit origin=IF
@@ -599,7 +601,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
             ARG <this>: CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
               ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Converted> origin=GET_PROPERTY
                 TYPE_ARG T: io.github.expo.modules.v2.testdata.Converted
-                ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Converted>
+                ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Converted>
               ARG p0: STRING_CONCATENATION type=kotlin.String
                 CONST String type=kotlin.String value="firstHost"
                 GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
@@ -607,7 +609,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
                 CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<kotlin.collections.List<*>> origin=GET_PROPERTY
                   TYPE_ARG T: kotlin.collections.List<*>
                   ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB INTERFACE name:List modality:ABSTRACT visibility:public superTypes:[kotlin.collections.Collection<E of kotlin.collections.List>]' type=kotlin.reflect.KClass<kotlin.collections.List<*>>
-            ARG p0: GET_OBJECT 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=io.github.expo.modules.v2.testdata.Converted
+            ARG p0: GET_OBJECT 'CLASS OBJECT name:Converted modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=io.github.expo.modules.v2.testdata.Converted
             ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] kotlin.Any?>? varargElementType=@[FlexibleNullability] kotlin.Any?
               CALL 'public final fun listOf <T> (vararg elements: T of kotlin.collections.listOf): kotlin.collections.List<T of kotlin.collections.listOf> declared in kotlin.collections' type=kotlin.collections.List<kotlin.String> origin=null
                 TYPE_ARG T: kotlin.String
@@ -709,7 +711,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
                 CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
                   ARG owner: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Buffered> origin=GET_PROPERTY
                     TYPE_ARG T: io.github.expo.modules.v2.testdata.Buffered
-                    ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Buffered>
+                    ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Buffered>
                   ARG name: GET_VAR 'val name: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
               WHEN type=kotlin.Unit origin=IF
                 BRANCH
@@ -732,7 +734,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
               CALL 'public open fun getDeclaredMethods (): @[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>? declared in java.lang.Class' type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.reflect.Method?>? origin=GET_PROPERTY
                 ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Buffered> origin=GET_PROPERTY
                   TYPE_ARG T: io.github.expo.modules.v2.testdata.Buffered
-                  ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Buffered>
+                  ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Buffered>
             ARG predicate: FUN_EXPR type=kotlin.Function1<@[FlexibleNullability] java.lang.reflect.Method?, kotlin.Boolean> origin=LAMBDA
               FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Boolean
                 VALUE_PARAMETER kind:Regular name:it index:0 type:@[FlexibleNullability] java.lang.reflect.Method?
@@ -750,7 +752,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
           ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Buffered> origin=GET_PROPERTY
             TYPE_ARG T: io.github.expo.modules.v2.testdata.Buffered
-            ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.modules.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Buffered>
+            ARG <this>: CLASS_REFERENCE 'CLASS OBJECT name:Buffered modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Buffered>
           ARG p0: CONST String type=kotlin.String value="isReady"
       RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
         CONST String type=kotlin.String value="OK"

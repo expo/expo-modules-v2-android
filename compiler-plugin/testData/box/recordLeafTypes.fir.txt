@@ -1,7 +1,7 @@
 FILE: recordLeafTypes.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|(bufferSafe = Boolean(false)) public final class Leaves : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|(bufferSafe = Boolean(false)) public final class Leaves : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(duration: R|kotlin/time/Duration|, file: R|java/io/File|, url: R|java/net/URL|, uri: R|java/net/URI|, path: R|java/nio/file/Path|, maybe: R|kotlin/time/Duration?|): R|io/github/expo/modules/v2/testdata/Leaves| {
             super<R|kotlin/Any|>()
         }

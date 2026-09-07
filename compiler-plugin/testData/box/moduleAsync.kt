@@ -2,10 +2,12 @@
 
 package io.github.expo.modules.v2.testdata
 
-import io.github.expo.modules.v2.annotations.Buffer
-import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.async.Promise
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.Module
 import kotlinx.coroutines.delay
 
 /**
@@ -16,10 +18,11 @@ import kotlinx.coroutines.delay
  * wrapped in a `suspend` lambda handed to `Promise.launch`. The result reaches JavaScript through
  * the promise, so it never appears in the JVM signature.
  */
-@JS
+@ExpoModule
 class AsyncShapes : Module() {
     // No buffered value anywhere: slots only, so the trampoline is (I, Promise)V.
-    @JS(buffer = Buffer.NO)
+    @JS
+    @BufferMode(Buffer.NO)
     suspend fun scale(value: Int): Int {
         delay(1)
         return value * 2
@@ -32,7 +35,7 @@ class AsyncShapes : Module() {
     // A buffered argument beside a slot argument, so payloadLength sits between them and the
     // Promise still comes last: (I, I, Promise)V.
     @JS
-    suspend fun repeat(@JS(buffer = Buffer.NO) times: Int, value: String): String = value.repeat(times)
+    suspend fun repeat(@BufferMode(Buffer.NO) times: Int, value: String): String = value.repeat(times)
 
     // Nothing to resolve with. The trampoline still returns Unit, not the export's Unit.
     @JS

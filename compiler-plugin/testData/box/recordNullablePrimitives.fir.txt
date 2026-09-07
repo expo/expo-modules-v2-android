@@ -1,7 +1,7 @@
 FILE: recordNullablePrimitives.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class Boxes : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class Boxes : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(i: R|kotlin/Int?|, l: R|kotlin/Long?|, f: R|kotlin/Float?|, d: R|kotlin/Double?|, b: R|kotlin/Boolean?|, s: R|kotlin/String?|): R|io/github/expo/modules/v2/testdata/Boxes| {
             super<R|kotlin/Any|>()
         }

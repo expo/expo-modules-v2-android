@@ -1,90 +1,7 @@
 package io.github.expo.modules.v2.testdata
 
-@Record(name = "Both", bufferSafe = false)
-data class BothArguments : Record {
-  val v: String
-    field = v
-    get
-
-  private class RecordCodec$ExpoModulesV2 : RecordCodec<BothArguments> {
-    override val recordClass: Class<BothArguments>
-      field = <get-java>(/* $receiver = BothArguments::class */)
-      override get
-
-    override val schema: RecordSchema
-      field = RecordSchema(name = "Both", bufferSafe = false, fields = [RecordField(name = "v", type = #STRING, isOptional = false)])
-      override get
-
-    constructor() /* primary */ {
-      super/*Any*/()
-      /* <init>() */
-
-      RecordRegistry.register(codec = <this>)
-    }
-
-    override fun decode(reader: RecordReader): BothArguments {
-      return BothArguments(v = reader.read<String>(schema = #STRING))
-    }
-
-    override fun encode(value: BothArguments, writer: RecordWriter) {
-      writer.write(value = value.<get-v>(), schema = #STRING)
-    }
-
-  }
-
-  companion object Companion {
-    val recordCodec$ExpoModulesV2: RecordCodec<BothArguments>
-      field = RecordCodec$ExpoModulesV2()
-      get
-
-    private constructor() /* primary */ {
-      super/*Any*/()
-      /* <init>() */
-
-    }
-
-  }
-
-  constructor(v: String) /* primary */ {
-    super/*Any*/()
-    /* <init>() */
-
-  }
-
-  operator fun component1(): String {
-    return <this>.#v
-  }
-
-  fun copy(v: String = <this>.#v): BothArguments {
-    return BothArguments(v = v)
-  }
-
-  override operator fun equals(other: Any?): Boolean {
-    when {
-      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
-    }
-    when {
-      other !is BothArguments -> return false
-    }
-    val tmp_0: BothArguments = other as BothArguments
-    when {
-      EQEQ(arg0 = <this>.#v, arg1 = tmp_0.#v).not() -> return false
-    }
-    return true
-  }
-
-  override fun hashCode(): Int {
-    return <this>.#v.hashCode()
-  }
-
-  override fun toString(): String {
-    return "BothArguments(" + "v=" + <this>.#v + ")"
-  }
-
-}
-
-@Record(name = "Half")
-data class Renamed : Record {
+@Record
+data class Defaults : Record {
   val x: Double
     field = x
     get
@@ -93,13 +10,13 @@ data class Renamed : Record {
     field = y
     get
 
-  private class RecordCodec$ExpoModulesV2 : RecordCodec<Renamed> {
-    override val recordClass: Class<Renamed>
-      field = <get-java>(/* $receiver = Renamed::class */)
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Defaults> {
+    override val recordClass: Class<Defaults>
+      field = <get-java>(/* $receiver = Defaults::class */)
       override get
 
     override val schema: RecordSchema
-      field = RecordSchema(name = "Half", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
+      field = RecordSchema(name = "Defaults", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
       override get
 
     constructor() /* primary */ {
@@ -109,11 +26,11 @@ data class Renamed : Record {
       RecordRegistry.register(codec = <this>)
     }
 
-    override fun decode(reader: RecordReader): Renamed {
-      return Renamed(x = reader.readDouble(), y = reader.readDouble())
+    override fun decode(reader: RecordReader): Defaults {
+      return Defaults(x = reader.readDouble(), y = reader.readDouble())
     }
 
-    override fun encode(value: Renamed, writer: RecordWriter) {
+    override fun encode(value: Defaults, writer: RecordWriter) {
       writer.write(value = value.<get-x>())
       writer.write(value = value.<get-y>())
     }
@@ -121,7 +38,7 @@ data class Renamed : Record {
   }
 
   companion object Companion {
-    val recordCodec$ExpoModulesV2: RecordCodec<Renamed>
+    val recordCodec$ExpoModulesV2: RecordCodec<Defaults>
       field = RecordCodec$ExpoModulesV2()
       get
 
@@ -147,8 +64,8 @@ data class Renamed : Record {
     return <this>.#y
   }
 
-  fun copy(x: Double = <this>.#x, y: Double = <this>.#y): Renamed {
-    return Renamed(x = x, y = y)
+  fun copy(x: Double = <this>.#x, y: Double = <this>.#y): Defaults {
+    return Defaults(x = x, y = y)
   }
 
   override operator fun equals(other: Any?): Boolean {
@@ -156,14 +73,14 @@ data class Renamed : Record {
       EQEQEQ(arg0 = <this>, arg1 = other) -> return true
     }
     when {
-      other !is Renamed -> return false
+      other !is Defaults -> return false
     }
-    val tmp_1: Renamed = other as Renamed
+    val tmp_0: Defaults = other as Defaults
     when {
-      EQEQ(arg0 = <this>.#x, arg1 = tmp_1.#x).not() -> return false
+      EQEQ(arg0 = <this>.#x, arg1 = tmp_0.#x).not() -> return false
     }
     when {
-      EQEQ(arg0 = <this>.#y, arg1 = tmp_1.#y).not() -> return false
+      EQEQ(arg0 = <this>.#y, arg1 = tmp_0.#y).not() -> return false
     }
     return true
   }
@@ -175,7 +92,7 @@ data class Renamed : Record {
   }
 
   override fun toString(): String {
-    return "Renamed(" + "x=" + <this>.#x + ", " + "y=" + <this>.#y + ")"
+    return "Defaults(" + "x=" + <this>.#x + ", " + "y=" + <this>.#y + ")"
   }
 
 }
@@ -246,9 +163,9 @@ data class Unsafe : Record {
     when {
       other !is Unsafe -> return false
     }
-    val tmp_2: Unsafe = other as Unsafe
+    val tmp_1: Unsafe = other as Unsafe
     when {
-      EQEQ(arg0 = <this>.#payload, arg1 = tmp_2.#payload).not() -> return false
+      EQEQ(arg0 = <this>.#payload, arg1 = tmp_1.#payload).not() -> return false
     }
     return true
   }
@@ -268,27 +185,19 @@ data class Unsafe : Record {
 
 fun box(): String {
   when {
-    EQEQ(arg0 = codecFor<Renamed>().<get-schema>().<get-name>(), arg1 = "Half").not() -> { // BLOCK
-      return "Fail: name is " + codecFor<Renamed>().<get-schema>().<get-name>()
+    EQEQ(arg0 = codecFor<Defaults>().<get-schema>().<get-name>(), arg1 = "Defaults").not() -> { // BLOCK
+      return "Fail: name is " + codecFor<Defaults>().<get-schema>().<get-name>()
     }
   }
   when {
-    codecFor<Renamed>().<get-schema>().<get-bufferSafe>().not() -> return "Fail: Renamed lost its default bufferSafe"
+    codecFor<Defaults>().<get-schema>().<get-bufferSafe>().not() -> return "Fail: Defaults lost its default bufferSafe"
+  }
+  val unsafe: RecordSchema = codecFor<Unsafe>().<get-schema>()
+  when {
+    unsafe.<get-bufferSafe>() -> return "Fail: Unsafe is still bufferSafe"
   }
   when {
-    codecFor<Unsafe>().<get-schema>().<get-bufferSafe>() -> return "Fail: Unsafe is still bufferSafe"
-  }
-  when {
-    EQEQ(arg0 = codecFor<Unsafe>().<get-schema>().<get-name>(), arg1 = "Unsafe").not() -> { // BLOCK
-      return "Fail: Unsafe name is " + codecFor<Unsafe>().<get-schema>().<get-name>()
-    }
-  }
-  val both: RecordSchema = codecFor<BothArguments>().<get-schema>()
-  when {
-    when {
-      EQEQ(arg0 = both.<get-name>(), arg1 = "Both").not() -> true
-      else -> both.<get-bufferSafe>()
-    } -> return "Fail: both gave " + both.<get-name>() + "/" + both.<get-bufferSafe>()
+    EQEQ(arg0 = unsafe.<get-name>(), arg1 = "Unsafe").not() -> return "Fail: Unsafe name is " + unsafe.<get-name>()
   }
   return "OK"
 }

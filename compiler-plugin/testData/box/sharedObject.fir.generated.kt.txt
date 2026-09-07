@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.testdata
 
-@JS
+@ExpoSharedObject
 class Listed : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
   /* static */ fun __construct$ExpoModulesV2(p0: Int): Listed {
@@ -19,9 +19,9 @@ class Listed : SharedObject {
   }
 }
 
-@JS(classes = [Listed::class])
+@ExpoModule(classes = [Listed::class])
 class Owner : Module {
-  @JS
+  @ExpoSharedObject
   class Nested : SharedObject {
     private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
     /* static */ fun __construct$ExpoModulesV2(payloadLength: Int): Nested {
@@ -46,7 +46,7 @@ class Owner : Module {
     }
   }
 
-  @JS
+  @ExpoSharedObject
   class NotConstructable : SharedObject {
     private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
     /* static */ fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
@@ -68,9 +68,13 @@ class Owner : Module {
   }
 }
 
-@JS
+@ExpoSharedObject
 class Player : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  /* static */ fun __construct$ExpoModulesV2(): Player {
+    return Player()
+  }
+
   /* static */ fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "play", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "play")
     builder.property(jsName = "volume", type = AnyType(descriptor = Double, useBuffer = false), mutable = true, propertyName = "volume", setterType = AnyType(descriptor = Double, useBuffer = false))
@@ -95,7 +99,7 @@ class Player : SharedObject {
   }
 }
 
-@JS
+@ExpoModule
 class Players : Module {
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "create", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Player::class */), isNullable = false), useBuffer = false), methodName = "create")
@@ -105,9 +109,13 @@ class Players : Module {
   }
 }
 
-@JS(name = "Renamed")
+@ExpoSharedObject(name = "Renamed")
 class Speaker : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  /* static */ fun __construct$ExpoModulesV2(): Speaker {
+    return Speaker()
+  }
+
   /* static */ fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "mute", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "mute")
     return "Renamed"
@@ -117,6 +125,21 @@ class Speaker : SharedObject {
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "Renamed", sharedClass = <get-java>(/* $receiver = Speaker::class */), definition = builder)
+  }
+}
+
+@ExpoSharedObject
+class TextRef : SharedRef<StringBuilder> {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  /* static */ fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "length", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "length")
+    return "TextRef"
+  }
+
+  private /* static */ fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)
   }
 }
 

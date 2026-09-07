@@ -142,7 +142,7 @@ object BinaryValueCodec {
     val type = RecordRegistry.typeFor(value.javaClass)
       ?: throw IllegalArgumentException(
         "No external schema registered for ${value.javaClass.name}; annotate the class with " +
-          "@io.github.expo.modules.v2.annotations.Record, or call RecordRegistry.register before the " +
+          "@io.github.expo.modules.v2.Record, or call RecordRegistry.register before the " +
           "payload encode begins",
       )
     buf.putExternalSchemaHeader(type.schemaId.value)

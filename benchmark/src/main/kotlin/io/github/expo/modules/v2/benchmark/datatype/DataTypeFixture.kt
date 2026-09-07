@@ -1,15 +1,16 @@
 package io.github.expo.modules.v2.benchmark.datatype
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.testsupport.HermesRuntime
-import io.github.expo.modules.v2.modules.Module
 
 /**
  * Focused end-to-end conversion targets shared by JMH and the long-running profiling workload.
  * Every operation crosses JS -> JSI -> JNI -> Kotlin and back to JavaScript.
  */
-@JS(name = "DataTypeBench")
+@ExpoModule(name = "DataTypeBench")
 class DataTypeBenchModule : Module() {
   @JS
   fun echoBoolean(value: Boolean): Boolean = value

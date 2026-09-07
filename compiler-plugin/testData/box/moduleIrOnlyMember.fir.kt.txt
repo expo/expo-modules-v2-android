@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.testdata
 
-@JS(name = "Instance")
+@ExpoModule(name = "Instance")
 class DirectInstance : Module {
   constructor() /* primary */ {
     super/*Module*/()
@@ -20,7 +20,7 @@ class DirectInstance : Module {
 
 }
 
-@JS
+@ExpoModule
 object Direct : Module {
   @JS
   val answer: Int

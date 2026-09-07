@@ -1,7 +1,7 @@
 FILE: recordWide.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class Wide : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class Wide : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(field0: R|kotlin/Int|, field1: R|kotlin/Int|, field2: R|kotlin/Int|, field3: R|kotlin/Int|, field4: R|kotlin/Int|, field5: R|kotlin/Int|, field6: R|kotlin/Int|, field7: R|kotlin/Int|, field8: R|kotlin/Int|, field9: R|kotlin/Int|, field10: R|kotlin/Int|, field11: R|kotlin/Int|, field12: R|kotlin/Int|, field13: R|kotlin/Int|, field14: R|kotlin/Int|, field15: R|kotlin/Int|, field16: R|kotlin/Int|, field17: R|kotlin/Int|, field18: R|kotlin/Int|, field19: R|kotlin/Int|, field20: R|kotlin/Int|, field21: R|kotlin/Int|, field22: R|kotlin/Int|, field23: R|kotlin/Int|, field24: R|kotlin/Int|, field25: R|kotlin/Int|, field26: R|kotlin/Int|, field27: R|kotlin/Int|, field28: R|kotlin/Int|, field29: R|kotlin/Int|, field30: R|kotlin/Int|, field31: R|kotlin/Int|, field32: R|kotlin/Int|, field33: R|kotlin/Int|, field34: R|kotlin/Int|, field35: R|kotlin/Int|, field36: R|kotlin/Int|, field37: R|kotlin/Int|, field38: R|kotlin/Int|, field39: R|kotlin/Int|, field40: R|kotlin/Int|, field41: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Wide| {
             super<R|kotlin/Any|>()
         }

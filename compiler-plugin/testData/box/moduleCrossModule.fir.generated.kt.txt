@@ -39,7 +39,7 @@ data class Shared : Record {
   }
 }
 
-@JS(name = "Producer")
+@ExpoModule(name = "Producer")
 object ProducerModule : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
   fun bump__trampoline$ExpoModulesV2(payloadLength: Int): Int {
@@ -74,7 +74,7 @@ object ProducerModule : Module {
 // FILE: consumer.kt
 package io.github.expo.modules.v2.testdata.consumer
 
-@JS(name = "Consumer")
+@ExpoModule(name = "Consumer")
 object ConsumerModule : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {

@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.benchmark
 
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
 import io.github.expo.modules.v2.testsupport.TestSupport

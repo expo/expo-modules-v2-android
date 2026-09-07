@@ -1,10 +1,11 @@
 package io.github.expo.modules.v2.react
 
 import com.facebook.react.bridge.ReactContext
+import io.github.expo.kolibri.NativePointer
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.async.AsyncContext
 import io.github.expo.modules.v2.jsi.JavaScriptRuntime
 import io.github.expo.modules.v2.modules.ModuleRegistry
-import io.github.expo.kolibri.NativePointer
 
 /**
  * A [JavaScriptRuntime] attached to the `jsi::Runtime` React Native created.

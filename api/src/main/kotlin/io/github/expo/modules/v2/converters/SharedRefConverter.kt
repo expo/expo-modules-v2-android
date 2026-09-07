@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.converters
 
 import io.github.expo.modules.v2.sharedobjects.SharedClassId
-import io.github.expo.modules.v2.sharedobjects.SharedRef
+import io.github.expo.modules.v2.SharedRef
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeCodes
 import io.github.expo.kolibri.binary.BinaryBuffer

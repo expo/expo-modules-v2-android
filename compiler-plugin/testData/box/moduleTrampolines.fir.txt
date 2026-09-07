@@ -1,57 +1,57 @@
 FILE: moduleTrampolines.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/JS|() public final object Converted : R|io/github/expo/modules/v2/modules/Module| {
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object Converted : R|io/github/expo/modules/v2/Module| {
         private constructor(): R|io/github/expo/modules/v2/testdata/Converted| {
-            super<R|io/github/expo/modules/v2/modules/Module|>()
+            super<R|io/github/expo/modules/v2/Module|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun total(a: R|kotlin/time/Duration|, b: R|kotlin/time/Duration|): R|kotlin/time/Duration| {
+        @R|io/github/expo/modules/v2/JS|() public final fun total(a: R|kotlin/time/Duration|, b: R|kotlin/time/Duration|): R|kotlin/time/Duration| {
             ^total R|<local>/a|.R|kotlin/time/Duration.plus|(R|<local>/b|)
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|(buffer = Q|io/github/expo/modules/v2/annotations/Buffer|.R|io/github/expo/modules/v2/annotations/Buffer.NO|) public final fun host(url: R|java/net/URL|): R|kotlin/String| {
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final fun host(url: R|java/net/URL|): R|kotlin/String| {
             ^host R|<local>/url|.R|java/net/URL.host|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|(buffer = Q|io/github/expo/modules/v2/annotations/Buffer|.R|io/github/expo/modules/v2/annotations/Buffer.NO|) public final fun firstHost(urls: R|kotlin/collections/List<java/net/URL>|): R|kotlin/String| {
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final fun firstHost(urls: R|kotlin/collections/List<java/net/URL>|): R|kotlin/String| {
             ^firstHost R|<local>/urls|.R|kotlin/collections/first|<R|java/net/URL|>().R|java/net/URL.host|
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/JS|() public final object Buffered : R|io/github/expo/modules/v2/modules/Module| {
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object Buffered : R|io/github/expo/modules/v2/Module| {
         private constructor(): R|io/github/expo/modules/v2/testdata/Buffered| {
-            super<R|io/github/expo/modules/v2/modules/Module|>()
+            super<R|io/github/expo/modules/v2/Module|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun greet(name: R|kotlin/String|): R|kotlin/String| {
+        @R|io/github/expo/modules/v2/JS|() public final fun greet(name: R|kotlin/String|): R|kotlin/String| {
             ^greet <strcat>(String(Hello, ), R|<local>/name|, String(!))
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun sum(values: R|kotlin/collections/List<kotlin/Int>|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun sum(values: R|kotlin/collections/List<kotlin/Int>|): R|kotlin/Int| {
             ^sum R|<local>/values|.R|kotlin/collections/sum|()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun describe(prefix: R|kotlin/String|, count: R|kotlin/Int|): R|kotlin/String| {
+        @R|io/github/expo/modules/v2/JS|() public final fun describe(prefix: R|kotlin/String|, count: R|kotlin/Int|): R|kotlin/String| {
             ^describe <strcat>(R|<local>/prefix|, R|<local>/count|)
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun makeNames(count: R|kotlin/Int|): R|kotlin/collections/List<kotlin/String>| {
+        @R|io/github/expo/modules/v2/JS|() public final fun makeNames(count: R|kotlin/Int|): R|kotlin/collections/List<kotlin/String>| {
             ^makeNames R|kotlin/collections/List|<R|kotlin/String|>(R|<local>/count|, <L> = List@fun <anonymous>(it: R|kotlin/Int|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
                 ^ <strcat>(String(n), R|<local>/it|)
             }
             )
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun scale(values: R|kotlin/DoubleArray|): R|kotlin/Double| {
+        @R|io/github/expo/modules/v2/JS|() public final fun scale(values: R|kotlin/DoubleArray|): R|kotlin/Double| {
             ^scale R|<local>/values|.R|kotlin/collections/sum|()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final var motto: R|kotlin/String| = String(carpe diem)
+        @R|io/github/expo/modules/v2/JS|() public final var motto: R|kotlin/String| = String(carpe diem)
             public get(): R|kotlin/String|
             public set(value: R|kotlin/String|): R|kotlin/Unit|
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final val isReady: R|kotlin/Boolean| = Boolean(true)
+        @R|io/github/expo/modules/v2/JS|() public final val isReady: R|kotlin/Boolean| = Boolean(true)
             public get(): R|kotlin/Boolean|
 
     }

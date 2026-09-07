@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.testdata
 
-@JS
+@ExpoModule
 object Buffered : Module {
   private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
   private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
@@ -64,7 +64,7 @@ object Buffered : Module {
   }
 }
 
-@JS
+@ExpoModule
 object Converted : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false)
   private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)

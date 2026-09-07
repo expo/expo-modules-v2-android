@@ -2,7 +2,7 @@ package io.github.expo.modules.v2.records
 
 // An explicit import beats a same-package declaration, so inside this package the annotation's
 // simple name shadows the marker interface. [NeverRegistered] needs the marker.
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.records.Record as RecordMarker
 import io.github.expo.modules.v2.converters.RecordConverter
 import io.github.expo.modules.v2.types.TypeDescriptor

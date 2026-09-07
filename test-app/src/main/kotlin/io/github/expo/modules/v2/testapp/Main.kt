@@ -1,20 +1,22 @@
 package io.github.expo.modules.v2.testapp
 
-import io.github.expo.modules.v2.annotations.Buffer
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
-import io.github.expo.modules.v2.modules.Module
 import io.github.expo.modules.v2.testsupport.TestSupport
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeDescriptor
 import java.net.URL
-import kotlinx.coroutines.delay
 import kotlin.system.exitProcess
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
+import kotlinx.coroutines.delay
 
 // Interning a record is eager and native-free: this initializer runs before main() loads the
 // native library, and the schema is pushed to native when ensureLoaded() flushes the queue.
@@ -40,7 +42,7 @@ private fun run() {
   println("=== Expo Modules API v2 — Hermes runtime smoke test ===")
 
   // The two hand-written registrations left in this file (sections 8 and 9) still name their types
-  // through descriptors; every @JS module has them generated instead.
+  // through descriptors; every @ExpoModule has them generated instead.
   val intType = AnyType(TypeDescriptor.Int)
 
   HermesRuntime().use { runtime ->
@@ -590,7 +592,7 @@ private fun run() {
  * value, and the trampolines. Section 8 registers this same object a second time through the
  * hand-written DSL, which is how one receiver still backs two module names.
  */
-@JS
+@ExpoModule
 class MathUtils : Module() {
   val answer = 42
 
@@ -611,7 +613,7 @@ class MathUtils : Module() {
 }
 
 /** A record crossing the bridge as a typed positional payload in [run] (section 11). */
-@Record(name = "MainMyRecord")
+@Record
 data class MyRecord(val x: Int, val b: String)
 
 /**
@@ -619,7 +621,7 @@ data class MyRecord(val x: Int, val b: String)
  * decode each record off the payload and write the result back; see
  * [io.github.expo.modules.v2.args.Trampoline] for the contract they follow.
  */
-@JS
+@ExpoModule
 class MyModule : Module() {
   @JS
   fun record(value: MyRecord): MyRecord = value
@@ -628,7 +630,7 @@ class MyModule : Module() {
   // payload argument, which is what proves overflow slots are packed in payload order.
   @JS
   fun describe(
-    @JS(buffer = Buffer.NO) prefix: String,
+    @BufferMode(Buffer.NO) prefix: String,
     value: MyRecord,
   ): String = "$prefix${value.b}/${value.x}"
 
@@ -645,9 +647,10 @@ class MyModule : Module() {
  * slots with no override. [host] is pinned to a slot to keep exercising that path for a `String`
  * bridge, which the buffer would otherwise win.
  */
-@JS
+@ExpoModule
 class LinkUtils : Module() {
-  @JS(buffer = Buffer.NO)
+  @JS
+  @BufferMode(Buffer.NO)
   fun host(url: URL): String = url.host
 
   @JS
@@ -655,7 +658,7 @@ class LinkUtils : Module() {
 }
 
 /** Element-wise conversion inside containers: List<File>, List<File?>, Map<String, Duration>. */
-@JS(name = "Containers")
+@ExpoModule(name = "Containers")
 class ConvertedContainers : Module() {
   @JS
   fun echoFiles(values: List<java.io.File>): String = values.joinToString(",") { it.name }
@@ -681,7 +684,7 @@ class ConvertedContainers : Module() {
  * bridges as its element type's list, so these trampolines read and write the array itself while
  * only strings ever reach JS.
  */
-@JS
+@ExpoModule
 class ArrayUtils : Module() {
   @JS
   fun hosts(urls: Array<URL>): String = urls.joinToString(",") { it.host }
@@ -697,7 +700,7 @@ class ArrayUtils : Module() {
   fun countUrls(urls: Array<URL>?): Int = urls?.size ?: -1
 }
 
-@JS
+@ExpoModule
 class SetUtils : Module() {
   @JS
   fun hostsOf(urls: Set<URL>): String = urls.joinToString(",") { it.host }
@@ -708,7 +711,7 @@ class SetUtils : Module() {
  * `null` and a value are three visibly distinct outcomes; `trailing` sits after the optional
  * fields, which pins the field cursor.
  */
-@Record(name = "MainWithDefaults")
+@Record
 data class WithDefaults(
   val tag: String,
   val count: Int = 5,
@@ -717,7 +720,7 @@ data class WithDefaults(
 )
 
 /** Both crossing shapes for [WithDefaults] in [run] (section 15): binary payload and `Map`. */
-@JS
+@ExpoModule
 class DefaultsUtils : Module() {
   @JS
   fun describe(value: WithDefaults): String =
@@ -728,7 +731,8 @@ class DefaultsUtils : Module() {
    * instead of a payload, so an absent optional field is a key that is simply not there — which is
    * what makes both halves of the optional-field contract observable from one module.
    */
-  @JS(name = "describeMap", buffer = Buffer.NO)
+  @JS(name = "describeMap")
+  @BufferMode(Buffer.NO)
   fun describeMapped(value: WithDefaults): String = describe(value)
 }
 
@@ -739,7 +743,7 @@ class DefaultsUtils : Module() {
  * trailing [Promise], starts the user's body as a coroutine, and returns nothing. The result
  * crosses when the coroutine finishes, not when the trampoline returns.
  */
-@JS(name = "Async")
+@ExpoModule(name = "Async")
 class AsyncModule : Module() {
   @JS
   suspend fun immediate(value: Int): String = "immediate:$value"

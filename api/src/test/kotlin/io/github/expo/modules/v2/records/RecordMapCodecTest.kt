@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.records
 
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Record
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -41,8 +41,8 @@ private data class Wrapper(val value: Any?) : io.github.expo.modules.v2.records.
 @Record(bufferSafe = false)
 private class MapOnly(val h: JavaScriptObject) : io.github.expo.modules.v2.records.Record
 
-/** The schema name is an annotation argument, not the class's simple name. */
-@Record(name = "Half")
+/** The schema name is the class's simple name; a record has none of its own in JavaScript. */
+@Record
 private data class MapPoint2(val x: Double, val y: Double) : io.github.expo.modules.v2.records.Record
 
 /**
@@ -196,8 +196,8 @@ class RecordMapCodecTest {
   }
 
   @Test
-  fun `a record can rename its schema`() {
-    assertEquals("Half", codecFor<MapPoint2>().schema.name)
+  fun `a record's schema is named after its class`() {
+    assertEquals("MapPoint2", codecFor<MapPoint2>().schema.name)
   }
 
   @Test

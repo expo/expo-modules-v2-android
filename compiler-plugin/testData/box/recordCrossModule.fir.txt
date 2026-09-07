@@ -2,7 +2,7 @@ Module: producer
 FILE: producer.kt
     package io.github.expo.modules.v2.testdata.producer
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class Shared : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class Shared : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(n: R|kotlin/Int|, label: R|kotlin/String?|): R|io/github/expo/modules/v2/testdata/producer/Shared| {
             super<R|kotlin/Any|>()
         }
@@ -49,7 +49,7 @@ Module: consumer
 FILE: consumer.kt
     package io.github.expo.modules.v2.testdata.consumer
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class Holder : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class Holder : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(shared: R|io/github/expo/modules/v2/testdata/producer/Shared|, more: R|kotlin/collections/List<io/github/expo/modules/v2/testdata/producer/Shared>|): R|io/github/expo/modules/v2/testdata/consumer/Holder| {
             super<R|kotlin/Any|>()
         }

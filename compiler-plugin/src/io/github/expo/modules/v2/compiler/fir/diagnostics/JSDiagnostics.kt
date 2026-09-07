@@ -7,22 +7,13 @@ import org.jetbrains.kotlin.diagnostics.error1
 import org.jetbrains.kotlin.diagnostics.rendering.BaseDiagnosticRendererFactory
 import org.jetbrains.kotlin.diagnostics.rendering.CommonRenderers
 import org.jetbrains.kotlin.diagnostics.rendering.RootDiagnosticRendererFactory
-import org.jetbrains.kotlin.psi.KtClassLikeDeclaration
 import org.jetbrains.kotlin.psi.KtDeclaration
 
 /**
- * The frontend diagnostics [io.github.expo.modules.v2.compiler.fir.JSCheckers] reports.
+ * The frontend diagnostics [io.github.expo.modules.v2.compiler.fir.JSCheckers] reports about an
+ * exported member.
  */
 object JSDiagnostics {
-  val JS_ON_UNSUPPORTED_DECLARATION by error1<KtClassLikeDeclaration, String>(
-    SourceElementPositioningStrategies.DECLARATION_NAME,
-  )
-  val JS_CLASS_IS_NOT_EXPORTABLE by error0<KtClassLikeDeclaration>(
-    SourceElementPositioningStrategies.DECLARATION_NAME,
-  )
-  val JS_CLASS_WITH_TYPE_PARAMETERS by error0<KtClassLikeDeclaration>(
-    SourceElementPositioningStrategies.DECLARATION_NAME,
-  )
   val JS_MEMBER_OUTSIDE_MODULE by error0<KtDeclaration>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
@@ -35,15 +26,6 @@ object JSDiagnostics {
   val JS_DUPLICATE_EXPORT_NAME by error1<KtDeclaration, String>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
-  val JS_CONSTRUCTOR_ON_NON_SHARED_OBJECT by error0<KtDeclaration>(
-    SourceElementPositioningStrategies.DECLARATION_NAME,
-  )
-  val JS_DUPLICATE_CONSTRUCTOR by error0<KtDeclaration>(
-    SourceElementPositioningStrategies.DECLARATION_NAME,
-  )
-  val JS_UNEXPOSABLE_CLASS by error1<KtClassLikeDeclaration, String>(
-    SourceElementPositioningStrategies.DECLARATION_NAME,
-  )
 
   init {
     RootDiagnosticRendererFactory.registerFactory(JSDiagnosticMessages)
@@ -53,24 +35,9 @@ object JSDiagnostics {
 object JSDiagnosticMessages : BaseDiagnosticRendererFactory() {
   override val MAP = KtDiagnosticFactoryToRendererMap("ExpoModulesV2").apply {
     put(
-      JSDiagnostics.JS_ON_UNSUPPORTED_DECLARATION,
-      "@JS only applies to a non-abstract, non-inner class or object - this is {0}",
-      CommonRenderers.STRING,
-    )
-    put(
-      JSDiagnostics.JS_CLASS_IS_NOT_EXPORTABLE,
-      "A @JS class must extend io.github.expo.modules.v2.modules.Module or " +
-        "io.github.expo.modules.v2.sharedobjects.SharedObject - those are the two receivers the " +
-        "bridge knows how to invoke methods on",
-    )
-    put(
-      JSDiagnostics.JS_CLASS_WITH_TYPE_PARAMETERS,
-      "@JS cannot be used on a generic class - an exported class is described once under one " +
-        "name, and JavaScript has no way to name a type argument",
-    )
-    put(
       JSDiagnostics.JS_MEMBER_OUTSIDE_MODULE,
-      "@JS on a member only exports it when the class itself is annotated @JS - annotate the class",
+      "@JS on a member only exports it when the class itself is annotated @ExpoModule or " +
+        "@ExpoSharedObject - annotate the class",
     )
     put(
       JSDiagnostics.JS_MEMBER_IS_INTERNAL,
@@ -80,21 +47,6 @@ object JSDiagnosticMessages : BaseDiagnosticRendererFactory() {
     put(
       JSDiagnostics.JS_UNSUPPORTED_FUNCTION_SHAPE,
       "A @JS function cannot {0}",
-      CommonRenderers.STRING,
-    )
-    put(
-      JSDiagnostics.JS_CONSTRUCTOR_ON_NON_SHARED_OBJECT,
-      "@JS on a constructor only means something on a SharedObject - a module is registered, never " +
-        "constructed from JavaScript",
-    )
-    put(
-      JSDiagnostics.JS_DUPLICATE_CONSTRUCTOR,
-      "A shared object can expose only one constructor to JavaScript - annotate just the one `new` " +
-        "should call",
-    )
-    put(
-      JSDiagnostics.JS_UNEXPOSABLE_CLASS,
-      "@JS(classes = [...]) cannot expose ''{0}''",
       CommonRenderers.STRING,
     )
     put(

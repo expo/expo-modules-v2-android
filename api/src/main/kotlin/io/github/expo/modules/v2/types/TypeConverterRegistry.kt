@@ -27,9 +27,9 @@ import io.github.expo.modules.v2.converters.selectJsHandleConverter
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.records.RecordRegistry
-import io.github.expo.modules.v2.sharedobjects.SharedObject
+import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
-import io.github.expo.modules.v2.sharedobjects.SharedRef
+import io.github.expo.modules.v2.SharedRef
 import java.io.File
 import java.net.URI
 import java.net.URL

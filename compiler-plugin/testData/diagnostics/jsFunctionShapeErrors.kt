@@ -2,12 +2,13 @@
 
 package io.github.expo.modules.v2.testdata
 
-import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.Module
 
-@JS
+@ExpoModule
 class BadFunctions : Module() {
     @JS
     fun <T> <!JS_UNSUPPORTED_FUNCTION_SHAPE!>generic<!>(value: Int): Int = value

@@ -1,13 +1,13 @@
 package io.github.expo.modules.v2.testdata
 
-@Record(name = "Both", bufferSafe = false)
-data class BothArguments : Record {
-  private class RecordCodec$ExpoModulesV2 : RecordCodec<BothArguments> {
-    override val recordClass: Class<BothArguments>
-      field = <get-java>(/* $receiver = BothArguments::class */)
+@Record
+data class Defaults : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Defaults> {
+    override val recordClass: Class<Defaults>
+      field = <get-java>(/* $receiver = Defaults::class */)
 
     override val schema: RecordSchema
-      field = RecordSchema(name = "Both", bufferSafe = false, fields = [RecordField(name = "v", type = #STRING, isOptional = false)])
+      field = RecordSchema(name = "Defaults", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
 
     constructor() /* primary */ {
       super/*Any*/()
@@ -16,54 +16,18 @@ data class BothArguments : Record {
       RecordRegistry.register(codec = <this>)
     }
 
-    override fun decode(reader: RecordReader): BothArguments {
-      return BothArguments(v = reader.read<String>(schema = #STRING))
+    override fun decode(reader: RecordReader): Defaults {
+      return Defaults(x = reader.readDouble(), y = reader.readDouble())
     }
 
-    override fun encode(value: BothArguments, writer: RecordWriter) {
-      writer.write(value = value.<get-v>(), schema = #STRING)
-    }
-  }
-
-  companion object Companion {
-    val recordCodec$ExpoModulesV2: RecordCodec<BothArguments>
-      field = RecordCodec$ExpoModulesV2()
-
-    private constructor() /* primary */ {
-      super/*Any*/()
-      /* <init>() */
-    }
-  }
-}
-
-@Record(name = "Half")
-data class Renamed : Record {
-  private class RecordCodec$ExpoModulesV2 : RecordCodec<Renamed> {
-    override val recordClass: Class<Renamed>
-      field = <get-java>(/* $receiver = Renamed::class */)
-
-    override val schema: RecordSchema
-      field = RecordSchema(name = "Half", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
-
-    constructor() /* primary */ {
-      super/*Any*/()
-      /* <init>() */
-
-      RecordRegistry.register(codec = <this>)
-    }
-
-    override fun decode(reader: RecordReader): Renamed {
-      return Renamed(x = reader.readDouble(), y = reader.readDouble())
-    }
-
-    override fun encode(value: Renamed, writer: RecordWriter) {
+    override fun encode(value: Defaults, writer: RecordWriter) {
       writer.write(value = value.<get-x>())
       writer.write(value = value.<get-y>())
     }
   }
 
   companion object Companion {
-    val recordCodec$ExpoModulesV2: RecordCodec<Renamed>
+    val recordCodec$ExpoModulesV2: RecordCodec<Defaults>
       field = RecordCodec$ExpoModulesV2()
 
     private constructor() /* primary */ {

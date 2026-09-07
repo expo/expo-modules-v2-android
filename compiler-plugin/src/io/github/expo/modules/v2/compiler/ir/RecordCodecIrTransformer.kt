@@ -129,10 +129,9 @@ class RecordCodecIrTransformer(
     val backingField = property.backingField ?: return
 
     val annotation = record.getAnnotation(Identifiers.FqNames.RECORD_ANNOTATION)
-    val schemaName = annotation
-      .stringArgument(Identifiers.Names.ARG_NAME)
-      ?.takeIf { it.isNotEmpty() }
-      ?: record.name.asString()
+    // A record crosses as a plain JavaScript object, so it carries no name there. This one only
+    // ever reaches an error message, and the class's own name is what the reader is looking for.
+    val schemaName = record.name.asString()
     val bufferSafe = annotation.booleanArgument(Identifiers.Names.ARG_BUFFER_SAFE) ?: true
 
     val codecThis = codecClass.thisReceiver
@@ -420,9 +419,6 @@ class RecordCodecIrTransformer(
       else -> null
     }
   }
-
-  private fun IrConstructorCall?.stringArgument(name: Name): String? =
-    this?.argumentByName(name)?.let { (it as? IrConst)?.value as? String }
 
   private fun IrConstructorCall?.booleanArgument(name: Name): Boolean? =
     this?.argumentByName(name)?.let { (it as? IrConst)?.value as? Boolean }

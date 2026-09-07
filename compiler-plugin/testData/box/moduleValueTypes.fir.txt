@@ -1,7 +1,7 @@
 FILE: moduleValueTypes.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class Point : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class Point : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(x: R|kotlin/Double|, y: R|kotlin/Double|): R|io/github/expo/modules/v2/testdata/Point| {
             super<R|kotlin/Any|>()
         }
@@ -44,7 +44,7 @@ FILE: moduleValueTypes.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|(bufferSafe = Boolean(false)) public final data class Holder : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|(bufferSafe = Boolean(false)) public final data class Holder : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(value: R|kotlin/Any?|): R|io/github/expo/modules/v2/testdata/Holder| {
             super<R|kotlin/Any|>()
         }
@@ -82,56 +82,56 @@ FILE: moduleValueTypes.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/JS|() public final object Values : R|io/github/expo/modules/v2/modules/Module| {
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object Values : R|io/github/expo/modules/v2/Module| {
         private constructor(): R|io/github/expo/modules/v2/testdata/Values| {
-            super<R|io/github/expo/modules/v2/modules/Module|>()
+            super<R|io/github/expo/modules/v2/Module|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun nullableScalars(a: R|kotlin/Int?|, b: R|kotlin/Long?|, c: R|kotlin/Float?|, d: R|kotlin/Double?|, e: R|kotlin/Boolean?|): R|kotlin/Int?| {
+        @R|io/github/expo/modules/v2/JS|() public final fun nullableScalars(a: R|kotlin/Int?|, b: R|kotlin/Long?|, c: R|kotlin/Float?|, d: R|kotlin/Double?|, e: R|kotlin/Boolean?|): R|kotlin/Int?| {
             ^nullableScalars R|<local>/a|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun unboxedScalars(a: R|kotlin/Int|, b: R|kotlin/Long|, c: R|kotlin/Float|, d: R|kotlin/Double|, e: R|kotlin/Boolean|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun unboxedScalars(a: R|kotlin/Int|, b: R|kotlin/Long|, c: R|kotlin/Float|, d: R|kotlin/Double|, e: R|kotlin/Boolean|): R|kotlin/Int| {
             ^unboxedScalars R|<local>/a|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun arrays(a: R|kotlin/IntArray|, b: R|kotlin/DoubleArray?|, c: R|kotlin/ByteArray|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun arrays(a: R|kotlin/IntArray|, b: R|kotlin/DoubleArray?|, c: R|kotlin/ByteArray|): R|kotlin/Int| {
             ^arrays R|<local>/a|.R|kotlin/IntArray.size|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun containers(list: R|kotlin/collections/List<kotlin/String>|, map: R|kotlin/collections/Map<kotlin/String, kotlin/Int>|, set: R|kotlin/collections/Set<kotlin/String>|, array: R|kotlin/Array<kotlin/String>|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun containers(list: R|kotlin/collections/List<kotlin/String>|, map: R|kotlin/collections/Map<kotlin/String, kotlin/Int>|, set: R|kotlin/collections/Set<kotlin/String>|, array: R|kotlin/Array<kotlin/String>|): R|kotlin/Int| {
             ^containers R|<local>/list|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|.R|kotlin/Int.plus|(R|<local>/map|.R|SubstitutionOverride<kotlin/collections/Map.size: R|kotlin/Int|>|).R|kotlin/Int.plus|(R|<local>/set|.R|SubstitutionOverride<kotlin/collections/Set.size: R|kotlin/Int|>|).R|kotlin/Int.plus|(R|<local>/array|.R|SubstitutionOverride<kotlin/Array.size: R|kotlin/Int|>|)
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun nullableElements(values: R|kotlin/collections/List<kotlin/String?>|, nullableList: R|kotlin/collections/List<kotlin/Int>?|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun nullableElements(values: R|kotlin/collections/List<kotlin/String?>|, nullableList: R|kotlin/collections/List<kotlin/Int>?|): R|kotlin/Int| {
             ^nullableElements R|<local>/values|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun echoPoint(point: R|io/github/expo/modules/v2/testdata/Point|): R|io/github/expo/modules/v2/testdata/Point| {
+        @R|io/github/expo/modules/v2/JS|() public final fun echoPoint(point: R|io/github/expo/modules/v2/testdata/Point|): R|io/github/expo/modules/v2/testdata/Point| {
             ^echoPoint R|<local>/point|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun echoHolder(holder: R|io/github/expo/modules/v2/testdata/Holder|): R|io/github/expo/modules/v2/testdata/Holder| {
+        @R|io/github/expo/modules/v2/JS|() public final fun echoHolder(holder: R|io/github/expo/modules/v2/testdata/Holder|): R|io/github/expo/modules/v2/testdata/Holder| {
             ^echoHolder R|<local>/holder|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun points(values: R|kotlin/collections/List<io/github/expo/modules/v2/testdata/Point>|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun points(values: R|kotlin/collections/List<io/github/expo/modules/v2/testdata/Point>|): R|kotlin/Int| {
             ^points R|<local>/values|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun holders(values: R|kotlin/collections/List<io/github/expo/modules/v2/testdata/Holder>|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun holders(values: R|kotlin/collections/List<io/github/expo/modules/v2/testdata/Holder>|): R|kotlin/Int| {
             ^holders R|<local>/values|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun dynamic(value: R|kotlin/Any?|, handle: R|io/github/expo/modules/v2/jsi/JavaScriptValue|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun dynamic(value: R|kotlin/Any?|, handle: R|io/github/expo/modules/v2/jsi/JavaScriptValue|): R|kotlin/Int| {
             ^dynamic R|<local>/handle|.R|kotlin/Any.hashCode|()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun optedOut(@R|io/github/expo/modules/v2/annotations/JS|(buffer = Q|io/github/expo/modules/v2/annotations/Buffer|.R|io/github/expo/modules/v2/annotations/Buffer.NO|) values: R|kotlin/collections/List<kotlin/String>|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun optedOut(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) values: R|kotlin/collections/List<kotlin/String>|): R|kotlin/Int| {
             ^optedOut R|<local>/values|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|(buffer = Q|io/github/expo/modules/v2/annotations/Buffer|.R|io/github/expo/modules/v2/annotations/Buffer.YES|) public final fun optedIn(values: R|kotlin/IntArray|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES|) public final fun optedIn(values: R|kotlin/IntArray|): R|kotlin/Int| {
             ^optedIn R|<local>/values|.R|kotlin/IntArray.size|
         }
 

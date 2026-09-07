@@ -1,7 +1,7 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordNullablePrimitives.kt
   CLASS CLASS name:Boxes modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Boxes
     PROPERTY name:i visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:i type:kotlin.Int? visibility:private [final]

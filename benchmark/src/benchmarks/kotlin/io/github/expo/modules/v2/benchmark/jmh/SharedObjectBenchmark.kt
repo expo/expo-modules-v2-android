@@ -1,9 +1,11 @@
 package io.github.expo.modules.v2.benchmark.jmh
 
-import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.ExpoSharedObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
-import io.github.expo.modules.v2.modules.Module
-import io.github.expo.modules.v2.sharedobjects.SharedObject
+import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.SharedObject
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.BenchmarkMode
 import kotlinx.benchmark.BenchmarkTimeUnit
@@ -25,7 +27,7 @@ import org.openjdk.jmh.annotations.OperationsPerInvocation
  */
 private const val OPS = 150_000
 
-@JS
+@ExpoSharedObject
 private class BenchCounter : SharedObject() {
   private var count: Int = 0
 
@@ -36,7 +38,7 @@ private class BenchCounter : SharedObject() {
   var seconds: Int = 0
 }
 
-@JS(name = "SharedObjectBench")
+@ExpoModule(name = "SharedObjectBench")
 private class SharedObjectOps : Module() {
   private val shared = BenchCounter()
 

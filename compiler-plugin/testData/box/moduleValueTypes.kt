@@ -2,11 +2,13 @@
 
 package io.github.expo.modules.v2.testdata
 
-import io.github.expo.modules.v2.annotations.Buffer
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.jsi.JavaScriptValue
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.Module
 
 @Record
 data class Point(val x: Double, val y: Double)
@@ -18,7 +20,7 @@ data class Holder(val value: Any?)
  * Every value shape the emitter has to describe, so the transport decision for each is pinned in one
  * place. The rule under test: buffer whenever the wire format allows it, except a primitive array.
  */
-@JS
+@ExpoModule
 object Values : Module() {
     // Nullable scalars box, so they ride the buffer; their non-null forms cannot.
     @JS
@@ -65,10 +67,11 @@ object Values : Module() {
 
     // Buffer.NO on a value the default would have buffered.
     @JS
-    fun optedOut(@JS(buffer = Buffer.NO) values: List<String>): Int = values.size
+    fun optedOut(@BufferMode(Buffer.NO) values: List<String>): Int = values.size
 
     // Buffer.YES on the one shape the default declines.
-    @JS(buffer = Buffer.YES)
+    @JS
+    @BufferMode(Buffer.YES)
     fun optedIn(values: IntArray): Int = values.size
 }
 

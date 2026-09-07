@@ -1,6 +1,6 @@
 package io.github.expo.modules.v2.testdata
 
-@JS
+@ExpoModule
 class AsyncShapes : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false)
   constructor() /* primary */ {
@@ -68,11 +68,12 @@ class AsyncShapes : Module {
   }
 
   @JS
-  suspend fun repeat(@JS(buffer = Buffer.NO) times: Int, value: String): String {
+  suspend fun repeat(@BufferMode(value = Buffer.NO) times: Int, value: String): String {
     return repeat(/* <this> = value, */ n = times)
   }
 
-  @JS(buffer = Buffer.NO)
+  @JS
+  @BufferMode(value = Buffer.NO)
   suspend fun scale(value: Int): Int {
     delay(timeMillis = 1L)
     return value.times(other = 2)

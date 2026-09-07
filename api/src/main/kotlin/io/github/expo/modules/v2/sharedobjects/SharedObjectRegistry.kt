@@ -2,6 +2,8 @@ package io.github.expo.modules.v2.sharedobjects
 
 import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.SharedRef
 import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
 import io.github.expo.modules.v2.binary.newSharedView
 import io.github.expo.modules.v2.cache.MultiKeyCache

@@ -102,7 +102,7 @@ data class Shared : Record {
 
 }
 
-@JS(name = "Producer")
+@ExpoModule(name = "Producer")
 object ProducerModule : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
   @JS
@@ -160,7 +160,7 @@ object ProducerModule : Module {
 // FILE: consumer.kt
 package io.github.expo.modules.v2.testdata.consumer
 
-@JS(name = "Consumer")
+@ExpoModule(name = "Consumer")
 object ConsumerModule : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
   private constructor() /* primary */ {

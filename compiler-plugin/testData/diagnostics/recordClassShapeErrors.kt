@@ -3,7 +3,7 @@
 
 package io.github.expo.modules.v2.testdata
 
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.records.Record as RecordMarker
 import io.github.expo.modules.v2.records.RecordCodec
 import io.github.expo.modules.v2.records.RecordSchema

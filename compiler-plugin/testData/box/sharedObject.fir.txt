@@ -1,92 +1,102 @@
 FILE: sharedObject.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/JS|() public final class Player : R|io/github/expo/modules/v2/sharedobjects/SharedObject| {
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Player : R|io/github/expo/modules/v2/SharedObject| {
         public constructor(): R|io/github/expo/modules/v2/testdata/Player| {
-            super<R|io/github/expo/modules/v2/sharedobjects/SharedObject|>()
+            super<R|io/github/expo/modules/v2/SharedObject|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun play(): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun play(): R|kotlin/Int| {
             ^play Int(1)
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final var volume: R|kotlin/Double| = Double(1.0)
+        @R|io/github/expo/modules/v2/JS|() public final var volume: R|kotlin/Double| = Double(1.0)
             public get(): R|kotlin/Double|
             public set(value: R|kotlin/Double|): R|kotlin/Unit|
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun rename(name: R|kotlin/String|): R|kotlin/String| {
+        @R|io/github/expo/modules/v2/JS|() public final fun rename(name: R|kotlin/String|): R|kotlin/String| {
             ^rename R|<local>/name|
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/JS|(name = String(Renamed)) public final class Speaker : R|io/github/expo/modules/v2/sharedobjects/SharedObject| {
+    @R|io/github/expo/modules/v2/ExpoSharedObject|(name = String(Renamed)) public final class Speaker : R|io/github/expo/modules/v2/SharedObject| {
         public constructor(): R|io/github/expo/modules/v2/testdata/Speaker| {
-            super<R|io/github/expo/modules/v2/sharedobjects/SharedObject|>()
+            super<R|io/github/expo/modules/v2/SharedObject|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun mute(): R|kotlin/Unit| {
+        @R|io/github/expo/modules/v2/JS|() public final fun mute(): R|kotlin/Unit| {
             ^mute Q|kotlin/Unit|
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/JS|() public final class Listed : R|io/github/expo/modules/v2/sharedobjects/SharedObject| {
-        @R|io/github/expo/modules/v2/annotations/JS|() public constructor(n: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Listed| {
-            super<R|io/github/expo/modules/v2/sharedobjects/SharedObject|>()
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class TextRef : R|io/github/expo/modules/v2/SharedRef<{kotlin/text/StringBuilder=} java/lang/StringBuilder>| {
+        public constructor(text: R|{kotlin/text/StringBuilder=} java/lang/StringBuilder|): R|io/github/expo/modules/v2/testdata/TextRef| {
+            super<R|io/github/expo/modules/v2/SharedRef<{kotlin/text/StringBuilder=} java/lang/StringBuilder>|>(R|<local>/text|)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun length(): R|kotlin/Int| {
+            ^length this@R|io/github/expo/modules/v2/testdata/TextRef|.R|SubstitutionOverride<io/github/expo/modules/v2/testdata/TextRef.ref: R|{kotlin/text/StringBuilder=} java/lang/StringBuilder|>|.R|java/lang/AbstractStringBuilder.length|
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Listed : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(n: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Listed| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
         }
 
         private final val n: R|kotlin/Int| = R|<local>/n|
             private get(): R|kotlin/Int|
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun value(): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun value(): R|kotlin/Int| {
             ^value this@R|io/github/expo/modules/v2/testdata/Listed|.R|io/github/expo/modules/v2/testdata/Listed.n|
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/JS|(classes = <implicitArrayOf>(<getClass>(Q|io/github/expo/modules/v2/testdata/Listed|))) public final class Owner : R|io/github/expo/modules/v2/modules/Module| {
+    @R|io/github/expo/modules/v2/ExpoModule|(classes = <implicitArrayOf>(<getClass>(Q|io/github/expo/modules/v2/testdata/Listed|))) public final class Owner : R|io/github/expo/modules/v2/Module| {
         public constructor(): R|io/github/expo/modules/v2/testdata/Owner| {
-            super<R|io/github/expo/modules/v2/modules/Module|>()
+            super<R|io/github/expo/modules/v2/Module|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final class Nested : R|io/github/expo/modules/v2/sharedobjects/SharedObject| {
-            @R|io/github/expo/modules/v2/annotations/JS|() public constructor(text: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/Owner.Nested| {
-                super<R|io/github/expo/modules/v2/sharedobjects/SharedObject|>()
+        @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Nested : R|io/github/expo/modules/v2/SharedObject| {
+            public constructor(text: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/Owner.Nested| {
+                super<R|io/github/expo/modules/v2/SharedObject|>()
             }
 
             private final val text: R|kotlin/String| = R|<local>/text|
                 private get(): R|kotlin/String|
 
-            @R|io/github/expo/modules/v2/annotations/JS|() public final fun render(): R|kotlin/String| {
+            @R|io/github/expo/modules/v2/JS|() public final fun render(): R|kotlin/String| {
                 ^render this@R|io/github/expo/modules/v2/testdata/Owner.Nested|.R|io/github/expo/modules/v2/testdata/Owner.Nested.text|
             }
 
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final class NotConstructable : R|io/github/expo/modules/v2/sharedobjects/SharedObject| {
-            public constructor(): R|io/github/expo/modules/v2/testdata/Owner.NotConstructable| {
-                super<R|io/github/expo/modules/v2/sharedobjects/SharedObject|>()
+        @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class NotConstructable : R|io/github/expo/modules/v2/SharedObject| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/Owner.NotConstructable| {
+                super<R|io/github/expo/modules/v2/SharedObject|>()
             }
 
-            @R|io/github/expo/modules/v2/annotations/JS|() public final fun name(): R|kotlin/String| {
+            @R|io/github/expo/modules/v2/JS|() public final fun name(): R|kotlin/String| {
                 ^name String(hidden)
             }
 
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/JS|() public final class Players : R|io/github/expo/modules/v2/modules/Module| {
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class Players : R|io/github/expo/modules/v2/Module| {
         public constructor(): R|io/github/expo/modules/v2/testdata/Players| {
-            super<R|io/github/expo/modules/v2/modules/Module|>()
+            super<R|io/github/expo/modules/v2/Module|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun create(): R|io/github/expo/modules/v2/testdata/Player| {
+        @R|io/github/expo/modules/v2/JS|() public final fun create(): R|io/github/expo/modules/v2/testdata/Player| {
             ^create R|io/github/expo/modules/v2/testdata/Player.Player|()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun volumeOf(player: R|io/github/expo/modules/v2/testdata/Player|): R|kotlin/Double| {
+        @R|io/github/expo/modules/v2/JS|() public final fun volumeOf(player: R|io/github/expo/modules/v2/testdata/Player|): R|kotlin/Double| {
             ^volumeOf R|<local>/player|.R|io/github/expo/modules/v2/testdata/Player.volume|
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun maybe(player: R|io/github/expo/modules/v2/testdata/Player?|): R|kotlin/Int| {
+        @R|io/github/expo/modules/v2/JS|() public final fun maybe(player: R|io/github/expo/modules/v2/testdata/Player?|): R|kotlin/Int| {
             ^maybe when () {
                 ==(R|<local>/player|, Null(null)) ->  {
                     Int(0)
@@ -150,6 +160,30 @@ FILE: sharedObject.kt
 
         }
 
+        lval base: R|java/lang/Class<io/github/expo/modules/v2/SharedObject>| = <getClass>(Q|io/github/expo/modules/v2/SharedObject|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/SharedObject|>
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/SharedObject>>| = R|kotlin/collections/listOf|<R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>|>(vararg(<getClass>(Q|io/github/expo/modules/v2/testdata/Player|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Player|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Speaker|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Speaker|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Listed|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Listed|>, <getClass>(Q|io/github/expo/modules/v2/testdata/TextRef|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/TextRef|>)).R|SubstitutionOverride<kotlin/collections/List.iterator: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/SharedObject>>|>|()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval owner: R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>|>|()
+                 {
+                    when () {
+                        R|<local>/base|.R|SubstitutionOverride<java/lang/Class.isAssignableFrom: R|kotlin/Boolean|>|(R|<local>/owner|).R|kotlin/Boolean.not|() ->  {
+                            ^box <strcat>(R|<local>/owner|.R|java/lang/Class.simpleName|, String(: not a ExpoSharedObject))
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        when () {
+            !=(<getClass>(Q|io/github/expo/modules/v2/testdata/TextRef|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/TextRef|>.R|java/lang/Class.superclass|, <getClass>(Q|io/github/expo/modules/v2/SharedRef|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/SharedRef<*>|>) ->  {
+                ^box <strcat>(String(TextRef: declared base replaced by ), <getClass>(Q|io/github/expo/modules/v2/testdata/TextRef|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/TextRef|>.R|java/lang/Class.superclass|)
+            }
+        }
+
         lval expected: R|kotlin/collections/Map<java/lang/Class<out kotlin/Any>, kotlin/collections/Map<kotlin/String, kotlin/String>>| = R|kotlin/collections/mapOf|<R|java/lang/Class<out kotlin/Any>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>(vararg(<getClass>(Q|io/github/expo/modules/v2/testdata/Players|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Players|>.R|kotlin/to|<R|java/lang/Class<io/github/expo/modules/v2/testdata/Players>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>(R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(volumeOf), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)), <strcat>(String(maybe), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)), <strcat>(String(create), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>))))), <getClass>(Q|io/github/expo/modules/v2/testdata/Player|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Player|>.R|kotlin/to|<R|java/lang/Class<io/github/expo/modules/v2/testdata/Player>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>(R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(rename), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)Ljava/lang/String;)), <strcat>(String(play), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)))))))
          {
             lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<java/lang/Class<out kotlin/Any>, kotlin/collections/Map<kotlin/String, kotlin/String>>>| = R|<local>/expected|.R|kotlin/collections/iterator|<R|java/lang/Class<out kotlin/Any>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>()
@@ -185,9 +219,9 @@ FILE: sharedObject.kt
         }
 
          {
-            lval <iterator>: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/sharedobjects/SharedObject>>| = R|kotlin/collections/listOf|<R|java/lang/Class<out io/github/expo/modules/v2/sharedobjects/SharedObject>|>(vararg(<getClass>(Q|io/github/expo/modules/v2/testdata/Listed|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Listed|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Owner.Nested|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Owner.Nested|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Owner.NotConstructable|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Owner.NotConstructable|>)).R|SubstitutionOverride<kotlin/collections/List.iterator: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/sharedobjects/SharedObject>>|>|()
+            lval <iterator>: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/SharedObject>>| = R|kotlin/collections/listOf|<R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>|>(vararg(<getClass>(Q|io/github/expo/modules/v2/testdata/Listed|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Listed|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Owner.Nested|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Owner.Nested|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Owner.NotConstructable|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Owner.NotConstructable|>)).R|SubstitutionOverride<kotlin/collections/List.iterator: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/SharedObject>>|>|()
             while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
-                lval owner: R|java/lang/Class<out io/github/expo/modules/v2/sharedobjects/SharedObject>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|java/lang/Class<out io/github/expo/modules/v2/sharedobjects/SharedObject>|>|()
+                lval owner: R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>|>|()
                  {
                     when () {
                         ==(R|io/github/expo/modules/v2/testdata/descriptorOf|(R|<local>/owner|, String(define$ExpoModulesV2)), String(<absent>)) ->  {

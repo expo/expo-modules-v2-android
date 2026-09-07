@@ -8,7 +8,8 @@ import org.jetbrains.kotlin.name.Name
 @Suppress("CanUnescapeDollarLiteral")
 object Identifiers {
   private object Packages {
-    val ANNOTATIONS = FqName("io.github.expo.modules.v2.annotations")
+    /** The public surface: the annotations, and the two base classes a user extends. */
+    val API = FqName("io.github.expo.modules.v2")
     val RECORDS = FqName("io.github.expo.modules.v2.records")
     val READERS = FqName("io.github.expo.modules.v2.records.readers")
     val WRITERS = FqName("io.github.expo.modules.v2.records.writers")
@@ -21,8 +22,11 @@ object Identifiers {
   }
 
   object Classes {
-    val RecordAnnotation = classId(Packages.ANNOTATIONS, "Record")
-    val JSAnnotation = classId(Packages.ANNOTATIONS, "JS")
+    val RecordAnnotation = classId(Packages.API, "Record")
+    val JSAnnotation = classId(Packages.API, "JS")
+    val ExpoModuleAnnotation = classId(Packages.API, "ExpoModule")
+    val BufferModeAnnotation = classId(Packages.API, "BufferMode")
+    val ExpoSharedObjectAnnotation = classId(Packages.API, "ExpoSharedObject")
 
     val RecordInterface = classId(Packages.RECORDS, "Record")
     val RecordCodec = classId(Packages.RECORDS, "RecordCodec")
@@ -39,11 +43,11 @@ object Identifiers {
     val CommonDescriptors = classId(Packages.TYPES, "CommonDescriptors")
     val AnyType = classId(Packages.TYPES, "AnyType")
 
-    val Module = classId(Packages.MODULES, "Module")
+    val Module = classId(Packages.API, "Module")
     val ModuleBuilder = classId(Packages.MODULES, "ModuleBuilder")
 
-    val SharedObject = classId(Packages.SHARED_OBJECTS, "SharedObject")
-    val SharedRef = classId(Packages.SHARED_OBJECTS, "SharedRef")
+    val SharedObject = classId(Packages.API, "SharedObject")
+    val SharedRef = classId(Packages.API, "SharedRef")
     val SharedObjectRegistry = classId(Packages.SHARED_OBJECTS, "SharedObjectRegistry")
 
     val Trampoline = classId(Packages.ARGS, "Trampoline")
@@ -65,6 +69,9 @@ object Identifiers {
   object FqNames {
     val RECORD_ANNOTATION: FqName = Classes.RecordAnnotation.asSingleFqName()
     val JS_ANNOTATION: FqName = Classes.JSAnnotation.asSingleFqName()
+    val EXPO_MODULE_ANNOTATION: FqName = Classes.ExpoModuleAnnotation.asSingleFqName()
+    val BUFFER_MODE_ANNOTATION: FqName = Classes.BufferModeAnnotation.asSingleFqName()
+    val SHARED_OBJECT_ANNOTATION: FqName = Classes.ExpoSharedObjectAnnotation.asSingleFqName()
   }
 
   object Names {
@@ -98,8 +105,8 @@ object Identifiers {
     // Annotation arguments.
     val ARG_NAME = Name.identifier("name")
     val ARG_BUFFER_SAFE = Name.identifier("bufferSafe")
-    val ARG_BUFFER = Name.identifier("buffer")
-    val ARG_RETURN_BUFFER = Name.identifier("returnBuffer")
+    val ARG_VALUE = Name.identifier("value")
+    val ARG_RETURNS = Name.identifier("returns")
     val ARG_CLASSES = Name.identifier("classes")
   }
 

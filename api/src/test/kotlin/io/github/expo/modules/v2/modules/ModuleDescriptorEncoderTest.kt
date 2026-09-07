@@ -1,28 +1,29 @@
 package io.github.expo.modules.v2.modules
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
-import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
-import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
-import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.AnyType
-import io.github.expo.modules.v2.types.buffered
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.ExpoSharedObject
+import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
+import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+import io.github.expo.modules.v2.types.AnyType
+import io.github.expo.modules.v2.types.CppType
+import io.github.expo.modules.v2.types.TypeDescriptor
+import io.github.expo.modules.v2.types.buffered
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
-import io.github.expo.modules.v2.types.TypeDescriptor
 
 private const val TRAMPOLINE = "__construct\$ExpoModulesV2"
 
 @Record
 private data class EncoderTestRecord(val x: Int) : io.github.expo.modules.v2.records.Record
 
-@JS
+@ExpoSharedObject
 private class EncoderTestSharedObject(
   @Suppress("unused") val greeting: String,
-) : io.github.expo.modules.v2.sharedobjects.SharedObject()
+) : SharedObject()
 
 /**
  * Exercises the module-descriptor layout on a privately allocated buffer — no natives involved.

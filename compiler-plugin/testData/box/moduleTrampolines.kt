@@ -2,9 +2,11 @@
 
 package io.github.expo.modules.v2.testdata
 
-import io.github.expo.modules.v2.annotations.Buffer
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
 import java.net.URI
 import java.net.URL
 import kotlin.time.Duration
@@ -14,15 +16,17 @@ import kotlin.time.Duration
  * runtime: `Duration` bridges as an unboxed `Double`, and `Buffer.NO` keeps the `URL`'s `String`
  * bridge in a slot too.
  */
-@JS
+@ExpoModule
 object Converted : Module() {
     @JS
     fun total(a: Duration, b: Duration): Duration = a + b
 
-    @JS(buffer = Buffer.NO)
+    @JS
+    @BufferMode(Buffer.NO)
     fun host(url: URL): String = url.host
 
-    @JS(buffer = Buffer.NO)
+    @JS
+    @BufferMode(Buffer.NO)
     fun firstHost(urls: List<URL>): String = urls.first().host
 }
 
@@ -32,7 +36,7 @@ object Converted : Module() {
  * descriptor, and a buffered argument contributes no parameter while adding one trailing
  * `payloadLength`.
  */
-@JS
+@ExpoModule
 object Buffered : Module() {
     @JS
     fun greet(name: String): String = "Hello, $name!"

@@ -2,7 +2,7 @@ Module: producer
 FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
   CLASS CLASS name:Shared modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.producer.Shared
     PROPERTY name:n visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:n type:kotlin.Int visibility:private [final]
@@ -288,7 +288,7 @@ Module: consumer
 FILE fqName:io.github.expo.modules.v2.testdata.consumer fileName:/consumer.kt
   CLASS CLASS name:Holder modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
     annotations:
-      Record(name = <null>, bufferSafe = <null>)
+      Record(bufferSafe = <null>)
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.consumer.Holder
     PROPERTY name:shared visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:shared type:io.github.expo.modules.v2.testdata.producer.Shared visibility:private [final]

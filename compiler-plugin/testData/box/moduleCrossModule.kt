@@ -4,9 +4,10 @@
 // FILE: producer.kt
 package io.github.expo.modules.v2.testdata.producer
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.annotations.Record
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.Module
 
 @Record
 data class Shared(val n: Int, val label: String?)
@@ -15,7 +16,7 @@ data class Shared(val n: Int, val label: String?)
  * The registration and every trampoline land in this module's class file, so the consumer below
  * registers it without a plugin run of its own — the same property the record half relies on.
  */
-@JS(name = "Producer")
+@ExpoModule(name = "Producer")
 object ProducerModule : Module() {
     @JS
     fun bump(value: Shared): Shared = Shared(value.n + 1, value.label)
@@ -31,13 +32,14 @@ object ProducerModule : Module() {
 // FILE: consumer.kt
 package io.github.expo.modules.v2.testdata.consumer
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.testdata.producer.ProducerModule
 import io.github.expo.modules.v2.testdata.producer.Shared
 
 /** A module in this module whose signature names a record from the other one. */
-@JS(name = "Consumer")
+@ExpoModule(name = "Consumer")
 object ConsumerModule : Module() {
     @JS
     fun forward(value: Shared): Shared = ProducerModule.bump(value)

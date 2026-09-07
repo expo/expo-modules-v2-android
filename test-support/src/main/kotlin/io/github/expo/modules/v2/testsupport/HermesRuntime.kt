@@ -1,9 +1,10 @@
 package io.github.expo.modules.v2.testsupport
 
+import io.github.expo.hermes.HermesRuntime as HermesEngine
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.async.AsyncContext
 import io.github.expo.modules.v2.jsi.AttachedRuntime
 import io.github.expo.modules.v2.modules.ModuleRegistry
-import io.github.expo.hermes.HermesRuntime as HermesEngine
 
 /**
  * A Hermes-backed [AttachedRuntime] for desktop tests and benchmarks.

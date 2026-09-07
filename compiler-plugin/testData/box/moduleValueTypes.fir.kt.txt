@@ -183,7 +183,7 @@ data class Point : Record {
 
 }
 
-@JS
+@ExpoModule
 object Values : Module {
   private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<E>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
   private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<K, V>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))
@@ -341,13 +341,14 @@ object Values : Module {
     return a
   }
 
-  @JS(buffer = Buffer.YES)
+  @JS
+  @BufferMode(value = Buffer.YES)
   fun optedIn(values: IntArray): Int {
     return values.<get-size>()
   }
 
   @JS
-  fun optedOut(@JS(buffer = Buffer.NO) values: List<String>): Int {
+  fun optedOut(@BufferMode(value = Buffer.NO) values: List<String>): Int {
     return values.<get-size>()
   }
 

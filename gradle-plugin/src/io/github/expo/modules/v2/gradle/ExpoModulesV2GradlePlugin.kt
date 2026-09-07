@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
  * Registers the Expo Modules v2 Kotlin compiler plugin — the one that turns an
- * `@io.github.expo.modules.v2.annotations.Record` class into a record with a generated `RecordCodec` — with
+ * `@io.github.expo.modules.v2.Record` class into a record with a generated `RecordCodec` — with
  * every Kotlin compilation of the project it is applied to.
  *
  * The plugin adds no dependency of its own: every module that declares records already depends on

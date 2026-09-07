@@ -1,7 +1,7 @@
 FILE: recordClassShapes.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class Plain : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class Plain : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(a: R|kotlin/Int|, b: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/Plain| {
             super<R|kotlin/Any|>()
         }
@@ -38,7 +38,7 @@ FILE: recordClassShapes.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() private final class Hidden : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() private final class Hidden : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Hidden| {
             super<R|kotlin/Any|>()
         }
@@ -72,7 +72,7 @@ FILE: recordClassShapes.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class Explicit : R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class Explicit : R|io/github/expo/modules/v2/records/Record| {
         public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Explicit| {
             super<R|kotlin/Any|>()
         }
@@ -106,7 +106,7 @@ FILE: recordClassShapes.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class WithCompanion : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class WithCompanion : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/WithCompanion| {
             super<R|kotlin/Any|>()
         }
@@ -152,7 +152,7 @@ FILE: recordClassShapes.kt
             super<R|kotlin/Any|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/Record|() public final class Nested : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        @R|io/github/expo/modules/v2/Record|() public final class Nested : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
             public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Host.Nested| {
                 super<R|kotlin/Any|>()
             }
@@ -188,7 +188,7 @@ FILE: recordClassShapes.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class Empty : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class Empty : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(): R|io/github/expo/modules/v2/testdata/Empty| {
             super<R|kotlin/Any|>()
         }

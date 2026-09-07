@@ -4,7 +4,7 @@ import io.github.expo.modules.v2.records.readers.BufferRecordReader
 import io.github.expo.modules.v2.records.writers.BufferRecordWriter
 import io.github.expo.modules.v2.args.BufferTrampolineArguments
 import io.github.expo.modules.v2.modules.ModuleBuilder
-import io.github.expo.modules.v2.annotations.Record
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.codecFor
 import io.github.expo.modules.v2.converters.ArrayConverter

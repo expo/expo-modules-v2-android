@@ -1,7 +1,7 @@
 FILE: recordPrimitiveArrays.kt
     package io.github.expo.modules.v2.testdata
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final class Samples : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final class Samples : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(ints: R|kotlin/IntArray|, longs: R|kotlin/LongArray|, floats: R|kotlin/FloatArray|, doubles: R|kotlin/DoubleArray|, bools: R|kotlin/BooleanArray|, bytes: R|kotlin/ByteArray|, maybe: R|kotlin/IntArray?|): R|io/github/expo/modules/v2/testdata/Samples| {
             super<R|kotlin/Any|>()
         }

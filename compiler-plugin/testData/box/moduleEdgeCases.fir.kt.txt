@@ -13,7 +13,7 @@ abstract class BaseModule : Module {
 
 }
 
-@JS
+@ExpoModule
 class WithNested : Module {
   class Nested {
     constructor() /* primary */ {
@@ -59,7 +59,7 @@ class WithNested : Module {
 
 }
 
-@JS
+@ExpoModule
 object Arity : Module {
   private constructor() /* primary */ {
     super/*Module*/()
@@ -121,7 +121,7 @@ object Arity : Module {
 
 }
 
-@JS
+@ExpoModule
 object Derived : BaseModule {
   private constructor() /* primary */ {
     super/*BaseModule*/()
@@ -141,7 +141,7 @@ object Derived : BaseModule {
 
 }
 
-@JS
+@ExpoModule
 object Empty : Module {
   private constructor() /* primary */ {
     super/*Module*/()
@@ -155,7 +155,7 @@ object Empty : Module {
 
 }
 
-@JS
+@ExpoModule
 object Visibility : Module {
   private constructor() /* primary */ {
     super/*Module*/()

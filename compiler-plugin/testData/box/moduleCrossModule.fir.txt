@@ -2,7 +2,7 @@ Module: producer
 FILE: producer.kt
     package io.github.expo.modules.v2.testdata.producer
 
-    @R|io/github/expo/modules/v2/annotations/Record|() public final data class Shared : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+    @R|io/github/expo/modules/v2/Record|() public final data class Shared : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
         public constructor(n: R|kotlin/Int|, label: R|kotlin/String?|): R|io/github/expo/modules/v2/testdata/producer/Shared| {
             super<R|kotlin/Any|>()
         }
@@ -45,20 +45,20 @@ FILE: producer.kt
         }
 
     }
-    @R|io/github/expo/modules/v2/annotations/JS|(name = String(Producer)) public final object ProducerModule : R|io/github/expo/modules/v2/modules/Module| {
+    @R|io/github/expo/modules/v2/ExpoModule|(name = String(Producer)) public final object ProducerModule : R|io/github/expo/modules/v2/Module| {
         private constructor(): R|io/github/expo/modules/v2/testdata/producer/ProducerModule| {
-            super<R|io/github/expo/modules/v2/modules/Module|>()
+            super<R|io/github/expo/modules/v2/Module|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun bump(value: R|io/github/expo/modules/v2/testdata/producer/Shared|): R|io/github/expo/modules/v2/testdata/producer/Shared| {
+        @R|io/github/expo/modules/v2/JS|() public final fun bump(value: R|io/github/expo/modules/v2/testdata/producer/Shared|): R|io/github/expo/modules/v2/testdata/producer/Shared| {
             ^bump R|io/github/expo/modules/v2/testdata/producer/Shared.Shared|(R|<local>/value|.R|io/github/expo/modules/v2/testdata/producer/Shared.n|.R|kotlin/Int.plus|(Int(1)), R|<local>/value|.R|io/github/expo/modules/v2/testdata/producer/Shared.label|)
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun name(prefix: R|kotlin/String|): R|kotlin/String| {
+        @R|io/github/expo/modules/v2/JS|() public final fun name(prefix: R|kotlin/String|): R|kotlin/String| {
             ^name <strcat>(R|<local>/prefix|, String(!))
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final var count: R|kotlin/Int| = Int(1)
+        @R|io/github/expo/modules/v2/JS|() public final var count: R|kotlin/Int| = Int(1)
             public get(): R|kotlin/Int|
             public set(value: R|kotlin/Int|): R|kotlin/Unit|
 
@@ -67,12 +67,12 @@ Module: consumer
 FILE: consumer.kt
     package io.github.expo.modules.v2.testdata.consumer
 
-    @R|io/github/expo/modules/v2/annotations/JS|(name = String(Consumer)) public final object ConsumerModule : R|io/github/expo/modules/v2/modules/Module| {
+    @R|io/github/expo/modules/v2/ExpoModule|(name = String(Consumer)) public final object ConsumerModule : R|io/github/expo/modules/v2/Module| {
         private constructor(): R|io/github/expo/modules/v2/testdata/consumer/ConsumerModule| {
-            super<R|io/github/expo/modules/v2/modules/Module|>()
+            super<R|io/github/expo/modules/v2/Module|>()
         }
 
-        @R|io/github/expo/modules/v2/annotations/JS|() public final fun forward(value: R|io/github/expo/modules/v2/testdata/producer/Shared|): R|io/github/expo/modules/v2/testdata/producer/Shared| {
+        @R|io/github/expo/modules/v2/JS|() public final fun forward(value: R|io/github/expo/modules/v2/testdata/producer/Shared|): R|io/github/expo/modules/v2/testdata/producer/Shared| {
             ^forward Q|io/github/expo/modules/v2/testdata/producer/ProducerModule|.R|io/github/expo/modules/v2/testdata/producer/ProducerModule.bump|(R|<local>/value|)
         }
 

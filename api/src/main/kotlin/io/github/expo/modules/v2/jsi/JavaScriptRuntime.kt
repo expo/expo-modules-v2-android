@@ -1,10 +1,10 @@
 package io.github.expo.modules.v2.jsi
 
-import io.github.expo.modules.v2.async.AsyncContext
-import io.github.expo.modules.v2.modules.ModuleRegistry
 import io.github.expo.kolibri.NativeMethod
 import io.github.expo.kolibri.NativeObject
 import io.github.expo.kolibri.NativePointer
+import io.github.expo.modules.v2.async.AsyncContext
+import io.github.expo.modules.v2.modules.ModuleRegistry
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource

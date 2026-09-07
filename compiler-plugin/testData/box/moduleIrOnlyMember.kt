@@ -2,8 +2,9 @@
 
 package io.github.expo.modules.v2.testdata
 
-import io.github.expo.modules.v2.annotations.JS
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
 
 /**
  * The whole module generator adds members in the backend only, so this pins two things the rest
@@ -13,7 +14,7 @@ import io.github.expo.modules.v2.modules.Module
  * Every value here is a non-null scalar, an `Any` or a JSI-free array — all of which keep their JNI
  * slot — so no trampoline is involved and the bridge calls each method directly.
  */
-@JS
+@ExpoModule
 object Direct : Module() {
     @JS
     fun add(a: Int, b: Int): Int = a + b
@@ -40,7 +41,7 @@ object Direct : Module() {
     fun internalHelper(): Int = 0
 }
 
-@JS(name = "Instance")
+@ExpoModule(name = "Instance")
 class DirectInstance : Module() {
     @JS
     fun echo(value: Long): Long = value

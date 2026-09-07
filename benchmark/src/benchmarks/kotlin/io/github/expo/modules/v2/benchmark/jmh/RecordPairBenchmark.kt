@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.benchmark.jmh
 
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.BenchmarkMode

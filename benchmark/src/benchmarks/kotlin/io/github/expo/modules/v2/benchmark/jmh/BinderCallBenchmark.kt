@@ -1,9 +1,11 @@
 package io.github.expo.modules.v2.benchmark.jmh
 
-import io.github.expo.modules.v2.annotations.Buffer
-import io.github.expo.modules.v2.annotations.JS
+import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.jsi.JavaScriptValue
-import io.github.expo.modules.v2.modules.Module
+import io.github.expo.modules.v2.Module
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.BenchmarkMode
 import kotlinx.benchmark.BenchmarkTimeUnit
@@ -32,18 +34,20 @@ private const val OPS = 100_000
  * pinned to a JNI slot with `Buffer.NO`, one left on the default, which buffers. A single Kotlin
  * function has exactly one transport, so the pair has to be two.
  */
-@JS(name = "FunctionBinderBench")
+@ExpoModule(name = "FunctionBinderBench")
 private class BinderOps : Module() {
   @JS
   fun intValue(): Int = 42
 
-  @JS(name = "stringValue", buffer = Buffer.NO)
+  @JS(name = "stringValue")
+  @BufferMode(Buffer.NO)
   fun stringValueDirect(): String = "forty-two"
 
   @JS(name = "stringValueBuffered")
   fun stringValueBuffered(): String = "forty-two"
 
-  @JS(name = "echoString", buffer = Buffer.NO)
+  @JS(name = "echoString")
+  @BufferMode(Buffer.NO)
   fun echoStringDirect(value: String): String = value
 
   @JS(name = "echoStringBuffered")

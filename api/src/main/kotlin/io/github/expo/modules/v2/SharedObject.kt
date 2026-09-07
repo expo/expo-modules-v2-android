@@ -1,4 +1,4 @@
-package io.github.expo.modules.v2.sharedobjects
+package io.github.expo.modules.v2
 
 abstract class SharedObject {
   @Volatile
