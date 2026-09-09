@@ -71,7 +71,11 @@ class Event<T> internal constructor(
     val started = synchronized(EventSupport.lock) {
       val added = observers.add(context)
       if (added) {
-        observerSnapshot = observers.toTypedArray()
+        observerSnapshot = if (observers.size == 1) {
+          arrayOf(context)
+        } else {
+          observers.toTypedArray()
+        }
       }
       added && observers.size == 1
     }

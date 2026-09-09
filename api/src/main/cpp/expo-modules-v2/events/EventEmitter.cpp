@@ -143,41 +143,51 @@ namespace expo::modules::v2::events {
       }
     }
 
+    /** What a subscription's `remove` needs: the emitter to find the listener on, and the listener. */
+    struct Subscription {
+      facebook::jsi::Value emitter;
+      facebook::jsi::Value listener;
+      int eventIndex;
+    };
+
     facebook::jsi::Value createSubscription(
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Object& emitterObject,
       const int eventIndex,
       const facebook::jsi::Function& listener
     ) {
-      // The subscription keeps both alive: `remove` needs the emitter to find the listener on, and
-      // the very listener object to find by identity.
-      auto emitterValue = std::make_shared<facebook::jsi::Value>(rt, emitterObject);
-      auto listenerValue = std::make_shared<facebook::jsi::Value>(rt, listener);
+      auto subscription = std::make_shared<Subscription>(
+        Subscription{
+          .emitter = facebook::jsi::Value(rt, emitterObject),
+          .listener = facebook::jsi::Value(rt, listener),
+          .eventIndex = eventIndex,
+        }
+      );
 
-      facebook::jsi::Object subscription(rt);
-      subscription.setProperty(
+      facebook::jsi::Object result(rt);
+      result.setProperty(
         rt,
         "remove",
         facebook::jsi::Function::createFromHostFunction(
           rt,
           facebook::jsi::PropNameID::forAscii(rt, "remove"),
           0,
-          [eventIndex, emitterValue, listenerValue](
+          [subscription](
           facebook::jsi::Runtime& rt,
           const facebook::jsi::Value&,
           const facebook::jsi::Value*,
           size_t) -> facebook::jsi::Value {
             removeListener(
               rt,
-              emitterValue->getObject(rt),
-              eventIndex,
-              listenerValue->getObject(rt).getFunction(rt)
+              subscription->emitter.getObject(rt),
+              subscription->eventIndex,
+              subscription->listener.getObject(rt).getFunction(rt)
             );
             return facebook::jsi::Value::undefined();
           }
         )
       );
-      return facebook::jsi::Value(rt, subscription);
+      return facebook::jsi::Value(rt, result);
     }
 
     facebook::jsi::Object thisObjectOf(
