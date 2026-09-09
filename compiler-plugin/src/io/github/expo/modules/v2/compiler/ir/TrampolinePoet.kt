@@ -28,21 +28,19 @@ import org.jetbrains.kotlin.ir.util.patchDeclarationParents
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.name.SpecialNames
 
+/**
+ * @param descriptors A trampoline body runs on every call, so an allocating descriptor is hoisted
+ * into a static field of the module class - a `TypeDescriptor` says nothing about the module
+ * instance. Shared with everything else that hoists descriptors into the same class, so the fields
+ * are numbered once.
+ */
 internal class TrampolinePoet(
   private val context: IrPluginContext,
   private val symbols: SymbolFinder,
   private val poet: TypeDescriptorPoet,
+  private val descriptors: DescriptorFields,
 ) {
   private val irBuiltIns = context.irBuiltIns
-
-  /**
-   * A trampoline body runs on every call, so an allocating descriptor is hoisted into a field of the
-   * module class. It is static: a `TypeDescriptor` says nothing about the module instance, and a
-   * module registered once per runtime would otherwise re-resolve every converter for each one.
-   */
-  private val descriptors = DescriptorFields(
-    context, symbols, poet, JSModuleKey, isStatic = true,
-  )
 
   fun functionTrampoline(
     moduleClass: IrClass,

@@ -93,7 +93,10 @@ class BufferModeCheckers(session: FirSession) : FirAdditionalCheckersExtension(s
         return
       }
 
-      if (!declaration.symbol.hasJsAnnotation(session)) {
+      // An event's payload crosses like a property read, so @BufferMode steers it the same way.
+      val isExported = declaration.symbol.hasJsAnnotation(session) ||
+        declaration.symbol.hasEventAnnotation(session)
+      if (!isExported) {
         reporter.reportOn(
           declaration.source,
           BufferModeDiagnostics.BUFFER_MODE_ON_NON_EXPORTED_DECLARATION,

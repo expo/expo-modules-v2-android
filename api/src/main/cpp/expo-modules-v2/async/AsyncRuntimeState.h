@@ -25,6 +25,9 @@ namespace expo::modules::v2::async {
 
     [[nodiscard]] static AsyncRuntimeState* find(const facebook::jsi::Runtime& rt) noexcept;
 
+    /** The Kotlin `AsyncContext` of this runtime, or null once it was invalidated. */
+    [[nodiscard]] jobject context() const;
+
     [[nodiscard]] uint64_t beginCall(ExpectedType returnType);
 
     [[nodiscard]] facebook::jsi::Value finishCall(facebook::jsi::Runtime& rt, uint64_t id);

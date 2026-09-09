@@ -35,11 +35,13 @@ namespace expo::modules::v2 {
     std::shared_ptr<ModuleState> state,
     std::vector<descriptor::HostFunctionSpec> functions,
     std::vector<descriptor::HostPropertySpec> properties,
-    std::vector<descriptor::SharedClassSpec> sharedClasses
+    std::vector<descriptor::SharedClassSpec> sharedClasses,
+    std::vector<descriptor::EventSpec> events
   ) : ObjectNativeState(std::move(state)),
       functionBinders_(makeFunctionBinders(this->state()->instanceRef(), std::move(functions))),
       propertyBinders_(makePropertyBinders(this->state()->instanceRef(), std::move(properties))),
-      sharedClasses_(std::move(sharedClasses)) {
+      sharedClasses_(std::move(sharedClasses)),
+      events_(std::move(events)) {
   }
 
   ModuleNativeState::~ModuleNativeState() {
@@ -59,5 +61,9 @@ namespace expo::modules::v2 {
 
   std::span<descriptor::SharedClassSpec> ModuleNativeState::sharedClasses() {
     return sharedClasses_;
+  }
+
+  std::span<const descriptor::EventSpec> ModuleNativeState::events() const {
+    return events_;
   }
 } // namespace expo::modules::v2

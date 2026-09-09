@@ -4,10 +4,13 @@
 #include <jsi/jsi.h>
 
 #include <memory>
+#include <span>
+#include <string_view>
 #include <utility>
 
 #include <expo-jsi/ChainedNativeState.h>
 
+#include <expo-modules-v2/descriptor/EventSpec.h>
 #include <expo-modules-v2/objects/ObjectState.h>
 
 namespace expo::modules::v2::objects {
@@ -36,6 +39,19 @@ namespace expo::modules::v2::objects {
 
     /** The Kotlin instance, or null once it was released. */
     [[nodiscard]] jobject instance() const { return state_->instance(); }
+
+    /** The events this JavaScript object can emit; the emitter members check names against it. */
+    [[nodiscard]] virtual std::span<const descriptor::EventSpec> events() const { return {}; }
+
+    /** The declared event named [name], or null. */
+    [[nodiscard]] const descriptor::EventSpec* eventSpec(const std::string_view name) const {
+      for (const descriptor::EventSpec& spec: events()) {
+        if (spec.name == name) {
+          return &spec;
+        }
+      }
+      return nullptr;
+    }
 
     /** The node on [object], or null if it stands for no Kotlin instance. */
     static std::shared_ptr<ObjectNativeState> of(

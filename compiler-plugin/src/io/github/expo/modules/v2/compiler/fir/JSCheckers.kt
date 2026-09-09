@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.compiler.fir
 
 import io.github.expo.modules.v2.compiler.Identifiers
+import io.github.expo.modules.v2.compiler.eventJsName
 import io.github.expo.modules.v2.compiler.fir.diagnostics.JSDiagnostics
 import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.Modality
@@ -166,6 +167,9 @@ internal fun FirAnnotation.classListArgument(name: Name): List<FirRegularClassSy
 internal fun FirDeclaration.jsAnnotation(session: FirSession): FirAnnotation? =
   getAnnotationByClassId(Identifiers.Classes.JSAnnotation, session)
 
+internal fun FirDeclaration.eventAnnotation(session: FirSession): FirAnnotation? =
+  getAnnotationByClassId(Identifiers.Classes.EventAnnotation, session)
+
 internal fun FirBasedSymbol<*>.sharedObjectAnnotation(session: FirSession): FirAnnotation? =
   getAnnotationByClassId(Identifiers.Classes.ExpoSharedObjectAnnotation, session)
 
@@ -235,7 +239,11 @@ internal fun checkVisibility(
   return true
 }
 
-/** Reports two exports of one class that would land on the same JavaScript name. */
+/**
+ * Reports two exports of one class that would land on the same JavaScript name - functions,
+ * properties and events share one namespace - and an export named after one of the event emitter's
+ * own members, which every module object and shared-object prototype carries.
+ */
 internal fun reportDuplicateExportNames(
   declaration: FirRegularClass,
   session: FirSession,
@@ -247,16 +255,27 @@ internal fun reportDuplicateExportNames(
     if (member !is FirSimpleFunction && member !is FirProperty) {
       continue
     }
-    val annotation = member.jsAnnotation(session) ?: continue
-    val name = annotation.exportName(session)
-      ?: (member as FirCallableDeclaration).symbol.name
-    if (!seen.add(name.asString())) {
-      reporter.reportOn(
-        member.source,
-        JSDiagnostics.JS_DUPLICATE_EXPORT_NAME,
-        name.asString(),
-        context,
-      )
+    val name = member.exportNameOrNull(session) ?: continue
+    if (name in Identifiers.Literals.RESERVED_EXPORT_NAMES) {
+      reporter.reportOn(member.source, JSDiagnostics.JS_RESERVED_EXPORT_NAME, name, context)
+      continue
+    }
+    if (!seen.add(name)) {
+      reporter.reportOn(member.source, JSDiagnostics.JS_DUPLICATE_EXPORT_NAME, name, context)
     }
   }
+}
+
+/** The JavaScript name this member exports under, or null when it is not exported. */
+private fun FirDeclaration.exportNameOrNull(session: FirSession): String? {
+  val symbolName = (this as FirCallableDeclaration).symbol.name.asString()
+  jsAnnotation(session)?.let { annotation ->
+    return annotation.exportName(session)?.asString() ?: symbolName
+  }
+  if (this is FirProperty) {
+    eventAnnotation(session)?.let { annotation ->
+      return annotation.exportName(session)?.asString() ?: eventJsName(symbolName)
+    }
+  }
+  return null
 }

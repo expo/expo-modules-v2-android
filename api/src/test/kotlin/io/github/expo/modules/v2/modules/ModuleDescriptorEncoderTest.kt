@@ -13,7 +13,6 @@ import io.github.expo.modules.v2.types.buffered
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 
 private const val TRAMPOLINE = "__construct\$ExpoModulesV2"
 
@@ -55,7 +54,7 @@ class ModuleDescriptorEncoderTest {
     }
     val buf = BinaryBuffer.allocate(1024)
 
-    val size = ModuleDescriptorEncoder.encode(functions, emptyList(), buf)
+    val size = ModuleDescriptorEncoder.encode(buf, functions, emptyList())
 
     val reader = buf.duplicateView()
     reader.limit = size // reading past the payload must fail, not return zeros
@@ -85,6 +84,8 @@ class ModuleDescriptorEncoderTest {
     assertEquals(0, reader.getInt(), "no properties declared")
     assertEquals(0, reader.getInt(), "no constructable shared classes declared")
 
+    assertEquals(0, reader.getInt(), "no events declared")
+
     assertEquals(size, reader.position, "trailing bytes in the payload")
   }
 
@@ -103,9 +104,9 @@ class ModuleDescriptorEncoderTest {
     val buf = BinaryBuffer.allocate(1024)
 
     val size = ModuleDescriptorEncoder.encode(
+      buf,
       definition.functions,
       definition.properties,
-      buf,
     )
 
     val reader = buf.duplicateView()
@@ -132,6 +133,7 @@ class ModuleDescriptorEncoderTest {
       "the setter was declared buffered",
     )
     assertEquals(0, reader.getInt(), "no constructable shared classes declared")
+    assertEquals(0, reader.getInt(), "no events declared")
     assertEquals(size, reader.position)
   }
 
@@ -149,7 +151,7 @@ class ModuleDescriptorEncoderTest {
     }
     val buf = BinaryBuffer.allocate(1024)
 
-    val size = ModuleDescriptorEncoder.encode(functions, emptyList(), buf)
+    val size = ModuleDescriptorEncoder.encode(buf, functions, emptyList())
 
     val reader = buf.duplicateView()
     reader.limit = size
@@ -173,7 +175,7 @@ class ModuleDescriptorEncoderTest {
     }
     val buf = BinaryBuffer.allocate(1024)
 
-    val size = ModuleDescriptorEncoder.encode(functions, emptyList(), buf)
+    val size = ModuleDescriptorEncoder.encode(buf, functions, emptyList())
 
     val reader = buf.duplicateView()
     reader.limit = size
@@ -193,7 +195,7 @@ class ModuleDescriptorEncoderTest {
   fun `a zero-function module encodes a valid header`() {
     val buf = BinaryBuffer.allocate(64)
 
-    val size = ModuleDescriptorEncoder.encode(emptyList(), emptyList(), buf)
+    val size = ModuleDescriptorEncoder.encode(buf, emptyList(), emptyList())
 
     val reader = buf.duplicateView()
     reader.limit = size
@@ -201,6 +203,7 @@ class ModuleDescriptorEncoderTest {
     assertEquals(0, reader.getInt(), "no functions")
     assertEquals(0, reader.getInt(), "no properties")
     assertEquals(0, reader.getInt(), "no constructable shared classes")
+    assertEquals(0, reader.getInt(), "no events declared")
     assertEquals(size, reader.position, "trailing bytes in the payload")
   }
 
@@ -217,9 +220,9 @@ class ModuleDescriptorEncoderTest {
     val buf = BinaryBuffer.allocate(1024)
 
     val size = ModuleDescriptorEncoder.encode(
+      buf,
       definition.functions,
       definition.properties,
-      buf,
       definition.sharedClasses,
     )
 
@@ -239,6 +242,7 @@ class ModuleDescriptorEncoderTest {
     assertEquals(TRAMPOLINE, reader.readString(), "the constructor trampoline")
     assertEquals(1, reader.getInt(), "one constructor argument")
     assertEquals(listOf(CppType.STRING.code), reader.readIntArray())
+    assertEquals(0, reader.getInt(), "no events declared")
     assertEquals(size, reader.position, "trailing bytes in the payload")
   }
 
@@ -255,9 +259,9 @@ class ModuleDescriptorEncoderTest {
     val buf = BinaryBuffer.allocate(1024)
 
     val size = ModuleDescriptorEncoder.encode(
+      buf,
       definition.functions,
       definition.properties,
-      buf,
       definition.sharedClasses,
     )
 
@@ -279,6 +283,52 @@ class ModuleDescriptorEncoderTest {
       listOf(CppType.STRING.code or CppType.USES_BUFFER),
       reader.readIntArray(),
     )
+    assertEquals(0, reader.getInt(), "no events declared")
+    assertEquals(size, reader.position, "trailing bytes in the payload")
+  }
+
+  @Test
+  fun `encodes declared events after the shared classes`() {
+    val definition = ModuleBuilder().apply {
+      event("changed", AnyType(TypeDescriptor.Int))
+      event(
+        "batch",
+        AnyType(
+          TypeDescriptor.Parametrized(
+            List::class.java,
+            false,
+            arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, false)),
+          ),
+        ).buffered(),
+      )
+    }
+    val buf = BinaryBuffer.allocate(1024)
+
+    val size = ModuleDescriptorEncoder.encode(
+      buf,
+      definition.functions,
+      definition.properties,
+      definition.sharedClasses,
+      definition.events,
+    )
+
+    val reader = buf.duplicateView()
+    reader.limit = size
+    assertEquals(size, reader.getInt())
+    assertEquals(0, reader.getInt(), "no functions")
+    assertEquals(0, reader.getInt(), "no properties")
+    assertEquals(0, reader.getInt(), "no constructable shared classes")
+    assertEquals(2, reader.getInt(), "two events")
+
+    assertEquals("changed", reader.readString())
+    assertEquals(listOf(CppType.INT.code), reader.readIntArray())
+
+    assertEquals("batch", reader.readString())
+    assertEquals(
+      listOf(CppType.LIST.code or CppType.USES_BUFFER, CppType.BOX_INT.code),
+      reader.readIntArray(),
+      "the payload's transport rides the head code, as a result's does",
+    )
     assertEquals(size, reader.position, "trailing bytes in the payload")
   }
 
@@ -291,7 +341,7 @@ class ModuleDescriptorEncoderTest {
 
     // The raw overflow escapes here; ModuleRegistry.encodeModule wraps it, naming the module.
     assertFailsWith<java.nio.BufferOverflowException> {
-      ModuleDescriptorEncoder.encode(functions, emptyList(), buf)
+      ModuleDescriptorEncoder.encode(buf, functions, emptyList())
     }
   }
 }

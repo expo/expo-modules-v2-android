@@ -93,6 +93,50 @@ class ModuleBuilderTest {
   }
 
   @Test
+  fun `events share the export namespace with functions and properties`() {
+    val builder = builder()
+    builder.event("changed", int)
+    assertEquals(listOf("changed"), builder.events.map { it.jsName })
+    assertContentEquals(intArrayOf(CppType.INT.code), builder.events.single().payloadType)
+
+    val function = assertFailsWith<IllegalArgumentException> {
+      builder.function("changed", returns = int)
+    }
+    assertTrue("already declared" in function.message!!, function.message)
+
+    val property = assertFailsWith<IllegalArgumentException> {
+      builder.property("changed", int)
+    }
+    assertTrue("already declared" in property.message!!, property.message)
+
+    builder.function("value", returns = int)
+    val event = assertFailsWith<IllegalArgumentException> {
+      builder.event("value", int)
+    }
+    assertTrue("already declared" in event.message!!, event.message)
+  }
+
+  @Test
+  fun `the event emitter's own member names are reserved`() {
+    // Every module object and shared-object prototype defines these itself, non-configurable, so a
+    // second definition would throw halfway through installing the object.
+    for (name in ModuleBuilder.RESERVED_EXPORT_NAMES) {
+      val function = assertFailsWith<IllegalArgumentException> { builder().function(name, returns = int) }
+      assertTrue("reserved" in function.message!!, function.message)
+
+      val property = assertFailsWith<IllegalArgumentException> { builder().property(name, int) }
+      assertTrue("reserved" in property.message!!, property.message)
+
+      val event = assertFailsWith<IllegalArgumentException> { builder().event(name, int) }
+      assertTrue("reserved" in event.message!!, event.message)
+    }
+    assertEquals(
+      setOf("addListener", "removeListener", "removeAllListeners", "listenerCount", "emit"),
+      ModuleBuilder.RESERVED_EXPORT_NAMES,
+    )
+  }
+
+  @Test
   fun `buffered values mark the transport flag on their head code`() {
     val cases = listOf(
       AnyType(TypeDescriptor.Simple(PlainRec::class.java, false)),

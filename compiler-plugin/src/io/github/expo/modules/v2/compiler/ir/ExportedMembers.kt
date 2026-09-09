@@ -7,11 +7,14 @@ import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.declarations.IrProperty
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
+import io.github.expo.modules.v2.compiler.eventJsName
 import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
+import org.jetbrains.kotlin.ir.types.IrSimpleType
+import org.jetbrains.kotlin.ir.types.IrTypeProjection
 import org.jetbrains.kotlin.ir.util.getAnnotation
 import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
 
-/** One `@JS` member of an exported class, as the builder will describe it. */
+/** One `@JS` or `@Event` member of an exported class, as the builder will describe it. */
 internal sealed interface Exported {
   val jsName: String
   val needsTrampoline: Boolean
@@ -44,6 +47,20 @@ internal class ExportedProperty(
     get() = listOfNotNull(getterPlan, setterPlan).any { it.buffered || !it.passthrough }
 }
 
+/**
+ * An `@Event` property: `val onChanged = event<Change>(...)`. The payload crosses like a property
+ * read, and nothing is called through the bridge, so no trampoline; the binder wraps the
+ * initializer instead.
+ */
+internal class ExportedEvent(
+  override val jsName: String,
+  val property: IrProperty,
+  val payload: ValuePlan,
+) : Exported {
+  override val needsTrampoline: Boolean
+    get() = false
+}
+
 /** The `@BufferMode(value)` this declaration carries, or `AUTO` when it carries none. */
 internal fun IrAnnotationContainer.ownBufferChoice(): BufferChoice =
   getAnnotation(Identifiers.FqNames.BUFFER_MODE_ANNOTATION)
@@ -72,7 +89,9 @@ internal class ExportedMembers(private val policy: TransportPolicy) {
             }
 
           is IrProperty ->
-            declaration.getAnnotation(Identifiers.FqNames.JS_ANNOTATION)?.let { annotation ->
+            declaration.getAnnotation(Identifiers.FqNames.EVENT_ANNOTATION)?.let { annotation ->
+              event(declaration, annotation, classChoice)
+            } ?: declaration.getAnnotation(Identifiers.FqNames.JS_ANNOTATION)?.let { annotation ->
               property(declaration, annotation, classChoice)
             }
 
@@ -113,6 +132,31 @@ internal class ExportedMembers(private val policy: TransportPolicy) {
       function = function,
       arguments = arguments,
       result = policy.plan(function.returnType, returnChoice, Crossing.RESULT),
+    )
+  }
+
+  private fun event(
+    property: IrProperty,
+    annotation: IrConstructorCall,
+    classChoice: BufferChoice,
+  ): ExportedEvent {
+    val eventType = property.getter?.returnType as? IrSimpleType
+      ?: error("@Event: ${property.name} has no getter")
+    val payloadType = (eventType.arguments.singleOrNull() as? IrTypeProjection)?.type
+      ?: error("@Event: ${property.name} is not an Event<T> - the frontend should have rejected it")
+
+    val choice = property
+      .getAnnotation(Identifiers.FqNames.BUFFER_MODE_ANNOTATION)
+      .bufferChoice(Identifiers.Names.ARG_VALUE)
+      .orElse(classChoice)
+
+    return ExportedEvent(
+      jsName = annotation
+        .stringArgument(Identifiers.Names.ARG_NAME)
+        ?.takeIf { it.isNotEmpty() }
+        ?: eventJsName(property.name.asString()),
+      property = property,
+      payload = policy.plan(payloadType, choice, Crossing.RESULT),
     )
   }
 

@@ -31,6 +31,11 @@ namespace expo::modules::v2::jsi {
       return asyncState_.has_value() ? &*asyncState_ : nullptr;
     }
 
+    /** This runtime's instance -> JavaScript object table, or null during teardown. */
+    [[nodiscard]] objects::RuntimeObjects* objects() {
+      return objects_.has_value() ? &*objects_ : nullptr;
+    }
+
     ~JavaScriptRuntime() override;
 
   protected:

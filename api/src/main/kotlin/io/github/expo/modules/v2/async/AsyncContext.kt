@@ -21,8 +21,10 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
 
   internal val exportScope: CoroutineScope = scope + Dispatchers.Unconfined
 
+  /** The native `JavaScriptRuntime`, or 0 once it is gone. Only read on the JS thread. */
   @Volatile
-  private var runtimePointer: Long = 0
+  internal var runtimePointer: Long = 0
+    private set
 
   internal fun attach(pointer: Long) {
     runtimePointer = pointer

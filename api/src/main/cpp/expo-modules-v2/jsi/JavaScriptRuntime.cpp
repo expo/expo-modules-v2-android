@@ -1,36 +1,17 @@
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
 
-#include <iostream>
-
-#if defined(__ANDROID__)
-#include <android/log.h>
-#endif
-
 #include <expo-jsi/LazyObject.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <expo-modules-v2/jsi/ModulesHostObject.h>
 #include <expo-modules-v2/objects/ObjectId.h>
+#include <expo-modules-v2/utils/Log.h>
 #include <kolibri/ScopedNativeObject.h>
 #include <kolibri/string_utils.h>
 
 namespace expo::modules::v2::jsi {
   using expo::jsi::LazyObject;
-
-  namespace {
-    /**
-     * `ExpoModulesCore.nativeLog`'s sink. stdout is the process's console on a desktop JVM and
-     * nowhere at all on Android, where logcat is the only place a line can land.
-     */
-    void logLine(const std::string& message) {
-#if defined(__ANDROID__)
-      __android_log_print(ANDROID_LOG_INFO, "ExpoModulesCore", "%s", message.c_str());
-#else
-      std::cout << "[ExpoModulesCore] " << message << std::endl;
-#endif
-    }
-  } // namespace
 
   JavaScriptRuntime::JavaScriptRuntime(
     JNIEnv* env,
@@ -59,7 +40,14 @@ namespace expo::modules::v2::jsi {
   }
 
   JavaScriptRuntime::~JavaScriptRuntime() {
-    // First: it tells Kotlin the runtime is gone, so an in-flight settle stops before it can reach
+    // Before the async state goes: every event listener this runtime holds dies with it, and Kotlin
+    // hears about each one through the context the async state still owns, so an event whose last
+    // observer was this runtime fires its stop hook.
+    if (objects_.has_value()) {
+      objects_->dropAllListeners(*runtime_);
+    }
+
+    // Then: it tells Kotlin the runtime is gone, so an in-flight settle stops before it can reach
     // a half-destroyed runtime, and it drops every pending resolve/reject while `runtime_` is still
     // alive to destroy them against.
     asyncState_.reset();

@@ -2,6 +2,7 @@ package io.github.expo.modules.v2.modules
 
 import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.Event
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
@@ -52,9 +53,16 @@ class GeneratedModuleTest {
     @JS @BufferMode(Buffer.NO) fun optedOut(a: String, b: List<Int>): Int = a.length
     @JS fun optedIn(@BufferMode(Buffer.YES) a: IntArray): Int = a.size
     @JS @BufferMode(returns = Buffer.NO) fun plainReturn(a: Int): String = "$a"
+
+    @Event val onChanged = event<Pt>()
+    @Event(name = "renamed") val onSomething = event<Int>()
+    @Event val progress = event<Double>()
+    @Event val onBatch = event<List<Int>>()
+    @Event @BufferMode(Buffer.NO) val onSlot = event<List<Int>>()
   }
 
-  private val definition = ModuleBuilder().also { Shapes().`define$ExpoModulesV2`(it) }
+  private val shapes = Shapes()
+  private val definition = ModuleBuilder().also { shapes.`define$ExpoModulesV2`(it) }
 
   private fun args(jsName: String): List<IntArray> =
     definition.functions.single { it.jsName == jsName }.argTypes.toList()
@@ -264,5 +272,44 @@ class GeneratedModuleTest {
     val homepage = props.getValue("homepage")
     assertEquals("getHomepage__trampoline\$ExpoModulesV2", homepage.getterName)
     assertEquals("setHomepage__trampoline\$ExpoModulesV2", homepage.setterName)
+  }
+
+  @Test
+  fun `an event is declared under its JavaScript name with its payload's transport`() {
+    val events = definition.events.associate { it.jsName to it.payloadType.toList() }
+    assertEquals(
+      listOf("changed", "renamed", "progress", "batch", "slot"),
+      definition.events.map { it.jsName },
+      "`on` + upper-case is dropped, @Event(name) wins, anything else is kept",
+    )
+    // A payload crosses like a result: a record rides the buffer, a scalar keeps its slot.
+    assertEquals(listOf(CppType.RECORD.code or buffered, events.getValue("changed")[1]), events.getValue("changed"))
+    assertEquals(listOf(CppType.INT.code), events.getValue("renamed"))
+    assertEquals(listOf(CppType.DOUBLE.code), events.getValue("progress"))
+    assertEquals(listOf(CppType.LIST.code or buffered, CppType.BOX_INT.code), events.getValue("batch"))
+    assertEquals(listOf(CppType.LIST.code, CppType.BOX_INT.code), events.getValue("slot"), "@BufferMode(NO) pins the slot")
+  }
+
+  @Test
+  fun `an event is bound to the same name and transport at construction`() {
+    // The definition says what the native side expects; the wrap on the initializer is what the
+    // Kotlin side emits with. The two come from one plan, so they agree.
+    assertEquals("changed", shapes.onChanged.name)
+    assertEquals("renamed", shapes.onSomething.name)
+    assertEquals("progress", shapes.progress.name)
+    assertEquals("batch", shapes.onBatch.name)
+    assertEquals("slot", shapes.onSlot.name)
+
+    assertTrue(shapes.onBatch.useBuffer)
+    assertTrue(!shapes.onSlot.useBuffer)
+    assertEquals("List<Integer>", shapes.onBatch.descriptor.toString())
+    assertEquals("Pt", shapes.onChanged.descriptor.toString())
+
+    // Findable by name on the owner, which is how the native side reaches an event.
+    assertEquals(
+      setOf("changed", "renamed", "progress", "batch", "slot"),
+      shapes.events?.keys?.toSet(),
+    )
+    assertTrue(!shapes.onChanged.isObserved, "nothing observes a fresh instance")
   }
 }

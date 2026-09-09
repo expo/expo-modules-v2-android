@@ -26,6 +26,9 @@ object JSDiagnostics {
   val JS_DUPLICATE_EXPORT_NAME by error1<KtDeclaration, String>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
+  val JS_RESERVED_EXPORT_NAME by error1<KtDeclaration, String>(
+    SourceElementPositioningStrategies.DECLARATION_NAME,
+  )
 
   init {
     RootDiagnosticRendererFactory.registerFactory(JSDiagnosticMessages)
@@ -53,6 +56,13 @@ object JSDiagnosticMessages : BaseDiagnosticRendererFactory() {
       JSDiagnostics.JS_DUPLICATE_EXPORT_NAME,
       "Two exports of this class are both named ''{0}'' in JavaScript - rename one, or give it a " +
         "different @JS(name = \"...\")",
+      CommonRenderers.STRING,
+    )
+    put(
+      JSDiagnostics.JS_RESERVED_EXPORT_NAME,
+      "''{0}'' is reserved: every module and shared object carries the event emitter members " +
+        "addListener, removeListener, removeAllListeners, listenerCount and emit. Rename the " +
+        "export, or give it a different name with the annotation's name argument",
       CommonRenderers.STRING,
     )
   }

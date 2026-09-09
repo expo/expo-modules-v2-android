@@ -19,6 +19,7 @@ object Identifiers {
     val JSI = FqName("io.github.expo.modules.v2.jsi")
     val ASYNC = FqName("io.github.expo.modules.v2.async")
     val SHARED_OBJECTS = FqName("io.github.expo.modules.v2.sharedobjects")
+    val EVENTS = FqName("io.github.expo.modules.v2.events")
   }
 
   object Classes {
@@ -27,6 +28,7 @@ object Identifiers {
     val ExpoModuleAnnotation = classId(Packages.API, "ExpoModule")
     val BufferModeAnnotation = classId(Packages.API, "BufferMode")
     val ExpoSharedObjectAnnotation = classId(Packages.API, "ExpoSharedObject")
+    val EventAnnotation = classId(Packages.API, "Event")
 
     val RecordInterface = classId(Packages.RECORDS, "Record")
     val RecordCodec = classId(Packages.RECORDS, "RecordCodec")
@@ -50,6 +52,12 @@ object Identifiers {
     val SharedRef = classId(Packages.API, "SharedRef")
     val SharedObjectRegistry = classId(Packages.SHARED_OBJECTS, "SharedObjectRegistry")
 
+    val ExpoObject = classId(Packages.API, "ExpoObject")
+
+    /** `class Event<T>` - the event object, distinct from the `@Event` annotation. */
+    val Event = classId(Packages.EVENTS, "Event")
+    val EventSupport = classId(Packages.EVENTS, "EventSupport")
+
     val Trampoline = classId(Packages.ARGS, "Trampoline")
     val TrampolineArguments = classId(Packages.ARGS, "TrampolineArguments")
     val Bridge = classId(Packages.ARGS, "Bridge")
@@ -72,6 +80,7 @@ object Identifiers {
     val EXPO_MODULE_ANNOTATION: FqName = Classes.ExpoModuleAnnotation.asSingleFqName()
     val BUFFER_MODE_ANNOTATION: FqName = Classes.BufferModeAnnotation.asSingleFqName()
     val SHARED_OBJECT_ANNOTATION: FqName = Classes.ExpoSharedObjectAnnotation.asSingleFqName()
+    val EVENT_ANNOTATION: FqName = Classes.EventAnnotation.asSingleFqName()
   }
 
   object Names {
@@ -92,6 +101,8 @@ object Identifiers {
     val FUNCTION = Name.identifier("function")
     val PROPERTY = Name.identifier("property")
     val SHARED_CLASS = Name.identifier("sharedClass")
+    val EVENT = Name.identifier("event")
+    val BIND_EVENT = Name.identifier("bind")
 
     // Trampoline members.
     val ARGUMENTS = Name.identifier("arguments")
@@ -123,6 +134,18 @@ object Identifiers {
     const val REGISTRATION_FIELD = "sharedClassId\$ExpoModulesV2"
 
     const val REGISTER_FUNCTION = "register\$ExpoModulesV2"
+
+    /**
+     * The members the event emitter installs on every module object and shared-object prototype.
+     * MUST stay in sync with `ModuleBuilder.RESERVED_EXPORT_NAMES` in `:api`.
+     */
+    val RESERVED_EXPORT_NAMES: Set<String> = setOf(
+      "addListener",
+      "removeListener",
+      "removeAllListeners",
+      "listenerCount",
+      "emit",
+    )
 
     // Entry names of the `Buffer` enum, as spelled in the annotation.
     const val BUFFER_AUTO = "AUTO"

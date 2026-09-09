@@ -33,3 +33,8 @@ internal class ModuleSharedClassDefinition(
   val argTypes: Array<IntArray>,
   val trampolineName: String,
 )
+
+internal class ModuleEventDefinition(
+  val jsName: String,
+  val payloadType: IntArray,
+)

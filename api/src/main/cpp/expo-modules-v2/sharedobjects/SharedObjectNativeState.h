@@ -19,5 +19,9 @@ namespace expo::modules::v2::sharedobjects {
     [[nodiscard]] std::shared_ptr<SharedObjectState> shared() const {
       return std::static_pointer_cast<SharedObjectState>(state());
     }
+
+    [[nodiscard]] std::span<const descriptor::EventSpec> events() const override {
+      return shared()->spec().events;
+    }
   };
 } // namespace expo::modules::v2::sharedobjects

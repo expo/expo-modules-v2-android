@@ -14,6 +14,7 @@ class ModuleRegistry {
     val functions: List<ModuleFunctionDefinition>,
     val properties: List<ModulePropertyDefinition>,
     val sharedClasses: List<ModuleSharedClassDefinition>,
+    val events: List<ModuleEventDefinition>,
   )
 
   private val modules = LinkedHashMap<String, Entry>()
@@ -38,7 +39,13 @@ class ModuleRegistry {
   private fun add(name: String, module: Module, definition: ModuleBuilder) {
     require(name !in modules) { "Module '$name' is already registered" }
 
-    modules[name] = Entry(module, definition.functions, definition.properties, definition.sharedClasses)
+    modules[name] = Entry(
+      module,
+      definition.functions,
+      definition.properties,
+      definition.sharedClasses,
+      definition.events,
+    )
   }
 
   @Suppress("unused")
@@ -47,10 +54,11 @@ class ModuleRegistry {
     val entry = modules[name] ?: return null
     try {
       ModuleDescriptorEncoder.encode(
+        BinaryBuffer.newSharedView(),
         entry.functions,
         entry.properties,
-        BinaryBuffer.newSharedView(),
         entry.sharedClasses,
+        entry.events,
       )
     } catch (overflow: BufferOverflowException) {
       throw IllegalArgumentException(

@@ -6,6 +6,7 @@
 
 #include <expo-modules-v2/binders/FunctionBinder.h>
 #include <expo-modules-v2/binders/PropertyBinder.h>
+#include <expo-modules-v2/descriptor/EventSpec.h>
 #include <expo-modules-v2/descriptor/HostPropertySpec.h>
 #include <expo-modules-v2/descriptor/SharedClassSpec.h>
 #include <expo-modules-v2/modules/ModuleState.h>
@@ -21,10 +22,13 @@ namespace expo::modules::v2 {
       std::shared_ptr<ModuleState> state,
       std::vector<descriptor::HostFunctionSpec> functions,
       std::vector<descriptor::HostPropertySpec> properties,
-      std::vector<descriptor::SharedClassSpec> sharedClasses
+      std::vector<descriptor::SharedClassSpec> sharedClasses,
+      std::vector<descriptor::EventSpec> events
     );
 
     ~ModuleNativeState() override;
+
+    [[nodiscard]] std::span<const descriptor::EventSpec> events() const override;
 
     [[nodiscard]] std::span<const FunctionBinder> functionBinders() const;
 
@@ -36,5 +40,6 @@ namespace expo::modules::v2 {
     std::vector<FunctionBinder> functionBinders_;
     std::vector<PropertyBinder> propertyBinders_;
     std::vector<descriptor::SharedClassSpec> sharedClasses_;
+    std::vector<descriptor::EventSpec> events_;
   };
 } // namespace expo::modules::v2

@@ -2,6 +2,7 @@ package io.github.expo.modules.v2.sharedobjects
 
 import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.Event
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.ExpoSharedObject
 import io.github.expo.modules.v2.JS
@@ -30,6 +31,8 @@ class GeneratedSharedObjectTest {
     @JS var volume: Double = 1.0
 
     @JS fun rename(name: String): String = name
+
+    @Event val onStateChange = event<String>()
   }
 
   @ExpoSharedObject(name = "Renamed")
@@ -71,6 +74,8 @@ class GeneratedSharedObjectTest {
       playerDefinition.functions.map { it.jsName },
     )
     assertEquals(listOf("volume"), playerDefinition.properties.map { it.jsName })
+    assertEquals(listOf("stateChange"), playerDefinition.events.map { it.jsName })
+    assertEquals("stateChange", Player().onStateChange.name)
 
     val volume = playerDefinition.properties.single()
     assertEquals("getVolume", volume.getterName)

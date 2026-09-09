@@ -89,6 +89,10 @@ namespace expo::modules::v2::async {
     return found == registry().end() ? nullptr : found->second;
   }
 
+  jobject AsyncRuntimeState::context() const {
+    return jContext_.get();
+  }
+
   void AsyncRuntimeState::ensureFactory(facebook::jsi::Runtime& rt) {
     if (!factory_.has_value()) {
       factory_.emplace(makeDeferredFactory(rt));

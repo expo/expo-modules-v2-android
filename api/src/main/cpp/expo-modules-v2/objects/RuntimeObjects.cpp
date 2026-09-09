@@ -4,6 +4,11 @@
 #include <atomic>
 #include <mutex>
 
+#include <kolibri/env.h>
+
+#include <expo-modules-v2/async/AsyncRuntimeState.h>
+#include <expo-modules-v2/events/EventEmitter.h>
+#include <expo-modules-v2/jni/JEventSupport.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectPrototype.h>
 
@@ -47,8 +52,11 @@ namespace expo::modules::v2::objects {
       generation().fetch_add(1, std::memory_order_release);
     }
 
+    // Kotlin was already told about these listeners by `dropAllListeners`; this only frees them.
+    listeners_.clear();
     entries_.clear();
     prototypes_.clear();
+    eventEmitterPrototype_.reset();
   }
 
   RuntimeObjects* RuntimeObjects::find(const facebook::jsi::Runtime& rt) noexcept {
@@ -80,6 +88,7 @@ namespace expo::modules::v2::objects {
     facebook::jsi::Value cached = it->second.lock(rt);
     if (cached.isUndefined()) {
       entries_.erase(it);
+      dropListeners(rt, objectId);
     }
     return cached;
   }
@@ -98,9 +107,15 @@ namespace expo::modules::v2::objects {
     const int classId,
     const bool installMembers
   ) {
-    Prototype& prototype = prototypes_
-      .try_emplace(classId, Prototype{.object = facebook::jsi::Object(rt)})
-      .first->second;
+    auto found = prototypes_.find(classId);
+    if (found == prototypes_.end()) {
+      // Looked up first: `try_emplace` would build the object before knowing whether it is needed.
+      facebook::jsi::Object object(rt);
+      // A class extends the emitter, as `SharedObject extends EventEmitter` does in JavaScript.
+      object.setPrototype(rt, facebook::jsi::Value(rt, eventEmitterPrototype(rt)));
+      found = prototypes_.emplace(classId, Prototype{.object = std::move(object)}).first;
+    }
+    Prototype& prototype = found->second;
 
     if (installMembers && !prototype.installed) {
       sharedobjects::installPrototypeMembers(
@@ -114,6 +129,15 @@ namespace expo::modules::v2::objects {
     return prototype.object;
   }
 
+  const facebook::jsi::Object& RuntimeObjects::eventEmitterPrototype(facebook::jsi::Runtime& rt) {
+    if (!eventEmitterPrototype_.has_value()) {
+      facebook::jsi::Object prototype(rt);
+      events::installEmitterMethods(rt, prototype);
+      eventEmitterPrototype_.emplace(std::move(prototype));
+    }
+    return *eventEmitterPrototype_;
+  }
+
   void RuntimeObjects::sweep(facebook::jsi::Runtime& rt) {
     if (entries_.size() < sweepThreshold_) {
       return;
@@ -121,12 +145,41 @@ namespace expo::modules::v2::objects {
 
     for (auto it = entries_.begin(); it != entries_.end();) {
       if (it->second.lock(rt).isUndefined()) {
+        const ObjectId::Value objectId = it->first;
         it = entries_.erase(it);
+        dropListeners(rt, objectId);
       } else {
         ++it;
       }
     }
 
     sweepThreshold_ = std::max(kMinSweepThreshold, entries_.size() * 2);
+  }
+
+  namespace {
+    /** Tells Kotlin that [rt] no longer observes [name] on [instance], if Kotlin can still hear it. */
+    auto stopObserving(facebook::jsi::Runtime& rt) {
+      // Null once the async state is gone, which only happens after `dropAllListeners` ran.
+      const async::AsyncRuntimeState* async = async::AsyncRuntimeState::find(rt);
+      const jobject context = async == nullptr ? nullptr : async->context();
+      JNIEnv* env = kolibri::getEnv();
+
+      return [env, context](const jobject instance, const std::string& name) {
+        if (context != nullptr && instance != nullptr) {
+          JEventSupport::observe(env, instance, name, context, false);
+        }
+      };
+    }
+  } // namespace
+
+  void RuntimeObjects::dropListeners(facebook::jsi::Runtime& rt, const ObjectId::Value objectId) {
+    if (!listeners_.has(objectId)) {
+      return;
+    }
+    listeners_.drop(objectId, stopObserving(rt));
+  }
+
+  void RuntimeObjects::dropAllListeners(facebook::jsi::Runtime& rt) {
+    listeners_.dropAll(stopObserving(rt));
   }
 } // namespace expo::modules::v2::objects

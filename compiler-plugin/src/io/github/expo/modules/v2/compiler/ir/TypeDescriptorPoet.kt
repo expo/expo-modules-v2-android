@@ -118,6 +118,14 @@ class TypeDescriptorPoet(
     symbol = constructor,
   ).apply { fillRegularArguments(constructor, arguments) }
 
+  /** `AnyType(descriptor, useBuffer)`, as `ModuleBuilder` wants a value described. */
+  internal fun anyTypeOf(plan: ValuePlan): IrExpression =
+    constructorCall(
+      constructor = symbols.constructors.anyType,
+      type = symbols.classes.anyType.owner.defaultType,
+      arguments = listOf(descriptorFor(plan.type), boolean(plan.buffered)),
+    )
+
   /** `TypeDescriptor` for a record field of [type], as it appears in the constructor. */
   fun descriptorFor(type: IrType): IrExpression {
     val simpleType = type as? IrSimpleType ?: unsupported(type)

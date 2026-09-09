@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.ir.util.patchDeclarationParents
  * fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
  *   builder.function("add", AnyType(TypeDescriptor.Int, false), ..., returns = ..., methodName = "add")
  *   builder.property("count", AnyType(CommonDescriptors.INT_BOXED_NULL, false), true, "count")
+ *   builder.event("changed", AnyType(TypeDescriptor.Int, false))
  *   return "MathUtils"
  * }
  * ```
@@ -41,6 +42,7 @@ internal class ModuleDefinitionPoet(
       body.statements += when (export) {
         is ExportedFunction -> declareFunction(export, builder.get())
         is ExportedProperty -> declareProperty(export, builder.get())
+        is ExportedEvent -> declareEvent(export, builder.get())
       }
     }
     for (sharedClass in sharedClasses) {
@@ -117,13 +119,17 @@ internal class ModuleDefinitionPoet(
       returnType = irBuiltIns.unitType,
     )
 
-  /** `AnyType(descriptor, useBuffer)` */
-  private fun anyTypeOf(plan: ValuePlan): IrExpression =
-    poet.constructorCall(
-      constructor = symbols.constructors.anyType,
-      type = symbols.classes.anyType.owner.defaultType,
-      arguments = listOf(poet.descriptorFor(plan.type), poet.boolean(plan.buffered)),
+  /** `builder.event("changed", AnyType(...))` */
+  private fun declareEvent(export: ExportedEvent, builder: IrExpression): IrExpression =
+    callOn(
+      function = symbols.functions.builderEvent,
+      receiver = builder,
+      arguments = listOf(poet.string(export.jsName), anyTypeOf(export.payload)),
+      returnType = irBuiltIns.unitType,
     )
+
+  /** `AnyType(descriptor, useBuffer)` */
+  private fun anyTypeOf(plan: ValuePlan): IrExpression = poet.anyTypeOf(plan)
 
   /** The JVM method the bridge resolves: the user's own when no trampoline stands in front of it. */
   private fun methodNameOf(export: ExportedFunction): String =

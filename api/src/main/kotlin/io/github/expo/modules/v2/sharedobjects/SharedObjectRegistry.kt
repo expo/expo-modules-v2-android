@@ -109,6 +109,8 @@ object SharedObjectRegistry {
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JSharedObjectRegistry.h")
   fun release(instance: SharedObject) {
+    // A released object has no JavaScript side left to emit to, so nothing observes its events.
+    instance.events?.values?.forEach { it.detachAll() }
     instance.sharedObjectDidRelease()
   }
 
@@ -119,9 +121,10 @@ object SharedObjectRegistry {
 
     try {
       ModuleDescriptorEncoder.encode(
+        BinaryBuffer.newSharedView(),
         entry.definition.functions,
         entry.definition.properties,
-        BinaryBuffer.newSharedView(),
+        events = entry.definition.events,
       )
     } catch (overflow: BufferOverflowException) {
       throw IllegalArgumentException(

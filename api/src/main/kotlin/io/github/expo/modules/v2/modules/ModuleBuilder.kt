@@ -9,6 +9,7 @@ class ModuleBuilder {
   internal val functions = mutableListOf<ModuleFunctionDefinition>()
   internal val properties = mutableListOf<ModulePropertyDefinition>()
   internal val sharedClasses = mutableListOf<ModuleSharedClassDefinition>()
+  internal val events = mutableListOf<ModuleEventDefinition>()
 
   fun function(
     jsName: String,
@@ -96,11 +97,26 @@ class ModuleBuilder {
     )
   }
 
+  /**
+   * Declares an event JavaScript subscribes to under [jsName]. [type] is how the emitted payload
+   * crosses, and must match what the owning `Event` was bound with.
+   */
+  fun event(jsName: String, type: AnyType) {
+    requireAvailableExportName(jsName)
+
+    events.add(ModuleEventDefinition(jsName = jsName, payloadType = type.codes.values))
+  }
+
   private fun requireAvailableExportName(name: String) {
+    require(name !in RESERVED_EXPORT_NAMES) {
+      "Export '$name' is reserved: every module and shared object carries the event emitter " +
+        "members ${RESERVED_EXPORT_NAMES.joinToString()}"
+    }
     require(
       functions.none { it.jsName == name } &&
         properties.none { it.jsName == name } &&
-        sharedClasses.none { it.jsName == name },
+        sharedClasses.none { it.jsName == name } &&
+        events.none { it.jsName == name },
     ) {
       "Export '$name' is already declared in this module or shared-object class"
     }
@@ -115,5 +131,20 @@ class ModuleBuilder {
     } else {
       character.toString()
     }
+  }
+
+  companion object {
+    /**
+     * The members the event emitter installs on every module object and shared-object prototype.
+     * MUST stay in sync with `expo-modules-v2/events/EventEmitter.cpp` and the compiler plugin's
+     * `Identifiers.Literals.RESERVED_EXPORT_NAMES`.
+     */
+    val RESERVED_EXPORT_NAMES: Set<String> = setOf(
+      "addListener",
+      "removeListener",
+      "removeAllListeners",
+      "listenerCount",
+      "emit",
+    )
   }
 }

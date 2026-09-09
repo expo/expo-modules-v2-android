@@ -7,6 +7,7 @@ class ExpoModulesV2FirRegistrar : FirExtensionRegistrar() {
     +::RecordPredicates
     +::JSPredicates
     +::SharedObjectPredicates
+    +::EventPredicates
     +::RecordSupertypeGenerator
     +::RecordCodecGenerator
     +::RecordCheckers
@@ -14,5 +15,6 @@ class ExpoModulesV2FirRegistrar : FirExtensionRegistrar() {
     +::ExpoModuleCheckers
     +::BufferModeCheckers
     +::SharedObjectCheckers
+    +::EventCheckers
   }
 }

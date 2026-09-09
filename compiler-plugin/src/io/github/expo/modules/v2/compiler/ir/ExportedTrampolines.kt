@@ -15,8 +15,9 @@ internal class ExportedTrampolines(
   context: IrPluginContext,
   symbols: SymbolFinder,
   poet: TypeDescriptorPoet,
+  descriptors: DescriptorFields,
 ) {
-  private val trampolines = TrampolinePoet(context, symbols, poet)
+  private val trampolines = TrampolinePoet(context, symbols, poet, descriptors)
 
   fun generate(exportedClass: IrClass, exported: List<Exported>) {
     exported
@@ -25,6 +26,7 @@ internal class ExportedTrampolines(
         when (export) {
           is ExportedFunction -> function(exportedClass, export)
           is ExportedProperty -> property(exportedClass, export)
+          is ExportedEvent -> Unit
         }
       }
   }

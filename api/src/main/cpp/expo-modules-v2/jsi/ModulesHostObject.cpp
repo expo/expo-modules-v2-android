@@ -89,10 +89,18 @@ namespace expo::modules::v2::jsi {
         std::move(shared),
         std::move(desc.functions),
         std::move(desc.properties),
-        std::move(desc.sharedClasses)
+        std::move(desc.sharedClasses),
+        std::move(desc.events)
       );
 
+      objects::RuntimeObjects* table = objects::RuntimeObjects::find(rt);
+
       facebook::jsi::Object moduleObject(rt);
+      // Every module is an event emitter, whether or not it declares events: subscribing to an
+      // unknown name then fails with a message naming the declared ones.
+      if (table != nullptr) {
+        moduleObject.setPrototype(rt, facebook::jsi::Value(rt, table->eventEmitterPrototype(rt)));
+      }
 
       for (const FunctionBinder& binder: state->functionBinders()) {
         moduleObject.setProperty(
@@ -118,7 +126,7 @@ namespace expo::modules::v2::jsi {
 
       // `materialized_` below holds the strong reference; the weak entry lets a Kotlin instance be
       // mapped back to this object.
-      if (objects::RuntimeObjects* table = objects::RuntimeObjects::find(rt)) {
+      if (table != nullptr) {
         table->store(rt, objectId, moduleObject);
       }
 

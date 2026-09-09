@@ -142,6 +142,8 @@ namespace expo::modules::v2::sharedobjects {
       );
     }
 
+    spec->events = std::move(exports->descriptor.events);
+
     spec->validateExportNames();
 
     const auto entry = registryMap().emplace(classId, std::move(spec)).first;

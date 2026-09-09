@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.binary
 
+import io.github.expo.modules.v2.modules.ModuleEventDefinition
 import io.github.expo.modules.v2.modules.ModuleFunctionDefinition
 import io.github.expo.modules.v2.modules.ModulePropertyDefinition
 import io.github.expo.modules.v2.modules.ModuleSharedClassDefinition
@@ -32,29 +33,40 @@ import io.github.expo.kolibri.binary.BinaryBuffer
  * sharedClassCount x {
  *   jsName: string                    // the constructable class's name on the module
  *   classId: i32                      // SharedObjectRegistry's id for it
+ *   trampolineName: string            // the static factory `new` lands on
  *   argCount: i32
  *   argCount x { typeCodes: intArray }   // the constructor's parameters
+ * }
+ * eventCount: i32
+ * eventCount x {
+ *   jsName: string                    // the name JavaScript subscribes to
+ *   payloadTypeCodes: intArray        // how an emitted payload crosses Kotlin -> JS
  * }
  * ```
  */
 internal object ModuleDescriptorEncoder {
   fun encode(
+    buf: BinaryBuffer,
     functions: List<ModuleFunctionDefinition>,
     properties: List<ModulePropertyDefinition>,
-    buf: BinaryBuffer,
     sharedClasses: List<ModuleSharedClassDefinition> = emptyList(),
+    events: List<ModuleEventDefinition> = emptyList(),
   ): Int {
-    return buf.encode(
+    return buf.writeDescriptor(
       functions,
       properties,
-      sharedClasses
+      sharedClasses,
+      events,
     )
   }
 
-  private fun BinaryBuffer.encode(
+  // Not an `encode` overload: with `buf` first in the public signature, an extension of the same
+  // name would erase to the same JVM method.
+  private fun BinaryBuffer.writeDescriptor(
     functions: List<ModuleFunctionDefinition>,
     properties: List<ModulePropertyDefinition>,
     sharedClasses: List<ModuleSharedClassDefinition>,
+    events: List<ModuleEventDefinition>,
   ): Int {
     val currentPosition = position
 
@@ -62,6 +74,7 @@ internal object ModuleDescriptorEncoder {
     writeFunctions(functions)
     writeProperties(properties)
     writeSharedClasses(sharedClasses)
+    writeEvents(events)
 
     val payloadEnd = position
     position = currentPosition
@@ -94,6 +107,14 @@ internal object ModuleDescriptorEncoder {
       for (argType in sharedClass.argTypes) {
         putIntArray(argType)
       }
+    }
+  }
+
+  private fun BinaryBuffer.writeEvents(events: List<ModuleEventDefinition>) {
+    putInt(events.size)
+    for (event in events) {
+      putString(event.jsName)
+      putIntArray(event.payloadType)
     }
   }
 

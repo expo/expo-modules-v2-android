@@ -1,9 +1,15 @@
 package io.github.expo.modules.v2.compiler.handlers
 
+import io.github.expo.modules.v2.compiler.EventBindingOrigin
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclaration
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
+import org.jetbrains.kotlin.ir.declarations.IrField
+import org.jetbrains.kotlin.ir.declarations.IrPackageFragment
+import org.jetbrains.kotlin.ir.declarations.IrProperty
+import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
+import org.jetbrains.kotlin.ir.expressions.IrCall
 import org.jetbrains.kotlin.ir.util.CustomKotlinLikeDumpStrategy
 import org.jetbrains.kotlin.ir.util.FakeOverridesStrategy
 import org.jetbrains.kotlin.ir.util.KotlinLikeDumpOptions
@@ -91,7 +97,8 @@ class RecordKotlinLikeDumpHandler(
 
 /**
  * Prints a declaration only when the plugin generated it, or when it holds one that it did.
- * Classes always print: they are the containers the generated members live in.
+ * Classes always print: they are the containers the generated members live in. An `@Event`
+ * property is the user's, but the plugin rewrote its initializer, so it prints as well.
  */
 private object GeneratedDeclarationsOnly : CustomKotlinLikeDumpStrategy {
   override fun willPrintElement(
@@ -99,10 +106,21 @@ private object GeneratedDeclarationsOnly : CustomKotlinLikeDumpStrategy {
     container: IrDeclaration?,
     printer: Printer,
     options: KotlinLikeDumpOptions,
-  ): Boolean = element !is IrDeclaration || element is IrClass || element.isPluginGenerated()
+  ): Boolean = element !is IrDeclaration || element is IrClass || element.isLocal() ||
+    element.isPluginGenerated()
 }
 
+/**
+ * A declaration inside a body - a lambda's function, a local variable. It is only visited when its
+ * container printed, so it prints too; hiding it would leave the call it belongs to half-rendered.
+ */
+private fun IrDeclaration.isLocal(): Boolean =
+  parent.let { it !is IrClass && it !is IrPackageFragment }
+
 private fun IrDeclaration.isPluginGenerated(): Boolean {
+  if (isEventBinding()) {
+    return true
+  }
   var declaration: IrDeclaration? = this
   while (declaration != null) {
     if (declaration.origin is IrDeclarationOrigin.GeneratedByPlugin) {
@@ -111,6 +129,21 @@ private fun IrDeclaration.isPluginGenerated(): Boolean {
     declaration = declaration.parent as? IrDeclaration
   }
   return false
+}
+
+/**
+ * Whether this is an `@Event` property whose initializer the plugin wrapped, or one of its parts.
+ * The accessor counts too, so the property renders exactly as the stock dump renders it; [tidy]
+ * then drops the bare `get` line.
+ */
+private fun IrDeclaration.isEventBinding(): Boolean {
+  val field = when (this) {
+    is IrProperty -> backingField
+    is IrField -> this
+    is IrSimpleFunction -> correspondingPropertySymbol?.owner?.backingField
+    else -> null
+  } ?: return false
+  return (field.initializer?.expression as? IrCall)?.origin == EventBindingOrigin
 }
 
 private val DEFAULT_ACCESSOR = Regex("""\n[ \t]*(override )?[gs]et(?=\n)""")

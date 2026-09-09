@@ -1,6 +1,7 @@
 #include <jni.h>
 
 #include <expo-modules-v2/jni/JAsyncContext.h>
+#include <expo-modules-v2/jni/JEventSupport.h>
 #include <expo-modules-v2/jni/JModuleRegistry.h>
 #include <expo-modules-v2/jni/JSharedObjectRegistry.h>
 #include <expo-modules-v2/jsi/AttachedRuntime.h>
@@ -21,5 +22,6 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
   expo::modules::v2::jsi::JavaScriptRuntime::registerNatives(env);
   expo::modules::v2::jsi::AttachedRuntime::registerNatives(env);
   expo::modules::v2::JAsyncContext::registerNatives(env);
+  expo::modules::v2::JEventNatives::registerNatives(env);
   return JNI_VERSION_1_6;
 }

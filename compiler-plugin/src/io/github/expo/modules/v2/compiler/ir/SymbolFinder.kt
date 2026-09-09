@@ -74,6 +74,12 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `abstract class SharedRef<T : Any>(ref: T)` */
     val sharedRef: IrClassSymbol by lazy { clazz(Identifiers.Classes.SharedRef) }
 
+    /** `class Event<T>` - what `event<T>(...)` returns. */
+    val event: IrClassSymbol by lazy { clazz(Identifiers.Classes.Event) }
+
+    /** `object EventSupport` */
+    val eventSupport: IrClassSymbol by lazy { clazz(Identifiers.Classes.EventSupport) }
+
     /** `class AnyType(descriptor, useBuffer)` */
     val anyType: IrClassSymbol by lazy { clazz(Identifiers.Classes.AnyType) }
 
@@ -187,6 +193,16 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `ModuleBuilder.sharedClass(jsName, sharedClass, vararg argTypes)` */
     val builderSharedClass: IrSimpleFunctionSymbol by lazy {
       classes.moduleBuilder.functions.single { it.owner.name == Identifiers.Names.SHARED_CLASS }
+    }
+
+    /** `ModuleBuilder.event(jsName, type)` */
+    val builderEvent: IrSimpleFunctionSymbol by lazy {
+      classes.moduleBuilder.functions.single { it.owner.name == Identifiers.Names.EVENT }
+    }
+
+    /** `EventSupport.bind(event, jsName, descriptor, useBuffer): Event<T>` */
+    val bindEvent: IrSimpleFunctionSymbol by lazy {
+      classes.eventSupport.functions.single { it.owner.name == Identifiers.Names.BIND_EVENT }
     }
 
     /** `Trampoline.arguments(payloadLength): TrampolineArguments` */
