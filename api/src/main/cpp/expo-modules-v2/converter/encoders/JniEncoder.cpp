@@ -2,7 +2,6 @@
 
 #include <span>
 #include <string>
-#include <vector>
 
 #include <expo-modules-v2/converter/encoders/EncodeCommon.h>
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
@@ -194,77 +193,37 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::DOUBLE_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
-    const size_t size = array.size(rt);
-
-    std::vector<double> values;
-    values.reserve(size);
-
-    for (size_t i = 0; i < size; i++) {
-      values.push_back(array.getValueAtIndex(rt, i).asNumber());
-    }
-
-    return kolibri::JDoubleArray::createRaw(env, values);
+    return encodeJsArrayToJni<jdouble>(env, rt, value, [](const facebook::jsi::Value& value) {
+      return value.asNumber();
+    });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::INT_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
-    const size_t size = array.size(rt);
-
-    std::vector<int32_t> values;
-    values.reserve(size);
-
-    for (size_t i = 0; i < size; i++) {
-      values.push_back(array.getValueAtIndex(rt, i).asNumber());
-    }
-
-    return kolibri::JIntArray::createRaw(env, values);
+    return encodeJsArrayToJni<jint>(env, rt, value, [](const facebook::jsi::Value& value) {
+      return static_cast<jint>(value.asNumber());
+    });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::LONG_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
-    const size_t size = array.size(rt);
-
-    std::vector<jlong> values;
-    values.reserve(size);
-
-    for (size_t i = 0; i < size; i++) {
-      values.push_back(array.getValueAtIndex(rt, i).asNumber());
-    }
-
-    return kolibri::JLongArray::createRaw(env, values);
+    return encodeJsArrayToJni<jlong>(env, rt, value, [](const facebook::jsi::Value& value) {
+      return static_cast<jlong>(value.asNumber());
+    });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::FLOAT_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
-    const size_t size = array.size(rt);
-
-    std::vector<float> values;
-    values.reserve(size);
-
-    for (size_t i = 0; i < size; i++) {
-      values.push_back(array.getValueAtIndex(rt, i).asNumber());
-    }
-
-    return kolibri::JFloatArray::createRaw(env, values);
+    return encodeJsArrayToJni<jfloat>(env, rt, value, [](const facebook::jsi::Value& value) {
+      return static_cast<jfloat>(value.asNumber());
+    });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOOLEAN_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
-    const size_t size = array.size(rt);
-
-    std::vector<jboolean> values;
-    values.reserve(size);
-
-    for (size_t i = 0; i < size; i++) {
-      values.push_back(array.getValueAtIndex(rt, i).asBool());
-    }
-
-    return kolibri::JBooleanArray::createRaw(env, values);
+    return encodeJsArrayToJni<jboolean>(env, rt, value, [](const facebook::jsi::Value& value) {
+      return static_cast<jboolean>(value.asBool());
+    });
   }
 
   template<>

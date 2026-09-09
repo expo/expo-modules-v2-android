@@ -1,8 +1,6 @@
 #include <expo-modules-v2/converter/decoders/DynamicJniDecoder.h>
 
-#include <memory>
 #include <stdexcept>
-#include <vector>
 
 #include <expo-jsi/ByteArrayBuffer.h>
 
@@ -12,7 +10,6 @@
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <kolibri/Ref.h>
-#include <kolibri/array.h>
 #include <kolibri/box.h>
 #include <kolibri/class.h>
 #include <kolibri/string_utils.h>
@@ -91,60 +88,43 @@ namespace expo::modules::v2 {
 
   template<>
   facebook::jsi::Value DynamicJniDecoder::operator()<CppType::BOOLEAN_ARRAY>() const {
-    const std::vector<jboolean> values =
-      kolibri::UnownedRef<kolibri::JArray<jboolean>>(object)->toVector(env);
-    return buildJsArray(rt, values.size(), [&](const size_t i) {
-      return facebook::jsi::Value(values[i] != 0);
+    return decodeJniArray<jboolean>(env, rt, object, [](const jboolean value) {
+      return facebook::jsi::Value(value != 0);
     });
   }
 
   template<>
   facebook::jsi::Value DynamicJniDecoder::operator()<CppType::INT_ARRAY>() const {
-    const std::vector<jint> values =
-      kolibri::UnownedRef<kolibri::JArray<jint>>(object)->toVector(env);
-    return buildJsArray(rt, values.size(), [&](const size_t i) {
-      return facebook::jsi::Value(static_cast<double>(values[i]));
+    return decodeJniArray<jint>(env, rt, object, [](const jint value) {
+      return facebook::jsi::Value(static_cast<double>(value));
     });
   }
 
   template<>
   facebook::jsi::Value DynamicJniDecoder::operator()<CppType::LONG_ARRAY>() const {
-    const std::vector<jlong> values =
-      kolibri::UnownedRef<kolibri::JArray<jlong>>(object)->toVector(env);
-    return buildJsArray(rt, values.size(), [&](const size_t i) {
-      return facebook::jsi::Value(static_cast<double>(values[i]));
+    return decodeJniArray<jlong>(env, rt, object, [](const jlong value) {
+      return facebook::jsi::Value(static_cast<double>(value));
     });
   }
 
   template<>
   facebook::jsi::Value DynamicJniDecoder::operator()<CppType::FLOAT_ARRAY>() const {
-    const std::vector<jfloat> values =
-      kolibri::UnownedRef<kolibri::JArray<jfloat>>(object)->toVector(env);
-    return buildJsArray(rt, values.size(), [&](const size_t i) {
-      return facebook::jsi::Value(values[i]);
+    return decodeJniArray<jfloat>(env, rt, object, [](const jfloat value) {
+      return facebook::jsi::Value(value);
     });
   }
 
   template<>
   facebook::jsi::Value DynamicJniDecoder::operator()<CppType::DOUBLE_ARRAY>() const {
-    const std::vector<jdouble> values =
-      kolibri::UnownedRef<kolibri::JArray<jdouble>>(object)->toVector(env);
-    return buildJsArray(rt, values.size(), [&](const size_t i) {
-      return facebook::jsi::Value(values[i]);
+    return decodeJniArray<jdouble>(env, rt, object, [](const jdouble value) {
+      return facebook::jsi::Value(value);
     });
   }
 
+  /** A byte array lands in an ArrayBuffer rather than a JS array. */
   template<>
   facebook::jsi::Value DynamicJniDecoder::operator()<CppType::BYTE_ARRAY>() const {
-    const std::vector<jbyte> values =
-      kolibri::UnownedRef<kolibri::JArray<jbyte>>(object)->toVector(env);
-    return facebook::jsi::ArrayBuffer(
-      rt,
-      std::make_shared<expo::jsi::ByteArrayBuffer>(
-        reinterpret_cast<const uint8_t*>(values.data()),
-        values.size()
-      )
-    );
+    return decodeJniByteArray(env, rt, object);
   }
 
   template<>

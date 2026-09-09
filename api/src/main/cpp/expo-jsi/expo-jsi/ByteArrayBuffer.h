@@ -2,13 +2,15 @@
 
 #include <jsi/jsi.h>
 
-#include <cstdint>
 #include <vector>
 
 namespace expo::jsi {
   class ByteArrayBuffer : public facebook::jsi::MutableBuffer {
   public:
     ByteArrayBuffer(const uint8_t* data, size_t size);
+
+    /** Allocates `size` zeroed bytes for the caller to fill through `data()`. */
+    explicit ByteArrayBuffer(size_t size);
 
     size_t size() const override;
 

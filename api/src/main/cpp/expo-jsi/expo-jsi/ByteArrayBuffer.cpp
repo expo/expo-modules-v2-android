@@ -1,8 +1,13 @@
 #include <expo-jsi/ByteArrayBuffer.h>
 
 namespace expo::jsi {
-  ByteArrayBuffer::ByteArrayBuffer(const uint8_t* data, size_t size)
-    : bytes_(data, data + size) {
+  ByteArrayBuffer::ByteArrayBuffer(
+    const uint8_t* data,
+    size_t size
+  ) : bytes_(data, data + size) {
+  }
+
+  ByteArrayBuffer::ByteArrayBuffer(size_t size) : bytes_(size) {
   }
 
   size_t ByteArrayBuffer::size() const {
