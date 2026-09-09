@@ -99,6 +99,16 @@ namespace expo::modules::v2 {
     }
 
     if (env->GetStringUTFLength(value) == length) {
+      // Pure ASCII. Short strings are read with `GetStringUTFRegion` into a stack buffer: it saves
+      // the malloc and free `GetStringUTFChars` does inside ART.
+      constexpr jsize kRegionMax = 96;
+      if (length <= kRegionMax) {
+        // `GetStringUTFRegion` NUL-terminates what it writes, so the buffer needs one byte more.
+        char bytes[kRegionMax + 1];
+        env->GetStringUTFRegion(value, 0, length, bytes);
+        return facebook::jsi::String::createFromAscii(rt, bytes, static_cast<size_t>(length));
+      }
+
       const char* bytes = env->GetStringUTFChars(value, nullptr);
       auto result = facebook::jsi::String::createFromAscii(
         rt,
