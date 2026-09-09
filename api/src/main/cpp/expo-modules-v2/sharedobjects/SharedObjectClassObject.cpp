@@ -1,6 +1,6 @@
 #include <expo-modules-v2/sharedobjects/SharedObjectClassObject.h>
 
-#include <expo-modules-v2/sharedobjects/SharedObjectRuntimeCache.h>
+#include <expo-modules-v2/objects/RuntimeObjects.h>
 
 namespace expo::modules::v2::sharedobjects {
   namespace {
@@ -28,10 +28,10 @@ namespace expo::modules::v2::sharedobjects {
   ) {
     facebook::jsi::Function classObject = spec.binder().createFunction(rt);
 
-    SharedObjectRuntimeCache* cache = SharedObjectRuntimeCache::find(rt);
-    if (cache != nullptr) {
+    objects::RuntimeObjects* table = objects::RuntimeObjects::find(rt);
+    if (table != nullptr) {
       const facebook::jsi::Object& prototype =
-        cache->prototypeFor(rt, spec.classId, /* installMembers */ false);
+        table->prototypeFor(rt, spec.classId, /* installMembers */ false);
       defineHidden(rt, classObject, "prototype", prototype);
       defineHidden(rt, prototype, "constructor", classObject);
     }

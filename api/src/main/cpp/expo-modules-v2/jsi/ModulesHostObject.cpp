@@ -9,6 +9,10 @@
 #include <expo-modules-v2/decoders/ModuleDescriptorDecoder.h>
 #include <expo-modules-v2/modules/ModuleNativeState.h>
 #include <expo-modules-v2/binders/PropertyBinder.h>
+#include <expo-modules-v2/modules/ModuleState.h>
+#include <expo-modules-v2/objects/ObjectId.h>
+#include <expo-modules-v2/objects/ObjectRegistry.h>
+#include <expo-modules-v2/objects/RuntimeObjects.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassObject.h>
 
 namespace expo::modules::v2::jsi {
@@ -72,8 +76,17 @@ namespace expo::modules::v2::jsi {
 
       auto& [instance, desc] = module.value();
 
+      // One ModuleState per instance, shared by every module object standing for it; one
+      // ModuleNativeState per module object, since each registration has its own export table.
+      const objects::ObjectId::Value objectId = objects::ObjectId::of(env, instance.get());
+      std::shared_ptr<ModuleState> shared = objects::ObjectRegistry::find<ModuleState>(objectId);
+      if (shared == nullptr) {
+        shared = objects::ObjectRegistry::adopt(
+          std::make_shared<ModuleState>(objectId, kolibri::GlobalRef<>::make(env, instance.get()))
+        );
+      }
       const auto state = std::make_shared<ModuleNativeState>(
-        kolibri::GlobalRef<>::make(env, instance.get()),
+        std::move(shared),
         std::move(desc.functions),
         std::move(desc.properties),
         std::move(desc.sharedClasses)
@@ -102,6 +115,12 @@ namespace expo::modules::v2::jsi {
       }
 
       expo::jsi::ChainedNativeState::attach(rt, moduleObject, state);
+
+      // `materialized_` below holds the strong reference; the weak entry lets a Kotlin instance be
+      // mapped back to this object.
+      if (objects::RuntimeObjects* table = objects::RuntimeObjects::find(rt)) {
+        table->store(rt, objectId, moduleObject);
+      }
 
       // Cache only a fully built module object. Its attached native state owns the module instance
       // and unresolved metadata; successful first-call lookups populate that same state in place.

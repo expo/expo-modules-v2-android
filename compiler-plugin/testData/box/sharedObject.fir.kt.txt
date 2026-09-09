@@ -270,9 +270,9 @@ fun box(): String {
   val suffix: String = "__trampoline$ExpoModulesV2"
   val player: String = "Lio/github/expo/modules/v2/testdata/Player;"
   { // BLOCK
-    val tmp_0: Iterator<Class<out Any>> = listOf<Class<out Any>>(elements = [<get-java><Player>(/* <this> = Player::class */), <get-java><Speaker>(/* <this> = Speaker::class */), <get-java><Players>(/* <this> = Players::class */)]).iterator()
+    val tmp_0: Iterator<Class<out ExpoObject>> = listOf<Class<out ExpoObject>>(elements = [<get-java><Player>(/* <this> = Player::class */), <get-java><Speaker>(/* <this> = Speaker::class */), <get-java><Players>(/* <this> = Players::class */)]).iterator()
     while (tmp_0.hasNext()) { // BLOCK
-      val owner: Class<out Any> = tmp_0.next()
+      val owner: Class<out ExpoObject> = tmp_0.next()
       { // BLOCK
         when {
           EQEQ(arg0 = descriptorOf(owner = owner, name = "define$ExpoModulesV2"), arg1 = "<absent>") -> { // BLOCK
@@ -301,13 +301,13 @@ fun box(): String {
       return "TextRef: declared base replaced by " + <get-java><TextRef>(/* <this> = TextRef::class */).getSuperclass()
     }
   }
-  val expected: Map<Class<out Any>, Map<String, String>> = mapOf<Class<out Any>, Map<String, String>>(pairs = [to<Class<Players>, Map<String, String>>(/* <this> = <get-java><Players>(/* <this> = Players::class */), */ that = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "volumeOf" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "maybe" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "create" + suffix, */ that = "<absent>")])), to<Class<Player>, Map<String, String>>(/* <this> = <get-java><Player>(/* <this> = Player::class */), */ that = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "rename" + suffix, */ that = "(I)Ljava/lang/String;"), to<String, String>(/* <this> = "play" + suffix, */ that = "<absent>")]))])
+  val expected: Map<Class<out ExpoObject>, Map<String, String>> = mapOf<Class<out ExpoObject>, Map<String, String>>(pairs = [to<Class<Players>, Map<String, String>>(/* <this> = <get-java><Players>(/* <this> = Players::class */), */ that = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "volumeOf" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "maybe" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "create" + suffix, */ that = "<absent>")])), to<Class<Player>, Map<String, String>>(/* <this> = <get-java><Player>(/* <this> = Player::class */), */ that = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "rename" + suffix, */ that = "(I)Ljava/lang/String;"), to<String, String>(/* <this> = "play" + suffix, */ that = "<absent>")]))])
   { // BLOCK
-    val tmp_2: Iterator<Entry<Class<out Any>, Map<String, String>>> = iterator<Class<out Any>, Map<String, String>>(/* <this> = expected */)
+    val tmp_2: Iterator<Entry<Class<out ExpoObject>, Map<String, String>>> = iterator<Class<out ExpoObject>, Map<String, String>>(/* <this> = expected */)
     while (tmp_2.hasNext()) { // BLOCK
-      val tmp_3: Entry<Class<out Any>, Map<String, String>> = tmp_2.next()
-      val owner: Class<out Any> = component1<Class<out Any>, Map<String, String>>(/* <this> = tmp_3 */)
-      val methods: Map<String, String> = component2<Class<out Any>, Map<String, String>>(/* <this> = tmp_3 */)
+      val tmp_3: Entry<Class<out ExpoObject>, Map<String, String>> = tmp_2.next()
+      val owner: Class<out ExpoObject> = component1<Class<out ExpoObject>, Map<String, String>>(/* <this> = tmp_3 */)
+      val methods: Map<String, String> = component2<Class<out ExpoObject>, Map<String, String>>(/* <this> = tmp_3 */)
       { // BLOCK
         { // BLOCK
           val tmp_4: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = methods */)

@@ -9,7 +9,7 @@
 #include <expo-modules-v2/async/AsyncRuntimeState.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/ModulesHostObject.h>
-#include <expo-modules-v2/sharedobjects/SharedObjectRuntimeCache.h>
+#include <expo-modules-v2/objects/RuntimeObjects.h>
 
 namespace expo::modules::v2::jsi {
   class JavaScriptValue;
@@ -70,6 +70,13 @@ namespace expo::modules::v2::jsi {
 
     jobject getGlobal(JNIEnv* env) const;
 
+    /**
+     * The JavaScript object standing for [instance] in this runtime, or null if none exists yet.
+     * Never creates one: a module object comes from `expo.modules`, a facade from a function
+     * returning the instance.
+     */
+    jobject jsObjectOf(JNIEnv* env, jobject instance);
+
     void installExpoModulesHostObject(
       JNIEnv* env,
       jobject registry,
@@ -93,11 +100,11 @@ namespace expo::modules::v2::jsi {
     std::optional<async::AsyncRuntimeState> asyncState_;
 
     /**
-     * This runtime's shared-object facades. Declared after `runtime_` for the same reason as
-     * `asyncState_`: it holds `jsi::WeakObject`s, which have to be dropped on this runtime's thread
-     * while the runtime is still alive.
+     * This runtime's instance -> JavaScript object table. Declared after `runtime_` for the same
+     * reason as `asyncState_`: it holds `jsi::WeakObject`s, which have to be dropped on this
+     * runtime's thread while the runtime is still alive.
      */
-    std::optional<sharedobjects::SharedObjectRuntimeCache> sharedObjects_;
+    std::optional<objects::RuntimeObjects> objects_;
 
     /**
      * Shared with the JavaScript global that holds it. Declared after `runtime_` so it is released

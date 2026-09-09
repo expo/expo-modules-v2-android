@@ -1,6 +1,8 @@
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
+#include <expo-modules-v2/objects/ObjectId.h>
+#include <expo-modules-v2/objects/ObjectNativeState.h>
 #include <kolibri/class.h>
 #include <kolibri/string_utils.h>
 #include <kolibri/array.h>
@@ -169,6 +171,12 @@ namespace expo::modules::v2::jsi {
     releaseScopedResources();
   }
 
+  jobject JavaScriptObject::nativeInstance(JNIEnv* env) const {
+    const auto node = objects::ObjectNativeState::of(runtime(), object());
+    const jobject instance = node == nullptr ? nullptr : node->instance();
+    return instance == nullptr ? nullptr : env->NewLocalRef(instance);
+  }
+
   void JavaScriptObject::registerNatives(JNIEnv* env) {
     kolibri::registerNative<JavaScriptObject>(env)
       .method<&JavaScriptObject::isArray>("isArray")
@@ -192,6 +200,10 @@ namespace expo::modules::v2::jsi {
       .method<&JavaScriptObject::setJSValueProperty>("setJSValueProperty")
       .method<&JavaScriptObject::setObjectProperty>("setObjectProperty")
       .method<&JavaScriptObject::unsetProperty>("unsetProperty")
+      .method<
+        &JavaScriptObject::nativeInstance,
+        kolibri::Ref<objects::JExpoObject>(kolibri::NativePointer)
+      >("nativeInstance")
       .commit();
   }
 } // namespace expo::modules::v2::jsi

@@ -22,6 +22,9 @@ namespace expo::jsi {
    *   and mis-cast.
    * - A node belongs to at most one object's chain. [attach] rejects a node that already has a
    *   tail, but cannot see a tail-less node already installed on another object.
+   * - A node holds nothing that belongs to one runtime (no jsi::Value/Object/WeakObject, no
+   *   Runtime*). A worklet runtime that copies an object carries its native-state slot, and with it
+   *   the whole chain, into another runtime. Per-runtime data lives beside the runtime instead.
    *
    * Attaching a second state of the same type shadows the earlier one for [find]: the chain is
    * front-pushed and the walk returns the first hit.

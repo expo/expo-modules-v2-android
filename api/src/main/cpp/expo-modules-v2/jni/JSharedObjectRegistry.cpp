@@ -8,14 +8,8 @@
 #include <expo-modules-v2/decoders/ModuleDescriptorDecoder.h>
 
 namespace expo::modules::v2 {
-  JSharedObjectRegistry::Attachment::Attachment(jlong packed)
-    : classId(static_cast<int>(static_cast<uint64_t>(packed) >> 32)),
-      objectId(static_cast<int>(static_cast<uint32_t>(packed))) {
-  }
-
-  JSharedObjectRegistry::Attachment JSharedObjectRegistry::attach(JNIEnv* env, jobject instance) {
-    const jlong packed = attach_(env, instance);
-    return Attachment(packed);
+  int JSharedObjectRegistry::classIdOf(JNIEnv* env, jobject instance) {
+    return static_cast<int>(classIdOf_(env, instance));
   }
 
   void JSharedObjectRegistry::release(JNIEnv* env, jobject instance) {

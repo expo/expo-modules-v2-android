@@ -252,7 +252,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
         CALL 'public open fun getMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
           ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.Module> origin=GET_PROPERTY
             TYPE_ARG T: io.github.expo.modules.v2.Module
-            ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Module modality:ABSTRACT visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.Module>
+            ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Module modality:ABSTRACT visibility:public superTypes:[io.github.expo.modules.v2.ExpoObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.Module>
           ARG p0: CONST String type=kotlin.String value="define$ExpoModulesV2"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
             CALL 'public open fun forName (p0: @[FlexibleNullability] kotlin.String?): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
@@ -265,7 +265,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleIrOnlyMember.kt
                 ARG <this>: GET_VAR 'val method: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
               ARG arg1: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.Module> origin=GET_PROPERTY
                 TYPE_ARG T: io.github.expo.modules.v2.Module
-                ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Module modality:ABSTRACT visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.Module>
+                ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Module modality:ABSTRACT visibility:public superTypes:[io.github.expo.modules.v2.ExpoObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.Module>
           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
             STRING_CONCATENATION type=kotlin.String
               CONST String type=kotlin.String value="base lookup: "

@@ -13,7 +13,6 @@ import io.github.expo.modules.v2.modules.ModuleBuilder
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.TypeDescriptor
 import java.nio.BufferOverflowException
-import java.util.concurrent.atomic.AtomicInteger
 
 object SharedObjectRegistry {
   internal class ClassEntry(
@@ -22,10 +21,7 @@ object SharedObjectRegistry {
     val jsName: String,
     // TODO(@lukmccall): use immutable structure instead of ModuleBuilder
     val definition: ModuleBuilder,
-  ) {
-    private val _nextObjectId = AtomicInteger(1)
-    fun nextObjectId() = _nextObjectId.getAndIncrement()
-  }
+  )
 
   private val classes = MultiKeyCache<Class<*>, SharedClassId, ClassEntry>()
 
@@ -97,35 +93,23 @@ object SharedObjectRegistry {
     }
   }
 
+  /**
+   * The class id of [instance]'s shared class. The native side calls this once per instance, when
+   * it builds the instance's native state; the per-instance id itself lives on
+   * [io.github.expo.modules.v2.ExpoObject.objectId] and is managed natively.
+   */
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JSharedObjectRegistry.h")
-  fun attach(instance: SharedObject): Long {
-    val entry = entryFor(instance.javaClass)
+  fun classIdOf(instance: SharedObject): Int = entryFor(instance.javaClass).id.value
 
-    val objectId = when (val current = instance.sharedObjectId) {
-      SharedObject.RELEASED -> throw IllegalStateException(
-        "${instance.javaClass.name} was released and cannot be passed to JavaScript again",
-      )
-
-      SharedObject.UNASSIGNED -> entry.nextObjectId().also {
-        instance.sharedObjectId = it
-      }
-
-      else -> current
-    }
-
-    return (entry.id.value.toLong() shl 32) or (objectId.toLong() and 0xFFFFFFFFL)
-  }
-
+  /**
+   * Runs the release hook. The native side calls this exactly once per native state, guarded by
+   * that state's released flag, so no idempotency guard is needed here.
+   */
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JSharedObjectRegistry.h")
   fun release(instance: SharedObject) {
-    val isAlive = instance.sharedObjectId != SharedObject.RELEASED
-
-    if (isAlive) {
-      instance.sharedObjectDidRelease()
-      instance.sharedObjectId = SharedObject.RELEASED
-    }
+    instance.sharedObjectDidRelease()
   }
 
   @JvmStatic

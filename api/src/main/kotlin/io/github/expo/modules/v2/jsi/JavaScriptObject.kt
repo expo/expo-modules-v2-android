@@ -5,6 +5,7 @@ import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.NativeMethod
 import io.github.expo.kolibri.NativeObject
 import io.github.expo.kolibri.NativePointer
+import io.github.expo.modules.v2.ExpoObject
 
 class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObject.h") private constructor(
   pointer: Long,
@@ -29,6 +30,12 @@ class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObj
   @NativeMethod private external fun setObjectProperty(name: String, @AsNativePointer value: JavaScriptObject?)
 
   @NativeMethod external fun unsetProperty(name: String)
+
+  /**
+   * The Kotlin module or shared object this JavaScript object stands for, or null for any other
+   * object and for a released shared object.
+   */
+  @NativeMethod external fun nativeInstance(): ExpoObject?
   //@formatter:on
 
   fun setProperty(name: String, value: Boolean): Unit = setBoolProperty(name, value)

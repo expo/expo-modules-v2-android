@@ -19,19 +19,13 @@ namespace expo::modules::v2 {
     static constexpr std::string_view descriptor =
       "io/github/expo/modules/v2/sharedobjects/SharedObjectRegistry";
 
-    struct Attachment {
-      int classId;
-      int objectId;
-
-      explicit Attachment(jlong packed);
-    };
-
     struct ClassExports {
       std::string jsName;
       descriptor::ModuleDescriptorPayload descriptor;
     };
 
-    static Attachment attach(JNIEnv* env, jobject instance);
+    /** The shared class id of [instance]; the per-instance id is `objects::ObjectId`. */
+    static int classIdOf(JNIEnv* env, jobject instance);
 
     static void release(JNIEnv* env, jobject instance);
 
@@ -43,7 +37,7 @@ namespace expo::modules::v2 {
 
   private:
     // clang-format off
-    static constexpr StaticMethod<"attach", jlong(kolibri::Ref<JSharedObject>)> attach_{};
+    static constexpr StaticMethod<"classIdOf", jint(kolibri::Ref<JSharedObject>)> classIdOf_{};
     static constexpr StaticMethod<"release", void(kolibri::Ref<JSharedObject>)> release_{};
     static constexpr StaticMethod<"encodeClass", kolibri::Ref<kolibri::JString>(jint)> encodeClass_{};
     static constexpr StaticMethod<"sharedClassOf", kolibri::Ref<kolibri::JClass>(jint)> sharedClassOf_{};

@@ -3,21 +3,21 @@
 #include <memory>
 #include <utility>
 
-#include <expo-jsi/ChainedNativeState.h>
+#include <expo-modules-v2/objects/ObjectNativeState.h>
+#include <expo-modules-v2/sharedobjects/SharedObjectState.h>
 
 namespace expo::modules::v2::sharedobjects {
-  class SharedObjectState;
-
-  class SharedObjectNativeState final
-    : public ::expo::jsi::ChainedNativeStateOf<SharedObjectNativeState> {
+  /** The chain node on one facade. Everything it needs is in the instance's `SharedObjectState`. */
+  class SharedObjectNativeState final : public objects::ObjectNativeState {
   public:
+    static constexpr Kind kKind = Kind::SharedObject;
+
     explicit SharedObjectNativeState(std::shared_ptr<SharedObjectState> state)
-      : state_(std::move(state)) {
+      : ObjectNativeState(std::move(state)) {
     }
 
-    [[nodiscard]] const std::shared_ptr<SharedObjectState>& state() const { return state_; }
-
-  private:
-    std::shared_ptr<SharedObjectState> state_;
+    [[nodiscard]] std::shared_ptr<SharedObjectState> shared() const {
+      return std::static_pointer_cast<SharedObjectState>(state());
+    }
   };
 } // namespace expo::modules::v2::sharedobjects

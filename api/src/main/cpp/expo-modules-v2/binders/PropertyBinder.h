@@ -16,14 +16,14 @@ namespace expo::modules::v2 {
   public:
     PropertyBinder(
       descriptor::HostPropertySpec spec,
-      std::shared_ptr<kolibri::GlobalRef<>> instance
+      const kolibri::GlobalRef<>& instance
     );
 
     PropertyBinder(
       std::string name,
       const std::shared_ptr<descriptor::HostFunctionSpec>& getter,
       const std::shared_ptr<descriptor::HostFunctionSpec>& setter,
-      std::shared_ptr<kolibri::GlobalRef<>> instance
+      const kolibri::GlobalRef<>& instance
     );
 
     [[nodiscard]] const std::string& name() const;

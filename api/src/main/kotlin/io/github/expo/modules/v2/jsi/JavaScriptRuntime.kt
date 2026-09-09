@@ -3,6 +3,7 @@ package io.github.expo.modules.v2.jsi
 import io.github.expo.kolibri.NativeMethod
 import io.github.expo.kolibri.NativeObject
 import io.github.expo.kolibri.NativePointer
+import io.github.expo.modules.v2.ExpoObject
 import io.github.expo.modules.v2.async.AsyncContext
 import io.github.expo.modules.v2.modules.ModuleRegistry
 import kotlin.time.Duration
@@ -23,6 +24,13 @@ abstract class JavaScriptRuntime protected constructor(
   @NativeMethod external fun evaluate(script: String, sourceURL: String = "<eval>"): JavaScriptValue
   @NativeMethod external fun global(): JavaScriptObject
   @NativeMethod external fun createObject(): JavaScriptObject
+
+  /**
+   * The JavaScript object that stands for [instance] in this runtime, or null if this runtime has
+   * none yet: a module JavaScript has not read from `expo.modules`, or a shared object no function
+   * has returned to it. Once it exists, it is the very object JavaScript holds.
+   */
+  @NativeMethod external fun jsObjectOf(instance: ExpoObject): JavaScriptObject?
   //@formatter:on
 
   /**

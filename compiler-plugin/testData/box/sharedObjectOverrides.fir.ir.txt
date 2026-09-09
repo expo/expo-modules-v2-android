@@ -174,7 +174,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Delegating'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
-            ARG <this>: CALL 'public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.SharedObject' superQualifier='CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:SharedObject modality:ABSTRACT visibility:public superTypes:[kotlin.Any]' type=kotlin.Int origin=null
+            ARG <this>: CALL 'public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.SharedObject' superQualifier='CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:SharedObject modality:ABSTRACT visibility:public superTypes:[io.github.expo.modules.v2.ExpoObject]' type=kotlin.Int origin=null
               ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Delegating declared in io.github.expo.modules.v2.testdata.Delegating.getAdditionalMemoryPressure' type=io.github.expo.modules.v2.testdata.Delegating origin=IMPLICIT_ARGUMENT
             ARG other: CONST Int type=kotlin.Int value=5
     FUN name:sharedObjectDidRelease visibility:public modality:OPEN returnType:kotlin.Unit
@@ -182,7 +182,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
       overridden:
         public open fun sharedObjectDidRelease (): kotlin.Unit declared in io.github.expo.modules.v2.SharedObject
       BLOCK_BODY
-        CALL 'public open fun sharedObjectDidRelease (): kotlin.Unit declared in io.github.expo.modules.v2.SharedObject' superQualifier='CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:SharedObject modality:ABSTRACT visibility:public superTypes:[kotlin.Any]' type=kotlin.Unit origin=null
+        CALL 'public open fun sharedObjectDidRelease (): kotlin.Unit declared in io.github.expo.modules.v2.SharedObject' superQualifier='CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:SharedObject modality:ABSTRACT visibility:public superTypes:[io.github.expo.modules.v2.ExpoObject]' type=kotlin.Unit origin=null
           ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Delegating declared in io.github.expo.modules.v2.testdata.Delegating.sharedObjectDidRelease' type=io.github.expo.modules.v2.testdata.Delegating origin=IMPLICIT_ARGUMENT
         TYPE_OP type=kotlin.Unit origin=IMPLICIT_COERCION_TO_UNIT typeOperand=kotlin.Unit
           BLOCK type=kotlin.Int origin=POSTFIX_INCR

@@ -18,6 +18,7 @@
 #include <expo-modules-v2/converter/decoders/JniDecode.h>
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
 #include <expo-modules-v2/modules/ModuleNativeState.h>
+#include <expo-modules-v2/objects/ObjectNativeState.h>
 
 namespace expo::modules::v2 {
 
@@ -73,7 +74,9 @@ namespace expo::modules::v2 {
       );
 
       if (moduleObject != nullptr) {
-        const auto state = ChainedNativeState::find<ModuleNativeState>(rt, *moduleObject);
+        const auto state = objects::ObjectNativeState::as<ModuleNativeState>(
+          objects::ObjectNativeState::of(rt, *moduleObject)
+        );
         expectSmoke(
           state != nullptr && state->instance() != nullptr,
           "expected a chained ModuleNativeState on the module object"
@@ -85,6 +88,11 @@ namespace expo::modules::v2 {
         expectSmoke(
           state->propertyBinders().size() == 1 && state->propertyBinders()[0].name() == "answer",
           "expected the module property binder in ModuleNativeState"
+        );
+        // The same node answers the identity questions: kind and a process-wide id.
+        expectSmoke(
+          state->kind() == objects::ObjectNativeState::Kind::Module && state->objectId() > 0,
+          "expected the module state to carry its kind and object id"
         );
       }
 

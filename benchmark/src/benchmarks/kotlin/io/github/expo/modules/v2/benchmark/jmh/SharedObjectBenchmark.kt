@@ -81,7 +81,7 @@ private val SHARED_OBJECT_CASES = mapOf(
   // Inbound: native-state lookup, released check, IsInstanceOf, then a fresh local reference.
   "pass-arg" to
     SharedObjectCase("const g = SharedObjectBench.tickOf; const o = SharedObjectBench.current()", "g(o)"),
-  // Outbound, already known: one JNI attach call, then the runtime's façade cache answers.
+  // Outbound, already known: one JNI field read for the id, then the runtime's object table answers.
   "return-existing" to
     SharedObjectCase("const c = SharedObjectBench.current", "(c(), 1)"),
   // Outbound, first time: id assignment, a new state, a new façade, a cache store.

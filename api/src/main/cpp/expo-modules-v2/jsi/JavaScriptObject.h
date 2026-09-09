@@ -49,6 +49,7 @@ namespace expo::modules::v2::jsi {
     void setJSValueProperty(JNIEnv* env, jstring name, JavaScriptValue* value) const;
     void setObjectProperty(JNIEnv* env, jstring name, JavaScriptObject* value) const;
     void unsetProperty(JNIEnv* env, jstring name) const;
+    jobject nativeInstance(JNIEnv* env) const;
     // clang-format on
 
     void onScopeInvalidated() { object_.reset(); }

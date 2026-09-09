@@ -1,69 +1,43 @@
 #include <expo-modules-v2/sharedobjects/SharedObjects.h>
 
-#include <mutex>
-#include <unordered_map>
 #include <utility>
 
 #include <expo-jsi/ChainedNativeState.h>
 #include <kolibri/Ref.h>
 
 #include <expo-modules-v2/jni/JSharedObjectRegistry.h>
+#include <expo-modules-v2/objects/ObjectId.h>
+#include <expo-modules-v2/objects/ObjectRegistry.h>
+#include <expo-modules-v2/objects/RuntimeObjects.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectNativeState.h>
-#include <expo-modules-v2/sharedobjects/SharedObjectRuntimeCache.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectState.h>
 
 namespace expo::modules::v2::sharedobjects {
-  namespace {
-    std::mutex& tableMutex() {
-      static std::mutex mutex;
-      return mutex;
-    }
-
-    std::unordered_map<int, std::weak_ptr<SharedObjectState>>& table() {
-      static std::unordered_map<int, std::weak_ptr<SharedObjectState>> states;
-      return states;
-    }
-
-    std::shared_ptr<SharedObjectState> lookupState(const int objectId) {
-      const std::lock_guard lock(tableMutex());
-      const auto it = table().find(objectId);
-      return it == table().end() ? nullptr : it->second.lock();
-    }
-  } // namespace
-
   facebook::jsi::Value SharedObjects::facadeFor(
     JNIEnv* env,
     facebook::jsi::Runtime& rt,
     jobject instance
   ) {
-    const JSharedObjectRegistry::Attachment attachment =
-      JSharedObjectRegistry::attach(env, instance);
+    const objects::ObjectId::Value objectId = objects::ObjectId::of(env, instance);
 
-    SharedObjectRuntimeCache* cache = SharedObjectRuntimeCache::find(rt);
-    if (cache != nullptr) {
-      facebook::jsi::Value cached = cache->lookupFacade(rt, attachment.objectId);
+    objects::RuntimeObjects* table = objects::RuntimeObjects::find(rt);
+    if (table != nullptr) {
+      facebook::jsi::Value cached = table->lookup(rt, objectId);
       if (!cached.isUndefined()) {
         return cached;
       }
     }
 
-    std::shared_ptr<SharedObjectState> state = lookupState(attachment.objectId);
+    std::shared_ptr<SharedObjectState> state =
+      objects::ObjectRegistry::find<SharedObjectState>(objectId);
     if (state == nullptr) {
-      const SharedObjectClassSpec& spec = SharedObjectClassRegistry::get(attachment.classId);
-      auto created = std::make_shared<SharedObjectState>(
-        kolibri::GlobalRef<>::make(env, instance),
-        attachment.objectId,
-        spec
+      // Slow path, once per instance lifetime: the class id is the only thing Kotlin still answers.
+      const int classId = JSharedObjectRegistry::classIdOf(env, instance);
+      const SharedObjectClassSpec& spec = SharedObjectClassRegistry::get(classId);
+      state = objects::ObjectRegistry::adopt(
+        std::make_shared<SharedObjectState>(kolibri::GlobalRef<>::make(env, instance), objectId, spec)
       );
-
-      const std::lock_guard lock(tableMutex());
-      const auto it = table().find(attachment.objectId);
-      state = it == table().end() ? nullptr : it->second.lock();
-      if (state == nullptr) {
-        state = std::move(created);
-        table()[attachment.objectId] = state;
-      }
     }
 
     facebook::jsi::Object facade(rt);
@@ -73,15 +47,15 @@ namespace expo::modules::v2::sharedobjects {
       std::make_shared<SharedObjectNativeState>(state)
     );
 
-    if (cache != nullptr) {
+    if (table != nullptr) {
       facade.setPrototype(
         rt,
         facebook::jsi::Value(
           rt,
-          cache->prototypeFor(rt, attachment.classId, /* installMembers */ true)
+          table->prototypeFor(rt, state->spec().classId, /* installMembers */ true)
         )
       );
-      cache->storeFacade(rt, attachment.objectId, facade, state);
+      table->store(rt, objectId, facade);
     }
 
     return facebook::jsi::Value(rt, std::move(facade));
@@ -91,14 +65,10 @@ namespace expo::modules::v2::sharedobjects {
     facebook::jsi::Runtime& rt,
     const facebook::jsi::Object& object
   ) {
-    const auto attached = expo::jsi::ChainedNativeState::find<SharedObjectNativeState>(rt, object);
-    return attached == nullptr ? nullptr : attached->state();
+    const auto attached = objects::ObjectNativeState::as<SharedObjectNativeState>(
+      objects::ObjectNativeState::of(rt, object)
+    );
+    return attached == nullptr ? nullptr : attached->shared();
   }
 
-  void SharedObjects::forget(const int objectId) {
-    const std::lock_guard lock(tableMutex());
-    if (const auto it = table().find(objectId); it != table().end() && it->second.expired()) {
-      table().erase(it);
-    }
-  }
 } // namespace expo::modules::v2::sharedobjects

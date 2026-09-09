@@ -156,7 +156,9 @@ namespace expo::modules::v2::sharedobjects {
         const facebook::jsi::Value& thisValue,
         const facebook::jsi::Value*,
         size_t) -> facebook::jsi::Value {
-          return facebook::jsi::Value(receiverOf(rt, thisValue, kObjectId)->objectId());
+          return facebook::jsi::Value(
+            static_cast<double>(receiverOf(rt, thisValue, kObjectId)->objectId())
+          );
         }
       ),
       std::nullopt,

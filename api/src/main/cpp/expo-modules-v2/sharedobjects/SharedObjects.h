@@ -20,7 +20,5 @@ namespace expo::modules::v2::sharedobjects {
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Object& object
     );
-
-    static void forget(int objectId);
   };
 }

@@ -11,6 +11,7 @@
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <expo-modules-v2/jsi/ModulesHostObject.h>
+#include <expo-modules-v2/objects/ObjectId.h>
 #include <kolibri/ScopedNativeObject.h>
 #include <kolibri/string_utils.h>
 
@@ -40,7 +41,7 @@ namespace expo::modules::v2::jsi {
     std::string_view globalName
   ) : ownedRuntime_(std::move(runtime)), runtime_(ownedRuntime_.get()) {
     asyncState_.emplace(env, *runtime_, asyncContext);
-    sharedObjects_.emplace(*runtime_);
+    objects_.emplace(*runtime_);
     installExpoModulesHostObject(env, registry, engineName, globalName);
   }
 
@@ -53,7 +54,7 @@ namespace expo::modules::v2::jsi {
     std::string_view globalName
   ) : ownedRuntime_(nullptr), runtime_(&runtime) {
     asyncState_.emplace(env, *runtime_, asyncContext);
-    sharedObjects_.emplace(*runtime_);
+    objects_.emplace(*runtime_);
     installExpoModulesHostObject(env, registry, engineName, globalName);
   }
 
@@ -65,7 +66,7 @@ namespace expo::modules::v2::jsi {
 
     // Also before the runtime goes: these hold `jsi` values belonging to this runtime, and this is
     // its own thread.
-    sharedObjects_.reset();
+    objects_.reset();
     modules_.reset();
 
     RecordPropertyCache::clearForRuntime(*runtime_);
@@ -90,6 +91,19 @@ namespace expo::modules::v2::jsi {
 
   jobject JavaScriptRuntime::getGlobal(JNIEnv* env) const {
     return JavaScriptObject::create(env, runtime_, runtime_->global());
+  }
+
+  jobject JavaScriptRuntime::jsObjectOf(JNIEnv* env, jobject instance) {
+    if (instance == nullptr) {
+      return nullptr;
+    }
+    facebook::jsi::Runtime& rt = *runtime_;
+
+    const facebook::jsi::Value existing = objects_->lookup(rt, objects::ObjectId::of(env, instance));
+    if (existing.isUndefined()) {
+      return nullptr;
+    }
+    return JavaScriptObject::create(env, runtime_, existing.getObject(rt));
   }
 
   facebook::jsi::Runtime& JavaScriptRuntime::runtime() const {
@@ -181,6 +195,10 @@ namespace expo::modules::v2::jsi {
         &JavaScriptRuntime::createObject,
         kolibri::Ref<JavaScriptObject>(kolibri::NativePointer)
       >("createObject")
+      .method<
+        &JavaScriptRuntime::jsObjectOf,
+        kolibri::Ref<JavaScriptObject>(kolibri::NativePointer, kolibri::Ref<objects::JExpoObject>)
+      >("jsObjectOf")
       .method<&JavaScriptRuntime::drainMicrotasks>("drainMicrotasks")
       .commit();
   }

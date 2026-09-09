@@ -11,18 +11,18 @@
 #include <expo-modules-v2/descriptor/HostFunctionSpec.h>
 
 namespace expo::modules::v2 {
-  class ModuleNativeState;
 
   class FunctionBinder {
   public:
+    /** [instance] is the owning state's ref; the binder is a member of that state and only points at it. */
     FunctionBinder(
       descriptor::HostFunctionSpec spec,
-      std::shared_ptr<kolibri::GlobalRef<>> instance
+      const kolibri::GlobalRef<>& instance
     );
 
     FunctionBinder(
       std::shared_ptr<descriptor::HostFunctionSpec> spec,
-      std::shared_ptr<kolibri::GlobalRef<>> instance
+      const kolibri::GlobalRef<>& instance
     );
 
     [[nodiscard]] const std::string& name() const;
@@ -35,16 +35,11 @@ namespace expo::modules::v2 {
 
     [[nodiscard]] facebook::jsi::Function createFunction(facebook::jsi::Runtime& rt) const;
 
-    [[nodiscard]] facebook::jsi::Function createFunction(
-      facebook::jsi::Runtime& rt,
-      std::shared_ptr<const void> owner
-    ) const;
-
   private:
     [[nodiscard]] const descriptor::HostFunctionSpec& resolve() const;
 
     std::shared_ptr<descriptor::HostFunctionSpec> spec_;
-    std::shared_ptr<kolibri::GlobalRef<>> instance_;
+    const kolibri::GlobalRef<>* instance_;
 
     FunctionInvoker invoker_;
 

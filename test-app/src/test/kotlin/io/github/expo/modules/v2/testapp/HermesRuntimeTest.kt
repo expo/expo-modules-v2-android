@@ -27,7 +27,9 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration
 import kotlinx.coroutines.delay
@@ -2725,6 +2727,47 @@ class HermesRuntimeTest {
       assertEquals("1", runtime.evaluateAsString("expo.modules.Counter.increment()"))
       assertEquals("2", runtime.evaluateAsString("expo.modules.Counter.increment()"))
       assertEquals("3", runtime.evaluateAsString("expo.modules.Counter.increment()"))
+    }
+  }
+
+  @Test
+  fun `a module maps to its JavaScript object and back once materialized`() {
+    HermesRuntime().use { runtime ->
+      val module = CounterFixture()
+      runtime.moduleRegistry.register(module)
+
+      // Nothing exists in this runtime until JavaScript reads the module.
+      assertNull(runtime.jsObjectOf(module))
+
+      runtime.evaluate("globalThis.m = expo.modules.Counter;")
+      val moduleObject = assertNotNull(runtime.jsObjectOf(module))
+      runtime.global()["fromKotlin"] = moduleObject
+      assertEquals("true", runtime.evaluateAsString("fromKotlin === m"))
+
+      // And back: the module object stands for exactly the registered instance.
+      assertSame(module, moduleObject.nativeInstance())
+      assertNull(runtime.createObject().nativeInstance())
+    }
+  }
+
+  @Test
+  fun `one module instance has one JavaScript object per runtime`() {
+    val module = CounterFixture()
+    HermesRuntime().use { first ->
+      HermesRuntime().use { second ->
+        first.moduleRegistry.register(module)
+        second.moduleRegistry.register(module)
+
+        first.evaluate("expo.modules.Counter.increment();")
+        assertNotNull(first.jsObjectOf(module))
+        // The second runtime has not materialized it yet, even though the instance already has an id.
+        assertNull(second.jsObjectOf(module))
+
+        second.evaluate("expo.modules.Counter.increment();")
+        val inSecond = assertNotNull(second.jsObjectOf(module))
+        assertSame(module, inSecond.nativeInstance())
+        assertSame(module, assertNotNull(first.jsObjectOf(module)).nativeInstance())
+      }
     }
   }
 

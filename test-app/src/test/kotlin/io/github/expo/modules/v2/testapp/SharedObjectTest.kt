@@ -18,6 +18,9 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 /**
@@ -321,6 +324,64 @@ class SharedObjectTest {
   }
 
   @Test
+  fun `first instances of two different classes do not alias`() {
+    // Ids are process-wide, not per class: the first Counter and the first Tag must never share a
+    // key in the native tables, or the Tag would come back wearing the Counter's facade.
+    HermesRuntime().use { runtime ->
+      runtime.registerCounters()
+      runtime.moduleRegistry.register("Tags", TagModule()) {
+        function("create", returns = tagType)
+      }
+
+      runtime.evaluate("globalThis.c = expo.modules.Counters.create(); globalThis.t = expo.modules.Tags.create();")
+      assertEquals("false", runtime.evaluateAsString("c === t"))
+      assertEquals("tag", runtime.evaluateAsString("t.label()"))
+      assertEquals("1", runtime.evaluateAsString("c.increment()"))
+      assertEquals("undefined", runtime.evaluateAsString("typeof t.increment"))
+    }
+  }
+
+  @Test
+  fun `a shared object maps to its facade and back from Kotlin`() {
+    HermesRuntime().use { runtime ->
+      val module = runtime.registerCounters()
+      runtime.evaluate("globalThis.c = expo.modules.Counters.create();")
+      val counter = requireNotNull(module.last)
+
+      // Kotlin -> JS: the facade JavaScript already holds, not a second one.
+      val facade = assertNotNull(runtime.jsObjectOf(counter))
+      runtime.global()["fromKotlin"] = facade
+      assertEquals("true", runtime.evaluateAsString("fromKotlin === c"))
+
+      // JS -> Kotlin: the very instance the module created.
+      assertSame(counter, facade.nativeInstance())
+
+      // A shared object that never crossed has no facade here, and asking does not create one.
+      val fresh = Counter()
+      assertNull(runtime.jsObjectOf(fresh))
+      assertNull(runtime.jsObjectOf(fresh))
+
+      // Any other object answers null.
+      assertNull(runtime.createObject().nativeInstance())
+      assertNull(runtime.global().nativeInstance())
+    }
+  }
+
+  @Test
+  fun `a released facade no longer answers its native instance`() {
+    HermesRuntime().use { runtime ->
+      val module = runtime.registerCounters()
+      runtime.evaluate("globalThis.c = expo.modules.Counters.create();")
+      val counter = requireNotNull(module.last)
+      val facade = assertNotNull(runtime.jsObjectOf(counter))
+
+      runtime.evaluate("c.release();")
+
+      assertNull(facade.nativeInstance())
+    }
+  }
+
+  @Test
   fun `a plain JavaScript object is not accepted where a shared object is declared`() {
     HermesRuntime().use { runtime ->
       runtime.registerCounters()
@@ -351,15 +412,34 @@ class SharedObjectTest {
   }
 
   @Test
-  fun `a released object cannot be handed to JavaScript again`() {
+  fun `an explicitly released object maps back to its released facade while JavaScript holds it`() {
     HermesRuntime().use { runtime ->
       runtime.registerCounters()
 
-      runtime.evaluate("expo.modules.Counters.create().release();")
+      runtime.evaluate("globalThis.c = expo.modules.Counters.create(); c.release();")
+      // The id is untouched by release, so the same instance still maps to the same JS object...
+      assertEquals("true", runtime.evaluateAsString("expo.modules.Counters.current() === c"))
+      // ...and that object is released, so using it fails.
       val error = runtime.evaluateAsString(
-        "try { expo.modules.Counters.current(); 'no error'; } catch (e) { String(e.message); }",
+        "try { expo.modules.Counters.current().increment(); 'no error'; } catch (e) { String(e.message); }",
       )
       assertTrue("released" in error, "unexpected message: $error")
+    }
+  }
+
+  @Test
+  fun `an object whose facade was collected can be handed to JavaScript again`() {
+    HermesRuntime().use { runtime ->
+      TestSupport.install(runtime)
+      val module = runtime.registerCounters()
+
+      runtime.evaluate("expo.modules.Counters.create().increment();")
+      runtime.evaluate("ExpoTestSupport.__collectGarbage()")
+      assertEquals(1, requireNotNull(module.last).releaseCount)
+
+      // Nothing binds the instance to JavaScript any more, so the next export starts over, with a
+      // working object that still carries the Kotlin state.
+      assertEquals("2", runtime.evaluateAsString("expo.modules.Counters.current().increment()"))
     }
   }
 

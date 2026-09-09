@@ -5,11 +5,11 @@
 namespace expo::modules::v2 {
   PropertyBinder::PropertyBinder(
     descriptor::HostPropertySpec spec,
-    std::shared_ptr<kolibri::GlobalRef<>> instance
+    const kolibri::GlobalRef<>& instance
   ) : name_(std::move(spec.name)),
       getter_(std::move(spec.getter), instance) {
     if (spec.setter.has_value()) {
-      setter_.emplace(std::move(*spec.setter), std::move(instance));
+      setter_.emplace(std::move(*spec.setter), instance);
     }
   }
 
@@ -17,11 +17,11 @@ namespace expo::modules::v2 {
     std::string name,
     const std::shared_ptr<descriptor::HostFunctionSpec>& getter,
     const std::shared_ptr<descriptor::HostFunctionSpec>& setter,
-    std::shared_ptr<kolibri::GlobalRef<>> instance
+    const kolibri::GlobalRef<>& instance
   ) : name_(std::move(name)),
       getter_(getter, instance) {
     if (setter != nullptr) {
-      setter_.emplace(setter, std::move(instance));
+      setter_.emplace(setter, instance);
     }
   }
 

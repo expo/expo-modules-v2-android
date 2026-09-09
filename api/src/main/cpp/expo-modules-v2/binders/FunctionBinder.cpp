@@ -1,7 +1,5 @@
 #include <expo-modules-v2/binders/FunctionBinder.h>
 
-#include <expo-modules-v2/modules/ModuleNativeState.h>
-
 #include <utility>
 
 #include <kolibri/env.h>
@@ -12,9 +10,9 @@ namespace expo::modules::v2 {
 
   FunctionBinder::FunctionBinder(
     HostFunctionSpec spec,
-    std::shared_ptr<kolibri::GlobalRef<>> instance
+    const kolibri::GlobalRef<>& instance
   ) : spec_(std::make_shared<HostFunctionSpec>(std::move(spec))),
-      instance_(std::move(instance)),
+      instance_(&instance),
       invoker_(
         selectFunctionInvoker(
           spec_->returnType,
@@ -27,9 +25,9 @@ namespace expo::modules::v2 {
 
   FunctionBinder::FunctionBinder(
     std::shared_ptr<HostFunctionSpec> spec,
-    std::shared_ptr<kolibri::GlobalRef<>> instance
+    const kolibri::GlobalRef<>& instance
   ) : spec_(std::move(spec)),
-      instance_(std::move(instance)),
+      instance_(&instance),
       invoker_(
         selectFunctionInvoker(
           spec_->returnType,
@@ -102,22 +100,4 @@ namespace expo::modules::v2 {
     );
   }
 
-  facebook::jsi::Function FunctionBinder::createFunction(
-    facebook::jsi::Runtime& rt,
-    std::shared_ptr<const void> owner
-  ) const {
-    return facebook::jsi::Function::createFromHostFunction(
-      rt,
-      facebook::jsi::PropNameID::forUtf8(rt, spec_->name),
-      spec_->argTypes.size(),
-      [binder = this, owner = std::move(owner)](
-      facebook::jsi::Runtime& rt,
-      const facebook::jsi::Value&,
-      const facebook::jsi::Value* args,
-      size_t count
-    ) -> facebook::jsi::Value {
-        return binder->invoke(rt, args, count);
-      }
-    );
-  }
 } // namespace expo::modules::v2

@@ -1,32 +1,30 @@
 #pragma once
 
-#include <jni.h>
-
 #include <memory>
 #include <span>
 #include <vector>
-
-#include <expo-jsi/ChainedNativeState.h>
-#include <kolibri/Ref.h>
 
 #include <expo-modules-v2/binders/FunctionBinder.h>
 #include <expo-modules-v2/binders/PropertyBinder.h>
 #include <expo-modules-v2/descriptor/HostPropertySpec.h>
 #include <expo-modules-v2/descriptor/SharedClassSpec.h>
+#include <expo-modules-v2/modules/ModuleState.h>
+#include <expo-modules-v2/objects/ObjectNativeState.h>
 
 namespace expo::modules::v2 {
-  class ModuleNativeState : public ::expo::jsi::ChainedNativeStateOf<ModuleNativeState> {
+  /** The chain node on one module object: its export table, bound to the instance's `ModuleState`. */
+  class ModuleNativeState final : public objects::ObjectNativeState {
   public:
+    static constexpr Kind kKind = Kind::Module;
+
     ModuleNativeState(
-      kolibri::GlobalRef<> instance,
+      std::shared_ptr<ModuleState> state,
       std::vector<descriptor::HostFunctionSpec> functions,
       std::vector<descriptor::HostPropertySpec> properties,
       std::vector<descriptor::SharedClassSpec> sharedClasses
     );
 
     ~ModuleNativeState() override;
-
-    [[nodiscard]] jobject instance() const { return instance_->get(); }
 
     [[nodiscard]] std::span<const FunctionBinder> functionBinders() const;
 
@@ -35,7 +33,6 @@ namespace expo::modules::v2 {
     [[nodiscard]] std::span<descriptor::SharedClassSpec> sharedClasses();
 
   private:
-    std::shared_ptr<kolibri::GlobalRef<>> instance_;
     std::vector<FunctionBinder> functionBinders_;
     std::vector<PropertyBinder> propertyBinders_;
     std::vector<descriptor::SharedClassSpec> sharedClasses_;

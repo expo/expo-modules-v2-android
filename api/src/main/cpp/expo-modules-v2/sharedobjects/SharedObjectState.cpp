@@ -5,12 +5,11 @@
 #include <kolibri/env.h>
 
 #include <expo-modules-v2/jni/JSharedObjectRegistry.h>
-#include <expo-modules-v2/sharedobjects/SharedObjects.h>
 
 namespace expo::modules::v2::sharedobjects {
   namespace {
     std::vector<FunctionBinder> makeFunctionBinders(
-      const std::shared_ptr<kolibri::GlobalRef<>>& instance,
+      const kolibri::GlobalRef<>& instance,
       const std::vector<std::shared_ptr<descriptor::HostFunctionSpec>>& specs
     ) {
       std::vector<FunctionBinder> binders;
@@ -22,7 +21,7 @@ namespace expo::modules::v2::sharedobjects {
     }
 
     std::vector<PropertyBinder> makePropertyBinders(
-      const std::shared_ptr<kolibri::GlobalRef<>>& instance,
+      const kolibri::GlobalRef<>& instance,
       const std::vector<SharedObjectClassSpec::Property>& specs
     ) {
       std::vector<PropertyBinder> binders;
@@ -36,18 +35,16 @@ namespace expo::modules::v2::sharedobjects {
 
   SharedObjectState::SharedObjectState(
     kolibri::GlobalRef<> instance,
-    const int objectId,
+    const objects::ObjectId::Value objectId,
     const SharedObjectClassSpec& spec
-  ) : objectId_(objectId),
+  ) : ObjectState(kKind, objectId, std::move(instance)),
       spec_(&spec),
-      instance_(std::make_shared<kolibri::GlobalRef<>>(std::move(instance))),
       functionBinders_(makeFunctionBinders(instance_, spec.functions)),
       propertyBinders_(makePropertyBinders(instance_, spec.properties)) {
   }
 
   SharedObjectState::~SharedObjectState() {
     release();
-    SharedObjects::forget(objectId_);
   }
 
   void SharedObjectState::release() {
@@ -55,12 +52,12 @@ namespace expo::modules::v2::sharedobjects {
       return;
     }
 
-    if (!instance_ || !*instance_) {
+    if (!instance_) {
       return;
     }
 
     JNIEnv* env = kolibri::getEnv();
-    JSharedObjectRegistry::release(env, instance_->get());
-    instance_->reset();
+    JSharedObjectRegistry::release(env, instance_.get());
+    instance_.reset();
   }
 }

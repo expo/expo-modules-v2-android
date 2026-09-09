@@ -699,11 +699,11 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
       VAR name:player type:kotlin.String [val]
         CONST String type=kotlin.String value="Lio/github/expo/modules/v2/testdata/Player;"
       BLOCK type=kotlin.Unit origin=FOR_LOOP
-        VAR FOR_LOOP_ITERATOR name:tmp_0 type:kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> [val]
-          CALL 'public abstract fun iterator (): kotlin.collections.Iterator<E of kotlin.collections.List> declared in kotlin.collections.List' type=kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> origin=FOR_LOOP_ITERATOR
-            ARG <this>: CALL 'public final fun listOf <T> (vararg elements: T of kotlin.collections.listOf): kotlin.collections.List<T of kotlin.collections.listOf> declared in kotlin.collections' type=kotlin.collections.List<java.lang.Class<out kotlin.Any>> origin=null
-              TYPE_ARG T: java.lang.Class<out kotlin.Any>
-              ARG elements: VARARG type=kotlin.Array<out java.lang.Class<out kotlin.Any>> varargElementType=java.lang.Class<out kotlin.Any>
+        VAR FOR_LOOP_ITERATOR name:tmp_0 type:kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>> [val]
+          CALL 'public abstract fun iterator (): kotlin.collections.Iterator<E of kotlin.collections.List> declared in kotlin.collections.List' type=kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>> origin=FOR_LOOP_ITERATOR
+            ARG <this>: CALL 'public final fun listOf <T> (vararg elements: T of kotlin.collections.listOf): kotlin.collections.List<T of kotlin.collections.listOf> declared in kotlin.collections' type=kotlin.collections.List<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>> origin=null
+              TYPE_ARG T: java.lang.Class<out io.github.expo.modules.v2.ExpoObject>
+              ARG elements: VARARG type=kotlin.Array<out java.lang.Class<out io.github.expo.modules.v2.ExpoObject>> varargElementType=java.lang.Class<out io.github.expo.modules.v2.ExpoObject>
                 CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Player> origin=GET_PROPERTY
                   TYPE_ARG T: io.github.expo.modules.v2.testdata.Player
                   ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Player>
@@ -715,29 +715,29 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
                   ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:Players modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Players>
         WHILE label=null origin=FOR_LOOP_INNER_WHILE
           condition: CALL 'public abstract fun hasNext (): kotlin.Boolean declared in kotlin.collections.Iterator' type=kotlin.Boolean origin=FOR_LOOP_HAS_NEXT
-            ARG <this>: GET_VAR 'val tmp_0: kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> origin=null
+            ARG <this>: GET_VAR 'val tmp_0: kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>> origin=null
           body: BLOCK type=kotlin.Unit origin=FOR_LOOP_INNER_WHILE
-            VAR FOR_LOOP_VARIABLE name:owner type:java.lang.Class<out kotlin.Any> [val]
-              CALL 'public abstract fun next (): T of kotlin.collections.Iterator declared in kotlin.collections.Iterator' type=java.lang.Class<out kotlin.Any> origin=FOR_LOOP_NEXT
-                ARG <this>: GET_VAR 'val tmp_0: kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<java.lang.Class<out kotlin.Any>> origin=null
+            VAR FOR_LOOP_VARIABLE name:owner type:java.lang.Class<out io.github.expo.modules.v2.ExpoObject> [val]
+              CALL 'public abstract fun next (): T of kotlin.collections.Iterator declared in kotlin.collections.Iterator' type=java.lang.Class<out io.github.expo.modules.v2.ExpoObject> origin=FOR_LOOP_NEXT
+                ARG <this>: GET_VAR 'val tmp_0: kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>> origin=null
             BLOCK type=kotlin.Unit origin=null
               WHEN type=kotlin.Unit origin=IF
                 BRANCH
                   if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
                     ARG arg0: CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
-                      ARG owner: GET_VAR 'val owner: java.lang.Class<out kotlin.Any> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out kotlin.Any> origin=null
+                      ARG owner: GET_VAR 'val owner: java.lang.Class<out io.github.expo.modules.v2.ExpoObject> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out io.github.expo.modules.v2.ExpoObject> origin=null
                       ARG name: CONST String type=kotlin.String value="define$ExpoModulesV2"
                     ARG arg1: CONST String type=kotlin.String value="<absent>"
                   then: BLOCK type=kotlin.Unit origin=null
                     RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
                       STRING_CONCATENATION type=kotlin.String
                         CALL 'public open fun getSimpleName (): @[FlexibleNullability] kotlin.String? declared in java.lang.Class' type=@[FlexibleNullability] kotlin.String? origin=GET_PROPERTY
-                          ARG <this>: GET_VAR 'val owner: java.lang.Class<out kotlin.Any> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out kotlin.Any> origin=null
+                          ARG <this>: GET_VAR 'val owner: java.lang.Class<out io.github.expo.modules.v2.ExpoObject> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out io.github.expo.modules.v2.ExpoObject> origin=null
                         CONST String type=kotlin.String value=": no generated define$ExpoModulesV2"
       VAR name:base type:java.lang.Class<io.github.expo.modules.v2.SharedObject> [val]
         CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.SharedObject> origin=GET_PROPERTY
           TYPE_ARG T: io.github.expo.modules.v2.SharedObject
-          ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:SharedObject modality:ABSTRACT visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.SharedObject>
+          ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:SharedObject modality:ABSTRACT visibility:public superTypes:[io.github.expo.modules.v2.ExpoObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.SharedObject>
       BLOCK type=kotlin.Unit origin=FOR_LOOP
         VAR FOR_LOOP_ITERATOR name:tmp_1 type:kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.SharedObject>> [val]
           CALL 'public abstract fun iterator (): kotlin.collections.Iterator<E of kotlin.collections.List> declared in kotlin.collections.List' type=kotlin.collections.Iterator<java.lang.Class<out io.github.expo.modules.v2.SharedObject>> origin=FOR_LOOP_ITERATOR
@@ -795,11 +795,11 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
                   ARG <this>: CALL 'public final fun <get-java> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-java>>): java.lang.Class<T of kotlin.jvm.<get-java>> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.TextRef> origin=GET_PROPERTY
                     TYPE_ARG T: io.github.expo.modules.v2.testdata.TextRef
                     ARG <this>: CLASS_REFERENCE 'CLASS CLASS name:TextRef modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedRef<java.lang.StringBuilder>]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.TextRef>
-      VAR name:expected type:kotlin.collections.Map<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> [val]
-        CALL 'public final fun mapOf <K, V> (vararg pairs: kotlin.Pair<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf>): kotlin.collections.Map<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf> declared in kotlin.collections' type=kotlin.collections.Map<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
-          TYPE_ARG K: java.lang.Class<out kotlin.Any>
+      VAR name:expected type:kotlin.collections.Map<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> [val]
+        CALL 'public final fun mapOf <K, V> (vararg pairs: kotlin.Pair<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf>): kotlin.collections.Map<K of kotlin.collections.mapOf, V of kotlin.collections.mapOf> declared in kotlin.collections' type=kotlin.collections.Map<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+          TYPE_ARG K: java.lang.Class<out io.github.expo.modules.v2.ExpoObject>
           TYPE_ARG V: kotlin.collections.Map<kotlin.String, kotlin.String>
-          ARG pairs: VARARG type=kotlin.Array<out kotlin.Pair<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> varargElementType=kotlin.Pair<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>
+          ARG pairs: VARARG type=kotlin.Array<out kotlin.Pair<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>>> varargElementType=kotlin.Pair<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>>
             CALL 'public final fun to <A, B> (<this>: A of kotlin.to, that: B of kotlin.to): kotlin.Pair<A of kotlin.to, B of kotlin.to> declared in kotlin' type=kotlin.Pair<java.lang.Class<io.github.expo.modules.v2.testdata.Players>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
               TYPE_ARG A: java.lang.Class<io.github.expo.modules.v2.testdata.Players>
               TYPE_ARG B: kotlin.collections.Map<kotlin.String, kotlin.String>
@@ -856,28 +856,28 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
                       GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
                     ARG that: CONST String type=kotlin.String value="<absent>"
       BLOCK type=kotlin.Unit origin=FOR_LOOP
-        VAR FOR_LOOP_ITERATOR name:tmp_2 type:kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> [val]
-          CALL 'public final fun iterator <K, V> (<this>: kotlin.collections.Map<out K of kotlin.collections.iterator, V of kotlin.collections.iterator>): kotlin.collections.Iterator<kotlin.collections.Map.Entry<K of kotlin.collections.iterator, V of kotlin.collections.iterator>> declared in kotlin.collections' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> origin=FOR_LOOP_ITERATOR
-            TYPE_ARG K: java.lang.Class<out kotlin.Any>
+        VAR FOR_LOOP_ITERATOR name:tmp_2 type:kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>>> [val]
+          CALL 'public final fun iterator <K, V> (<this>: kotlin.collections.Map<out K of kotlin.collections.iterator, V of kotlin.collections.iterator>): kotlin.collections.Iterator<kotlin.collections.Map.Entry<K of kotlin.collections.iterator, V of kotlin.collections.iterator>> declared in kotlin.collections' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>>> origin=FOR_LOOP_ITERATOR
+            TYPE_ARG K: java.lang.Class<out io.github.expo.modules.v2.ExpoObject>
             TYPE_ARG V: kotlin.collections.Map<kotlin.String, kotlin.String>
-            ARG <this>: GET_VAR 'val expected: kotlin.collections.Map<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+            ARG <this>: GET_VAR 'val expected: kotlin.collections.Map<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
         WHILE label=null origin=FOR_LOOP_INNER_WHILE
           condition: CALL 'public abstract fun hasNext (): kotlin.Boolean declared in kotlin.collections.Iterator' type=kotlin.Boolean origin=FOR_LOOP_HAS_NEXT
-            ARG <this>: GET_VAR 'val tmp_2: kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> origin=null
+            ARG <this>: GET_VAR 'val tmp_2: kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>>> origin=null
           body: BLOCK type=kotlin.Unit origin=FOR_LOOP_INNER_WHILE
-            VAR IR_TEMPORARY_VARIABLE name:tmp_3 type:kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> [val]
-              CALL 'public abstract fun next (): T of kotlin.collections.Iterator declared in kotlin.collections.Iterator' type=kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=FOR_LOOP_NEXT
-                ARG <this>: GET_VAR 'val tmp_2: kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>>> origin=null
-            VAR name:owner type:java.lang.Class<out kotlin.Any> [val]
-              CALL 'public final fun component1 <K, V> (<this>: kotlin.collections.Map.Entry<K of kotlin.collections.component1, V of kotlin.collections.component1>): K of kotlin.collections.component1 declared in kotlin.collections' type=java.lang.Class<out kotlin.Any> origin=COMPONENT_N(index=1)
-                TYPE_ARG K: java.lang.Class<out kotlin.Any>
+            VAR IR_TEMPORARY_VARIABLE name:tmp_3 type:kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> [val]
+              CALL 'public abstract fun next (): T of kotlin.collections.Iterator declared in kotlin.collections.Iterator' type=kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=FOR_LOOP_NEXT
+                ARG <this>: GET_VAR 'val tmp_2: kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Iterator<kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>>> origin=null
+            VAR name:owner type:java.lang.Class<out io.github.expo.modules.v2.ExpoObject> [val]
+              CALL 'public final fun component1 <K, V> (<this>: kotlin.collections.Map.Entry<K of kotlin.collections.component1, V of kotlin.collections.component1>): K of kotlin.collections.component1 declared in kotlin.collections' type=java.lang.Class<out io.github.expo.modules.v2.ExpoObject> origin=COMPONENT_N(index=1)
+                TYPE_ARG K: java.lang.Class<out io.github.expo.modules.v2.ExpoObject>
                 TYPE_ARG V: kotlin.collections.Map<kotlin.String, kotlin.String>
-                ARG <this>: GET_VAR 'val tmp_3: kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+                ARG <this>: GET_VAR 'val tmp_3: kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
             VAR name:methods type:kotlin.collections.Map<kotlin.String, kotlin.String> [val]
               CALL 'public final fun component2 <K, V> (<this>: kotlin.collections.Map.Entry<K of kotlin.collections.component2, V of kotlin.collections.component2>): V of kotlin.collections.component2 declared in kotlin.collections' type=kotlin.collections.Map<kotlin.String, kotlin.String> origin=COMPONENT_N(index=2)
-                TYPE_ARG K: java.lang.Class<out kotlin.Any>
+                TYPE_ARG K: java.lang.Class<out io.github.expo.modules.v2.ExpoObject>
                 TYPE_ARG V: kotlin.collections.Map<kotlin.String, kotlin.String>
-                ARG <this>: GET_VAR 'val tmp_3: kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map.Entry<java.lang.Class<out kotlin.Any>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
+                ARG <this>: GET_VAR 'val tmp_3: kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> declared in io.github.expo.modules.v2.testdata.box' type=kotlin.collections.Map.Entry<java.lang.Class<out io.github.expo.modules.v2.ExpoObject>, kotlin.collections.Map<kotlin.String, kotlin.String>> origin=null
             BLOCK type=kotlin.Unit origin=null
               BLOCK type=kotlin.Unit origin=FOR_LOOP
                 VAR FOR_LOOP_ITERATOR name:tmp_4 type:kotlin.collections.Iterator<kotlin.collections.Map.Entry<kotlin.String, kotlin.String>> [val]
@@ -905,7 +905,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
                     BLOCK type=kotlin.Unit origin=null
                       VAR name:got type:kotlin.String [val]
                         CALL 'private final fun descriptorOf (owner: java.lang.Class<*>, name: kotlin.String): kotlin.String declared in io.github.expo.modules.v2.testdata' type=kotlin.String origin=null
-                          ARG owner: GET_VAR 'val owner: java.lang.Class<out kotlin.Any> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out kotlin.Any> origin=null
+                          ARG owner: GET_VAR 'val owner: java.lang.Class<out io.github.expo.modules.v2.ExpoObject> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out io.github.expo.modules.v2.ExpoObject> origin=null
                           ARG name: GET_VAR 'val name: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
                       WHEN type=kotlin.Unit origin=IF
                         BRANCH
@@ -916,7 +916,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
                           then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
                             STRING_CONCATENATION type=kotlin.String
                               CALL 'public open fun getSimpleName (): @[FlexibleNullability] kotlin.String? declared in java.lang.Class' type=@[FlexibleNullability] kotlin.String? origin=GET_PROPERTY
-                                ARG <this>: GET_VAR 'val owner: java.lang.Class<out kotlin.Any> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out kotlin.Any> origin=null
+                                ARG <this>: GET_VAR 'val owner: java.lang.Class<out io.github.expo.modules.v2.ExpoObject> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<out io.github.expo.modules.v2.ExpoObject> origin=null
                               CONST String type=kotlin.String value="."
                               GET_VAR 'val name: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
                               CONST String type=kotlin.String value=": expected "
