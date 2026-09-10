@@ -8,7 +8,10 @@
 #include <expo-modules-v2/decoders/ExpectedTypeDecoder.h>
 
 namespace expo::modules::v2::decoders {
-  descriptor::HostFunctionSpec decodeHostFunctionSpec(kolibri::binary::Reader& reader) {
+  descriptor::HostFunctionSpec decodeHostFunctionSpec(
+    kolibri::binary::Reader& reader,
+    const jclass declaringClass
+  ) {
     std::string name = reader.readString();
     std::string methodName = reader.readString();
     const int32_t flags = reader.read<int32_t>();
@@ -37,18 +40,20 @@ namespace expo::modules::v2::decoders {
         .argTypes = std::move(argTypes),
         .returnType = std::move(returnType),
         .async = async,
+        .declaringClass = declaringClass,
       },
     };
   }
 
   std::vector<descriptor::HostFunctionSpec> decodeHostFunctionSpecs(
-    kolibri::binary::Reader& reader
+    kolibri::binary::Reader& reader,
+    const jclass declaringClass
   ) {
     const size_t count = reader.readCount();
     std::vector<descriptor::HostFunctionSpec> functions;
     functions.reserve(count);
     for (size_t i = 0; i < count; i++) {
-      functions.push_back(decodeHostFunctionSpec(reader));
+      functions.push_back(decodeHostFunctionSpec(reader, declaringClass));
     }
     return functions;
   }

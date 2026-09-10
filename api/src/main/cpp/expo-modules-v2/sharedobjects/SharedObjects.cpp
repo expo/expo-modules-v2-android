@@ -61,14 +61,12 @@ namespace expo::modules::v2::sharedobjects {
     return facebook::jsi::Value(rt, std::move(facade));
   }
 
-  std::shared_ptr<SharedObjectState> SharedObjects::stateOf(
+  SharedObjectState* SharedObjects::stateOf(
     facebook::jsi::Runtime& rt,
     const facebook::jsi::Object& object
   ) {
-    const auto attached = objects::ObjectNativeState::as<SharedObjectNativeState>(
-      objects::ObjectNativeState::of(rt, object)
-    );
-    return attached == nullptr ? nullptr : attached->shared();
+    const objects::ObjectNativeState* node = objects::ObjectNativeState::borrow(rt, object);
+    return node == nullptr ? nullptr : node->stateAs<SharedObjectState>();
   }
 
 } // namespace expo::modules::v2::sharedobjects

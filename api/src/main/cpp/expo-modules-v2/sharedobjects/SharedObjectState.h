@@ -3,20 +3,17 @@
 #include <jni.h>
 
 #include <atomic>
-#include <memory>
-#include <vector>
 
 #include <kolibri/Ref.h>
 
-#include <expo-modules-v2/binders/FunctionBinder.h>
-#include <expo-modules-v2/binders/PropertyBinder.h>
 #include <expo-modules-v2/objects/ObjectState.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassSpec.h>
 
 namespace expo::modules::v2::sharedobjects {
   /**
-   * The runtime-agnostic state of one shared object: its instance, its class's binders and its
-   * released flag. Every runtime's facade of the instance shares it, so release is global.
+   * The runtime-agnostic state of one shared object: its instance and its released flag. The
+   * export table belongs to the class spec, one for every instance. Every runtime's facade of the
+   * instance shares this state, so release is global.
    */
   class SharedObjectState final : public objects::ObjectState {
   public:
@@ -34,21 +31,29 @@ namespace expo::modules::v2::sharedobjects {
 
     [[nodiscard]] bool released() const { return released_.load(std::memory_order_acquire); }
 
-    [[nodiscard]] const FunctionBinder& function(uint32_t index) const {
-      return functionBinders_[index];
+    /** Calls the class's [index]th function on this instance. */
+    facebook::jsi::Value invokeFunction(
+      facebook::jsi::Runtime& rt,
+      const uint32_t index,
+      const facebook::jsi::Value* args,
+      const size_t count
+    ) const {
+      return spec_->functions[index].invoke(rt, instance_.get(), args, count);
     }
 
-    [[nodiscard]] const PropertyBinder& property(uint32_t index) const {
-      return propertyBinders_[index];
+    [[nodiscard]] facebook::jsi::Value getProperty(facebook::jsi::Runtime& rt, const uint32_t index) const {
+      return spec_->properties[index].get(rt, instance_.get());
+    }
+
+    void setProperty(facebook::jsi::Runtime& rt, const uint32_t index, const facebook::jsi::Value& value) const {
+      spec_->properties[index].set(rt, instance_.get(), value);
     }
 
     void release();
 
   private:
+    /** Owned by `SharedObjectClassRegistry` for the life of the process. */
     const SharedObjectClassSpec* spec_;
-
-    std::vector<FunctionBinder> functionBinders_;
-    std::vector<PropertyBinder> propertyBinders_;
 
     std::atomic<bool> released_{false};
   };

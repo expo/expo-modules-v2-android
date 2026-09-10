@@ -1,11 +1,11 @@
 #include <expo-modules-v2/decoders/SharedClassDecoder.h>
 
-#include <memory>
 #include <stdexcept>
 #include <string>
 #include <utility>
 
 #include <expo-modules-v2/decoders/ExpectedTypeDecoder.h>
+#include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 
 namespace expo::modules::v2::decoders {
   descriptor::SharedClassSpec decodeSharedClassSpec(kolibri::binary::Reader& reader) {
@@ -34,22 +34,28 @@ namespace expo::modules::v2::decoders {
       argTypes.push_back(decodeExpectedType(reader, /* allowBufferedHead */ true));
     }
 
-    auto constructor = std::make_shared<descriptor::StaticFunctionSpec>(
-      descriptor::StaticFunctionSpec{
-        descriptor::FunctionSpec{
-          .name = jsName,
-          .methodName = std::move(trampolineName),
-          .argTypes = std::move(argTypes),
-          .returnType = ExpectedType::sharedObject(classId, /* nullable */ false),
-        },
-      }
-    );
+    const jclass sharedClass = sharedobjects::SharedObjectClassRegistry::javaClassOf(classId);
+    if (sharedClass == nullptr) {
+      throw std::invalid_argument(
+        "Shared class " + jsName + " (id " + std::to_string(classId) + ") is not registered"
+      );
+    }
 
-    descriptor::SharedClassSpec spec;
-    spec.jsName = std::move(jsName);
-    spec.classId = classId;
-    spec.constructor = std::move(constructor);
-    return spec;
+    descriptor::StaticFunctionSpec constructor{
+      descriptor::FunctionSpec{
+        .name = jsName,
+        .methodName = std::move(trampolineName),
+        .argTypes = std::move(argTypes),
+        .returnType = ExpectedType::sharedObject(classId, /* nullable */ false),
+        .declaringClass = sharedClass,
+      },
+    };
+
+    return descriptor::SharedClassSpec{
+      .jsName = std::move(jsName),
+      .classId = classId,
+      .constructor = std::move(constructor),
+    };
   }
 
   std::vector<descriptor::SharedClassSpec> decodeSharedClassSpecs(

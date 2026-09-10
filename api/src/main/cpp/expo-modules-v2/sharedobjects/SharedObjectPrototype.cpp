@@ -25,8 +25,8 @@ namespace expo::modules::v2::sharedobjects {
     ) {
       if (thisValue.isObject()) {
         const facebook::jsi::Object self = thisValue.asObject(rt);
-        if (const auto state = SharedObjects::stateOf(rt, self)) {
-          return state.get();
+        if (SharedObjectState* state = SharedObjects::stateOf(rt, self)) {
+          return state;
         }
       }
 
@@ -166,7 +166,7 @@ namespace expo::modules::v2::sharedobjects {
     );
 
     for (size_t i = 0; i < spec.functions.size(); i++) {
-      const descriptor::HostFunctionSpec& function = *spec.functions[i];
+      const descriptor::HostFunctionSpec& function = spec.functions[i];
 
       defineMember(
         rt,
@@ -183,19 +183,19 @@ namespace expo::modules::v2::sharedobjects {
           const facebook::jsi::Value* args,
           const size_t count
         ) -> facebook::jsi::Value {
-            return liveReceiverOf(rt, thisValue, name)->function(index).invoke(rt, args, count);
+            return liveReceiverOf(rt, thisValue, name)->invokeFunction(rt, index, args, count);
           }
         )
       );
     }
 
     for (size_t i = 0; i < spec.properties.size(); i++) {
-      const SharedObjectClassSpec::Property& property = spec.properties[i];
+      const descriptor::HostPropertySpec& property = spec.properties[i];
 
       const uint32_t index = static_cast<uint32_t>(i);
 
       std::optional<facebook::jsi::Function> setter;
-      if (property.setter != nullptr) {
+      if (property.hasSetter()) {
         setter = hostFunction(
           rt,
           property.name,
@@ -209,7 +209,7 @@ namespace expo::modules::v2::sharedobjects {
             if (count < 1) {
               throw facebook::jsi::JSError(rt, "Setting '" + name + "' needs a value");
             }
-            liveReceiverOf(rt, thisValue, name)->property(index).set(rt, args[0]);
+            liveReceiverOf(rt, thisValue, name)->setProperty(rt, index, args[0]);
             return facebook::jsi::Value::undefined();
           }
         );
@@ -229,7 +229,7 @@ namespace expo::modules::v2::sharedobjects {
           const facebook::jsi::Value& thisValue,
           const facebook::jsi::Value*,
           size_t) -> facebook::jsi::Value {
-            return liveReceiverOf(rt, thisValue, name)->property(index).get(rt);
+            return liveReceiverOf(rt, thisValue, name)->getProperty(rt, index);
           }
         ),
         std::move(setter)

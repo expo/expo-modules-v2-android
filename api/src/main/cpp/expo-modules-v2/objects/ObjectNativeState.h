@@ -17,7 +17,7 @@ namespace expo::modules::v2::objects {
   /**
    * The chain node every JavaScript object standing for a Kotlin instance carries: a module object
    * or a shared-object facade. It points at the instance's one `ObjectState`, and the derived node
-   * owns whatever is specific to this JavaScript object, such as the binders of one export table.
+   * owns whatever is specific to this JavaScript object, such as the specs of one export table.
    *
    * Invariant: a node holds nothing that belongs to one runtime - no `jsi::Value`, `Object`,
    * `WeakObject` or `Runtime*`. Whatever rides in an object's native-state slot rides along when a
@@ -59,6 +59,23 @@ namespace expo::modules::v2::objects {
       const facebook::jsi::Object& object
     ) {
       return ::expo::jsi::ChainedNativeState::find<ObjectNativeState>(rt, object);
+    }
+
+    /**
+     * [of] as a borrowed pointer: valid while [object] is held, and copies no `shared_ptr` on the
+     * way.
+     */
+    static ObjectNativeState* borrow(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Object& object
+    ) {
+      return ::expo::jsi::ChainedNativeState::findBorrowed<ObjectNativeState>(rt, object);
+    }
+
+    /** The borrowed instance state as `T`, or null if it is not of `T::kKind`. */
+    template<typename T>
+    [[nodiscard]] T* stateAs() const {
+      return state_->kind() == T::kKind ? static_cast<T*>(state_.get()) : nullptr;
     }
 
     /** [node] as the concrete `T`, or null if it is not of `T::kKind`. */

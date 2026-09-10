@@ -24,9 +24,22 @@ namespace expo::modules::v2::sharedobjects {
 
   facebook::jsi::Function createClassConstructor(
     facebook::jsi::Runtime& rt,
-    descriptor::SharedClassSpec& spec
+    const descriptor::SharedClassSpec& spec
   ) {
-    facebook::jsi::Function classObject = spec.binder().createFunction(rt);
+    // Captures the spec by pointer: it lives in the module object's node, which owns this function.
+    facebook::jsi::Function classObject = facebook::jsi::Function::createFromHostFunction(
+      rt,
+      facebook::jsi::PropNameID::forUtf8(rt, spec.constructor.name),
+      spec.constructor.argTypes.size(),
+      [constructor = &spec.constructor](
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Value&,
+      const facebook::jsi::Value* args,
+      size_t count
+    ) -> facebook::jsi::Value {
+        return constructor->invoke(rt, args, count);
+      }
+    );
 
     objects::RuntimeObjects* table = objects::RuntimeObjects::find(rt);
     if (table != nullptr) {

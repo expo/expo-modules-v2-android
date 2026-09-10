@@ -4,9 +4,8 @@
 #include <span>
 #include <vector>
 
-#include <expo-modules-v2/binders/FunctionBinder.h>
-#include <expo-modules-v2/binders/PropertyBinder.h>
 #include <expo-modules-v2/descriptor/EventSpec.h>
+#include <expo-modules-v2/descriptor/HostFunctionSpec.h>
 #include <expo-modules-v2/descriptor/HostPropertySpec.h>
 #include <expo-modules-v2/descriptor/SharedClassSpec.h>
 #include <expo-modules-v2/modules/ModuleState.h>
@@ -26,19 +25,19 @@ namespace expo::modules::v2 {
       std::vector<descriptor::EventSpec> events
     );
 
-    ~ModuleNativeState() override;
+    [[nodiscard]] const ModuleState& moduleState() const;
 
     [[nodiscard]] std::span<const descriptor::EventSpec> events() const override;
 
-    [[nodiscard]] std::span<const FunctionBinder> functionBinders() const;
+    [[nodiscard]] std::span<const descriptor::HostFunctionSpec> functions() const;
 
-    [[nodiscard]] std::span<const PropertyBinder> propertyBinders() const;
+    [[nodiscard]] std::span<const descriptor::HostPropertySpec> properties() const;
 
-    [[nodiscard]] std::span<descriptor::SharedClassSpec> sharedClasses();
+    [[nodiscard]] std::span<const descriptor::SharedClassSpec> sharedClasses() const;
 
   private:
-    std::vector<FunctionBinder> functionBinders_;
-    std::vector<PropertyBinder> propertyBinders_;
+    std::vector<descriptor::HostFunctionSpec> functions_;
+    std::vector<descriptor::HostPropertySpec> properties_;
     std::vector<descriptor::SharedClassSpec> sharedClasses_;
     std::vector<descriptor::EventSpec> events_;
   };

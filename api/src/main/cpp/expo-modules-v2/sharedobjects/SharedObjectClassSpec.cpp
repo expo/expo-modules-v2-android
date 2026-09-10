@@ -11,10 +11,10 @@ namespace expo::modules::v2::sharedobjects {
     std::unordered_set<std::string_view> names;
     names.reserve(functions.size() + properties.size() + events.size());
 
-    for (const std::shared_ptr<descriptor::HostFunctionSpec>& function: functions) {
-      names.emplace(function->name);
+    for (const descriptor::HostFunctionSpec& function: functions) {
+      names.emplace(function.name);
     }
-    for (const Property& property: properties) {
+    for (const descriptor::HostPropertySpec& property: properties) {
       names.emplace(property.name);
     }
     for (const descriptor::EventSpec& event: events) {

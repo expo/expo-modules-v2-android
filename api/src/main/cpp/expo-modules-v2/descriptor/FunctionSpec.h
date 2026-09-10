@@ -26,9 +26,10 @@ namespace expo::modules::v2::descriptor {
 
     bool async = false;
 
-    jmethodID method = nullptr;
-
     jclass declaringClass = nullptr;
+
+    /** The method id, filled by the derived spec's `resolve` on first use. A cache, not an input. */
+    mutable jmethodID method = nullptr;
 
     [[nodiscard]] bool hasBufferedArgs() const;
 

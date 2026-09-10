@@ -38,20 +38,6 @@ namespace expo::modules::v2::sharedobjects {
 
     constexpr std::string kNoDescriptor;
 
-    std::shared_ptr<descriptor::HostFunctionSpec> share(
-      descriptor::HostFunctionSpec spec,
-      const jclass declaredClass
-    ) {
-      auto shared = std::make_shared<descriptor::HostFunctionSpec>(std::move(spec));
-      try {
-        shared->resolveFunction(kolibri::getEnv(), declaredClass);
-        shared->declaringClass = declaredClass;
-      } catch (const std::exception&) {
-        // Left unresolved - the call site raises the error with the context JavaScript needs.
-      }
-      return shared;
-    }
-
     const ClassHandle* handleFor(const int classId) {
       if (const auto it = classHandles().find(classId); it != classHandles().end()) {
         return &it->second;
@@ -98,55 +84,43 @@ namespace expo::modules::v2::sharedobjects {
   } // namespace
 
   const SharedObjectClassSpec& SharedObjectClassRegistry::get(const int classId) {
-    const std::lock_guard lock(registryMutex());
-    if (const auto it = registryMap().find(classId); it != registryMap().end()) {
-      return *it->second;
+    {
+      const std::lock_guard lock(registryMutex());
+      if (const auto it = registryMap().find(classId); it != registryMap().end()) {
+        return *it->second;
+      }
     }
 
+    // Built without the lock: decoding the export table consults this registry for the classes the
+    // members mention, and two threads racing here just build the same spec twice.
+    const jclass declaredClass = javaClassOf(classId);
+    if (declaredClass == nullptr) {
+      throw std::invalid_argument(
+        "No shared object class is registered for id " + std::to_string(classId)
+      );
+    }
+
+    // TODO(@lukmccall): use SharedObjectClassSpec instead of JSharedObjectRegistry::ClassExports
     std::optional<JSharedObjectRegistry::ClassExports> exports =
-      JSharedObjectRegistry::encodeClass(kolibri::getEnv(), classId);
+      JSharedObjectRegistry::encodeClass(kolibri::getEnv(), classId, declaredClass);
     if (!exports.has_value()) {
       throw std::invalid_argument(
         "No shared object class is described for id " + std::to_string(classId)
       );
     }
 
-    const ClassHandle* handle = handleFor(classId);
-    if (handle == nullptr) {
-      throw std::invalid_argument(
-        "No shared object class is registered for id " + std::to_string(classId)
-      );
-    }
-
-    const auto declaredClass = reinterpret_cast<jclass>(handle->javaClass.get());
-
     auto spec = std::make_unique<SharedObjectClassSpec>();
     spec->classId = classId;
     spec->name = std::move(exports->jsName);
 
-    spec->functions.reserve(exports->descriptor.functions.size());
-    for (descriptor::HostFunctionSpec& function: exports->descriptor.functions) {
-      spec->functions.push_back(share(std::move(function), declaredClass));
-    }
-
-    spec->properties.reserve(exports->descriptor.properties.size());
-    for (descriptor::HostPropertySpec& property: exports->descriptor.properties) {
-      spec->properties.push_back(
-        SharedObjectClassSpec::Property{
-          .name = std::move(property.name),
-          .getter = share(std::move(property.getter), declaredClass),
-          .setter = property.setter.has_value()
-                      ? share(std::move(*property.setter), declaredClass)
-                      : nullptr,
-        }
-      );
-    }
-
+    spec->functions = std::move(exports->descriptor.functions);
+    spec->properties = std::move(exports->descriptor.properties);
     spec->events = std::move(exports->descriptor.events);
 
     spec->validateExportNames();
 
-    const auto entry = registryMap().emplace(classId, std::move(spec)).first;
+    const std::lock_guard lock(registryMutex());
+    const auto entry = registryMap().try_emplace(classId, std::move(spec)).first;
     return *entry->second;
   }
 
@@ -175,7 +149,7 @@ namespace expo::modules::v2::sharedobjects {
     if (classId <= 0) {
       return nullptr;
     }
-    if (jclass memo = memoized(classId); memo != nullptr) {
+    if (const jclass memo = memoized(classId); memo != nullptr) {
       return memo;
     }
 

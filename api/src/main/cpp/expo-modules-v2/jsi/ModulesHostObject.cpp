@@ -8,7 +8,6 @@
 
 #include <expo-modules-v2/decoders/ModuleDescriptorDecoder.h>
 #include <expo-modules-v2/modules/ModuleNativeState.h>
-#include <expo-modules-v2/binders/PropertyBinder.h>
 #include <expo-modules-v2/modules/ModuleState.h>
 #include <expo-modules-v2/objects/ObjectId.h>
 #include <expo-modules-v2/objects/ObjectRegistry.h>
@@ -17,18 +16,44 @@
 
 namespace expo::modules::v2::jsi {
   namespace {
+    /**
+     * A host function calling [spec] on whatever [receiver] holds at call time. Both are captured by
+     * pointer: the spec lives in the module object's node and the receiver ref in the state that
+     * node owns, so neither dies before a function reachable from the module object.
+     */
+    facebook::jsi::Function hostFunction(
+      facebook::jsi::Runtime& rt,
+      const descriptor::HostFunctionSpec& spec,
+      const kolibri::GlobalRef<>& receiver
+    ) {
+      return facebook::jsi::Function::createFromHostFunction(
+        rt,
+        facebook::jsi::PropNameID::forUtf8(rt, spec.name),
+        spec.argTypes.size(),
+        [spec = &spec, receiver = &receiver](
+        facebook::jsi::Runtime& rt,
+        const facebook::jsi::Value&,
+        const facebook::jsi::Value* args,
+        size_t count
+      ) -> facebook::jsi::Value {
+          return spec->invoke(rt, receiver->get(), args, count);
+        }
+      );
+    }
+
     // JSI has no direct property-descriptor API. Define a real JavaScript accessor on the plain
     // module object so reads invoke Kotlin every time, `var` writes reach its setter, and `val`
     // stays read-only while preserving the module object's NativeState.
     void defineHostProperty(
       facebook::jsi::Runtime& rt,
       facebook::jsi::Object& moduleObject,
-      const PropertyBinder& binder
+      const descriptor::HostPropertySpec& property,
+      const kolibri::GlobalRef<>& receiver
     ) {
       facebook::jsi::Object descriptor(rt);
-      descriptor.setProperty(rt, "get", binder.createGetter(rt));
-      if (binder.hasSetter()) {
-        descriptor.setProperty(rt, "set", binder.createSetter(rt));
+      descriptor.setProperty(rt, "get", hostFunction(rt, property.getter, receiver));
+      if (property.hasSetter()) {
+        descriptor.setProperty(rt, "set", hostFunction(rt, *property.setter, receiver));
       }
       descriptor.setProperty(rt, "enumerable", true);
       descriptor.setProperty(rt, "configurable", false);
@@ -36,7 +61,7 @@ namespace expo::modules::v2::jsi {
       rt.global()
         .getPropertyAsObject(rt, "Object")
         .getPropertyAsFunction(rt, "defineProperty")
-        .call(rt, moduleObject, binder.name(), descriptor);
+        .call(rt, moduleObject, property.name, descriptor);
     }
   } // namespace
 
@@ -68,29 +93,37 @@ namespace expo::modules::v2::jsi {
 
     try {
       JNIEnv* env = kolibri::getEnv();
-      auto module = registry_->encodeModule(env, moduleName);
-      if (!module.has_value()) {
+
+      // One ModuleState per instance, shared by every module object standing for it; one
+      // ModuleNativeState per module object, since each registration has its own export table.
+      // The state comes first because the decoded specs bind to the class it holds.
+      std::shared_ptr<ModuleState> shared;
+      std::optional<descriptor::ModuleDescriptorPayload> desc = registry_->encodeModule(
+        env,
+        moduleName,
+        [&shared](JNIEnv* env, const jobject instance) -> jclass {
+          const objects::ObjectId::Value objectId = objects::ObjectId::of(env, instance);
+          shared = objects::ObjectRegistry::find<ModuleState>(objectId);
+          if (shared == nullptr) {
+            shared = objects::ObjectRegistry::adopt(
+              std::make_shared<ModuleState>(env, objectId, kolibri::GlobalRef<>::make(env, instance))
+            );
+          }
+          return shared->javaClass();
+        }
+      );
+      if (!desc.has_value()) {
         // TODO(@lukmccall): consider throwing
         return facebook::jsi::Value::undefined();
       }
 
-      auto& [instance, desc] = module.value();
-
-      // One ModuleState per instance, shared by every module object standing for it; one
-      // ModuleNativeState per module object, since each registration has its own export table.
-      const objects::ObjectId::Value objectId = objects::ObjectId::of(env, instance.get());
-      std::shared_ptr<ModuleState> shared = objects::ObjectRegistry::find<ModuleState>(objectId);
-      if (shared == nullptr) {
-        shared = objects::ObjectRegistry::adopt(
-          std::make_shared<ModuleState>(objectId, kolibri::GlobalRef<>::make(env, instance.get()))
-        );
-      }
+      const objects::ObjectId::Value objectId = shared->objectId();
       const auto state = std::make_shared<ModuleNativeState>(
         std::move(shared),
-        std::move(desc.functions),
-        std::move(desc.properties),
-        std::move(desc.sharedClasses),
-        std::move(desc.events)
+        std::move(desc->functions),
+        std::move(desc->properties),
+        std::move(desc->sharedClasses),
+        std::move(desc->events)
       );
 
       objects::RuntimeObjects* table = objects::RuntimeObjects::find(rt);
@@ -102,19 +135,20 @@ namespace expo::modules::v2::jsi {
         moduleObject.setPrototype(rt, facebook::jsi::Value(rt, table->eventEmitterPrototype(rt)));
       }
 
-      for (const FunctionBinder& binder: state->functionBinders()) {
+      const kolibri::GlobalRef<>& receiver = state->moduleState().instanceRef();
+      for (const descriptor::HostFunctionSpec& function: state->functions()) {
         moduleObject.setProperty(
           rt,
-          facebook::jsi::PropNameID::forUtf8(rt, binder.name()),
-          binder.createFunction(rt)
+          facebook::jsi::PropNameID::forUtf8(rt, function.name),
+          hostFunction(rt, function, receiver)
         );
       }
 
-      for (const PropertyBinder& binder: state->propertyBinders()) {
-        defineHostProperty(rt, moduleObject, binder);
+      for (const descriptor::HostPropertySpec& property: state->properties()) {
+        defineHostProperty(rt, moduleObject, property, receiver);
       }
 
-      for (auto& sharedClass: state->sharedClasses()) {
+      for (const descriptor::SharedClassSpec& sharedClass: state->sharedClasses()) {
         moduleObject.setProperty(
           rt,
           facebook::jsi::PropNameID::forUtf8(rt, sharedClass.jsName),

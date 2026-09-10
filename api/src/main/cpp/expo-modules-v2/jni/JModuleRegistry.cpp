@@ -5,14 +5,16 @@
 #include <kolibri/native_method.h>
 
 namespace expo::modules::v2 {
-  std::optional<JModuleRegistry::Module> JModuleRegistry::Accessors::encodeModule(
+  std::optional<descriptor::ModuleDescriptorPayload> JModuleRegistry::Accessors::encodeModule(
     JNIEnv* env,
-    std::string moduleName
+    std::string moduleName,
+    const ClassOf& classOf
   ) const {
-    kolibri::Ref<> instance = callToken(env, Owner::encodeModule, std::move(moduleName));
+    const kolibri::Ref<> instance = callToken(env, Owner::encodeModule, std::move(moduleName));
     if (instance == nullptr) {
       return std::nullopt;
     }
+    const jclass declaringClass = classOf(env, instance.get());
 
     const kolibri::binary::BinaryBuffer::Claim claim;
     if (!claim) {
@@ -22,15 +24,12 @@ namespace expo::modules::v2 {
     kolibri::binary::Reader reader = claim.reader();
 
     descriptor::ModuleDescriptorPayload descriptor =
-      decoders::decodeModuleDescriptorPayload(reader);
+      decoders::decodeModuleDescriptorPayload(reader, declaringClass);
     if (!reader.isOnEnd()) {
       throw std::invalid_argument("Trailing bytes in the module metadata payload");
     }
 
-    return Module{
-      .instance = std::move(instance),
-      .descriptor = std::move(descriptor)
-    };
+    return descriptor;
   }
 
   std::vector<std::string> JModuleRegistry::Accessors::encodeModuleNames(JNIEnv* env) const {

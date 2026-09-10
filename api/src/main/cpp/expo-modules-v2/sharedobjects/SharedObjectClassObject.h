@@ -7,6 +7,6 @@
 namespace expo::modules::v2::sharedobjects {
   facebook::jsi::Function createClassConstructor(
     facebook::jsi::Runtime& rt,
-    descriptor::SharedClassSpec& spec
+    const descriptor::SharedClassSpec& spec
   );
 } // namespace expo::modules::v2::sharedobjects

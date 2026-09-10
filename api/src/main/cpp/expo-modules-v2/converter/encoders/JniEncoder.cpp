@@ -71,8 +71,7 @@ namespace expo::modules::v2 {
     }
 
     const facebook::jsi::Object object = value.getObject(rt);
-    const std::shared_ptr<sharedobjects::SharedObjectState> state =
-      sharedobjects::SharedObjects::stateOf(rt, object);
+    const auto* state = sharedobjects::SharedObjects::stateOf(rt, object);
     if (state == nullptr) {
       throw facebook::jsi::JSError(
         rt,

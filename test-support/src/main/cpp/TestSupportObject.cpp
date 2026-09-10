@@ -82,12 +82,12 @@ namespace expo::modules::v2 {
           "expected a chained ModuleNativeState on the module object"
         );
         expectSmoke(
-          state->functionBinders().size() == 1 && state->functionBinders()[0].name() == "add",
-          "expected the module function binder in ModuleNativeState"
+          state->functions().size() == 1 && state->functions()[0].name == "add",
+          "expected the module function spec in ModuleNativeState"
         );
         expectSmoke(
-          state->propertyBinders().size() == 1 && state->propertyBinders()[0].name() == "answer",
-          "expected the module property binder in ModuleNativeState"
+          state->properties().size() == 1 && state->properties()[0].name == "answer",
+          "expected the module property spec in ModuleNativeState"
         );
         // The same node answers the identity questions: kind and a process-wide id.
         expectSmoke(

@@ -21,7 +21,7 @@ namespace expo::modules::v2::sharedobjects {
     }
 
     [[nodiscard]] std::span<const descriptor::EventSpec> events() const override {
-      return shared()->spec().events;
+      return static_cast<const SharedObjectState*>(state().get())->spec().events;
     }
   };
 } // namespace expo::modules::v2::sharedobjects

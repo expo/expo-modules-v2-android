@@ -8,7 +8,10 @@
 #include <expo-modules-v2/decoders/ExpectedTypeDecoder.h>
 
 namespace expo::modules::v2::decoders {
-  descriptor::HostPropertySpec decodeHostPropertySpec(kolibri::binary::Reader& reader) {
+  descriptor::HostPropertySpec decodeHostPropertySpec(
+    kolibri::binary::Reader& reader,
+    const jclass declaringClass
+  ) {
     std::string name = reader.readString();
     std::string getterName = reader.readString();
     ExpectedType getterType = decodeExpectedType(reader, /* allowBufferedHead */ true);
@@ -26,6 +29,7 @@ namespace expo::modules::v2::decoders {
           .methodName = std::move(setterName),
           .argTypes = std::move(argTypes),
           .returnType = ExpectedType(LeafType::UNIT),
+          .declaringClass = declaringClass,
         },
       };
     }
@@ -36,6 +40,7 @@ namespace expo::modules::v2::decoders {
         .methodName = std::move(getterName),
         .argTypes = {},
         .returnType = std::move(getterType),
+        .declaringClass = declaringClass,
       },
     };
 
@@ -47,13 +52,14 @@ namespace expo::modules::v2::decoders {
   }
 
   std::vector<descriptor::HostPropertySpec> decodeHostPropertySpecs(
-    kolibri::binary::Reader& reader
+    kolibri::binary::Reader& reader,
+    const jclass declaringClass
   ) {
     const size_t count = reader.readCount();
     std::vector<descriptor::HostPropertySpec> properties;
     properties.reserve(count);
     for (size_t i = 0; i < count; i++) {
-      properties.push_back(decodeHostPropertySpec(reader));
+      properties.push_back(decodeHostPropertySpec(reader, declaringClass));
     }
     return properties;
   }

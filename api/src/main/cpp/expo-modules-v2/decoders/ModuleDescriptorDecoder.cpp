@@ -9,10 +9,11 @@
 
 namespace expo::modules::v2::decoders {
   descriptor::ModuleDescriptorPayload decodeModuleDescriptorPayload(
-    kolibri::binary::Reader& reader
+    kolibri::binary::Reader& reader,
+    const jclass declaringClass
   ) {
-    std::vector<descriptor::HostFunctionSpec> functions = decodeHostFunctionSpecs(reader);
-    std::vector<descriptor::HostPropertySpec> properties = decodeHostPropertySpecs(reader);
+    std::vector<descriptor::HostFunctionSpec> functions = decodeHostFunctionSpecs(reader, declaringClass);
+    std::vector<descriptor::HostPropertySpec> properties = decodeHostPropertySpecs(reader, declaringClass);
     std::vector<descriptor::SharedClassSpec> sharedClasses = decodeSharedClassSpecs(reader);
     std::vector<descriptor::EventSpec> events = decodeEventSpecs(reader);
 

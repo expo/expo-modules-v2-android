@@ -2,35 +2,7 @@
 
 #include <utility>
 
-#include <kolibri/env.h>
-
 namespace expo::modules::v2 {
-  namespace {
-    std::vector<FunctionBinder> makeFunctionBinders(
-      const kolibri::GlobalRef<>& instance,
-      std::vector<descriptor::HostFunctionSpec> specs
-    ) {
-      std::vector<FunctionBinder> binders;
-      binders.reserve(specs.size());
-      for (auto& spec: specs) {
-        binders.emplace_back(std::move(spec), instance);
-      }
-      return binders;
-    }
-
-    std::vector<PropertyBinder> makePropertyBinders(
-      const kolibri::GlobalRef<>& instance,
-      std::vector<descriptor::HostPropertySpec> specs
-    ) {
-      std::vector<PropertyBinder> binders;
-      binders.reserve(specs.size());
-      for (auto& spec: specs) {
-        binders.emplace_back(std::move(spec), instance);
-      }
-      return binders;
-    }
-  } // namespace
-
   ModuleNativeState::ModuleNativeState(
     std::shared_ptr<ModuleState> state,
     std::vector<descriptor::HostFunctionSpec> functions,
@@ -38,28 +10,25 @@ namespace expo::modules::v2 {
     std::vector<descriptor::SharedClassSpec> sharedClasses,
     std::vector<descriptor::EventSpec> events
   ) : ObjectNativeState(std::move(state)),
-      functionBinders_(makeFunctionBinders(this->state()->instanceRef(), std::move(functions))),
-      propertyBinders_(makePropertyBinders(this->state()->instanceRef(), std::move(properties))),
+      functions_(std::move(functions)),
+      properties_(std::move(properties)),
       sharedClasses_(std::move(sharedClasses)),
       events_(std::move(events)) {
   }
 
-  ModuleNativeState::~ModuleNativeState() {
-    // A detached JS callback can be the last owner after ModulesHostObject is gone, and Hermes may
-    // release it on a JNI-detached GC thread. The binders die with this node and each may hold a
-    // global ref (its resolved declaring class), so attach before the members go.
-    kolibri::getEnv();
+  const ModuleState& ModuleNativeState::moduleState() const {
+    return static_cast<const ModuleState&>(*state());
   }
 
-  std::span<const FunctionBinder> ModuleNativeState::functionBinders() const {
-    return functionBinders_;
+  std::span<const descriptor::HostFunctionSpec> ModuleNativeState::functions() const {
+    return functions_;
   }
 
-  std::span<const PropertyBinder> ModuleNativeState::propertyBinders() const {
-    return propertyBinders_;
+  std::span<const descriptor::HostPropertySpec> ModuleNativeState::properties() const {
+    return properties_;
   }
 
-  std::span<descriptor::SharedClassSpec> ModuleNativeState::sharedClasses() {
+  std::span<const descriptor::SharedClassSpec> ModuleNativeState::sharedClasses() const {
     return sharedClasses_;
   }
 

@@ -18,7 +18,8 @@ namespace expo::modules::v2 {
 
   std::optional<JSharedObjectRegistry::ClassExports> JSharedObjectRegistry::encodeClass(
     JNIEnv* env,
-    const int classId
+    const int classId,
+    const jclass declaringClass
   ) {
     const kolibri::Ref<kolibri::JString> jsName = encodeClass_(env, classId);
     if (jsName == nullptr) {
@@ -32,7 +33,8 @@ namespace expo::modules::v2 {
 
     kolibri::binary::Reader reader = claim.reader();
 
-    descriptor::ModuleDescriptorPayload payload = decoders::decodeModuleDescriptorPayload(reader);
+    descriptor::ModuleDescriptorPayload payload =
+      decoders::decodeModuleDescriptorPayload(reader, declaringClass);
     if (!reader.isOnEnd()) {
       throw std::invalid_argument("Trailing bytes in the shared object class metadata payload");
     }

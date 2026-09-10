@@ -42,6 +42,15 @@ namespace expo::jsi {
       return std::static_pointer_cast<T>(find(rt, object, T::staticTag()));
     }
 
+    /**
+     * [find] without taking ownership: a borrowed pointer, valid while [object] is. The one
+     * `shared_ptr` copy left is the one JSI's `getNativeState` returns.
+     */
+    template<typename T>
+    static T* findBorrowed(facebook::jsi::Runtime& rt, const facebook::jsi::Object& object) {
+      return static_cast<T*>(findBorrowed(rt, object, T::staticTag()));
+    }
+
   protected:
     using StateTag = const void*;
 
@@ -49,6 +58,12 @@ namespace expo::jsi {
 
   private:
     static std::shared_ptr<ChainedNativeState> find(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Object& object,
+      StateTag tag
+    );
+
+    static ChainedNativeState* findBorrowed(
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Object& object,
       StateTag tag

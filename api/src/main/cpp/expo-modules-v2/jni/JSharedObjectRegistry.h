@@ -29,7 +29,7 @@ namespace expo::modules::v2 {
 
     static void release(JNIEnv* env, jobject instance);
 
-    static std::optional<ClassExports> encodeClass(JNIEnv* env, int classId);
+    static std::optional<ClassExports> encodeClass(JNIEnv* env, int classId, jclass declaringClass);
 
     static kolibri::Ref<kolibri::JClass> sharedClassOf(JNIEnv* env, int classId);
 

@@ -16,7 +16,7 @@ namespace expo::modules::v2::objects {
    * in every runtime, and `ObjectRegistry` finds it by `ObjectId`.
    *
    * It holds nothing that belongs to a runtime. Per-runtime data - the JavaScript object itself -
-   * lives in `RuntimeObjects`; per-JavaScript-object data - the binders built for one export
+   * lives in `RuntimeObjects`; per-JavaScript-object data - the specs decoded for one export
    * table - lives in the `ObjectNativeState` chain node that points here.
    */
   class ObjectState {
@@ -36,8 +36,8 @@ namespace expo::modules::v2::objects {
     [[nodiscard]] jobject instance() const { return instance_.get(); }
 
     /**
-     * The ref the binders point at. They are members of a state that owns this one, or of a node
-     * that owns such a state, so they never outlive it.
+     * The ref a host function reads its receiver from on every call. Such a function is a member of
+     * a JavaScript object whose node owns this state, so it never outlives the ref.
      */
     [[nodiscard]] const kolibri::GlobalRef<>& instanceRef() const { return instance_; }
 
