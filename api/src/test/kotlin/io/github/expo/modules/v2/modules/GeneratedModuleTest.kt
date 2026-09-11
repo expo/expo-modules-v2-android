@@ -305,11 +305,13 @@ class GeneratedModuleTest {
     assertEquals("List<Integer>", shapes.onBatch.descriptor.toString())
     assertEquals("Pt", shapes.onChanged.descriptor.toString())
 
-    // Findable by name on the owner, which is how the native side reaches an event.
+    // Bound on the owner in declaration order, which is how the native side reaches an event: by
+    // its index in the class's declaration.
     assertEquals(
-      setOf("changed", "renamed", "progress", "batch", "slot"),
-      shapes.events?.keys?.toSet(),
+      listOf("changed", "renamed", "progress", "batch", "slot"),
+      shapes.events?.map { it.name },
     )
+    assertEquals(listOf(0, 1, 2, 3, 4), shapes.events?.map { it.index })
     assertTrue(!shapes.onChanged.isObserved, "nothing observes a fresh instance")
   }
 }

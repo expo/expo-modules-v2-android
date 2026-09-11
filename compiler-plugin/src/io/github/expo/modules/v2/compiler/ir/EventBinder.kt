@@ -16,8 +16,9 @@ import org.jetbrains.kotlin.ir.util.kotlinFqName
  *
  * `event<T>(...)` already ties the event to its owner (it is a member of `ExpoObject`); the wrap
  * adds what only the plugin knows - the name and the transport of the payload - and records the
- * event on its owner so the native side can find it by name. The descriptor is hoisted into a
- * static field, so constructing an instance allocates nothing beyond the event itself.
+ * event on its owner at its declaration index, which is how the native side refers to it. The
+ * descriptor is hoisted into a static field, so constructing an instance allocates nothing beyond
+ * the event itself.
  */
 internal class EventBinder(
   private val symbols: SymbolFinder,

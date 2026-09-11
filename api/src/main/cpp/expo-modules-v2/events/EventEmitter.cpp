@@ -20,10 +20,9 @@ namespace expo::modules::v2::events {
     constexpr std::string_view kRemoveListener = "removeListener";
     constexpr std::string_view kRemoveAllListeners = "removeAllListeners";
     constexpr std::string_view kListenerCount = "listenerCount";
-    constexpr std::string_view kEmit = "emit";
 
     constexpr std::array kMemberNames = {
-      kAddListener, kRemoveListener, kRemoveAllListeners, kListenerCount, kEmit,
+      kAddListener, kRemoveListener, kRemoveAllListeners, kListenerCount,
     };
 
     /** The emitter a member was called on: its node, and the runtime tables it lives in. */
@@ -38,13 +37,19 @@ namespace expo::modules::v2::events {
 
       [[nodiscard]] jobject instance() const { return node->instance(); }
 
-      void observe(const std::string& name, const bool observing) const {
+      void observe(const int eventIndex, const bool observing) const {
         const jobject context = async->context();
         if (context == nullptr) {
           return;
         }
-        JEventSupport::observe(kolibri::getEnv(), instance(), name, context, observing);
+        JEventSupport::observe(kolibri::getEnv(), instance(), eventIndex, context, observing);
       }
+    };
+
+    /** A declared event: its spec, and its index, which names it in the table and to Kotlin. */
+    struct Declared {
+      const descriptor::EventSpec& spec;
+      int index;
     };
 
     Emitter emitterOf(
@@ -85,7 +90,8 @@ namespace expo::modules::v2::events {
       return names.empty() ? "none" : names;
     }
 
-    std::string eventNameOf(
+    /** The declared event the first argument names; throws for anything else. */
+    Declared eventOf(
       facebook::jsi::Runtime& rt,
       const Emitter& emitter,
       const facebook::jsi::Value* args,
@@ -98,15 +104,16 @@ namespace expo::modules::v2::events {
           "'" + std::string(member) + "' expects an event name as its first argument"
         );
       }
-      std::string name = args[0].getString(rt).utf8(rt);
-      if (emitter.node->eventSpec(name) == nullptr) {
+      const std::string name = args[0].getString(rt).utf8(rt);
+      const int index = emitter.node->eventIndexOf(name);
+      if (index < 0) {
         throw facebook::jsi::JSError(
           rt,
           "'" + name + "' is not an event of this object - it declares: " +
           declaredEvents(*emitter.node)
         );
       }
-      return name;
+      return Declared{.spec = *emitter.node->eventAt(index), .index = index};
     }
 
     facebook::jsi::Function listenerOf(
@@ -127,19 +134,19 @@ namespace expo::modules::v2::events {
     void removeListener(
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Object& emitterObject,
-      const std::string& name,
+      const int eventIndex,
       const facebook::jsi::Function& listener
     ) {
       const Emitter emitter = emitterOf(rt, emitterObject, kRemoveListener);
-      if (emitter.listeners().remove(rt, emitter.objectId(), name, listener)) {
-        emitter.observe(name, false);
+      if (emitter.listeners().remove(rt, emitter.objectId(), eventIndex, listener)) {
+        emitter.observe(eventIndex, false);
       }
     }
 
     facebook::jsi::Value createSubscription(
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Object& emitterObject,
-      std::string name,
+      const int eventIndex,
       const facebook::jsi::Function& listener
     ) {
       // The subscription keeps both alive: `remove` needs the emitter to find the listener on, and
@@ -155,7 +162,7 @@ namespace expo::modules::v2::events {
           rt,
           facebook::jsi::PropNameID::forAscii(rt, "remove"),
           0,
-          [name = std::move(name), emitterValue, listenerValue](
+          [eventIndex, emitterValue, listenerValue](
           facebook::jsi::Runtime& rt,
           const facebook::jsi::Value&,
           const facebook::jsi::Value*,
@@ -163,7 +170,7 @@ namespace expo::modules::v2::events {
             removeListener(
               rt,
               emitterValue->getObject(rt),
-              name,
+              eventIndex,
               listenerValue->getObject(rt).getFunction(rt)
             );
             return facebook::jsi::Value::undefined();
@@ -195,14 +202,14 @@ namespace expo::modules::v2::events {
     ) {
       const facebook::jsi::Object self = thisObjectOf(rt, thisValue, kAddListener);
       const Emitter emitter = emitterOf(rt, self, kAddListener);
-      std::string name = eventNameOf(rt, emitter, args, count, kAddListener);
+      const Declared event = eventOf(rt, emitter, args, count, kAddListener);
       const facebook::jsi::Function listener = listenerOf(rt, args, count, kAddListener);
 
-      const bool first = emitter.listeners().add(rt, emitter.node->state(), name, listener);
+      const bool first = emitter.listeners().add(rt, emitter.node->state(), event.index, listener);
       if (first) {
-        emitter.observe(name, true);
+        emitter.observe(event.index, true);
       }
-      return createSubscription(rt, self, std::move(name), listener);
+      return createSubscription(rt, self, event.index, listener);
     }
 
     facebook::jsi::Value removeListenerMember(
@@ -213,11 +220,11 @@ namespace expo::modules::v2::events {
     ) {
       const facebook::jsi::Object self = thisObjectOf(rt, thisValue, kRemoveListener);
       const Emitter emitter = emitterOf(rt, self, kRemoveListener);
-      const std::string name = eventNameOf(rt, emitter, args, count, kRemoveListener);
+      const Declared event = eventOf(rt, emitter, args, count, kRemoveListener);
       const facebook::jsi::Function listener = listenerOf(rt, args, count, kRemoveListener);
 
-      if (emitter.listeners().remove(rt, emitter.objectId(), name, listener)) {
-        emitter.observe(name, false);
+      if (emitter.listeners().remove(rt, emitter.objectId(), event.index, listener)) {
+        emitter.observe(event.index, false);
       }
       return facebook::jsi::Value::undefined();
     }
@@ -230,10 +237,10 @@ namespace expo::modules::v2::events {
     ) {
       const facebook::jsi::Object self = thisObjectOf(rt, thisValue, kRemoveAllListeners);
       const Emitter emitter = emitterOf(rt, self, kRemoveAllListeners);
-      const std::string name = eventNameOf(rt, emitter, args, count, kRemoveAllListeners);
+      const Declared event = eventOf(rt, emitter, args, count, kRemoveAllListeners);
 
-      if (emitter.listeners().removeAll(emitter.objectId(), name)) {
-        emitter.observe(name, false);
+      if (emitter.listeners().removeAll(emitter.objectId(), event.index)) {
+        emitter.observe(event.index, false);
       }
       return facebook::jsi::Value::undefined();
     }
@@ -246,26 +253,11 @@ namespace expo::modules::v2::events {
     ) {
       const facebook::jsi::Object self = thisObjectOf(rt, thisValue, kListenerCount);
       const Emitter emitter = emitterOf(rt, self, kListenerCount);
-      const std::string name = eventNameOf(rt, emitter, args, count, kListenerCount);
+      const Declared event = eventOf(rt, emitter, args, count, kListenerCount);
 
       return facebook::jsi::Value(
-        static_cast<double>(emitter.listeners().count(emitter.objectId(), name))
+        static_cast<double>(emitter.listeners().count(emitter.objectId(), event.index))
       );
-    }
-
-    /** JavaScript's own `emit(name, ...args)`: the listeners get the arguments as they are. */
-    facebook::jsi::Value emit(
-      facebook::jsi::Runtime& rt,
-      const facebook::jsi::Value& thisValue,
-      const facebook::jsi::Value* args,
-      const size_t count
-    ) {
-      const facebook::jsi::Object self = thisObjectOf(rt, thisValue, kEmit);
-      const Emitter emitter = emitterOf(rt, self, kEmit);
-      const std::string name = eventNameOf(rt, emitter, args, count, kEmit);
-
-      emitter.listeners().call(rt, emitter.objectId(), name, self, args + 1, count - 1);
-      return facebook::jsi::Value::undefined();
     }
 
     void defineMember(
@@ -308,7 +300,6 @@ namespace expo::modules::v2::events {
     defineMember(rt, target, defineProperty, kRemoveListener, 2, &removeListenerMember);
     defineMember(rt, target, defineProperty, kRemoveAllListeners, 1, &removeAllListeners);
     defineMember(rt, target, defineProperty, kListenerCount, 1, &listenerCount);
-    defineMember(rt, target, defineProperty, kEmit, 1, &emit);
   }
 
   bool isEmitterMemberName(const std::string_view name) noexcept {

@@ -29,8 +29,18 @@ class Event<T> internal constructor(
   internal var descriptor: TypeDescriptor? = null
   internal var useBuffer: Boolean = false
 
-  /** The runtimes with at least one listener for this event. Guarded by [EventSupport.lock]. */
+  @JvmField
+  internal var index: Int = -1
+
   private val observers = LinkedHashSet<AsyncContext>()
+
+  /**
+   * [observers] as an array, rebuilt under the lock whenever the set changes and read without it
+   * by [emit]. Observing changes rarely; emitting is the hot path, and it must neither lock nor
+   * allocate a snapshot per call.
+   */
+  @Volatile
+  private var observerSnapshot: Array<AsyncContext> = NO_OBSERVERS
 
   /** The name JavaScript subscribes to. */
   val name: String
@@ -43,20 +53,14 @@ class Event<T> internal constructor(
   fun emit(payload: T) {
     val name = name
     val descriptor = requireNotNull(descriptor)
-    val targets = synchronized(EventSupport.lock) {
-      if (observers.isEmpty()) {
-        return
-      }
-      observers.toTypedArray()
+    val targets = observerSnapshot
+    if (targets.isEmpty()) {
+      return
     }
 
     for (context in targets) {
-      if (context.scheduler.isOnJSThread) {
-        EventSupport.deliver(context, owner, name, descriptor, useBuffer, payload)
-      } else {
-        context.scheduler.post {
-          EventSupport.deliver(context, owner, name, descriptor, useBuffer, payload)
-        }
+      context.scheduler.postOrExecuteIfOnJsThread {
+        EventSupport.deliver(context, this, name, descriptor, useBuffer, payload)
       }
     }
   }
@@ -65,7 +69,11 @@ class Event<T> internal constructor(
 
   internal fun attach(context: AsyncContext) {
     val started = synchronized(EventSupport.lock) {
-      observers.add(context) && observers.size == 1
+      val added = observers.add(context)
+      if (added) {
+        observerSnapshot = observers.toTypedArray()
+      }
+      added && observers.size == 1
     }
     if (started) {
       onStartObserving?.invoke()
@@ -74,7 +82,15 @@ class Event<T> internal constructor(
 
   internal fun detach(context: AsyncContext) {
     val stopped = synchronized(EventSupport.lock) {
-      observers.remove(context) && observers.isEmpty()
+      val removed = observers.remove(context)
+      if (removed) {
+        observerSnapshot = if (observers.isEmpty()) {
+          NO_OBSERVERS
+        } else {
+          observers.toTypedArray()
+        }
+      }
+      removed && observers.isEmpty()
     }
     if (stopped) {
       onStopObserving?.invoke()
@@ -87,6 +103,7 @@ class Event<T> internal constructor(
         false
       } else {
         observers.clear()
+        observerSnapshot = NO_OBSERVERS
         true
       }
     }
@@ -101,4 +118,8 @@ class Event<T> internal constructor(
   )
 
   override fun toString(): String = "Event(${jsName ?: "<unbound>"} of ${owner.javaClass.simpleName})"
+
+  private companion object {
+    val NO_OBSERVERS: Array<AsyncContext> = emptyArray()
+  }
 }

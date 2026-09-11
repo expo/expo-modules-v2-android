@@ -43,14 +43,27 @@ namespace expo::modules::v2::objects {
     /** The events this JavaScript object can emit; the emitter members check names against it. */
     [[nodiscard]] virtual std::span<const descriptor::EventSpec> events() const { return {}; }
 
-    /** The declared event named [name], or null. */
-    [[nodiscard]] const descriptor::EventSpec* eventSpec(const std::string_view name) const {
-      for (const descriptor::EventSpec& spec: events()) {
-        if (spec.name == name) {
-          return &spec;
+    /**
+     * The index of the declared event named [name] in [events], or -1. The index names the event
+     * on both sides of the bridge: Kotlin bound its `Event`s in the same order.
+     */
+    [[nodiscard]] int eventIndexOf(const std::string_view name) const {
+      const std::span<const descriptor::EventSpec> declared = events();
+      for (size_t i = 0; i < declared.size(); i++) {
+        if (declared[i].name == name) {
+          return static_cast<int>(i);
         }
       }
-      return nullptr;
+      return -1;
+    }
+
+    /** The declared event at [index], or null when the index is out of range. */
+    [[nodiscard]] const descriptor::EventSpec* eventAt(const int index) const {
+      const std::span<const descriptor::EventSpec> declared = events();
+      if (index < 0 || static_cast<size_t>(index) >= declared.size()) {
+        return nullptr;
+      }
+      return &declared[static_cast<size_t>(index)];
     }
 
     /** The node on [object], or null if it stands for no Kotlin instance. */

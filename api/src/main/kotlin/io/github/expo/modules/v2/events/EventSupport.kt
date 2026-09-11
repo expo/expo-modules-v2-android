@@ -18,10 +18,12 @@ object EventSupport {
 
   /**
    * Gives [event] the name JavaScript subscribes to and the type its payload crosses as, and
-   * records it on its owner so the native side can find it by name. Returns [event].
+   * records it on its owner at the next index, which is how the native side refers to it. Returns
+   * [event].
    *
    * The compiler plugin wraps every `@Event` property initializer in this call; a hand-described
-   * class calls it itself, with the same type it declares through `ModuleBuilder.event`.
+   * class calls it itself, with the same type it declares through `ModuleBuilder.event`, and in
+   * the same order - see [checkDeclaration].
    */
   @JvmStatic
   fun <T> bind(
@@ -36,21 +38,20 @@ object EventSupport {
     event.useBuffer = useBuffer
 
     val owner = event.owner
-    val events = owner.events ?: HashMap<String, Event<*>>(2).also { owner.events = it }
-    require(events.put(jsName, event) == null) {
-      "${owner.javaClass.name} declares two events named '$jsName'"
-    }
+    val events = owner.events ?: ArrayList<Event<*>>(2).also { owner.events = it }
+    event.index = events.size
+    events.add(event)
     return event
   }
 
   /**
-   * Called when [context]'s runtime gains its first listener for the event, or loses its last one.
-   * Runs on that runtime's JS thread.
+   * Called when [context]'s runtime gains its first listener for the event at [index], or loses
+   * its last one. Runs on that runtime's JS thread.
    */
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JEventSupport.h")
-  fun observe(instance: ExpoObject, jsName: String, context: AsyncContext, observing: Boolean) {
-    val event = instance.events?.get(jsName) ?: return
+  fun observe(instance: ExpoObject, index: Int, context: AsyncContext, observing: Boolean) {
+    val event = instance.events?.getOrNull(index) ?: return
     if (observing) {
       event.attach(context)
     } else {
@@ -67,7 +68,7 @@ object EventSupport {
    */
   internal fun deliver(
     context: AsyncContext,
-    owner: ExpoObject,
+    event: Event<*>,
     name: String,
     descriptor: TypeDescriptor,
     useBuffer: Boolean,
@@ -77,20 +78,21 @@ object EventSupport {
     if (pointer == 0L) {
       return
     }
+    val owner = event.owner
 
     try {
       if (useBuffer) {
         EventNatives.emitBuffered(
           pointer,
           owner.objectId,
-          name,
+          event.index,
           Trampoline.writeResult(payload, descriptor),
         )
       } else {
         EventNatives.emit(
           pointer,
           owner.objectId,
-          name,
+          event.index,
           Bridge.toJni(payload, descriptor)
         )
       }
@@ -111,20 +113,15 @@ internal object EventNatives {
     ExpoModulesV2.load()
   }
 
-  fun emit(runtimePointer: Long, objectId: Long, name: String, value: Any?) =
-    nativeEmit(runtimePointer, objectId, name, value)
+  fun emit(runtimePointer: Long, objectId: Long, index: Int, value: Any?) =
+    nativeEmit(runtimePointer, objectId, index, value)
 
-  fun emitBuffered(runtimePointer: Long, objectId: Long, name: String, payloadLength: Int) =
-    nativeEmitBuffered(runtimePointer, objectId, name, payloadLength)
-
-  @JvmStatic
-  private external fun nativeEmit(runtimePointer: Long, objectId: Long, name: String, value: Any?)
+  fun emitBuffered(runtimePointer: Long, objectId: Long, index: Int, payloadLength: Int) =
+    nativeEmitBuffered(runtimePointer, objectId, index, payloadLength)
 
   @JvmStatic
-  private external fun nativeEmitBuffered(
-    runtimePointer: Long,
-    objectId: Long,
-    name: String,
-    payloadLength: Int,
-  )
+  private external fun nativeEmit(runtimePointer: Long, objectId: Long, index: Int, value: Any?)
+
+  @JvmStatic
+  private external fun nativeEmitBuffered(runtimePointer: Long, objectId: Long, index: Int, payloadLength: Int)
 }

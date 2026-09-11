@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include <string_view>
 
 #include <jni.h>
@@ -24,14 +23,10 @@ namespace expo::modules::v2 {
   struct JEventSupport : kolibri::JavaClass<JEventSupport> {
     static constexpr std::string_view descriptor = "io/github/expo/modules/v2/events/EventSupport";
 
-    /**
-     * Tells Kotlin that [context]'s runtime gained its first listener for [name] on [instance]
-     * ([observing] true), or lost its last one (false).
-     */
     static void observe(
       JNIEnv* env,
       jobject instance,
-      const std::string& name,
+      int eventIndex,
       jobject context,
       bool observing
     );
@@ -40,7 +35,7 @@ namespace expo::modules::v2 {
     // clang-format off
     static constexpr StaticMethod<
       "observe",
-      void(kolibri::Ref<objects::JExpoObject>, jstring, kolibri::Ref<JAsyncContext>, jboolean)
+      void(kolibri::Ref<objects::JExpoObject>, jint, kolibri::Ref<JAsyncContext>, jboolean)
     > observe_{};
     // clang-format on
   };

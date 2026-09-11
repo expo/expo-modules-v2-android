@@ -5,6 +5,24 @@
 #include <expo-modules-v2/utils/Log.h>
 
 namespace expo::modules::v2::events {
+  ListenerTable::EventListeners* ListenerTable::Entry::find(const int eventIndex) noexcept {
+    for (EventListeners& named: byEvent) {
+      if (named.eventIndex == eventIndex) {
+        return &named;
+      }
+    }
+    return nullptr;
+  }
+
+  const ListenerTable::EventListeners* ListenerTable::Entry::find(const int eventIndex) const noexcept {
+    for (const EventListeners& named: byEvent) {
+      if (named.eventIndex == eventIndex) {
+        return &named;
+      }
+    }
+    return nullptr;
+  }
+
   namespace {
     void callOne(
       facebook::jsi::Runtime& rt,
@@ -26,7 +44,7 @@ namespace expo::modules::v2::events {
   bool ListenerTable::add(
     facebook::jsi::Runtime& rt,
     const std::shared_ptr<objects::ObjectState>& state,
-    const std::string& name,
+    const int eventIndex,
     const facebook::jsi::Function& listener
   ) {
     auto [entry, inserted] = entries_.try_emplace(state->objectId());
@@ -34,27 +52,30 @@ namespace expo::modules::v2::events {
       entry->second.state = state;
     }
 
-    std::vector<facebook::jsi::Value>& listeners = entry->second.byName[name];
-    listeners.emplace_back(rt, listener);
-    return listeners.size() == 1;
+    EventListeners* named = entry->second.find(eventIndex);
+    if (named == nullptr) {
+      named = &entry->second.byEvent.emplace_back(EventListeners{.eventIndex = eventIndex, .listeners = {}});
+    }
+    named->listeners.emplace_back(rt, listener);
+    return named->listeners.size() == 1;
   }
 
   bool ListenerTable::remove(
     facebook::jsi::Runtime& rt,
     const objects::ObjectId::Value objectId,
-    const std::string& name,
+    const int eventIndex,
     const facebook::jsi::Function& listener
   ) {
     const auto entry = entries_.find(objectId);
     if (entry == entries_.end()) {
       return false;
     }
-    const auto byName = entry->second.byName.find(name);
-    if (byName == entry->second.byName.end() || byName->second.empty()) {
+    EventListeners* named = entry->second.find(eventIndex);
+    if (named == nullptr || named->listeners.empty()) {
       return false;
     }
 
-    std::vector<facebook::jsi::Value>& listeners = byName->second;
+    std::vector<facebook::jsi::Value>& listeners = named->listeners;
     const facebook::jsi::Value wanted(rt, listener);
     const auto found = std::ranges::find_if(listeners, [&](const facebook::jsi::Value& item) {
       return facebook::jsi::Value::strictEquals(rt, wanted, item);
@@ -67,55 +88,51 @@ namespace expo::modules::v2::events {
     return listeners.empty();
   }
 
-  bool ListenerTable::removeAll(const objects::ObjectId::Value objectId, const std::string& name) {
+  bool ListenerTable::removeAll(const objects::ObjectId::Value objectId, const int eventIndex) {
     const auto entry = entries_.find(objectId);
     if (entry == entries_.end()) {
       return false;
     }
-    const auto byName = entry->second.byName.find(name);
-    if (byName == entry->second.byName.end()) {
+    EventListeners* eventListeners = entry->second.find(eventIndex);
+    if (eventListeners == nullptr) {
       return false;
     }
 
-    const bool hadListeners = !byName->second.empty();
-    byName->second.clear();
+    const bool hadListeners = !eventListeners->listeners.empty();
+    eventListeners->listeners.clear();
     return hadListeners;
   }
 
   size_t ListenerTable::count(
     const objects::ObjectId::Value objectId,
-    const std::string_view name
+    const int eventIndex
+  ) const {
+    const std::vector<facebook::jsi::Value>* listeners = find(objectId, eventIndex);
+    return listeners == nullptr ? 0 : listeners->size();
+  }
+
+  const std::vector<facebook::jsi::Value>* ListenerTable::find(
+    const objects::ObjectId::Value objectId,
+    const int eventIndex
   ) const {
     const auto entry = entries_.find(objectId);
     if (entry == entries_.end()) {
-      return 0;
+      return nullptr;
     }
-    for (const auto& [eventName, listeners]: entry->second.byName) {
-      if (eventName == name) {
-        return listeners.size();
-      }
+    const EventListeners* named = entry->second.find(eventIndex);
+    if (named == nullptr || named->listeners.empty()) {
+      return nullptr;
     }
-    return 0;
+    return &named->listeners;
   }
 
   void ListenerTable::call(
     facebook::jsi::Runtime& rt,
-    const objects::ObjectId::Value objectId,
-    const std::string& name,
+    const std::vector<facebook::jsi::Value>& listeners,
     const facebook::jsi::Object& thisObject,
     const facebook::jsi::Value* args,
     const size_t count
   ) {
-    const auto entry = entries_.find(objectId);
-    if (entry == entries_.end()) {
-      return;
-    }
-    const auto byName = entry->second.byName.find(name);
-    if (byName == entry->second.byName.end() || byName->second.empty()) {
-      return;
-    }
-
-    const std::vector<facebook::jsi::Value>& listeners = byName->second;
     if (listeners.size() == 1) {
       // The common case: one listener, no snapshot. The function is taken before the call, so the
       // listener removing itself cannot pull the vector out from under us.

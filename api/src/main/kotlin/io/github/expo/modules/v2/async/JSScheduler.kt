@@ -10,6 +10,14 @@ interface JSScheduler {
    */
   fun post(job: Runnable)
 
+  fun postOrExecuteIfOnJsThread(job: Runnable) {
+    if (isOnJSThread) {
+      job.run()
+    } else {
+      post(job)
+    }
+  }
+
   /**
    * Runs every job queued right now and returns how many ran.
    *

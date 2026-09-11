@@ -157,16 +157,16 @@ namespace expo::modules::v2::objects {
   }
 
   namespace {
-    /** Tells Kotlin that [rt] no longer observes [name] on [instance], if Kotlin can still hear it. */
+    /** Tells Kotlin that [rt] no longer observes event [index] on [instance], if Kotlin can still hear it. */
     auto stopObserving(facebook::jsi::Runtime& rt) {
       // Null once the async state is gone, which only happens after `dropAllListeners` ran.
       const async::AsyncRuntimeState* async = async::AsyncRuntimeState::find(rt);
       const jobject context = async == nullptr ? nullptr : async->context();
       JNIEnv* env = kolibri::getEnv();
 
-      return [env, context](const jobject instance, const std::string& name) {
+      return [env, context](const jobject instance, const int index) {
         if (context != nullptr && instance != nullptr) {
-          JEventSupport::observe(env, instance, name, context, false);
+          JEventSupport::observe(env, instance, index, context, false);
         }
       };
     }

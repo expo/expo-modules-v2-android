@@ -3,10 +3,7 @@
 #include <jni.h>
 #include <jsi/jsi.h>
 
-#include <cstddef>
 #include <memory>
-#include <string>
-#include <string_view>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -15,16 +12,6 @@
 #include <expo-modules-v2/objects/ObjectState.h>
 
 namespace expo::modules::v2::events {
-  /**
-   * One runtime's event listeners, keyed by the `ObjectId` of the object they were added on and
-   * then by event name. Owned by `RuntimeObjects`, so it lives and dies with its runtime on that
-   * runtime's thread - which is what lets it hold `jsi::Value`s at all. Nothing here may ride on
-   * a JavaScript object's native state (see `ObjectNativeState`).
-   *
-   * Semantics follow expo-modules-core's `EventEmitter`: listeners are called in insertion order
-   * on a snapshot, so one that removes itself (or another) still runs once, and a listener that
-   * throws does not stop the rest.
-   */
   class ListenerTable {
   public:
     ListenerTable() = default;
@@ -36,7 +23,7 @@ namespace expo::modules::v2::events {
     bool add(
       facebook::jsi::Runtime& rt,
       const std::shared_ptr<objects::ObjectState>& state,
-      const std::string& name,
+      int eventIndex,
       const facebook::jsi::Function& listener
     );
 
@@ -44,31 +31,40 @@ namespace expo::modules::v2::events {
     bool remove(
       facebook::jsi::Runtime& rt,
       objects::ObjectId::Value objectId,
-      const std::string& name,
+      int eventIndex,
       const facebook::jsi::Function& listener
     );
 
     /** Removes every listener of that event; true when there was at least one. */
-    bool removeAll(objects::ObjectId::Value objectId, const std::string& name);
+    bool removeAll(objects::ObjectId::Value objectId, int eventIndex);
 
-    [[nodiscard]] size_t count(objects::ObjectId::Value objectId, std::string_view name) const;
+    [[nodiscard]] size_t count(objects::ObjectId::Value objectId, int eventIndex) const;
+
+    /**
+     * The listeners of event [eventIndex] on [objectId], or null when there are none. Borrowed; a
+     * caller that runs them uses [call] with the vector, which snapshots before calling.
+     */
+    [[nodiscard]] const std::vector<facebook::jsi::Value>* find(
+      objects::ObjectId::Value objectId,
+      int eventIndex
+    ) const;
 
     [[nodiscard]] bool has(objects::ObjectId::Value objectId) const {
       return entries_.contains(objectId);
     }
 
-    void call(
+    /** [call] for listeners already found with [find]. */
+    static void call(
       facebook::jsi::Runtime& rt,
-      objects::ObjectId::Value objectId,
-      const std::string& name,
+      const std::vector<facebook::jsi::Value>& listeners,
       const facebook::jsi::Object& thisObject,
       const facebook::jsi::Value* args,
       size_t count
     );
 
     /**
-     * Drops every listener of [objectId], calling `onStop(instance, name)` for each event that
-     * still had one - the object went away, so nothing will ever remove them.
+     * Drops every listener of [objectId], calling `onStop(instance, eventIndex)` for each event
+     * that still had one - the object went away, so nothing will ever remove them.
      *
      * Nothing is reported once the state is gone: a shared object's state dies with its last
      * facade, and its release already detached every observer on the Kotlin side.
@@ -88,9 +84,9 @@ namespace expo::modules::v2::events {
       if (instance == nullptr) {
         return;
       }
-      for (const auto& [name, listeners]: entry.byName) {
-        if (!listeners.empty()) {
-          onStop(instance, name);
+      for (const EventListeners& named: entry.byEvent) {
+        if (!named.listeners.empty()) {
+          onStop(instance, named.eventIndex);
         }
       }
     }
@@ -106,13 +102,26 @@ namespace expo::modules::v2::events {
     void clear() { entries_.clear(); }
 
   private:
+    /** The listeners of one event on one object. */
+    struct EventListeners {
+      int eventIndex;
+      std::vector<facebook::jsi::Value> listeners;
+    };
+
     struct Entry {
       /**
        * The instance's state, which owns the Kotlin ref. Weak on purpose: listeners must not keep
        * an object alive that JavaScript has let go of, or its release would wait for a sweep.
        */
       std::weak_ptr<objects::ObjectState> state;
-      std::unordered_map<std::string, std::vector<facebook::jsi::Value>> byName;
+      /**
+       * An object declares a handful of events, and only the ones with a listener are here, so a
+       * scan comparing indices beats a map: no hashing, and each compare is one load.
+       */
+      std::vector<EventListeners> byEvent;
+
+      [[nodiscard]] EventListeners* find(int eventIndex) noexcept;
+      [[nodiscard]] const EventListeners* find(int eventIndex) const noexcept;
     };
 
     std::unordered_map<objects::ObjectId::Value, Entry> entries_;

@@ -19,6 +19,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -555,22 +556,58 @@ class EventEmitterTest {
     val watcher = Watcher()
     val first = AsyncContext()
     val second = AsyncContext()
+    // The native side names an event by its index in the declaration: `changed` is Watcher's first.
+    val changed = 0
 
-    EventSupport.observe(watcher, "changed", first, observing = true)
-    EventSupport.observe(watcher, "changed", second, observing = true)
-    EventSupport.observe(watcher, "changed", first, observing = true)
+    EventSupport.observe(watcher, changed, first, observing = true)
+    EventSupport.observe(watcher, changed, second, observing = true)
+    EventSupport.observe(watcher, changed, first, observing = true)
     assertEquals(1, watcher.starts)
 
-    EventSupport.observe(watcher, "changed", first, observing = false)
+    EventSupport.observe(watcher, changed, first, observing = false)
     assertEquals(0, watcher.stops)
 
-    EventSupport.observe(watcher, "changed", second, observing = false)
+    EventSupport.observe(watcher, changed, second, observing = false)
     assertEquals(1, watcher.stops)
     assertFalse(watcher.onChanged.isObserved)
 
-    // Stopping what does not observe, or an unknown event, is a no-op.
-    EventSupport.observe(watcher, "changed", second, observing = false)
-    EventSupport.observe(watcher, "nope", first, observing = true)
+    // Stopping what does not observe, or an index of no event, is a no-op.
+    EventSupport.observe(watcher, changed, second, observing = false)
+    EventSupport.observe(watcher, 99, first, observing = true)
     assertEquals(1 to 1, watcher.starts to watcher.stops)
+  }
+
+  @Test
+  fun `a hand-described module must declare its events in binding order`() {
+    class Swapped : Module() {
+      val onFirst = EventSupport.bind(event<Int>(), "first", TypeDescriptor.Int)
+      val onSecond = EventSupport.bind(event<Int>(), "second", TypeDescriptor.Int)
+    }
+
+    HermesRuntime().use { runtime ->
+      val error = assertFailsWith<IllegalArgumentException> {
+        runtime.moduleRegistry.register("Swapped", Swapped()) {
+          event("second", AnyType(TypeDescriptor.Int))
+          event("first", AnyType(TypeDescriptor.Int))
+        }
+      }
+      assertTrue("[second, first]" in error.message!!, error.message)
+      assertTrue("[first, second]" in error.message!!, error.message)
+
+      // Same order: fine, and each event is reached by its index.
+      val module = Swapped()
+      runtime.moduleRegistry.register("Ordered", module) {
+        event("first", AnyType(TypeDescriptor.Int))
+        event("second", AnyType(TypeDescriptor.Int))
+      }
+      runtime.evaluate(
+        "globalThis.seen = [];" +
+          "expo.modules.Ordered.addListener('second', (n) => seen.push('second:' + n));" +
+          "expo.modules.Ordered.addListener('first', (n) => seen.push('first:' + n));"
+      )
+      module.onSecond.emit(2)
+      module.onFirst.emit(1)
+      assertEquals("second:2,first:1", runtime.evaluateAsString("seen.join()"))
+    }
   }
 }
