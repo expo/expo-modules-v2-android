@@ -21,8 +21,12 @@ dependencies {
 
 // --- Native build (CMake + Ninja) ---------------------------------------------------------------
 
-val desktopNativeEnabled = OperatingSystem.current().isMacOsX &&
-  !providers.gradleProperty("skipDesktopNative").isPresent
+// macOS and Linux: the two hosts hermes-test-environment publishes for. The library names differ
+// only in their suffix; CMake picks it, and `copyNativeLibs` below has to agree.
+val desktopNativeEnabled =
+  (OperatingSystem.current().isMacOsX || OperatingSystem.current().isLinux) &&
+    !providers.gradleProperty("skipDesktopNative").isPresent
+val sharedLibrarySuffix = if (OperatingSystem.current().isMacOsX) ".dylib" else ".so"
 // The test/benchmark host functions (globalThis.ExpoTestSupport) live in their own library so the
 // :api bridge dylib ships pure library code: libexpo-test-support.dylib links against the :api
 // bridge (kolibri, jsi and converter symbols) and installs the suite into a runtime on demand.
@@ -87,7 +91,7 @@ val buildNative by tasks.registering(Exec::class) {
 val copyNativeLibs by tasks.registering(Copy::class) {
   onlyIf { desktopNativeEnabled }
   dependsOn(buildNative)
-  from(nativeBuildDir.map { it.file("libexpo-test-support.dylib") })
+  from(nativeBuildDir.map { it.file("libexpo-test-support$sharedLibrarySuffix") })
   into(nativeLibsDir)
 }
 

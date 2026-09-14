@@ -45,7 +45,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # nothing here vendors Hermes.
 add_library(jsi SHARED IMPORTED)
 set_target_properties(jsi PROPERTIES
-        IMPORTED_LOCATION ${HERMES_ENV_LIBS_DIR}/libhermes-test-env.dylib)
+        IMPORTED_LOCATION ${HERMES_ENV_LIBS_DIR}/libhermes-test-env${CMAKE_SHARED_LIBRARY_SUFFIX})
 target_include_directories(jsi INTERFACE ${JSI_DIR})
 
 # --- expo::kolibri (standalone JNI layer) -----------------------------------------------

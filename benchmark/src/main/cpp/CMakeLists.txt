@@ -34,6 +34,13 @@ if (NOT DEFINED JAVA_HOME)
   endif ()
 endif ()
 
+# jni_md.h lives in a per-platform subdirectory of the JDK's include/ dir.
+if (APPLE)
+  set(JNI_MD_SUBDIR darwin)
+else ()
+  set(JNI_MD_SUBDIR linux)
+endif ()
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -42,11 +49,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # global state must exist exactly once in the process, so it is never re-linked statically here.
 add_library(expo-api-bridge SHARED IMPORTED)
 set_target_properties(expo-api-bridge PROPERTIES
-        IMPORTED_LOCATION ${EXPO_API_LIBS_DIR}/libexpo-kolibri.dylib)
+        IMPORTED_LOCATION ${EXPO_API_LIBS_DIR}/libexpo-kolibri${CMAKE_SHARED_LIBRARY_SUFFIX})
 target_include_directories(expo-api-bridge INTERFACE
         ${KOLIBRI_DIR}
         ${JAVA_HOME}/include
-        ${JAVA_HOME}/include/darwin
+        ${JAVA_HOME}/include/${JNI_MD_SUBDIR}
 )
 
 # --- fbjni (imported) -------------------------------------------------------------------------
@@ -55,7 +62,7 @@ target_include_directories(expo-api-bridge INTERFACE
 # its `fbjni-cpp` zip.
 add_library(fbjni SHARED IMPORTED)
 set_target_properties(fbjni PROPERTIES
-        IMPORTED_LOCATION ${HERMES_ENV_LIBS_DIR}/libfbjni.dylib)
+        IMPORTED_LOCATION ${HERMES_ENV_LIBS_DIR}/libfbjni${CMAKE_SHARED_LIBRARY_SUFFIX})
 target_include_directories(fbjni INTERFACE ${FBJNI_CPP_DIR})
 
 # --- The benchmark library -------------------------------------------------------------------
