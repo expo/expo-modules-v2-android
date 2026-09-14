@@ -8,8 +8,8 @@ plugins {
   alias(libs.plugins.gradle.java.test.fixtures)
   alias(libs.plugins.gradle.idea)
   // Published, because a consuming app must not compile this: it is pure JVM, while the rest of
-  // this repo is built from source there against the `jsi` binary the app ships. The POM, signing
-  // and checksum pruning come from the root build.
+  // this repo is built from source there against the `jsi` binary the app ships. The POM and signing
+  // come from the root build.
   alias(libs.plugins.vanniktech.mavenPublish)
 }
 
@@ -77,7 +77,6 @@ dependencies {
   testFixturesRuntimeOnly(libs.junit)
 
   // Dependencies required to run the internal test framework.
-  testArtifacts(libs.kotlin.stdlib)
   testArtifacts(libs.kotlin.stdlib.jdk8)
   testArtifacts(libs.kotlin.reflect)
   testArtifacts(libs.kotlin.test)

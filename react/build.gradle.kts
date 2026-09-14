@@ -1,4 +1,6 @@
 import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SourcesJar
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -10,8 +12,8 @@ plugins {
   // because this is an Android project — the kolibri-android Prefab AAR plus prefab consumption, so
   // the CMake build below can `find_package(kolibri-android)`.
   alias(libs.plugins.kolibri)
-  // This is the one artifact a consuming app depends on rather than builds. The POM boilerplate,
-  // signing and checksum pruning come from the root build.
+  // This is the one artifact a consuming app depends on rather than builds. The POM boilerplate and
+  // signing come from the root build.
   alias(libs.plugins.vanniktech.mavenPublish)
 }
 
@@ -22,9 +24,15 @@ mavenPublishing {
 
   // `release` only — a consumer never wants the debug variant, and every published file counts
   // against Maven Central's per-organization file-count limit. Central's validator rejects a
-  // deployment with no `-javadoc.jar`, so `publishJavadocJar` stays on; AGP generates it from this
+  // deployment with no `-javadoc.jar`, so `JavadocJar.Javadoc()` stays; AGP generates it from this
   // variant's sources.
-  configure(AndroidSingleVariantLibrary("release", sourcesJar = true, publishJavadocJar = true))
+  configure(
+    AndroidSingleVariantLibrary(
+      javadocJar = JavadocJar.Empty(),
+      sourcesJar = SourcesJar.Sources(),
+      variant = "release"
+    )
+  )
 
   pom {
     description = "Expo Modules API v2 for React Native on Android: the Kotlin bridge plus, as a " +
@@ -80,7 +88,8 @@ android {
 
   sourceSets {
     named("main") {
-      kotlin.setSrcDirs(listOf(apiKotlinDir, layout.projectDirectory.dir("src/main/kotlin")))
+      // Added next to this module's own src/main/kotlin, which stays the default.
+      kotlin.directories += apiKotlinDir.asFile.path
     }
   }
 

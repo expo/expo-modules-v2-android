@@ -25,15 +25,13 @@ junit = "4.13.2"
 buildconfig = "5.5.1"
 
 # https://github.com/vanniktech/gradle-maven-publish-plugin
-vanniktech-mavenPublish = "0.30.0"
+vanniktech-mavenPublish = "0.37.0"
 
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidx-annotation = "1.9.1"
 
 # https://developer.android.com/build/releases/gradle-plugin
-# The Android library module (:react) only. 8.10.1 is the newest AGP that
-# runs on the Gradle 8.11.1 in gradle/wrapper; kolibri pins the same pair.
-agp = "8.10.1"
+agp = "9.2.1"
 
 # https://github.com/facebook/react-native
 react-native = "0.87.0"
