@@ -1,7 +1,9 @@
 #include <expo-modules-v2/descriptor/ExpectedType.h>
 
-#include <utility>
+#include <cassert>
+#include <cstdlib>
 #include <string>
+#include <utility>
 
 #include <kolibri/class.h>
 #include <kolibri/array.h>
@@ -201,6 +203,9 @@ namespace expo::modules::v2 {
           }
 
           assert(false && "Unsupported type");
+          // Every LeafType is handled above; this keeps a release build (no assert) from falling
+          // off the end, which GCC rejects under -Werror=return-type.
+          std::abort();
         },
         [](const List&) { return desc<kolibri::JList>(); },
         [](const Map&) { return desc<kolibri::JMap>(); },

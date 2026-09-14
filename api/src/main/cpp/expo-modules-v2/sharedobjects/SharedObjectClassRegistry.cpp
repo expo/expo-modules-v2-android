@@ -36,7 +36,7 @@ namespace expo::modules::v2::sharedobjects {
       return *map;
     }
 
-    constexpr std::string kNoDescriptor;
+    const std::string kNoDescriptor;
 
     const ClassHandle* handleFor(const int classId) {
       if (const auto it = classHandles().find(classId); it != classHandles().end()) {

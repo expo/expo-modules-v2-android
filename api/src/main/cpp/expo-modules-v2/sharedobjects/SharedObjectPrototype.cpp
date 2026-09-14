@@ -120,7 +120,7 @@ namespace expo::modules::v2::sharedobjects {
       .getPropertyAsObject(rt, "Object")
       .getPropertyAsFunction(rt, "defineProperty");
 
-    constexpr std::string release(kRelease);
+    const std::string release(kRelease);
     defineMember(
       rt,
       prototype,
@@ -141,7 +141,7 @@ namespace expo::modules::v2::sharedobjects {
       )
     );
 
-    constexpr std::string objectId(kObjectId);
+    const std::string objectId(kObjectId);
     defineAccessor(
       rt,
       prototype,

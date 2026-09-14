@@ -41,6 +41,13 @@ if (NOT DEFINED JAVA_HOME)
   endif ()
 endif ()
 
+# jni_md.h lives in a per-platform subdirectory of the JDK's include/ dir.
+if (APPLE)
+  set(JNI_MD_SUBDIR darwin)
+else ()
+  set(JNI_MD_SUBDIR linux)
+endif ()
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -49,7 +56,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # library uses resolves here, the same way it does for the :api bridge below.
 add_library(hermes-env SHARED IMPORTED)
 set_target_properties(hermes-env PROPERTIES
-        IMPORTED_LOCATION ${HERMES_ENV_LIBS_DIR}/libhermes-test-env.dylib)
+        IMPORTED_LOCATION ${HERMES_ENV_LIBS_DIR}/libhermes-test-env${CMAKE_SHARED_LIBRARY_SUFFIX})
 target_include_directories(hermes-env INTERFACE ${JSI_DIR})
 
 # --- The :api bridge dylib (imported) ------------------------------------------------------
@@ -58,13 +65,13 @@ target_include_directories(hermes-env INTERFACE ${JSI_DIR})
 # from the source trees.
 add_library(expo-api-bridge SHARED IMPORTED)
 set_target_properties(expo-api-bridge PROPERTIES
-        IMPORTED_LOCATION ${EXPO_API_LIBS_DIR}/libexpo-kolibri.dylib)
+        IMPORTED_LOCATION ${EXPO_API_LIBS_DIR}/libexpo-kolibri${CMAKE_SHARED_LIBRARY_SUFFIX})
 target_include_directories(expo-api-bridge INTERFACE
         ${EXPO_API_CPP_DIR}
         ${EXPO_API_CPP_DIR}/expo-jsi
         ${KOLIBRI_DIR}
         ${JAVA_HOME}/include
-        ${JAVA_HOME}/include/darwin
+        ${JAVA_HOME}/include/${JNI_MD_SUBDIR}
 )
 
 # --- The test-support library ----------------------------------------------------------------

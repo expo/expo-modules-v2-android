@@ -99,8 +99,12 @@ tasks.named<Test>("test") {
 
 // --- Native build (CMake + Ninja) ---------------------------------------------------------------
 
-val desktopNativeEnabled = OperatingSystem.current().isMacOsX &&
-  !providers.gradleProperty("skipDesktopNative").isPresent
+// macOS and Linux: the two hosts hermes-test-environment publishes for. The library names differ
+// only in their suffix; CMake picks it, and `copyNativeLibs` below has to agree.
+val desktopNativeEnabled =
+  (OperatingSystem.current().isMacOsX || OperatingSystem.current().isLinux) &&
+    !providers.gradleProperty("skipDesktopNative").isPresent
+val sharedLibrarySuffix = if (OperatingSystem.current().isMacOsX) ".dylib" else ".so"
 
 val configureNative by tasks.registering(Exec::class) {
   onlyIf { desktopNativeEnabled }
@@ -137,13 +141,14 @@ val buildNative by tasks.registering(Exec::class) {
   outputs.dir(nativeBuildDir)
 
   workingDir = rootDir
-  commandLine("cmake", "--build", nativeBuildDir.get().asFile.path, "--target", "expo-kolibri")
+  // `-k 0`: Ninja keeps going past a failing translation unit, so one build reports every error.
+  commandLine("cmake", "--build", nativeBuildDir.get().asFile.path, "--target", "expo-kolibri", "--", "-k", "0")
 }
 
 val copyNativeLibs by tasks.registering(Copy::class) {
   onlyIf { desktopNativeEnabled }
   dependsOn(buildNative)
-  from(nativeBuildDir.map { it.file("libexpo-kolibri.dylib") })
+  from(nativeBuildDir.map { it.file("libexpo-kolibri$sharedLibrarySuffix") })
   into(nativeLibsDir)
 }
 

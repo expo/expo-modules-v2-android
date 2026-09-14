@@ -1,5 +1,6 @@
 #include <expo-modules-v2/jsi/ModulesHostObject.h>
 
+#include <algorithm>
 #include <utility>
 
 #include <expo-jsi/ChainedNativeState.h>
