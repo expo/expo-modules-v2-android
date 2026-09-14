@@ -33,12 +33,17 @@ object EventSupport {
     useBuffer: Boolean = false,
   ): Event<T> {
     check(event.jsName == null) { "$event is already bound" }
+    val owner = event.owner
+    val events = owner.events ?: ArrayList<Event<*>>(2).also { owner.events = it }
+    // A linear scan: an object declares a handful of events, and this runs once per event while
+    // the object is constructed, so a name-keyed map would cost more than it saves.
+    require(events.none { it.jsName == jsName }) {
+      "${owner.javaClass.name} declares two events named '$jsName'"
+    }
+
     event.jsName = jsName
     event.descriptor = descriptor
     event.useBuffer = useBuffer
-
-    val owner = event.owner
-    val events = owner.events ?: ArrayList<Event<*>>(2).also { owner.events = it }
     event.index = events.size
     events.add(event)
     return event
