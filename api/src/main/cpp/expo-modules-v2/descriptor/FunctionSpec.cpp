@@ -1,5 +1,6 @@
 #include <expo-modules-v2/descriptor/FunctionSpec.h>
 
+#include <algorithm>
 #include <stdexcept>
 
 #include <kolibri/class.h>

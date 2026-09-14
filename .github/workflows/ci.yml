@@ -117,10 +117,12 @@ jobs:
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       # Building the host compiles the Hermes VM, which takes several minutes. What it publishes is
-      # cached under the host's commit, so it is rebuilt only when that repository moves.
+      # cached under the host's commit, so it is rebuilt only when that repository moves. Restore
+      # and save are separate steps so the host is saved as soon as it is built, whether or not the
+      # tests that follow pass.
       - name: Restore the published Hermes host
         id: hermes-env-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ~/.m2/repository/io/github/expo/hermes-test-environment
           key: hermes-test-environment-${{ runner.os }}-${{ runner.arch }}-${{ steps.hermes-env.outputs.sha }}
@@ -146,6 +148,13 @@ jobs:
         run: |
           git submodule update --init --recursive --depth 1
           ./gradlew :runtime:publishToMavenLocal --stacktrace
+
+      - name: Save the published Hermes host
+        if: steps.hermes-env-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.m2/repository/io/github/expo/hermes-test-environment
+          key: ${{ steps.hermes-env-cache.outputs.cache-primary-key }}
 
       # -PskipHermesEnvBuild: the host is already in mavenLocal, built above or restored from the
       # cache, so settings.gradle.kts must not compare source timestamps and publish it again.
