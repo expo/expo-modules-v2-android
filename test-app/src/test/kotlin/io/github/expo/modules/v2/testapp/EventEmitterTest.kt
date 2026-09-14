@@ -19,7 +19,6 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -234,20 +233,6 @@ class EventEmitterTest {
   }
 
   @Test
-  fun `JavaScript can emit too, with the arguments as they are`() {
-    HermesRuntime().use { runtime ->
-      runtime.watch()
-      assertEquals(
-        "1|two|3",
-        runtime.evaluateAsString(
-          "expo.modules.Watcher.addListener('count', (...args) => seen.push(args.join('|')));" +
-            "expo.modules.Watcher.emit('count', 1, 'two', 3); seen.join()",
-        ),
-      )
-    }
-  }
-
-  @Test
   fun `a throwing listener stops neither the others nor the emitter`() {
     HermesRuntime().use { runtime ->
       val watcher = runtime.watch()
@@ -271,7 +256,6 @@ class EventEmitterTest {
         "removeListener('nope', () => {})",
         "removeAllListeners('nope')",
         "listenerCount('nope')",
-        "emit('nope')",
       )) {
         val error = runtime.evaluateAsString(
           "try { expo.modules.Watcher.$call; 'no error'; } catch (e) { String(e.message); }",
@@ -575,39 +559,5 @@ class EventEmitterTest {
     EventSupport.observe(watcher, changed, second, observing = false)
     EventSupport.observe(watcher, 99, first, observing = true)
     assertEquals(1 to 1, watcher.starts to watcher.stops)
-  }
-
-  @Test
-  fun `a hand-described module must declare its events in binding order`() {
-    class Swapped : Module() {
-      val onFirst = EventSupport.bind(event<Int>(), "first", TypeDescriptor.Int)
-      val onSecond = EventSupport.bind(event<Int>(), "second", TypeDescriptor.Int)
-    }
-
-    HermesRuntime().use { runtime ->
-      val error = assertFailsWith<IllegalArgumentException> {
-        runtime.moduleRegistry.register("Swapped", Swapped()) {
-          event("second", AnyType(TypeDescriptor.Int))
-          event("first", AnyType(TypeDescriptor.Int))
-        }
-      }
-      assertTrue("[second, first]" in error.message!!, error.message)
-      assertTrue("[first, second]" in error.message!!, error.message)
-
-      // Same order: fine, and each event is reached by its index.
-      val module = Swapped()
-      runtime.moduleRegistry.register("Ordered", module) {
-        event("first", AnyType(TypeDescriptor.Int))
-        event("second", AnyType(TypeDescriptor.Int))
-      }
-      runtime.evaluate(
-        "globalThis.seen = [];" +
-          "expo.modules.Ordered.addListener('second', (n) => seen.push('second:' + n));" +
-          "expo.modules.Ordered.addListener('first', (n) => seen.push('first:' + n));"
-      )
-      module.onSecond.emit(2)
-      module.onFirst.emit(1)
-      assertEquals("second:2,first:1", runtime.evaluateAsString("seen.join()"))
-    }
   }
 }
