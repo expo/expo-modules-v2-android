@@ -163,7 +163,8 @@ val buildNative by tasks.registering(Exec::class) {
   outputs.dir(nativeBuildDir)
 
   workingDir = rootDir
-  commandLine("cmake", "--build", nativeBuildDir.get().asFile.path, "--target", "expo-benchmark")
+  // `-k 0`: Ninja keeps going past a failing translation unit, so one build reports every error.
+  commandLine("cmake", "--build", nativeBuildDir.get().asFile.path, "--target", "expo-benchmark", "--", "-k", "0")
 }
 
 val copyNativeLibs by tasks.registering(Copy::class) {
