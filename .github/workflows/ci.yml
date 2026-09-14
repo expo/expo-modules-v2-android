@@ -88,3 +88,77 @@ jobs:
 
       - name: Run tests
         run: ./gradlew :gradle-plugin:test --stacktrace -PskipHermesEnvBuild
+
+  # The JSI-level suites: they drive a real Hermes runtime through :test-support. That needs the
+  # desktop Hermes host from expo/hermes-test-environment, which is published only to mavenLocal, and
+  # macOS, because :api's own native build is macOS-only (see `desktopNativeEnabled`).
+  test-app:
+    runs-on: macos-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          path: expo-modules-v2-android
+
+      # Next to this checkout, under the name settings.gradle.kts looks for by default. The
+      # repository is private, so the workflow's own token cannot read it: HERMES_TEST_ENV_TOKEN is a
+      # fine-grained token with read access to expo/hermes-test-environment.
+      - name: Check out hermes-test-environment
+        uses: actions/checkout@v4
+        with:
+          repository: expo/hermes-test-environment
+          token: ${{ secrets.HERMES_TEST_ENV_TOKEN }}
+          path: hermes-tests-environment
+
+      - name: Resolve the Hermes host revision
+        id: hermes-env
+        working-directory: hermes-tests-environment
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      # Building the host compiles the Hermes VM, which takes several minutes. What it publishes is
+      # cached under the host's commit, so it is rebuilt only when that repository moves.
+      - name: Restore the published Hermes host
+        id: hermes-env-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository/io/github/expo/hermes-test-environment
+          key: hermes-test-environment-${{ runner.os }}-${{ runner.arch }}-${{ steps.hermes-env.outputs.sha }}
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      # CMake ships with the runner image; Ninja does not.
+      - name: Install Ninja
+        run: brew install ninja
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          build-root-directory: expo-modules-v2-android
+
+      - name: Build and publish the Hermes host to mavenLocal
+        if: steps.hermes-env-cache.outputs.cache-hit != 'true'
+        working-directory: hermes-tests-environment
+        run: |
+          git submodule update --init --recursive --depth 1
+          ./gradlew :runtime:publishToMavenLocal --stacktrace
+
+      # -PskipHermesEnvBuild: the host is already in mavenLocal, built above or restored from the
+      # cache, so settings.gradle.kts must not compare source timestamps and publish it again.
+      - name: Run tests
+        working-directory: expo-modules-v2-android
+        run: ./gradlew :test-app:test --stacktrace -PskipHermesEnvBuild
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-test-app
+          path: |
+            expo-modules-v2-android/test-app/build/reports/tests/
+            expo-modules-v2-android/test-app/build/test-results/
+          retention-days: 7
+          if-no-files-found: ignore
