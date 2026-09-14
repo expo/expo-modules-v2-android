@@ -29,7 +29,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run tests
-        run: ./gradlew :compiler-plugin:test --stacktrace -PskipHermesEnvBuild
+        # -PskipDesktopNative: :compiler-plugin's tests compile against :api, whose classes would
+        # otherwise pull in the desktop native build and the Hermes host it needs. The test-app job
+        # is the one that builds and exercises that side.
+        run: ./gradlew :compiler-plugin:test --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
 
       - name: Upload test reports
         if: failure()
@@ -58,8 +61,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run tests
-        # -PskipDesktopNative: this job covers the JVM side; the native bridge and the Hermes host
-        # it needs are built and exercised by the test-app job.
+        # -PskipDesktopNative: this job covers the JVM side only, see the compiler-plugin job.
         run: ./gradlew :api:test --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
 
       - name: Upload test reports
@@ -89,7 +91,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run tests
-        run: ./gradlew :gradle-plugin:test --stacktrace -PskipHermesEnvBuild
+        run: ./gradlew :gradle-plugin:test --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
 
   # The JSI-level suites: they drive a real Hermes runtime through :test-support, which needs the
   # desktop Hermes host from expo/hermes-test-environment. It is published only to mavenLocal, so
