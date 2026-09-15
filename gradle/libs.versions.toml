@@ -1,5 +1,5 @@
 [versions]
-expo-modules-v2 = "0.1.5-SNAPSHOT"
+expo-modules-v2 = "0.1.5"
 
 # https://github.com/expo/kolibri
 kolibri = "0.1.9"
