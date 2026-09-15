@@ -456,6 +456,24 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
           STRING_CONCATENATION type=kotlin.String
             GET_VAR 'prefix: kotlin.String declared in io.github.expo.modules.v2.testdata.producer.ProducerModule.name' type=kotlin.String origin=null
             CONST String type=kotlin.String value="!"
+FILE fqName:io.github.expo.modules.v2.hints fileName:__GENERATED DECLARATIONS__.kt
+  CLASS GENERATED[io.github.expo.modules.v2.compiler.ModuleHintKey] INTERFACE name:io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a modality:FINAL visibility:public superTypes:[kotlin.Any]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.hints.io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+    FUN GENERATED[io.github.expo.modules.v2.compiler.ModuleHintKey] name:module visibility:public modality:ABSTRACT returnType:io.github.expo.modules.v2.testdata.producer.ProducerModule
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.hints.io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a
 Module: consumer
 FILE fqName:io.github.expo.modules.v2.testdata.consumer fileName:/consumer.kt
   CLASS OBJECT name:ConsumerModule modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]
@@ -774,3 +792,21 @@ FILE fqName:io.github.expo.modules.v2.testdata.consumer fileName:/consumer.kt
             ARG type: TYPE_OP type=java.lang.Class<*> origin=IMPLICIT_NOTNULL typeOperand=java.lang.Class<*>
               CALL 'public open fun getReturnType (): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] java.lang.Class<*>? origin=GET_PROPERTY
                 ARG <this>: GET_VAR 'val method: java.lang.reflect.Method declared in io.github.expo.modules.v2.testdata.consumer.descriptorOf' type=java.lang.reflect.Method origin=null
+FILE fqName:io.github.expo.modules.v2.hints fileName:__GENERATED DECLARATIONS__.kt
+  CLASS GENERATED[io.github.expo.modules.v2.compiler.ModuleHintKey] INTERFACE name:io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a modality:FINAL visibility:public superTypes:[kotlin.Any]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.hints.io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+    FUN GENERATED[io.github.expo.modules.v2.compiler.ModuleHintKey] name:module visibility:public modality:ABSTRACT returnType:io.github.expo.modules.v2.testdata.consumer.ConsumerModule
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.hints.io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a

@@ -201,3 +201,10 @@ FILE: moduleValueTypes.kt
 
         ^box String(OK)
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Values_1539afc2 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Values|
+
+    }

@@ -133,3 +133,50 @@ FILE: expoModuleShapeErrors.kt
             public get(): R|kotlin/Int|
 
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_NotAClass_5cce23aa : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NotAClass|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_NotAnEnum_5f1a8ce1 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NotAnEnum|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_NotAnAnnotation_17597b0f : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NotAnAnnotation|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_NotAbstract_d6b20d75 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NotAbstract|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_NotSealed_7d5fa56f : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NotSealed|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Generic_7f674b37 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Generic|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Outer_NotInner_26478216 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Outer.NotInner|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_NotAModule_4e32727a : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NotAModule|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_WrongAnnotation_8513a21c : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/WrongAnnotation|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_InternalMembers_56e1dcfc : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/InternalMembers|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_DuplicateNames_25ad7b9d : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/DuplicateNames|
+
+    }

@@ -1,0 +1,155 @@
+Module: producer
+FILE: producer.kt
+    package io.github.expo.modules.v2.testdata.producer
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object First : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/producer/First| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun one(): R|kotlin/Int| {
+            ^one Int(1)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|(name = String(Renamed)) public final class Second : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/producer/Second| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+    }
+    public final object Outer : R|kotlin/Any| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/producer/Outer| {
+            super<R|kotlin/Any|>()
+        }
+
+        @R|io/github/expo/modules/v2/ExpoModule|() public final object Nested : R|io/github/expo/modules/v2/Module| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/producer/Outer.Nested| {
+                super<R|io/github/expo/modules/v2/Module|>()
+            }
+
+        }
+
+    }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_producer_First_c84dcfb4 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/producer/First|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_producer_Second_575be7f0 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/producer/Second|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_producer_Outer_Nested_1df67866 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/producer/Outer.Nested|
+
+    }
+Module: consumer
+FILE: consumer.kt
+    package io.github.expo.modules.v2.testdata.consumer
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object Local : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/consumer/Local| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+    }
+    private final fun discovered(): R|kotlin/collections/List<java/lang/Class<out io/github/expo/modules/v2/Module>>| {
+        ^discovered R|io/github/expo/modules/v2/discoveredExpoModules|()
+    }
+    public final fun box(): R|kotlin/String| {
+        lval modules: R|kotlin/collections/List<java/lang/Class<out io/github/expo/modules/v2/Module>>| = R|io/github/expo/modules/v2/testdata/consumer/discovered|()
+        lval expected: R|kotlin/collections/List<java/lang/Class<out io/github/expo/modules/v2/Module>>| = R|kotlin/collections/listOf|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|>(vararg(<getClass>(Q|io/github/expo/modules/v2/testdata/producer/First|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/producer/First|>, <getClass>(Q|io/github/expo/modules/v2/testdata/producer/Second|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/producer/Second|>, <getClass>(Q|io/github/expo/modules/v2/testdata/producer/Outer.Nested|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/producer/Outer.Nested|>, <getClass>(Q|io/github/expo/modules/v2/testdata/consumer/Local|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/consumer/Local|>))
+        lval missing: R|kotlin/collections/List<java/lang/Class<out io/github/expo/modules/v2/Module>>| = R|<local>/expected|.R|kotlin/collections/filterNot|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|>(<L> = filterNot@fun <anonymous>(it: R|java/lang/Class<out io/github/expo/modules/v2/Module>|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ R|<local>/modules|.R|SubstitutionOverride<kotlin/collections/List.contains: R|kotlin/Boolean|>|(R|<local>/it|)
+        }
+        )
+        when () {
+            R|<local>/missing|.R|kotlin/collections/isNotEmpty|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|>() ->  {
+                ^box <strcat>(String(missing: ), R|<local>/missing|.R|kotlin/collections/map|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|, R|kotlin/String!|>(<L> = map@fun <anonymous>(it: R|java/lang/Class<out io/github/expo/modules/v2/Module>|): R|kotlin/String!| <inline=Inline, kind=UNKNOWN>  {
+                    ^ R|<local>/it|.R|java/lang/Class.name|
+                }
+                ), String( in ), R|<local>/modules|.R|kotlin/collections/map|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|, R|kotlin/String!|>(<L> = map@fun <anonymous>(it: R|java/lang/Class<out io/github/expo/modules/v2/Module>|): R|kotlin/String!| <inline=Inline, kind=UNKNOWN>  {
+                    ^ R|<local>/it|.R|java/lang/Class.name|
+                }
+                ))
+            }
+        }
+
+        lval unexpected: R|kotlin/collections/List<java/lang/Class<out io/github/expo/modules/v2/Module>>| = R|<local>/modules|.R|kotlin/collections/filterNot|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|>(<L> = filterNot@fun <anonymous>(it: R|java/lang/Class<out io/github/expo/modules/v2/Module>|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ R|<local>/expected|.R|SubstitutionOverride<kotlin/collections/List.contains: R|kotlin/Boolean|>|(R|<local>/it|)
+        }
+        )
+        when () {
+            R|<local>/unexpected|.R|kotlin/collections/isNotEmpty|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|>() ->  {
+                ^box <strcat>(String(unexpected: ), R|<local>/unexpected|.R|kotlin/collections/map|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|, R|kotlin/String!|>(<L> = map@fun <anonymous>(it: R|java/lang/Class<out io/github/expo/modules/v2/Module>|): R|kotlin/String!| <inline=Inline, kind=UNKNOWN>  {
+                    ^ R|<local>/it|.R|java/lang/Class.name|
+                }
+                ))
+            }
+        }
+
+        when () {
+            !=(R|<local>/modules|.R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|, R|<local>/modules|.R|kotlin/collections/distinct|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|>().R|SubstitutionOverride<kotlin/collections/List.size: R|kotlin/Int|>|) ->  {
+                ^box <strcat>(String(duplicates in ), R|<local>/modules|.R|kotlin/collections/map|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|, R|kotlin/String!|>(<L> = map@fun <anonymous>(it: R|java/lang/Class<out io/github/expo/modules/v2/Module>|): R|kotlin/String!| <inline=Inline, kind=UNKNOWN>  {
+                    ^ R|<local>/it|.R|java/lang/Class.name|
+                }
+                ))
+            }
+        }
+
+        lval hints: R|kotlin/collections/List<ft<java/lang/Class<*>, java/lang/Class<*>?>>| = R|<local>/modules|.R|kotlin/collections/filter|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|>(<L> = filter@fun <anonymous>(it: R|java/lang/Class<out io/github/expo/modules/v2/Module>|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ !=(R|<local>/it|, <getClass>(Q|io/github/expo/modules/v2/testdata/consumer/Local|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/consumer/Local|>)
+        }
+        ).R|kotlin/collections/map|<R|java/lang/Class<out io/github/expo/modules/v2/Module>|, R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(<L> = map@fun <anonymous>(module: R|java/lang/Class<out io/github/expo/modules/v2/Module>|): R|ft<java/lang/Class<*>, java/lang/Class<*>?>| <inline=Inline, kind=UNKNOWN>  {
+            ^ Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.hints.).R|kotlin/String.plus|(R|io/github/expo/modules/v2/testdata/consumer/hintNameOf|(R|<local>/module|)))
+        }
+        )
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<ft<java/lang/Class<*>, java/lang/Class<*>?>>| = R|<local>/hints|.R|SubstitutionOverride<kotlin/collections/List.iterator: R|kotlin/collections/Iterator<ft<java/lang/Class<*>, java/lang/Class<*>?>>|>|()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval hint: R|ft<java/lang/Class<*>, java/lang/Class<*>?>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>|()
+                 {
+                    when () {
+                        R|<local>/hint|.R|java/lang/Class.isInterface|.R|kotlin/Boolean.not|() ->  {
+                            ^box <strcat>(R|<local>/hint|.R|java/lang/Class.name|, String( is not an interface))
+                        }
+                    }
+
+                    lval members: R|ft<kotlin/Array<java/lang/reflect/Method!>, kotlin/Array<out java/lang/reflect/Method!>?>| = R|<local>/hint|.R|java/lang/Class.declaredMethods|
+                    when () {
+                        !=(R|<local>/members|.R|SubstitutionOverride<kotlin/Array.size: R|kotlin/Int|>|, Int(1)) || !=(R|<local>/members|.R|SubstitutionOverride<kotlin/Array.get: R|java/lang/reflect/Method!|>|(Int(0)).R|java/lang/reflect/Method.name|, String(module)) ->  {
+                            ^box <strcat>(R|<local>/hint|.R|java/lang/Class.name|, String( declares ), R|<local>/members|.R|kotlin/collections/map|<R|java/lang/reflect/Method!|, R|kotlin/String!|>(<L> = map@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/String!| <inline=Inline, kind=UNKNOWN>  {
+                                ^ R|<local>/it|.R|java/lang/reflect/Method.name|
+                            }
+                            ))
+                        }
+                    }
+
+                    when () {
+                        R|<local>/modules|.R|kotlin/collections/contains|<R|ft<java/lang/Class<out kotlin/Any>, java/lang/Class<out kotlin/Any>?>|>(R|<local>/members|.R|SubstitutionOverride<kotlin/Array.get: R|java/lang/reflect/Method!|>|(Int(0)).R|java/lang/reflect/Method.returnType|).R|kotlin/Boolean.not|() ->  {
+                            ^box <strcat>(R|<local>/hint|.R|java/lang/Class.name|, String( names ), R|<local>/members|.R|SubstitutionOverride<kotlin/Array.get: R|java/lang/reflect/Method!|>|(Int(0)).R|java/lang/reflect/Method.returnType|)
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        ^box String(OK)
+    }
+    private final fun hintNameOf(module: R|java/lang/Class<*>|): R|kotlin/String| {
+        lval fqName: R|kotlin/String| = R|<local>/module|.R|java/lang/Class.name|.R|kotlin/text/replace|(Char($), Char(.))
+        ^hintNameOf R|<local>/fqName|.R|kotlin/text/replace|(Char(.), Char(_)).R|kotlin/String.plus|(String(_)).R|kotlin/String.plus|(Q|kotlin/String|.R|kotlin/text/format|(String(%08x), vararg(R|<local>/fqName|.R|kotlin/Any.hashCode|())))
+    }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_consumer_Local_0139b5d3 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/consumer/Local|
+
+    }

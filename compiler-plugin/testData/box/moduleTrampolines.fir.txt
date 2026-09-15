@@ -145,3 +145,14 @@ FILE: moduleTrampolines.kt
         <getClass>(Q|io/github/expo/modules/v2/testdata/Buffered|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Buffered|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(isReady))
         ^box String(OK)
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Converted_1ccaf2f2 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Converted|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Buffered_a6e17b7f : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Buffered|
+
+    }

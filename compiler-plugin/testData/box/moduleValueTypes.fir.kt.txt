@@ -1,3 +1,4 @@
+// FILE: moduleValueTypes.kt
 package io.github.expo.modules.v2.testdata
 
 @Record(bufferSafe = false)
@@ -413,5 +414,13 @@ private fun descriptorOf(name: String): String {
   }
 )
   return "(" + parameters + ")" + descriptor(type = method.getReturnType() /*!! Class<*> */)
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Values_1539afc2 {
+  abstract fun module(): Values
+
 }
 

@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.compiler
 
+import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
@@ -20,6 +21,41 @@ object Identifiers {
     val ASYNC = FqName("io.github.expo.modules.v2.async")
     val SHARED_OBJECTS = FqName("io.github.expo.modules.v2.sharedobjects")
     val EVENTS = FqName("io.github.expo.modules.v2.events")
+
+    /**
+     * Where a compiled `@ExpoModule` leaves its hint. Shared by every module on a classpath, so a
+     * later compilation can list the package's classes and find them all.
+     */
+    val HINTS = FqName("io.github.expo.modules.v2.hints")
+  }
+
+  /**
+   * The cross-compilation hand-off that makes `discoveredExpoModules()` work.
+   *
+   * Compiling `@ExpoModule object Foo` also emits `interface <hint> { fun module(): Foo }` into
+   * [Packages.HINTS]. The hint's name only has to be unique; its one member's return type is what
+   * names the module back, so a reader never has to un-mangle anything.
+   */
+  object Hints {
+    val PACKAGE: FqName = Packages.HINTS
+
+    /** `fun module(): <the module class>` - the hint's single, abstract member. */
+    val MEMBER: Name = Name.identifier("module")
+
+    /** The hint for [module]: its dotted name with `_` for `.`, plus a hash of that name. */
+    fun classIdFor(module: ClassId): ClassId {
+      val fqName = module.asSingleFqName().asString()
+      val hash = "%08x".format(fqName.hashCode())
+      return ClassId(PACKAGE, Name.identifier(fqName.replace('.', '_') + "_" + hash))
+    }
+  }
+
+  object Callables {
+    /** `fun discoveredExpoModules(): List<Class<out Module>>` - the call the plugin expands. */
+    val discoveredExpoModules = CallableId(Packages.API, Name.identifier("discoveredExpoModules"))
+
+    /** `kotlin.collections.listOf(vararg elements: T)` - what the expansion builds the list with. */
+    val listOf = CallableId(FqName("kotlin.collections"), Name.identifier("listOf"))
   }
 
   object Classes {

@@ -157,3 +157,14 @@ FILE: sharedObjectShapeErrors.kt
         }
 
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_BothAnnotations_22d13e43 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/BothAnnotations|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_NotConstructable_93ba743e : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NotConstructable|
+
+    }

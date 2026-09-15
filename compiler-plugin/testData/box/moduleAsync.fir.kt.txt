@@ -1,3 +1,4 @@
+// FILE: moduleAsync.kt
 package io.github.expo.modules.v2.testdata
 
 @ExpoModule
@@ -118,4 +119,12 @@ fun box(): String {
 private const val TRAMPOLINE: String
   field = "__trampoline$ExpoModulesV2"
   private get
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_AsyncShapes_3dc057ee {
+  abstract fun module(): AsyncShapes
+
+}
 

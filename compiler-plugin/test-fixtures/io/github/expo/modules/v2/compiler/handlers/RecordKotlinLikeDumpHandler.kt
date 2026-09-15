@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.compiler.handlers
 
 import io.github.expo.modules.v2.compiler.EventBindingOrigin
+import io.github.expo.modules.v2.compiler.ModuleDiscoveryOrigin
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclaration
@@ -9,11 +10,14 @@ import org.jetbrains.kotlin.ir.declarations.IrField
 import org.jetbrains.kotlin.ir.declarations.IrPackageFragment
 import org.jetbrains.kotlin.ir.declarations.IrProperty
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
+import org.jetbrains.kotlin.ir.declarations.IrDeclarationBase
 import org.jetbrains.kotlin.ir.expressions.IrCall
 import org.jetbrains.kotlin.ir.util.CustomKotlinLikeDumpStrategy
 import org.jetbrains.kotlin.ir.util.FakeOverridesStrategy
 import org.jetbrains.kotlin.ir.util.KotlinLikeDumpOptions
 import org.jetbrains.kotlin.ir.util.dumpKotlinLike
+import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
+import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.test.backend.handlers.AbstractIrHandler
 import org.jetbrains.kotlin.test.backend.handlers.IrTextDumpHandler.Companion.computeDumpExtension
 import org.jetbrains.kotlin.test.backend.handlers.IrTextDumpHandler.Companion.groupWithTestFiles
@@ -98,7 +102,8 @@ class RecordKotlinLikeDumpHandler(
 /**
  * Prints a declaration only when the plugin generated it, or when it holds one that it did.
  * Classes always print: they are the containers the generated members live in. An `@Event`
- * property is the user's, but the plugin rewrote its initializer, so it prints as well.
+ * property is the user's, but the plugin rewrote its initializer, so it prints as well - and so does
+ * a function or property whose body held a `discoveredExpoModules()` call the plugin replaced.
  */
 private object GeneratedDeclarationsOnly : CustomKotlinLikeDumpStrategy {
   override fun willPrintElement(
@@ -118,7 +123,7 @@ private fun IrDeclaration.isLocal(): Boolean =
   parent.let { it !is IrClass && it !is IrPackageFragment }
 
 private fun IrDeclaration.isPluginGenerated(): Boolean {
-  if (isEventBinding()) {
+  if (isEventBinding() || callsDiscoveredModules()) {
     return true
   }
   var declaration: IrDeclaration? = this
@@ -144,6 +149,31 @@ private fun IrDeclaration.isEventBinding(): Boolean {
     else -> null
   } ?: return false
   return (field.initializer?.expression as? IrCall)?.origin == EventBindingOrigin
+}
+
+/**
+ * Whether this declaration's body holds the `listOf(...)` the plugin put where a
+ * `discoveredExpoModules()` call was. The call is the user's, so the marked replacement is the only
+ * trace of the plugin; the whole declaration prints so the dump shows the list in place.
+ */
+private fun IrDeclaration.callsDiscoveredModules(): Boolean {
+  if (this !is IrDeclarationBase || this is IrClass) {
+    return false
+  }
+  var found = false
+  acceptChildrenVoid(object : IrVisitorVoid() {
+    override fun visitElement(element: IrElement) {
+      if (found) return
+      // Nested classes are printed on their own; their bodies do not make this one print.
+      if (element is IrClass) return
+      if (element is IrCall && element.origin == ModuleDiscoveryOrigin) {
+        found = true
+        return
+      }
+      element.acceptChildrenVoid(this)
+    }
+  })
+  return found
 }
 
 private val DEFAULT_ACCESSOR = Regex("""\n[ \t]*(override )?[gs]et(?=\n)""")

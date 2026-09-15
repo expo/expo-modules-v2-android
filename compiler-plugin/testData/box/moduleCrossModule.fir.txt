@@ -63,6 +63,13 @@ FILE: producer.kt
             public set(value: R|kotlin/Int|): R|kotlin/Unit|
 
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/producer/ProducerModule|
+
+    }
 Module: consumer
 FILE: consumer.kt
     package io.github.expo.modules.v2.testdata.consumer
@@ -147,4 +154,11 @@ FILE: consumer.kt
         }
 
         ^box String(OK)
+    }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/consumer/ConsumerModule|
+
     }

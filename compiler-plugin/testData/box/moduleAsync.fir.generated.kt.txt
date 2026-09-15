@@ -1,3 +1,4 @@
+// FILE: moduleAsync.kt
 package io.github.expo.modules.v2.testdata
 
 @ExpoModule
@@ -50,5 +51,12 @@ class AsyncShapes : Module {
     }
 )
   }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_AsyncShapes_3dc057ee {
+  abstract fun module(): AsyncShapes
 }
 

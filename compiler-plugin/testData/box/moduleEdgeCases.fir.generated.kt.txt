@@ -1,3 +1,4 @@
+// FILE: moduleEdgeCases.kt
 package io.github.expo.modules.v2.testdata
 
 abstract class BaseModule : Module {
@@ -74,5 +75,28 @@ object Visibility : Module {
     builder.function(jsName = "visible", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "visible")
     return "Visibility"
   }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Arity_311b6c3d {
+  abstract fun module(): Arity
+}
+
+final interface io_github_expo_modules_v2_testdata_Derived_e0eed77d {
+  abstract fun module(): Derived
+}
+
+final interface io_github_expo_modules_v2_testdata_Empty_31519ead {
+  abstract fun module(): Empty
+}
+
+final interface io_github_expo_modules_v2_testdata_Visibility_768025b2 {
+  abstract fun module(): Visibility
+}
+
+final interface io_github_expo_modules_v2_testdata_WithNested_7b6e93fd {
+  abstract fun module(): WithNested
 }
 

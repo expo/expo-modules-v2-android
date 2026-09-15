@@ -79,3 +79,14 @@ FILE: moduleIrOnlyMember.kt
 
         ^box String(OK)
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Direct_f6f5ae89 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Direct|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_DirectInstance_32f80e3e : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/DirectInstance|
+
+    }

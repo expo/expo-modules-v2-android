@@ -70,6 +70,13 @@ object ProducerModule : Module {
   }
 }
 
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a {
+  abstract fun module(): ProducerModule
+}
+
 // MODULE: consumer
 // FILE: consumer.kt
 package io.github.expo.modules.v2.testdata.consumer
@@ -91,5 +98,12 @@ object ConsumerModule : Module {
     finally args.finish()
     return Trampoline.writeResult(value = <this>.forward(value = v0), type = #type$0)
   }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a {
+  abstract fun module(): ConsumerModule
 }
 

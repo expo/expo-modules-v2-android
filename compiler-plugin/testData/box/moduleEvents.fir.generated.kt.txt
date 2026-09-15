@@ -1,3 +1,4 @@
+// FILE: moduleEvents.kt
 package io.github.expo.modules.v2.testdata
 
 @Record
@@ -135,5 +136,16 @@ object Singleton : Module {
     builder.event(jsName = "tick", type = AnyType(descriptor = Int, useBuffer = false))
     return "Singleton"
   }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Singleton_d88ee16b {
+  abstract fun module(): Singleton
+}
+
+final interface io_github_expo_modules_v2_testdata_Watcher_c74b1b1c {
+  abstract fun module(): Watcher
 }
 

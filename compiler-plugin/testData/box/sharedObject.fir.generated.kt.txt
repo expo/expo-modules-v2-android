@@ -1,3 +1,4 @@
+// FILE: sharedObject.kt
 package io.github.expo.modules.v2.testdata
 
 @ExpoSharedObject
@@ -141,5 +142,16 @@ class TextRef : SharedRef<StringBuilder> {
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)
   }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Owner_31e30c13 {
+  abstract fun module(): Owner
+}
+
+final interface io_github_expo_modules_v2_testdata_Players_66c30312 {
+  abstract fun module(): Players
 }
 

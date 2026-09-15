@@ -156,6 +156,14 @@ object ProducerModule : Module {
 
 }
 
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a {
+  abstract fun module(): ProducerModule
+
+}
+
 // MODULE: consumer
 // FILE: consumer.kt
 package io.github.expo.modules.v2.testdata.consumer
@@ -247,5 +255,13 @@ private fun descriptorOf(owner: Class<*>, name: String): String {
   }
 )
   return "(" + parameters + ")" + descriptor(type = method.getReturnType() /*!! Class<*> */)
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a {
+  abstract fun module(): ConsumerModule
+
 }
 

@@ -249,3 +249,14 @@ FILE: sharedObject.kt
 
         ^box String(OK)
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Owner_31e30c13 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Owner|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Players_66c30312 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Players|
+
+    }

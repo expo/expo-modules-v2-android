@@ -1,3 +1,4 @@
+// FILE: moduleIrOnlyMember.kt
 package io.github.expo.modules.v2.testdata
 
 @ExpoModule(name = "Instance")
@@ -20,5 +21,16 @@ object Direct : Module {
     builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = true, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false))
     return "Direct"
   }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_DirectInstance_32f80e3e {
+  abstract fun module(): DirectInstance
+}
+
+final interface io_github_expo_modules_v2_testdata_Direct_f6f5ae89 {
+  abstract fun module(): Direct
 }
 

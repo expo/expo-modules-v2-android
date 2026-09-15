@@ -215,3 +215,50 @@ FILE: eventShapeErrors.kt
         }
 
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_CompanionEvent_eb51198e : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/CompanionEvent|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Other_31e19870 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Other|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_BothAnnotations_22d13e43 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/BothAnnotations|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_BadShapes_8da09eb7 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/BadShapes|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_FromConstructor_8866bb50 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/FromConstructor|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_WrongTypes_1192416c : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/WrongTypes|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Borrowed_7ea3f7f4 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Borrowed|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Collisions_a2af6221 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Collisions|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Reserved_ecb775c8 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Reserved|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_GoodEvents_c700ced6 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/GoodEvents|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_GoodObjectEvents_089cb135 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/GoodObjectEvents|
+
+    }

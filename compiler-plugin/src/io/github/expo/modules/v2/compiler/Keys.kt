@@ -8,6 +8,17 @@ object RecordKey : GeneratedDeclarationKey()
 /** Marks everything this transformer adds, so a box-test dump can single it out. */
 object JSModuleKey : GeneratedDeclarationKey()
 
+/** Marks the hint interface a compiled `@ExpoModule` leaves in `io.github.expo.modules.v2.hints`. */
+object ModuleHintKey : GeneratedDeclarationKey()
+
+/** Marks the `listOf(...)` the plugin puts where a `discoveredExpoModules()` call was. */
+object ModuleDiscoveryOrigin : IrStatementOrigin {
+  override val debugName: String
+    get() = "MODULE_DISCOVERY"
+
+  override fun toString(): String = debugName
+}
+
 /**
  * Marks the `EventSupport.bind(...)` call the plugin wraps an `@Event` property's initializer in.
  * The property itself is the user's, so the call carries the mark that lets a box-test dump show

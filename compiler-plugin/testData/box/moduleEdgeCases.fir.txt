@@ -179,3 +179,26 @@ FILE: moduleEdgeCases.kt
 
         ^box String(OK)
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Empty_31519ead : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Empty|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Arity_311b6c3d : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Arity|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Visibility_768025b2 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Visibility|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Derived_e0eed77d : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Derived|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_WithNested_7b6e93fd : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/WithNested|
+
+    }

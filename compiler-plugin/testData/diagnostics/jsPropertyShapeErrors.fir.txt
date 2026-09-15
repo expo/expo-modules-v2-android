@@ -90,3 +90,26 @@ FILE: jsPropertyShapeErrors.kt
             public get(): R|kotlin/Int|
 
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_CompanionMembers_e60b830d : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/CompanionMembers|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_NestedContainer_540812aa : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NestedContainer|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_ExtensionProperties_afa8b432 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/ExtensionProperties|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_GoodProperties_36ef5470 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/GoodProperties|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_GoodObjectProperties_a904ef4f : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/GoodObjectProperties|
+
+    }

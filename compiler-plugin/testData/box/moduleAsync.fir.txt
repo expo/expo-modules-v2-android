@@ -66,3 +66,10 @@ FILE: moduleAsync.kt
 
         ^box String(OK)
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_AsyncShapes_3dc057ee : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/AsyncShapes|
+
+    }

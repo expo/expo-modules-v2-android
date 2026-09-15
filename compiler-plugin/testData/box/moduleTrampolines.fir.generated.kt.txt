@@ -1,3 +1,4 @@
+// FILE: moduleTrampolines.kt
 package io.github.expo.modules.v2.testdata
 
 @ExpoModule
@@ -87,5 +88,16 @@ object Converted : Module {
   fun total__trampoline$ExpoModulesV2(p0: Double, p1: Double): Double {
     return Bridge.toJni(value = <this>.total(a = Bridge.fromJni(value = p0, type = #type$0) as Duration, b = Bridge.fromJni(value = p1, type = #type$0) as Duration), type = #type$0) as Double
   }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Buffered_a6e17b7f {
+  abstract fun module(): Buffered
+}
+
+final interface io_github_expo_modules_v2_testdata_Converted_1ccaf2f2 {
+  abstract fun module(): Converted
 }
 

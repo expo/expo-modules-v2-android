@@ -59,3 +59,22 @@ FILE: bufferModeErrors.kt
             public get(): R|kotlin/Int|
 
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_UnexportedMembers_04e05fed : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/UnexportedMembers|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_ClassReturns_bafcdb4b : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/ClassReturns|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_ArgumentReturns_be51e526 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/ArgumentReturns|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Accepted_81a88a47 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Accepted|
+
+    }

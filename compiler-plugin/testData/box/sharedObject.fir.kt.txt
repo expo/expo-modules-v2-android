@@ -1,3 +1,4 @@
+// FILE: sharedObject.kt
 package io.github.expo.modules.v2.testdata
 
 @ExpoSharedObject
@@ -378,5 +379,18 @@ private fun descriptorOf(owner: Class<*>, name: String): String {
   }
 )
   return "(" + parameters + ")" + descriptor(type = method.getReturnType() /*!! Class<*> */)
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Owner_31e30c13 {
+  abstract fun module(): Owner
+
+}
+
+final interface io_github_expo_modules_v2_testdata_Players_66c30312 {
+  abstract fun module(): Players
+
 }
 

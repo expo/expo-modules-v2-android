@@ -193,3 +193,14 @@ FILE: moduleEvents.kt
 
         ^box String(OK)
     }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Watcher_c74b1b1c : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Watcher|
+
+    }
+    public final interface io_github_expo_modules_v2_testdata_Singleton_d88ee16b : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Singleton|
+
+    }
