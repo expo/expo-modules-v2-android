@@ -36,6 +36,22 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.producer.Second'
           CONST String type=kotlin.String value="Renamed"
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
   CLASS OBJECT name:First modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]
     annotations:
       ExpoModule(name = <null>, classes = <null>)
@@ -87,6 +103,22 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun one (): kotlin.Int declared in io.github.expo.modules.v2.testdata.producer.First'
           CONST Int type=kotlin.Int value=1
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
   CLASS OBJECT name:Outer modality:FINAL visibility:public superTypes:[kotlin.Any]
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.producer.Outer
     CLASS OBJECT name:Nested modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]
@@ -125,6 +157,22 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.producer.Outer.Nested'
             CONST String type=kotlin.String value="Nested"
+      PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+        FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+          correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+          overridden:
+            public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+      PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
+        FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+          correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+          overridden:
+            public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
     CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.producer.Outer [primary]
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
@@ -232,6 +280,22 @@ FILE fqName:io.github.expo.modules.v2.testdata.consumer fileName:/consumer.kt
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.consumer.Local'
           CONST String type=kotlin.String value="Local"
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
   FUN name:box visibility:public modality:FINAL returnType:kotlin.String
     BLOCK_BODY
       VAR name:modules type:kotlin.collections.List<java.lang.Class<out io.github.expo.modules.v2.Module>> [val]

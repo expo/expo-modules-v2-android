@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.testsupport
 
 import io.github.expo.hermes.HermesRuntime as HermesEngine
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.async.AsyncContext
 import io.github.expo.modules.v2.jsi.AttachedRuntime
@@ -17,17 +18,28 @@ import io.github.expo.modules.v2.modules.ModuleRegistry
  * The thread that runs this constructor becomes the runtime's JS thread — a `jsi::Runtime` is
  * thread-affine, and the default [AsyncContext] captures that thread as the one every promise
  * settles on.
+ *
+ * Pass one [ExpoContext] to several runtimes to let them share module and shared object instances;
+ * each runtime otherwise gets a context of its own.
  */
 class HermesRuntime private constructor(
   private val engine: HermesEngine,
   moduleRegistry: ModuleRegistry,
   asyncContext: AsyncContext,
-) : AttachedRuntime(engine.pointer, moduleRegistry, asyncContext, ENGINE_NAME) {
+  context: ExpoContext?,
+) : AttachedRuntime(
+  engine.pointer,
+  moduleRegistry,
+  asyncContext,
+  ENGINE_NAME,
+  context = context,
+) {
 
   constructor(
     moduleRegistry: ModuleRegistry = ModuleRegistry(),
     asyncContext: AsyncContext = AsyncContext(),
-  ) : this(newEngine(), moduleRegistry, asyncContext)
+    context: ExpoContext? = null,
+  ) : this(newEngine(), moduleRegistry, asyncContext, context)
 
   /**
    * Tears down the modules first and the VM second: the native runtime object drops pending

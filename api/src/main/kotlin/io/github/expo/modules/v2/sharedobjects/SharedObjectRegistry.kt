@@ -8,6 +8,7 @@ import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
 import io.github.expo.modules.v2.binary.newSharedView
 import io.github.expo.modules.v2.cache.MultiKeyCache
 import io.github.expo.modules.v2.jni.jniDescriptor
+import io.github.expo.modules.v2.jsi.JavaScriptRuntime
 import io.github.expo.modules.v2.loader.ExpoClassLoader
 import io.github.expo.modules.v2.modules.ModuleBuilder
 import io.github.expo.modules.v2.types.AnyType
@@ -96,11 +97,18 @@ object SharedObjectRegistry {
   /**
    * The class id of [instance]'s shared class. The native side calls this once per instance, when
    * it builds the instance's native state; the per-instance id itself lives on
-   * [io.github.expo.modules.v2.ExpoObject.objectId] and is managed natively.
+   * [io.github.expo.modules.v2.ExpoObject.objectId] and is managed natively. An instance that has
+   * no context yet is bound to the context of the calling JS thread's runtime here.
    */
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JSharedObjectRegistry.h")
-  fun classIdOf(instance: SharedObject): Int = entryFor(instance.javaClass).id.value
+  fun classIdOf(instance: SharedObject): Int {
+    // This runs on the JS thread of the runtime the instance is crossing into, so an instance made
+    // off that thread without a context, or whose context is closed, gets one here. One that
+    // belongs to a different live context throws, which JavaScript sees as the call failing.
+    JavaScriptRuntime.current?.context?.let(instance::bindContext)
+    return entryFor(instance.javaClass).id.value
+  }
 
   /**
    * Runs the release hook. The native side calls this exactly once per native state, guarded by

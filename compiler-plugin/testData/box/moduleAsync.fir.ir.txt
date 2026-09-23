@@ -225,6 +225,22 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
           CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=MUL
             ARG <this>: GET_VAR 'value: kotlin.Int declared in io.github.expo.modules.v2.testdata.AsyncShapes.scale' type=kotlin.Int origin=null
             ARG other: CONST Int type=kotlin.Int value=2
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
   FUN name:box visibility:public modality:FINAL returnType:kotlin.String
     BLOCK_BODY
       VAR name:clazz type:java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> [val]

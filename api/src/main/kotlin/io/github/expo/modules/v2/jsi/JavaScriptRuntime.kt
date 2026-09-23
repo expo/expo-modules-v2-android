@@ -3,21 +3,45 @@ package io.github.expo.modules.v2.jsi
 import io.github.expo.kolibri.NativeMethod
 import io.github.expo.kolibri.NativeObject
 import io.github.expo.kolibri.NativePointer
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.ExpoObject
 import io.github.expo.modules.v2.async.AsyncContext
 import io.github.expo.modules.v2.modules.ModuleRegistry
+import java.lang.ref.WeakReference
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
 
+/**
+ * @param context the app this runtime belongs to. Runtimes that share one [ExpoContext] can share
+ * module and shared object instances.
+ * @param ownsContext whether [close] closes [context] too: true for a context the runtime created
+ * for itself, false for one the caller passed in and still owns.
+ */
 abstract class JavaScriptRuntime protected constructor(
   val moduleRegistry: ModuleRegistry,
   val asyncContext: AsyncContext,
   pointer: NativePointer,
+  /** The app this runtime belongs to. Every module and shared object it meets is bound to it. */
+  val context: ExpoContext,
+  private val ownsContext: Boolean,
 ) : NativeObject(pointer), AutoCloseable {
+
+  /** The thread this runtime was constructed on, which is its JS thread. */
+  private val jsThread: Thread = Thread.currentThread()
+
+  /** Set by [close]. */
+  @Volatile
+  var isClosed: Boolean = false
+    private set
 
   init {
     asyncContext.attach(pointer.value)
+
+    // One runtime per thread is assumed: a second one on the same thread takes the slot over.
+    CurrentRuntime.set(WeakReference(this))
+
+    moduleRegistry.bind(context)
   }
 
   //@formatter:off
@@ -84,9 +108,33 @@ abstract class JavaScriptRuntime protected constructor(
   }
 
   override fun close() {
+    isClosed = true
+    // Only the JS thread's slot can name this runtime. A close from any other thread leaves the
+    // slot alone; [current] skips a closed runtime.
+    if (Thread.currentThread() === jsThread && CurrentRuntime.raw()?.get() === this) {
+      CurrentRuntime.set(null)
+    }
+
+    if (ownsContext) {
+      context.close()
+    }
+
     // Before destroy(), so no coroutine can still be handed a pointer that is about to go away.
     // The native destructor invalidates the context a second time for the cleaner's path.
     asyncContext.invalidate()
     destroy()
+  }
+
+  companion object {
+    /**
+     * The runtime whose JS thread is the calling thread, or null on any other thread. This is how
+     * a [io.github.expo.modules.v2.SharedObject] built inside a JavaScript call finds its runtime.
+     *
+     * Assumes one runtime per thread, as in React Native. With several runtimes on one thread, it
+     * names the one created last.
+     */
+    @JvmStatic
+    val current: JavaScriptRuntime?
+      get() = CurrentRuntime.get()
   }
 }

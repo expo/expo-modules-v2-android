@@ -1240,6 +1240,22 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun unboxedScalars (a: kotlin.Int, b: kotlin.Long, c: kotlin.Float, d: kotlin.Double, e: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           GET_VAR 'a: kotlin.Int declared in io.github.expo.modules.v2.testdata.Values.unboxedScalars' type=kotlin.Int origin=null
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
   FUN name:box visibility:public modality:FINAL returnType:kotlin.String
     BLOCK_BODY
       VAR name:suffix type:kotlin.String [val]

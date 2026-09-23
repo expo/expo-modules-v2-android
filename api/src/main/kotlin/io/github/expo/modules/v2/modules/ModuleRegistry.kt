@@ -6,6 +6,8 @@ import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
 import io.github.expo.modules.v2.binary.newSharedView
 import io.github.expo.modules.v2.core.ExpoModulesV2
+import io.github.expo.modules.v2.ExpoContext
+import java.lang.ref.WeakReference
 import java.nio.BufferOverflowException
 
 class ModuleRegistry {
@@ -18,6 +20,19 @@ class ModuleRegistry {
   )
 
   private val modules = LinkedHashMap<String, Entry>()
+
+  /** The context of the runtime this registry is installed in, set once that runtime exists. */
+  private var contextRef: WeakReference<ExpoContext>? = null
+
+  /**
+   * Binds every module registered so far, and every one registered later, to [context]. A module
+   * that outlives its context (a Kotlin `object` across a reload) is re-bound to the new one, and
+   * one module can serve every runtime that shares [context].
+   */
+  internal fun bind(context: ExpoContext) {
+    contextRef = WeakReference(context)
+    modules.values.forEach { it.module.bindContext(context) }
+  }
 
   fun register(name: String, module: Module, build: ModuleBuilder.() -> Unit) {
     add(name, module, ModuleBuilder().apply(build))
@@ -39,6 +54,7 @@ class ModuleRegistry {
   private fun add(name: String, module: Module, definition: ModuleBuilder) {
     require(name !in modules) { "Module '$name' is already registered" }
 
+    contextRef?.get()?.let(module::bindContext)
     modules[name] = Entry(
       module,
       definition.functions,

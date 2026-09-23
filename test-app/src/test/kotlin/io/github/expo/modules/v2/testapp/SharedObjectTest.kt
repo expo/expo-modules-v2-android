@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.testapp
 
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.ExpoSharedObject
 import io.github.expo.modules.v2.JS
@@ -514,13 +515,15 @@ class SharedObjectTest {
 
   @Test
   fun `one native object serves two runtimes`() {
+    // The runtimes share instances, and so must share the context those instances belong to.
+    val context = ExpoContext()
     // The whole point of the design: the registry is process-wide and the façade is a host object,
     // so a second runtime reaching the same Kotlin instance shares its state rather than proxying
     // it. Two live runtimes is an established pattern here — see HermesRuntimeTest's
     // `each runtime asks its own registry`.
     val module = CounterModule()
-    HermesRuntime().use { first ->
-      HermesRuntime().use { second ->
+    HermesRuntime(context = context).use { first ->
+      HermesRuntime(context = context).use { second ->
         first.registerCounters(module)
         second.registerCounters(module)
 
@@ -544,9 +547,11 @@ class SharedObjectTest {
 
   @Test
   fun `releasing in one runtime releases in all of them`() {
+    // The runtimes share instances, and so must share the context those instances belong to.
+    val context = ExpoContext()
     val module = CounterModule()
-    HermesRuntime().use { first ->
-      HermesRuntime().use { second ->
+    HermesRuntime(context = context).use { first ->
+      HermesRuntime(context = context).use { second ->
         first.registerCounters(module)
         second.registerCounters(module)
 
@@ -564,11 +569,13 @@ class SharedObjectTest {
 
   @Test
   fun `a shared object is callable from a runtime on another thread`() {
+    // The runtimes share instances, and so must share the context those instances belong to.
+    val context = ExpoContext()
     // The chosen semantics: a call runs synchronously on whichever JS thread made it. Nothing here
     // hops threads, and nothing needs to — the argument buffer is thread-local on both sides and
     // kolibri attaches an unattached thread on demand.
     val module = CounterModule()
-    HermesRuntime().use { first ->
+    HermesRuntime(context = context).use { first ->
       first.registerCounters(module)
       first.evaluate("globalThis.c = expo.modules.Counters.create(); c.increment();")
 
@@ -577,7 +584,7 @@ class SharedObjectTest {
         results.put(
           runCatching {
             // A jsi::Runtime is thread-affine, so this one is created and used here only.
-            HermesRuntime().use { second ->
+            HermesRuntime(context = context).use { second ->
               second.registerCounters(module)
               second.evaluateAsString("expo.modules.Counters.current().increment()")
             }

@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.testapp
 
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
@@ -2752,9 +2753,11 @@ class HermesRuntimeTest {
 
   @Test
   fun `one module instance has one JavaScript object per runtime`() {
+    // The runtimes share instances, and so must share the context those instances belong to.
+    val context = ExpoContext()
     val module = CounterFixture()
-    HermesRuntime().use { first ->
-      HermesRuntime().use { second ->
+    HermesRuntime(context = context).use { first ->
+      HermesRuntime(context = context).use { second ->
         first.moduleRegistry.register(module)
         second.moduleRegistry.register(module)
 

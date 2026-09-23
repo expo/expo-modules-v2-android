@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.testapp
 
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.Event
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.ExpoSharedObject
@@ -376,9 +377,11 @@ class EventEmitterTest {
 
   @Test
   fun `two runtimes observing one instance both receive, and count as one observer`() {
+    // The runtimes share instances, and so must share the context those instances belong to.
+    val context = ExpoContext()
     val watcher = Watcher()
-    HermesRuntime().use { first ->
-      HermesRuntime().use { second ->
+    HermesRuntime(context = context).use { first ->
+      HermesRuntime(context = context).use { second ->
         first.watch(watcher)
         second.watch(watcher)
 
@@ -405,8 +408,10 @@ class EventEmitterTest {
 
   @Test
   fun `a runtime on another thread receives an emit when it drains`() {
+    // The runtimes share instances, and so must share the context those instances belong to.
+    val context = ExpoContext()
     val watcher = Watcher()
-    HermesRuntime().use { first ->
+    HermesRuntime(context = context).use { first ->
       first.watch(watcher)
 
       val listening = CountDownLatch(1)
@@ -414,7 +419,7 @@ class EventEmitterTest {
       val worker = Thread {
         results.put(
           runCatching {
-            HermesRuntime().use { second ->
+            HermesRuntime(context = context).use { second ->
               second.watch(watcher)
               second.evaluate("expo.modules.Watcher.addListener('count', (n) => seen.push(n));")
               listening.countDown()

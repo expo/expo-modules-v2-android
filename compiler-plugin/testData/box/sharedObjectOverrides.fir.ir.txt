@@ -109,6 +109,22 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
         RETURN type=kotlin.Nothing from='public final fun value (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Counter'
           CALL 'public final fun <get-released> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Counter' type=kotlin.Int origin=GET_PROPERTY
             ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Counter declared in io.github.expo.modules.v2.testdata.Counter.value' type=io.github.expo.modules.v2.testdata.Counter origin=IMPLICIT_ARGUMENT
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
   CLASS CLASS name:Delegating modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]
     annotations:
       ExpoSharedObject(name = <null>)
@@ -208,6 +224,22 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
               ARG <set-?>: CALL 'public final fun inc (): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=POSTFIX_INCR
                 ARG <this>: GET_VAR 'val tmp_1: kotlin.Int declared in io.github.expo.modules.v2.testdata.Delegating.sharedObjectDidRelease' type=kotlin.Int origin=null
             GET_VAR 'val tmp_1: kotlin.Int declared in io.github.expo.modules.v2.testdata.Delegating.sharedObjectDidRelease' type=kotlin.Int origin=null
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
   CLASS CLASS name:Plain modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]
     annotations:
       ExpoSharedObject(name = <null>)
@@ -269,6 +301,22 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
             ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Plain> origin=null
               ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Plain modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
             ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Plain.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
   CLASS CLASS name:Pressured modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]
     annotations:
       ExpoSharedObject(name = <null>)
@@ -333,6 +381,22 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Pressured'
           CONST Int type=kotlin.Int value=7
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
   CLASS CLASS name:TextRef modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedRef<java.lang.StringBuilder>]
     annotations:
       ExpoSharedObject(name = <null>)
@@ -398,6 +462,22 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
           CALL 'public open fun <get-length> (): kotlin.Int declared in java.lang.StringBuilder' type=kotlin.Int origin=GET_PROPERTY
             ARG <this>: CALL 'public final fun <get-ref> (): java.lang.StringBuilder declared in io.github.expo.modules.v2.testdata.TextRef' type=java.lang.StringBuilder origin=GET_PROPERTY
               ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.TextRef declared in io.github.expo.modules.v2.testdata.TextRef.getAdditionalMemoryPressure' type=io.github.expo.modules.v2.testdata.TextRef origin=IMPLICIT_ARGUMENT
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedRef
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedRef<java.lang.StringBuilder>
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedRef
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedRef
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedRef<java.lang.StringBuilder>
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedRef
     PROPERTY FAKE_OVERRIDE name:nativeRefType visibility:public modality:OPEN [fake_override,val]
       overridden:
         public open nativeRefType: kotlin.String declared in io.github.expo.modules.v2.SharedRef
