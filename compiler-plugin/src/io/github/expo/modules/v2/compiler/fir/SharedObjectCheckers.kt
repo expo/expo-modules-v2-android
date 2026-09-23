@@ -6,12 +6,10 @@ import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.DeclarationCheckers
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirConstructorChecker
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirRegularClassChecker
-import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
 import org.jetbrains.kotlin.fir.analysis.extensions.FirAdditionalCheckersExtension
 import org.jetbrains.kotlin.fir.declarations.FirConstructor
 import org.jetbrains.kotlin.fir.declarations.FirRegularClass
@@ -29,8 +27,8 @@ class SharedObjectCheckers(session: FirSession) : FirAdditionalCheckersExtension
       setOf(SharedObjectConstructorChecker)
   }
 
-  private object SharedObjectClassChecker : FirRegularClassChecker(MppCheckerKind.Common) {
-    override fun check(
+  private object SharedObjectClassChecker : ExpoDeclarationChecker<FirRegularClass>() {
+    override fun checkDeclaration(
       declaration: FirRegularClass,
       context: CheckerContext,
       reporter: DiagnosticReporter,
@@ -96,8 +94,8 @@ class SharedObjectCheckers(session: FirSession) : FirAdditionalCheckersExtension
    * shared object, and only one constructor of a class can carry it - a class with a single public
    * constructor needs no mark at all.
    */
-  private object SharedObjectConstructorChecker : FirConstructorChecker(MppCheckerKind.Common) {
-    override fun check(
+  private object SharedObjectConstructorChecker : ExpoDeclarationChecker<FirConstructor>() {
+    override fun checkDeclaration(
       declaration: FirConstructor,
       context: CheckerContext,
       reporter: DiagnosticReporter,
@@ -107,7 +105,7 @@ class SharedObjectCheckers(session: FirSession) : FirAdditionalCheckersExtension
         return
       }
 
-      val owner = declaration.getContainingClassSymbol() as? FirRegularClassSymbol
+      val owner = declaration.containingClass() as? FirRegularClassSymbol
       if (owner == null || !owner.hasExpoSharedObjectAnnotation(session)) {
         reporter.reportOn(
           declaration.source,
@@ -149,7 +147,7 @@ internal fun FirRegularClassSymbol.hasConstructorForJavaScript(session: FirSessi
  * constructor rather than of the class.
  */
 internal fun FirConstructor.isExportedToJavaScript(session: FirSession): Boolean {
-  val owner = getContainingClassSymbol() as? FirRegularClassSymbol ?: return false
+  val owner = containingClass() as? FirRegularClassSymbol ?: return false
   if (!owner.hasExpoSharedObjectAnnotation(session)) {
     return false
   }

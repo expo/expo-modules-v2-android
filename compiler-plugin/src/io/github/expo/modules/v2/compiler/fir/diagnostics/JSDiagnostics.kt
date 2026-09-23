@@ -1,19 +1,19 @@
 package io.github.expo.modules.v2.compiler.fir.diagnostics
 
-import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactoryToRendererMap
+import io.github.expo.modules.v2.compiler.fir.ExpoDiagnosticsContainer
+import io.github.expo.modules.v2.compiler.fir.expoRendererMap
 import org.jetbrains.kotlin.diagnostics.SourceElementPositioningStrategies
 import org.jetbrains.kotlin.diagnostics.error0
 import org.jetbrains.kotlin.diagnostics.error1
 import org.jetbrains.kotlin.diagnostics.rendering.BaseDiagnosticRendererFactory
 import org.jetbrains.kotlin.diagnostics.rendering.CommonRenderers
-import org.jetbrains.kotlin.diagnostics.rendering.RootDiagnosticRendererFactory
 import org.jetbrains.kotlin.psi.KtDeclaration
 
 /**
  * The frontend diagnostics [io.github.expo.modules.v2.compiler.fir.JSCheckers] reports about an
  * exported member.
  */
-object JSDiagnostics {
+object JSDiagnostics : ExpoDiagnosticsContainer() {
   val JS_MEMBER_OUTSIDE_MODULE by error0<KtDeclaration>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
@@ -30,13 +30,15 @@ object JSDiagnostics {
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
 
+  override fun getRendererFactory(): BaseDiagnosticRendererFactory = JSDiagnosticMessages
+
   init {
-    RootDiagnosticRendererFactory.registerFactory(JSDiagnosticMessages)
+    registerRenderer()
   }
 }
 
 object JSDiagnosticMessages : BaseDiagnosticRendererFactory() {
-  override val MAP = KtDiagnosticFactoryToRendererMap("ExpoModulesV2").apply {
+  override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       JSDiagnostics.JS_MEMBER_OUTSIDE_MODULE,
       "@JS on a member only exports it when the class itself is annotated @ExpoModule or " +

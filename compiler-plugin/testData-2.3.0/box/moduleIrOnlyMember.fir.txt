@@ -1,0 +1,95 @@
+FILE: moduleIrOnlyMember.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object Direct : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/Direct| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun add(a: R|kotlin/Int|, b: R|kotlin/Int|): R|kotlin/Int| {
+            ^add R|<local>/a|.R|kotlin/Int.plus|(R|<local>/b|)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun scale(values: R|kotlin/DoubleArray|, by: R|kotlin/Double|): R|kotlin/Double| {
+            ^scale R|<local>/values|.R|kotlin/collections/sum|().R|kotlin/Double.times|(R|<local>/by|)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun identity(value: R|kotlin/Any?|): R|kotlin/Any?| {
+            ^identity R|<local>/value|
+        }
+
+        @R|io/github/expo/modules/v2/JS|(name = String(renamed)) public final fun original(flag: R|kotlin/Boolean|): R|kotlin/Boolean| {
+            ^original R|<local>/flag|.R|kotlin/Boolean.not|()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun clear(): R|kotlin/Unit| {
+            ^clear Q|kotlin/Unit|
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final val answer: R|kotlin/Int| = Int(42)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/JS|() public final var count: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+            public set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+        public final fun internalHelper(): R|kotlin/Int| {
+            ^internalHelper Int(0)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|(name = String(Instance)) public final class DirectInstance : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/DirectInstance| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun echo(value: R|kotlin/Long|): R|kotlin/Long| {
+            ^echo R|<local>/value|
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval method: R|java/lang/reflect/Method!| = <getClass>(Q|io/github/expo/modules/v2/Module|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/Module|>.R|SubstitutionOverride<java/lang/Class.getMethod: R|java/lang/reflect/Method!|>|(String(define$ExpoModulesV2), vararg(Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.modules.ModuleBuilder))))
+        when () {
+            !=(R|<local>/method|.R|java/lang/reflect/Method.declaringClass|, <getClass>(Q|io/github/expo/modules/v2/Module|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/Module|>) ->  {
+                ^box <strcat>(String(base lookup: ), R|<local>/method|.R|java/lang/reflect/Method.declaringClass|)
+            }
+        }
+
+        lval generated: R|java/lang/reflect/Method!| = <getClass>(Q|io/github/expo/modules/v2/testdata/Direct|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Direct|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(define$ExpoModulesV2), vararg(Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.modules.ModuleBuilder))))
+        when () {
+            !=(R|<local>/generated|.R|java/lang/reflect/Method.returnType|, <getClass>(Q|kotlin/String|).R|kotlin/jvm/java|<R|kotlin/String|>) ->  {
+                ^box <strcat>(String(expected a String return, got ), R|<local>/generated|.R|java/lang/reflect/Method.returnType|)
+            }
+        }
+
+        <getClass>(Q|io/github/expo/modules/v2/testdata/Direct|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Direct|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(add), vararg(<getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>, <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>))
+        <getClass>(Q|io/github/expo/modules/v2/testdata/Direct|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Direct|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(clear))
+        <getClass>(Q|io/github/expo/modules/v2/testdata/Direct|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Direct|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(getAnswer))
+        <getClass>(Q|io/github/expo/modules/v2/testdata/Direct|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Direct|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(setCount), vararg(<getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>))
+        <getClass>(Q|io/github/expo/modules/v2/testdata/DirectInstance|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/DirectInstance|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(echo), vararg(<getClass>(Q|kotlin/Long|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Long|>))
+        when () {
+            <getClass>(Q|io/github/expo/modules/v2/testdata/Direct|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Direct|>.R|java/lang/Class.declaredMethods|.R|kotlin/collections/any|<R|java/lang/reflect/Method!|>(<L> = any@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+                ^ R|<local>/it|.R|java/lang/reflect/Method.name|.R|kotlin/text/contains|(String(__trampoline))
+            }
+            ) ->  {
+                ^box String(a direct-only module should have no trampolines)
+            }
+        }
+
+        ^box String(OK)
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Direct_f6f5ae89.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Direct_f6f5ae89 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Direct|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_DirectInstance_32f80e3e.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_DirectInstance_32f80e3e : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/DirectInstance|
+
+    }

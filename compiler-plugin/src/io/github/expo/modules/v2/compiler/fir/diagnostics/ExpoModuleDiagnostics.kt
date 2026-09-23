@@ -1,18 +1,18 @@
 package io.github.expo.modules.v2.compiler.fir.diagnostics
 
-import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactoryToRendererMap
+import io.github.expo.modules.v2.compiler.fir.ExpoDiagnosticsContainer
+import io.github.expo.modules.v2.compiler.fir.expoRendererMap
 import org.jetbrains.kotlin.diagnostics.SourceElementPositioningStrategies
 import org.jetbrains.kotlin.diagnostics.error0
 import org.jetbrains.kotlin.diagnostics.error1
 import org.jetbrains.kotlin.diagnostics.rendering.BaseDiagnosticRendererFactory
 import org.jetbrains.kotlin.diagnostics.rendering.CommonRenderers
-import org.jetbrains.kotlin.diagnostics.rendering.RootDiagnosticRendererFactory
 import org.jetbrains.kotlin.psi.KtClassLikeDeclaration
 
 /**
  * The frontend diagnostics [io.github.expo.modules.v2.compiler.fir.ExpoModuleCheckers] reports.
  */
-object ExpoModuleDiagnostics {
+object ExpoModuleDiagnostics : ExpoDiagnosticsContainer() {
   val EXPO_MODULE_ON_UNSUPPORTED_DECLARATION by error1<KtClassLikeDeclaration, String>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
@@ -29,13 +29,15 @@ object ExpoModuleDiagnostics {
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
 
+  override fun getRendererFactory(): BaseDiagnosticRendererFactory = ExpoModuleDiagnosticMessages
+
   init {
-    RootDiagnosticRendererFactory.registerFactory(ExpoModuleDiagnosticMessages)
+    registerRenderer()
   }
 }
 
 object ExpoModuleDiagnosticMessages : BaseDiagnosticRendererFactory() {
-  override val MAP = KtDiagnosticFactoryToRendererMap("ExpoModulesV2").apply {
+  override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       ExpoModuleDiagnostics.EXPO_MODULE_ON_UNSUPPORTED_DECLARATION,
       "@ExpoModule only applies to a non-abstract, non-inner class or object - this is {0}",

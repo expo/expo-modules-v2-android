@@ -1,0 +1,1 @@
+../../testData-2.4.0/diagnostics/jsPropertyShapeErrors.fir.txt

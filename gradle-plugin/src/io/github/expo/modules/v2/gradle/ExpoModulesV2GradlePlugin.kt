@@ -6,6 +6,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilerPluginSupportPlugin
 import org.jetbrains.kotlin.gradle.plugin.SubpluginArtifact
 import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
+import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
@@ -18,7 +19,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  */
 @Suppress("unused") // Used via reflection.
 class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
+  private lateinit var project: Project
+
   override fun apply(target: Project) {
+    project = target
     target.extensions.create("expoModulesV2", ExpoModulesV2GradleExtension::class.java)
   }
 
@@ -26,10 +30,14 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
 
   override fun getCompilerPluginId(): String = BuildConfig.KOTLIN_PLUGIN_ID
 
+  // A compiler plugin is bound to the exact compiler it was built against, so one compiler-plugin
+  // artifact is published per supported Kotlin release, versioned `<expo-modules-v2>-<kotlin>`.
+  // Resolving by the project's own Kotlin version keeps the consumer's `plugins {}` block
+  // Kotlin-agnostic; a Kotlin release with no build fails resolution with the missing coordinates.
   override fun getPluginArtifact(): SubpluginArtifact = SubpluginArtifact(
     groupId = BuildConfig.KOTLIN_PLUGIN_GROUP,
     artifactId = BuildConfig.KOTLIN_PLUGIN_NAME,
-    version = BuildConfig.KOTLIN_PLUGIN_VERSION,
+    version = "${BuildConfig.EXPO_MODULES_V2_VERSION}-${project.getKotlinPluginVersion()}",
   )
 
   override fun applyToCompilation(

@@ -1,0 +1,155 @@
+package io.github.expo.modules.v2.testdata
+
+@Record
+data class Inner : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Inner> {
+    override val recordClass: Class<Inner>
+      field = <get-java>(/* $receiver = Inner::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Inner", bufferSafe = true, fields = [RecordField(name = "n", type = Int, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Inner {
+      return Inner(n = reader.readInt())
+    }
+
+    override fun encode(value: Inner, writer: RecordWriter) {
+      writer.write(value = value.<get-n>())
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Inner>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+@Record
+data class LoopA : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<LoopA> {
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = LoopB::class */), isNullable = true)
+    override val recordClass: Class<LoopA>
+      field = <get-java>(/* $receiver = LoopA::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "LoopA", bufferSafe = true, fields = [RecordField(name = "n", type = Int, isOptional = false), RecordField(name = "b", type = <this>.#type$0, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): LoopA {
+      return LoopA(n = reader.readInt(), b = reader.read<LoopB?>(schema = <this>.#type$0))
+    }
+
+    override fun encode(value: LoopA, writer: RecordWriter) {
+      writer.write(value = value.<get-n>())
+      writer.write(value = value.<get-b>(), schema = <this>.#type$0)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<LoopA>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+@Record
+data class LoopB : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<LoopB> {
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = LoopA::class */), isNullable = true)
+    override val recordClass: Class<LoopB>
+      field = <get-java>(/* $receiver = LoopB::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "LoopB", bufferSafe = true, fields = [RecordField(name = "n", type = Int, isOptional = false), RecordField(name = "a", type = <this>.#type$0, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): LoopB {
+      return LoopB(n = reader.readInt(), a = reader.read<LoopA?>(schema = <this>.#type$0))
+    }
+
+    override fun encode(value: LoopB, writer: RecordWriter) {
+      writer.write(value = value.<get-n>())
+      writer.write(value = value.<get-a>(), schema = <this>.#type$0)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<LoopB>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+@Record
+data class Outer : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Outer> {
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Inner::class */), isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Inner::class */), isNullable = false)]))
+    private /* final field */ val type$2: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Inner::class */), isNullable = true)
+    override val recordClass: Class<Outer>
+      field = <get-java>(/* $receiver = Outer::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Outer", bufferSafe = true, fields = [RecordField(name = "inner", type = <this>.#type$0, isOptional = false), RecordField(name = "list", type = <this>.#type$1, isOptional = false), RecordField(name = "maybe", type = <this>.#type$2, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Outer {
+      return Outer(inner = reader.read<Inner>(schema = <this>.#type$0), list = reader.read<List<Inner>>(schema = <this>.#type$1), maybe = reader.read<Inner?>(schema = <this>.#type$2))
+    }
+
+    override fun encode(value: Outer, writer: RecordWriter) {
+      writer.write(value = value.<get-inner>(), schema = <this>.#type$0)
+      writer.write(value = value.<get-list>(), schema = <this>.#type$1)
+      writer.write(value = value.<get-maybe>(), schema = <this>.#type$2)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Outer>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+

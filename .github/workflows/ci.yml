@@ -13,8 +13,30 @@ env:
   GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false -Dkotlin.incremental=false"
 
 jobs:
-  compiler-plugin:
+  # The compiler plugin links against compiler internals, so every Kotlin release it is published
+  # for gets its own build and test run. gradle/kotlin-versions.txt is the single list of those
+  # releases (the publish workflow and scripts/test-all-versions.sh read the same file).
+  kotlin-versions:
+    name: Kotlin versions
     runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.read.outputs.versions }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Read gradle/kotlin-versions.txt
+        id: read
+        run: echo "versions=$(jq -R -s -c 'split("\n") | map(select(length > 0))' gradle/kotlin-versions.txt)" >> "$GITHUB_OUTPUT"
+
+  test-kotlin:
+    name: Kotlin ${{ matrix.kotlin-version }}
+    needs: kotlin-versions
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kotlin-version: ${{ fromJSON(needs.kotlin-versions.outputs.versions) }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -28,70 +50,27 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Run tests
-        # -PskipDesktopNative: :compiler-plugin's tests compile against :api, whose classes would
-        # otherwise pull in the desktop native build and the Hermes host it needs. The test-app job
-        # is the one that builds and exercises that side.
-        run: ./gradlew :compiler-plugin:test --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
+      # The compiler plugin's own tests, the Gradle plugin compiled against that release's KGP, and
+      # :api compiled with that release's compiler.
+      # -PskipDesktopNative: :compiler-plugin's tests compile against :api, whose classes would
+      # otherwise pull in the desktop native build and the Hermes host it needs. The test-app job
+      # is the one that builds and exercises that side.
+      - name: Run checks against Kotlin ${{ matrix.kotlin-version }}
+        run: ./gradlew :compiler-plugin:test :gradle-plugin:build :api:test -PkotlinVersion=${{ matrix.kotlin-version }} --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
 
+      # always(), not failure(): the reports are the only record of how many tests actually ran.
       - name: Upload test reports
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports-compiler-plugin
+          name: test-reports-kotlin-${{ matrix.kotlin-version }}
           path: |
             compiler-plugin/build/reports/tests/
             compiler-plugin/build/test-results/
-          retention-days: 7
-          if-no-files-found: ignore
-
-  api:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: 17
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Run tests
-        # -PskipDesktopNative: this job covers the JVM side only, see the compiler-plugin job.
-        run: ./gradlew :api:test --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
-
-      - name: Upload test reports
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports-api
-          path: |
             api/build/reports/tests/
             api/build/test-results/
           retention-days: 7
           if-no-files-found: ignore
-
-  gradle-plugin:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: 17
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Run tests
-        run: ./gradlew :gradle-plugin:test --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
 
   # The JSI-level suites: they drive a real Hermes runtime through :test-support, which needs the
   # desktop Hermes host from expo/hermes-test-environment. It is published only to mavenLocal, so

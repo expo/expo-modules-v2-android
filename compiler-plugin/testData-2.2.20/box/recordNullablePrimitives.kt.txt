@@ -1,0 +1,198 @@
+package io.github.expo.modules.v2.testdata
+
+@Record
+data class Boxes : Record {
+  val i: Int?
+    field = i
+    get
+
+  val l: Long?
+    field = l
+    get
+
+  val f: Float?
+    field = f
+    get
+
+  val d: Double?
+    field = d
+    get
+
+  val b: Boolean?
+    field = b
+    get
+
+  val s: String?
+    field = s
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Boxes> {
+    override val recordClass: Class<Boxes>
+      field = <get-java>(/* $receiver = Boxes::class */)
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Boxes", bufferSafe = true, fields = [RecordField(name = "i", type = #INT_BOXED_NULL, isOptional = false), RecordField(name = "l", type = #LONG_BOXED_NULL, isOptional = false), RecordField(name = "f", type = #FLOAT_BOXED_NULL, isOptional = false), RecordField(name = "d", type = #DOUBLE_BOXED_NULL, isOptional = false), RecordField(name = "b", type = #BOOLEAN_BOXED_NULL, isOptional = false), RecordField(name = "s", type = #STRING_NULL, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Boxes {
+      return Boxes(i = reader.readIntOrNull(), l = reader.readLongOrNull(), f = reader.readFloatOrNull(), d = reader.readDoubleOrNull(), b = reader.readBooleanOrNull(), s = reader.read<String?>(schema = #STRING_NULL))
+    }
+
+    override fun encode(value: Boxes, writer: RecordWriter) {
+      writer.write(value = value.<get-i>())
+      writer.write(value = value.<get-l>())
+      writer.write(value = value.<get-f>())
+      writer.write(value = value.<get-d>())
+      writer.write(value = value.<get-b>())
+      writer.write(value = value.<get-s>(), schema = #STRING_NULL)
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Boxes>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(i: Int?, l: Long?, f: Float?, d: Double?, b: Boolean?, s: String?) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Int? {
+    return <this>.#i
+  }
+
+  operator fun component2(): Long? {
+    return <this>.#l
+  }
+
+  operator fun component3(): Float? {
+    return <this>.#f
+  }
+
+  operator fun component4(): Double? {
+    return <this>.#d
+  }
+
+  operator fun component5(): Boolean? {
+    return <this>.#b
+  }
+
+  operator fun component6(): String? {
+    return <this>.#s
+  }
+
+  fun copy(i: Int? = <this>.#i, l: Long? = <this>.#l, f: Float? = <this>.#f, d: Double? = <this>.#d, b: Boolean? = <this>.#b, s: String? = <this>.#s): Boxes {
+    return Boxes(i = i, l = l, f = f, d = d, b = b, s = s)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Boxes -> return false
+    }
+    val tmp_0: Boxes = other /*as Boxes */
+    when {
+      EQEQ(arg0 = <this>.#i, arg1 = tmp_0.#i).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#l, arg1 = tmp_0.#l).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#f, arg1 = tmp_0.#f).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#d, arg1 = tmp_0.#d).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#b, arg1 = tmp_0.#b).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#s, arg1 = tmp_0.#s).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result: Int = when {
+      EQEQ(arg0 = <this>.#i, arg1 = null) -> 0
+      else -> <this>.#i.hashCode()
+    }
+    result = result.times(other = 31).plus(other = when {
+      EQEQ(arg0 = <this>.#l, arg1 = null) -> 0
+      else -> <this>.#l.hashCode()
+    })
+    result = result.times(other = 31).plus(other = when {
+      EQEQ(arg0 = <this>.#f, arg1 = null) -> 0
+      else -> <this>.#f.hashCode()
+    })
+    result = result.times(other = 31).plus(other = when {
+      EQEQ(arg0 = <this>.#d, arg1 = null) -> 0
+      else -> <this>.#d.hashCode()
+    })
+    result = result.times(other = 31).plus(other = when {
+      EQEQ(arg0 = <this>.#b, arg1 = null) -> 0
+      else -> <this>.#b.hashCode()
+    })
+    result = result.times(other = 31).plus(other = when {
+      EQEQ(arg0 = <this>.#s, arg1 = null) -> 0
+      else -> <this>.#s.hashCode()
+    })
+    return result
+  }
+
+  override fun toString(): String {
+    return "Boxes(" + "i=" + <this>.#i + ", " + "l=" + <this>.#l + ", " + "f=" + <this>.#f + ", " + "d=" + <this>.#d + ", " + "b=" + <this>.#b + ", " + "s=" + <this>.#s + ")"
+  }
+
+}
+
+fun box(): String {
+  val codec: RecordCodec<Boxes> = codecFor<Boxes>()
+  val full: Boxes = Boxes(i = 1, l = 2L, f = 3.5F, d = 4.5, b = true, s = "s")
+  val fullMap: Map<String, Any?> = codec.toMap(value = full)
+  when {
+    EQEQ(arg0 = fullMap, arg1 = mapOf<String, Any?>(pairs = [to<String, Int>(/* <this> = "i", */ that = 1), to<String, Long>(/* <this> = "l", */ that = 2L), to<String, Float>(/* <this> = "f", */ that = 3.5F), to<String, Double>(/* <this> = "d", */ that = 4.5), to<String, Boolean>(/* <this> = "b", */ that = true), to<String, String>(/* <this> = "s", */ that = "s")])).not() -> { // BLOCK
+      return "Fail: toMap gave " + fullMap
+    }
+  }
+  when {
+    EQEQ(arg0 = codec.fromMap(map = fullMap), arg1 = full).not() -> return "Fail: fromMap gave " + codec.fromMap(map = fullMap)
+  }
+  val empty: Boxes = Boxes(i = null, l = null, f = null, d = null, b = null, s = null)
+  val emptyMap: Map<String, Any?> = codec.toMap(value = empty)
+  when {
+    EQEQ(arg0 = emptyMap.<get-size>(), arg1 = 6).not() -> return "Fail: nulls dropped keys, got " + emptyMap
+  }
+  when {
+    any<Any?>(/* <this> = emptyMap.<get-values>(), */ predicate = local fun <anonymous>(it: Any?): Boolean {
+      return EQEQ(arg0 = it, arg1 = null).not()
+    }
+) -> return "Fail: nulls did not cross, got " + emptyMap
+  }
+  when {
+    EQEQ(arg0 = codec.fromMap(map = emptyMap), arg1 = empty).not() -> return "Fail: fromMap gave " + codec.fromMap(map = emptyMap)
+  }
+  return "OK"
+}
+

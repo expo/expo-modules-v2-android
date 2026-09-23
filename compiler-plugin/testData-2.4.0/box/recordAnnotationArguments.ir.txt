@@ -1,0 +1,1 @@
+../../testData-2.2.20/box/recordAnnotationArguments.ir.txt

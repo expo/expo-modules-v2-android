@@ -1,0 +1,127 @@
+// FILE: moduleIrOnlyMember.kt
+package io.github.expo.modules.v2.testdata
+
+@ExpoModule(name = "Instance")
+class DirectInstance : Module {
+  constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "echo", argTypes = [AnyType(descriptor = Long, useBuffer = false)], returns = AnyType(descriptor = Long, useBuffer = false), methodName = "echo")
+    return "Instance"
+  }
+
+  @JS
+  fun echo(value: Long): Long {
+    return value
+  }
+
+}
+
+@ExpoModule
+object Direct : Module {
+  @JS
+  val answer: Int
+    field = 42
+    get
+
+  @JS
+  var count: Int
+    field = 1
+    get
+    set
+
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "add", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "add")
+    builder.function(jsName = "scale", argTypes = [AnyType(descriptor = DoubleArray(isNullable = false), useBuffer = false), AnyType(descriptor = Double, useBuffer = false)], returns = AnyType(descriptor = Double, useBuffer = false), methodName = "scale")
+    builder.function(jsName = "identity", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = false)], returns = AnyType(descriptor = #ANY_NULL, useBuffer = false), methodName = "identity")
+    builder.function(jsName = "renamed", argTypes = [AnyType(descriptor = Bool, useBuffer = false)], returns = AnyType(descriptor = Bool, useBuffer = false), methodName = "original")
+    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "clear")
+    builder.property(jsName = "answer", type = AnyType(descriptor = Int, useBuffer = false), mutable = false, propertyName = "answer", setterType = AnyType(descriptor = Int, useBuffer = false))
+    builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = true, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false))
+    return "Direct"
+  }
+
+  @JS
+  fun add(a: Int, b: Int): Int {
+    return a.plus(other = b)
+  }
+
+  @JS
+  fun clear() {
+    return Unit
+  }
+
+  @JS
+  fun identity(value: Any?): Any? {
+    return value
+  }
+
+  fun internalHelper(): Int {
+    return 0
+  }
+
+  @JS(name = "renamed")
+  fun original(flag: Boolean): Boolean {
+    return flag.not()
+  }
+
+  @JS
+  fun scale(values: DoubleArray, by: Double): Double {
+    return sum(/* <this> = values */).times(other = by)
+  }
+
+}
+
+fun box(): String {
+  val method: @FlexibleNullability Method? = <get-java><Module>(/* <this> = Module::class */).getMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "io.github.expo.modules.v2.modules.ModuleBuilder")])
+  when {
+    EQEQ(arg0 = method /*!! Method */.getDeclaringClass(), arg1 = <get-java><Module>(/* <this> = Module::class */)).not() -> return "base lookup: " + method /*!! Method */.getDeclaringClass()
+  }
+  val generated: @FlexibleNullability Method? = <get-java><Direct>(/* <this> = Direct::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "io.github.expo.modules.v2.modules.ModuleBuilder")])
+  when {
+    EQEQ(arg0 = generated /*!! Method */.getReturnType(), arg1 = <get-java><String>(/* <this> = String::class */)).not() -> { // BLOCK
+      return "expected a String return, got " + generated /*!! Method */.getReturnType()
+    }
+  }
+  <get-java><Direct>(/* <this> = Direct::class */).getDeclaredMethod(p0 = "add", p1 = [<get-javaPrimitiveType><Int>(/* <this> = Int::class */), <get-javaPrimitiveType><Int>(/* <this> = Int::class */)]) /*~> Unit */
+  <get-java><Direct>(/* <this> = Direct::class */).getDeclaredMethod(p0 = "clear") /*~> Unit */
+  <get-java><Direct>(/* <this> = Direct::class */).getDeclaredMethod(p0 = "getAnswer") /*~> Unit */
+  <get-java><Direct>(/* <this> = Direct::class */).getDeclaredMethod(p0 = "setCount", p1 = [<get-javaPrimitiveType><Int>(/* <this> = Int::class */)]) /*~> Unit */
+  <get-java><DirectInstance>(/* <this> = DirectInstance::class */).getDeclaredMethod(p0 = "echo", p1 = [<get-javaPrimitiveType><Long>(/* <this> = Long::class */)]) /*~> Unit */
+  when {
+    any<@FlexibleNullability Method?>(/* <this> = <get-java><Direct>(/* <this> = Direct::class */).getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return contains(/* <this> = it /*!! Method */.getName() /*!! String */, */ other = "__trampoline")
+    }
+) -> { // BLOCK
+      return "a direct-only module should have no trampolines"
+    }
+  }
+  return "OK"
+}
+
+// FILE: io_github_expo_modules_v2_testdata_DirectInstance_32f80e3e.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_DirectInstance_32f80e3e {
+  abstract fun module(): DirectInstance
+
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Direct_f6f5ae89.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Direct_f6f5ae89 {
+  abstract fun module(): Direct
+
+}
+

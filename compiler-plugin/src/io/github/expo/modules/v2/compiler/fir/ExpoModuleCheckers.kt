@@ -5,7 +5,6 @@ import io.github.expo.modules.v2.compiler.fir.diagnostics.ExpoModuleDiagnostics
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.DeclarationCheckers
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirRegularClassChecker
@@ -21,8 +20,8 @@ class ExpoModuleCheckers(session: FirSession) : FirAdditionalCheckersExtension(s
     override val regularClassCheckers: Set<FirRegularClassChecker> = setOf(ExpoModuleClassChecker)
   }
 
-  private object ExpoModuleClassChecker : FirRegularClassChecker(MppCheckerKind.Common) {
-    override fun check(
+  private object ExpoModuleClassChecker : ExpoDeclarationChecker<FirRegularClass>() {
+    override fun checkDeclaration(
       declaration: FirRegularClass,
       context: CheckerContext,
       reporter: DiagnosticReporter,

@@ -1,0 +1,552 @@
+FILE fqName:io.github.expo.modules.v2.testdata fileName:/recordAnnotationArguments.kt
+  CLASS CLASS name:Defaults modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
+    annotations:
+      Record(bufferSafe = <null>)
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Defaults
+    PROPERTY name:x visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:x type:kotlin.Double visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'x: kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults.<init>' type=kotlin.Double origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-x> visibility:public modality:FINAL returnType:kotlin.Double
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults
+        correspondingProperty: PROPERTY name:x visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-x> (): kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:x type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.<get-x>' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+    PROPERTY name:y visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:y type:kotlin.Double visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'y: kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults.<init>' type=kotlin.Double origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-y> visibility:public modality:FINAL returnType:kotlin.Double
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults
+        correspondingProperty: PROPERTY name:y visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-y> (): kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:y type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.<get-y>' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+    CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults>]
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2
+      PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+        overridden:
+          public abstract recordClass: java.lang.Class<T of io.github.expo.modules.v2.records.RecordCodec> declared in io.github.expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<io.github.expo.modules.v2.testdata.Defaults> visibility:private [final]
+          EXPRESSION_BODY
+            CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Defaults> origin=null
+              ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Defaults modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL returnType:java.lang.Class<io.github.expo.modules.v2.testdata.Defaults>
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2
+          correspondingProperty: PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-recordClass> (): java.lang.Class<T of io.github.expo.modules.v2.records.RecordCodec> declared in io.github.expo.modules.v2.records.RecordCodec
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<io.github.expo.modules.v2.testdata.Defaults> declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<io.github.expo.modules.v2.testdata.Defaults> visibility:private [final]' type=java.lang.Class<io.github.expo.modules.v2.testdata.Defaults> origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2 declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2.<get-recordClass>' type=io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2 origin=null
+      PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+        overridden:
+          public abstract schema: io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:schema type:io.github.expo.modules.v2.records.RecordSchema visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: io.github.expo.modules.v2.records.RecordField) declared in io.github.expo.modules.v2.records.RecordSchema' type=io.github.expo.modules.v2.records.RecordSchema origin=null
+              ARG name: CONST String type=kotlin.String value="Defaults"
+              ARG bufferSafe: CONST Boolean type=kotlin.Boolean value=true
+              ARG fields: VARARG type=kotlin.Array<io.github.expo.modules.v2.records.RecordField> varargElementType=io.github.expo.modules.v2.records.RecordField
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: io.github.expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in io.github.expo.modules.v2.records.RecordField' type=io.github.expo.modules.v2.records.RecordField origin=null
+                  ARG name: CONST String type=kotlin.String value="x"
+                  ARG type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Double modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Double
+                  ARG isOptional: CONST Boolean type=kotlin.Boolean value=false
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: io.github.expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in io.github.expo.modules.v2.records.RecordField' type=io.github.expo.modules.v2.records.RecordField origin=null
+                  ARG name: CONST String type=kotlin.String value="y"
+                  ARG type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Double modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Double
+                  ARG isOptional: CONST Boolean type=kotlin.Boolean value=false
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.records.RecordSchema
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2
+          correspondingProperty: PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:io.github.expo.modules.v2.records.RecordSchema visibility:private [final]' type=io.github.expo.modules.v2.records.RecordSchema origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2 declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2.<get-schema>' type=io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2 origin=null
+      CONSTRUCTOR GENERATED[io.github.expo.modules.v2.compiler.RecordKey] visibility:public returnType:io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2 [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults>]' type=kotlin.Unit
+          CALL 'public final fun register (codec: io.github.expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in io.github.expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.records.RecordRegistry
+            ARG codec: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2 declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2 origin=null
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN returnType:io.github.expo.modules.v2.testdata.Defaults [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults>
+        VALUE_PARAMETER kind:Regular name:map index:1 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
+        overridden:
+          public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults>
+        VALUE_PARAMETER kind:Regular name:value index:1 type:io.github.expo.modules.v2.testdata.Defaults
+        overridden:
+          public open fun toMap (value: T of io.github.expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Defaults
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[io.github.expo.modules.v2.compiler.RecordKey] kind:Regular name:reader index:1 type:io.github.expo.modules.v2.records.readers.RecordReader
+        overridden:
+          public abstract fun decode (reader: io.github.expo.modules.v2.records.readers.RecordReader): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec
+        BLOCK_BODY
+          RETURN type=io.github.expo.modules.v2.testdata.Defaults from='public final fun decode (reader: io.github.expo.modules.v2.records.readers.RecordReader): io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2'
+            CONSTRUCTOR_CALL 'public constructor <init> (x: kotlin.Double, y: kotlin.Double) declared in io.github.expo.modules.v2.testdata.Defaults' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+              ARG x: CALL 'public abstract fun readDouble (): kotlin.Double declared in io.github.expo.modules.v2.records.readers.RecordReader' type=kotlin.Double origin=null
+                ARG <this>: GET_VAR 'reader: io.github.expo.modules.v2.records.readers.RecordReader declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2.decode' type=io.github.expo.modules.v2.records.readers.RecordReader origin=null
+              ARG y: CALL 'public abstract fun readDouble (): kotlin.Double declared in io.github.expo.modules.v2.records.readers.RecordReader' type=kotlin.Double origin=null
+                ARG <this>: GET_VAR 'reader: io.github.expo.modules.v2.records.readers.RecordReader declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2.decode' type=io.github.expo.modules.v2.records.readers.RecordReader origin=null
+      FUN GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL returnType:kotlin.Unit
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[io.github.expo.modules.v2.compiler.RecordKey] kind:Regular name:value index:1 type:io.github.expo.modules.v2.testdata.Defaults
+        VALUE_PARAMETER GENERATED[io.github.expo.modules.v2.compiler.RecordKey] kind:Regular name:writer index:2 type:io.github.expo.modules.v2.records.writers.RecordWriter
+        overridden:
+          public abstract fun encode (value: T of io.github.expo.modules.v2.records.RecordCodec, writer: io.github.expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in io.github.expo.modules.v2.records.RecordCodec
+        BLOCK_BODY
+          CALL 'public abstract fun write (value: kotlin.Double): kotlin.Unit declared in io.github.expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'writer: io.github.expo.modules.v2.records.writers.RecordWriter declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-x> (): kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults' type=kotlin.Double origin=null
+              ARG <this>: GET_VAR 'value: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+          CALL 'public abstract fun write (value: kotlin.Double): kotlin.Unit declared in io.github.expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'writer: io.github.expo.modules.v2.records.writers.RecordWriter declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-y> (): kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults' type=kotlin.Double origin=null
+              ARG <this>: GET_VAR 'value: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+    CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Defaults.Companion
+      PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults> visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.Defaults.RecordCodec$ExpoModulesV2 origin=null
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults>
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults.Companion
+          correspondingProperty: PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults> declared in io.github.expo.modules.v2.testdata.Defaults.Companion'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults> visibility:private [final]' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults> origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults.Companion declared in io.github.expo.modules.v2.testdata.Defaults.Companion.<get-recordCodec$ExpoModulesV2>' type=io.github.expo.modules.v2.testdata.Defaults.Companion origin=null
+      CONSTRUCTOR GENERATED[io.github.expo.modules.v2.compiler.RecordKey] visibility:private returnType:io.github.expo.modules.v2.testdata.Defaults.Companion [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in kotlin.Any
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun toString (): kotlin.String declared in kotlin.Any
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Defaults [primary]
+      VALUE_PARAMETER kind:Regular name:x index:0 type:kotlin.Double
+      VALUE_PARAMETER kind:Regular name:y index:1 type:kotlin.Double
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Defaults modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]' type=kotlin.Unit
+    FUN GENERATED_DATA_CLASS_MEMBER name:component1 visibility:public modality:FINAL returnType:kotlin.Double [operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component1 (): kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:x type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.component1' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:component2 visibility:public modality:FINAL returnType:kotlin.Double [operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component2 (): kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:y type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.component2' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Defaults
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults
+      VALUE_PARAMETER kind:Regular name:x index:1 type:kotlin.Double
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:x type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.copy' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+      VALUE_PARAMETER kind:Regular name:y index:2 type:kotlin.Double
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:y type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.copy' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun copy (x: kotlin.Double, y: kotlin.Double): io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults'
+          CONSTRUCTOR_CALL 'public constructor <init> (x: kotlin.Double, y: kotlin.Double) declared in io.github.expo.modules.v2.testdata.Defaults' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+            ARG x: GET_VAR 'x: kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults.copy' type=kotlin.Double origin=null
+            ARG y: GET_VAR 'y: kotlin.Double declared in io.github.expo.modules.v2.testdata.Defaults.copy' type=kotlin.Double origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.records.Record
+      BLOCK_BODY
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun EQEQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQEQ
+              ARG arg0: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.equals' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+              ARG arg1: GET_VAR 'other: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Defaults.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Defaults'
+              CONST Boolean type=kotlin.Boolean value=true
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=io.github.expo.modules.v2.testdata.Defaults
+              GET_VAR 'other: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Defaults.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Defaults'
+              CONST Boolean type=kotlin.Boolean value=false
+        VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:io.github.expo.modules.v2.testdata.Defaults [val]
+          TYPE_OP type=io.github.expo.modules.v2.testdata.Defaults origin=IMPLICIT_CAST typeOperand=io.github.expo.modules.v2.testdata.Defaults
+            GET_VAR 'other: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Defaults.equals' type=kotlin.Any? origin=null
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:x type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.equals' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+                ARG arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:x type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+                  receiver: GET_VAR 'val tmp_0: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.equals' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Defaults'
+              CONST Boolean type=kotlin.Boolean value=false
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:y type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.equals' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+                ARG arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:y type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+                  receiver: GET_VAR 'val tmp_0: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.equals' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Defaults'
+              CONST Boolean type=kotlin.Boolean value=false
+        RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Defaults'
+          CONST Boolean type=kotlin.Boolean value=true
+    FUN GENERATED_DATA_CLASS_MEMBER name:hashCode visibility:public modality:OPEN returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.records.Record
+      BLOCK_BODY
+        VAR name:result type:kotlin.Int [var]
+          CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Double' type=kotlin.Int origin=null
+            ARG <this>: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:x type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.hashCode' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+        SET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Defaults.hashCode' type=kotlin.Unit origin=EQ
+          CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+            ARG <this>: CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=null
+              ARG <this>: GET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Defaults.hashCode' type=kotlin.Int origin=null
+              ARG other: CONST Int type=kotlin.Int value=31
+            ARG other: CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Double' type=kotlin.Int origin=null
+              ARG <this>: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:y type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.hashCode' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+        RETURN type=kotlin.Nothing from='public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Defaults'
+          GET_VAR 'var result: kotlin.Int declared in io.github.expo.modules.v2.testdata.Defaults.hashCode' type=kotlin.Int origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:toString visibility:public modality:OPEN returnType:kotlin.String
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Defaults
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.records.Record
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.testdata.Defaults'
+          STRING_CONCATENATION type=kotlin.String
+            CONST String type=kotlin.String value="Defaults("
+            CONST String type=kotlin.String value="x="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:x type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.toString' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+            CONST String type=kotlin.String value=", "
+            CONST String type=kotlin.String value="y="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:y type:kotlin.Double visibility:private [final]' type=kotlin.Double origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Defaults declared in io.github.expo.modules.v2.testdata.Defaults.toString' type=io.github.expo.modules.v2.testdata.Defaults origin=null
+            CONST String type=kotlin.String value=")"
+  CLASS CLASS name:Unsafe modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]
+    annotations:
+      Record(bufferSafe = false)
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Unsafe
+    PROPERTY name:payload visibility:public modality:FINAL [val]
+      FIELD PROPERTY_BACKING_FIELD name:payload type:kotlin.Any? visibility:private [final]
+        EXPRESSION_BODY
+          GET_VAR 'payload: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Unsafe.<init>' type=kotlin.Any? origin=INITIALIZE_PROPERTY_FROM_PARAMETER
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-payload> visibility:public modality:FINAL returnType:kotlin.Any?
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe
+        correspondingProperty: PROPERTY name:payload visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-payload> (): kotlin.Any? declared in io.github.expo.modules.v2.testdata.Unsafe'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:payload type:kotlin.Any? visibility:private [final]' type=kotlin.Any? origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.<get-payload>' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+    CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe>]
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2
+      PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+        overridden:
+          public abstract recordClass: java.lang.Class<T of io.github.expo.modules.v2.records.RecordCodec> declared in io.github.expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<io.github.expo.modules.v2.testdata.Unsafe> visibility:private [final]
+          EXPRESSION_BODY
+            CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Unsafe> origin=null
+              ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Unsafe modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]' type=kotlin.reflect.KClass<*>
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordClass> visibility:public modality:FINAL returnType:java.lang.Class<io.github.expo.modules.v2.testdata.Unsafe>
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2
+          correspondingProperty: PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordClass visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-recordClass> (): java.lang.Class<T of io.github.expo.modules.v2.records.RecordCodec> declared in io.github.expo.modules.v2.records.RecordCodec
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordClass> (): java.lang.Class<io.github.expo.modules.v2.testdata.Unsafe> declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordClass type:java.lang.Class<io.github.expo.modules.v2.testdata.Unsafe> visibility:private [final]' type=java.lang.Class<io.github.expo.modules.v2.testdata.Unsafe> origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2 declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2.<get-recordClass>' type=io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2 origin=null
+      PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+        overridden:
+          public abstract schema: io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec
+        FIELD PROPERTY_BACKING_FIELD name:schema type:io.github.expo.modules.v2.records.RecordSchema visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, bufferSafe: kotlin.Boolean, vararg fields: io.github.expo.modules.v2.records.RecordField) declared in io.github.expo.modules.v2.records.RecordSchema' type=io.github.expo.modules.v2.records.RecordSchema origin=null
+              ARG name: CONST String type=kotlin.String value="Unsafe"
+              ARG bufferSafe: CONST Boolean type=kotlin.Boolean value=false
+              ARG fields: VARARG type=kotlin.Array<io.github.expo.modules.v2.records.RecordField> varargElementType=io.github.expo.modules.v2.records.RecordField
+                CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, type: io.github.expo.modules.v2.types.TypeDescriptor, isOptional: kotlin.Boolean) declared in io.github.expo.modules.v2.records.RecordField' type=io.github.expo.modules.v2.records.RecordField origin=null
+                  ARG name: CONST String type=kotlin.String value="payload"
+                  ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:ANY_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                  ARG isOptional: CONST Boolean type=kotlin.Boolean value=false
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-schema> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.records.RecordSchema
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2
+          correspondingProperty: PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:schema visibility:public modality:FINAL [val]
+          overridden:
+            public abstract fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:schema type:io.github.expo.modules.v2.records.RecordSchema visibility:private [final]' type=io.github.expo.modules.v2.records.RecordSchema origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2 declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2.<get-schema>' type=io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2 origin=null
+      CONSTRUCTOR GENERATED[io.github.expo.modules.v2.compiler.RecordKey] visibility:public returnType:io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2 [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] CLASS name:RecordCodec$ExpoModulesV2 modality:FINAL visibility:private superTypes:[io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe>]' type=kotlin.Unit
+          CALL 'public final fun register (codec: io.github.expo.modules.v2.records.RecordCodec<*>): kotlin.Unit declared in io.github.expo.modules.v2.records.RecordRegistry' type=kotlin.Unit origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:RecordRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.records.RecordRegistry
+            ARG codec: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2 declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2 origin=null
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN FAKE_OVERRIDE name:fromMap visibility:public modality:OPEN returnType:io.github.expo.modules.v2.testdata.Unsafe [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe>
+        VALUE_PARAMETER kind:Regular name:map index:1 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>
+        overridden:
+          public open fun fromMap (map: kotlin.collections.Map<kotlin.String, kotlin.Any?>): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN FAKE_OVERRIDE name:toMap visibility:public modality:OPEN returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?> [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe>
+        VALUE_PARAMETER kind:Regular name:value index:1 type:io.github.expo.modules.v2.testdata.Unsafe
+        overridden:
+          public open fun toMap (value: T of io.github.expo.modules.v2.records.RecordCodec): kotlin.collections.Map<kotlin.String, kotlin.Any?> declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.records.RecordCodec
+      FUN GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:decode visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Unsafe
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[io.github.expo.modules.v2.compiler.RecordKey] kind:Regular name:reader index:1 type:io.github.expo.modules.v2.records.readers.RecordReader
+        overridden:
+          public abstract fun decode (reader: io.github.expo.modules.v2.records.readers.RecordReader): T of io.github.expo.modules.v2.records.RecordCodec declared in io.github.expo.modules.v2.records.RecordCodec
+        BLOCK_BODY
+          RETURN type=io.github.expo.modules.v2.testdata.Unsafe from='public final fun decode (reader: io.github.expo.modules.v2.records.readers.RecordReader): io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2'
+            CONSTRUCTOR_CALL 'public constructor <init> (payload: kotlin.Any?) declared in io.github.expo.modules.v2.testdata.Unsafe' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+              ARG payload: CALL 'public abstract fun read <T> (schema: io.github.expo.modules.v2.types.TypeDescriptor): T of io.github.expo.modules.v2.records.readers.RecordReader.read declared in io.github.expo.modules.v2.records.readers.RecordReader' type=kotlin.Any? origin=null
+                TYPE_ARG T: kotlin.Any?
+                ARG <this>: GET_VAR 'reader: io.github.expo.modules.v2.records.readers.RecordReader declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2.decode' type=io.github.expo.modules.v2.records.readers.RecordReader origin=null
+                ARG schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:ANY_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+      FUN GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:encode visibility:public modality:FINAL returnType:kotlin.Unit
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2
+        VALUE_PARAMETER GENERATED[io.github.expo.modules.v2.compiler.RecordKey] kind:Regular name:value index:1 type:io.github.expo.modules.v2.testdata.Unsafe
+        VALUE_PARAMETER GENERATED[io.github.expo.modules.v2.compiler.RecordKey] kind:Regular name:writer index:2 type:io.github.expo.modules.v2.records.writers.RecordWriter
+        overridden:
+          public abstract fun encode (value: T of io.github.expo.modules.v2.records.RecordCodec, writer: io.github.expo.modules.v2.records.writers.RecordWriter): kotlin.Unit declared in io.github.expo.modules.v2.records.RecordCodec
+        BLOCK_BODY
+          CALL 'public abstract fun write (value: kotlin.Any?, schema: io.github.expo.modules.v2.types.TypeDescriptor): kotlin.Unit declared in io.github.expo.modules.v2.records.writers.RecordWriter' type=kotlin.Unit origin=null
+            ARG <this>: GET_VAR 'writer: io.github.expo.modules.v2.records.writers.RecordWriter declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.records.writers.RecordWriter origin=null
+            ARG value: CALL 'public final fun <get-payload> (): kotlin.Any? declared in io.github.expo.modules.v2.testdata.Unsafe' type=kotlin.Any? origin=null
+              ARG <this>: GET_VAR 'value: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2.encode' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+            ARG schema: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:ANY_NULL type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+    CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]
+      thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Unsafe.Companion
+      PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+        FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe> visibility:private [final]
+          EXPRESSION_BODY
+            CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.Unsafe.RecordCodec$ExpoModulesV2 origin=null
+        FUN DEFAULT_PROPERTY_ACCESSOR name:<get-recordCodec$ExpoModulesV2> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe>
+          VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe.Companion
+          correspondingProperty: PROPERTY GENERATED[io.github.expo.modules.v2.compiler.RecordKey] name:recordCodec$ExpoModulesV2 visibility:public modality:FINAL [val]
+          BLOCK_BODY
+            RETURN type=kotlin.Nothing from='public final fun <get-recordCodec$ExpoModulesV2> (): io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe> declared in io.github.expo.modules.v2.testdata.Unsafe.Companion'
+              GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:recordCodec$ExpoModulesV2 type:io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe> visibility:private [final]' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe> origin=null
+                receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe.Companion declared in io.github.expo.modules.v2.testdata.Unsafe.Companion.<get-recordCodec$ExpoModulesV2>' type=io.github.expo.modules.v2.testdata.Unsafe.Companion origin=null
+      CONSTRUCTOR GENERATED[io.github.expo.modules.v2.compiler.RecordKey] visibility:private returnType:io.github.expo.modules.v2.testdata.Unsafe.Companion [primary]
+        BLOCK_BODY
+          DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+          INSTANCE_INITIALIZER_CALL classDescriptor='CLASS GENERATED[io.github.expo.modules.v2.compiler.RecordKey] OBJECT name:Companion modality:FINAL visibility:public [companion] superTypes:[kotlin.Any]' type=kotlin.Unit
+      FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+        overridden:
+          public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+      FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun hashCode (): kotlin.Int declared in kotlin.Any
+      FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+        overridden:
+          public open fun toString (): kotlin.String declared in kotlin.Any
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Unsafe [primary]
+      VALUE_PARAMETER kind:Regular name:payload index:0 type:kotlin.Any?
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Unsafe modality:FINAL visibility:public [data] superTypes:[kotlin.Any; io.github.expo.modules.v2.records.Record]' type=kotlin.Unit
+    FUN GENERATED_DATA_CLASS_MEMBER name:component1 visibility:public modality:FINAL returnType:kotlin.Any? [operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun component1 (): kotlin.Any? declared in io.github.expo.modules.v2.testdata.Unsafe'
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:payload type:kotlin.Any? visibility:private [final]' type=kotlin.Any? origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.component1' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:copy visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Unsafe
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe
+      VALUE_PARAMETER kind:Regular name:payload index:1 type:kotlin.Any?
+        EXPRESSION_BODY
+          GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:payload type:kotlin.Any? visibility:private [final]' type=kotlin.Any? origin=null
+            receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.copy' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun copy (payload: kotlin.Any?): io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe'
+          CONSTRUCTOR_CALL 'public constructor <init> (payload: kotlin.Any?) declared in io.github.expo.modules.v2.testdata.Unsafe' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+            ARG payload: GET_VAR 'payload: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Unsafe.copy' type=kotlin.Any? origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.records.Record
+      BLOCK_BODY
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun EQEQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQEQ
+              ARG arg0: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.equals' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+              ARG arg1: GET_VAR 'other: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Unsafe.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Unsafe'
+              CONST Boolean type=kotlin.Boolean value=true
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: TYPE_OP type=kotlin.Boolean origin=NOT_INSTANCEOF typeOperand=io.github.expo.modules.v2.testdata.Unsafe
+              GET_VAR 'other: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Unsafe.equals' type=kotlin.Any? origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Unsafe'
+              CONST Boolean type=kotlin.Boolean value=false
+        VAR IR_TEMPORARY_VARIABLE name:tmp_1 type:io.github.expo.modules.v2.testdata.Unsafe [val]
+          TYPE_OP type=io.github.expo.modules.v2.testdata.Unsafe origin=IMPLICIT_CAST typeOperand=io.github.expo.modules.v2.testdata.Unsafe
+            GET_VAR 'other: kotlin.Any? declared in io.github.expo.modules.v2.testdata.Unsafe.equals' type=kotlin.Any? origin=null
+        WHEN type=kotlin.Unit origin=null
+          BRANCH
+            if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+              ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:payload type:kotlin.Any? visibility:private [final]' type=kotlin.Any? origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.equals' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+                ARG arg1: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:payload type:kotlin.Any? visibility:private [final]' type=kotlin.Any? origin=null
+                  receiver: GET_VAR 'val tmp_1: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.equals' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+            then: RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Unsafe'
+              CONST Boolean type=kotlin.Boolean value=false
+        RETURN type=kotlin.Nothing from='public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.testdata.Unsafe'
+          CONST Boolean type=kotlin.Boolean value=true
+    FUN GENERATED_DATA_CLASS_MEMBER name:hashCode visibility:public modality:OPEN returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.records.Record
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Unsafe'
+          WHEN type=kotlin.Int origin=null
+            BRANCH
+              if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                ARG arg0: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:payload type:kotlin.Any? visibility:private [final]' type=kotlin.Any? origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.hashCode' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+                ARG arg1: CONST Null type=kotlin.Nothing? value=null
+              then: CONST Int type=kotlin.Int value=0
+            BRANCH
+              if: CONST Boolean type=kotlin.Boolean value=true
+              then: CALL 'public open fun hashCode (): kotlin.Int declared in kotlin.Any' type=kotlin.Int origin=null
+                ARG <this>: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:payload type:kotlin.Any? visibility:private [final]' type=kotlin.Any? origin=null
+                  receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.hashCode' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+    FUN GENERATED_DATA_CLASS_MEMBER name:toString visibility:public modality:OPEN returnType:kotlin.String
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Unsafe
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.records.Record
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.testdata.Unsafe'
+          STRING_CONCATENATION type=kotlin.String
+            CONST String type=kotlin.String value="Unsafe("
+            CONST String type=kotlin.String value="payload="
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:payload type:kotlin.Any? visibility:private [final]' type=kotlin.Any? origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Unsafe declared in io.github.expo.modules.v2.testdata.Unsafe.toString' type=io.github.expo.modules.v2.testdata.Unsafe origin=null
+            CONST String type=kotlin.String value=")"
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    BLOCK_BODY
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'public final fun <get-name> (): kotlin.String declared in io.github.expo.modules.v2.records.RecordSchema' type=kotlin.String origin=GET_PROPERTY
+                ARG <this>: CALL 'public abstract fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec' type=io.github.expo.modules.v2.records.RecordSchema origin=GET_PROPERTY
+                  ARG <this>: CALL 'public final fun codecFor <T> (): io.github.expo.modules.v2.records.RecordCodec<T of io.github.expo.modules.v2.records.codecFor> declared in io.github.expo.modules.v2.records' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults> origin=null
+                    TYPE_ARG T: io.github.expo.modules.v2.testdata.Defaults
+              ARG arg1: CONST String type=kotlin.String value="Defaults"
+          then: BLOCK type=kotlin.Unit origin=null
+            RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+              STRING_CONCATENATION type=kotlin.String
+                CONST String type=kotlin.String value="Fail: name is "
+                CALL 'public final fun <get-name> (): kotlin.String declared in io.github.expo.modules.v2.records.RecordSchema' type=kotlin.String origin=GET_PROPERTY
+                  ARG <this>: CALL 'public abstract fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec' type=io.github.expo.modules.v2.records.RecordSchema origin=GET_PROPERTY
+                    ARG <this>: CALL 'public final fun codecFor <T> (): io.github.expo.modules.v2.records.RecordCodec<T of io.github.expo.modules.v2.records.codecFor> declared in io.github.expo.modules.v2.records' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults> origin=null
+                      TYPE_ARG T: io.github.expo.modules.v2.testdata.Defaults
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+            ARG <this>: CALL 'public final fun <get-bufferSafe> (): kotlin.Boolean declared in io.github.expo.modules.v2.records.RecordSchema' type=kotlin.Boolean origin=GET_PROPERTY
+              ARG <this>: CALL 'public abstract fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec' type=io.github.expo.modules.v2.records.RecordSchema origin=GET_PROPERTY
+                ARG <this>: CALL 'public final fun codecFor <T> (): io.github.expo.modules.v2.records.RecordCodec<T of io.github.expo.modules.v2.records.codecFor> declared in io.github.expo.modules.v2.records' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Defaults> origin=null
+                  TYPE_ARG T: io.github.expo.modules.v2.testdata.Defaults
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+            CONST String type=kotlin.String value="Fail: Defaults lost its default bufferSafe"
+      VAR name:unsafe type:io.github.expo.modules.v2.records.RecordSchema [val]
+        CALL 'public abstract fun <get-schema> (): io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.records.RecordCodec' type=io.github.expo.modules.v2.records.RecordSchema origin=GET_PROPERTY
+          ARG <this>: CALL 'public final fun codecFor <T> (): io.github.expo.modules.v2.records.RecordCodec<T of io.github.expo.modules.v2.records.codecFor> declared in io.github.expo.modules.v2.records' type=io.github.expo.modules.v2.records.RecordCodec<io.github.expo.modules.v2.testdata.Unsafe> origin=null
+            TYPE_ARG T: io.github.expo.modules.v2.testdata.Unsafe
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun <get-bufferSafe> (): kotlin.Boolean declared in io.github.expo.modules.v2.records.RecordSchema' type=kotlin.Boolean origin=GET_PROPERTY
+            ARG <this>: GET_VAR 'val unsafe: io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.records.RecordSchema origin=null
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+            CONST String type=kotlin.String value="Fail: Unsafe is still bufferSafe"
+      WHEN type=kotlin.Unit origin=IF
+        BRANCH
+          if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+            ARG <this>: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+              ARG arg0: CALL 'public final fun <get-name> (): kotlin.String declared in io.github.expo.modules.v2.records.RecordSchema' type=kotlin.String origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'val unsafe: io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.records.RecordSchema origin=null
+              ARG arg1: CONST String type=kotlin.String value="Unsafe"
+          then: RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+            STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="Fail: Unsafe name is "
+              CALL 'public final fun <get-name> (): kotlin.String declared in io.github.expo.modules.v2.records.RecordSchema' type=kotlin.String origin=GET_PROPERTY
+                ARG <this>: GET_VAR 'val unsafe: io.github.expo.modules.v2.records.RecordSchema declared in io.github.expo.modules.v2.testdata.box' type=io.github.expo.modules.v2.records.RecordSchema origin=null
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+        CONST String type=kotlin.String value="OK"

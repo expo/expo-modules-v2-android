@@ -1,0 +1,188 @@
+// MODULE: producer
+// FILE: producer.kt
+package io.github.expo.modules.v2.testdata.producer
+
+@ExpoModule(name = "Renamed")
+class Second : Module {
+  constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Renamed"
+  }
+
+}
+
+@ExpoModule
+object First : Module {
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "one", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "one")
+    return "First"
+  }
+
+  @JS
+  fun one(): Int {
+    return 1
+  }
+
+}
+
+object Outer {
+  @ExpoModule
+  object Nested : Module {
+    private constructor() /* primary */ {
+      super/*Module*/()
+      /* <init>() */
+
+    }
+
+    override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+      return "Nested"
+    }
+
+  }
+
+  private constructor() /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+// FILE: io_github_expo_modules_v2_testdata_producer_First_c84dcfb4.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_First_c84dcfb4 {
+  abstract fun module(): First
+
+}
+
+// FILE: io_github_expo_modules_v2_testdata_producer_Outer_Nested_1df67866.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_Outer_Nested_1df67866 {
+  abstract fun module(): Nested
+
+}
+
+// FILE: io_github_expo_modules_v2_testdata_producer_Second_575be7f0.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_Second_575be7f0 {
+  abstract fun module(): Second
+
+}
+
+// MODULE: consumer
+// FILE: consumer.kt
+package io.github.expo.modules.v2.testdata.consumer
+
+@ExpoModule
+object Local : Module {
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Local"
+  }
+
+}
+
+fun box(): String {
+  val modules: List<Class<out Module>> = discovered()
+  val expected: List<Class<out Module>> = listOf<Class<out Module>>(elements = [<get-java><First>(/* <this> = First::class */), <get-java><Second>(/* <this> = Second::class */), <get-java><Nested>(/* <this> = Nested::class */), <get-java><Local>(/* <this> = Local::class */)])
+  val missing: List<Class<out Module>> = filterNot<Class<out Module>>(/* <this> = expected, */ predicate = local fun <anonymous>(it: Class<out Module>): Boolean {
+    return modules.contains(element = it)
+  }
+)
+  when {
+    isNotEmpty<Class<out Module>>(/* <this> = missing */) -> return "missing: " + map<Class<out Module>, @FlexibleNullability String?>(/* <this> = missing, */ transform = local fun <anonymous>(it: Class<out Module>): @FlexibleNullability String? {
+      return it.getName()
+    }
+) + " in " + map<Class<out Module>, @FlexibleNullability String?>(/* <this> = modules, */ transform = local fun <anonymous>(it: Class<out Module>): @FlexibleNullability String? {
+      return it.getName()
+    }
+)
+  }
+  val unexpected: List<Class<out Module>> = filterNot<Class<out Module>>(/* <this> = modules, */ predicate = local fun <anonymous>(it: Class<out Module>): Boolean {
+    return expected.contains(element = it)
+  }
+)
+  when {
+    isNotEmpty<Class<out Module>>(/* <this> = unexpected */) -> return "unexpected: " + map<Class<out Module>, @FlexibleNullability String?>(/* <this> = unexpected, */ transform = local fun <anonymous>(it: Class<out Module>): @FlexibleNullability String? {
+      return it.getName()
+    }
+)
+  }
+  when {
+    EQEQ(arg0 = modules.<get-size>(), arg1 = distinct<Class<out Module>>(/* <this> = modules */).<get-size>()).not() -> return "duplicates in " + map<Class<out Module>, @FlexibleNullability String?>(/* <this> = modules, */ transform = local fun <anonymous>(it: Class<out Module>): @FlexibleNullability String? {
+      return it.getName()
+    }
+)
+  }
+  val hints: List<@FlexibleNullability Class<*>?> = map<Class<out Module>, @FlexibleNullability Class<*>?>(/* <this> = filter<Class<out Module>>(/* <this> = modules, */ predicate = local fun <anonymous>(it: Class<out Module>): Boolean {
+    return EQEQ(arg0 = it, arg1 = <get-java><Local>(/* <this> = Local::class */)).not()
+  }
+), */ transform = local fun <anonymous>(module: Class<out Module>): @FlexibleNullability Class<*>? {
+    return forName(p0 = "io.github.expo.modules.v2.hints.".plus(other = hintNameOf(module = module)))
+  }
+)
+  { // BLOCK
+    val tmp_0: Iterator<@FlexibleNullability Class<*>?> = hints.iterator()
+    while (tmp_0.hasNext()) { // BLOCK
+      val hint: @FlexibleNullability Class<*>? = tmp_0.next()
+      { // BLOCK
+        when {
+          hint /*!! Class<*> */.isInterface().not() -> return hint /*!! Class<*> */.getName() + " is not an interface"
+        }
+        val members: @FlexibleNullability @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?>? = hint /*!! Class<*> */.getDeclaredMethods()
+        when {
+          when {
+            EQEQ(arg0 = members /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */.<get-size>(), arg1 = 1).not() -> true
+            else -> EQEQ(arg0 = members /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */.get(index = 0) /*!! Method */.getName(), arg1 = "module").not()
+          } -> { // BLOCK
+            return hint /*!! Class<*> */.getName() + " declares " + map<@FlexibleNullability Method?, @FlexibleNullability String?>(/* <this> = members /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ transform = local fun <anonymous>(it: @FlexibleNullability Method?): @FlexibleNullability String? {
+              return it /*!! Method */.getName()
+            }
+)
+          }
+        }
+        when {
+          contains<@FlexibleNullability Class<out Any>?>(/* <this> = modules, */ element = members /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */.get(index = 0) /*!! Method */.getReturnType()).not() -> return hint /*!! Class<*> */.getName() + " names " + members /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */.get(index = 0) /*!! Method */.getReturnType()
+        }
+      }
+    }
+  }
+  return "OK"
+}
+
+private fun discovered(): List<Class<out Module>> {
+  return listOf<Class<out Module>>(elements = [<get-java>(/* $receiver = Local::class */), <get-java>(/* $receiver = First::class */), <get-java>(/* $receiver = Nested::class */), <get-java>(/* $receiver = Second::class */)])
+}
+
+private fun hintNameOf(module: Class<*>): String {
+  val fqName: String = replace(/* <this> = module.getName() /*!! String */, */ oldChar = '$', newChar = '.')
+  return replace(/* <this> = fqName, */ oldChar = '.', newChar = '_').plus(other = "_").plus(other = format(/* <this> = Companion, */ format = "%08x", args = [fqName.hashCode()]))
+}
+
+// FILE: io_github_expo_modules_v2_testdata_consumer_Local_0139b5d3.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_consumer_Local_0139b5d3 {
+  abstract fun module(): Local
+
+}
+

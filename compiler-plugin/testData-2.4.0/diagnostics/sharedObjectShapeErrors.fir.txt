@@ -1,0 +1,173 @@
+FILE: sharedObjectShapeErrors.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public abstract interface NotAClass : R|kotlin/Any| {
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final enum class NotAnEnum : R|kotlin/Enum<io/github/expo/modules/v2/testdata/NotAnEnum>| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/NotAnEnum| {
+            super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/NotAnEnum>|>()
+        }
+
+        public final static enum entry A: R|io/github/expo/modules/v2/testdata/NotAnEnum|
+        public final static fun values(): R|kotlin/Array<io/github/expo/modules/v2/testdata/NotAnEnum>| {
+        }
+
+        public final static fun valueOf(value: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/NotAnEnum| {
+        }
+
+        public final static val entries: R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/NotAnEnum>|
+            public static get(): R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/NotAnEnum>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final annotation class NotAnAnnotation : R|kotlin/Annotation| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NotAnAnnotation| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public abstract class NotAbstract : R|kotlin/Any| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NotAbstract| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public sealed class NotSealed : R|kotlin/Any| {
+        protected constructor(): R|io/github/expo/modules/v2/testdata/NotSealed| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final object NotAnObject : R|kotlin/Any| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/NotAnObject| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Generic<T> : R|kotlin/Any| {
+        public constructor<T>(): R|io/github/expo/modules/v2/testdata/Generic<T>| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    public final class Outer : R|kotlin/Any| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Outer| {
+            super<R|kotlin/Any|>()
+        }
+
+        @R|io/github/expo/modules/v2/ExpoSharedObject|() public final inner class NotInner : R|kotlin/Any| {
+            public io/github/expo/modules/v2/testdata/Outer.constructor(): R|io/github/expo/modules/v2/testdata/Outer.NotInner| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    public final fun containingFunction(): R|kotlin/Unit| {
+        @R|io/github/expo/modules/v2/ExpoSharedObject|() local final class NotLocal : R|kotlin/Any| {
+            public constructor(): R|<local>/NotLocal| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class BothAnnotations : R|kotlin/Any| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/BothAnnotations| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class AModule : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/AModule| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+    }
+    public open class SomeoneElsesBase : R|kotlin/Any| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/SomeoneElsesBase| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class HasItsOwnBase : R|io/github/expo/modules/v2/testdata/SomeoneElsesBase| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/HasItsOwnBase| {
+            super<R|io/github/expo/modules/v2/testdata/SomeoneElsesBase|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class ForgotTheBase : R|kotlin/Any| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ForgotTheBase| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class NotConstructable : R|io/github/expo/modules/v2/Module| {
+        @R|io/github/expo/modules/v2/JS|() public constructor(n: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/NotConstructable| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class TwoConstructors : R|io/github/expo/modules/v2/SharedObject| {
+        @R|io/github/expo/modules/v2/JS|() public constructor(n: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/TwoConstructors| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public constructor(text: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/TwoConstructors| {
+            this<R|io/github/expo/modules/v2/testdata/TwoConstructors|>(R|<local>/text|.R|kotlin/String.length|)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Ambiguous : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(n: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Ambiguous| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        public constructor(text: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/Ambiguous| {
+            this<R|io/github/expo/modules/v2/testdata/Ambiguous|>(R|<local>/text|.R|kotlin/String.length|)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class NotPublic : R|io/github/expo/modules/v2/SharedObject| {
+        private constructor(n: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/NotPublic| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+    }
+    public final class ForgotTheClassAnnotation : R|kotlin/Any| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ForgotTheClassAnnotation| {
+            super<R|kotlin/Any|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun f(): R|kotlin/Int| {
+            ^f Int(1)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class DuplicateNames : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/DuplicateNames| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun value(): R|kotlin/Int| {
+            ^value Int(1)
+        }
+
+        @R|io/github/expo/modules/v2/JS|(name = String(value) [evaluated = String(value)]) public final fun renamedOntoValue(): R|kotlin/Int| {
+            ^renamedOntoValue Int(2)
+        }
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_BothAnnotations_22d13e43.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_BothAnnotations_22d13e43 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/BothAnnotations|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_NotConstructable_93ba743e.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_NotConstructable_93ba743e : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NotConstructable|
+
+    }

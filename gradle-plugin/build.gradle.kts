@@ -50,7 +50,9 @@ buildConfig {
   buildConfigField("String", "KOTLIN_PLUGIN_ID", "\"io.github.expo.modules.v2.compiler\"")
   buildConfigField("String", "KOTLIN_PLUGIN_GROUP", "\"$group\"")
   buildConfigField("String", "KOTLIN_PLUGIN_NAME", "\"expo-modules-v2-compiler-plugin\"")
-  buildConfigField("String", "KOTLIN_PLUGIN_VERSION", "\"$version\"")
+  // The compiler plugin is published once per Kotlin release as `<expo-modules-v2>-<kotlin>`; the
+  // Gradle plugin appends the consumer's Kotlin at configuration time, so only this half is baked in.
+  buildConfigField("String", "EXPO_MODULES_V2_VERSION", "\"${libs.versions.expo.modules.v2.get()}\"")
 }
 
 gradlePlugin {

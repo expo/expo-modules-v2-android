@@ -1,0 +1,84 @@
+// MODULE: producer
+// FILE: producer.kt
+package io.github.expo.modules.v2.testdata.producer
+
+@Record
+data class Shared : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Shared> {
+    override val recordClass: Class<Shared>
+      field = <get-java>(/* $receiver = Shared::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Shared", bufferSafe = true, fields = [RecordField(name = "n", type = Int, isOptional = false), RecordField(name = "label", type = #STRING_NULL, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Shared {
+      return Shared(n = reader.readInt(), label = reader.read<String?>(schema = #STRING_NULL))
+    }
+
+    override fun encode(value: Shared, writer: RecordWriter) {
+      writer.write(value = value.<get-n>())
+      writer.write(value = value.<get-label>(), schema = #STRING_NULL)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Shared>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+// MODULE: consumer
+// FILE: consumer.kt
+package io.github.expo.modules.v2.testdata.consumer
+
+@Record
+data class Holder : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Holder> {
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)]))
+    override val recordClass: Class<Holder>
+      field = <get-java>(/* $receiver = Holder::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Holder", bufferSafe = true, fields = [RecordField(name = "shared", type = <this>.#type$0, isOptional = false), RecordField(name = "more", type = <this>.#type$1, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Holder {
+      return Holder(shared = reader.read<Shared>(schema = <this>.#type$0), more = reader.read<List<Shared>>(schema = <this>.#type$1))
+    }
+
+    override fun encode(value: Holder, writer: RecordWriter) {
+      writer.write(value = value.<get-shared>(), schema = <this>.#type$0)
+      writer.write(value = value.<get-more>(), schema = <this>.#type$1)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Holder>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+

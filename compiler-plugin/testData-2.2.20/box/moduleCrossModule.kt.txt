@@ -1,0 +1,267 @@
+// MODULE: producer
+// FILE: producer.kt
+package io.github.expo.modules.v2.testdata.producer
+
+@Record
+data class Shared : Record {
+  val n: Int
+    field = n
+    get
+
+  val label: String?
+    field = label
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Shared> {
+    override val recordClass: Class<Shared>
+      field = <get-java>(/* $receiver = Shared::class */)
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Shared", bufferSafe = true, fields = [RecordField(name = "n", type = Int, isOptional = false), RecordField(name = "label", type = #STRING_NULL, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Shared {
+      return Shared(n = reader.readInt(), label = reader.read<String?>(schema = #STRING_NULL))
+    }
+
+    override fun encode(value: Shared, writer: RecordWriter) {
+      writer.write(value = value.<get-n>())
+      writer.write(value = value.<get-label>(), schema = #STRING_NULL)
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Shared>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(n: Int, label: String?) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Int {
+    return <this>.#n
+  }
+
+  operator fun component2(): String? {
+    return <this>.#label
+  }
+
+  fun copy(n: Int = <this>.#n, label: String? = <this>.#label): Shared {
+    return Shared(n = n, label = label)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Shared -> return false
+    }
+    val tmp_0: Shared = other /*as Shared */
+    when {
+      EQEQ(arg0 = <this>.#n, arg1 = tmp_0.#n).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#label, arg1 = tmp_0.#label).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result: Int = <this>.#n.hashCode()
+    result = result.times(other = 31).plus(other = when {
+      EQEQ(arg0 = <this>.#label, arg1 = null) -> 0
+      else -> <this>.#label.hashCode()
+    })
+    return result
+  }
+
+  override fun toString(): String {
+    return "Shared(" + "n=" + <this>.#n + ", " + "label=" + <this>.#label + ")"
+  }
+
+}
+
+@ExpoModule(name = "Producer")
+object ProducerModule : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
+  @JS
+  var count: Int
+    field = 1
+    get
+    set
+
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  fun bump__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Shared
+    try { // BLOCK
+      v0 = args.next<Shared>(type = #type$0)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.bump(value = v0), type = #type$0)
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "bump", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true), methodName = "bump__trampoline$ExpoModulesV2")
+    builder.function(jsName = "name", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "name__trampoline$ExpoModulesV2")
+    builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = true, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false))
+    return "Producer"
+  }
+
+  fun name__trampoline$ExpoModulesV2(payloadLength: Int): String? {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    return <this>.name(prefix = v0) as String?
+  }
+
+  @JS
+  fun bump(value: Shared): Shared {
+    return Shared(n = value.<get-n>().plus(other = 1), label = value.<get-label>())
+  }
+
+  @JS
+  fun name(prefix: String): String {
+    return prefix + "!"
+  }
+
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a {
+  abstract fun module(): ProducerModule
+
+}
+
+// MODULE: consumer
+// FILE: consumer.kt
+package io.github.expo.modules.v2.testdata.consumer
+
+@ExpoModule(name = "Consumer")
+object ConsumerModule : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "forward", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true), methodName = "forward__trampoline$ExpoModulesV2")
+    return "Consumer"
+  }
+
+  fun forward__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Shared
+    try { // BLOCK
+      v0 = args.next<Shared>(type = #type$0)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.forward(value = v0), type = #type$0)
+  }
+
+  @JS
+  fun forward(value: Shared): Shared {
+    return ProducerModule.bump(value = value)
+  }
+
+}
+
+fun box(): String {
+  val suffix: String = "__trampoline$ExpoModulesV2"
+  val define: @FlexibleNullability Method? = <get-java><ProducerModule>(/* <this> = ProducerModule::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [forName(p0 = "io.github.expo.modules.v2.modules.ModuleBuilder")])
+  when {
+    EQEQ(arg0 = define /*!! Method */.getReturnType(), arg1 = <get-java><String>(/* <this> = String::class */)).not() -> return "producer define: " + define /*!! Method */.getReturnType()
+  }
+  val producer: Map<String, String> = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "bump" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "name" + suffix, */ that = "(I)Ljava/lang/String;"), to<String, String>(/* <this> = "getCount", */ that = "()I"), to<String, String>(/* <this> = "setCount", */ that = "(I)V")])
+  { // BLOCK
+    val tmp_0: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = producer */)
+    while (tmp_0.hasNext()) { // BLOCK
+      val tmp_1: Entry<String, String> = tmp_0.next()
+      val name: String = component1<String, String>(/* <this> = tmp_1 */)
+      val want: String = component2<String, String>(/* <this> = tmp_1 */)
+      { // BLOCK
+        val got: String = descriptorOf(owner = <get-java><ProducerModule>(/* <this> = ProducerModule::class */), name = name)
+        when {
+          EQEQ(arg0 = got, arg1 = want).not() -> return "producer " + name + ": expected " + want + ", got " + got
+        }
+      }
+    }
+  }
+  val got: String = descriptorOf(owner = <get-java><ConsumerModule>(/* <this> = ConsumerModule::class */), name = "forward" + suffix)
+  when {
+    EQEQ(arg0 = got, arg1 = "(I)I").not() -> return "consumer forward: expected (I)I, got " + got
+  }
+  val bumped: Shared = ProducerModule.bump(value = Shared(n = 1, label = "a"))
+  when {
+    EQEQ(arg0 = bumped, arg1 = Shared(n = 2, label = "a")).not() -> return "bump gave " + bumped
+  }
+  return "OK"
+}
+
+private fun descriptor(type: Class<*>): String {
+  return when {
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)) -> "I"
+    EQEQ(arg0 = type, arg1 = super<Void>.#TYPE) -> "V"
+    else -> "L".plus(other = replace(/* <this> = type.getName() /*!! String */, */ oldChar = '.', newChar = '/')).plus(other = ";")
+  }
+}
+
+private fun descriptorOf(owner: Class<*>, name: String): String {
+  val method: Method = { // BLOCK
+    val tmp_2: Method? = firstOrNull<@FlexibleNullability Method?>(/* <this> = owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return EQEQ(arg0 = it /*!! Method */.getName(), arg1 = name)
+    }
+)
+    when {
+      EQEQ(arg0 = tmp_2, arg1 = null) -> return "<absent>"
+      else -> tmp_2
+    }
+  }
+  val parameters: String = joinToString<@FlexibleNullability Class<*>?>(/* <this> = method.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ separator = "", transform = local fun <anonymous>(it: @FlexibleNullability Class<*>?): CharSequence {
+    return descriptor(type = it /*!! Class<*> */)
+  }
+)
+  return "(" + parameters + ")" + descriptor(type = method.getReturnType() /*!! Class<*> */)
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a {
+  abstract fun module(): ConsumerModule
+
+}
+

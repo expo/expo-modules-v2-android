@@ -1,0 +1,397 @@
+// FILE: sharedObject.kt
+package io.github.expo.modules.v2.testdata
+
+@ExpoSharedObject
+class Listed : SharedObject {
+  private val n: Int
+    field = n
+    private get
+
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor(n: Int) /* primary */ {
+    super/*SharedObject*/()
+    /* <init>() */
+
+  }
+
+  companion fun __construct$ExpoModulesV2(p0: Int): Listed {
+    return Listed(n = p0)
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "value", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "value")
+    return "Listed"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Listed", sharedClass = <get-java>(/* $receiver = Listed::class */), definition = builder)
+  }
+
+  @JS
+  fun value(): Int {
+    return <this>.<get-n>()
+  }
+
+}
+
+@ExpoModule(classes = [Listed::class])
+class Owner : Module {
+  @ExpoSharedObject
+  class Nested : SharedObject {
+    private val text: String
+      field = text
+      private get
+
+    private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+    constructor(text: String) /* primary */ {
+      super/*SharedObject*/()
+      /* <init>() */
+
+    }
+
+    companion fun __construct$ExpoModulesV2(payloadLength: Int): Nested {
+      val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+      var v0: String
+      try { // BLOCK
+        v0 = args.nextString()
+      }
+      finally args.finish()
+      return Nested(text = v0)
+    }
+
+    companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+      builder.function(jsName = "render", argTypes = [], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "render")
+      return "Nested"
+    }
+
+    private companion fun register$ExpoModulesV2(): Int {
+      val builder: ModuleBuilder = ModuleBuilder()
+      define$ExpoModulesV2(builder = builder)
+      return SharedObjectRegistry.register(jsName = "Nested", sharedClass = <get-java>(/* $receiver = Nested::class */), definition = builder)
+    }
+
+    @JS
+    fun render(): String {
+      return <this>.<get-text>()
+    }
+
+  }
+
+  @ExpoSharedObject
+  class NotConstructable : SharedObject {
+    private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+    private constructor() /* primary */ {
+      super/*SharedObject*/()
+      /* <init>() */
+
+    }
+
+    companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+      builder.function(jsName = "name", argTypes = [], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "name")
+      return "NotConstructable"
+    }
+
+    private companion fun register$ExpoModulesV2(): Int {
+      val builder: ModuleBuilder = ModuleBuilder()
+      define$ExpoModulesV2(builder = builder)
+      return SharedObjectRegistry.register(jsName = "NotConstructable", sharedClass = <get-java>(/* $receiver = NotConstructable::class */), definition = builder)
+    }
+
+    @JS
+    fun name(): String {
+      return "hidden"
+    }
+
+  }
+
+  constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.sharedClass(jsName = "Nested", sharedClass = <get-java>(/* $receiver = Nested::class */), argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], trampolineName = "__construct$ExpoModulesV2")
+    builder.sharedClass(jsName = "Listed", sharedClass = <get-java>(/* $receiver = Listed::class */), argTypes = [AnyType(descriptor = Int, useBuffer = false)], trampolineName = "__construct$ExpoModulesV2")
+    return "Owner"
+  }
+
+}
+
+@ExpoSharedObject
+class Player : SharedObject {
+  @JS
+  var volume: Double
+    field = 1.0
+    get
+    set
+
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor() /* primary */ {
+    super/*SharedObject*/()
+    /* <init>() */
+
+  }
+
+  companion fun __construct$ExpoModulesV2(): Player {
+    return Player()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "play", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "play")
+    builder.property(jsName = "volume", type = AnyType(descriptor = Double, useBuffer = false), mutable = true, propertyName = "volume", setterType = AnyType(descriptor = Double, useBuffer = false))
+    builder.function(jsName = "rename", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "rename__trampoline$ExpoModulesV2")
+    return "Player"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Player", sharedClass = <get-java>(/* $receiver = Player::class */), definition = builder)
+  }
+
+  fun rename__trampoline$ExpoModulesV2(payloadLength: Int): String? {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    return <this>.rename(name = v0) as String?
+  }
+
+  @JS
+  fun play(): Int {
+    return 1
+  }
+
+  @JS
+  fun rename(name: String): String {
+    return name
+  }
+
+}
+
+@ExpoModule
+class Players : Module {
+  constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "create", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Player::class */), isNullable = false), useBuffer = false), methodName = "create")
+    builder.function(jsName = "volumeOf", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Player::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Double, useBuffer = false), methodName = "volumeOf")
+    builder.function(jsName = "maybe", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Player::class */), isNullable = true), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "maybe")
+    return "Players"
+  }
+
+  @JS
+  fun create(): Player {
+    return Player()
+  }
+
+  @JS
+  fun maybe(player: Player?): Int {
+    return when {
+      EQEQ(arg0 = player, arg1 = null) -> 0
+      else -> 1
+    }
+  }
+
+  @JS
+  fun volumeOf(player: Player): Double {
+    return player.<get-volume>()
+  }
+
+}
+
+@ExpoSharedObject(name = "Renamed")
+class Speaker : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor() /* primary */ {
+    super/*SharedObject*/()
+    /* <init>() */
+
+  }
+
+  companion fun __construct$ExpoModulesV2(): Speaker {
+    return Speaker()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "mute", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "mute")
+    return "Renamed"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Renamed", sharedClass = <get-java>(/* $receiver = Speaker::class */), definition = builder)
+  }
+
+  @JS
+  fun mute() {
+    return Unit
+  }
+
+}
+
+@ExpoSharedObject
+class TextRef : SharedRef<StringBuilder> {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor(text: StringBuilder) /* primary */ {
+    super/*SharedRef*/<StringBuilder>(ref = text)
+    /* <init>() */
+
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "length", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "length")
+    return "TextRef"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)
+  }
+
+  @JS
+  fun length(): Int {
+    return <this>.<get-ref>().<get-length>()
+  }
+
+}
+
+fun box(): String {
+  val suffix: String = "__trampoline$ExpoModulesV2"
+  val player: String = "Lio/github/expo/modules/v2/testdata/Player;"
+  { // BLOCK
+    val tmp_0: Iterator<Class<out ExpoObject>> = listOf<Class<out ExpoObject>>(elements = [<get-java><Player>(/* <this> = Player::class */), <get-java><Speaker>(/* <this> = Speaker::class */), <get-java><Players>(/* <this> = Players::class */)]).iterator()
+    while (tmp_0.hasNext()) { // BLOCK
+      val owner: Class<out ExpoObject> = tmp_0.next()
+      { // BLOCK
+        when {
+          EQEQ(arg0 = descriptorOf(owner = owner, name = "define$ExpoModulesV2"), arg1 = "<absent>") -> { // BLOCK
+            return owner.getSimpleName() + ": no generated define$ExpoModulesV2"
+          }
+        }
+      }
+    }
+  }
+  val base: Class<SharedObject> = <get-java><SharedObject>(/* <this> = SharedObject::class */)
+  { // BLOCK
+    val tmp_1: Iterator<Class<out SharedObject>> = listOf<Class<out SharedObject>>(elements = [<get-java><Player>(/* <this> = Player::class */), <get-java><Speaker>(/* <this> = Speaker::class */), <get-java><Listed>(/* <this> = Listed::class */), <get-java><TextRef>(/* <this> = TextRef::class */)]).iterator()
+    while (tmp_1.hasNext()) { // BLOCK
+      val owner: Class<out SharedObject> = tmp_1.next()
+      { // BLOCK
+        when {
+          base.isAssignableFrom(p0 = owner).not() -> { // BLOCK
+            return owner.getSimpleName() + ": not a ExpoSharedObject"
+          }
+        }
+      }
+    }
+  }
+  when {
+    EQEQ(arg0 = <get-java><TextRef>(/* <this> = TextRef::class */).getSuperclass(), arg1 = <get-java><SharedRef<*>>(/* <this> = SharedRef<*>::class */)).not() -> { // BLOCK
+      return "TextRef: declared base replaced by " + <get-java><TextRef>(/* <this> = TextRef::class */).getSuperclass()
+    }
+  }
+  val expected: Map<Class<out ExpoObject>, Map<String, String>> = mapOf<Class<out ExpoObject>, Map<String, String>>(pairs = [to<Class<Players>, Map<String, String>>(/* <this> = <get-java><Players>(/* <this> = Players::class */), */ that = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "volumeOf" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "maybe" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "create" + suffix, */ that = "<absent>")])), to<Class<Player>, Map<String, String>>(/* <this> = <get-java><Player>(/* <this> = Player::class */), */ that = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "rename" + suffix, */ that = "(I)Ljava/lang/String;"), to<String, String>(/* <this> = "play" + suffix, */ that = "<absent>")]))])
+  { // BLOCK
+    val tmp_2: Iterator<Entry<Class<out ExpoObject>, Map<String, String>>> = iterator<Class<out ExpoObject>, Map<String, String>>(/* <this> = expected */)
+    while (tmp_2.hasNext()) { // BLOCK
+      val tmp_3: Entry<Class<out ExpoObject>, Map<String, String>> = tmp_2.next()
+      val owner: Class<out ExpoObject> = component1<Class<out ExpoObject>, Map<String, String>>(/* <this> = tmp_3 */)
+      val methods: Map<String, String> = component2<Class<out ExpoObject>, Map<String, String>>(/* <this> = tmp_3 */)
+      { // BLOCK
+        val tmp_4: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = methods */)
+        while (tmp_4.hasNext()) { // BLOCK
+          val tmp_5: Entry<String, String> = tmp_4.next()
+          val name: String = component1<String, String>(/* <this> = tmp_5 */)
+          val want: String = component2<String, String>(/* <this> = tmp_5 */)
+          { // BLOCK
+            val got: String = descriptorOf(owner = owner, name = name)
+            when {
+              EQEQ(arg0 = got, arg1 = want).not() -> return owner.getSimpleName() + "." + name + ": expected " + want + ", got " + got
+            }
+          }
+        }
+      }
+    }
+  }
+  { // BLOCK
+    val tmp_6: Iterator<Class<out SharedObject>> = listOf<Class<out SharedObject>>(elements = [<get-java><Listed>(/* <this> = Listed::class */), <get-java><Nested>(/* <this> = Nested::class */), <get-java><NotConstructable>(/* <this> = NotConstructable::class */)]).iterator()
+    while (tmp_6.hasNext()) { // BLOCK
+      val owner: Class<out SharedObject> = tmp_6.next()
+      { // BLOCK
+        when {
+          EQEQ(arg0 = descriptorOf(owner = owner, name = "define$ExpoModulesV2"), arg1 = "<absent>") -> { // BLOCK
+            return owner.getSimpleName() + ": no generated define$ExpoModulesV2"
+          }
+        }
+      }
+    }
+  }
+  when {
+    EQEQ(arg0 = descriptorOf(owner = <get-java><Players>(/* <this> = Players::class */), name = "volumeOf"), arg1 = "(" + player + ")D").not() -> { // BLOCK
+      return "volumeOf: " + descriptorOf(owner = <get-java><Players>(/* <this> = Players::class */), name = "volumeOf")
+    }
+  }
+  when {
+    EQEQ(arg0 = descriptorOf(owner = <get-java><Players>(/* <this> = Players::class */), name = "create"), arg1 = "()" + player).not() -> { // BLOCK
+      return "create: " + descriptorOf(owner = <get-java><Players>(/* <this> = Players::class */), name = "create")
+    }
+  }
+  return "OK"
+}
+
+private fun descriptor(type: Class<*>): String {
+  return when {
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)) -> "I"
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Double>(/* <this> = Double::class */)) -> "D"
+    EQEQ(arg0 = type, arg1 = super<Void>.#TYPE) -> "V"
+    type.isArray() -> "[".plus(other = descriptor(type = type.getComponentType() /*!! Class<*> */))
+    else -> "L".plus(other = replace(/* <this> = type.getName() /*!! String */, */ oldChar = '.', newChar = '/')).plus(other = ";")
+  }
+}
+
+private fun descriptorOf(owner: Class<*>, name: String): String {
+  val method: Method = { // BLOCK
+    val tmp_7: Method? = firstOrNull<@FlexibleNullability Method?>(/* <this> = owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return EQEQ(arg0 = it /*!! Method */.getName(), arg1 = name)
+    }
+)
+    when {
+      EQEQ(arg0 = tmp_7, arg1 = null) -> return "<absent>"
+      else -> tmp_7
+    }
+  }
+  val parameters: String = joinToString<@FlexibleNullability Class<*>?>(/* <this> = method.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ separator = "", transform = local fun <anonymous>(it: @FlexibleNullability Class<*>?): CharSequence {
+    return descriptor(type = it /*!! Class<*> */)
+  }
+)
+  return "(" + parameters + ")" + descriptor(type = method.getReturnType() /*!! Class<*> */)
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Owner_31e30c13.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Owner_31e30c13 {
+  abstract fun module(): Owner
+
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Players_66c30312.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Players_66c30312 {
+  abstract fun module(): Players
+
+}
+

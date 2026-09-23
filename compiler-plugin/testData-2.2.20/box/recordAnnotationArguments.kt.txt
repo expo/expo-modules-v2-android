@@ -1,0 +1,204 @@
+package io.github.expo.modules.v2.testdata
+
+@Record
+data class Defaults : Record {
+  val x: Double
+    field = x
+    get
+
+  val y: Double
+    field = y
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Defaults> {
+    override val recordClass: Class<Defaults>
+      field = <get-java>(/* $receiver = Defaults::class */)
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Defaults", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Defaults {
+      return Defaults(x = reader.readDouble(), y = reader.readDouble())
+    }
+
+    override fun encode(value: Defaults, writer: RecordWriter) {
+      writer.write(value = value.<get-x>())
+      writer.write(value = value.<get-y>())
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Defaults>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(x: Double, y: Double) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Double {
+    return <this>.#x
+  }
+
+  operator fun component2(): Double {
+    return <this>.#y
+  }
+
+  fun copy(x: Double = <this>.#x, y: Double = <this>.#y): Defaults {
+    return Defaults(x = x, y = y)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Defaults -> return false
+    }
+    val tmp_0: Defaults = other /*as Defaults */
+    when {
+      EQEQ(arg0 = <this>.#x, arg1 = tmp_0.#x).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#y, arg1 = tmp_0.#y).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result: Int = <this>.#x.hashCode()
+    result = result.times(other = 31).plus(other = <this>.#y.hashCode())
+    return result
+  }
+
+  override fun toString(): String {
+    return "Defaults(" + "x=" + <this>.#x + ", " + "y=" + <this>.#y + ")"
+  }
+
+}
+
+@Record(bufferSafe = false)
+data class Unsafe : Record {
+  val payload: Any?
+    field = payload
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Unsafe> {
+    override val recordClass: Class<Unsafe>
+      field = <get-java>(/* $receiver = Unsafe::class */)
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Unsafe", bufferSafe = false, fields = [RecordField(name = "payload", type = #ANY_NULL, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Unsafe {
+      return Unsafe(payload = reader.read<Any?>(schema = #ANY_NULL))
+    }
+
+    override fun encode(value: Unsafe, writer: RecordWriter) {
+      writer.write(value = value.<get-payload>(), schema = #ANY_NULL)
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Unsafe>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(payload: Any?) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Any? {
+    return <this>.#payload
+  }
+
+  fun copy(payload: Any? = <this>.#payload): Unsafe {
+    return Unsafe(payload = payload)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Unsafe -> return false
+    }
+    val tmp_1: Unsafe = other /*as Unsafe */
+    when {
+      EQEQ(arg0 = <this>.#payload, arg1 = tmp_1.#payload).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    return when {
+      EQEQ(arg0 = <this>.#payload, arg1 = null) -> 0
+      else -> <this>.#payload.hashCode()
+    }
+  }
+
+  override fun toString(): String {
+    return "Unsafe(" + "payload=" + <this>.#payload + ")"
+  }
+
+}
+
+fun box(): String {
+  when {
+    EQEQ(arg0 = codecFor<Defaults>().<get-schema>().<get-name>(), arg1 = "Defaults").not() -> { // BLOCK
+      return "Fail: name is " + codecFor<Defaults>().<get-schema>().<get-name>()
+    }
+  }
+  when {
+    codecFor<Defaults>().<get-schema>().<get-bufferSafe>().not() -> return "Fail: Defaults lost its default bufferSafe"
+  }
+  val unsafe: RecordSchema = codecFor<Unsafe>().<get-schema>()
+  when {
+    unsafe.<get-bufferSafe>() -> return "Fail: Unsafe is still bufferSafe"
+  }
+  when {
+    EQEQ(arg0 = unsafe.<get-name>(), arg1 = "Unsafe").not() -> return "Fail: Unsafe name is " + unsafe.<get-name>()
+  }
+  return "OK"
+}
+

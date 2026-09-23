@@ -72,3 +72,6 @@ object GoodObjectProperties : Module() {
     @JS
     val fromObject: Int = 1
 }
+
+/* GENERATED_FIR_TAGS: classDeclaration, companionObject, functionDeclaration, getter, integerLiteral, localProperty,
+nestedClass, objectDeclaration, propertyDeclaration, propertyWithExtensionReceiver, stringLiteral, thisExpression */

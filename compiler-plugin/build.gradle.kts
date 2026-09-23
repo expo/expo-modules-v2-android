@@ -37,16 +37,31 @@ mavenPublishing {
     .forEach { java.withVariantsFromConfiguration(configurations[it]) { skip() } }
 }
 
-val testDataDir = layout.projectDirectory.dir("testData")
+val kotlinVersionString: String = libs.versions.kotlin.get()
+val kotlinVersion: KotlinVersion = parseKotlinVersion(kotlinVersionString)
+
+// A compiler plugin is bound to the exact compiler it was built against, so this artifact is
+// published once per supported Kotlin release as `<expo-modules-v2>-<kotlin>`. The Gradle plugin
+// picks the one that matches the consumer's Kotlin.
+version = "${libs.versions.expo.modules.v2.get()}-$kotlinVersionString"
+
+val compatSourceDirs: List<File> =
+  compatSourceDirsFor(layout.projectDirectory.dir("compat").asFile, kotlinVersion)
+val testFixturesCompatSourceDirs: List<File> =
+  compatSourceDirsFor(layout.projectDirectory.dir("test-fixtures-compat").asFile, kotlinVersion)
+
+val testDataDir: Directory = testDataDirFor(layout.projectDirectory, kotlinVersion)
 val testGenDirectory = layout.buildDirectory.dir("test-gen")
 
 sourceSets {
   main {
     java.setSrcDirs(listOf("src"))
+    kotlin.srcDirs(compatSourceDirs)
     resources.setSrcDirs(listOf("resources"))
   }
   testFixtures {
     java.setSrcDirs(listOf("test-fixtures"))
+    kotlin.srcDirs(testFixturesCompatSourceDirs)
   }
   test {
     java.setSrcDirs(listOf("test", testGenDirectory))
@@ -136,6 +151,12 @@ kotlin {
     optIn.add("org.jetbrains.kotlin.DeprecatedForRemovalCompilerApi")
     optIn.add("org.jetbrains.kotlin.fir.declarations.DirectDeclarationsAccess")
     optIn.add("org.jetbrains.kotlin.fir.symbols.SymbolInternals")
+    // From 2.2.20 the FIR checker and diagnostics APIs are declared with context parameters, which
+    // the compiler only lets us implement or call once the feature is enabled. It was experimental
+    // until it became part of the language in 2.4, where the flag is redundant (and warns).
+    if (kotlinVersion >= KotlinVersion(2, 2, 20) && kotlinVersion < KotlinVersion(2, 4, 0)) {
+      freeCompilerArgs.add("-Xcontext-parameters")
+    }
   }
 }
 
@@ -167,4 +188,35 @@ fun Test.setLibraryProperty(propName: String, jarName: String) {
     ?.absolutePath
     ?: return
   systemProperty(propName, path)
+}
+
+/** "2.3.20", "2.3", or a pre-release like "2.5.0-Beta1" (the qualifier is ignored). */
+fun parseKotlinVersion(version: String): KotlinVersion {
+  val parts = version.substringBefore("-").split(".").map { part ->
+    part.toIntOrNull() ?: error("Not a Kotlin version: '$version'")
+  }
+  require(parts.size in 2..3) { "Not a Kotlin version: '$version'" }
+  return KotlinVersion(parts[0], parts[1], parts.getOrElse(2) { 0 })
+}
+
+/** `testData-<since>/` for the newest `<since>` that [kotlin] satisfies, else the baseline `testData/`. */
+fun testDataDirFor(projectDir: Directory, kotlin: KotlinVersion): Directory {
+  val tiers = projectDir.asFile.listFiles { file -> file.isDirectory && file.name.startsWith("testData-") }.orEmpty()
+    .associateBy { parseKotlinVersion(it.name.removePrefix("testData-")) }
+  val tier = tiers.filterKeys { it <= kotlin }.maxByOrNull { it.key }?.value
+  return projectDir.dir(tier?.name ?: "testData")
+}
+
+/** One directory per concern under [compatRoot]: the newest `<since>` variant that [kotlin] satisfies. */
+fun compatSourceDirsFor(compatRoot: File, kotlin: KotlinVersion): List<File> {
+  val concerns = compatRoot.listFiles { file -> file.isDirectory }?.sortedBy { it.name }.orEmpty()
+  return concerns.map { concern ->
+    val variants = concern.listFiles { file -> file.isDirectory }.orEmpty()
+      .associateBy { parseKotlinVersion(it.name) }
+    variants.filterKeys { it <= kotlin }.maxByOrNull { it.key }?.value
+      ?: error(
+        "compiler-plugin/${compatRoot.name}/${concern.name}: no variant supports Kotlin $kotlin " +
+          "(oldest is ${variants.keys.minOrNull()})."
+      )
+  }
 }

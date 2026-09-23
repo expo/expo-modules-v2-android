@@ -1,19 +1,19 @@
 package io.github.expo.modules.v2.compiler.fir.diagnostics
 
-import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactoryToRendererMap
+import io.github.expo.modules.v2.compiler.fir.ExpoDiagnosticsContainer
+import io.github.expo.modules.v2.compiler.fir.expoRendererMap
 import org.jetbrains.kotlin.diagnostics.SourceElementPositioningStrategies
 import org.jetbrains.kotlin.diagnostics.error0
 import org.jetbrains.kotlin.diagnostics.error1
 import org.jetbrains.kotlin.diagnostics.rendering.BaseDiagnosticRendererFactory
 import org.jetbrains.kotlin.diagnostics.rendering.CommonRenderers
-import org.jetbrains.kotlin.diagnostics.rendering.RootDiagnosticRendererFactory
 import org.jetbrains.kotlin.psi.KtClassLikeDeclaration
 import org.jetbrains.kotlin.psi.KtParameter
 
 /**
  * The frontend diagnostics [io.github.expo.modules.v2.compiler.fir.RecordCheckers] reports.
  */
-object RecordDiagnostics {
+object RecordDiagnostics : ExpoDiagnosticsContainer() {
   val RECORD_ON_UNSUPPORTED_DECLARATION by error1<KtClassLikeDeclaration, String>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
@@ -28,13 +28,15 @@ object RecordDiagnostics {
   )
   val RECORD_PARAMETER_IS_NOT_A_PROPERTY by error0<KtParameter>()
 
+  override fun getRendererFactory(): BaseDiagnosticRendererFactory = RecordDiagnosticMessages
+
   init {
-    RootDiagnosticRendererFactory.registerFactory(RecordDiagnosticMessages)
+    registerRenderer()
   }
 }
 
 object RecordDiagnosticMessages : BaseDiagnosticRendererFactory() {
-  override val MAP = KtDiagnosticFactoryToRendererMap("ExpoModulesV2").apply {
+  override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       RecordDiagnostics.RECORD_ON_UNSUPPORTED_DECLARATION,
       "@Record only applies to a non-abstract, non-inner, top-level or nested class - this is {0}",

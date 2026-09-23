@@ -1,0 +1,235 @@
+package io.github.expo.modules.v2.testdata
+
+@ExpoSharedObject
+class Counter : SharedObject {
+  var released: Int
+    field = 0
+    get
+    private set
+
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor() /* primary */ {
+    super/*SharedObject*/()
+    /* <init>() */
+
+  }
+
+  companion fun __construct$ExpoModulesV2(): Counter {
+    return Counter()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "value", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "value")
+    return "Counter"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Counter", sharedClass = <get-java>(/* $receiver = Counter::class */), definition = builder)
+  }
+
+  override fun getAdditionalMemoryPressure(): Int {
+    return 42
+  }
+
+  override fun sharedObjectDidRelease() {
+    { // BLOCK
+      val tmp_0: Int = <this>.<get-released>()
+      <this>.<set-released>(<set-?> = tmp_0.inc())
+      tmp_0
+    } /*~> Unit */
+  }
+
+  @JS
+  fun value(): Int {
+    return <this>.<get-released>()
+  }
+
+}
+
+@ExpoSharedObject
+class Delegating : SharedObject {
+  var released: Int
+    field = 0
+    get
+    private set
+
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor() /* primary */ {
+    super/*SharedObject*/()
+    /* <init>() */
+
+  }
+
+  companion fun __construct$ExpoModulesV2(): Delegating {
+    return Delegating()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Delegating"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Delegating", sharedClass = <get-java>(/* $receiver = Delegating::class */), definition = builder)
+  }
+
+  override fun getAdditionalMemoryPressure(): Int {
+    return super<SharedObject>.getAdditionalMemoryPressure().plus(other = 5)
+  }
+
+  override fun sharedObjectDidRelease() {
+    super<SharedObject>.sharedObjectDidRelease()
+    { // BLOCK
+      val tmp_1: Int = <this>.<get-released>()
+      <this>.<set-released>(<set-?> = tmp_1.inc())
+      tmp_1
+    } /*~> Unit */
+  }
+
+}
+
+@ExpoSharedObject
+class Plain : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor() /* primary */ {
+    super/*SharedObject*/()
+    /* <init>() */
+
+  }
+
+  companion fun __construct$ExpoModulesV2(): Plain {
+    return Plain()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Plain"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Plain", sharedClass = <get-java>(/* $receiver = Plain::class */), definition = builder)
+  }
+
+}
+
+@ExpoSharedObject
+class Pressured : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor() /* primary */ {
+    super/*SharedObject*/()
+    /* <init>() */
+
+  }
+
+  companion fun __construct$ExpoModulesV2(): Pressured {
+    return Pressured()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Pressured"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Pressured", sharedClass = <get-java>(/* $receiver = Pressured::class */), definition = builder)
+  }
+
+  override fun getAdditionalMemoryPressure(): Int {
+    return 7
+  }
+
+}
+
+@ExpoSharedObject
+class TextRef : SharedRef<StringBuilder> {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor(text: StringBuilder) /* primary */ {
+    super/*SharedRef*/<StringBuilder>(ref = text)
+    /* <init>() */
+
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "TextRef"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)
+  }
+
+  override fun getAdditionalMemoryPressure(): Int {
+    return <this>.<get-ref>().<get-length>()
+  }
+
+}
+
+fun box(): String {
+  val base: SharedObject = Counter()
+  when {
+    EQEQ(arg0 = base.getAdditionalMemoryPressure(), arg1 = 42).not() -> { // BLOCK
+      return "Counter.getAdditionalMemoryPressure: " + base.getAdditionalMemoryPressure()
+    }
+  }
+  base.sharedObjectDidRelease()
+  base.sharedObjectDidRelease()
+  when {
+    EQEQ(arg0 = base as Counter.<get-released>(), arg1 = 2).not() -> { // BLOCK
+      return "Counter.sharedObjectDidRelease ran " + base /*as Counter */.<get-released>() + " times"
+    }
+  }
+  val pressured: SharedObject = Pressured()
+  when {
+    EQEQ(arg0 = pressured.getAdditionalMemoryPressure(), arg1 = 7).not() -> { // BLOCK
+      return "Pressured: " + pressured.getAdditionalMemoryPressure()
+    }
+  }
+  val delegating: SharedObject = Delegating()
+  when {
+    EQEQ(arg0 = delegating.getAdditionalMemoryPressure(), arg1 = 5).not() -> { // BLOCK
+      return "Delegating: " + delegating.getAdditionalMemoryPressure()
+    }
+  }
+  delegating.sharedObjectDidRelease()
+  when {
+    EQEQ(arg0 = delegating as Delegating.<get-released>(), arg1 = 1).not() -> { // BLOCK
+      return "Delegating.sharedObjectDidRelease ran " + delegating /*as Delegating */.<get-released>() + " times"
+    }
+  }
+  val ref: SharedObject = TextRef(text = StringBuilder(p0 = "abcd"))
+  when {
+    EQEQ(arg0 = ref.getAdditionalMemoryPressure(), arg1 = 4).not() -> { // BLOCK
+      return "TextRef: " + ref.getAdditionalMemoryPressure()
+    }
+  }
+  val plain: SharedObject = Plain()
+  when {
+    EQEQ(arg0 = plain.getAdditionalMemoryPressure(), arg1 = 0).not() -> { // BLOCK
+      return "Plain: " + plain.getAdditionalMemoryPressure()
+    }
+  }
+  plain.sharedObjectDidRelease()
+  val declared: List<@FlexibleNullability String?> = map<@FlexibleNullability Method?, @FlexibleNullability String?>(/* <this> = <get-java><Counter>(/* <this> = Counter::class */).getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ transform = local fun <anonymous>(it: @FlexibleNullability Method?): @FlexibleNullability String? {
+    return it /*!! Method */.getName()
+  }
+)
+  { // BLOCK
+    val tmp_2: Iterator<String> = listOf<String>(elements = ["sharedObjectDidRelease", "getAdditionalMemoryPressure"]).iterator()
+    while (tmp_2.hasNext()) { // BLOCK
+      val name: String = tmp_2.next()
+      { // BLOCK
+        when {
+          declared.contains(element = name).not() -> return "Counter does not declare " + name
+        }
+      }
+    }
+  }
+  return "OK"
+}
+

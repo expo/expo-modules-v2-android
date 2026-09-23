@@ -39,3 +39,6 @@ class BadFunctions : Module() {
     @JS
     val Int.<!JS_UNSUPPORTED_FUNCTION_SHAPE!>extensionProperty<!>: Int get() = this
 }
+
+/* GENERATED_FIR_TAGS: additiveExpression, classDeclaration, funWithExtensionReceiver, functionDeclaration, getter,
+integerLiteral, nullableType, propertyDeclaration, propertyWithExtensionReceiver, thisExpression, typeParameter, vararg */

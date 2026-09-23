@@ -1,0 +1,1 @@
+../../testData/diagnostics/sharedObjectShapeErrors.kt

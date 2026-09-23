@@ -10,29 +10,26 @@ import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactory1
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.DeclarationCheckers
+import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirDeclarationChecker
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirPropertyChecker
-import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirSimpleFunctionChecker
-import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
 import org.jetbrains.kotlin.fir.analysis.extensions.FirAdditionalCheckersExtension
 import org.jetbrains.kotlin.fir.declarations.FirCallableDeclaration
 import org.jetbrains.kotlin.fir.declarations.FirDeclaration
+import org.jetbrains.kotlin.fir.declarations.FirFunction
 import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.declarations.FirRegularClass
-import org.jetbrains.kotlin.fir.declarations.FirSimpleFunction
 import org.jetbrains.kotlin.fir.declarations.getAnnotationByClassId
-import org.jetbrains.kotlin.fir.declarations.getStringArgument
 import org.jetbrains.kotlin.fir.declarations.utils.isInner
 import org.jetbrains.kotlin.fir.declarations.utils.isLocal
 import org.jetbrains.kotlin.fir.declarations.utils.visibility
 import org.jetbrains.kotlin.fir.expressions.FirAnnotation
-import org.jetbrains.kotlin.fir.expressions.FirArrayLiteral
 import org.jetbrains.kotlin.fir.expressions.FirGetClassCall
 import org.jetbrains.kotlin.fir.expressions.FirResolvedQualifier
 import org.jetbrains.kotlin.fir.resolve.defaultType
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
+import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
 import org.jetbrains.kotlin.fir.types.constructClassLikeType
 import org.jetbrains.kotlin.fir.types.isSubtypeOf
@@ -45,16 +42,23 @@ import org.jetbrains.kotlin.name.Name
  */
 class JSCheckers(session: FirSession) : FirAdditionalCheckersExtension(session) {
   override val declarationCheckers: DeclarationCheckers = object : DeclarationCheckers() {
-    override val simpleFunctionCheckers: Set<FirSimpleFunctionChecker> = setOf(JsFunctionChecker)
+    override val functionCheckers: Set<FirDeclarationChecker<FirFunction>> =
+      setOf(JsFunctionChecker)
     override val propertyCheckers: Set<FirPropertyChecker> = setOf(JsPropertyChecker)
   }
 
-  private object JsFunctionChecker : FirSimpleFunctionChecker(MppCheckerKind.Common) {
-    override fun check(
-      declaration: FirSimpleFunction,
+  private object JsFunctionChecker : ExpoDeclarationChecker<FirFunction>() {
+    override fun checkDeclaration(
+      declaration: FirFunction,
       context: CheckerContext,
       reporter: DiagnosticReporter,
     ) {
+      // Registered for every function, so the checker set is spelled the same in every supported
+      // Kotlin release (2.4.20 renamed the simple-function one); only named functions are exported.
+      if (declaration.symbol !is FirNamedFunctionSymbol) {
+        return
+      }
+
       val session = context.session
       if (!declaration.symbol.hasJsAnnotation(session)) {
         return
@@ -102,8 +106,8 @@ class JSCheckers(session: FirSession) : FirAdditionalCheckersExtension(session) 
     }
   }
 
-  private object JsPropertyChecker : FirPropertyChecker(MppCheckerKind.Common) {
-    override fun check(
+  private object JsPropertyChecker : ExpoDeclarationChecker<FirProperty>() {
+    override fun checkDeclaration(
       declaration: FirProperty,
       context: CheckerContext,
       reporter: DiagnosticReporter,
@@ -113,7 +117,7 @@ class JSCheckers(session: FirSession) : FirAdditionalCheckersExtension(session) 
         return
       }
 
-      if (declaration.isLocal) {
+      if (declaration.isLocalProperty) {
         reporter.reportOn(declaration.source, JSDiagnostics.JS_MEMBER_OUTSIDE_MODULE, context)
         return
       }
@@ -155,12 +159,12 @@ internal fun FirRegularClassSymbol.isSubtypeOfClass(
 /** The classes an `Array<KClass<*>>` annotation argument names. */
 internal fun FirAnnotation.classListArgument(name: Name): List<FirRegularClassSymbol> {
   val argument = argumentMapping.mapping[name] ?: return emptyList()
-  val elements = (argument as? FirArrayLiteral)?.argumentList?.arguments ?: listOf(argument)
+  val elements = argument.collectionLiteralElements() ?: listOf(argument)
   return elements.mapNotNull { element ->
     // `Foo::class` resolves to a qualifier that already carries the symbol, so there is no type to
     // pick apart.
     ((element as? FirGetClassCall)?.argument as? FirResolvedQualifier)
-      ?.symbol as? FirRegularClassSymbol
+      ?.classSymbol as? FirRegularClassSymbol
   }
 }
 
@@ -178,7 +182,7 @@ internal fun FirBasedSymbol<*>.expoModuleAnnotation(session: FirSession): FirAnn
 
 /** The `name` argument, or null when it is absent or empty. */
 internal fun FirAnnotation.exportName(session: FirSession): Name? =
-  getStringArgument(Identifiers.Names.ARG_NAME, session)
+  stringArgument(Identifiers.Names.ARG_NAME, session)
     ?.takeIf { it.isNotEmpty() }
     ?.let(Name::identifier)
 
@@ -214,7 +218,7 @@ internal fun checkExportedClassShape(
  * none.
  */
 internal fun FirDeclaration.exportContainer(session: FirSession): FirRegularClassSymbol? {
-  val container = symbolOrNull()?.getContainingClassSymbol() as? FirRegularClassSymbol ?: return null
+  val container = symbolOrNull()?.containingClass() as? FirRegularClassSymbol ?: return null
   return container.takeIf {
     it.expoModuleAnnotation(session) != null || it.sharedObjectAnnotation(session) != null
   }
@@ -252,7 +256,8 @@ internal fun reportDuplicateExportNames(
 ) {
   val seen = mutableSetOf<String>()
   for (member in declaration.declarations) {
-    if (member !is FirSimpleFunction && member !is FirProperty) {
+    val isNamedFunction = (member as? FirFunction)?.symbol is FirNamedFunctionSymbol
+    if (!isNamedFunction && member !is FirProperty) {
       continue
     }
     val name = member.exportNameOrNull(session) ?: continue

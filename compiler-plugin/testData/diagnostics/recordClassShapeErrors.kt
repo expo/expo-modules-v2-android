@@ -54,3 +54,7 @@ class NotAProperty(<!RECORD_PARAMETER_IS_NOT_A_PROPERTY!>a: Int<!>, val b: Int)
         override fun decode(reader: RecordReader) = OwnCodec(0)
     }
 }
+
+/* GENERATED_FIR_TAGS: annotationDeclaration, classDeclaration, classReference, companionObject, enumDeclaration,
+enumEntry, functionDeclaration, inner, integerLiteral, interfaceDeclaration, nullableType, objectDeclaration, override,
+primaryConstructor, propertyDeclaration, sealed, secondaryConstructor, stringLiteral, typeParameter */

@@ -5,7 +5,6 @@ import io.github.expo.modules.v2.compiler.fir.diagnostics.EventDiagnostics
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.DeclarationCheckers
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirPropertyChecker
@@ -31,8 +30,8 @@ class EventCheckers(session: FirSession) : FirAdditionalCheckersExtension(sessio
     override val propertyCheckers: Set<FirPropertyChecker> = setOf(EventPropertyChecker)
   }
 
-  private object EventPropertyChecker : FirPropertyChecker(MppCheckerKind.Common) {
-    override fun check(
+  private object EventPropertyChecker : ExpoDeclarationChecker<FirProperty>() {
+    override fun checkDeclaration(
       declaration: FirProperty,
       context: CheckerContext,
       reporter: DiagnosticReporter,
@@ -42,7 +41,7 @@ class EventCheckers(session: FirSession) : FirAdditionalCheckersExtension(sessio
         return
       }
 
-      if (declaration.isLocal || declaration.exportContainer(session) == null) {
+      if (declaration.isLocalProperty || declaration.exportContainer(session) == null) {
         reporter.reportOn(declaration.source, EventDiagnostics.EVENT_OUTSIDE_MODULE, context)
         return
       }

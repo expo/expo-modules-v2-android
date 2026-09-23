@@ -1,0 +1,164 @@
+Module: producer
+FILE: producer.kt
+    package io.github.expo.modules.v2.testdata.producer
+
+    @R|io/github/expo/modules/v2/Record|() public final data class Shared : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        public constructor(n: R|kotlin/Int|, label: R|kotlin/String?|): R|io/github/expo/modules/v2/testdata/producer/Shared| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val n: R|kotlin/Int| = R|<local>/n|
+            public get(): R|kotlin/Int|
+
+        public final val label: R|kotlin/String?| = R|<local>/label|
+            public get(): R|kotlin/String?|
+
+        public final operator fun component1(): R|kotlin/Int|
+
+        public final operator fun component2(): R|kotlin/String?|
+
+        public final fun copy(n: R|kotlin/Int| = this@R|io/github/expo/modules/v2/testdata/producer/Shared|.R|io/github/expo/modules/v2/testdata/producer/Shared.n|, label: R|kotlin/String?| = this@R|io/github/expo/modules/v2/testdata/producer/Shared|.R|io/github/expo/modules/v2/testdata/producer/Shared.label|): R|io/github/expo/modules/v2/testdata/producer/Shared|
+
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/producer/Shared>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/producer/Shared>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/producer/Shared>|
+
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/producer/Shared|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/producer/Shared|
+
+            public constructor(): R|io/github/expo/modules/v2/testdata/producer/Shared.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/producer/Shared>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/producer/Shared>|
+
+            private constructor(): R|io/github/expo/modules/v2/testdata/producer/Shared.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|(name = String(Producer) [evaluated = String(Producer)]) public final object ProducerModule : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/producer/ProducerModule| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun bump(value: R|io/github/expo/modules/v2/testdata/producer/Shared|): R|io/github/expo/modules/v2/testdata/producer/Shared| {
+            ^bump R|io/github/expo/modules/v2/testdata/producer/Shared.Shared|(R|<local>/value|.R|io/github/expo/modules/v2/testdata/producer/Shared.n|.R|kotlin/Int.plus|(Int(1)), R|<local>/value|.R|io/github/expo/modules/v2/testdata/producer/Shared.label|)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun name(prefix: R|kotlin/String|): R|kotlin/String| {
+            ^name <strcat>(R|<local>/prefix|, String(!))
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final var count: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+            public set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/producer/ProducerModule|
+
+    }
+Module: consumer
+FILE: consumer.kt
+    package io.github.expo.modules.v2.testdata.consumer
+
+    @R|io/github/expo/modules/v2/ExpoModule|(name = String(Consumer) [evaluated = String(Consumer)]) public final object ConsumerModule : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/consumer/ConsumerModule| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun forward(value: R|io/github/expo/modules/v2/testdata/producer/Shared|): R|io/github/expo/modules/v2/testdata/producer/Shared| {
+            ^forward Q|io/github/expo/modules/v2/testdata/producer/ProducerModule|.R|io/github/expo/modules/v2/testdata/producer/ProducerModule.bump|(R|<local>/value|)
+        }
+
+    }
+    private final fun descriptorOf(owner: R|java/lang/Class<*>|, name: R|kotlin/String|): R|kotlin/String| {
+        lval method: R|java/lang/reflect/Method| = R|<local>/owner|.R|java/lang/Class.declaredMethods|.R|kotlin/collections/firstOrNull|<R|java/lang/reflect/Method!|>(<L> = firstOrNull@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, R|<local>/name|)
+        }
+        ) ?: ^descriptorOf String(<absent>)
+        lval parameters: R|kotlin/String| = R|<local>/method|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/joinToString|<R|java/lang/Class<*>!|>(String(), <L> = joinToString@fun <anonymous>(it: R|java/lang/Class<*>!|): R|kotlin/CharSequence| <inline=NoInline>  {
+            ^ R|io/github/expo/modules/v2/testdata/consumer/descriptor|(R|<local>/it|)
+        }
+        )
+        ^descriptorOf <strcat>(String((), R|<local>/parameters|, String()), R|io/github/expo/modules/v2/testdata/consumer/descriptor|(R|<local>/method|.R|java/lang/reflect/Method.returnType|))
+    }
+    private final fun descriptor(type: R|java/lang/Class<*>|): R|kotlin/String| {
+        ^descriptor when () {
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>) ->  {
+                String(I)
+            }
+            ==(R|<local>/type|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                String(V)
+            }
+            else ->  {
+                String(L).R|kotlin/String.plus|(R|<local>/type|.R|java/lang/Class.name|.R|kotlin/text/replace|(Char(.), Char(/))).R|kotlin/String.plus|(String(;))
+            }
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval suffix: R|kotlin/String| = String(__trampoline$ExpoModulesV2)
+        lval define: R|java/lang/reflect/Method!| = <getClass>(Q|io/github/expo/modules/v2/testdata/producer/ProducerModule|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/producer/ProducerModule|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(define$ExpoModulesV2), vararg(Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.modules.ModuleBuilder))))
+        when () {
+            !=(R|<local>/define|.R|java/lang/reflect/Method.returnType|, <getClass>(Q|kotlin/String|).R|kotlin/jvm/java|<R|kotlin/String|>) ->  {
+                ^box <strcat>(String(producer define: ), R|<local>/define|.R|java/lang/reflect/Method.returnType|)
+            }
+        }
+
+        lval producer: R|kotlin/collections/Map<kotlin/String, kotlin/String>| = R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(bump), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I)), <strcat>(String(name), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)Ljava/lang/String;)), String(getCount).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(()I)), String(setCount).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)V))))
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<kotlin/String, kotlin/String>>| = R|<local>/producer|.R|kotlin/collections/iterator|<R|kotlin/String|, R|kotlin/String|>()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval <destruct>: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>|>|()
+                lval name: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component1|<R|kotlin/String|, R|kotlin/String|>()
+                lval want: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component2|<R|kotlin/String|, R|kotlin/String|>()
+                 {
+                    lval got: R|kotlin/String| = R|io/github/expo/modules/v2/testdata/consumer/descriptorOf|(<getClass>(Q|io/github/expo/modules/v2/testdata/producer/ProducerModule|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/producer/ProducerModule|>, R|<local>/name|)
+                    when () {
+                        !=(R|<local>/got|, R|<local>/want|) ->  {
+                            ^box <strcat>(String(producer ), R|<local>/name|, String(: expected ), R|<local>/want|, String(, got ), R|<local>/got|)
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        lval got: R|kotlin/String| = R|io/github/expo/modules/v2/testdata/consumer/descriptorOf|(<getClass>(Q|io/github/expo/modules/v2/testdata/consumer/ConsumerModule|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/consumer/ConsumerModule|>, <strcat>(String(forward), R|<local>/suffix|))
+        when () {
+            !=(R|<local>/got|, String((I)I)) ->  {
+                ^box <strcat>(String(consumer forward: expected (I)I, got ), R|<local>/got|)
+            }
+        }
+
+        lval bumped: R|io/github/expo/modules/v2/testdata/producer/Shared| = Q|io/github/expo/modules/v2/testdata/producer/ProducerModule|.R|io/github/expo/modules/v2/testdata/producer/ProducerModule.bump|(R|io/github/expo/modules/v2/testdata/producer/Shared.Shared|(Int(1), String(a)))
+        when () {
+            !=(R|<local>/bumped|, R|io/github/expo/modules/v2/testdata/producer/Shared.Shared|(Int(2), String(a))) ->  {
+                ^box <strcat>(String(bump gave ), R|<local>/bumped|)
+            }
+        }
+
+        ^box String(OK)
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/consumer/ConsumerModule|
+
+    }

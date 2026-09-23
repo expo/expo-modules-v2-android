@@ -1,0 +1,127 @@
+FILE: jsPropertyShapeErrors.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class CompanionMembers : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/CompanionMembers| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/CompanionMembers.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+            @R|io/github/expo/modules/v2/JS|() public final val fromCompanion: R|kotlin/Int| = Int(1)
+                public get(): R|kotlin/Int|
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class NestedContainer : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NestedContainer| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        public final class Inner : R|kotlin/Any| {
+            public constructor(): R|io/github/expo/modules/v2/testdata/NestedContainer.Inner| {
+                super<R|kotlin/Any|>()
+            }
+
+            @R|io/github/expo/modules/v2/JS|() public final val fromNested: R|kotlin/Int| = Int(1)
+                public get(): R|kotlin/Int|
+
+        }
+
+    }
+    public final fun localVariable(): R|kotlin/Unit| {
+        @R|io/github/expo/modules/v2/JS|() lval local: R|kotlin/Int| = Int(1)
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class ExtensionProperties : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ExtensionProperties| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final val R|kotlin/Int|.received: R|kotlin/Int|
+            public get(): R|kotlin/Int| {
+                ^ this@R|io/github/expo/modules/v2/testdata/ExtensionProperties.received|
+            }
+
+        @R|io/github/expo/modules/v2/JS|() internal final val R|kotlin/Int|.internalAndReceived: R|kotlin/Int|
+            internal get(): R|kotlin/Int| {
+                ^ this@R|io/github/expo/modules/v2/testdata/ExtensionProperties.internalAndReceived|
+            }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class GoodProperties : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/GoodProperties| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final val readOnly: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/JS|() public final var mutable: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+            public set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+        @R|io/github/expo/modules/v2/JS|() public final val computed: R|kotlin/Int|
+            public get(): R|kotlin/Int| {
+                ^ Int(1)
+            }
+
+        @R|io/github/expo/modules/v2/JS|(name = String(renamed) [evaluated = String(renamed)]) public final val original: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/JS|() private final val hidden: R|kotlin/Int| = Int(1)
+            private get(): R|kotlin/Int|
+
+        public final val R|kotlin/Int|.notExported: R|kotlin/Int|
+            public get(): R|kotlin/Int| {
+                ^ this@R|io/github/expo/modules/v2/testdata/GoodProperties.notExported|
+            }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object GoodObjectProperties : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/GoodObjectProperties| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final val fromObject: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_CompanionMembers_e60b830d.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_CompanionMembers_e60b830d : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/CompanionMembers|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_NestedContainer_540812aa.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_NestedContainer_540812aa : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/NestedContainer|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_ExtensionProperties_afa8b432.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_ExtensionProperties_afa8b432 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/ExtensionProperties|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_GoodProperties_36ef5470.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_GoodProperties_36ef5470 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/GoodProperties|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_GoodObjectProperties_a904ef4f.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_GoodObjectProperties_a904ef4f : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/GoodObjectProperties|
+
+    }

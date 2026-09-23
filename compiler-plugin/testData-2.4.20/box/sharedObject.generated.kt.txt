@@ -1,0 +1,160 @@
+// FILE: sharedObject.kt
+package io.github.expo.modules.v2.testdata
+
+@ExpoSharedObject
+class Listed : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun __construct$ExpoModulesV2(p0: Int): Listed {
+    return Listed(n = p0)
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "value", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "value")
+    return "Listed"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Listed", sharedClass = <get-java>(/* $receiver = Listed::class */), definition = builder)
+  }
+}
+
+@ExpoModule(classes = [Listed::class])
+class Owner : Module {
+  @ExpoSharedObject
+  class Nested : SharedObject {
+    private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+    companion fun __construct$ExpoModulesV2(payloadLength: Int): Nested {
+      val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+      var v0: String
+      try { // BLOCK
+        v0 = args.nextString()
+      }
+      finally args.finish()
+      return Nested(text = v0)
+    }
+
+    companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+      builder.function(jsName = "render", argTypes = [], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "render")
+      return "Nested"
+    }
+
+    private companion fun register$ExpoModulesV2(): Int {
+      val builder: ModuleBuilder = ModuleBuilder()
+      define$ExpoModulesV2(builder = builder)
+      return SharedObjectRegistry.register(jsName = "Nested", sharedClass = <get-java>(/* $receiver = Nested::class */), definition = builder)
+    }
+  }
+
+  @ExpoSharedObject
+  class NotConstructable : SharedObject {
+    private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+    companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+      builder.function(jsName = "name", argTypes = [], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "name")
+      return "NotConstructable"
+    }
+
+    private companion fun register$ExpoModulesV2(): Int {
+      val builder: ModuleBuilder = ModuleBuilder()
+      define$ExpoModulesV2(builder = builder)
+      return SharedObjectRegistry.register(jsName = "NotConstructable", sharedClass = <get-java>(/* $receiver = NotConstructable::class */), definition = builder)
+    }
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.sharedClass(jsName = "Nested", sharedClass = <get-java>(/* $receiver = Nested::class */), argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], trampolineName = "__construct$ExpoModulesV2")
+    builder.sharedClass(jsName = "Listed", sharedClass = <get-java>(/* $receiver = Listed::class */), argTypes = [AnyType(descriptor = Int, useBuffer = false)], trampolineName = "__construct$ExpoModulesV2")
+    return "Owner"
+  }
+}
+
+@ExpoSharedObject
+class Player : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun __construct$ExpoModulesV2(): Player {
+    return Player()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "play", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "play")
+    builder.property(jsName = "volume", type = AnyType(descriptor = Double, useBuffer = false), mutable = true, propertyName = "volume", setterType = AnyType(descriptor = Double, useBuffer = false))
+    builder.function(jsName = "rename", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "rename__trampoline$ExpoModulesV2")
+    return "Player"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Player", sharedClass = <get-java>(/* $receiver = Player::class */), definition = builder)
+  }
+
+  fun rename__trampoline$ExpoModulesV2(payloadLength: Int): String? {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    return <this>.rename(name = v0) as String?
+  }
+}
+
+@ExpoModule
+class Players : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "create", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Player::class */), isNullable = false), useBuffer = false), methodName = "create")
+    builder.function(jsName = "volumeOf", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Player::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Double, useBuffer = false), methodName = "volumeOf")
+    builder.function(jsName = "maybe", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Player::class */), isNullable = true), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "maybe")
+    return "Players"
+  }
+}
+
+@ExpoSharedObject(name = "Renamed")
+class Speaker : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun __construct$ExpoModulesV2(): Speaker {
+    return Speaker()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "mute", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "mute")
+    return "Renamed"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Renamed", sharedClass = <get-java>(/* $receiver = Speaker::class */), definition = builder)
+  }
+}
+
+@ExpoSharedObject
+class TextRef : SharedRef<StringBuilder> {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "length", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "length")
+    return "TextRef"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)
+  }
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Owner_31e30c13.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Owner_31e30c13 {
+  abstract fun module(): Owner
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Players_66c30312.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Players_66c30312 {
+  abstract fun module(): Players
+}
+

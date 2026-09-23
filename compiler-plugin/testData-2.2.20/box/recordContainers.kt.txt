@@ -1,0 +1,177 @@
+package io.github.expo.modules.v2.testdata
+
+@Record
+class Bag : Record {
+  val tags: List<String>
+    field = tags
+    get
+
+  val counts: List<Int>
+    field = counts
+    get
+
+  val maybes: List<String?>
+    field = maybes
+    get
+
+  val ids: Set<Long>
+    field = ids
+    get
+
+  val meta: Map<String, Any?>
+    field = meta
+    get
+
+  val names: Array<String>
+    field = names
+    get
+
+  val nested: List<List<Int>>
+    field = nested
+    get
+
+  val absent: List<String>?
+    field = absent
+    get
+
+  val absentNames: Array<String>?
+    field = absentNames
+    get
+
+  val mutableTags: MutableList<String>
+    field = mutableTags
+    get
+
+  val mutableMeta: MutableMap<String, Int>
+    field = mutableMeta
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Bag> {
+    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+    private /* final field */ val type$2: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL]))
+    private /* final field */ val type$3: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Set<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#LONG_BOXED]))
+    private /* final field */ val type$4: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #ANY_NULL]))
+    private /* final field */ val type$5: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Array<String>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$6: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))]))
+    private /* final field */ val type$7: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$8: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Array<String>?::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$9: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$10: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))
+    override val recordClass: Class<Bag>
+      field = <get-java>(/* $receiver = Bag::class */)
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Bag", bufferSafe = true, fields = [RecordField(name = "tags", type = <this>.#type$0, isOptional = false), RecordField(name = "counts", type = <this>.#type$1, isOptional = false), RecordField(name = "maybes", type = <this>.#type$2, isOptional = false), RecordField(name = "ids", type = <this>.#type$3, isOptional = false), RecordField(name = "meta", type = <this>.#type$4, isOptional = false), RecordField(name = "names", type = <this>.#type$5, isOptional = false), RecordField(name = "nested", type = <this>.#type$6, isOptional = false), RecordField(name = "absent", type = <this>.#type$7, isOptional = false), RecordField(name = "absentNames", type = <this>.#type$8, isOptional = false), RecordField(name = "mutableTags", type = <this>.#type$9, isOptional = false), RecordField(name = "mutableMeta", type = <this>.#type$10, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Bag {
+      return Bag(tags = reader.read<List<String>>(schema = <this>.#type$0), counts = reader.read<List<Int>>(schema = <this>.#type$1), maybes = reader.read<List<String?>>(schema = <this>.#type$2), ids = reader.read<Set<Long>>(schema = <this>.#type$3), meta = reader.read<Map<String, Any?>>(schema = <this>.#type$4), names = reader.read<Array<String>>(schema = <this>.#type$5), nested = reader.read<List<List<Int>>>(schema = <this>.#type$6), absent = reader.read<List<String>?>(schema = <this>.#type$7), absentNames = reader.read<Array<String>?>(schema = <this>.#type$8), mutableTags = reader.read<MutableList<String>>(schema = <this>.#type$9), mutableMeta = reader.read<MutableMap<String, Int>>(schema = <this>.#type$10))
+    }
+
+    override fun encode(value: Bag, writer: RecordWriter) {
+      writer.write(value = value.<get-tags>(), schema = <this>.#type$0)
+      writer.write(value = value.<get-counts>(), schema = <this>.#type$1)
+      writer.write(value = value.<get-maybes>(), schema = <this>.#type$2)
+      writer.write(value = value.<get-ids>(), schema = <this>.#type$3)
+      writer.write(value = value.<get-meta>(), schema = <this>.#type$4)
+      writer.write(value = value.<get-names>(), schema = <this>.#type$5)
+      writer.write(value = value.<get-nested>(), schema = <this>.#type$6)
+      writer.write(value = value.<get-absent>(), schema = <this>.#type$7)
+      writer.write(value = value.<get-absentNames>(), schema = <this>.#type$8)
+      writer.write(value = value.<get-mutableTags>(), schema = <this>.#type$9)
+      writer.write(value = value.<get-mutableMeta>(), schema = <this>.#type$10)
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Bag>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(tags: List<String>, counts: List<Int>, maybes: List<String?>, ids: Set<Long>, meta: Map<String, Any?>, names: Array<String>, nested: List<List<Int>>, absent: List<String>?, absentNames: Array<String>?, mutableTags: MutableList<String>, mutableMeta: MutableMap<String, Int>) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+fun box(): String {
+  val codec: RecordCodec<Bag> = codecFor<Bag>()
+  val fieldTypes: List<String> = map<RecordField, String>(/* <this> = codec.<get-schema>().<get-fields>(), */ transform = local fun <anonymous>(it: RecordField): String {
+    return it.<get-name>() + "=" + it.<get-type>()
+  }
+)
+  val expected: List<String> = listOf<String>(elements = ["tags=List<String>", "counts=List<Integer>", "maybes=List<String?>", "ids=Set<Long>", "meta=Map<String, Object?>", "names=String[]<String>", "nested=List<List<Integer>>", "absent=List<String>?", "absentNames=String[]<String>?", "mutableTags=List<String>", "mutableMeta=Map<String, Integer>"])
+  when {
+    EQEQ(arg0 = fieldTypes, arg1 = expected).not() -> return "Fail: descriptors are " + fieldTypes
+  }
+  val bag: Bag = Bag(tags = listOf<String>(elements = ["a", "b"]), counts = listOf<Int>(elements = [1, 2]), maybes = listOf<String?>(elements = ["x", null]), ids = setOf<Long>(element = 7L), meta = mapOf<String, Int?>(pairs = [to<String, Int>(/* <this> = "k", */ that = 1), to<String, Nothing?>(/* <this> = "n", */ that = null)]), names = arrayOf<String>(elements = ["n"]), nested = listOf<List<Int>>(elements = [listOf<Int>(element = 1), listOf<Int>(elements = [2, 3])]), absent = null, absentNames = null, mutableTags = mutableListOf<String>(elements = ["m"]), mutableMeta = mutableMapOf<String, Int>(pairs = [to<String, Int>(/* <this> = "k", */ that = 1)]))
+  val map: Map<String, Any?> = codec.toMap(value = bag)
+  when {
+    EQEQ(arg0 = map.get(key = "tags"), arg1 = listOf<String>(elements = ["a", "b"])).not() -> return "Fail: tags is " + map.get(key = "tags")
+  }
+  when {
+    EQEQ(arg0 = map.get(key = "absent"), arg1 = null).not() -> return "Fail: absent is " + map.get(key = "absent")
+  }
+  val back: Bag = codec.fromMap(map = map)
+  when {
+    EQEQ(arg0 = back.<get-tags>(), arg1 = bag.<get-tags>()).not() -> return "Fail: tags round trip gave " + back.<get-tags>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-counts>(), arg1 = bag.<get-counts>()).not() -> return "Fail: counts round trip gave " + back.<get-counts>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-maybes>(), arg1 = bag.<get-maybes>()).not() -> return "Fail: maybes round trip gave " + back.<get-maybes>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-ids>(), arg1 = bag.<get-ids>()).not() -> return "Fail: ids round trip gave " + back.<get-ids>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-meta>(), arg1 = bag.<get-meta>()).not() -> return "Fail: meta round trip gave " + back.<get-meta>()
+  }
+  when {
+    EQEQ(arg0 = toList<String>(/* <this> = back.<get-names>() */), arg1 = toList<String>(/* <this> = bag.<get-names>() */)).not() -> return "Fail: names round trip gave " + toList<String>(/* <this> = back.<get-names>() */)
+  }
+  when {
+    EQEQ(arg0 = back.<get-nested>(), arg1 = bag.<get-nested>()).not() -> return "Fail: nested round trip gave " + back.<get-nested>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-absent>(), arg1 = null).not() -> return "Fail: absent round trip gave " + back.<get-absent>() /*as List<String> */
+  }
+  when {
+    EQEQ(arg0 = back.<get-absentNames>(), arg1 = null).not() -> return "Fail: absentNames round trip gave " + { // BLOCK
+      val tmp_0: Array<String> = back.<get-absentNames>() /*as Array<String> */
+      when {
+        EQEQ(arg0 = tmp_0, arg1 = null) -> null
+        else -> toList<String>(/* <this> = tmp_0 */)
+      }
+    }
+  }
+  when {
+    EQEQ(arg0 = back.<get-mutableTags>(), arg1 = bag.<get-mutableTags>()).not() -> return "Fail: mutableTags round trip gave " + back.<get-mutableTags>()
+  }
+  when {
+    EQEQ(arg0 = back.<get-mutableMeta>(), arg1 = bag.<get-mutableMeta>()).not() -> return "Fail: mutableMeta round trip gave " + back.<get-mutableMeta>()
+  }
+  return "OK"
+}
+

@@ -1,0 +1,154 @@
+// FILE: moduleEvents.kt
+package io.github.expo.modules.v2.testdata
+
+@Record
+data class Change : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Change> {
+    override val recordClass: Class<Change>
+      field = <get-java>(/* $receiver = Change::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Change", bufferSafe = true, fields = [RecordField(name = "value", type = Int, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Change {
+      return Change(value = reader.readInt())
+    }
+
+    override fun encode(value: Change, writer: RecordWriter) {
+      writer.write(value = value.<get-value>())
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Change>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+@ExpoSharedObject
+class Player : SharedObject {
+  @Event
+  val onStateChange: Event<String>
+    field = EventSupport.bind<String>(event = <this>.event<String>(), jsName = "stateChange", descriptor = #STRING, useBuffer = false)
+
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun __construct$ExpoModulesV2(): Player {
+    return Player()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.event(jsName = "stateChange", type = AnyType(descriptor = #STRING, useBuffer = false))
+    builder.function(jsName = "play", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "play")
+    return "Player"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Player", sharedClass = <get-java>(/* $receiver = Player::class */), definition = builder)
+  }
+}
+
+@ExpoModule
+class Watcher : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Change::class */), isNullable = false)
+  private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+  @Event
+  val onChanged: Event<Change>
+    field = EventSupport.bind<Change>(event = <this>.event<Change>(onStartObserving = local fun <anonymous>() {
+      { // BLOCK
+        val tmp_0: Int = <this>.<get-starts>()
+        <this>.<set-starts>(<set-?> = tmp_0.inc())
+        tmp_0
+      } /*~> Unit */
+    }
+, onStopObserving = local fun <anonymous>() {
+      { // BLOCK
+        val tmp_1: Int = <this>.<get-stops>()
+        <this>.<set-stops>(<set-?> = tmp_1.inc())
+        tmp_1
+      } /*~> Unit */
+    }
+), jsName = "changed", descriptor = #type$0, useBuffer = true)
+
+  @Event(name = "renamed")
+  val onSomething: Event<Int>
+    field = EventSupport.bind<Int>(event = <this>.event<Int>(), jsName = "renamed", descriptor = Int, useBuffer = false)
+
+  @Event
+  val progress: Event<Double>
+    field = EventSupport.bind<Double>(event = <this>.event<Double>(), jsName = "progress", descriptor = Double, useBuffer = false)
+
+  @Event
+  val online: Event<String>
+    field = EventSupport.bind<String>(event = <this>.event<String>(), jsName = "online", descriptor = #STRING, useBuffer = false)
+
+  @Event
+  val onBatch: Event<List<Int>>
+    field = EventSupport.bind<List<Int>>(event = <this>.event<List<Int>>(), jsName = "batch", descriptor = #type$1, useBuffer = true)
+
+  @Event
+  @BufferMode(value = Buffer.NO)
+  val onSlot: Event<List<Int>>
+    field = EventSupport.bind<List<Int>>(event = <this>.event<List<Int>>(), jsName = "slot", descriptor = #type$1, useBuffer = false)
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.event(jsName = "changed", type = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Change::class */), isNullable = false), useBuffer = true))
+    builder.event(jsName = "renamed", type = AnyType(descriptor = Int, useBuffer = false))
+    builder.event(jsName = "progress", type = AnyType(descriptor = Double, useBuffer = false))
+    builder.event(jsName = "online", type = AnyType(descriptor = #STRING, useBuffer = false))
+    builder.event(jsName = "batch", type = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED])), useBuffer = true))
+    builder.event(jsName = "slot", type = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED])), useBuffer = false))
+    builder.function(jsName = "describe", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Change::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "describe__trampoline$ExpoModulesV2")
+    return "Watcher"
+  }
+
+  fun describe__trampoline$ExpoModulesV2(payloadLength: Int): String? {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Change
+    try { // BLOCK
+      v0 = args.next<Change>(type = #type$0)
+    }
+    finally args.finish()
+    return <this>.describe(change = v0) as String?
+  }
+}
+
+@ExpoModule
+object Singleton : Module {
+  @Event
+  val onTick: Event<Int>
+    field = EventSupport.bind<Int>(event = <this>.event<Int>(), jsName = "tick", descriptor = Int, useBuffer = false)
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.event(jsName = "tick", type = AnyType(descriptor = Int, useBuffer = false))
+    return "Singleton"
+  }
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Singleton_d88ee16b.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Singleton_d88ee16b {
+  abstract fun module(): Singleton
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Watcher_c74b1b1c.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Watcher_c74b1b1c {
+  abstract fun module(): Watcher
+}
+

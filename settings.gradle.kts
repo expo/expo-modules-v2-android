@@ -13,6 +13,14 @@ dependencyResolutionManagement {
     google()
     mavenCentral()
   }
+  versionCatalogs {
+    create("libs") {
+      // The compiler plugin is compiled once per supported Kotlin release (see
+      // gradle/kotlin-versions.txt): `-PkotlinVersion=<version>` swaps the Kotlin the whole build
+      // uses. Without it the catalog's own `kotlin` (the oldest supported release) applies.
+      providers.gradleProperty("kotlinVersion").orNull?.let { version("kotlin", it) }
+    }
+  }
 }
 
 rootProject.name = "expo-modules-v2"

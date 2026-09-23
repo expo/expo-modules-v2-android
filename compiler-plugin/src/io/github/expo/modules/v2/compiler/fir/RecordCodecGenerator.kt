@@ -5,7 +5,6 @@ import io.github.expo.modules.v2.compiler.RecordKey
 import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.analysis.checkers.getContainingClassSymbol
 import org.jetbrains.kotlin.fir.declarations.FirDeclarationOrigin
 import org.jetbrains.kotlin.fir.declarations.utils.isCompanion
 import org.jetbrains.kotlin.fir.extensions.FirDeclarationGenerationExtension
@@ -160,7 +159,7 @@ class RecordCodecGenerator(session: FirSession) : FirDeclarationGenerationExtens
     }
 
     if (owner.isCompanionOfARecord() && callableId.callableName == Identifiers.Names.CODEC_PROPERTY) {
-      val record = owner.getContainingClassSymbol() as? FirClassSymbol<*> ?: return emptyList()
+      val record = owner.containingClass() as? FirClassSymbol<*> ?: return emptyList()
       return listOf(
         createMemberProperty(
           owner,
@@ -236,12 +235,12 @@ class RecordCodecGenerator(session: FirSession) : FirDeclarationGenerationExtens
       return false
     }
 
-    val containing = getContainingClassSymbol() as? FirClassSymbol<*> ?: return false
+    val containing = containingClass() as? FirClassSymbol<*> ?: return false
     return containing.isRecord(session) && containing.canCarryACodec()
   }
 
   private fun FirClassSymbol<*>.recordOwner(): FirClassSymbol<*>? =
-    getContainingClassSymbol() as? FirClassSymbol<*>
+    containingClass() as? FirClassSymbol<*>
 
   private fun coneType(classId: ClassId, vararg arguments: ConeKotlinType): ConeKotlinType =
     classId.createConeType(session, arrayOf(*arguments))

@@ -1,0 +1,265 @@
+FILE: sharedObject.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Player : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Player| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun play(): R|kotlin/Int| {
+            ^play Int(1)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final var volume: R|kotlin/Double| = Double(1.0)
+            public get(): R|kotlin/Double|
+            public set(value: R|kotlin/Double|): R|kotlin/Unit|
+
+        @R|io/github/expo/modules/v2/JS|() public final fun rename(name: R|kotlin/String|): R|kotlin/String| {
+            ^rename R|<local>/name|
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|(name = String(Renamed)) public final class Speaker : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Speaker| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun mute(): R|kotlin/Unit| {
+            ^mute Q|kotlin/Unit|
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class TextRef : R|io/github/expo/modules/v2/SharedRef<{kotlin/text/StringBuilder=} java/lang/StringBuilder>| {
+        public constructor(text: R|{kotlin/text/StringBuilder=} java/lang/StringBuilder|): R|io/github/expo/modules/v2/testdata/TextRef| {
+            super<R|io/github/expo/modules/v2/SharedRef<{kotlin/text/StringBuilder=} java/lang/StringBuilder>|>(R|<local>/text|)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun length(): R|kotlin/Int| {
+            ^length this@R|io/github/expo/modules/v2/testdata/TextRef|.R|SubstitutionOverride<io/github/expo/modules/v2/testdata/TextRef.ref: R|{kotlin/text/StringBuilder=} java/lang/StringBuilder|>|.R|java/lang/AbstractStringBuilder.length|
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Listed : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(n: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Listed| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        private final val n: R|kotlin/Int| = R|<local>/n|
+            private get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/JS|() public final fun value(): R|kotlin/Int| {
+            ^value this@R|io/github/expo/modules/v2/testdata/Listed|.R|io/github/expo/modules/v2/testdata/Listed.n|
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|(classes = <implicitArrayOf>(<getClass>(Q|io/github/expo/modules/v2/testdata/Listed|))) public final class Owner : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Owner| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Nested : R|io/github/expo/modules/v2/SharedObject| {
+            public constructor(text: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/Owner.Nested| {
+                super<R|io/github/expo/modules/v2/SharedObject|>()
+            }
+
+            private final val text: R|kotlin/String| = R|<local>/text|
+                private get(): R|kotlin/String|
+
+            @R|io/github/expo/modules/v2/JS|() public final fun render(): R|kotlin/String| {
+                ^render this@R|io/github/expo/modules/v2/testdata/Owner.Nested|.R|io/github/expo/modules/v2/testdata/Owner.Nested.text|
+            }
+
+        }
+
+        @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class NotConstructable : R|io/github/expo/modules/v2/SharedObject| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/Owner.NotConstructable| {
+                super<R|io/github/expo/modules/v2/SharedObject|>()
+            }
+
+            @R|io/github/expo/modules/v2/JS|() public final fun name(): R|kotlin/String| {
+                ^name String(hidden)
+            }
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class Players : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Players| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun create(): R|io/github/expo/modules/v2/testdata/Player| {
+            ^create R|io/github/expo/modules/v2/testdata/Player.Player|()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun volumeOf(player: R|io/github/expo/modules/v2/testdata/Player|): R|kotlin/Double| {
+            ^volumeOf R|<local>/player|.R|io/github/expo/modules/v2/testdata/Player.volume|
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun maybe(player: R|io/github/expo/modules/v2/testdata/Player?|): R|kotlin/Int| {
+            ^maybe when () {
+                ==(R|<local>/player|, Null(null)) ->  {
+                    Int(0)
+                }
+                else ->  {
+                    Int(1)
+                }
+            }
+
+        }
+
+    }
+    private final fun descriptor(type: R|java/lang/Class<*>|): R|kotlin/String| {
+        ^descriptor when () {
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>) ->  {
+                String(I)
+            }
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Double|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Double|>) ->  {
+                String(D)
+            }
+            ==(R|<local>/type|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                String(V)
+            }
+            R|<local>/type|.R|java/lang/Class.isArray| ->  {
+                String([).R|kotlin/String.plus|(R|io/github/expo/modules/v2/testdata/descriptor|(R|<local>/type|.R|java/lang/Class.componentType|))
+            }
+            else ->  {
+                String(L).R|kotlin/String.plus|(R|<local>/type|.R|java/lang/Class.name|.R|kotlin/text/replace|(Char(.), Char(/))).R|kotlin/String.plus|(String(;))
+            }
+        }
+
+    }
+    private final fun descriptorOf(owner: R|java/lang/Class<*>|, name: R|kotlin/String|): R|kotlin/String| {
+        lval method: R|java/lang/reflect/Method| = R|<local>/owner|.R|java/lang/Class.declaredMethods|.R|kotlin/collections/firstOrNull|<R|java/lang/reflect/Method!|>(<L> = firstOrNull@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, R|<local>/name|)
+        }
+        ) ?: ^descriptorOf String(<absent>)
+        lval parameters: R|kotlin/String| = R|<local>/method|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/joinToString|<R|java/lang/Class<*>!|>(String(), <L> = joinToString@fun <anonymous>(it: R|java/lang/Class<*>!|): R|kotlin/CharSequence| <inline=NoInline>  {
+            ^ R|io/github/expo/modules/v2/testdata/descriptor|(R|<local>/it|)
+        }
+        )
+        ^descriptorOf <strcat>(String((), R|<local>/parameters|, String()), R|io/github/expo/modules/v2/testdata/descriptor|(R|<local>/method|.R|java/lang/reflect/Method.returnType|))
+    }
+    public final fun box(): R|kotlin/String| {
+        lval suffix: R|kotlin/String| = String(__trampoline$ExpoModulesV2)
+        lval player: R|kotlin/String| = String(Lio/github/expo/modules/v2/testdata/Player;)
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/ExpoObject>>| = R|kotlin/collections/listOf|<R|java/lang/Class<out io/github/expo/modules/v2/ExpoObject>|>(vararg(<getClass>(Q|io/github/expo/modules/v2/testdata/Player|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Player|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Speaker|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Speaker|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Players|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Players|>)).R|SubstitutionOverride<kotlin/collections/List.iterator: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/ExpoObject>>|>|()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval owner: R|java/lang/Class<out io/github/expo/modules/v2/ExpoObject>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|java/lang/Class<out io/github/expo/modules/v2/ExpoObject>|>|()
+                 {
+                    when () {
+                        ==(R|io/github/expo/modules/v2/testdata/descriptorOf|(R|<local>/owner|, String(define$ExpoModulesV2)), String(<absent>)) ->  {
+                            ^box <strcat>(R|<local>/owner|.R|java/lang/Class.simpleName|, String(: no generated define), String($), String(ExpoModulesV2))
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        lval base: R|java/lang/Class<io/github/expo/modules/v2/SharedObject>| = <getClass>(Q|io/github/expo/modules/v2/SharedObject|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/SharedObject|>
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/SharedObject>>| = R|kotlin/collections/listOf|<R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>|>(vararg(<getClass>(Q|io/github/expo/modules/v2/testdata/Player|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Player|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Speaker|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Speaker|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Listed|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Listed|>, <getClass>(Q|io/github/expo/modules/v2/testdata/TextRef|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/TextRef|>)).R|SubstitutionOverride<kotlin/collections/List.iterator: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/SharedObject>>|>|()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval owner: R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>|>|()
+                 {
+                    when () {
+                        R|<local>/base|.R|SubstitutionOverride<java/lang/Class.isAssignableFrom: R|kotlin/Boolean|>|(R|<local>/owner|).R|kotlin/Boolean.not|() ->  {
+                            ^box <strcat>(R|<local>/owner|.R|java/lang/Class.simpleName|, String(: not a ExpoSharedObject))
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        when () {
+            !=(<getClass>(Q|io/github/expo/modules/v2/testdata/TextRef|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/TextRef|>.R|java/lang/Class.superclass|, <getClass>(Q|io/github/expo/modules/v2/SharedRef|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/SharedRef<*>|>) ->  {
+                ^box <strcat>(String(TextRef: declared base replaced by ), <getClass>(Q|io/github/expo/modules/v2/testdata/TextRef|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/TextRef|>.R|java/lang/Class.superclass|)
+            }
+        }
+
+        lval expected: R|kotlin/collections/Map<java/lang/Class<out io/github/expo/modules/v2/ExpoObject>, kotlin/collections/Map<kotlin/String, kotlin/String>>| = R|kotlin/collections/mapOf|<R|java/lang/Class<out io/github/expo/modules/v2/ExpoObject>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>(vararg(<getClass>(Q|io/github/expo/modules/v2/testdata/Players|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Players|>.R|kotlin/to|<R|java/lang/Class<io/github/expo/modules/v2/testdata/Players>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>(R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(volumeOf), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)), <strcat>(String(maybe), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)), <strcat>(String(create), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>))))), <getClass>(Q|io/github/expo/modules/v2/testdata/Player|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Player|>.R|kotlin/to|<R|java/lang/Class<io/github/expo/modules/v2/testdata/Player>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>(R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(rename), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)Ljava/lang/String;)), <strcat>(String(play), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String(<absent>)))))))
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<java/lang/Class<out io/github/expo/modules/v2/ExpoObject>, kotlin/collections/Map<kotlin/String, kotlin/String>>>| = R|<local>/expected|.R|kotlin/collections/iterator|<R|java/lang/Class<out io/github/expo/modules/v2/ExpoObject>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval <destruct>: R|kotlin/collections/Map.Entry<java/lang/Class<out io/github/expo/modules/v2/ExpoObject>, kotlin/collections/Map<kotlin/String, kotlin/String>>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/collections/Map.Entry<java/lang/Class<out io/github/expo/modules/v2/ExpoObject>, kotlin/collections/Map<kotlin/String, kotlin/String>>|>|()
+                lval owner: R|java/lang/Class<out io/github/expo/modules/v2/ExpoObject>| = R|<local>/<destruct>|.R|kotlin/collections/component1|<R|java/lang/Class<out io/github/expo/modules/v2/ExpoObject>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>()
+                lval methods: R|kotlin/collections/Map<kotlin/String, kotlin/String>| = R|<local>/<destruct>|.R|kotlin/collections/component2|<R|java/lang/Class<out io/github/expo/modules/v2/ExpoObject>|, R|kotlin/collections/Map<kotlin/String, kotlin/String>|>()
+                 {
+                     {
+                        lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<kotlin/String, kotlin/String>>| = R|<local>/methods|.R|kotlin/collections/iterator|<R|kotlin/String|, R|kotlin/String|>()
+                        while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                            lval <destruct>: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>|>|()
+                            lval name: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component1|<R|kotlin/String|, R|kotlin/String|>()
+                            lval want: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component2|<R|kotlin/String|, R|kotlin/String|>()
+                             {
+                                lval got: R|kotlin/String| = R|io/github/expo/modules/v2/testdata/descriptorOf|(R|<local>/owner|, R|<local>/name|)
+                                when () {
+                                    !=(R|<local>/got|, R|<local>/want|) ->  {
+                                        ^box <strcat>(R|<local>/owner|.R|java/lang/Class.simpleName|, String(.), R|<local>/name|, String(: expected ), R|<local>/want|, String(, got ), R|<local>/got|)
+                                    }
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/SharedObject>>| = R|kotlin/collections/listOf|<R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>|>(vararg(<getClass>(Q|io/github/expo/modules/v2/testdata/Listed|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Listed|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Owner.Nested|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Owner.Nested|>, <getClass>(Q|io/github/expo/modules/v2/testdata/Owner.NotConstructable|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Owner.NotConstructable|>)).R|SubstitutionOverride<kotlin/collections/List.iterator: R|kotlin/collections/Iterator<java/lang/Class<out io/github/expo/modules/v2/SharedObject>>|>|()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval owner: R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|java/lang/Class<out io/github/expo/modules/v2/SharedObject>|>|()
+                 {
+                    when () {
+                        ==(R|io/github/expo/modules/v2/testdata/descriptorOf|(R|<local>/owner|, String(define$ExpoModulesV2)), String(<absent>)) ->  {
+                            ^box <strcat>(R|<local>/owner|.R|java/lang/Class.simpleName|, String(: no generated define), String($), String(ExpoModulesV2))
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        when () {
+            !=(R|io/github/expo/modules/v2/testdata/descriptorOf|(<getClass>(Q|io/github/expo/modules/v2/testdata/Players|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Players|>, String(volumeOf)), <strcat>(String((), R|<local>/player|, String()D))) ->  {
+                ^box <strcat>(String(volumeOf: ), R|io/github/expo/modules/v2/testdata/descriptorOf|(<getClass>(Q|io/github/expo/modules/v2/testdata/Players|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Players|>, String(volumeOf)))
+            }
+        }
+
+        when () {
+            !=(R|io/github/expo/modules/v2/testdata/descriptorOf|(<getClass>(Q|io/github/expo/modules/v2/testdata/Players|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Players|>, String(create)), <strcat>(String(()), R|<local>/player|)) ->  {
+                ^box <strcat>(String(create: ), R|io/github/expo/modules/v2/testdata/descriptorOf|(<getClass>(Q|io/github/expo/modules/v2/testdata/Players|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Players|>, String(create)))
+            }
+        }
+
+        ^box String(OK)
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Owner_31e30c13.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Owner_31e30c13 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Owner|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Players_66c30312.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Players_66c30312 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Players|
+
+    }

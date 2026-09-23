@@ -1,0 +1,114 @@
+// FILE: moduleEdgeCases.kt
+package io.github.expo.modules.v2.testdata
+
+abstract class BaseModule : Module {
+}
+
+@ExpoModule
+class WithNested : Module {
+  class Nested {
+  }
+
+  companion object Companion {
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "value", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "value")
+    return "WithNested"
+  }
+}
+
+@ExpoModule
+object Arity : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "none", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "none")
+    builder.function(jsName = "one", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "one")
+    builder.function(jsName = "eight", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "eight")
+    builder.function(jsName = "eightBuffered", argTypes = [AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "eightBuffered__trampoline$ExpoModulesV2")
+    return "Arity"
+  }
+
+  fun eightBuffered__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    var v1: String
+    var v2: String
+    var v3: String
+    var v4: String
+    var v5: String
+    var v6: String
+    var v7: String
+    try { // BLOCK
+      v0 = args.nextString()
+      v1 = args.nextString()
+      v2 = args.nextString()
+      v3 = args.nextString()
+      v4 = args.nextString()
+      v5 = args.nextString()
+      v6 = args.nextString()
+      v7 = args.nextString()
+    }
+    finally args.finish()
+    return <this>.eightBuffered(a = v0, b = v1, c = v2, d = v3, e = v4, f = v5, g = v6, h = v7)
+  }
+}
+
+@ExpoModule
+object Derived : BaseModule {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "own", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "own")
+    return "Derived"
+  }
+}
+
+@ExpoModule
+object Empty : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Empty"
+  }
+}
+
+@ExpoModule
+object Visibility : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "hidden", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "hidden")
+    builder.function(jsName = "visible", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "visible")
+    return "Visibility"
+  }
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Arity_311b6c3d.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Arity_311b6c3d {
+  abstract fun module(): Arity
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Derived_e0eed77d.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Derived_e0eed77d {
+  abstract fun module(): Derived
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Empty_31519ead.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Empty_31519ead {
+  abstract fun module(): Empty
+}
+
+// FILE: io_github_expo_modules_v2_testdata_Visibility_768025b2.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Visibility_768025b2 {
+  abstract fun module(): Visibility
+}
+
+// FILE: io_github_expo_modules_v2_testdata_WithNested_7b6e93fd.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_WithNested_7b6e93fd {
+  abstract fun module(): WithNested
+}
+

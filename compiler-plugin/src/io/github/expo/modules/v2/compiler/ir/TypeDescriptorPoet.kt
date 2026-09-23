@@ -14,11 +14,13 @@ import org.jetbrains.kotlin.ir.expressions.impl.IrConstructorCallImpl
 import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
 import org.jetbrains.kotlin.ir.symbols.IrConstructorSymbol
 import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
+import org.jetbrains.kotlin.ir.symbols.IrTypeParameterSymbol
 import org.jetbrains.kotlin.ir.symbols.impl.IrFieldSymbolImpl
 import org.jetbrains.kotlin.ir.types.IrSimpleType
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.IrTypeProjection
 import org.jetbrains.kotlin.ir.types.classOrNull
+import org.jetbrains.kotlin.ir.types.classifierOrNull
 import org.jetbrains.kotlin.ir.types.isMarkedNullable
 import org.jetbrains.kotlin.ir.types.starProjectedType
 import org.jetbrains.kotlin.ir.types.typeWith
@@ -68,15 +70,20 @@ class TypeDescriptorPoet(
   fun javaClass(type: IrType): IrExpression {
     val symbol = type.classOrNull
       ?: error("Cannot take a class literal of $type")
+    // A class's default type names its own type parameters, which are out of scope here, and
+    // Kotlin 2.4.20's IR validation rejects that. Such a type is star-projected, like
+    // `List::class.java` in source (`Class<List<*>>`). A concrete type such as `Array<String>` stays
+    // as it is, because its arguments decide the JVM class.
+    val literalType = if (type.mentionsTypeParameter()) symbol.starProjectedType else type
 
     val reference = IrSyntheticClassReferenceImpl(
       type = irBuiltIns.kClassClass.starProjectedType,
       symbol = symbol,
-      classType = type,
+      classType = literalType,
     )
 
     return IrSyntheticCallImpl(
-      type = symbols.classes.javaLangClass.typeWith(type),
+      type = symbols.classes.javaLangClass.typeWith(literalType),
       symbol = kClassJavaGetter,
     ).apply {
       arguments[0] = reference
@@ -276,4 +283,12 @@ class TypeDescriptorPoet(
 
   private fun unsupported(type: IrType): Nothing =
     error("@Record does not support the field type $type - the frontend checker should have caught this")
+}
+
+private fun IrType.mentionsTypeParameter(): Boolean {
+  if (classifierOrNull is IrTypeParameterSymbol) {
+    return true
+  }
+  val arguments = (this as? IrSimpleType)?.arguments ?: return false
+  return arguments.any { (it as? IrTypeProjection)?.type?.mentionsTypeParameter() == true }
 }

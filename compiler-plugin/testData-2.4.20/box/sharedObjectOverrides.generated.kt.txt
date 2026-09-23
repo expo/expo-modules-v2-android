@@ -1,0 +1,89 @@
+package io.github.expo.modules.v2.testdata
+
+@ExpoSharedObject
+class Counter : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun __construct$ExpoModulesV2(): Counter {
+    return Counter()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "value", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "value")
+    return "Counter"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Counter", sharedClass = <get-java>(/* $receiver = Counter::class */), definition = builder)
+  }
+}
+
+@ExpoSharedObject
+class Delegating : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun __construct$ExpoModulesV2(): Delegating {
+    return Delegating()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Delegating"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Delegating", sharedClass = <get-java>(/* $receiver = Delegating::class */), definition = builder)
+  }
+}
+
+@ExpoSharedObject
+class Plain : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun __construct$ExpoModulesV2(): Plain {
+    return Plain()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Plain"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Plain", sharedClass = <get-java>(/* $receiver = Plain::class */), definition = builder)
+  }
+}
+
+@ExpoSharedObject
+class Pressured : SharedObject {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun __construct$ExpoModulesV2(): Pressured {
+    return Pressured()
+  }
+
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Pressured"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Pressured", sharedClass = <get-java>(/* $receiver = Pressured::class */), definition = builder)
+  }
+}
+
+@ExpoSharedObject
+class TextRef : SharedRef<StringBuilder> {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  companion fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "TextRef"
+  }
+
+  private companion fun register$ExpoModulesV2(): Int {
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)
+  }
+}
+

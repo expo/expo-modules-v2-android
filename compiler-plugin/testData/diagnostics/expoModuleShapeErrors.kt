@@ -88,3 +88,7 @@ class DuplicateNames : Module() {
     @JS(name = "value")
     val <!JS_DUPLICATE_EXPORT_NAME!>alsoValue<!>: Int = 3
 }
+
+/* GENERATED_FIR_TAGS: annotationDeclaration, classDeclaration, enumDeclaration, enumEntry, functionDeclaration, inner,
+integerLiteral, interfaceDeclaration, localClass, nullableType, propertyDeclaration, sealed, stringLiteral,
+typeParameter */

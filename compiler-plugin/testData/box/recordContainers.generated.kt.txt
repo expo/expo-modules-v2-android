@@ -1,0 +1,59 @@
+package io.github.expo.modules.v2.testdata
+
+@Record
+class Bag : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Bag> {
+    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+    private /* final field */ val type$2: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING_NULL]))
+    private /* final field */ val type$3: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Set<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#LONG_BOXED]))
+    private /* final field */ val type$4: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #ANY_NULL]))
+    private /* final field */ val type$5: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Array<String>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$6: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))]))
+    private /* final field */ val type$7: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$8: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Array<String>?::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$9: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$10: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))
+    override val recordClass: Class<Bag>
+      field = <get-java>(/* $receiver = Bag::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Bag", bufferSafe = true, fields = [RecordField(name = "tags", type = <this>.#type$0, isOptional = false), RecordField(name = "counts", type = <this>.#type$1, isOptional = false), RecordField(name = "maybes", type = <this>.#type$2, isOptional = false), RecordField(name = "ids", type = <this>.#type$3, isOptional = false), RecordField(name = "meta", type = <this>.#type$4, isOptional = false), RecordField(name = "names", type = <this>.#type$5, isOptional = false), RecordField(name = "nested", type = <this>.#type$6, isOptional = false), RecordField(name = "absent", type = <this>.#type$7, isOptional = false), RecordField(name = "absentNames", type = <this>.#type$8, isOptional = false), RecordField(name = "mutableTags", type = <this>.#type$9, isOptional = false), RecordField(name = "mutableMeta", type = <this>.#type$10, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Bag {
+      return Bag(tags = reader.read<List<String>>(schema = <this>.#type$0), counts = reader.read<List<Int>>(schema = <this>.#type$1), maybes = reader.read<List<String?>>(schema = <this>.#type$2), ids = reader.read<Set<Long>>(schema = <this>.#type$3), meta = reader.read<Map<String, Any?>>(schema = <this>.#type$4), names = reader.read<Array<String>>(schema = <this>.#type$5), nested = reader.read<List<List<Int>>>(schema = <this>.#type$6), absent = reader.read<List<String>?>(schema = <this>.#type$7), absentNames = reader.read<Array<String>?>(schema = <this>.#type$8), mutableTags = reader.read<MutableList<String>>(schema = <this>.#type$9), mutableMeta = reader.read<MutableMap<String, Int>>(schema = <this>.#type$10))
+    }
+
+    override fun encode(value: Bag, writer: RecordWriter) {
+      writer.write(value = value.<get-tags>(), schema = <this>.#type$0)
+      writer.write(value = value.<get-counts>(), schema = <this>.#type$1)
+      writer.write(value = value.<get-maybes>(), schema = <this>.#type$2)
+      writer.write(value = value.<get-ids>(), schema = <this>.#type$3)
+      writer.write(value = value.<get-meta>(), schema = <this>.#type$4)
+      writer.write(value = value.<get-names>(), schema = <this>.#type$5)
+      writer.write(value = value.<get-nested>(), schema = <this>.#type$6)
+      writer.write(value = value.<get-absent>(), schema = <this>.#type$7)
+      writer.write(value = value.<get-absentNames>(), schema = <this>.#type$8)
+      writer.write(value = value.<get-mutableTags>(), schema = <this>.#type$9)
+      writer.write(value = value.<get-mutableMeta>(), schema = <this>.#type$10)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Bag>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+

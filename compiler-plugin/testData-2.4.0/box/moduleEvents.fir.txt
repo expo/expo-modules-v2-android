@@ -1,0 +1,209 @@
+FILE: moduleEvents.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/Record|() public final data class Change : R|io/github/expo/modules/v2/records/Record| {
+        public constructor(value: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Change| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val value: R|kotlin/Int| = R|<local>/value|
+            public get(): R|kotlin/Int|
+
+        public final operator fun component1(): R|kotlin/Int|
+
+        public final fun copy(value: R|kotlin/Int| = this@R|io/github/expo/modules/v2/testdata/Change|.R|io/github/expo/modules/v2/testdata/Change.value|): R|io/github/expo/modules/v2/testdata/Change|
+
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Change>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/Change>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/Change>|
+
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/Change|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/Change|
+
+            public constructor(): R|io/github/expo/modules/v2/testdata/Change.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Change>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Change>|
+
+            private constructor(): R|io/github/expo/modules/v2/testdata/Change.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class Watcher : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Watcher| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        public final var starts: R|kotlin/Int| = Int(0)
+            public get(): R|kotlin/Int|
+            public set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+        public final var stops: R|kotlin/Int| = Int(0)
+            public get(): R|kotlin/Int|
+            public set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+        @R|io/github/expo/modules/v2/Event|() public final val onChanged: R|io/github/expo/modules/v2/events/Event<io/github/expo/modules/v2/testdata/Change>| = this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/ExpoObject.event|<R|io/github/expo/modules/v2/testdata/Change|>(event@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
+             {
+                lval <unary>: R|kotlin/Int| = this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/testdata/Watcher.starts|
+                this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/testdata/Watcher.starts| = R|<local>/<unary>|.R|kotlin/Int.inc|()
+                R|<local>/<unary>|
+            }
+
+        }
+        , event@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
+             {
+                lval <unary>: R|kotlin/Int| = this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/testdata/Watcher.stops|
+                this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/testdata/Watcher.stops| = R|<local>/<unary>|.R|kotlin/Int.inc|()
+                R|<local>/<unary>|
+            }
+
+        }
+        )
+            public get(): R|io/github/expo/modules/v2/events/Event<io/github/expo/modules/v2/testdata/Change>|
+
+        @R|io/github/expo/modules/v2/Event|(name = String(renamed) [evaluated = String(renamed)]) public final val onSomething: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+        @R|io/github/expo/modules/v2/Event|() public final val progress: R|io/github/expo/modules/v2/events/Event<kotlin/Double>| = this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Double|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Double>|
+
+        @R|io/github/expo/modules/v2/Event|() public final val online: R|io/github/expo/modules/v2/events/Event<kotlin/String>| = this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/String|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/String>|
+
+        @R|io/github/expo/modules/v2/Event|() public final val onBatch: R|io/github/expo/modules/v2/events/Event<kotlin/collections/List<kotlin/Int>>| = this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/collections/List<kotlin/Int>|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/collections/List<kotlin/Int>>|
+
+        @R|io/github/expo/modules/v2/Event|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|]) public final val onSlot: R|io/github/expo/modules/v2/events/Event<kotlin/collections/List<kotlin/Int>>| = this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/collections/List<kotlin/Int>|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/collections/List<kotlin/Int>>|
+
+        @R|io/github/expo/modules/v2/JS|() public final fun describe(change: R|io/github/expo/modules/v2/testdata/Change|): R|kotlin/String| {
+            ^describe <strcat>(String(change:), R|<local>/change|.R|io/github/expo/modules/v2/testdata/Change.value|)
+        }
+
+        public final fun fire(change: R|io/github/expo/modules/v2/testdata/Change|): R|kotlin/Unit| {
+            ^fire this@R|io/github/expo/modules/v2/testdata/Watcher|.R|io/github/expo/modules/v2/testdata/Watcher.onChanged|.R|SubstitutionOverride<io/github/expo/modules/v2/events/Event.invoke: R|kotlin/Unit|>|(R|<local>/change|)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object Singleton : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/Singleton| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onTick: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/Singleton|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Player : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Player| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onStateChange: R|io/github/expo/modules/v2/events/Event<kotlin/String>| = this@R|io/github/expo/modules/v2/testdata/Player|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/String|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/String>|
+
+        @R|io/github/expo/modules/v2/JS|() public final fun play(): R|kotlin/Int| {
+            ^play Int(1)
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval watcher: R|io/github/expo/modules/v2/testdata/Watcher| = R|io/github/expo/modules/v2/testdata/Watcher.Watcher|()
+        lval expected: R|kotlin/collections/Map<io/github/expo/modules/v2/events/Event<out kotlin/Any>, kotlin/String>| = R|kotlin/collections/mapOf|<R|io/github/expo/modules/v2/events/Event<out kotlin/Any>|, R|kotlin/String|>(vararg(R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.onChanged|.R|kotlin/to|<R|io/github/expo/modules/v2/events/Event<io/github/expo/modules/v2/testdata/Change>|, R|kotlin/String|>(String(changed)), R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.onSomething|.R|kotlin/to|<R|io/github/expo/modules/v2/events/Event<kotlin/Int>|, R|kotlin/String|>(String(renamed)), R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.progress|.R|kotlin/to|<R|io/github/expo/modules/v2/events/Event<kotlin/Double>|, R|kotlin/String|>(String(progress)), R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.online|.R|kotlin/to|<R|io/github/expo/modules/v2/events/Event<kotlin/String>|, R|kotlin/String|>(String(online)), R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.onBatch|.R|kotlin/to|<R|io/github/expo/modules/v2/events/Event<kotlin/collections/List<kotlin/Int>>|, R|kotlin/String|>(String(batch)), R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.onSlot|.R|kotlin/to|<R|io/github/expo/modules/v2/events/Event<kotlin/collections/List<kotlin/Int>>|, R|kotlin/String|>(String(slot))))
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<io/github/expo/modules/v2/events/Event<out kotlin/Any>, kotlin/String>>| = R|<local>/expected|.R|kotlin/collections/iterator|<R|io/github/expo/modules/v2/events/Event<out kotlin/Any>|, R|kotlin/String|>()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval <destruct>: R|kotlin/collections/Map.Entry<io/github/expo/modules/v2/events/Event<out kotlin/Any>, kotlin/String>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/collections/Map.Entry<io/github/expo/modules/v2/events/Event<out kotlin/Any>, kotlin/String>|>|()
+                lval event: R|io/github/expo/modules/v2/events/Event<out kotlin/Any>| = R|<local>/<destruct>|.R|kotlin/collections/component1|<R|io/github/expo/modules/v2/events/Event<out kotlin/Any>|, R|kotlin/String|>()
+                lval name: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component2|<R|io/github/expo/modules/v2/events/Event<out kotlin/Any>|, R|kotlin/String|>()
+                 {
+                    when () {
+                        !=(R|<local>/event|.R|SubstitutionOverride<io/github/expo/modules/v2/events/Event.name: R|kotlin/String|>|, R|<local>/name|) ->  {
+                            ^box <strcat>(String(expected '), R|<local>/name|, String(', got '), R|<local>/event|.R|SubstitutionOverride<io/github/expo/modules/v2/events/Event.name: R|kotlin/String|>|, String('))
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        when () {
+            !=(Q|io/github/expo/modules/v2/testdata/Singleton|.R|io/github/expo/modules/v2/testdata/Singleton.onTick|.R|SubstitutionOverride<io/github/expo/modules/v2/events/Event.name: R|kotlin/String|>|, String(tick)) ->  {
+                ^box <strcat>(String(object: ), Q|io/github/expo/modules/v2/testdata/Singleton|.R|io/github/expo/modules/v2/testdata/Singleton.onTick|.R|SubstitutionOverride<io/github/expo/modules/v2/events/Event.name: R|kotlin/String|>|)
+            }
+        }
+
+        when () {
+            !=(R|io/github/expo/modules/v2/testdata/Player.Player|().R|io/github/expo/modules/v2/testdata/Player.onStateChange|.R|SubstitutionOverride<io/github/expo/modules/v2/events/Event.name: R|kotlin/String|>|, String(stateChange)) ->  {
+                ^box <strcat>(String(shared object: ), R|io/github/expo/modules/v2/testdata/Player.Player|().R|io/github/expo/modules/v2/testdata/Player.onStateChange|.R|SubstitutionOverride<io/github/expo/modules/v2/events/Event.name: R|kotlin/String|>|)
+            }
+        }
+
+        when () {
+            R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.onChanged|.R|SubstitutionOverride<io/github/expo/modules/v2/events/Event.isObserved: R|kotlin/Boolean|>| ->  {
+                ^box String(observed before any listener)
+            }
+        }
+
+        R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.fire|(R|io/github/expo/modules/v2/testdata/Change.Change|(Int(1)))
+        R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.onSomething|.R|SubstitutionOverride<io/github/expo/modules/v2/events/Event.emit: R|kotlin/Unit|>|(Int(2))
+        when () {
+            !=(R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.starts|, Int(0)) || !=(R|<local>/watcher|.R|io/github/expo/modules/v2/testdata/Watcher.stops|, Int(0)) ->  {
+                ^box String(hooks ran without a listener)
+            }
+        }
+
+        lval fields: R|kotlin/collections/List<kotlin/String!>| = <getClass>(Q|io/github/expo/modules/v2/testdata/Watcher|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Watcher|>.R|java/lang/Class.declaredFields|.R|kotlin/collections/map|<R|java/lang/reflect/Field!|, R|kotlin/String!|>(<L> = map@fun <anonymous>(it: R|java/lang/reflect/Field!|): R|kotlin/String!| <inline=Inline, kind=UNKNOWN>  {
+            ^ R|<local>/it|.R|java/lang/reflect/Field.name|
+        }
+        ).R|kotlin/collections/filter|<R|kotlin/String!|>(<L> = filter@fun <anonymous>(it: R|kotlin/String!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ R|<local>/it|.R|kotlin/text/startsWith|(String(type$))
+        }
+        )
+        when () {
+            !=(R|<local>/fields|.R|kotlin/collections/sorted|<R|kotlin/String!|>(), R|<local>/fields|.R|kotlin/collections/indices|.R|kotlin/collections/map|<R|kotlin/Int|, R|kotlin/String|>(<L> = map@fun <anonymous>(it: R|kotlin/Int|): R|kotlin/String| <inline=Inline, kind=UNKNOWN>  {
+                ^ <strcat>(String(type), String($), R|<local>/it|)
+            }
+            ).R|kotlin/collections/sorted|<R|kotlin/String|>()) ->  {
+                ^box <strcat>(String(descriptor fields: ), R|<local>/fields|)
+            }
+        }
+
+        <getClass>(Q|io/github/expo/modules/v2/testdata/Watcher|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Watcher|>.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(getOnChanged))
+        when () {
+            <getClass>(Q|io/github/expo/modules/v2/testdata/Watcher|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Watcher|>.R|java/lang/Class.declaredMethods|.R|kotlin/collections/any|<R|java/lang/reflect/Method!|>(<L> = any@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+                ^ R|<local>/it|.R|java/lang/reflect/Method.name|.R|kotlin/text/startsWith|(String(getOnChanged__trampoline))
+            }
+            ) ->  {
+                ^box String(an event must not get a trampoline)
+            }
+        }
+
+        ^box String(OK)
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Watcher_c74b1b1c.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Watcher_c74b1b1c : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Watcher|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Singleton_d88ee16b.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Singleton_d88ee16b : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Singleton|
+
+    }

@@ -1,19 +1,19 @@
 package io.github.expo.modules.v2.compiler.fir.diagnostics
 
-import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactoryToRendererMap
+import io.github.expo.modules.v2.compiler.fir.ExpoDiagnosticsContainer
+import io.github.expo.modules.v2.compiler.fir.expoRendererMap
 import org.jetbrains.kotlin.diagnostics.SourceElementPositioningStrategies
 import org.jetbrains.kotlin.diagnostics.error0
 import org.jetbrains.kotlin.diagnostics.error1
 import org.jetbrains.kotlin.diagnostics.rendering.BaseDiagnosticRendererFactory
 import org.jetbrains.kotlin.diagnostics.rendering.CommonRenderers
-import org.jetbrains.kotlin.diagnostics.rendering.RootDiagnosticRendererFactory
 import org.jetbrains.kotlin.psi.KtClassLikeDeclaration
 import org.jetbrains.kotlin.psi.KtDeclaration
 
 /**
  * The frontend diagnostics [io.github.expo.modules.v2.compiler.fir.SharedObjectCheckers] reports.
  */
-object SharedObjectDiagnostics {
+object SharedObjectDiagnostics : ExpoDiagnosticsContainer() {
   val SHARED_OBJECT_ON_UNSUPPORTED_DECLARATION by error1<KtClassLikeDeclaration, String>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
@@ -36,13 +36,15 @@ object SharedObjectDiagnostics {
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
 
+  override fun getRendererFactory(): BaseDiagnosticRendererFactory = SharedObjectDiagnosticMessages
+
   init {
-    RootDiagnosticRendererFactory.registerFactory(SharedObjectDiagnosticMessages)
+    registerRenderer()
   }
 }
 
 object SharedObjectDiagnosticMessages : BaseDiagnosticRendererFactory() {
-  override val MAP = KtDiagnosticFactoryToRendererMap("ExpoModulesV2").apply {
+  override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       SharedObjectDiagnostics.SHARED_OBJECT_ON_UNSUPPORTED_DECLARATION,
       "@ExpoSharedObject only applies to a non-abstract, non-inner class - this is {0}",

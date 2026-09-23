@@ -1,0 +1,294 @@
+FILE: eventShapeErrors.kt
+    package io.github.expo.modules.v2.testdata
+
+    public final class NotExported : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NotExported| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onChanged: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/NotExported|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class CompanionEvent : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/CompanionEvent| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/CompanionEvent.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+            public final val other: R|io/github/expo/modules/v2/testdata/Other| = R|io/github/expo/modules/v2/testdata/Other.Other|()
+                public get(): R|io/github/expo/modules/v2/testdata/Other|
+
+            @R|io/github/expo/modules/v2/Event|() public final val onChanged: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/CompanionEvent.Companion|.R|io/github/expo/modules/v2/testdata/CompanionEvent.Companion.other|.R|io/github/expo/modules/v2/testdata/Other.onChanged|
+                public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class Other : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Other| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onChanged: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/Other|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class BothAnnotations : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/BothAnnotations| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() @R|io/github/expo/modules/v2/JS|() public final val onChanged: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/BothAnnotations|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class BadShapes : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/BadShapes| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final var onVar: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/BadShapes|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+            public set(value: R|io/github/expo/modules/v2/events/Event<kotlin/Int>|): R|kotlin/Unit|
+
+        @R|io/github/expo/modules/v2/Event|() public final lateinit var onLate: R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+            public set(value: R|io/github/expo/modules/v2/events/Event<kotlin/Int>|): R|kotlin/Unit|
+
+        @R|io/github/expo/modules/v2/Event|() public final val onDelegated: R|io/github/expo/modules/v2/events/Event<kotlin/Int>|by R|kotlin/lazy|<R|io/github/expo/modules/v2/events/Event<kotlin/Int>|>(<L> = lazy@fun <anonymous>(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>| <inline=NoInline>  {
+            ^ this@R|io/github/expo/modules/v2/testdata/BadShapes|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+        }
+        )
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>| {
+                ^ this@R|io/github/expo/modules/v2/testdata/BadShapes|.D|io/github/expo/modules/v2/testdata/BadShapes.onDelegated|.R|kotlin/getValue|<R|io/github/expo/modules/v2/events/Event<kotlin/Int>|>(this@R|io/github/expo/modules/v2/testdata/BadShapes|, ::R|io/github/expo/modules/v2/testdata/BadShapes.onDelegated|)
+            }
+
+        @R|io/github/expo/modules/v2/Event|() public final val R|kotlin/Int|.onReceived: R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>| {
+                ^ this@R|io/github/expo/modules/v2/testdata/BadShapes|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onComputed: R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>| {
+                ^ this@R|io/github/expo/modules/v2/testdata/BadShapes|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onCustomGetter: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/BadShapes|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>| {
+                ^ this@R|io/github/expo/modules/v2/testdata/BadShapes|.F|io/github/expo/modules/v2/testdata/BadShapes.onCustomGetter|
+            }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class FromConstructor : R|io/github/expo/modules/v2/Module| {
+        public constructor(onGiven: R|io/github/expo/modules/v2/events/Event<kotlin/Int>|): R|io/github/expo/modules/v2/testdata/FromConstructor| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @PROPERTY:R|io/github/expo/modules/v2/Event|() public final val onGiven: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = R|<local>/onGiven|
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class WrongTypes : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/WrongTypes| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onNumber: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/Event|() public final val onNullable: R|io/github/expo/modules/v2/events/Event<kotlin/Int>?| = this@R|io/github/expo/modules/v2/testdata/WrongTypes|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>?|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class Borrowed : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Borrowed| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        public final val other: R|io/github/expo/modules/v2/testdata/Other| = R|io/github/expo/modules/v2/testdata/Other.Other|()
+            public get(): R|io/github/expo/modules/v2/testdata/Other|
+
+        @R|io/github/expo/modules/v2/Event|() public final val onChanged: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/Borrowed|.R|io/github/expo/modules/v2/testdata/Borrowed.other|.R|io/github/expo/modules/v2/testdata/Other.onChanged|
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+        @R|io/github/expo/modules/v2/Event|() public final val onWrapped: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/Borrowed|.R|kotlin/run|<R|io/github/expo/modules/v2/testdata/Borrowed|, R|io/github/expo/modules/v2/events/Event<kotlin/Int>|>(<L> = run@fun R|io/github/expo/modules/v2/testdata/Borrowed|.<anonymous>(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>| <inline=Inline, kind=EXACTLY_ONCE>  {
+            ^ this@R|special/anonymous|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+        }
+        )
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class Collisions : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Collisions| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onChanged: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/Collisions|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+        @R|io/github/expo/modules/v2/JS|() public final fun changed(): R|kotlin/Int| {
+            ^changed Int(1)
+        }
+
+        @R|io/github/expo/modules/v2/Event|(name = String(count)) public final val onCount: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/Collisions|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+        @R|io/github/expo/modules/v2/JS|() public final val count: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class Reserved : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Reserved| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun emit(): R|kotlin/Int| {
+            ^emit Int(1)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final val listenerCount: R|kotlin/Int| = Int(0)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/Event|(name = String(addListener)) public final val onAdd: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/Reserved|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class ReservedShared : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ReservedShared| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun removeAllListeners(): R|kotlin/Int| {
+            ^removeAllListeners Int(1)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class GoodEvents : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/GoodEvents| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onChanged: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/GoodEvents|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+        @R|io/github/expo/modules/v2/Event|(name = String(renamed)) public final val onSomething: R|io/github/expo/modules/v2/events/Event<kotlin/String>| = this@R|io/github/expo/modules/v2/testdata/GoodEvents|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/String|>(event@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
+            ^@event Unit
+        }
+        , event@fun <anonymous>(): R|kotlin/Unit| <inline=NoInline>  {
+            ^@event Unit
+        }
+        )
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/String>|
+
+        @R|io/github/expo/modules/v2/Event|() public final val progress: R|io/github/expo/modules/v2/events/Event<kotlin/Double>| = this@R|io/github/expo/modules/v2/testdata/GoodEvents|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Double|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Double>|
+
+        public final var notExported: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/GoodEvents|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+            public set(value: R|io/github/expo/modules/v2/events/Event<kotlin/Int>|): R|kotlin/Unit|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object GoodObjectEvents : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/GoodObjectEvents| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onTick: R|io/github/expo/modules/v2/events/Event<kotlin/Int>| = this@R|io/github/expo/modules/v2/testdata/GoodObjectEvents|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/Int|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/Int>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class GoodSharedEvents : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/GoodSharedEvents| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        @R|io/github/expo/modules/v2/Event|() public final val onStateChange: R|io/github/expo/modules/v2/events/Event<kotlin/String>| = this@R|io/github/expo/modules/v2/testdata/GoodSharedEvents|.R|io/github/expo/modules/v2/ExpoObject.event|<R|kotlin/String|>()
+            public get(): R|io/github/expo/modules/v2/events/Event<kotlin/String>|
+
+        @R|io/github/expo/modules/v2/JS|() public final fun play(): R|kotlin/Int| {
+            ^play Int(1)
+        }
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_CompanionEvent_eb51198e.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_CompanionEvent_eb51198e : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/CompanionEvent|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Other_31e19870.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Other_31e19870 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Other|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_BothAnnotations_22d13e43.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_BothAnnotations_22d13e43 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/BothAnnotations|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_BadShapes_8da09eb7.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_BadShapes_8da09eb7 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/BadShapes|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_FromConstructor_8866bb50.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_FromConstructor_8866bb50 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/FromConstructor|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_WrongTypes_1192416c.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_WrongTypes_1192416c : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/WrongTypes|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Borrowed_7ea3f7f4.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Borrowed_7ea3f7f4 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Borrowed|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Collisions_a2af6221.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Collisions_a2af6221 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Collisions|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Reserved_ecb775c8.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Reserved_ecb775c8 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Reserved|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_GoodEvents_c700ced6.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_GoodEvents_c700ced6 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/GoodEvents|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_GoodObjectEvents_089cb135.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_GoodObjectEvents_089cb135 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/GoodObjectEvents|
+
+    }

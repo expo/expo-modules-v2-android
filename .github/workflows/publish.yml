@@ -9,8 +9,10 @@ env:
   GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false -Dkotlin.incremental=false"
 
 jobs:
-  publish:
-    name: Publish to Maven Central
+  # Everything but the compiler plugin is the same for every Kotlin release, so it is published once,
+  # built with the catalog's Kotlin (the oldest supported release).
+  publish-universal:
+    name: Publish react and gradle-plugin
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -32,7 +34,52 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Publish to Maven Central
-        run: ./gradlew publishToMavenCentral -PskipHermesEnvBuild
+        run: ./gradlew :react:publishToMavenCentral :gradle-plugin:publishToMavenCentral -PskipHermesEnvBuild
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
+
+  kotlin-versions:
+    name: Kotlin versions
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.read.outputs.versions }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Read gradle/kotlin-versions.txt
+        id: read
+        run: echo "versions=$(jq -R -s -c 'split("\n") | map(select(length > 0))' gradle/kotlin-versions.txt)" >> "$GITHUB_OUTPUT"
+
+  # A compiler plugin is bound to the exact compiler it was built against, so it is published once
+  # per supported Kotlin release, as `expo-modules-v2-compiler-plugin:<version>-<kotlin>`.
+  publish-compiler:
+    name: Publish compiler-plugin for Kotlin ${{ matrix.kotlin-version }}
+    needs: [publish-universal, kotlin-versions]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kotlin-version: ${{ fromJSON(needs.kotlin-versions.outputs.versions) }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Publish to Maven Central
+        run: ./gradlew :compiler-plugin:publishToMavenCentral -PkotlinVersion=${{ matrix.kotlin-version }} -PskipHermesEnvBuild -PskipDesktopNative
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}

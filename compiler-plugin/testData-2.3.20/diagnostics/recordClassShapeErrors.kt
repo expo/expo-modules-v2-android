@@ -1,0 +1,1 @@
+../../testData/diagnostics/recordClassShapeErrors.kt

@@ -53,3 +53,5 @@ class Accepted : Module() {
     @BufferMode(Buffer.NO)
     val p: Int = 1
 }
+
+/* GENERATED_FIR_TAGS: classDeclaration, functionDeclaration, integerLiteral, primaryConstructor, propertyDeclaration */

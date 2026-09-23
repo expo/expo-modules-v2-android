@@ -1,0 +1,1 @@
+../../testData/box/moduleTrampolines.generated.kt.txt

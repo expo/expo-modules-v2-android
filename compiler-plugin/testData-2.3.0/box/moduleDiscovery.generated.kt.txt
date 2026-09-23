@@ -1,0 +1,71 @@
+// MODULE: producer
+// FILE: producer.kt
+package io.github.expo.modules.v2.testdata.producer
+
+@ExpoModule(name = "Renamed")
+class Second : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Renamed"
+  }
+}
+
+@ExpoModule
+object First : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "one", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "one")
+    return "First"
+  }
+}
+
+object Outer {
+  @ExpoModule
+  object Nested : Module {
+    override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+      return "Nested"
+    }
+  }
+}
+
+// FILE: io_github_expo_modules_v2_testdata_producer_First_c84dcfb4.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_First_c84dcfb4 {
+  abstract fun module(): First
+}
+
+// FILE: io_github_expo_modules_v2_testdata_producer_Outer_Nested_1df67866.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_Outer_Nested_1df67866 {
+  abstract fun module(): Nested
+}
+
+// FILE: io_github_expo_modules_v2_testdata_producer_Second_575be7f0.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_Second_575be7f0 {
+  abstract fun module(): Second
+}
+
+// MODULE: consumer
+// FILE: consumer.kt
+package io.github.expo.modules.v2.testdata.consumer
+
+@ExpoModule
+object Local : Module {
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Local"
+  }
+}
+
+private fun discovered(): List<Class<out Module>> {
+  return listOf<Class<out Module>>(elements = [<get-java>(/* $receiver = Local::class */), <get-java>(/* $receiver = First::class */), <get-java>(/* $receiver = Nested::class */), <get-java>(/* $receiver = Second::class */)])
+}
+
+// FILE: io_github_expo_modules_v2_testdata_consumer_Local_0139b5d3.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_consumer_Local_0139b5d3 {
+  abstract fun module(): Local
+}
+

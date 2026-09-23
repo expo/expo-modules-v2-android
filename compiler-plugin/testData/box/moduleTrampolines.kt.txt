@@ -1,0 +1,245 @@
+// FILE: moduleTrampolines.kt
+package io.github.expo.modules.v2.testdata
+
+@ExpoModule
+object Buffered : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+  private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  @JS
+  var motto: String
+    field = "carpe diem"
+    get
+    set
+
+  @JS
+  val isReady: Boolean
+    field = true
+    get
+
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "greet", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "greet__trampoline$ExpoModulesV2")
+    builder.function(jsName = "sum", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "sum__trampoline$ExpoModulesV2")
+    builder.function(jsName = "describe", argTypes = [AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "describe__trampoline$ExpoModulesV2")
+    builder.function(jsName = "makeNames", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), methodName = "makeNames__trampoline$ExpoModulesV2")
+    builder.function(jsName = "scale", argTypes = [AnyType(descriptor = DoubleArray(isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Double, useBuffer = false), methodName = "scale")
+    builder.property(jsName = "motto", type = AnyType(descriptor = #STRING, useBuffer = false), mutable = true, propertyName = "motto__trampoline$ExpoModulesV2", setterType = AnyType(descriptor = #STRING, useBuffer = true))
+    builder.property(jsName = "isReady", type = AnyType(descriptor = Bool, useBuffer = false), mutable = false, propertyName = "isReady", setterType = AnyType(descriptor = Bool, useBuffer = false))
+    return "Buffered"
+  }
+
+  fun describe__trampoline$ExpoModulesV2(p1: Int, payloadLength: Int): String? {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    return <this>.describe(prefix = v0, count = p1) as String?
+  }
+
+  fun getMotto__trampoline$ExpoModulesV2(): String? {
+    return <this>.<get-motto>() as String?
+  }
+
+  fun greet__trampoline$ExpoModulesV2(payloadLength: Int): String? {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    return <this>.greet(name = v0) as String?
+  }
+
+  fun makeNames__trampoline$ExpoModulesV2(p0: Int): Int {
+    return Trampoline.writeResult(value = <this>.makeNames(count = p0), type = #type$1)
+  }
+
+  fun setMotto__trampoline$ExpoModulesV2(payloadLength: Int) {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    <this>.<set-motto>(<set-?> = v0)
+  }
+
+  fun sum__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: List<Int>
+    try { // BLOCK
+      v0 = args.next<List<Int>>(type = #type$0)
+    }
+    finally args.finish()
+    return <this>.sum(values = v0)
+  }
+
+  @JS
+  fun describe(prefix: String, count: Int): String {
+    return prefix + count
+  }
+
+  @JS
+  fun greet(name: String): String {
+    return "Hello, " + name + "!"
+  }
+
+  @JS
+  fun makeNames(count: Int): List<String> {
+    return List<String>(size = count, init = local fun <anonymous>(it: Int): String {
+      return "n" + it
+    }
+)
+  }
+
+  @JS
+  fun scale(values: DoubleArray): Double {
+    return sum(/* <this> = values */)
+  }
+
+  @JS
+  fun sum(values: List<Int>): Int {
+    return sum(/* <this> = values */)
+  }
+
+}
+
+@ExpoModule
+object Converted : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false)
+  private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)
+  private /* static final field */ val type$2: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)]))
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "total", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false), useBuffer = false), AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Duration::class */), isNullable = false), useBuffer = false), methodName = "total__trampoline$ExpoModulesV2")
+    builder.function(jsName = "host", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "host__trampoline$ExpoModulesV2")
+    builder.function(jsName = "firstHost", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = URL::class */), isNullable = false)])), useBuffer = false)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "firstHost__trampoline$ExpoModulesV2")
+    return "Converted"
+  }
+
+  fun firstHost__trampoline$ExpoModulesV2(p0: List<Any?>?): String? {
+    return <this>.firstHost(urls = Bridge.fromJni(value = p0, type = #type$2) as List<URL>) as String?
+  }
+
+  fun host__trampoline$ExpoModulesV2(p0: String?): String? {
+    return <this>.host(url = Bridge.fromJni(value = p0, type = #type$1) as URL) as String?
+  }
+
+  fun total__trampoline$ExpoModulesV2(p0: Double, p1: Double): Double {
+    return Bridge.toJni(value = <this>.total(a = Bridge.fromJni(value = p0, type = #type$0) as Duration, b = Bridge.fromJni(value = p1, type = #type$0) as Duration), type = #type$0) as Double
+  }
+
+  @JS
+  @BufferMode(value = Buffer.NO)
+  fun firstHost(urls: List<URL>): String {
+    return first<URL>(/* <this> = urls */).getHost() /*!! String */
+  }
+
+  @JS
+  @BufferMode(value = Buffer.NO)
+  fun host(url: URL): String {
+    return url.getHost() /*!! String */
+  }
+
+  @JS
+  fun total(a: Duration, b: Duration): Duration {
+    return a.plus(other = b)
+  }
+
+}
+
+fun box(): String {
+  val suffix: String = "__trampoline$ExpoModulesV2"
+  val total: Double = <get-java><Converted>(/* <this> = Converted::class */).getDeclaredMethod(p0 = "total" + suffix, p1 = [<get-javaPrimitiveType><Double>(/* <this> = Double::class */), <get-javaPrimitiveType><Double>(/* <this> = Double::class */)]).invoke(p0 = Converted, p1 = [1.5, 2.5]) as Double
+  when {
+    ieee754equals(arg0 = total, arg1 = 4.0).not() -> return "total: expected 4.0, got " + total
+  }
+  val host: String = <get-java><Converted>(/* <this> = Converted::class */).getDeclaredMethod(p0 = "host" + suffix, p1 = [<get-java><String>(/* <this> = String::class */)]).invoke(p0 = Converted, p1 = ["https://expo.dev/path"]) as String
+  when {
+    EQEQ(arg0 = host, arg1 = "expo.dev").not() -> return "host: expected expo.dev, got " + host
+  }
+  val firstHost: String = <get-java><Converted>(/* <this> = Converted::class */).getDeclaredMethod(p0 = "firstHost" + suffix, p1 = [<get-java><List<*>>(/* <this> = List<*>::class */)]).invoke(p0 = Converted, p1 = [listOf<String>(elements = ["https://a.example/x", "https://b.example/y"])]) as String
+  when {
+    EQEQ(arg0 = firstHost, arg1 = "a.example").not() -> return "firstHost: expected a.example, got " + firstHost
+  }
+  val expected: Map<String, String> = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "greet" + suffix, */ that = "(I)Ljava/lang/String;"), to<String, String>(/* <this> = "sum" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "describe" + suffix, */ that = "(II)Ljava/lang/String;"), to<String, String>(/* <this> = "makeNames" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "scale" + suffix, */ that = "<no method scale" + suffix + ">"), to<String, String>(/* <this> = "getMotto" + suffix, */ that = "()Ljava/lang/String;"), to<String, String>(/* <this> = "setMotto" + suffix, */ that = "(I)V")])
+  { // BLOCK
+    val tmp_0: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = expected */)
+    while (tmp_0.hasNext()) { // BLOCK
+      val tmp_1: Entry<String, String> = tmp_0.next()
+      val name: String = component1<String, String>(/* <this> = tmp_1 */)
+      val want: String = component2<String, String>(/* <this> = tmp_1 */)
+      { // BLOCK
+        val got: String = descriptorOf(owner = <get-java><Buffered>(/* <this> = Buffered::class */), name = name)
+        when {
+          EQEQ(arg0 = got, arg1 = want).not() -> return name + ": expected " + want + ", got " + got
+        }
+      }
+    }
+  }
+  when {
+    any<@FlexibleNullability Method?>(/* <this> = <get-java><Buffered>(/* <this> = Buffered::class */).getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return startsWith(/* <this> = it.getName() /*!! String */, */ prefix = "getReady")
+    }
+) -> { // BLOCK
+      return "isReady should not have a trampoline"
+    }
+  }
+  <get-java><Buffered>(/* <this> = Buffered::class */).getDeclaredMethod(p0 = "isReady") /*~> Unit */
+  return "OK"
+}
+
+private fun descriptor(type: Class<*>): String {
+  return when {
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)) -> "I"
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Double>(/* <this> = Double::class */)) -> "D"
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Boolean>(/* <this> = Boolean::class */)) -> "Z"
+    EQEQ(arg0 = type, arg1 = super<Void>.#TYPE) -> "V"
+    type.isArray() -> "[".plus(other = descriptor(type = type.getComponentType() /*!! Class<*> */))
+    else -> "L".plus(other = replace(/* <this> = type.getName() /*!! String */, */ oldChar = '.', newChar = '/')).plus(other = ";")
+  }
+}
+
+private fun descriptorOf(owner: Class<*>, name: String): String {
+  val method: Method = { // BLOCK
+    val tmp_2: Method? = firstOrNull<@FlexibleNullability Method?>(/* <this> = owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return EQEQ(arg0 = it.getName(), arg1 = name)
+    }
+)
+    when {
+      EQEQ(arg0 = tmp_2, arg1 = null) -> return "<no method " + name + ">"
+      else -> tmp_2
+    }
+  }
+  val parameters: String = joinToString<@FlexibleNullability Class<*>?>(/* <this> = method.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ separator = "", transform = local fun <anonymous>(it: @FlexibleNullability Class<*>?): CharSequence {
+    return descriptor(type = it /*!! Class<*> */)
+  }
+)
+  return "(" + parameters + ")" + descriptor(type = method.getReturnType() /*!! Class<*> */)
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Buffered_a6e17b7f {
+  abstract fun module(): Buffered
+
+}
+
+final interface io_github_expo_modules_v2_testdata_Converted_1ccaf2f2 {
+  abstract fun module(): Converted
+
+}
+

@@ -1,0 +1,130 @@
+// FILE: moduleAsync.kt
+package io.github.expo.modules.v2.testdata
+
+@ExpoModule
+class AsyncShapes : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false)
+  constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  fun clear__trampoline$ExpoModulesV2(promise: Promise) {
+    promise.launch(type = #type$0, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.clear()
+    }
+)
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "scale", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "scale__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "greet", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "greet__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "repeat", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "repeat__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "clear__trampoline$ExpoModulesV2", isAsync = true)
+    return "AsyncShapes"
+  }
+
+  fun greet__trampoline$ExpoModulesV2(payloadLength: Int, promise: Promise) {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    promise.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.greet(name = v0)
+    }
+)
+  }
+
+  fun repeat__trampoline$ExpoModulesV2(p0: Int, payloadLength: Int, promise: Promise) {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v1: String
+    try { // BLOCK
+      v1 = args.nextString()
+    }
+    finally args.finish()
+    promise.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.repeat(times = p0, value = v1)
+    }
+)
+  }
+
+  fun scale__trampoline$ExpoModulesV2(p0: Int, promise: Promise) {
+    promise.launch(type = Int, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.scale(value = p0)
+    }
+)
+  }
+
+  @JS
+  suspend fun clear() {
+    return delay(timeMillis = 1L)
+  }
+
+  @JS
+  suspend fun greet(name: String): String {
+    return "Hello, " + name + "!"
+  }
+
+  @JS
+  suspend fun repeat(@BufferMode(value = Buffer.NO) times: Int, value: String): String {
+    return repeat(/* <this> = value, */ n = times)
+  }
+
+  @JS
+  @BufferMode(value = Buffer.NO)
+  suspend fun scale(value: Int): Int {
+    delay(timeMillis = 1L)
+    return value.times(other = 2)
+  }
+
+}
+
+fun box(): String {
+  val clazz: Class<AsyncShapes> = <get-java><AsyncShapes>(/* <this> = AsyncShapes::class */)
+  val int: Class<Int>? = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)
+  val promise: @FlexibleNullability Class<*>? = forName(p0 = "io.github.expo.modules.v2.async.Promise")
+  val scale: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "scale" + "__trampoline$ExpoModulesV2", p1 = [int, promise])
+  when {
+    EQEQ(arg0 = scale /*!! Method */.getReturnType(), arg1 = super<Void>.#TYPE).not() -> return "scale returns " + scale /*!! Method */.getReturnType()
+  }
+  val greet: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "greet" + "__trampoline$ExpoModulesV2", p1 = [int, promise])
+  when {
+    EQEQ(arg0 = greet /*!! Method */.getReturnType(), arg1 = super<Void>.#TYPE).not() -> return "greet returns " + greet /*!! Method */.getReturnType()
+  }
+  clazz.getDeclaredMethod(p0 = "repeat" + "__trampoline$ExpoModulesV2", p1 = [int, int, promise]) /*~> Unit */
+  val clear: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "clear" + "__trampoline$ExpoModulesV2", p1 = [promise])
+  when {
+    EQEQ(arg0 = clear /*!! Method */.getReturnType(), arg1 = super<Void>.#TYPE).not() -> return "clear returns " + clear /*!! Method */.getReturnType()
+  }
+  val continuation: @FlexibleNullability Class<*>? = forName(p0 = "kotlin.coroutines.Continuation")
+  clazz.getDeclaredMethod(p0 = "scale", p1 = [int, continuation]) /*~> Unit */
+  clazz.getDeclaredMethod(p0 = "greet", p1 = [<get-java><String>(/* <this> = String::class */), continuation]) /*~> Unit */
+  when {
+    any<@FlexibleNullability Method?>(/* <this> = clazz.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return when {
+        EQEQ(arg0 = it /*!! Method */.getName(), arg1 = "scale") -> contains<@FlexibleNullability Class<*>?>(/* <this> = it /*!! Method */.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ element = promise)
+        else -> false
+      }
+    }
+) -> { // BLOCK
+      return "the user's own method was rewritten"
+    }
+  }
+  return "OK"
+}
+
+private const val TRAMPOLINE: String
+  field = "__trampoline$ExpoModulesV2"
+  private get
+
+// FILE: io_github_expo_modules_v2_testdata_AsyncShapes_3dc057ee.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_AsyncShapes_3dc057ee {
+  abstract fun module(): AsyncShapes
+
+}
+

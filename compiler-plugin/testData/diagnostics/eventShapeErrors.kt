@@ -158,3 +158,7 @@ class GoodSharedEvents : SharedObject() {
     @JS
     fun play(): Int = 1
 }
+
+/* GENERATED_FIR_TAGS: annotationUseSiteTargetProperty, classDeclaration, companionObject, functionDeclaration, getter,
+integerLiteral, lambdaLiteral, lateinit, nullableType, objectDeclaration, primaryConstructor, propertyDeclaration,
+propertyDelegate, propertyWithExtensionReceiver, stringLiteral */

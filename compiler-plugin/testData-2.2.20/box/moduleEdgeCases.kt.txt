@@ -1,0 +1,280 @@
+// FILE: moduleEdgeCases.kt
+package io.github.expo.modules.v2.testdata
+
+abstract class BaseModule : Module {
+  constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  fun inherited(): Int {
+    return 1
+  }
+
+}
+
+@ExpoModule
+class WithNested : Module {
+  class Nested {
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+    fun ignored(): Int {
+      return 0
+    }
+
+  }
+
+  companion object Companion {
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+    const val CONSTANT: Int
+      field = 5
+      get
+
+  }
+
+  constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "value", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "value")
+    return "WithNested"
+  }
+
+  @JS
+  fun value(): Int {
+    return 1
+  }
+
+}
+
+@ExpoModule
+object Arity : Module {
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "none", argTypes = [], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "none")
+    builder.function(jsName = "one", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "one")
+    builder.function(jsName = "eight", argTypes = [AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false), AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "eight")
+    builder.function(jsName = "eightBuffered", argTypes = [AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true), AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "eightBuffered__trampoline$ExpoModulesV2")
+    return "Arity"
+  }
+
+  fun eightBuffered__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    var v1: String
+    var v2: String
+    var v3: String
+    var v4: String
+    var v5: String
+    var v6: String
+    var v7: String
+    try { // BLOCK
+      v0 = args.nextString()
+      v1 = args.nextString()
+      v2 = args.nextString()
+      v3 = args.nextString()
+      v4 = args.nextString()
+      v5 = args.nextString()
+      v6 = args.nextString()
+      v7 = args.nextString()
+    }
+    finally args.finish()
+    return <this>.eightBuffered(a = v0, b = v1, c = v2, d = v3, e = v4, f = v5, g = v6, h = v7)
+  }
+
+  @JS
+  fun eight(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int): Int {
+    return a.plus(other = b).plus(other = c).plus(other = d).plus(other = e).plus(other = f).plus(other = g).plus(other = h)
+  }
+
+  @JS
+  fun eightBuffered(a: String, b: String, c: String, d: String, e: String, f: String, g: String, h: String): Int {
+    return a.<get-length>().plus(other = b.<get-length>()).plus(other = c.<get-length>()).plus(other = d.<get-length>()).plus(other = e.<get-length>()).plus(other = f.<get-length>()).plus(other = g.<get-length>()).plus(other = h.<get-length>())
+  }
+
+  @JS
+  fun none(): Int {
+    return 0
+  }
+
+  @JS
+  fun one(a: Int): Int {
+    return a
+  }
+
+}
+
+@ExpoModule
+object Derived : BaseModule {
+  private constructor() /* primary */ {
+    super/*BaseModule*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "own", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "own")
+    return "Derived"
+  }
+
+  @JS
+  fun own(a: Int): Int {
+    return a.plus(other = 1)
+  }
+
+}
+
+@ExpoModule
+object Empty : Module {
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "Empty"
+  }
+
+}
+
+@ExpoModule
+object Visibility : Module {
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "hidden", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "hidden")
+    builder.function(jsName = "visible", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "visible")
+    return "Visibility"
+  }
+
+  @JS
+  private fun hidden(a: Int): Int {
+    return a.times(other = 2)
+  }
+
+  @JS
+  fun visible(a: Int): Int {
+    return a.plus(other = 1)
+  }
+
+}
+
+fun box(): String {
+  val builder: @FlexibleNullability Class<*>? = forName(p0 = "io.github.expo.modules.v2.modules.ModuleBuilder")
+  <get-java><Empty>(/* <this> = Empty::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder]) /*~> Unit */
+  when {
+    any<String>(/* <this> = names(owner = <get-java><Empty>(/* <this> = Empty::class */)), */ predicate = local fun <anonymous>(it: String): Boolean {
+      return contains(/* <this> = it, */ other = "__trampoline")
+    }
+) -> { // BLOCK
+      return "an empty module should generate no trampolines"
+    }
+  }
+  { // BLOCK
+    val tmp_0: Iterator<String> = listOf<String>(elements = ["none", "one", "eight"]).iterator()
+    while (tmp_0.hasNext()) { // BLOCK
+      val name: String = tmp_0.next()
+      { // BLOCK
+        when {
+          names(owner = <get-java><Arity>(/* <this> = Arity::class */)).contains(element = name + "__trampoline$ExpoModulesV2") -> { // BLOCK
+            return name + " should not have a trampoline"
+          }
+        }
+      }
+    }
+  }
+  val eightBuffered: @FlexibleNullability Method? = <get-java><Arity>(/* <this> = Arity::class */).getDeclaredMethod(p0 = "eightBuffered__trampoline$ExpoModulesV2", p1 = [<get-javaPrimitiveType><Int>(/* <this> = Int::class */)])
+  when {
+    EQEQ(arg0 = eightBuffered /*!! Method */.getReturnType(), arg1 = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)).not() -> { // BLOCK
+      return "eightBuffered: expected an int return, got " + eightBuffered /*!! Method */.getReturnType()
+    }
+  }
+  val hidden: @FlexibleNullability Method? = <get-java><Visibility>(/* <this> = Visibility::class */).getDeclaredMethod(p0 = "hidden", p1 = [<get-javaPrimitiveType><Int>(/* <this> = Int::class */)])
+  hidden /*!! Method */.setAccessible(p0 = true)
+  val doubled: Int = hidden /*!! Method */.invoke(p0 = Visibility, p1 = [21]) as Int
+  when {
+    EQEQ(arg0 = doubled, arg1 = 42).not() -> return "hidden(21) gave " + doubled
+  }
+  when {
+    none<String>(/* <this> = names(owner = <get-java><Visibility>(/* <this> = Visibility::class */)), */ predicate = local fun <anonymous>(it: String): Boolean {
+      return EQEQ(arg0 = it, arg1 = "visible")
+    }
+) -> return "visible is missing"
+  }
+  val derived: @FlexibleNullability Method? = <get-java><Derived>(/* <this> = Derived::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder])
+  when {
+    EQEQ(arg0 = derived /*!! Method */.getReturnType(), arg1 = <get-java><String>(/* <this> = String::class */)).not() -> return "derived define: " + derived /*!! Method */.getReturnType()
+  }
+  when {
+    EQEQ(arg0 = Derived.own(a = 1), arg1 = 2).not() -> return "derived own() is broken"
+  }
+  <get-java><WithNested>(/* <this> = WithNested::class */).getDeclaredMethod(p0 = "define$ExpoModulesV2", p1 = [builder]) /*~> Unit */
+  when {
+    any<String>(/* <this> = names(owner = <get-java><WithNested>(/* <this> = WithNested::class */)), */ predicate = local fun <anonymous>(it: String): Boolean {
+      return contains(/* <this> = it, */ other = "__trampoline")
+    }
+) -> { // BLOCK
+      return "WithNested should generate no trampolines"
+    }
+  }
+  return "OK"
+}
+
+private fun names(owner: Class<*>): Set<String> {
+  return toSet<@FlexibleNullability String?>(/* <this> = map<@FlexibleNullability Method?, @FlexibleNullability String?>(/* <this> = owner.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ transform = local fun <anonymous>(it: @FlexibleNullability Method?): @FlexibleNullability String? {
+    return it /*!! Method */.getName()
+  }
+) */)
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Arity_311b6c3d {
+  abstract fun module(): Arity
+
+}
+
+final interface io_github_expo_modules_v2_testdata_Derived_e0eed77d {
+  abstract fun module(): Derived
+
+}
+
+final interface io_github_expo_modules_v2_testdata_Empty_31519ead {
+  abstract fun module(): Empty
+
+}
+
+final interface io_github_expo_modules_v2_testdata_Visibility_768025b2 {
+  abstract fun module(): Visibility
+
+}
+
+final interface io_github_expo_modules_v2_testdata_WithNested_7b6e93fd {
+  abstract fun module(): WithNested
+
+}
+

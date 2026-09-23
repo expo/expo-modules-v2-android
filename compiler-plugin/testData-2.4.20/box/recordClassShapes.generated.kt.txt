@@ -1,0 +1,1 @@
+../../testData/box/recordClassShapes.generated.kt.txt

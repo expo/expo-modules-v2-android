@@ -99,3 +99,7 @@ class DuplicateNames : SharedObject() {
     @JS(name = "value")
     fun <!JS_DUPLICATE_EXPORT_NAME!>renamedOntoValue<!>(): Int = 2
 }
+
+/* GENERATED_FIR_TAGS: annotationDeclaration, classDeclaration, enumDeclaration, enumEntry, functionDeclaration, inner,
+integerLiteral, interfaceDeclaration, localClass, nullableType, objectDeclaration, primaryConstructor, sealed,
+secondaryConstructor, stringLiteral, typeParameter */

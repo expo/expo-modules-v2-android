@@ -7,7 +7,6 @@ import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.DeclarationCheckers
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirRegularClassChecker
@@ -29,8 +28,8 @@ class RecordCheckers(session: FirSession) : FirAdditionalCheckersExtension(sessi
     override val regularClassCheckers: Set<FirRegularClassChecker> = setOf(RecordClassChecker)
   }
 
-  private object RecordClassChecker : FirRegularClassChecker(MppCheckerKind.Common) {
-    override fun check(
+  private object RecordClassChecker : ExpoDeclarationChecker<FirRegularClass>() {
+    override fun checkDeclaration(
       declaration: FirRegularClass,
       context: CheckerContext,
       reporter: DiagnosticReporter,

@@ -1,0 +1,261 @@
+FILE: recordClassShapeErrors.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/Record|() public abstract interface NotAClass : R|kotlin/Any| {
+    }
+    @R|io/github/expo/modules/v2/Record|() public final object NotAnObject : R|kotlin/Any| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/NotAnObject| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/Record|() public final enum class NotAnEnum : R|kotlin/Enum<io/github/expo/modules/v2/testdata/NotAnEnum>| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/NotAnEnum| {
+            super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/NotAnEnum>|>()
+        }
+
+        public final static enum entry A: R|io/github/expo/modules/v2/testdata/NotAnEnum|
+        public final static fun values(): R|kotlin/Array<io/github/expo/modules/v2/testdata/NotAnEnum>| {
+        }
+
+        public final static fun valueOf(value: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/NotAnEnum| {
+        }
+
+        public final static val entries: R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/NotAnEnum>|
+            public static get(): R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/NotAnEnum>|
+
+    }
+    @R|io/github/expo/modules/v2/Record|() public final annotation class NotAnAnnotation : R|kotlin/Annotation| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NotAnAnnotation| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/Record|() public abstract class NotAbstract : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/NotAbstract| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val a: R|kotlin/Int| = R|<local>/a|
+            public get(): R|kotlin/Int|
+
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NotAbstract>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/NotAbstract>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/NotAbstract>|
+
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/NotAbstract|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/NotAbstract|
+
+            public constructor(): R|io/github/expo/modules/v2/testdata/NotAbstract.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NotAbstract>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NotAbstract>|
+
+            private constructor(): R|io/github/expo/modules/v2/testdata/NotAbstract.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/Record|() public sealed class NotSealed : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        protected constructor(): R|io/github/expo/modules/v2/testdata/NotSealed| {
+            super<R|kotlin/Any|>()
+        }
+
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NotSealed>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/NotSealed>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/NotSealed>|
+
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/NotSealed|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/NotSealed|
+
+            public constructor(): R|io/github/expo/modules/v2/testdata/NotSealed.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NotSealed>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NotSealed>|
+
+            private constructor(): R|io/github/expo/modules/v2/testdata/NotSealed.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/Record|() public final class Generic<T> : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        public constructor<T>(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Generic<T>| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val a: R|kotlin/Int| = R|<local>/a|
+            public get(): R|kotlin/Int|
+
+    }
+    public final class Outer : R|kotlin/Any| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Outer| {
+            super<R|kotlin/Any|>()
+        }
+
+        @R|io/github/expo/modules/v2/Record|() public final inner class NotInner : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+            public io/github/expo/modules/v2/testdata/Outer.constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Outer.NotInner| {
+                super<R|kotlin/Any|>()
+            }
+
+            public final val a: R|kotlin/Int| = R|<local>/a|
+                public get(): R|kotlin/Int|
+
+            private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Outer.NotInner>| {
+                public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/Outer.NotInner>|
+                    public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/Outer.NotInner>|
+
+                public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                    public get(): R|io/github/expo/modules/v2/records/RecordSchema|
+
+                public final override fun encode(value: R|io/github/expo/modules/v2/testdata/Outer.NotInner|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+                public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/Outer.NotInner|
+
+                public constructor(): R|io/github/expo/modules/v2/testdata/Outer.NotInner.RecordCodec$ExpoModulesV2|
+
+            }
+
+            public final companion object Companion : R|kotlin/Any| {
+                public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Outer.NotInner>|
+                    public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/Outer.NotInner>|
+
+                private constructor(): R|io/github/expo/modules/v2/testdata/Outer.NotInner.Companion| {
+                    super<R|kotlin/Any|>()
+                }
+
+            }
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/Record|() public final class NoPrimaryConstructor : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/NoPrimaryConstructor| {
+            super<R|kotlin/Any|>()
+        }
+
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NoPrimaryConstructor>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/NoPrimaryConstructor>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/NoPrimaryConstructor>|
+
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/NoPrimaryConstructor|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/NoPrimaryConstructor|
+
+            public constructor(): R|io/github/expo/modules/v2/testdata/NoPrimaryConstructor.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NoPrimaryConstructor>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NoPrimaryConstructor>|
+
+            private constructor(): R|io/github/expo/modules/v2/testdata/NoPrimaryConstructor.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/Record|() public final class NotAProperty : R|kotlin/Any|, R|io/github/expo/modules/v2/records/Record| {
+        public constructor(a: R|kotlin/Int|, b: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/NotAProperty| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val b: R|kotlin/Int| = R|<local>/b|
+            public get(): R|kotlin/Int|
+
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NotAProperty>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/NotAProperty>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/NotAProperty>|
+
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/NotAProperty|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/NotAProperty|
+
+            public constructor(): R|io/github/expo/modules/v2/testdata/NotAProperty.RecordCodec$ExpoModulesV2|
+
+        }
+
+        public final companion object Companion : R|kotlin/Any| {
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NotAProperty>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/NotAProperty>|
+
+            private constructor(): R|io/github/expo/modules/v2/testdata/NotAProperty.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+        }
+
+    }
+    @R|io/github/expo/modules/v2/Record|() public final class OwnCodec : R|io/github/expo/modules/v2/records/Record| {
+        public constructor(a: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/OwnCodec| {
+            super<R|kotlin/Any|>()
+        }
+
+        public final val a: R|kotlin/Int| = R|<local>/a|
+            public get(): R|kotlin/Int|
+
+        public final companion object Companion : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/OwnCodec>| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/OwnCodec.Companion| {
+                super<R|kotlin/Any|>()
+            }
+
+            public open override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/OwnCodec>| = <getClass>(Q|io/github/expo/modules/v2/testdata/OwnCodec|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/OwnCodec|>
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/OwnCodec>|
+
+            public open override val schema: R|io/github/expo/modules/v2/records/RecordSchema| = R|io/github/expo/modules/v2/records/RecordSchema.RecordSchema|(String(OwnCodec), Boolean(true))
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
+
+            public open override fun encode(value: R|io/github/expo/modules/v2/testdata/OwnCodec|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit| {
+                ^encode Q|kotlin/Unit|
+            }
+
+            public open override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/OwnCodec| {
+                ^decode R|io/github/expo/modules/v2/testdata/OwnCodec.OwnCodec|(Int(0))
+            }
+
+            public final val recordCodec$ExpoModulesV2: R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/OwnCodec>|
+                public get(): R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/OwnCodec>|
+
+        }
+
+        private final class RecordCodec$ExpoModulesV2 : R|io/github/expo/modules/v2/records/RecordCodec<io/github/expo/modules/v2/testdata/OwnCodec>| {
+            public final override val recordClass: R|java/lang/Class<io/github/expo/modules/v2/testdata/OwnCodec>|
+                public get(): R|java/lang/Class<io/github/expo/modules/v2/testdata/OwnCodec>|
+
+            public final override val schema: R|io/github/expo/modules/v2/records/RecordSchema|
+                public get(): R|io/github/expo/modules/v2/records/RecordSchema|
+
+            public final override fun encode(value: R|io/github/expo/modules/v2/testdata/OwnCodec|, writer: R|io/github/expo/modules/v2/records/writers/RecordWriter|): R|kotlin/Unit|
+
+            public final override fun decode(reader: R|io/github/expo/modules/v2/records/readers/RecordReader|): R|io/github/expo/modules/v2/testdata/OwnCodec|
+
+            public constructor(): R|io/github/expo/modules/v2/testdata/OwnCodec.RecordCodec$ExpoModulesV2|
+
+        }
+
+    }

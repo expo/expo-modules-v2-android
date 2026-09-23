@@ -1,0 +1,89 @@
+FILE: bufferModeErrors.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|]) public final class NotExported : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/NotExported| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class UnexportedMembers : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/UnexportedMembers| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|]) public final fun plain(): R|kotlin/Int| {
+            ^plain Int(1)
+        }
+
+        @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|]) public final val plainProperty: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        public final fun plainArgument(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|]) value: R|kotlin/String|): R|kotlin/Int| {
+            ^plainArgument Int(1)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class NotConstructable : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|]) text: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/NotConstructable| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|], returns = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES|]) public final class ClassReturns : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ClassReturns| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class ArgumentReturns : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ArgumentReturns| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun f(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|], returns = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES|]) value: R|kotlin/String|): R|kotlin/Int| {
+            ^f Int(1)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|]) public final class Accepted : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Accepted| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES|], returns = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|]) public final fun f(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.YES|]) value: R|kotlin/String|): R|kotlin/Int| {
+            ^f Int(1)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO| [evaluated = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|]) public final val p: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_UnexportedMembers_04e05fed.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_UnexportedMembers_04e05fed : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/UnexportedMembers|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_ClassReturns_bafcdb4b.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_ClassReturns_bafcdb4b : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/ClassReturns|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_ArgumentReturns_be51e526.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_ArgumentReturns_be51e526 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/ArgumentReturns|
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Accepted_81a88a47.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Accepted_81a88a47 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Accepted|
+
+    }

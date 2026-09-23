@@ -5,21 +5,21 @@ import io.github.expo.modules.v2.compiler.ModuleDiscoveryOrigin
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclaration
+import org.jetbrains.kotlin.ir.declarations.IrDeclarationContainer
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrField
-import org.jetbrains.kotlin.ir.declarations.IrPackageFragment
+import org.jetbrains.kotlin.ir.declarations.IrFile
 import org.jetbrains.kotlin.ir.declarations.IrProperty
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationBase
 import org.jetbrains.kotlin.ir.expressions.IrCall
-import org.jetbrains.kotlin.ir.util.CustomKotlinLikeDumpStrategy
 import org.jetbrains.kotlin.ir.util.FakeOverridesStrategy
 import org.jetbrains.kotlin.ir.util.KotlinLikeDumpOptions
+import org.jetbrains.kotlin.ir.util.deepCopyWithSymbols
 import org.jetbrains.kotlin.ir.util.dumpKotlinLike
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.test.backend.handlers.AbstractIrHandler
-import org.jetbrains.kotlin.test.backend.handlers.IrTextDumpHandler.Companion.computeDumpExtension
 import org.jetbrains.kotlin.test.backend.handlers.IrTextDumpHandler.Companion.groupWithTestFiles
 import org.jetbrains.kotlin.test.backend.ir.IrBackendInput
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives
@@ -33,17 +33,19 @@ import org.jetbrains.kotlin.test.services.TestServices
 import org.jetbrains.kotlin.test.services.moduleStructure
 import org.jetbrains.kotlin.test.utils.MultiModuleInfoDumper
 import org.jetbrains.kotlin.test.utils.withExtension
-import org.jetbrains.kotlin.utils.Printer
 
 /**
- * Dumps the plugin-generated IR as Kotlin-like source into `*.fir.generated.kt.txt`.
+ * Dumps the plugin-generated IR as Kotlin-like source into `*.generated.kt.txt`.
  *
- * It runs beside the stock `IrPrettyKotlinDumpHandler`, which writes the whole file to
- * `*.fir.kt.txt`. That handler is final and hardcodes its dump options, so the narrowed view is a
- * separate handler rather than a flag. Two things differ from the stock dump:
+ * It runs beside the stock `IrPrettyKotlinDumpHandler`, which writes the whole file to `*.kt.txt`.
+ * That handler is final and hardcodes its dump options, so the narrowed view is a separate handler
+ * rather than a flag. Two things differ from the stock dump:
  *  - only declarations the plugin generated are printed, so the record's own data-class members
  *    and the test's `box()` stay out;
  *  - the rendered text goes through [tidy], which drops noise the dump options cannot suppress.
+ *
+ * The box tests are `// FIR_IDENTICAL`, so the stock dumps carry no `fir.` prefix on any supported
+ * Kotlin release (2.4.20 dropped the prefix altogether); this dump follows the same naming.
  */
 class RecordKotlinLikeDumpHandler(
   testServices: TestServices,
@@ -66,7 +68,6 @@ class RecordKotlinLikeDumpHandler(
       .map { it.second }
 
     val options = KotlinLikeDumpOptions(
-      customDumpStrategy = GeneratedDeclarationsOnly,
       printFileName = irFiles.size > 1 || testServices.moduleStructure.modules.size > 1,
       printFilePath = false,
       printFakeOverridesStrategy = FakeOverridesStrategy.NONE,
@@ -77,13 +78,13 @@ class RecordKotlinLikeDumpHandler(
 
     val builder = dumper.builderForModule(module.name)
     for (irFile in irFiles) {
-      builder.append(irFile.dumpKotlinLike(options).tidy())
+      builder.append(irFile.generatedDeclarationsOnly().dumpKotlinLike(options).tidy())
     }
   }
 
   override fun processAfterAllModules(someAssertionWasFailed: Boolean) {
     val expectedFile = testServices.moduleStructure.originalTestDataFiles.first()
-      .withExtension(computeDumpExtension(testServices, DUMP_EXTENSION))
+      .withExtension(DUMP_EXTENSION)
 
     if (dumper.isEmpty()) {
       assertions.assertFileDoesntExist(expectedFile) {
@@ -100,27 +101,24 @@ class RecordKotlinLikeDumpHandler(
 }
 
 /**
- * Prints a declaration only when the plugin generated it, or when it holds one that it did.
- * Classes always print: they are the containers the generated members live in. An `@Event`
- * property is the user's, but the plugin rewrote its initializer, so it prints as well - and so does
- * a function or property whose body held a `discoveredExpoModules()` call the plugin replaced.
+ * A copy of this file that keeps a declaration only when the plugin generated it, or when it holds
+ * one that it did. Classes always stay: they are the containers the generated members live in. An
+ * `@Event` property is the user's, but the plugin rewrote its initializer, so it stays as well - and
+ * so does a function or property whose body held a `discoveredExpoModules()` call the plugin
+ * replaced. Declarations inside a body (a lambda's function, a local variable) are never pruned:
+ * hiding one would leave the call it belongs to half-rendered.
+ *
+ * The file is copied because the compiled IR must stay intact for the backend. Pruning a copy,
+ * rather than asking the dumper to skip declarations, works on every supported Kotlin release:
+ * 2.4.20 removed the dumper's per-element hook.
  */
-private object GeneratedDeclarationsOnly : CustomKotlinLikeDumpStrategy {
-  override fun willPrintElement(
-    element: IrElement,
-    container: IrDeclaration?,
-    printer: Printer,
-    options: KotlinLikeDumpOptions,
-  ): Boolean = element !is IrDeclaration || element is IrClass || element.isLocal() ||
-    element.isPluginGenerated()
-}
+private fun IrFile.generatedDeclarationsOnly(): IrFile =
+  deepCopyWithSymbols().also { it.pruneNonGenerated() }
 
-/**
- * A declaration inside a body - a lambda's function, a local variable. It is only visited when its
- * container printed, so it prints too; hiding it would leave the call it belongs to half-rendered.
- */
-private fun IrDeclaration.isLocal(): Boolean =
-  parent.let { it !is IrClass && it !is IrPackageFragment }
+private fun IrDeclarationContainer.pruneNonGenerated() {
+  declarations.retainAll { it is IrClass || it.isPluginGenerated() }
+  declarations.filterIsInstance<IrClass>().forEach { it.pruneNonGenerated() }
+}
 
 private fun IrDeclaration.isPluginGenerated(): Boolean {
   if (isEventBinding() || callsDiscoveredModules()) {

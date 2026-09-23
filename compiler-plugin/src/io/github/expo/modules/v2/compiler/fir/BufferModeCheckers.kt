@@ -5,22 +5,21 @@ import io.github.expo.modules.v2.compiler.fir.diagnostics.BufferModeDiagnostics
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
 import org.jetbrains.kotlin.diagnostics.reportOn
 import org.jetbrains.kotlin.fir.FirSession
-import org.jetbrains.kotlin.fir.analysis.checkers.MppCheckerKind
 import org.jetbrains.kotlin.fir.analysis.checkers.context.CheckerContext
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.DeclarationCheckers
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirConstructorChecker
+import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirDeclarationChecker
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirPropertyChecker
 import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirRegularClassChecker
-import org.jetbrains.kotlin.fir.analysis.checkers.declaration.FirSimpleFunctionChecker
 import org.jetbrains.kotlin.fir.analysis.extensions.FirAdditionalCheckersExtension
 import org.jetbrains.kotlin.fir.declarations.FirConstructor
 import org.jetbrains.kotlin.fir.declarations.FirFunction
 import org.jetbrains.kotlin.fir.declarations.FirProperty
 import org.jetbrains.kotlin.fir.declarations.FirRegularClass
-import org.jetbrains.kotlin.fir.declarations.FirSimpleFunction
 import org.jetbrains.kotlin.fir.declarations.getAnnotationByClassId
 import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
+import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 
 /**
  * Frontend validation for `@BufferMode`, which only means something on a declaration whose values
@@ -29,15 +28,15 @@ import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 class BufferModeCheckers(session: FirSession) : FirAdditionalCheckersExtension(session) {
   override val declarationCheckers: DeclarationCheckers = object : DeclarationCheckers() {
     override val regularClassCheckers: Set<FirRegularClassChecker> = setOf(BufferModeClassChecker)
-    override val simpleFunctionCheckers: Set<FirSimpleFunctionChecker> =
+    override val functionCheckers: Set<FirDeclarationChecker<FirFunction>> =
       setOf(BufferModeFunctionChecker)
     override val propertyCheckers: Set<FirPropertyChecker> = setOf(BufferModePropertyChecker)
     override val constructorCheckers: Set<FirConstructorChecker> =
       setOf(BufferModeConstructorChecker)
   }
 
-  private object BufferModeClassChecker : FirRegularClassChecker(MppCheckerKind.Common) {
-    override fun check(
+  private object BufferModeClassChecker : ExpoDeclarationChecker<FirRegularClass>() {
+    override fun checkDeclaration(
       declaration: FirRegularClass,
       context: CheckerContext,
       reporter: DiagnosticReporter,
@@ -61,12 +60,18 @@ class BufferModeCheckers(session: FirSession) : FirAdditionalCheckersExtension(s
     }
   }
 
-  private object BufferModeFunctionChecker : FirSimpleFunctionChecker(MppCheckerKind.Common) {
-    override fun check(
-      declaration: FirSimpleFunction,
+  private object BufferModeFunctionChecker : ExpoDeclarationChecker<FirFunction>() {
+    override fun checkDeclaration(
+      declaration: FirFunction,
       context: CheckerContext,
       reporter: DiagnosticReporter,
     ) {
+      // Registered for every function, so the checker set is spelled the same in every supported
+      // Kotlin release (2.4.20 renamed the simple-function one); only named functions are exported.
+      if (declaration.symbol !is FirNamedFunctionSymbol) {
+        return
+      }
+
       val session = context.session
       val isExported = declaration.symbol.hasJsAnnotation(session)
 
@@ -82,8 +87,8 @@ class BufferModeCheckers(session: FirSession) : FirAdditionalCheckersExtension(s
     }
   }
 
-  private object BufferModePropertyChecker : FirPropertyChecker(MppCheckerKind.Common) {
-    override fun check(
+  private object BufferModePropertyChecker : ExpoDeclarationChecker<FirProperty>() {
+    override fun checkDeclaration(
       declaration: FirProperty,
       context: CheckerContext,
       reporter: DiagnosticReporter,
@@ -107,8 +112,8 @@ class BufferModeCheckers(session: FirSession) : FirAdditionalCheckersExtension(s
   }
 
   /** A constructor's arguments cross the bridge only when JavaScript's `new` reaches it. */
-  private object BufferModeConstructorChecker : FirConstructorChecker(MppCheckerKind.Common) {
-    override fun check(
+  private object BufferModeConstructorChecker : ExpoDeclarationChecker<FirConstructor>() {
+    override fun checkDeclaration(
       declaration: FirConstructor,
       context: CheckerContext,
       reporter: DiagnosticReporter,

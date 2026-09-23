@@ -1,0 +1,61 @@
+package io.github.expo.modules.v2.testdata
+
+@Record
+data class Opts : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Opts> {
+    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+    override val recordClass: Class<Opts>
+      field = <get-java>(/* $receiver = Opts::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Opts", bufferSafe = true, fields = [RecordField(name = "tags", type = <this>.#type$0, isOptional = false), RecordField(name = "count", type = Int, isOptional = true), RecordField(name = "label", type = #STRING_NULL, isOptional = true), RecordField(name = "derived", type = Int, isOptional = true), RecordField(name = "trailing", type = <this>.#type$1, isOptional = true)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Opts {
+      val tags: List<String> = reader.read<List<String>>(schema = <this>.#type$0)
+      val count: Int = when {
+        reader.readIsPresent() -> reader.readInt()
+        else -> 5
+      }
+      val label: String? = when {
+        reader.readIsPresent() -> reader.read<String?>(schema = #STRING_NULL)
+        else -> "x"
+      }
+      val derived: Int = when {
+        reader.readIsPresent() -> reader.readInt()
+        else -> count.plus(other = 1)
+      }
+      val trailing: List<Int> = when {
+        reader.readIsPresent() -> reader.read<List<Int>>(schema = <this>.#type$1)
+        else -> listOf<Int>(element = 9)
+      }
+      return Opts(tags = tags, count = count, label = label, derived = derived, trailing = trailing)
+    }
+
+    override fun encode(value: Opts, writer: RecordWriter) {
+      writer.write(value = value.<get-tags>(), schema = <this>.#type$0)
+      writer.write(value = value.<get-count>())
+      writer.write(value = value.<get-label>(), schema = #STRING_NULL)
+      writer.write(value = value.<get-derived>())
+      writer.write(value = value.<get-trailing>(), schema = <this>.#type$1)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Opts>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+

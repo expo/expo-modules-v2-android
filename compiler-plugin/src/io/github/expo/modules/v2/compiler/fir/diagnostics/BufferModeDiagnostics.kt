@@ -1,16 +1,16 @@
 package io.github.expo.modules.v2.compiler.fir.diagnostics
 
-import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactoryToRendererMap
+import io.github.expo.modules.v2.compiler.fir.ExpoDiagnosticsContainer
+import io.github.expo.modules.v2.compiler.fir.expoRendererMap
 import org.jetbrains.kotlin.diagnostics.SourceElementPositioningStrategies
 import org.jetbrains.kotlin.diagnostics.error0
 import org.jetbrains.kotlin.diagnostics.rendering.BaseDiagnosticRendererFactory
-import org.jetbrains.kotlin.diagnostics.rendering.RootDiagnosticRendererFactory
 import org.jetbrains.kotlin.psi.KtDeclaration
 
 /**
  * The frontend diagnostics [io.github.expo.modules.v2.compiler.fir.BufferModeCheckers] reports.
  */
-object BufferModeDiagnostics {
+object BufferModeDiagnostics : ExpoDiagnosticsContainer() {
   val BUFFER_MODE_ON_NON_EXPORTED_DECLARATION by error0<KtDeclaration>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
@@ -18,13 +18,15 @@ object BufferModeDiagnostics {
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
 
+  override fun getRendererFactory(): BaseDiagnosticRendererFactory = BufferModeDiagnosticMessages
+
   init {
-    RootDiagnosticRendererFactory.registerFactory(BufferModeDiagnosticMessages)
+    registerRenderer()
   }
 }
 
 object BufferModeDiagnosticMessages : BaseDiagnosticRendererFactory() {
-  override val MAP = KtDiagnosticFactoryToRendererMap("ExpoModulesV2").apply {
+  override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       BufferModeDiagnostics.BUFFER_MODE_ON_NON_EXPORTED_DECLARATION,
       "@BufferMode only says something about a value that crosses the bridge, and nothing here " +

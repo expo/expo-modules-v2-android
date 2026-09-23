@@ -1,0 +1,75 @@
+FILE: moduleAsync.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class AsyncShapes : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/AsyncShapes| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final suspend fun scale(value: R|kotlin/Int|): R|kotlin/Int| {
+            R|kotlinx/coroutines/delay|(Long(1))
+            ^scale R|<local>/value|.R|kotlin/Int.times|(Int(2))
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun greet(name: R|kotlin/String|): R|kotlin/String| {
+            ^greet <strcat>(String(Hello, ), R|<local>/name|, String(!))
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun repeat(@R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) times: R|kotlin/Int|, value: R|kotlin/String|): R|kotlin/String| {
+            ^repeat R|<local>/value|.R|kotlin/text/repeat|(R|<local>/times|)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun clear(): R|kotlin/Unit| {
+            ^clear R|kotlinx/coroutines/delay|(Long(1))
+        }
+
+    }
+    private final const val TRAMPOLINE: R|kotlin/String| = String(__trampoline$ExpoModulesV2)
+        private get(): R|kotlin/String|
+    public final fun box(): R|kotlin/String| {
+        lval clazz: R|java/lang/Class<io/github/expo/modules/v2/testdata/AsyncShapes>| = <getClass>(Q|io/github/expo/modules/v2/testdata/AsyncShapes|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/AsyncShapes|>
+        lval int: R|java/lang/Class<kotlin/Int>?| = <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>
+        lval promise: R|java/lang/Class<*>!| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.async.Promise))
+        lval scale: R|java/lang/reflect/Method!| = R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(scale), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/int|, R|<local>/promise|))
+        when () {
+            !=(R|<local>/scale|.R|java/lang/reflect/Method.returnType|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                ^box <strcat>(String(scale returns ), R|<local>/scale|.R|java/lang/reflect/Method.returnType|)
+            }
+        }
+
+        lval greet: R|java/lang/reflect/Method!| = R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(greet), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/int|, R|<local>/promise|))
+        when () {
+            !=(R|<local>/greet|.R|java/lang/reflect/Method.returnType|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                ^box <strcat>(String(greet returns ), R|<local>/greet|.R|java/lang/reflect/Method.returnType|)
+            }
+        }
+
+        R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(repeat), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/int|, R|<local>/int|, R|<local>/promise|))
+        lval clear: R|java/lang/reflect/Method!| = R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(clear), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/promise|))
+        when () {
+            !=(R|<local>/clear|.R|java/lang/reflect/Method.returnType|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                ^box <strcat>(String(clear returns ), R|<local>/clear|.R|java/lang/reflect/Method.returnType|)
+            }
+        }
+
+        lval continuation: R|java/lang/Class<*>!| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(kotlin.coroutines.Continuation))
+        R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(scale), vararg(R|<local>/int|, R|<local>/continuation|))
+        R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(greet), vararg(<getClass>(Q|kotlin/String|).R|kotlin/jvm/java|<R|kotlin/String|>, R|<local>/continuation|))
+        when () {
+            R|<local>/clazz|.R|java/lang/Class.declaredMethods|.R|kotlin/collections/any|<R|java/lang/reflect/Method!|>(<L> = any@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+                ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, String(scale)) && R|<local>/it|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/contains|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(R|<local>/promise|)
+            }
+            ) ->  {
+                ^box String(the user's own method was rewritten)
+            }
+        }
+
+        ^box String(OK)
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_AsyncShapes_3dc057ee.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_AsyncShapes_3dc057ee : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/AsyncShapes|
+
+    }

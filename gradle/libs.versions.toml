@@ -2,9 +2,11 @@
 expo-modules-v2 = "0.1.5"
 
 # https://github.com/expo/kolibri
-kolibri = "0.1.9"
+kolibri = "0.2.0"
 
 # https://github.com/JetBrains/kotlin
+# The oldest supported release. Every release in gradle/kotlin-versions.txt is built and tested;
+# `-PkotlinVersion=<version>` overrides this one for the whole build (see settings.gradle.kts).
 kotlin = "2.2.0"
 
 # The desktop/no-React-Native Hermes host: it creates the `jsi::Runtime` this project attaches to,

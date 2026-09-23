@@ -1,0 +1,109 @@
+// MODULE: producer
+// FILE: producer.kt
+package io.github.expo.modules.v2.testdata.producer
+
+@Record
+data class Shared : Record {
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Shared> {
+    override val recordClass: Class<Shared>
+      field = <get-java>(/* $receiver = Shared::class */)
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Shared", bufferSafe = true, fields = [RecordField(name = "n", type = Int, isOptional = false), RecordField(name = "label", type = #STRING_NULL, isOptional = false)])
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Shared {
+      return Shared(n = reader.readInt(), label = reader.read<String?>(schema = #STRING_NULL))
+    }
+
+    override fun encode(value: Shared, writer: RecordWriter) {
+      writer.write(value = value.<get-n>())
+      writer.write(value = value.<get-label>(), schema = #STRING_NULL)
+    }
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Shared>
+      field = RecordCodec$ExpoModulesV2()
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+    }
+  }
+}
+
+@ExpoModule(name = "Producer")
+object ProducerModule : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
+  fun bump__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Shared
+    try { // BLOCK
+      v0 = args.next<Shared>(type = #type$0)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.bump(value = v0), type = #type$0)
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "bump", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true), methodName = "bump__trampoline$ExpoModulesV2")
+    builder.function(jsName = "name", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "name__trampoline$ExpoModulesV2")
+    builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = true, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false))
+    return "Producer"
+  }
+
+  fun name__trampoline$ExpoModulesV2(payloadLength: Int): String? {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    return <this>.name(prefix = v0) as String?
+  }
+}
+
+// FILE: io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_producer_ProducerModule_2806541a {
+  abstract fun module(): ProducerModule
+}
+
+// MODULE: consumer
+// FILE: consumer.kt
+package io.github.expo.modules.v2.testdata.consumer
+
+@ExpoModule(name = "Consumer")
+object ConsumerModule : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false)
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "forward", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Shared::class */), isNullable = false), useBuffer = true), methodName = "forward__trampoline$ExpoModulesV2")
+    return "Consumer"
+  }
+
+  fun forward__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Shared
+    try { // BLOCK
+      v0 = args.next<Shared>(type = #type$0)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.forward(value = v0), type = #type$0)
+  }
+}
+
+// FILE: io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_consumer_ConsumerModule_3c1aa49a {
+  abstract fun module(): ConsumerModule
+}
+

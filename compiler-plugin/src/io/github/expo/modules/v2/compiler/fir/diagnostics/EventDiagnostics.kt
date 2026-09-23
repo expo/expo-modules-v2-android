@@ -1,19 +1,19 @@
 package io.github.expo.modules.v2.compiler.fir.diagnostics
 
-import org.jetbrains.kotlin.diagnostics.KtDiagnosticFactoryToRendererMap
+import io.github.expo.modules.v2.compiler.fir.ExpoDiagnosticsContainer
+import io.github.expo.modules.v2.compiler.fir.expoRendererMap
 import org.jetbrains.kotlin.diagnostics.SourceElementPositioningStrategies
 import org.jetbrains.kotlin.diagnostics.error0
 import org.jetbrains.kotlin.diagnostics.error1
 import org.jetbrains.kotlin.diagnostics.rendering.BaseDiagnosticRendererFactory
 import org.jetbrains.kotlin.diagnostics.rendering.CommonRenderers
-import org.jetbrains.kotlin.diagnostics.rendering.RootDiagnosticRendererFactory
 import org.jetbrains.kotlin.psi.KtDeclaration
 
 /**
  * The frontend diagnostics [io.github.expo.modules.v2.compiler.fir.EventCheckers] reports about an
  * `@Event` property.
  */
-object EventDiagnostics {
+object EventDiagnostics : ExpoDiagnosticsContainer() {
   val EVENT_OUTSIDE_MODULE by error0<KtDeclaration>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
@@ -30,13 +30,15 @@ object EventDiagnostics {
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
 
+  override fun getRendererFactory(): BaseDiagnosticRendererFactory = EventDiagnosticMessages
+
   init {
-    RootDiagnosticRendererFactory.registerFactory(EventDiagnosticMessages)
+    registerRenderer()
   }
 }
 
 object EventDiagnosticMessages : BaseDiagnosticRendererFactory() {
-  override val MAP = KtDiagnosticFactoryToRendererMap("ExpoModulesV2").apply {
+  override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       EventDiagnostics.EVENT_OUTSIDE_MODULE,
       "@Event on a property only exports it when the class itself is annotated @ExpoModule or " +
