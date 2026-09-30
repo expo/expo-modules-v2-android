@@ -21,9 +21,10 @@ import io.github.expo.modules.v2.modules.ModuleRegistry
  * [ReactApplicationContext] through the [io.github.expo.modules.v2.ExpoObject.reactContext]
  * extension.
  * @param ownsContext whether [close] closes [context] too.
- * @param globalName the global the modules are installed under. It defaults to `expoV2` rather than
- * `expo`, because in a React Native app `globalThis.expo` already belongs to `expo-modules-core` —
- * installing over it would take every classic Expo module down with it.
+ * @param globalName the global the modules are installed under. When it already holds an object, as
+ * `globalThis.expo` does once `expo-modules-core` is installed, the modules join that namespace:
+ * `expo.modules` then serves the classic Expo modules first and these after them, so JavaScript
+ * reaches both through `requireNativeModule`.
  */
 class ReactRuntime private constructor(
   context: ReactExpoContext,
@@ -42,7 +43,7 @@ class ReactRuntime private constructor(
   val reactContext: ReactApplicationContext = context.reactContext
 
   companion object {
-    const val DEFAULT_GLOBAL_NAME = "expoV2"
+    const val DEFAULT_GLOBAL_NAME = "expo"
 
     init {
       ExpoModulesV2React.ensureLoaded()
@@ -59,6 +60,9 @@ class ReactRuntime private constructor(
      * Pass [context] to share modules and shared objects with other runtimes of the same app; it
      * must wrap [reactContext], and it stays the caller's to close. When null, the runtime creates
      * a context of its own and closes it with itself.
+     *
+     * To join the namespace of another module system, attach after it installed that namespace. A
+     * system that installs later may replace the namespace this runtime created.
      */
     fun attach(
       reactContext: ReactApplicationContext,

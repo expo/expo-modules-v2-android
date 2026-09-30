@@ -56,8 +56,10 @@ namespace expo::modules::v2::jsi {
      * Non-owning: the host already owns the `jsi::Runtime` and outlives this object (React
      * Native, which hands out its runtime through `ReactContext.javaScriptContextHolder`).
      *
-     * [globalName] is what the module host object is installed under. A host whose runtime
-     * already carries another `expo` global must pass a different name, or it would replace it.
+     * [globalName] is the namespace the module host object is installed under. When the global
+     * already holds an object (`expo-modules-core`'s `globalThis.expo` in a React Native app), the
+     * modules join it: its `modules` property becomes this runtime's host object, which serves the
+     * host's modules first and the registry's after them.
      */
     JavaScriptRuntime(
       JNIEnv* env,

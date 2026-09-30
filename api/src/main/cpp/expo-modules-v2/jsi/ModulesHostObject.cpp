@@ -1,6 +1,6 @@
 #include <expo-modules-v2/jsi/ModulesHostObject.h>
 
-#include <algorithm>
+#include <unordered_set>
 #include <utility>
 
 #include <expo-jsi/ChainedNativeState.h>
@@ -68,9 +68,11 @@ namespace expo::modules::v2::jsi {
 
   ModulesHostObject::ModulesHostObject(
     JNIEnv* env,
-    jobject registry
+    jobject registry,
+    std::optional<facebook::jsi::Object> hostModules
   )
-    : registry_(kolibri::GlobalRef<JModuleRegistry>::make(env, registry)) {
+    : registry_(kolibri::GlobalRef<JModuleRegistry>::make(env, registry)),
+      hostModules_(std::move(hostModules)) {
   }
 
   ModulesHostObject::~ModulesHostObject() {
@@ -90,6 +92,15 @@ namespace expo::modules::v2::jsi {
     const std::string moduleName = name.utf8(rt);
     if (const auto cached = materialized_.find(moduleName); cached != materialized_.end()) {
       return facebook::jsi::Value(rt, cached->second);
+    }
+
+    // Not cached here: the host caches its own modules, and a miss must stay a miss for the
+    // registry below.
+    if (hostModules_.has_value()) {
+      facebook::jsi::Value hostModule = hostModules_->getProperty(rt, name);
+      if (!hostModule.isUndefined()) {
+        return hostModule;
+      }
     }
 
     try {
@@ -113,6 +124,7 @@ namespace expo::modules::v2::jsi {
           return shared->javaClass();
         }
       );
+
       if (!desc.has_value()) {
         // TODO(@lukmccall): consider throwing
         return facebook::jsi::Value::undefined();
@@ -202,13 +214,25 @@ namespace expo::modules::v2::jsi {
     std::vector<facebook::jsi::PropNameID> output;
     output.reserve(names.size());
 
-    std::ranges::transform(
-      names,
-      std::back_inserter(output),
-      [&](const std::string& name) {
-        return facebook::jsi::PropNameID::forUtf8(rt, name);
+    // A name both sides have is listed once, the way `get` resolves it once.
+    std::unordered_set<std::string> listed;
+    const auto list = [&](std::string name) {
+      if (listed.insert(name).second) {
+        output.push_back(facebook::jsi::PropNameID::forUtf8(rt, name));
       }
-    );
+    };
+
+    if (hostModules_.has_value()) {
+      const facebook::jsi::Array hostNames = hostModules_->getPropertyNames(rt);
+      const size_t count = hostNames.size(rt);
+      for (size_t i = 0; i < count; ++i) {
+        list(hostNames.getValueAtIndex(rt, i).toString(rt).utf8(rt));
+      }
+    }
+
+    for (std::string& name: names) {
+      list(std::move(name));
+    }
 
     return output;
   }

@@ -3,6 +3,7 @@
 #include <jni.h>
 #include <jsi/jsi.h>
 
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -16,7 +17,8 @@ namespace expo::modules::v2::jsi {
   public:
     ModulesHostObject(
       JNIEnv* env,
-      jobject registry
+      jobject registry,
+      std::optional<facebook::jsi::Object> hostModules = std::nullopt
     );
 
     ~ModulesHostObject() override;
@@ -38,6 +40,7 @@ namespace expo::modules::v2::jsi {
 
   private:
     kolibri::GlobalRef<JModuleRegistry> registry_;
+    std::optional<facebook::jsi::Object> hostModules_;
     std::unordered_map<std::string, facebook::jsi::Object> materialized_;
   };
 } // namespace expo::modules::v2::jsi

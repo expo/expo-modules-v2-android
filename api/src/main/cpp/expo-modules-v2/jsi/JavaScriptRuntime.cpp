@@ -144,16 +144,38 @@ namespace expo::modules::v2::jsi {
     facebook::jsi::Runtime& rt = *runtime_;
 
     const std::string nameSpace(globalName);
+    facebook::jsi::Value existing = rt.global().getProperty(rt, nameSpace.c_str());
 
-    modules_ = std::make_shared<ModulesHostObject>(env, registry);
+    if (existing.isObject()) {
+      // The host already owns the namespace (`expo-modules-core` installs `globalThis.expo` as a
+      // non-writable global), so the modules join it instead of replacing it. The host's own
+      // `modules` object stays reachable through the host object that takes its place.
+      facebook::jsi::Object expoNamespace = existing.getObject(rt);
+      facebook::jsi::Value hostModules = expoNamespace.getProperty(rt, "modules");
 
-    auto expoNamespace = facebook::jsi::Object(rt);
-    expoNamespace.setProperty(
-      rt,
-      "modules",
-      facebook::jsi::Object::createFromHostObject(rt, modules_)
-    );
-    rt.global().setProperty(rt, nameSpace.c_str(), std::move(expoNamespace));
+      modules_ = std::make_shared<ModulesHostObject>(
+        env,
+        registry,
+        hostModules.isObject()
+          ? std::optional(hostModules.getObject(rt))
+          : std::nullopt
+      );
+      expoNamespace.setProperty(
+        rt,
+        "modules",
+        facebook::jsi::Object::createFromHostObject(rt, modules_)
+      );
+    } else {
+      modules_ = std::make_shared<ModulesHostObject>(env, registry);
+
+      auto expoNamespace = facebook::jsi::Object(rt);
+      expoNamespace.setProperty(
+        rt,
+        "modules",
+        facebook::jsi::Object::createFromHostObject(rt, modules_)
+      );
+      rt.global().setProperty(rt, nameSpace.c_str(), std::move(expoNamespace));
+    }
 
     rt.global().setProperty(
       rt,
