@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include <kolibri/env.h>
 
@@ -20,9 +21,10 @@ namespace expo::modules::v2::events {
     constexpr std::string_view kRemoveListener = "removeListener";
     constexpr std::string_view kRemoveAllListeners = "removeAllListeners";
     constexpr std::string_view kListenerCount = "listenerCount";
+    constexpr std::string_view kEmit = "emit";
 
     constexpr std::array kMemberNames = {
-      kAddListener, kRemoveListener, kRemoveAllListeners, kListenerCount,
+      kAddListener, kRemoveListener, kRemoveAllListeners, kListenerCount, kEmit,
     };
 
     /** The emitter a member was called on: its node, and the runtime tables it lives in. */
@@ -270,6 +272,31 @@ namespace expo::modules::v2::events {
       );
     }
 
+    facebook::jsi::Value emit(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Value& thisValue,
+      const facebook::jsi::Value* args,
+      const size_t count
+    ) {
+      const facebook::jsi::Object self = thisObjectOf(rt, thisValue, kEmit);
+      const Emitter emitter = emitterOf(rt, self, kEmit);
+      const Declared event = eventOf(rt, emitter, args, count, kEmit);
+
+      const std::vector<facebook::jsi::Value>* listeners = emitter
+        .listeners()
+        .find(emitter.objectId(), event.index);
+      if (listeners != nullptr) {
+        ListenerTable::call(
+          rt,
+          *listeners,
+          self,
+          args + 1,
+          count - 1
+        );
+      }
+      return facebook::jsi::Value::undefined();
+    }
+
     void defineMember(
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Object& target,
@@ -310,6 +337,7 @@ namespace expo::modules::v2::events {
     defineMember(rt, target, defineProperty, kRemoveListener, 2, &removeListenerMember);
     defineMember(rt, target, defineProperty, kRemoveAllListeners, 1, &removeAllListeners);
     defineMember(rt, target, defineProperty, kListenerCount, 1, &listenerCount);
+    defineMember(rt, target, defineProperty, kEmit, 1, &emit);
   }
 
   bool isEmitterMemberName(const std::string_view name) noexcept {

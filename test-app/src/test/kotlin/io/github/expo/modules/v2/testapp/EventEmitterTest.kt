@@ -247,6 +247,55 @@ class EventEmitterTest {
   }
 
   @Test
+  fun `emit from JavaScript calls the listeners of that event with its arguments`() {
+    HermesRuntime().use { runtime ->
+      runtime.watch()
+      assertEquals(
+        "1+extra|true|true",
+        runtime.evaluateAsString(
+          """
+          const w = expo.modules.Watcher;
+          let self;
+          w.addListener('count', function (...args) { self = this; seen.push(args.join('+')); });
+          w.addListener('text', () => seen.push('text'));
+          const result = w.emit('count', 1, 'extra');
+          [seen.join(), self === w, result === undefined].join('|');
+          """.trimIndent(),
+        ),
+      )
+    }
+  }
+
+  @Test
+  fun `emit on a shared object calls only that object's listeners`() {
+    HermesRuntime().use { runtime ->
+      runtime.watch()
+      assertEquals(
+        "paused",
+        runtime.evaluateAsString(
+          """
+          const a = expo.modules.Watcher.create();
+          const b = expo.modules.Watcher.create();
+          a.addListener('stateChange', (state) => seen.push(state));
+          b.addListener('stateChange', () => seen.push('wrong object'));
+          a.emit('stateChange', 'paused');
+          seen.join();
+          """.trimIndent(),
+        ),
+      )
+    }
+  }
+
+  @Test
+  fun `emit without listeners does nothing and does not start observing`() {
+    HermesRuntime().use { runtime ->
+      val watcher = runtime.watch()
+      assertEquals("undefined", runtime.evaluateAsString("String(expo.modules.Watcher.emit('changed', {}))"))
+      assertEquals(0 to 0, watcher.starts to watcher.stops)
+    }
+  }
+
+  @Test
   fun `an unknown event name is rejected by every member`() {
     HermesRuntime().use { runtime ->
       runtime.watch()
@@ -257,6 +306,7 @@ class EventEmitterTest {
         "removeListener('nope', () => {})",
         "removeAllListeners('nope')",
         "listenerCount('nope')",
+        "emit('nope')",
       )) {
         val error = runtime.evaluateAsString(
           "try { expo.modules.Watcher.$call; 'no error'; } catch (e) { String(e.message); }",

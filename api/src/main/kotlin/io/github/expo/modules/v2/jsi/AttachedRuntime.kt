@@ -23,7 +23,13 @@ open class AttachedRuntime(
   moduleRegistry,
   asyncContext,
   NativePointer(
-    nativeCreate(jsRuntimePointer, moduleRegistry, asyncContext, engineName, globalName)
+    nativeCreate(
+      jsRuntimePointer = jsRuntimePointer,
+      registry = moduleRegistry,
+      asyncContext = asyncContext,
+      engineName = engineName,
+      globalName = globalName
+    )
   ),
   context ?: ExpoContext(),
   ownsContext = context == null,
