@@ -65,7 +65,7 @@ fun Project.configureCentralPublishing() {
       pom {
         name = project.name
         inceptionYear = "2026"
-        url = "https://github.com/expo/expo-modules-android-v2"
+        url = "https://github.com/expo/expo-modules-v2-android"
         licenses {
           license {
             name = "The MIT License"
@@ -81,9 +81,9 @@ fun Project.configureCentralPublishing() {
           }
         }
         scm {
-          url = "https://github.com/expo/expo-modules-android-v2"
-          connection = "scm:git:git://github.com/expo/expo-modules-android-v2.git"
-          developerConnection = "scm:git:ssh://github.com/expo/expo-modules-android-v2.git"
+          url = "https://github.com/expo/expo-modules-v2-android"
+          connection = "scm:git:git://github.com/expo/expo-modules-v2-android.git"
+          developerConnection = "scm:git:ssh://github.com/expo/expo-modules-v2-android.git"
         }
       }
     }
