@@ -1,0 +1,186 @@
+// FILE: moduleEnums.kt
+package io.github.expo.modules.v2.testdata
+
+enum class Priority : Enum<Priority> {
+  val value: Int
+    field = value
+    get
+
+  LOW = Priority(value = 0)
+
+  HIGH = Priority(value = 10)
+
+  private constructor(value: Int) /* primary */ {
+    super/*Enum*/<Priority>()
+    /* <init>() */
+
+  }
+
+  /* static */ fun valueOf(value: String): Priority /* Synthetic body for ENUM_VALUEOF */
+
+  /* static */ fun values(): Array<Priority> /* Synthetic body for ENUM_VALUES */
+
+  /* static */ val entries: EnumEntries<Priority>
+    get(): EnumEntries<Priority> /* Synthetic body for ENUM_ENTRIES */
+
+}
+
+enum class Style : Enum<Style> {
+  val value: String
+    field = value
+    get
+
+  LIGHT = Style(value = "light")
+
+  HEAVY = Style(value = "heavy")
+
+  private constructor(value: String) /* primary */ {
+    super/*Enum*/<Style>()
+    /* <init>() */
+
+  }
+
+  /* static */ fun valueOf(value: String): Style /* Synthetic body for ENUM_VALUEOF */
+
+  /* static */ fun values(): Array<Style> /* Synthetic body for ENUM_VALUES */
+
+  /* static */ val entries: EnumEntries<Style>
+    get(): EnumEntries<Style> /* Synthetic body for ENUM_ENTRIES */
+
+}
+
+@ExpoModule
+object Enums : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = false)
+  private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = true)
+  private /* static final field */ val type$2: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = false)
+  private /* static final field */ val type$3: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true)
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "echoStyle", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = false), useBuffer = true), methodName = "echoStyle__trampoline$ExpoModulesV2")
+    builder.function(jsName = "styleSlot", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = true), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = true), useBuffer = false), methodName = "styleSlot__trampoline$ExpoModulesV2")
+    builder.function(jsName = "echoPriority", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = false), useBuffer = false), methodName = "echoPriority__trampoline$ExpoModulesV2")
+    builder.function(jsName = "maybePriority", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true), useBuffer = true), methodName = "maybePriority__trampoline$ExpoModulesV2")
+    builder.function(jsName = "priorityNoBuffer", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true), useBuffer = false), methodName = "priorityNoBuffer__trampoline$ExpoModulesV2")
+    return "Enums"
+  }
+
+  fun echoPriority__trampoline$ExpoModulesV2(p0: Int): Int {
+    return Bridge.toJni(value = <this>.echoPriority(priority = Bridge.fromJni(value = p0, type = #type$2) as Priority), type = #type$2) as Int
+  }
+
+  fun echoStyle__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Style
+    try { // BLOCK
+      v0 = args.next<Style>(type = #type$0)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.echoStyle(style = v0), type = #type$0)
+  }
+
+  fun maybePriority__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Priority?
+    try { // BLOCK
+      v0 = args.next<Priority?>(type = #type$3)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.maybePriority(priority = v0), type = #type$3)
+  }
+
+  fun priorityNoBuffer__trampoline$ExpoModulesV2(p0: Int?): Int? {
+    return Bridge.toJni(value = <this>.priorityNoBuffer(priority = Bridge.fromJni(value = p0, type = #type$3) as Priority?), type = #type$3) as Int?
+  }
+
+  fun styleSlot__trampoline$ExpoModulesV2(p0: String?): String? {
+    return Bridge.toJni(value = <this>.styleSlot(style = Bridge.fromJni(value = p0, type = #type$1) as Style?), type = #type$1) as String?
+  }
+
+  @JS
+  fun echoPriority(priority: Priority): Priority {
+    return priority
+  }
+
+  @JS
+  fun echoStyle(style: Style): Style {
+    return style
+  }
+
+  @JS
+  fun maybePriority(priority: Priority?): Priority? {
+    return priority
+  }
+
+  @JS
+  @BufferMode(value = Buffer.NO)
+  fun priorityNoBuffer(priority: Priority?): Priority? {
+    return priority
+  }
+
+  @JS
+  @BufferMode(value = Buffer.NO)
+  fun styleSlot(style: Style?): Style? {
+    return style
+  }
+
+}
+
+fun box(): String {
+  val suffix: String = "__trampoline$ExpoModulesV2"
+  val expected: Map<String, String> = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "echoStyle" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "styleSlot" + suffix, */ that = "(Ljava/lang/String;)Ljava/lang/String;"), to<String, String>(/* <this> = "echoPriority" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "maybePriority" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "priorityNoBuffer" + suffix, */ that = "(Ljava/lang/Integer;)Ljava/lang/Integer;")])
+  { // BLOCK
+    val tmp_0: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = expected */)
+    while (tmp_0.hasNext()) { // BLOCK
+      val tmp_1: Entry<String, String> = tmp_0.next()
+      val name: String = component1<String, String>(/* <this> = tmp_1 */)
+      val want: String = component2<String, String>(/* <this> = tmp_1 */)
+      { // BLOCK
+        val got: String = descriptorOf(name = name)
+        when {
+          EQEQ(arg0 = got, arg1 = want).not() -> return name + ": expected " + want + ", got " + got
+        }
+      }
+    }
+  }
+  return "OK"
+}
+
+private fun descriptor(type: Class<*>): String {
+  return when {
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)) -> "I"
+    EQEQ(arg0 = type, arg1 = super<Void>.#TYPE) -> "V"
+    else -> "L".plus(other = replace(/* <this> = type.getName() /*!! String */, */ oldChar = '.', newChar = '/')).plus(other = ";")
+  }
+}
+
+private fun descriptorOf(name: String): String {
+  val method: Method = { // BLOCK
+    val tmp_2: Method? = firstOrNull<@FlexibleNullability Method?>(/* <this> = <get-java><Enums>(/* <this> = Enums::class */).getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return EQEQ(arg0 = it /*!! Method */.getName(), arg1 = name)
+    }
+)
+    when {
+      EQEQ(arg0 = tmp_2, arg1 = null) -> return "<absent>"
+      else -> tmp_2
+    }
+  }
+  val parameters: String = joinToString<@FlexibleNullability Class<*>?>(/* <this> = method.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ separator = "", transform = local fun <anonymous>(it: @FlexibleNullability Class<*>?): CharSequence {
+    return descriptor(type = it /*!! Class<*> */)
+  }
+)
+  return "(" + parameters + ")" + descriptor(type = method.getReturnType() /*!! Class<*> */)
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Enums_315224f2 {
+  abstract fun module(): Enums
+
+}

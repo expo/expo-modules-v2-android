@@ -68,6 +68,10 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
           CONST String type=kotlin.String value="Counter"
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int [companion]
       BLOCK_BODY
+        CALL 'public final fun reserve (sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+          ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Counter> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Counter modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
         VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Counter' type=kotlin.String origin=null
@@ -186,6 +190,10 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
           CONST String type=kotlin.String value="Delegating"
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int [companion]
       BLOCK_BODY
+        CALL 'public final fun reserve (sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+          ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Delegating> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Delegating modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
         VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Delegating' type=kotlin.String origin=null
@@ -290,6 +298,10 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
           CONST String type=kotlin.String value="Plain"
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int [companion]
       BLOCK_BODY
+        CALL 'public final fun reserve (sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+          ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Plain> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Plain modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
         VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Plain' type=kotlin.String origin=null
@@ -363,6 +375,10 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
           CONST String type=kotlin.String value="Pressured"
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int [companion]
       BLOCK_BODY
+        CALL 'public final fun reserve (sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+          ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Pressured> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Pressured modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
         VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Pressured' type=kotlin.String origin=null
@@ -442,6 +458,10 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
           CONST String type=kotlin.String value="TextRef"
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int [companion]
       BLOCK_BODY
+        CALL 'public final fun reserve (sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+          ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.TextRef> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:TextRef modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedRef<java.lang.StringBuilder>]' type=kotlin.reflect.KClass<*>
         VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.TextRef' type=kotlin.String origin=null

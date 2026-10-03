@@ -1,0 +1,75 @@
+FILE: moduleTypedArrays.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object TypedArrays : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/TypedArrays| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun byteLength(array: R|io/github/expo/modules/v2/TypedArray|): R|kotlin/Int| {
+            ^byteLength R|<local>/array|.R|io/github/expo/modules/v2/TypedArray.byteLength|
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun echoArray(array: R|io/github/expo/modules/v2/TypedArray?|): R|io/github/expo/modules/v2/TypedArray?| {
+            ^echoArray R|<local>/array|
+        }
+
+    }
+    private final fun descriptorOf(name: R|kotlin/String|): R|kotlin/String| {
+        lval method: R|java/lang/reflect/Method| = <getClass>(Q|io/github/expo/modules/v2/testdata/TypedArrays|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/TypedArrays|>.R|java/lang/Class.declaredMethods|.R|kotlin/collections/firstOrNull|<R|java/lang/reflect/Method!|>(<L> = firstOrNull@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, R|<local>/name|)
+        }
+        ) ?: ^descriptorOf String(<absent>)
+        lval parameters: R|kotlin/String| = R|<local>/method|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/joinToString|<R|java/lang/Class<*>!|>(String(), <L> = joinToString@fun <anonymous>(it: R|java/lang/Class<*>!|): R|kotlin/CharSequence| <inline=NoInline>  {
+            ^ R|io/github/expo/modules/v2/testdata/descriptor|(R|<local>/it|)
+        }
+        )
+        ^descriptorOf <strcat>(String((), R|<local>/parameters|, String()), R|io/github/expo/modules/v2/testdata/descriptor|(R|<local>/method|.R|java/lang/reflect/Method.returnType|))
+    }
+    private final fun descriptor(type: R|java/lang/Class<*>|): R|kotlin/String| {
+        ^descriptor when () {
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>) ->  {
+                String(I)
+            }
+            ==(R|<local>/type|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                String(V)
+            }
+            else ->  {
+                String(L).R|kotlin/String.plus|(R|<local>/type|.R|java/lang/Class.name|.R|kotlin/text/replace|(Char(.), Char(/))).R|kotlin/String.plus|(String(;))
+            }
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval suffix: R|kotlin/String| = String(__trampoline$ExpoModulesV2)
+        lval jsObject: R|kotlin/String| = String(Lio/github/expo/modules/v2/jsi/JavaScriptObject;)
+        lval expected: R|kotlin/collections/Map<kotlin/String, kotlin/String>| = R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(byteLength), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(<strcat>(String((), R|<local>/jsObject|, String()I))), <strcat>(String(echoArray), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(<strcat>(String((), R|<local>/jsObject|, String()), R|<local>/jsObject|))))
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<kotlin/String, kotlin/String>>| = R|<local>/expected|.R|kotlin/collections/iterator|<R|kotlin/String|, R|kotlin/String|>()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval <destruct>: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>|>|()
+                lval name: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component1|<R|kotlin/String|, R|kotlin/String|>()
+                lval want: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component2|<R|kotlin/String|, R|kotlin/String|>()
+                 {
+                    lval got: R|kotlin/String| = R|io/github/expo/modules/v2/testdata/descriptorOf|(R|<local>/name|)
+                    when () {
+                        !=(R|<local>/got|, R|<local>/want|) ->  {
+                            ^box <strcat>(R|<local>/name|, String(: expected ), R|<local>/want|, String(, got ), R|<local>/got|)
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        ^box String(OK)
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_TypedArrays_3de337a4.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_TypedArrays_3de337a4 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/TypedArrays|
+
+    }

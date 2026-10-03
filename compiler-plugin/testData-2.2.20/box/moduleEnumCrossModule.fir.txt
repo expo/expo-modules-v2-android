@@ -1,0 +1,147 @@
+Module: producer
+FILE: producer.kt
+    package io.github.expo.modules.v2.testdata.producer
+
+    public final enum class Level : R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Level>| {
+        private constructor(value: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/producer/Level| {
+            super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Level>|>()
+        }
+
+        public final val value: R|kotlin/Int| = R|<local>/value|
+            public get(): R|kotlin/Int|
+
+        public final static enum entry LOW: R|io/github/expo/modules/v2/testdata/producer/Level| = object : R|io/github/expo/modules/v2/testdata/producer/Level| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/producer/<anonymous>| {
+                super<R|io/github/expo/modules/v2/testdata/producer/Level|>(Int(1))
+            }
+
+        }
+
+        public final static enum entry HIGH: R|io/github/expo/modules/v2/testdata/producer/Level| = object : R|io/github/expo/modules/v2/testdata/producer/Level| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/producer/<anonymous>| {
+                super<R|io/github/expo/modules/v2/testdata/producer/Level|>(Int(2))
+            }
+
+        }
+
+        public final static fun values(): R|kotlin/Array<io/github/expo/modules/v2/testdata/producer/Level>| {
+        }
+
+        public final static fun valueOf(value: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/producer/Level| {
+        }
+
+        public final static val entries: R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/producer/Level>|
+            public get(): R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/producer/Level>|
+
+    }
+    public final enum class Mode : R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Mode>| {
+        private constructor(value: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/producer/Mode| {
+            super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Mode>|>()
+        }
+
+        public final val value: R|kotlin/String| = R|<local>/value|
+            public get(): R|kotlin/String|
+
+        public final static enum entry FAST: R|io/github/expo/modules/v2/testdata/producer/Mode| = object : R|io/github/expo/modules/v2/testdata/producer/Mode| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/producer/<anonymous>| {
+                super<R|io/github/expo/modules/v2/testdata/producer/Mode|>(String(fast))
+            }
+
+        }
+
+        public final static enum entry SLOW: R|io/github/expo/modules/v2/testdata/producer/Mode| = object : R|io/github/expo/modules/v2/testdata/producer/Mode| {
+            private constructor(): R|io/github/expo/modules/v2/testdata/producer/<anonymous>| {
+                super<R|io/github/expo/modules/v2/testdata/producer/Mode|>(String(slow))
+            }
+
+        }
+
+        public final static fun values(): R|kotlin/Array<io/github/expo/modules/v2/testdata/producer/Mode>| {
+        }
+
+        public final static fun valueOf(value: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/producer/Mode| {
+        }
+
+        public final static val entries: R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/producer/Mode>|
+            public get(): R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/producer/Mode>|
+
+    }
+Module: consumer
+FILE: consumer.kt
+    package io.github.expo.modules.v2.testdata.consumer
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final object Levels : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/consumer/Levels| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun echo(level: R|io/github/expo/modules/v2/testdata/producer/Level|): R|io/github/expo/modules/v2/testdata/producer/Level| {
+            ^echo R|<local>/level|
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final fun maybe(level: R|io/github/expo/modules/v2/testdata/producer/Level?|): R|io/github/expo/modules/v2/testdata/producer/Level?| {
+            ^maybe R|<local>/level|
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/BufferMode|(value = Q|io/github/expo/modules/v2/Buffer|.R|io/github/expo/modules/v2/Buffer.NO|) public final fun mode(mode: R|io/github/expo/modules/v2/testdata/producer/Mode|): R|io/github/expo/modules/v2/testdata/producer/Mode| {
+            ^mode R|<local>/mode|
+        }
+
+    }
+    private final fun descriptorOf(name: R|kotlin/String|): R|kotlin/String| {
+        lval method: R|java/lang/reflect/Method| = <getClass>(Q|io/github/expo/modules/v2/testdata/consumer/Levels|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/consumer/Levels|>.R|java/lang/Class.declaredMethods|.R|kotlin/collections/firstOrNull|<R|java/lang/reflect/Method!|>(<L> = firstOrNull@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+            ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, R|<local>/name|)
+        }
+        ) ?: ^descriptorOf String(<absent>)
+        lval parameters: R|kotlin/String| = R|<local>/method|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/joinToString|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(String(), <L> = joinToString@fun <anonymous>(it: R|ft<java/lang/Class<*>, java/lang/Class<*>?>|): R|kotlin/CharSequence| <inline=NoInline>  {
+            ^ R|io/github/expo/modules/v2/testdata/consumer/descriptor|(R|<local>/it|)
+        }
+        )
+        ^descriptorOf <strcat>(String((), R|<local>/parameters|, String()), R|io/github/expo/modules/v2/testdata/consumer/descriptor|(R|<local>/method|.R|java/lang/reflect/Method.returnType|))
+    }
+    private final fun descriptor(type: R|java/lang/Class<*>|): R|kotlin/String| {
+        ^descriptor when () {
+            ==(R|<local>/type|, <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>) ->  {
+                String(I)
+            }
+            ==(R|<local>/type|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                String(V)
+            }
+            else ->  {
+                String(L).R|kotlin/String.plus|(R|<local>/type|.R|java/lang/Class.name|.R|kotlin/text/replace|(Char(.), Char(/))).R|kotlin/String.plus|(String(;))
+            }
+        }
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval suffix: R|kotlin/String| = String(__trampoline$ExpoModulesV2)
+        lval expected: R|kotlin/collections/Map<kotlin/String, kotlin/String>| = R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(echo), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((I)I)), <strcat>(String(maybe), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((Ljava/lang/Integer;)Ljava/lang/Integer;)), <strcat>(String(mode), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(String((Ljava/lang/String;)Ljava/lang/String;))))
+         {
+            lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<kotlin/String, kotlin/String>>| = R|<local>/expected|.R|kotlin/collections/iterator|<R|kotlin/String|, R|kotlin/String|>()
+            while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {
+                lval <destruct>: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>| = R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.next: R|kotlin/collections/Map.Entry<kotlin/String, kotlin/String>|>|()
+                lval name: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component1|<R|kotlin/String|, R|kotlin/String|>()
+                lval want: R|kotlin/String| = R|<local>/<destruct>|.R|kotlin/collections/component2|<R|kotlin/String|, R|kotlin/String|>()
+                 {
+                    lval got: R|kotlin/String| = R|io/github/expo/modules/v2/testdata/consumer/descriptorOf|(R|<local>/name|)
+                    when () {
+                        !=(R|<local>/got|, R|<local>/want|) ->  {
+                            ^box <strcat>(R|<local>/name|, String(: expected ), R|<local>/want|, String(, got ), R|<local>/got|)
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+
+        ^box String(OK)
+    }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_consumer_Levels_2578cc07 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/consumer/Levels|
+
+    }

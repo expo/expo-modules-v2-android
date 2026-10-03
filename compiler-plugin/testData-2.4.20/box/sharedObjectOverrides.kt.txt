@@ -24,6 +24,7 @@ class Counter : SharedObject {
   }
 
   private companion fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Counter::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "Counter", sharedClass = <get-java>(/* $receiver = Counter::class */), definition = builder)
@@ -71,6 +72,7 @@ class Delegating : SharedObject {
   }
 
   private companion fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Delegating::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "Delegating", sharedClass = <get-java>(/* $receiver = Delegating::class */), definition = builder)
@@ -109,6 +111,7 @@ class Plain : SharedObject {
   }
 
   private companion fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Plain::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "Plain", sharedClass = <get-java>(/* $receiver = Plain::class */), definition = builder)
@@ -134,6 +137,7 @@ class Pressured : SharedObject {
   }
 
   private companion fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Pressured::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "Pressured", sharedClass = <get-java>(/* $receiver = Pressured::class */), definition = builder)
@@ -159,6 +163,7 @@ class TextRef : SharedRef<StringBuilder> {
   }
 
   private companion fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = TextRef::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)

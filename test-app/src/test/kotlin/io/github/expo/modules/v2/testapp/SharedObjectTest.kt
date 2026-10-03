@@ -435,8 +435,16 @@ class SharedObjectTest {
       val module = runtime.registerCounters()
 
       runtime.evaluate("expo.modules.Counters.create().increment();")
-      runtime.evaluate("ExpoTestSupport.__collectGarbage()")
-      assertEquals(1, requireNotNull(module.last).releaseCount)
+      val counter = requireNotNull(module.last)
+
+      // Release runs from the facade's finalizer, and Hermes may run that finalizer after the
+      // collection that found the facade, so one pass is not always enough.
+      var passes = 0
+      while (counter.releaseCount == 0 && passes < 10) {
+        runtime.evaluate("ExpoTestSupport.__collectGarbage(); 0")
+        passes++
+      }
+      assertEquals(1, counter.releaseCount, "the facade was not collected in $passes passes")
 
       // Nothing binds the instance to JavaScript any more, so the next export starts over, with a
       // working object that still carries the Kotlin state.

@@ -109,6 +109,7 @@ class Player : SharedObject {
   }
 
   private companion fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Player::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "Player", sharedClass = <get-java>(/* $receiver = Player::class */), definition = builder)
