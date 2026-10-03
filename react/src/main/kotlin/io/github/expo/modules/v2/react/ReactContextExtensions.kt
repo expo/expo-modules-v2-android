@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.react
 
 import android.app.Activity
+import android.content.Context
 import com.facebook.react.bridge.ReactApplicationContext
 import io.github.expo.modules.v2.ExpoObject
 
@@ -23,6 +24,16 @@ val ExpoObject.reactContext: ReactApplicationContext
 /** Like [reactContext], but null instead of throwing. */
 val ExpoObject.reactContextOrNull: ReactApplicationContext?
   get() = (contextOrNull as? ReactExpoContext)?.reactContext
+
+/**
+ * The Android [Context] of the app this module or shared object belongs to: its
+ * [reactContext], typed as a plain [Context].
+ */
+val ExpoObject.androidContext: Context
+  get() = reactContext
+
+val ExpoObject.androidContextOrNull: Context?
+  get() = reactContextOrNull
 
 /** The activity React Native currently runs in, or null when there is none. */
 val ExpoObject.currentActivity: Activity?
