@@ -171,6 +171,28 @@ namespace expo::modules::v2::jsi {
     releaseScopedResources();
   }
 
+  jobject JavaScriptObject::getArrayBufferViewBytes(JNIEnv* env) const {
+    facebook::jsi::Runtime& rt = runtime();
+    const facebook::jsi::Object& view = object();
+
+    const bool isView = rt.global()
+      .getPropertyAsObject(rt, "ArrayBuffer")
+      .getPropertyAsFunction(rt, "isView")
+      .call(rt, facebook::jsi::Value(rt, view))
+      .getBool();
+    if (!isView) {
+      return nullptr;
+    }
+
+    const facebook::jsi::ArrayBuffer buffer = view.getPropertyAsObject(rt, "buffer").getArrayBuffer(rt);
+    const size_t offset = static_cast<size_t>(view.getProperty(rt, "byteOffset").getNumber());
+    const size_t length = static_cast<jlong>(view.getProperty(rt, "byteLength").getNumber());
+
+    static uint8_t empty = 0;
+    uint8_t* data = length == 0 ? &empty : buffer.data(rt) + offset;
+    return env->NewDirectByteBuffer(data, length);
+  }
+
   jobject JavaScriptObject::nativeInstance(JNIEnv* env) const {
     const auto node = objects::ObjectNativeState::of(runtime(), object());
     const jobject instance = node == nullptr ? nullptr : node->instance();
@@ -181,6 +203,10 @@ namespace expo::modules::v2::jsi {
     kolibri::registerNative<JavaScriptObject>(env)
       .method<&JavaScriptObject::isArray>("isArray")
       .method<&JavaScriptObject::isArrayBuffer>("isArrayBuffer")
+      .method<
+        &JavaScriptObject::getArrayBufferViewBytes,
+        kolibri::Ref<kolibri::JByteBuffer>(kolibri::NativePointer)
+      >("getArrayBufferViewBytes")
       .method<&JavaScriptObject::hasProperty>("hasProperty")
       .method<
         &JavaScriptObject::getProperty,

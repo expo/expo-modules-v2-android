@@ -3,6 +3,7 @@
 #include <span>
 #include <string>
 
+#include <expo-modules-v2/converter/ByteView.h>
 #include <expo-modules-v2/converter/encoders/EncodeCommon.h>
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
@@ -228,10 +229,10 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::BYTE_ARRAY>() const {
-    const facebook::jsi::ArrayBuffer arrayBuffer = value.asObject(rt).getArrayBuffer(rt);
+    const ByteView bytes = byteViewOf(rt, value);
     return kolibri::JByteArray::createRaw(env, {
-      reinterpret_cast<const jbyte*>(arrayBuffer.data(rt)),
-      arrayBuffer.size(rt)
+      reinterpret_cast<const jbyte*>(bytes.data),
+      bytes.size
     });
   }
 

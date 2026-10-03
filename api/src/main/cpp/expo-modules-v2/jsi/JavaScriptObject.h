@@ -39,6 +39,7 @@ namespace expo::modules::v2::jsi {
     // clang-format off
     jboolean isArray() const noexcept;
     jboolean isArrayBuffer() const noexcept;
+    jobject getArrayBufferViewBytes(JNIEnv* env) const;
     jboolean hasProperty(JNIEnv* env, jstring name) const;
     jobject getProperty(JNIEnv* env, jstring name) const;
     jobjectArray getPropertyNames(JNIEnv* env) const;

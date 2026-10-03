@@ -21,6 +21,7 @@ import io.github.expo.modules.v2.converters.SharedObjectConverter
 import io.github.expo.modules.v2.converters.SharedRefConverter
 import io.github.expo.modules.v2.converters.StringConverter
 import io.github.expo.modules.v2.converters.TypeConverter
+import io.github.expo.modules.v2.converters.TypedArrayConverter
 import io.github.expo.modules.v2.converters.UnitConverter
 import io.github.expo.modules.v2.converters.UriConverter
 import io.github.expo.modules.v2.converters.UrlConverter
@@ -31,6 +32,7 @@ import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
 import io.github.expo.modules.v2.SharedRef
+import io.github.expo.modules.v2.TypedArray
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -87,6 +89,11 @@ object TypeConverterRegistry {
     +entry(
       JavaScriptObject::class.java,
       selectJsHandleConverter(CppType.JS_OBJECT, ::JsHandleConverter)
+    )
+
+    +entry(
+      TypedArray::class.java,
+      ::TypedArrayConverter
     )
 
     +entry(

@@ -18,6 +18,7 @@ import org.jetbrains.kotlin.ir.types.isInt
 import org.jetbrains.kotlin.ir.types.isMarkedNullable
 import org.jetbrains.kotlin.ir.types.makeNullable
 import org.jetbrains.kotlin.ir.types.typeWith
+import org.jetbrains.kotlin.ir.util.defaultType
 import org.jetbrains.kotlin.ir.util.getAnnotation
 import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.ir.util.isSubclassOf
@@ -41,6 +42,9 @@ internal enum class ValueKind {
 
   /** `JavaScriptValue`/`JavaScriptObject`: a live handle, so it can never be serialized. */
   JS_HANDLE,
+
+  /** `TypedArray`, whose bridge is the live `JavaScriptObject` it wraps. */
+  TYPED_ARRAY,
 
   /** `Duration`, whose bridge is a `Double` - unboxed when the declaration is not nullable. */
   CONVERTED_TO_DOUBLE,
@@ -132,6 +136,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       "io.github.expo.modules.v2.jsi.JavaScriptValue", "io.github.expo.modules.v2.jsi.JavaScriptObject" ->
         ValueKind.JS_HANDLE
 
+      "io.github.expo.modules.v2.TypedArray" -> ValueKind.TYPED_ARRAY
+
       "kotlin.time.Duration" -> ValueKind.CONVERTED_TO_DOUBLE
       "java.io.File", "java.net.URL", "java.net.URI", "java.nio.file.Path" ->
         ValueKind.CONVERTED_TO_STRING
@@ -172,6 +178,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       // A Set or an Array always rebuilds its container, and a record always rebuilds itself.
       ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD,
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
+      ValueKind.TYPED_ARRAY,
         -> false
     }
 
@@ -179,7 +186,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
   fun canBuffer(kind: ValueKind, type: IrType): Boolean =
     when (kind) {
       ValueKind.UNBOXED_SCALAR, ValueKind.DYNAMIC, ValueKind.UNIT, ValueKind.JS_HANDLE,
-      ValueKind.SHARED_OBJECT,
+      ValueKind.TYPED_ARRAY, ValueKind.SHARED_OBJECT,
         -> false
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.INT_ENUM -> type.isMarkedNullable()
       ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.CONVERTED_TO_STRING,
@@ -205,7 +212,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
   private fun isBufferSafe(type: IrType, visited: MutableSet<String>): Boolean {
     val kind = kindOf(type)
     if (kind == ValueKind.DYNAMIC || kind == ValueKind.JS_HANDLE ||
-      kind == ValueKind.SHARED_OBJECT
+      kind == ValueKind.TYPED_ARRAY || kind == ValueKind.SHARED_OBJECT
     ) {
       return false
     }
@@ -279,6 +286,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM -> irBuiltIns.stringType.makeNullable()
       ValueKind.INT_ENUM ->
         if (type.isMarkedNullable()) irBuiltIns.intType.makeNullable() else irBuiltIns.intType
+      ValueKind.TYPED_ARRAY -> symbols.classes.javaScriptObject.owner.defaultType.makeNullable()
       ValueKind.LIST, ValueKind.SET, ValueKind.ARRAY ->
         irBuiltIns.listClass.typeWith(irBuiltIns.anyType.makeNullable()).makeNullable()
 

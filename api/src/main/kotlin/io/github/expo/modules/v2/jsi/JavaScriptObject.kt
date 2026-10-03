@@ -6,6 +6,7 @@ import io.github.expo.kolibri.NativeMethod
 import io.github.expo.kolibri.NativeObject
 import io.github.expo.kolibri.NativePointer
 import io.github.expo.modules.v2.ExpoObject
+import java.nio.ByteBuffer
 
 class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObject.h") private constructor(
   pointer: Long,
@@ -14,6 +15,8 @@ class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObj
   //@formatter:off
   @NativeMethod external fun isArray(): Boolean
   @NativeMethod external fun isArrayBuffer(): Boolean
+
+  @NativeMethod external fun getArrayBufferViewBytes(): ByteBuffer?
 
   @NativeMethod external fun hasProperty(name: String): Boolean
 

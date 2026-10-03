@@ -74,6 +74,9 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `abstract class SharedRef<T : Any>(ref: T)` */
     val sharedRef: IrClassSymbol by lazy { clazz(Identifiers.Classes.SharedRef) }
 
+    /** `class JavaScriptObject` - the JNI slot a `TypedArray` crosses in. */
+    val javaScriptObject: IrClassSymbol by lazy { clazz(Identifiers.Classes.JavaScriptObject) }
+
     /** `class Event<T>` - what `event<T>(...)` returns. */
     val event: IrClassSymbol by lazy { clazz(Identifiers.Classes.Event) }
 

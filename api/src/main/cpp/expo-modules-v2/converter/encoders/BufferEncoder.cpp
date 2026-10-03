@@ -1,5 +1,6 @@
 #include <expo-modules-v2/converter/encoders/BufferEncoder.h>
 
+#include <expo-modules-v2/converter/ByteView.h>
 #include <expo-modules-v2/converter/encoders/BufferEncode.h>
 #include <expo-modules-v2/converter/encoders/EncodeCommon.h>
 #include <expo-modules-v2/converter/JsiStringCodec.h>
@@ -118,11 +119,10 @@ namespace expo::modules::v2 {
 
   template<>
   void BufferEncoder::operator()<CppType::BYTE_ARRAY>() const {
-    const facebook::jsi::ArrayBuffer arrayBuffer = value.asObject(rt).getArrayBuffer(rt);
-    const size_t size = arrayBuffer.size(rt);
+    const ByteView bytes = byteViewOf(rt, value);
 
-    out.write<>(static_cast<int32_t>(size));
-    out.writeBytes(arrayBuffer.data(rt), size);
+    out.write<>(static_cast<int32_t>(bytes.size));
+    out.writeBytes(bytes.data, bytes.size);
   }
 
   template<>
