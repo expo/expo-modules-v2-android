@@ -9,6 +9,7 @@ import io.github.expo.modules.v2.converters.BoxedIntConverter
 import io.github.expo.modules.v2.converters.BoxedLongConverter
 import io.github.expo.modules.v2.converters.DurationConverter
 import io.github.expo.modules.v2.converters.DynamicConverter
+import io.github.expo.modules.v2.converters.EnumConverter
 import io.github.expo.modules.v2.converters.FileConverter
 import io.github.expo.modules.v2.converters.JsHandleConverter
 import io.github.expo.modules.v2.converters.ListConverter
@@ -130,6 +131,11 @@ object TypeConverterRegistry {
           sharedClass,
           isNullable,
         )
+      }
+
+      if (type.isEnum) {
+        @Suppress("UNCHECKED_CAST")
+        return@getOrPut EnumConverter(type as Class<out Enum<*>>, isNullable)
       }
 
       val recordType = RecordRegistry.typeFor(type)

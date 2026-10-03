@@ -3,8 +3,10 @@ package io.github.expo.modules.v2.compiler.ir
 import io.github.expo.modules.v2.compiler.BufferChoice
 import io.github.expo.modules.v2.compiler.Identifiers
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
+import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrParameterKind
+import org.jetbrains.kotlin.ir.declarations.IrProperty
 import org.jetbrains.kotlin.ir.expressions.IrConst
 import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
 import org.jetbrains.kotlin.ir.expressions.IrGetEnumValue
@@ -12,6 +14,7 @@ import org.jetbrains.kotlin.ir.types.IrSimpleType
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.IrTypeProjection
 import org.jetbrains.kotlin.ir.types.classOrNull
+import org.jetbrains.kotlin.ir.types.isInt
 import org.jetbrains.kotlin.ir.types.isMarkedNullable
 import org.jetbrains.kotlin.ir.types.makeNullable
 import org.jetbrains.kotlin.ir.types.typeWith
@@ -44,6 +47,12 @@ internal enum class ValueKind {
 
   /** `File`/`URL`/`URI`/`Path`, whose bridge is a `String`. */
   CONVERTED_TO_STRING,
+
+  /** An enum class, whose bridge is a `String`: the entry's name, or its one `String` property. */
+  ENUM,
+
+  /** An enum class with one `Int` property, whose bridge is that `Int` - unboxed when not nullable. */
+  INT_ENUM,
   LIST,
   MAP,
   SET,
@@ -136,6 +145,12 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
         when {
           owner?.hasAnnotation(Identifiers.Classes.RecordAnnotation) == true -> ValueKind.RECORD
           owner?.isSubclassOf(symbols.classes.sharedObject.owner) == true -> ValueKind.SHARED_OBJECT
+          owner?.kind == ClassKind.ENUM_CLASS ->
+            if (owner.isIntBackedEnum()) {
+              ValueKind.INT_ENUM
+            } else {
+              ValueKind.ENUM
+            }
           else -> unsupported(type)
         }
       }
@@ -156,7 +171,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.MAP -> elementTypes(type).drop(1).all { isPassthrough(kindOf(it), it) }
       // A Set or an Array always rebuilds its container, and a record always rebuilds itself.
       ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD,
-      ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING,
+      ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
         -> false
     }
 
@@ -166,8 +181,10 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.UNBOXED_SCALAR, ValueKind.DYNAMIC, ValueKind.UNIT, ValueKind.JS_HANDLE,
       ValueKind.SHARED_OBJECT,
         -> false
-      ValueKind.CONVERTED_TO_DOUBLE -> type.isMarkedNullable()
-      ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.CONVERTED_TO_STRING -> true
+      ValueKind.CONVERTED_TO_DOUBLE, ValueKind.INT_ENUM -> type.isMarkedNullable()
+      ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.CONVERTED_TO_STRING,
+      ValueKind.ENUM,
+        -> true
       ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD ->
         isBufferSafe(
           type,
@@ -225,6 +242,18 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ?.map { it.type }
       ?: emptyList()
 
+  /**
+   * Whether this enum crosses as an `Int`: its one instance field is a non-null `Int`. The runtime's
+   * `EnumConverter` reads the same field, so both sides agree on the bridge type.
+   */
+  private fun IrClass.isIntBackedEnum(): Boolean {
+    val fields = declarations
+      .filterIsInstance<IrProperty>()
+      .mapNotNull { it.backingField }
+      .filter { !it.isStatic }
+    return fields.singleOrNull()?.type?.isInt() == true
+  }
+
   fun isTypedSharedRef(type: IrType): Boolean {
     val owner = type.classOrNull?.owner ?: return false
     return owner.isSubclassOf(symbols.classes.sharedRef.owner) && elementTypes(type).size == 1
@@ -247,7 +276,9 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.CONVERTED_TO_DOUBLE ->
         if (type.isMarkedNullable()) irBuiltIns.doubleType.makeNullable() else irBuiltIns.doubleType
 
-      ValueKind.CONVERTED_TO_STRING -> irBuiltIns.stringType.makeNullable()
+      ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM -> irBuiltIns.stringType.makeNullable()
+      ValueKind.INT_ENUM ->
+        if (type.isMarkedNullable()) irBuiltIns.intType.makeNullable() else irBuiltIns.intType
       ValueKind.LIST, ValueKind.SET, ValueKind.ARRAY ->
         irBuiltIns.listClass.typeWith(irBuiltIns.anyType.makeNullable()).makeNullable()
 

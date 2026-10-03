@@ -1,0 +1,63 @@
+// FILE: moduleEnums.kt
+package io.github.expo.modules.v2.testdata
+
+enum class Priority : Enum<Priority> {
+}
+
+enum class Style : Enum<Style> {
+}
+
+@ExpoModule
+object Enums : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = false)
+  private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = true)
+  private /* static final field */ val type$2: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = false)
+  private /* static final field */ val type$3: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true)
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "echoStyle", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = false), useBuffer = true), methodName = "echoStyle__trampoline$ExpoModulesV2")
+    builder.function(jsName = "styleSlot", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = true), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Style::class */), isNullable = true), useBuffer = false), methodName = "styleSlot__trampoline$ExpoModulesV2")
+    builder.function(jsName = "echoPriority", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = false), useBuffer = false), methodName = "echoPriority__trampoline$ExpoModulesV2")
+    builder.function(jsName = "maybePriority", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true), useBuffer = true), methodName = "maybePriority__trampoline$ExpoModulesV2")
+    builder.function(jsName = "priorityNoBuffer", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Priority::class */), isNullable = true), useBuffer = false), methodName = "priorityNoBuffer__trampoline$ExpoModulesV2")
+    return "Enums"
+  }
+
+  fun echoPriority__trampoline$ExpoModulesV2(p0: Int): Int {
+    return Bridge.toJni(value = <this>.echoPriority(priority = Bridge.fromJni(value = p0, type = #type$2) as Priority), type = #type$2) as Int
+  }
+
+  fun echoStyle__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Style
+    try { // BLOCK
+      v0 = args.next<Style>(type = #type$0)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.echoStyle(style = v0), type = #type$0)
+  }
+
+  fun maybePriority__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Priority?
+    try { // BLOCK
+      v0 = args.next<Priority?>(type = #type$3)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.maybePriority(priority = v0), type = #type$3)
+  }
+
+  fun priorityNoBuffer__trampoline$ExpoModulesV2(p0: Int?): Int? {
+    return Bridge.toJni(value = <this>.priorityNoBuffer(priority = Bridge.fromJni(value = p0, type = #type$3) as Priority?), type = #type$3) as Int?
+  }
+
+  fun styleSlot__trampoline$ExpoModulesV2(p0: String?): String? {
+    return Bridge.toJni(value = <this>.styleSlot(style = Bridge.fromJni(value = p0, type = #type$1) as Style?), type = #type$1) as String?
+  }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Enums_315224f2 {
+  abstract fun module(): Enums
+}

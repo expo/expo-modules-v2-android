@@ -1,0 +1,45 @@
+// MODULE: producer
+// FILE: producer.kt
+package io.github.expo.modules.v2.testdata.producer
+
+enum class Level : Enum<Level> {
+}
+
+enum class Mode : Enum<Mode> {
+}
+
+// MODULE: consumer
+// FILE: consumer.kt
+package io.github.expo.modules.v2.testdata.consumer
+
+@ExpoModule
+object Levels : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Level::class */), isNullable = false)
+  private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Level::class */), isNullable = true)
+  private /* static final field */ val type$2: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Mode::class */), isNullable = false)
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "echo", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Level::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Level::class */), isNullable = false), useBuffer = false), methodName = "echo__trampoline$ExpoModulesV2")
+    builder.function(jsName = "maybe", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Level::class */), isNullable = true), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Level::class */), isNullable = true), useBuffer = false), methodName = "maybe__trampoline$ExpoModulesV2")
+    builder.function(jsName = "mode", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Mode::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Mode::class */), isNullable = false), useBuffer = false), methodName = "mode__trampoline$ExpoModulesV2")
+    return "Levels"
+  }
+
+  fun echo__trampoline$ExpoModulesV2(p0: Int): Int {
+    return Bridge.toJni(value = <this>.echo(level = Bridge.fromJni(value = p0, type = #type$0) as Level), type = #type$0) as Int
+  }
+
+  fun maybe__trampoline$ExpoModulesV2(p0: Int?): Int? {
+    return Bridge.toJni(value = <this>.maybe(level = Bridge.fromJni(value = p0, type = #type$1) as Level?), type = #type$1) as Int?
+  }
+
+  fun mode__trampoline$ExpoModulesV2(p0: String?): String? {
+    return Bridge.toJni(value = <this>.mode(mode = Bridge.fromJni(value = p0, type = #type$2) as Mode), type = #type$2) as String?
+  }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_consumer_Levels_2578cc07 {
+  abstract fun module(): Levels
+}
