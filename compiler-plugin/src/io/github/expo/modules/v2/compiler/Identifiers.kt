@@ -134,6 +134,7 @@ object Identifiers {
     // Module members.
     val DEFINE_FUNCTION = Name.identifier(Literals.DEFINE_FUNCTION)
     val REGISTER_SHARED_CLASS = Name.identifier("register")
+    val RESERVE_SHARED_CLASS = Name.identifier("reserve")
     val FUNCTION = Name.identifier("function")
     val PROPERTY = Name.identifier("property")
     val SHARED_CLASS = Name.identifier("sharedClass")

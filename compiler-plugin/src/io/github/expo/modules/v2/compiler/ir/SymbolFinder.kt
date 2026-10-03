@@ -128,7 +128,14 @@ class SymbolFinder(private val context: IrPluginContext) {
   }
 
   inner class Functions internal constructor() {
-    /** `RecordRegistry.register(codec)` */
+    /** `SharedObjectRegistry.reserve(sharedClass): Int` */
+    val reserveSharedClass: IrSimpleFunctionSymbol by lazy {
+      classes.sharedObjectRegistry.functions.single {
+        it.owner.name == Identifiers.Names.RESERVE_SHARED_CLASS
+      }
+    }
+
+    /** `SharedObjectRegistry.register(jsName, sharedClass, definition): Int` */
     val registerSharedClass: IrSimpleFunctionSymbol by lazy {
       classes.sharedObjectRegistry.functions.single {
         it.owner.name == Identifiers.Names.REGISTER_SHARED_CLASS &&

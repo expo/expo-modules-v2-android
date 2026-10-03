@@ -107,6 +107,15 @@ internal class ExpoSharedObjectIrTransformer(
     }
 
     register.body = context.irFactory.createSyntheticBlockBody().apply {
+      // Reserved before anything is described: a signature that names this class, its own or one
+      // of a class that names it back, asks the registry for the id while the definition runs, and
+      // register below takes the class under that same id.
+      statements += callStatic(
+        symbols.functions.reserveSharedClass,
+        symbols.classes.sharedObjectRegistry,
+        arguments = listOf(poet.javaClass(sharedClass.defaultType)),
+        returnType = irBuiltIns.intType,
+      )
       statements += builder
       // The describer's own return value is the JavaScript name, which this function already has.
       statements += IrSyntheticCallImpl(irBuiltIns.stringType, define.symbol).apply {

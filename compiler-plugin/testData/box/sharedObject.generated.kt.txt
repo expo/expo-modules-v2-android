@@ -14,6 +14,7 @@ class Listed : SharedObject {
   }
 
   private /* static */ fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Listed::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "Listed", sharedClass = <get-java>(/* $receiver = Listed::class */), definition = builder)
@@ -41,6 +42,7 @@ class Owner : Module {
     }
 
     private /* static */ fun register$ExpoModulesV2(): Int {
+      SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Nested::class */))
       val builder: ModuleBuilder = ModuleBuilder()
       define$ExpoModulesV2(builder = builder)
       return SharedObjectRegistry.register(jsName = "Nested", sharedClass = <get-java>(/* $receiver = Nested::class */), definition = builder)
@@ -56,6 +58,7 @@ class Owner : Module {
     }
 
     private /* static */ fun register$ExpoModulesV2(): Int {
+      SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = NotConstructable::class */))
       val builder: ModuleBuilder = ModuleBuilder()
       define$ExpoModulesV2(builder = builder)
       return SharedObjectRegistry.register(jsName = "NotConstructable", sharedClass = <get-java>(/* $receiver = NotConstructable::class */), definition = builder)
@@ -84,6 +87,7 @@ class Player : SharedObject {
   }
 
   private /* static */ fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Player::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "Player", sharedClass = <get-java>(/* $receiver = Player::class */), definition = builder)
@@ -123,6 +127,7 @@ class Speaker : SharedObject {
   }
 
   private /* static */ fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Speaker::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "Renamed", sharedClass = <get-java>(/* $receiver = Speaker::class */), definition = builder)
@@ -138,6 +143,7 @@ class TextRef : SharedRef<StringBuilder> {
   }
 
   private /* static */ fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = TextRef::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
     return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)

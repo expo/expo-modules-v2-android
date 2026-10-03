@@ -14,6 +14,7 @@ import io.github.expo.modules.v2.modules.ModuleBuilder
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.TypeDescriptor
 import java.nio.BufferOverflowException
+import java.util.concurrent.ConcurrentHashMap
 
 object SharedObjectRegistry {
   internal class ClassEntry(
@@ -26,10 +27,28 @@ object SharedObjectRegistry {
 
   private val classes = MultiKeyCache<Class<*>, SharedClassId, ClassEntry>()
 
+  /**
+   * Ids reserved by classes whose registration has not finished yet.
+   */
+  private val reservedIds = ConcurrentHashMap<Class<*>, SharedClassId>()
+
   init {
     register("SharedRef", SharedRef::class.java)
   }
 
+  /**
+   * Reserves the id [sharedClass] is registered under, and returns it.
+   */
+  @JvmStatic
+  fun reserve(sharedClass: Class<out SharedObject>): Int {
+    classes.get(sharedClass)?.let { return it.id.value }
+    return reservedIds.computeIfAbsent(sharedClass) { SharedClassId.next() }.value
+  }
+
+  /**
+   * Registers [sharedClass] under the id [reserve] gave it. A class the compiler plugin generated
+   * reserved that id before it described its exports; any other class is reserved here.
+   */
   @JvmStatic
   fun register(
     jsName: String,
@@ -41,12 +60,13 @@ object SharedObjectRegistry {
     definition.alsoDeclaringRefType(sharedClass)
 
     val entry = ClassEntry(
-      id = SharedClassId.next(),
+      id = SharedClassId(reserve(sharedClass)),
       sharedClass = sharedClass,
       jsName = jsName,
       definition = definition,
     )
     classes.put(sharedClass, entry.id, entry)
+    reservedIds.remove(sharedClass)
 
     return entry.id.value
   }
@@ -65,7 +85,10 @@ object SharedObjectRegistry {
   @CalledFromNative(by = "expo-modules-v2/jni/JSharedObjectRegistry.h")
   fun classDescriptorOf(classId: Int): String? = sharedClassOf(classId)?.jniDescriptor
 
-  internal fun classIdFor(sharedClass: Class<out SharedObject>): SharedClassId = entryFor(sharedClass).id
+  internal fun classIdFor(sharedClass: Class<out SharedObject>): SharedClassId =
+    entryOrNull(sharedClass)?.id
+      ?: reservedIds[sharedClass]
+      ?: throw notRegistered(sharedClass)
 
   internal fun entryOrNull(sharedClass: Class<out SharedObject>): ClassEntry? {
     classes.get(sharedClass)?.let { return it }
@@ -73,19 +96,19 @@ object SharedObjectRegistry {
     return classes.get(sharedClass)
   }
 
-  private fun entryFor(sharedClass: Class<out SharedObject>): ClassEntry {
-    entryOrNull(sharedClass)?.let { return it }
+  private fun entryFor(sharedClass: Class<out SharedObject>): ClassEntry =
+    entryOrNull(sharedClass) ?: throw notRegistered(sharedClass)
 
-    throw IllegalArgumentException(
-      "${sharedClass.name} is not annotated with @JS, so it declares no exports - annotate it, or " +
-        "describe it with SharedObjectRegistry.register(name, ${sharedClass.simpleName}::class.java) " +
-        "{ ... } before anything names it",
-    )
-  }
+  private fun notRegistered(sharedClass: Class<out SharedObject>) = IllegalArgumentException(
+    "${sharedClass.name} is not annotated with @JS, so it declares no exports - annotate it, or " +
+      "describe it with SharedObjectRegistry.register(name, ${sharedClass.simpleName}::class.java) " +
+      "{ ... } before anything names it",
+  )
 
   private fun ModuleBuilder.alsoDeclaringRefType(
     sharedClass: Class<out SharedObject>,
   ): ModuleBuilder = apply {
+    // TODO(@lukmccall): Remove this check
     if (SharedRef::class.java.isAssignableFrom(sharedClass)) {
       property(
         "nativeRefType",
