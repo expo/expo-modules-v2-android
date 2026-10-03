@@ -69,7 +69,7 @@ val unpackKolibriCpp by tasks.registering(Sync::class) {
 
 sourceSets {
   main {
-    java.setSrcDirs(listOf("src/main/kotlin"))
+    java.setSrcDirs(listOf("src/main/kotlin", "src/desktop/kotlin"))
     resources.setSrcDirs(listOf("src/main/resources"))
   }
   test {

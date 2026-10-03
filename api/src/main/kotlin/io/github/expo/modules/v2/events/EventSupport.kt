@@ -6,6 +6,7 @@ import io.github.expo.modules.v2.args.Bridge
 import io.github.expo.modules.v2.args.Trampoline
 import io.github.expo.modules.v2.async.AsyncContext
 import io.github.expo.modules.v2.core.ExpoModulesV2
+import io.github.expo.modules.v2.logging.platformLogger
 import io.github.expo.modules.v2.types.TypeDescriptor
 
 /**
@@ -102,8 +103,7 @@ object EventSupport {
         )
       }
     } catch (throwable: Throwable) {
-      System.err.println("expo-modules-v2: emitting '$name' on ${owner.javaClass.name} failed")
-      throwable.printStackTrace()
+      platformLogger.error("emitting '$name' on ${owner.javaClass.name} failed", throwable)
     }
   }
 }

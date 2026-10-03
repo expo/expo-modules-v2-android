@@ -30,13 +30,11 @@ class ReactRuntime private constructor(
   context: ReactExpoContext,
   ownsContext: Boolean,
   jsRuntimePointer: Long,
-  moduleRegistry: ModuleRegistry,
   asyncContext: AsyncContext,
   globalName: String,
 ) : JavaScriptRuntime(
-  moduleRegistry,
   asyncContext,
-  NativePointer(nativeCreate(jsRuntimePointer, moduleRegistry, asyncContext, globalName)),
+  NativePointer(nativeCreate(jsRuntimePointer, context.moduleRegistry, asyncContext, globalName)),
   context,
   ownsContext,
 ) {
@@ -57,16 +55,16 @@ class ReactRuntime private constructor(
      * as JavaScript can reach the installed modules: the handle owns the native runtime through
      * kolibri's cleaner, so dropping it frees the C++ object out from under the host object.
      *
-     * Pass [context] to share modules and shared objects with other runtimes of the same app; it
-     * must wrap [reactContext], and it stays the caller's to close. When null, the runtime creates
-     * a context of its own and closes it with itself.
+     * The runtime serves the modules of its context. Pass [context], with its registry already
+     * filled, to share its modules and shared objects with other runtimes of the same app; it must
+     * wrap [reactContext], and it stays the caller's to close. When null, the runtime creates a
+     * context of its own, with an empty registry, and closes it with itself.
      *
      * To join the namespace of another module system, attach after it installed that namespace. A
      * system that installs later may replace the namespace this runtime created.
      */
     fun attach(
       reactContext: ReactApplicationContext,
-      moduleRegistry: ModuleRegistry = ModuleRegistry(),
       globalName: String = DEFAULT_GLOBAL_NAME,
       context: ReactExpoContext? = null,
     ): ReactRuntime {
@@ -85,7 +83,6 @@ class ReactRuntime private constructor(
         context = context ?: ReactExpoContext(reactContext),
         ownsContext = context == null,
         jsRuntimePointer = pointer,
-        moduleRegistry = moduleRegistry,
         asyncContext = AsyncContext(scheduler),
         globalName = globalName,
       )

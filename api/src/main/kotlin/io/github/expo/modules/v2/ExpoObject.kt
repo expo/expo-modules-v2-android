@@ -38,6 +38,9 @@ abstract class ExpoObject {
   /**
    * Binds this object to [context]. Rebinding to the same context does nothing, and a closed one
    * gives way to the new one.
+   *
+   * A module is bound when it is registered, and a shared object when it is created or first handed
+   * to JavaScript.
    */
   @Synchronized
   internal fun bindContext(context: ExpoContext) {

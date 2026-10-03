@@ -517,15 +517,15 @@ class SharedObjectTest {
   fun `one native object serves two runtimes`() {
     // The runtimes share instances, and so must share the context those instances belong to.
     val context = ExpoContext()
-    // The whole point of the design: the registry is process-wide and the façade is a host object,
-    // so a second runtime reaching the same Kotlin instance shares its state rather than proxying
-    // it. Two live runtimes is an established pattern here — see HermesRuntimeTest's
+    // The whole point of the design: the registry belongs to the context the runtimes share and the
+    // façade is a host object, so a second runtime reaching the same Kotlin instance shares its state
+    // rather than proxying it. Two live runtimes is an established pattern here — see HermesRuntimeTest's
     // `each runtime asks its own registry`.
     val module = CounterModule()
     HermesRuntime(context = context).use { first ->
       HermesRuntime(context = context).use { second ->
+        // The shared context registers the module once, and both runtimes serve it.
         first.registerCounters(module)
-        second.registerCounters(module)
 
         first.evaluate("globalThis.c = expo.modules.Counters.create(); c.increment();")
 
@@ -552,8 +552,8 @@ class SharedObjectTest {
     val module = CounterModule()
     HermesRuntime(context = context).use { first ->
       HermesRuntime(context = context).use { second ->
+        // The shared context registers the module once, and both runtimes serve it.
         first.registerCounters(module)
-        second.registerCounters(module)
 
         first.evaluate("globalThis.c = expo.modules.Counters.create();")
         second.evaluate("expo.modules.Counters.current().release();")
@@ -585,7 +585,7 @@ class SharedObjectTest {
           runCatching {
             // A jsi::Runtime is thread-affine, so this one is created and used here only.
             HermesRuntime(context = context).use { second ->
-              second.registerCounters(module)
+              // The shared context already registered the module.
               second.evaluateAsString("expo.modules.Counters.current().increment()")
             }
           },

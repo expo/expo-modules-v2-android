@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.async
 
+import io.github.expo.modules.v2.logging.platformLogger
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
@@ -41,8 +42,7 @@ class DefaultJSScheduler : JSScheduler {
       try {
         job.run()
       } catch (throwable: Throwable) {
-        System.err.println("expo-modules-v2: a JS-thread job failed")
-        throwable.printStackTrace()
+        platformLogger.error("a JS-thread job failed", throwable)
       }
     }
   }

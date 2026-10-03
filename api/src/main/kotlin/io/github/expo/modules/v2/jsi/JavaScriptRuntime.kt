@@ -13,13 +13,13 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeSource
 
 /**
- * @param context the app this runtime belongs to. Runtimes that share one [ExpoContext] can share
- * module and shared object instances.
+ * @param context the app this runtime belongs to. The runtime serves the modules of its
+ * [ExpoContext.moduleRegistry], so runtimes that share one context share its module and shared
+ * object instances.
  * @param ownsContext whether [close] closes [context] too: true for a context the runtime created
  * for itself, false for one the caller passed in and still owns.
  */
 abstract class JavaScriptRuntime protected constructor(
-  val moduleRegistry: ModuleRegistry,
   val asyncContext: AsyncContext,
   pointer: NativePointer,
   /** The app this runtime belongs to. Every module and shared object it meets is bound to it. */
@@ -40,9 +40,11 @@ abstract class JavaScriptRuntime protected constructor(
 
     // One runtime per thread is assumed: a second one on the same thread takes the slot over.
     CurrentRuntime.set(WeakReference(this))
-
-    moduleRegistry.bind(context)
   }
+
+  /** The modules this runtime serves: those of its [context]. */
+  val moduleRegistry: ModuleRegistry
+    get() = context.moduleRegistry
 
   //@formatter:off
   @NativeMethod external fun evaluate(script: String, sourceURL: String = "<eval>"): JavaScriptValue

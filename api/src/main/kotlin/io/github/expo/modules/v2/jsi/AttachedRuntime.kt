@@ -7,33 +7,48 @@ import io.github.expo.modules.v2.modules.ModuleRegistry
 import io.github.expo.kolibri.NativePointer
 
 /**
- * A [JavaScriptRuntime] attached to a `jsi::Runtime` somebody else created.
- *
- * @param context the context to share with other runtimes, which stays the caller's to close. When
- * null, the runtime creates a context of its own and closes it with itself.
+ * A [JavaScriptRuntime] attached to a `jsi::Runtime` somebody else created. It serves the modules
+ * of its context.
  */
-open class AttachedRuntime(
+open class AttachedRuntime private constructor(
   jsRuntimePointer: Long,
-  moduleRegistry: ModuleRegistry = ModuleRegistry(),
-  asyncContext: AsyncContext = AsyncContext(),
-  engineName: String = DEFAULT_ENGINE_NAME,
-  globalName: String = DEFAULT_GLOBAL_NAME,
-  context: ExpoContext? = null,
+  asyncContext: AsyncContext,
+  engineName: String,
+  globalName: String,
+  context: ExpoContext,
+  ownsContext: Boolean,
 ) : JavaScriptRuntime(
-  moduleRegistry,
   asyncContext,
   NativePointer(
     nativeCreate(
       jsRuntimePointer = jsRuntimePointer,
-      registry = moduleRegistry,
+      registry = context.moduleRegistry,
       asyncContext = asyncContext,
       engineName = engineName,
       globalName = globalName
     )
   ),
-  context ?: ExpoContext(),
-  ownsContext = context == null,
+  context,
+  ownsContext,
 ) {
+  /**
+   * @param context the context to share with other runtimes, which stays the caller's to close.
+   * When null, the runtime creates a context of its own and closes it with itself.
+   */
+  constructor(
+    jsRuntimePointer: Long,
+    asyncContext: AsyncContext = AsyncContext(),
+    engineName: String = DEFAULT_ENGINE_NAME,
+    globalName: String = DEFAULT_GLOBAL_NAME,
+    context: ExpoContext? = null,
+  ) : this(
+    jsRuntimePointer,
+    asyncContext,
+    engineName,
+    globalName,
+    context ?: ExpoContext(),
+    ownsContext = context == null,
+  )
 
   companion object {
     const val DEFAULT_ENGINE_NAME: String = "unknown"

@@ -1,11 +1,11 @@
 package io.github.expo.modules.v2.testapp
 
 import io.github.expo.hermes.HermesRuntime as HermesEngine
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.jsi.AttachedRuntime
-import io.github.expo.modules.v2.modules.ModuleRegistry
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -48,8 +48,10 @@ class HostNamespaceTest {
   private fun <T> attached(prelude: String, vararg modules: Module, body: (AttachedRuntime) -> T): T =
     HermesEngine().use { engine ->
       engine.evaluate(prelude)
-      val registry = ModuleRegistry().apply { modules.forEach(::register) }
-      AttachedRuntime(engine.pointer, registry).use(body)
+      ExpoContext().use { context ->
+        modules.forEach(context.moduleRegistry::register)
+        AttachedRuntime(engine.pointer, context = context).use(body)
+      }
     }
 
   /**

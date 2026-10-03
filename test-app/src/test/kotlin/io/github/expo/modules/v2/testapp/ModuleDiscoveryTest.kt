@@ -4,7 +4,6 @@ import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.discoveredExpoModules
-import io.github.expo.modules.v2.modules.ModuleRegistry
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
 import kotlin.test.Test
@@ -39,7 +38,8 @@ class ModuleDiscoveryTest {
     val discovered = discoveredExpoModules().single { it == DiscoveredModule::class.java }
     val instance = discovered.getDeclaredField("INSTANCE").apply { isAccessible = true }.get(null) as Module
 
-    HermesRuntime(ModuleRegistry().apply { register(instance) }).use { runtime ->
+    HermesRuntime().use { runtime ->
+      runtime.moduleRegistry.register(instance)
       assertEquals(42, runtime.evaluate("globalThis.expo.modules.Discovered.answer()").getInt())
     }
   }

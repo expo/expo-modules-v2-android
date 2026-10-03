@@ -114,8 +114,13 @@ class EventEmitterTest {
 
   private fun HermesRuntime.watch(module: Watcher = Watcher()): Watcher {
     moduleRegistry.register(module)
-    evaluate("globalThis.seen = [];")
+    recordSeen()
     return module
+  }
+
+  /** Gives JavaScript the array the listeners push to. */
+  private fun HermesRuntime.recordSeen() {
+    evaluate("globalThis.seen = [];")
   }
 
   @Test
@@ -432,8 +437,9 @@ class EventEmitterTest {
     val watcher = Watcher()
     HermesRuntime(context = context).use { first ->
       HermesRuntime(context = context).use { second ->
+        // The shared context registers the watcher once, and both runtimes serve it.
         first.watch(watcher)
-        second.watch(watcher)
+        second.recordSeen()
 
         first.evaluate("globalThis.fn = (n) => seen.push('first:' + n); expo.modules.Watcher.addListener('count', fn);")
         second.evaluate("globalThis.fn = (n) => seen.push('second:' + n); expo.modules.Watcher.addListener('count', fn);")
@@ -470,7 +476,8 @@ class EventEmitterTest {
         results.put(
           runCatching {
             HermesRuntime(context = context).use { second ->
-              second.watch(watcher)
+              // The shared context already registered the watcher.
+              second.recordSeen()
               second.evaluate("expo.modules.Watcher.addListener('count', (n) => seen.push(n));")
               listening.countDown()
               second.runEventLoop { second.evaluate("seen.length > 0").getBool() }

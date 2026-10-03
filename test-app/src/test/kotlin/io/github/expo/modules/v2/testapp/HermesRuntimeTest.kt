@@ -2652,12 +2652,13 @@ class HermesRuntimeTest {
 
   @Test
   fun `a registry populated before the runtime exists works`() {
-    val registry = ModuleRegistry()
-    registry.register("Math", sharedMath) {
-      function("add", AnyType(TypeDescriptor.Int), AnyType(TypeDescriptor.Int), returns = AnyType(TypeDescriptor.Int))
-    }
-    HermesRuntime(registry).use { runtime ->
-      assertEquals("42", runtime.evaluateAsString("expo.modules.Math.add(40, 2)"))
+    ExpoContext().use { context ->
+      context.moduleRegistry.register("Math", sharedMath) {
+        function("add", AnyType(TypeDescriptor.Int), AnyType(TypeDescriptor.Int), returns = AnyType(TypeDescriptor.Int))
+      }
+      HermesRuntime(context = context).use { runtime ->
+        assertEquals("42", runtime.evaluateAsString("expo.modules.Math.add(40, 2)"))
+      }
     }
   }
 
@@ -2757,8 +2758,8 @@ class HermesRuntimeTest {
     val module = CounterFixture()
     HermesRuntime(context = context).use { first ->
       HermesRuntime(context = context).use { second ->
+        // The shared context registers the module once, and both runtimes serve it.
         first.moduleRegistry.register(module)
-        second.moduleRegistry.register(module)
 
         first.evaluate("expo.modules.Counter.increment();")
         assertNotNull(first.jsObjectOf(module))

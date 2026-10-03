@@ -7,10 +7,9 @@ import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
 import io.github.expo.modules.v2.binary.newSharedView
 import io.github.expo.modules.v2.core.ExpoModulesV2
 import io.github.expo.modules.v2.ExpoContext
-import java.lang.ref.WeakReference
 import java.nio.BufferOverflowException
 
-class ModuleRegistry {
+class ModuleRegistry internal constructor(private val context: ExpoContext) {
   private class Entry(
     val module: Module,
     val functions: List<ModuleFunctionDefinition>,
@@ -19,20 +18,8 @@ class ModuleRegistry {
     val events: List<ModuleEventDefinition>,
   )
 
+  /** Guarded by itself: the context reads it from any thread, and JavaScript from the JS thread. */
   private val modules = LinkedHashMap<String, Entry>()
-
-  /** The context of the runtime this registry is installed in, set once that runtime exists. */
-  private var contextRef: WeakReference<ExpoContext>? = null
-
-  /**
-   * Binds every module registered so far, and every one registered later, to [context]. A module
-   * that outlives its context (a Kotlin `object` across a reload) is re-bound to the new one, and
-   * one module can serve every runtime that shares [context].
-   */
-  internal fun bind(context: ExpoContext) {
-    contextRef = WeakReference(context)
-    modules.values.forEach { it.module.bindContext(context) }
-  }
 
   fun register(name: String, module: Module, build: ModuleBuilder.() -> Unit) {
     add(name, module, ModuleBuilder().apply(build))
@@ -51,23 +38,34 @@ class ModuleRegistry {
     add(name, module, builder)
   }
 
-  private fun add(name: String, module: Module, definition: ModuleBuilder) {
-    require(name !in modules) { "Module '$name' is already registered" }
+  /** Every registered module, in the order they were registered. */
+  internal fun modules(): List<Module> = synchronized(modules) { modules.values.map { it.module } }
 
-    contextRef?.get()?.let(module::bindContext)
-    modules[name] = Entry(
-      module,
-      definition.functions,
-      definition.properties,
-      definition.sharedClasses,
-      definition.events,
-    )
+  /** The registered module of [type], or null when there is none. */
+  internal fun <T : Module> module(type: Class<T>): T? {
+    val module = synchronized(modules) { modules.values.firstOrNull { type.isInstance(it.module) }?.module }
+    return module?.let(type::cast)
+  }
+
+  private fun add(name: String, module: Module, definition: ModuleBuilder) {
+    synchronized(modules) {
+      require(name !in modules) { "Module '$name' is already registered" }
+
+      module.bindContext(context)
+      modules[name] = Entry(
+        module,
+        definition.functions,
+        definition.properties,
+        definition.sharedClasses,
+        definition.events,
+      )
+    }
   }
 
   @Suppress("unused")
   @CalledFromNative(by = "expo-modules-v2/jni/JModuleRegistry.h")
   private fun encodeModule(name: String): Any? {
-    val entry = modules[name] ?: return null
+    val entry = synchronized(modules) { modules[name] } ?: return null
     try {
       ModuleDescriptorEncoder.encode(
         BinaryBuffer.newSharedView(),
@@ -91,7 +89,7 @@ class ModuleRegistry {
     val buf = BinaryBuffer.newSharedView()
 
     try {
-      buf.putStringCollection(modules.keys)
+      buf.putStringCollection(synchronized(modules) { modules.keys.toList() })
     } catch (overflow: BufferOverflowException) {
       throw IllegalArgumentException(
         "The registered module names do not fit in the fixed bridge buffer",

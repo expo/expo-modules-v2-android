@@ -8,7 +8,6 @@ import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.SharedRef
 import io.github.expo.modules.v2.jsi.JavaScriptRuntime
-import io.github.expo.modules.v2.modules.ModuleRegistry
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
 import kotlin.test.Test
@@ -86,14 +85,15 @@ class RuntimeBindingTest {
   }
 
   @Test
-  fun `a module registered before the runtime exists is bound when it is created`() {
-    val registry = ModuleRegistry()
-    val module = Probes()
-    registry.register(module)
-    assertNull(module.contextOrNull)
+  fun `a module registered before the runtime exists is bound to the context that owns it`() {
+    ExpoContext().use { context ->
+      val module = Probes()
+      context.moduleRegistry.register(module)
+      assertSame(context, module.context)
 
-    HermesRuntime(registry).use { runtime ->
-      assertSame(runtime.context, module.context)
+      HermesRuntime(context = context).use { runtime ->
+        assertSame(runtime.context, module.context)
+      }
     }
   }
 
@@ -173,7 +173,7 @@ class RuntimeBindingTest {
         // A second runtime on its own JS thread, as one per thread requires.
         onOtherThread {
           HermesRuntime(context = context).use { second ->
-            second.moduleRegistry.register(module)
+            // The shared context already registered the module.
             // The same Kotlin instance crosses into the second runtime and comes back.
             assertEquals(
               "shared",
