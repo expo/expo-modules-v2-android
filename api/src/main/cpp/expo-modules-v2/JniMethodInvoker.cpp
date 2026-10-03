@@ -33,6 +33,41 @@ namespace expo::modules::v2 {
       );
     }
 
+    /**
+     * Whether JavaScript may leave out every argument from [count] on: each one is nullable, so it
+     * arrives as null, the way an optional parameter does.
+     */
+    bool omitsOnlyOptionalArgs(const FunctionSpec& spec, const size_t count) {
+      if (count > spec.argTypes.size()) {
+        return false;
+      }
+
+      for (size_t i = count; i < spec.argTypes.size(); i++) {
+        if (!spec.argTypes[i].nullable()) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    /**
+     * [args], with `undefined` for each argument JavaScript left out. A spec takes at most
+     * [FunctionSpec::kMaxArgs] arguments, so they fit on the stack.
+     */
+    std::array<facebook::jsi::Value, FunctionSpec::kMaxArgs> padOmittedArgs(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Value* args,
+      const size_t count
+    ) {
+      // A default `jsi::Value` is `undefined`, so only the passed arguments need copying in.
+      std::array<facebook::jsi::Value, FunctionSpec::kMaxArgs> padded;
+      for (size_t i = 0; i < count; i++) {
+        padded[i] = facebook::jsi::Value(rt, args[i]);
+      }
+      return padded;
+    }
+
     facebook::jsi::Value callBoolean(const JniMethodCall& call) {
       const jboolean result = call.env->CallNonvirtualBooleanMethodA(
         call.receiver,
@@ -386,7 +421,18 @@ namespace expo::modules::v2 {
       size_t count
     ) {
       if (count != spec.argTypes.size()) [[unlikely]] {
-        throwArgumentCountMismatch(rt, spec, count);
+        if (!omitsOnlyOptionalArgs(spec, count)) {
+          throwArgumentCountMismatch(rt, spec, count);
+        }
+        const auto padded = padOmittedArgs(rt, args, count);
+        return invokeFunction<HasBufferedArgs, NeedsLocalFrame, Method>(
+          rt,
+          env,
+          spec,
+          receiver,
+          padded.data(),
+          spec.argTypes.size()
+        );
       }
 
       if constexpr (HasBufferedArgs) {
@@ -428,7 +474,18 @@ namespace expo::modules::v2 {
       size_t count
     ) {
       if (count != spec.argTypes.size()) [[unlikely]] {
-        throwArgumentCountMismatch(rt, spec, count);
+        if (!omitsOnlyOptionalArgs(spec, count)) {
+          throwArgumentCountMismatch(rt, spec, count);
+        }
+        const auto padded = padOmittedArgs(rt, args, count);
+        return invokeAsyncFunction<HasBufferedArgs>(
+          rt,
+          env,
+          spec,
+          receiver,
+          padded.data(),
+          spec.argTypes.size()
+        );
       }
 
       async::AsyncRuntimeState* state = async::AsyncRuntimeState::find(rt);
