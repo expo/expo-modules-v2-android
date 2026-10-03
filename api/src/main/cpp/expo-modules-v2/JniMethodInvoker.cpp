@@ -1,7 +1,9 @@
 #include <expo-modules-v2/JniMethodInvoker.h>
 
 #include <expo-modules-v2/async/AsyncRuntimeState.h>
+#include <expo-modules-v2/jni/JThrowableHelper.h>
 #include <expo-modules-v2/jni/JTrampoline.h>
+#include <expo-modules-v2/jsi/NativeError.h>
 #include <expo-modules-v2/converter/decoders/BufferDecode.h>
 #include <expo-modules-v2/converter/decoders/JniDecode.h>
 #include <expo-modules-v2/converter/encoders/BufferEncode.h>
@@ -12,7 +14,6 @@
 
 #include <kolibri/binary/BinaryBuffer.h>
 #include <kolibri/LocalFrame.h>
-#include <kolibri/exception.h>
 #include <kolibri/Ref.h>
 
 
@@ -39,7 +40,7 @@ namespace expo::modules::v2 {
         call.method,
         call.args
       );
-      kolibri::checkAndThrowPending(call.env);
+      rethrowPendingAsJSError(call.rt, call.env);
       return facebook::jsi::Value(result != 0);
     }
 
@@ -50,7 +51,7 @@ namespace expo::modules::v2 {
         call.method,
         call.args
       );
-      kolibri::checkAndThrowPending(call.env);
+      rethrowPendingAsJSError(call.rt, call.env);
       return facebook::jsi::Value(static_cast<double>(result));
     }
 
@@ -61,7 +62,7 @@ namespace expo::modules::v2 {
         call.method,
         call.args
       );
-      kolibri::checkAndThrowPending(call.env);
+      rethrowPendingAsJSError(call.rt, call.env);
       return facebook::jsi::Value(static_cast<double>(result));
     }
 
@@ -72,7 +73,7 @@ namespace expo::modules::v2 {
         call.method,
         call.args
       );
-      kolibri::checkAndThrowPending(call.env);
+      rethrowPendingAsJSError(call.rt, call.env);
       return facebook::jsi::Value(result);
     }
 
@@ -83,13 +84,13 @@ namespace expo::modules::v2 {
         call.method,
         call.args
       );
-      kolibri::checkAndThrowPending(call.env);
+      rethrowPendingAsJSError(call.rt, call.env);
       return facebook::jsi::Value(result);
     }
 
     facebook::jsi::Value callVoid(const JniMethodCall& call) {
       call.env->CallNonvirtualVoidMethodA(call.receiver, call.declaringClass, call.method, call.args);
-      kolibri::checkAndThrowPending(call.env);
+      rethrowPendingAsJSError(call.rt, call.env);
       return facebook::jsi::Value::undefined();
     }
 
@@ -98,7 +99,7 @@ namespace expo::modules::v2 {
         call.env,
         call.env->CallNonvirtualObjectMethodA(call.receiver, call.declaringClass, call.method, call.args)
       );
-      kolibri::checkAndThrowPending(call.env);
+      rethrowPendingAsJSError(call.rt, call.env);
       return decodeFromJni(
         call.env,
         call.rt,
@@ -112,7 +113,7 @@ namespace expo::modules::v2 {
         call.env,
         call.env->CallStaticObjectMethodA(call.declaringClass, call.method, call.args)
       );
-      kolibri::checkAndThrowPending(call.env);
+      rethrowPendingAsJSError(call.rt, call.env);
       return decodeFromJni(
         call.env,
         call.rt,
@@ -128,7 +129,7 @@ namespace expo::modules::v2 {
         call.method,
         call.args
       );
-      kolibri::checkAndThrowPending(call.env);
+      rethrowPendingAsJSError(call.rt, call.env);
 
       if (written == JTrampoline::kOverflowArgumentsSentinel) [[unlikely]] {
         const kolibri::Ref<> result = JTrampoline::takeOverflowResult(call.env);
@@ -465,9 +466,13 @@ namespace expo::modules::v2 {
       const kolibri::Ref<JPromise> kotlinPromise = state->newKotlinPromise(env, id);
       values[slot].l = kotlinPromise.get();
 
+      env->CallNonvirtualVoidMethodA(receiver, spec.declaringClass, spec.method, values.data());
       try {
-        env->CallNonvirtualVoidMethodA(receiver, spec.declaringClass, spec.method, values.data());
-        kolibri::checkAndThrowPending(env);
+        // A trampoline that throws before the body starts, such as on an argument it cannot
+        // convert, rejects the promise the way the body would have.
+        if (const auto details = JThrowableHelper::takePending(env)) {
+          state->reject(rt, id, details->code, details->message, details->stack);
+        }
       } catch (const std::exception& e) {
         state->reject(rt, id, "ERR_TRAMPOLINE", e.what(), "");
       }

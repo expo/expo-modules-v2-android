@@ -9,6 +9,7 @@
 
 #include <expo-modules-v2/converter/decoders/BufferDecode.h>
 #include <expo-modules-v2/jni/JTrampoline.h>
+#include <expo-modules-v2/jsi/NativeError.h>
 #include <expo-modules-v2/converter/decoders/JniDecode.h>
 
 namespace expo::modules::v2::async {
@@ -275,19 +276,7 @@ namespace expo::modules::v2::async {
       return;
     }
 
-    facebook::jsi::Object error = rt.global()
-      .getPropertyAsFunction(rt, "Error")
-      .callAsConstructor(
-        rt,
-        facebook::jsi::String::createFromUtf8(rt, message)
-      )
-      .getObject(rt);
-    error.setProperty(rt, "code", facebook::jsi::String::createFromUtf8(rt, code));
-    if (!stack.empty()) {
-      // `stack` is JavaScript's own; the Kotlin trace goes beside it under its own name.
-      error.setProperty(rt, "nativeStack", facebook::jsi::String::createFromUtf8(rt, stack));
-    }
-
+    const facebook::jsi::Object error = createNativeError(rt, code, message, stack);
     settle(id, facebook::jsi::Value(rt, error), true);
   }
 } // namespace expo::modules::v2::async

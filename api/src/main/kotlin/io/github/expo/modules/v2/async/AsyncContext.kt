@@ -4,6 +4,7 @@ import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.args.Bridge
 import io.github.expo.modules.v2.args.Trampoline
 import io.github.expo.modules.v2.core.ExpoModulesV2
+import io.github.expo.modules.v2.errors.ThrowableHelper
 import io.github.expo.modules.v2.types.TypeDescriptor
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineName
@@ -109,8 +110,8 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
       // so the conversion failure becomes the rejection.
       rejectOnJSThread(
         id,
-        throwable.javaClass.name,
-        throwable.message ?: throwable.toString(),
+        ThrowableHelper.codeOf(throwable),
+        ThrowableHelper.messageOf(throwable),
         throwable.stackTraceToString(),
       )
     }

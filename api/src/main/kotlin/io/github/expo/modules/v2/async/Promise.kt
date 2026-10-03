@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.async
 
 import io.github.expo.modules.v2.async.Promise.Companion.SETTLED
+import io.github.expo.modules.v2.errors.ThrowableHelper
 import io.github.expo.modules.v2.types.TypeDescriptor
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater
 import kotlinx.coroutines.CancellationException
@@ -69,9 +70,9 @@ class Promise internal constructor(
     val code = if (throwable is CancellationException) {
       CANCELLED_CODE
     } else {
-      throwable.javaClass.name
+      ThrowableHelper.codeOf(throwable)
     }
-    val message = throwable.message ?: throwable.toString()
+    val message = ThrowableHelper.messageOf(throwable)
     val stack = throwable.stackTraceToString()
 
     context.postSettle { context.rejectOnJSThread(id, code, message, stack) }

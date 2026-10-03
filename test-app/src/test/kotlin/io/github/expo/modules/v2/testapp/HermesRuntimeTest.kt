@@ -2270,12 +2270,11 @@ class HermesRuntimeTest {
       )
       assertEquals(expected, runAll())
 
-      // A Kotlin exception thrown by the user method crosses back as a JS error.
+      // A Kotlin exception thrown by the user method crosses back as a JS error with its message.
       val thrown = runtime.evaluateAsString(
         "try { expo.modules.Tramp.boom({x: 1, b: 'bad'}); 'no error'; } catch (e) { String(e); }",
       )
-      assertTrue("native call failed" in thrown, "expected a wrapped native error, got: $thrown")
-      assertTrue("boom: bad" in thrown, "expected the Kotlin message, got: $thrown")
+      assertTrue(thrown.startsWith("Error: boom: bad"), "expected the Kotlin message, got: $thrown")
 
       // A missing non-nullable field surfaces as an error naming the field.
       val missingField = runtime.evaluateAsString(
