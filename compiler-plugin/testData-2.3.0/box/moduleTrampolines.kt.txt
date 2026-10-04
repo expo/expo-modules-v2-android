@@ -29,7 +29,7 @@ object Buffered : Module {
     builder.function(jsName = "makeNames", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), methodName = "makeNames__trampoline$ExpoModulesV2")
     builder.function(jsName = "scale", argTypes = [AnyType(descriptor = DoubleArray(isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Double, useBuffer = false), methodName = "scale")
     builder.property(jsName = "motto", type = AnyType(descriptor = #STRING, useBuffer = false), mutable = true, propertyName = "motto__trampoline$ExpoModulesV2", setterType = AnyType(descriptor = #STRING, useBuffer = true))
-    builder.property(jsName = "isReady", type = AnyType(descriptor = Bool, useBuffer = false), mutable = false, propertyName = "isReady", setterType = AnyType(descriptor = Bool, useBuffer = false))
+    builder.property(jsName = "isReady", type = AnyType(descriptor = Bool, useBuffer = false), mutable = false, propertyName = "isReady", setterType = AnyType(descriptor = Bool, useBuffer = false), constant = true)
     return "Buffered"
   }
 

@@ -25,7 +25,19 @@ internal class ModulePropertyDefinition(
   val setterName: String?,
   val getterType: IntArray,
   val setterType: IntArray?,
-)
+  val isConstant: Boolean = false,
+) {
+  val flags: Int
+    get() = if (isConstant) {
+      FLAG_CONSTANT
+    } else {
+      0
+    }
+
+  internal companion object {
+    const val FLAG_CONSTANT = 1
+  }
+}
 
 internal class ModuleSharedClassDefinition(
   val jsName: String,

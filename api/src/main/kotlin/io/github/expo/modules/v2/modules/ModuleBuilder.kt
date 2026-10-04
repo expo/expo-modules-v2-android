@@ -41,6 +41,7 @@ class ModuleBuilder {
     mutable: Boolean = false,
     propertyName: String = jsName,
     setterType: AnyType = type,
+    constant: Boolean = false,
   ) {
     requireAvailableExportName(jsName)
 
@@ -71,6 +72,7 @@ class ModuleBuilder {
         } else {
           null
         },
+        isConstant = constant,
       ),
     )
   }

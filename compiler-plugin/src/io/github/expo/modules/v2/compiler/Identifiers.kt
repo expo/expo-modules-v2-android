@@ -65,6 +65,7 @@ object Identifiers {
     val BufferModeAnnotation = classId(Packages.API, "BufferMode")
     val ExpoSharedObjectAnnotation = classId(Packages.API, "ExpoSharedObject")
     val EventAnnotation = classId(Packages.API, "Event")
+    val ConstantAnnotation = classId(Packages.API, "Constant")
 
     val RecordInterface = classId(Packages.RECORDS, "Record")
     val RecordCodec = classId(Packages.RECORDS, "RecordCodec")
@@ -117,6 +118,7 @@ object Identifiers {
     val BUFFER_MODE_ANNOTATION: FqName = Classes.BufferModeAnnotation.asSingleFqName()
     val SHARED_OBJECT_ANNOTATION: FqName = Classes.ExpoSharedObjectAnnotation.asSingleFqName()
     val EVENT_ANNOTATION: FqName = Classes.EventAnnotation.asSingleFqName()
+    val CONSTANT_ANNOTATION: FqName = Classes.ConstantAnnotation.asSingleFqName()
   }
 
   object Names {

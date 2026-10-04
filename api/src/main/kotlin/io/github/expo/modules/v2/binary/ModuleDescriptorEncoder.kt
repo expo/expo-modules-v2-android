@@ -123,6 +123,7 @@ internal object ModuleDescriptorEncoder {
     for (property in properties) {
       putString(property.jsName)
       putString(property.getterName)
+      putInt(property.flags)
       putIntArray(property.getterType)
       putBoolean(property.setterName != null)
       property.setterName?.let { setterName ->

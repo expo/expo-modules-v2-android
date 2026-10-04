@@ -1,5 +1,6 @@
 #include <expo-modules-v2/jsi/ModulesHostObject.h>
 
+#include <string>
 #include <unordered_set>
 #include <utility>
 
@@ -32,37 +33,83 @@ namespace expo::modules::v2::jsi {
         facebook::jsi::PropNameID::forUtf8(rt, spec.name),
         spec.argTypes.size(),
         [spec = &spec, receiver = &receiver](
-        facebook::jsi::Runtime& rt,
+        facebook::jsi::Runtime& runtime,
         const facebook::jsi::Value&,
         const facebook::jsi::Value* args,
-        size_t count
+        const size_t count
       ) -> facebook::jsi::Value {
-          return spec->invoke(rt, receiver->get(), args, count);
+          return spec->invoke(runtime, receiver->get(), args, count);
         }
       );
     }
 
-    // JSI has no direct property-descriptor API. Define a real JavaScript accessor on the plain
-    // module object so reads invoke Kotlin every time, `var` writes reach its setter, and `val`
-    // stays read-only while preserving the module object's NativeState.
+    /** `Object.defineProperty(object, name, descriptor)`: JSI has no property-descriptor API. */
+    void defineProperty(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Object& object,
+      const std::string& name,
+      const facebook::jsi::Object& descriptor
+    ) {
+      rt.global()
+        .getPropertyAsObject(rt, "Object")
+        .getPropertyAsFunction(rt, "defineProperty")
+        .call(rt, object, name, descriptor);
+    }
+
+    facebook::jsi::Function constantGetter(
+      facebook::jsi::Runtime& rt,
+      const descriptor::HostPropertySpec& property,
+      const kolibri::GlobalRef<>& receiver
+    ) {
+      return facebook::jsi::Function::createFromHostFunction(
+        rt,
+        facebook::jsi::PropNameID::forUtf8(rt, property.name),
+        0,
+        [property = &property, receiver = &receiver](
+        facebook::jsi::Runtime& runtime,
+        const facebook::jsi::Value& thisValue,
+        const facebook::jsi::Value*,
+        size_t) -> facebook::jsi::Value {
+          facebook::jsi::Value value = property->get(runtime, receiver->get());
+
+          if (thisValue.isObject()) {
+            const facebook::jsi::Object descriptor(runtime);
+            descriptor.setProperty(runtime, "value", facebook::jsi::Value(runtime, value));
+            descriptor.setProperty(runtime, "writable", false);
+            descriptor.setProperty(runtime, "enumerable", true);
+            descriptor.setProperty(runtime, "configurable", false);
+            try {
+              defineProperty(runtime, thisValue.getObject(runtime), property->name, descriptor);
+            } catch (const facebook::jsi::JSError&) {
+              // The getter was called on an object that cannot take the property, such as a
+              // frozen one. The value is still right; only the caching is lost.
+            }
+          }
+          return value;
+        }
+      );
+    }
+
     void defineHostProperty(
       facebook::jsi::Runtime& rt,
-      facebook::jsi::Object& moduleObject,
+      const facebook::jsi::Object& moduleObject,
       const descriptor::HostPropertySpec& property,
       const kolibri::GlobalRef<>& receiver
     ) {
       facebook::jsi::Object descriptor(rt);
-      descriptor.setProperty(rt, "get", hostFunction(rt, property.getter, receiver));
-      if (property.hasSetter()) {
-        descriptor.setProperty(rt, "set", hostFunction(rt, *property.setter, receiver));
+      if (property.isConstant) {
+        descriptor.setProperty(rt, "get", constantGetter(rt, property, receiver));
+        descriptor.setProperty(rt, "configurable", true);
+      } else {
+        descriptor.setProperty(rt, "get", hostFunction(rt, property.getter, receiver));
+        if (property.hasSetter()) {
+          descriptor.setProperty(rt, "set", hostFunction(rt, *property.setter, receiver));
+        }
+        descriptor.setProperty(rt, "configurable", false);
       }
       descriptor.setProperty(rt, "enumerable", true);
-      descriptor.setProperty(rt, "configurable", false);
 
-      rt.global()
-        .getPropertyAsObject(rt, "Object")
-        .getPropertyAsFunction(rt, "defineProperty")
-        .call(rt, moduleObject, property.name, descriptor);
+      defineProperty(rt, moduleObject, property.name, descriptor);
     }
   } // namespace
 

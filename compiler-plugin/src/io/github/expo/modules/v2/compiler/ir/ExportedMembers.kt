@@ -2,16 +2,19 @@ package io.github.expo.modules.v2.compiler.ir
 
 import io.github.expo.modules.v2.compiler.BufferChoice
 import io.github.expo.modules.v2.compiler.Identifiers
+import io.github.expo.modules.v2.compiler.eventJsName
+import org.jetbrains.kotlin.descriptors.Modality
 import org.jetbrains.kotlin.ir.declarations.IrAnnotationContainer
 import org.jetbrains.kotlin.ir.declarations.IrClass
+import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.declarations.IrProperty
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
-import io.github.expo.modules.v2.compiler.eventJsName
 import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
 import org.jetbrains.kotlin.ir.types.IrSimpleType
 import org.jetbrains.kotlin.ir.types.IrTypeProjection
 import org.jetbrains.kotlin.ir.util.getAnnotation
+import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
 
 /** One `@JS` or `@Event` member of an exported class, as the builder will describe it. */
@@ -40,11 +43,13 @@ internal class ExportedProperty(
   val property: IrProperty,
   val getterPlan: ValuePlan,
   val setterPlan: ValuePlan?,
+  val isConstant: Boolean = false,
 ) : Exported {
   var trampolineBase: String? = null
 
   override val needsTrampoline: Boolean
-    get() = listOfNotNull(getterPlan, setterPlan).any { it.buffered || !it.passthrough }
+    get() = listOfNotNull(getterPlan, setterPlan)
+      .any { it.buffered || !it.passthrough }
 }
 
 /**
@@ -187,6 +192,33 @@ internal class ExportedMembers(private val policy: TransportPolicy) {
       property = property,
       getterPlan = policy.plan(type, returnChoice, Crossing.RESULT),
       setterPlan = property.isVar.ifTrue { policy.plan(type, choice, Crossing.INBOUND) },
+      isConstant = property.hasAnnotation(Identifiers.FqNames.CONSTANT_ANNOTATION) ||
+        holdsFixedValue(property),
+    )
+  }
+
+  private fun holdsFixedValue(property: IrProperty): Boolean {
+    val getter = property.getter
+      ?: return false
+
+    return !property.isVar &&
+      !property.isLateinit &&
+      !property.isDelegated &&
+      property.backingField != null &&
+      getter.origin == IrDeclarationOrigin.DEFAULT_PROPERTY_ACCESSOR &&
+      property.modality == Modality.FINAL &&
+      policy.kindOf(getter.returnType) in FIXED_VALUE_KINDS
+  }
+
+  private companion object {
+    val FIXED_VALUE_KINDS = setOf(
+      ValueKind.UNBOXED_SCALAR,
+      ValueKind.BOXED_SCALAR,
+      ValueKind.STRING,
+      ValueKind.ENUM,
+      ValueKind.INT_ENUM,
+      ValueKind.CONVERTED_TO_DOUBLE,
+      ValueKind.CONVERTED_TO_STRING,
     )
   }
 }

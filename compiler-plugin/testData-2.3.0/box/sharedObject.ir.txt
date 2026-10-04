@@ -476,7 +476,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
             ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="play"
-        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
           ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
           ARG jsName: CONST String type=kotlin.String value="volume"
           ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null

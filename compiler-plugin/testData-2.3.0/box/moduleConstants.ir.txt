@@ -1,0 +1,415 @@
+FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleConstants.kt
+  CLASS CLASS name:Item modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]
+    annotations:
+      ExpoSharedObject(name = <null>)
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Item
+    FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
+      EXPRESSION_BODY
+        CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean, params: kotlin.Array<out io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike>) declared in io.github.expo.modules.v2.types.TypeDescriptor.Parametrized' type=io.github.expo.modules.v2.types.TypeDescriptor.Parametrized origin=null
+          ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.collections.List<*>> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB INTERFACE name:List modality:ABSTRACT visibility:public superTypes:[kotlin.collections.Collection<E of kotlin.collections.List>]' type=kotlin.reflect.KClass<*>
+          ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+          ARG params: CALL 'public final fun arrayOf <T> (vararg elements: T of kotlin.arrayOf): kotlin.Array<T of kotlin.arrayOf> declared in kotlin' type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> origin=null
+            TYPE_ARG T: io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+            ARG elements: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> varargElementType=io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+              GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+    PROPERTY name:count visibility:public modality:FINAL [val]
+      annotations:
+        JS(name = <null>)
+      FIELD PROPERTY_BACKING_FIELD name:count type:kotlin.Int visibility:private [final]
+        EXPRESSION_BODY
+          CONST Int type=kotlin.Int value=1
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-count> visibility:public modality:FINAL returnType:kotlin.Int
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Item
+        correspondingProperty: PROPERTY name:count visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-count> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Item'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:count type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Item declared in io.github.expo.modules.v2.testdata.Item.<get-count>' type=io.github.expo.modules.v2.testdata.Item origin=null
+    PROPERTY name:tags visibility:public modality:FINAL [val]
+      annotations:
+        JS(name = <null>)
+      FIELD PROPERTY_BACKING_FIELD name:tags type:kotlin.collections.MutableList<kotlin.String> visibility:private [final]
+        EXPRESSION_BODY
+          CALL 'public final fun mutableListOf <T> (vararg elements: T of kotlin.collections.mutableListOf): kotlin.collections.MutableList<T of kotlin.collections.mutableListOf> declared in kotlin.collections' type=kotlin.collections.MutableList<kotlin.String> origin=null
+            TYPE_ARG T: kotlin.String
+            ARG elements: VARARG type=kotlin.Array<out kotlin.String> varargElementType=kotlin.String
+              CONST String type=kotlin.String value="a"
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-tags> visibility:public modality:FINAL returnType:kotlin.collections.MutableList<kotlin.String>
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Item
+        correspondingProperty: PROPERTY name:tags visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-tags> (): kotlin.collections.MutableList<kotlin.String> declared in io.github.expo.modules.v2.testdata.Item'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:tags type:kotlin.collections.MutableList<kotlin.String> visibility:private [final]' type=kotlin.collections.MutableList<kotlin.String> origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Item declared in io.github.expo.modules.v2.testdata.Item.<get-tags>' type=io.github.expo.modules.v2.testdata.Item origin=null
+    FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:sharedClassId$ExpoModulesV2 type:kotlin.Int visibility:private [final,static]
+      EXPRESSION_BODY
+        CALL 'private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Item' type=kotlin.Int origin=null
+    CONSTRUCTOR visibility:public returnType:io.github.expo.modules.v2.testdata.Item [primary]
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.SharedObject'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Item modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.Unit
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.SharedObject
+    FUN FAKE_OVERRIDE name:event visibility:protected modality:FINAL returnType:io.github.expo.modules.v2.events.Event<T of io.github.expo.modules.v2.testdata.Item.event> [fake_override]
+      TYPE_PARAMETER name:T index:0 variance: superTypes:[kotlin.Any?] reified:false
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.ExpoObject
+      VALUE_PARAMETER kind:Regular name:onStartObserving index:1 type:kotlin.Function0<kotlin.Unit>?
+      VALUE_PARAMETER kind:Regular name:onStopObserving index:2 type:kotlin.Function0<kotlin.Unit>?
+      overridden:
+        protected final fun event <T> (onStartObserving: kotlin.Function0<kotlin.Unit>?, onStopObserving: kotlin.Function0<kotlin.Unit>?): io.github.expo.modules.v2.events.Event<T of io.github.expo.modules.v2.SharedObject.event> declared in io.github.expo.modules.v2.SharedObject
+    FUN FAKE_OVERRIDE name:getAdditionalMemoryPressure visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+      overridden:
+        public open fun getAdditionalMemoryPressure (): kotlin.Int declared in io.github.expo.modules.v2.SharedObject
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.SharedObject
+    FUN FAKE_OVERRIDE name:sharedObjectDidRelease visibility:public modality:OPEN returnType:kotlin.Unit [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+      overridden:
+        public open fun sharedObjectDidRelease (): kotlin.Unit declared in io.github.expo.modules.v2.SharedObject
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.SharedObject
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:__construct$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Item
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun __construct$ExpoModulesV2 (): io.github.expo.modules.v2.testdata.Item declared in io.github.expo.modules.v2.testdata.Item'
+          CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Item' type=io.github.expo.modules.v2.testdata.Item origin=null
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:Regular name:builder index:0 type:io.github.expo.modules.v2.modules.ModuleBuilder
+      BLOCK_BODY
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Item.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="name"
+          ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG mutable: CONST Boolean type=kotlin.Boolean value=false
+          ARG propertyName: CONST String type=kotlin.String value="name"
+          ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG constant: CONST Boolean type=kotlin.Boolean value=true
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Item.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="count"
+          ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG mutable: CONST Boolean type=kotlin.Boolean value=false
+          ARG propertyName: CONST String type=kotlin.String value="count"
+          ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG constant: CONST Boolean type=kotlin.Boolean value=true
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Item.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="tags"
+          ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean, params: kotlin.Array<out io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike>) declared in io.github.expo.modules.v2.types.TypeDescriptor.Parametrized' type=io.github.expo.modules.v2.types.TypeDescriptor.Parametrized origin=null
+              ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.collections.List<*>> origin=null
+                ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB INTERFACE name:List modality:ABSTRACT visibility:public superTypes:[kotlin.collections.Collection<E of kotlin.collections.List>]' type=kotlin.reflect.KClass<*>
+              ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+              ARG params: CALL 'public final fun arrayOf <T> (vararg elements: T of kotlin.arrayOf): kotlin.Array<T of kotlin.arrayOf> declared in kotlin' type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> origin=null
+                TYPE_ARG T: io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+                ARG elements: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> varargElementType=io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+                  GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
+          ARG mutable: CONST Boolean type=kotlin.Boolean value=false
+          ARG propertyName: CONST String type=kotlin.String value="tags__trampoline$ExpoModulesV2"
+          ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean, params: kotlin.Array<out io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike>) declared in io.github.expo.modules.v2.types.TypeDescriptor.Parametrized' type=io.github.expo.modules.v2.types.TypeDescriptor.Parametrized origin=null
+              ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.collections.List<*>> origin=null
+                ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB INTERFACE name:List modality:ABSTRACT visibility:public superTypes:[kotlin.collections.Collection<E of kotlin.collections.List>]' type=kotlin.reflect.KClass<*>
+              ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+              ARG params: CALL 'public final fun arrayOf <T> (vararg elements: T of kotlin.arrayOf): kotlin.Array<T of kotlin.arrayOf> declared in kotlin' type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> origin=null
+                TYPE_ARG T: io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+                ARG elements: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> varargElementType=io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+                  GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
+        RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Item'
+          CONST String type=kotlin.String value="Item"
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:getTags__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Item
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun getTags__trampoline$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Item'
+          CALL 'public final fun writeResult (value: kotlin.Any?, type: io.github.expo.modules.v2.types.TypeDescriptor): kotlin.Int declared in io.github.expo.modules.v2.args.Trampoline' type=kotlin.Int origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.args.Trampoline
+            ARG value: CALL 'public final fun <get-tags> (): kotlin.collections.MutableList<kotlin.String> declared in io.github.expo.modules.v2.testdata.Item' type=kotlin.collections.MutableList<kotlin.String> origin=null
+              ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Item declared in io.github.expo.modules.v2.testdata.Item.getTags__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.Item origin=null
+            ARG type: GET_FIELD 'FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static] declared in io.github.expo.modules.v2.testdata.Item' type=io.github.expo.modules.v2.types.TypeDescriptor origin=null
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:register$ExpoModulesV2 visibility:private modality:FINAL returnType:kotlin.Int
+      BLOCK_BODY
+        CALL 'public final fun reserve (sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+          ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Item> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Item modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
+        VAR name:builder type:io.github.expo.modules.v2.modules.ModuleBuilder [val]
+          CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+        CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Item' type=kotlin.String origin=null
+          ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Item.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+        RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Item'
+          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+            ARG jsName: CONST String type=kotlin.String value="Item"
+            ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Item> origin=null
+              ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Item modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
+            ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Item.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.SharedObject
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedObject
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.SharedObject
+    PROPERTY name:name visibility:public modality:FINAL [val]
+      annotations:
+        JS(name = <null>)
+        Constant
+      FUN name:<get-name> visibility:public modality:FINAL returnType:kotlin.String
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Item
+        correspondingProperty: PROPERTY name:name visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-name> (): kotlin.String declared in io.github.expo.modules.v2.testdata.Item'
+            CONST String type=kotlin.String value="item"
+  CLASS OBJECT name:Info modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]
+    annotations:
+      ExpoModule(name = <null>, classes = [CLASS_REFERENCE 'CLASS CLASS name:Item modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<io.github.expo.modules.v2.testdata.Item>] type=kotlin.Array<kotlin.reflect.KClass<*>> varargElementType=kotlin.reflect.KClass<*>)
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Info
+    FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
+      EXPRESSION_BODY
+        CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean, params: kotlin.Array<out io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike>) declared in io.github.expo.modules.v2.types.TypeDescriptor.Parametrized' type=io.github.expo.modules.v2.types.TypeDescriptor.Parametrized origin=null
+          ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.collections.List<*>> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB INTERFACE name:List modality:ABSTRACT visibility:public superTypes:[kotlin.collections.Collection<E of kotlin.collections.List>]' type=kotlin.reflect.KClass<*>
+          ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+          ARG params: CALL 'public final fun arrayOf <T> (vararg elements: T of kotlin.arrayOf): kotlin.Array<T of kotlin.arrayOf> declared in kotlin' type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> origin=null
+            TYPE_ARG T: io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+            ARG elements: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> varargElementType=io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+              GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+    PROPERTY name:version visibility:public modality:FINAL [val]
+      annotations:
+        JS(name = <null>)
+      FIELD PROPERTY_BACKING_FIELD name:version type:kotlin.Int visibility:private [final]
+        EXPRESSION_BODY
+          CONST Int type=kotlin.Int value=3
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-version> visibility:public modality:FINAL returnType:kotlin.Int
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+        correspondingProperty: PROPERTY name:version visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-version> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Info'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:version type:kotlin.Int visibility:private [final]' type=kotlin.Int origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Info declared in io.github.expo.modules.v2.testdata.Info.<get-version>' type=io.github.expo.modules.v2.testdata.Info origin=null
+    PROPERTY name:names visibility:public modality:FINAL [val]
+      annotations:
+        JS(name = <null>)
+      FIELD PROPERTY_BACKING_FIELD name:names type:kotlin.collections.MutableList<kotlin.String> visibility:private [final]
+        EXPRESSION_BODY
+          CALL 'public final fun mutableListOf <T> (vararg elements: T of kotlin.collections.mutableListOf): kotlin.collections.MutableList<T of kotlin.collections.mutableListOf> declared in kotlin.collections' type=kotlin.collections.MutableList<kotlin.String> origin=null
+            TYPE_ARG T: kotlin.String
+            ARG elements: VARARG type=kotlin.Array<out kotlin.String> varargElementType=kotlin.String
+              CONST String type=kotlin.String value="a"
+      FUN DEFAULT_PROPERTY_ACCESSOR name:<get-names> visibility:public modality:FINAL returnType:kotlin.collections.MutableList<kotlin.String>
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+        correspondingProperty: PROPERTY name:names visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-names> (): kotlin.collections.MutableList<kotlin.String> declared in io.github.expo.modules.v2.testdata.Info'
+            GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:names type:kotlin.collections.MutableList<kotlin.String> visibility:private [final]' type=kotlin.collections.MutableList<kotlin.String> origin=null
+              receiver: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Info declared in io.github.expo.modules.v2.testdata.Info.<get-names>' type=io.github.expo.modules.v2.testdata.Info origin=null
+    CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.Info [primary]
+      BLOCK_BODY
+        DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.Module'
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS OBJECT name:Info modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=kotlin.Unit
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.Module
+    FUN FAKE_OVERRIDE name:event visibility:protected modality:FINAL returnType:io.github.expo.modules.v2.events.Event<T of io.github.expo.modules.v2.testdata.Info.event> [fake_override]
+      TYPE_PARAMETER name:T index:0 variance: superTypes:[kotlin.Any?] reified:false
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.ExpoObject
+      VALUE_PARAMETER kind:Regular name:onStartObserving index:1 type:kotlin.Function0<kotlin.Unit>?
+      VALUE_PARAMETER kind:Regular name:onStopObserving index:2 type:kotlin.Function0<kotlin.Unit>?
+      overridden:
+        protected final fun event <T> (onStartObserving: kotlin.Function0<kotlin.Unit>?, onStopObserving: kotlin.Function0<kotlin.Unit>?): io.github.expo.modules.v2.events.Event<T of io.github.expo.modules.v2.Module.event> declared in io.github.expo.modules.v2.Module
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.Module
+    FUN FAKE_OVERRIDE name:onDestroy visibility:public modality:OPEN returnType:kotlin.Unit [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+      overridden:
+        public open fun onDestroy (): kotlin.Unit declared in io.github.expo.modules.v2.Module
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.Module
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:define$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+      VALUE_PARAMETER kind:Regular name:builder index:1 type:io.github.expo.modules.v2.modules.ModuleBuilder
+      overridden:
+        public open fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.Module
+      BLOCK_BODY
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Info.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="applicationId"
+          ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG mutable: CONST Boolean type=kotlin.Boolean value=false
+          ARG propertyName: CONST String type=kotlin.String value="applicationId"
+          ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG constant: CONST Boolean type=kotlin.Boolean value=true
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Info.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="uptime"
+          ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG mutable: CONST Boolean type=kotlin.Boolean value=false
+          ARG propertyName: CONST String type=kotlin.String value="uptime"
+          ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Info.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="version"
+          ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG mutable: CONST Boolean type=kotlin.Boolean value=false
+          ARG propertyName: CONST String type=kotlin.String value="version"
+          ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG constant: CONST Boolean type=kotlin.Boolean value=true
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Info.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="names"
+          ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean, params: kotlin.Array<out io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike>) declared in io.github.expo.modules.v2.types.TypeDescriptor.Parametrized' type=io.github.expo.modules.v2.types.TypeDescriptor.Parametrized origin=null
+              ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.collections.List<*>> origin=null
+                ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB INTERFACE name:List modality:ABSTRACT visibility:public superTypes:[kotlin.collections.Collection<E of kotlin.collections.List>]' type=kotlin.reflect.KClass<*>
+              ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+              ARG params: CALL 'public final fun arrayOf <T> (vararg elements: T of kotlin.arrayOf): kotlin.Array<T of kotlin.arrayOf> declared in kotlin' type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> origin=null
+                TYPE_ARG T: io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+                ARG elements: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> varargElementType=io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+                  GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
+          ARG mutable: CONST Boolean type=kotlin.Boolean value=false
+          ARG propertyName: CONST String type=kotlin.String value="names__trampoline$ExpoModulesV2"
+          ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean, params: kotlin.Array<out io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike>) declared in io.github.expo.modules.v2.types.TypeDescriptor.Parametrized' type=io.github.expo.modules.v2.types.TypeDescriptor.Parametrized origin=null
+              ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<kotlin.collections.List<*>> origin=null
+                ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB INTERFACE name:List modality:ABSTRACT visibility:public superTypes:[kotlin.collections.Collection<E of kotlin.collections.List>]' type=kotlin.reflect.KClass<*>
+              ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+              ARG params: CALL 'public final fun arrayOf <T> (vararg elements: T of kotlin.arrayOf): kotlin.Array<T of kotlin.arrayOf> declared in kotlin' type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> origin=null
+                TYPE_ARG T: io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+                ARG elements: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike> varargElementType=io.github.expo.modules.v2.types.TypeDescriptor.ObjectLike
+                  GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
+        CALL 'public final fun sharedClass (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, vararg argTypes: io.github.expo.modules.v2.types.AnyType, trampolineName: kotlin.String): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Info.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="Item"
+          ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Item> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Item modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+          ARG trampolineName: CONST String type=kotlin.String value="__construct$ExpoModulesV2"
+        RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Info'
+          CONST String type=kotlin.String value="Info"
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:getNames__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun getNames__trampoline$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Info'
+          CALL 'public final fun writeResult (value: kotlin.Any?, type: io.github.expo.modules.v2.types.TypeDescriptor): kotlin.Int declared in io.github.expo.modules.v2.args.Trampoline' type=kotlin.Int origin=null
+            ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Trampoline modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.args.Trampoline
+            ARG value: CALL 'public final fun <get-names> (): kotlin.collections.MutableList<kotlin.String> declared in io.github.expo.modules.v2.testdata.Info' type=kotlin.collections.MutableList<kotlin.String> origin=null
+              ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.Info declared in io.github.expo.modules.v2.testdata.Info.getNames__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.Info origin=null
+            ARG type: GET_FIELD 'FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static] declared in io.github.expo.modules.v2.testdata.Info' type=io.github.expo.modules.v2.types.TypeDescriptor origin=null
+    PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-context> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-context> (): io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
+    PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+      overridden:
+        public final contextOrNull: io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
+      FUN FAKE_OVERRIDE name:<get-contextOrNull> visibility:public modality:FINAL returnType:io.github.expo.modules.v2.ExpoContext? [fake_override]
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.Module
+        correspondingProperty: PROPERTY FAKE_OVERRIDE name:contextOrNull visibility:public modality:FINAL [fake_override,val]
+        overridden:
+          public final fun <get-contextOrNull> (): io.github.expo.modules.v2.ExpoContext? declared in io.github.expo.modules.v2.Module
+    PROPERTY name:applicationId visibility:public modality:FINAL [val]
+      annotations:
+        JS(name = <null>)
+        Constant
+      FUN name:<get-applicationId> visibility:public modality:FINAL returnType:kotlin.String
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+        correspondingProperty: PROPERTY name:applicationId visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-applicationId> (): kotlin.String declared in io.github.expo.modules.v2.testdata.Info'
+            CONST String type=kotlin.String value="dev.expo.payments"
+    PROPERTY name:uptime visibility:public modality:FINAL [val]
+      annotations:
+        JS(name = <null>)
+      FUN name:<get-uptime> visibility:public modality:FINAL returnType:kotlin.Int
+        VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+        correspondingProperty: PROPERTY name:uptime visibility:public modality:FINAL [val]
+        BLOCK_BODY
+          RETURN type=kotlin.Nothing from='public final fun <get-uptime> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Info'
+            CONST Int type=kotlin.Int value=1
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    BLOCK_BODY
+      VAR name:name type:kotlin.String? [val]
+        CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Info' type=kotlin.String? origin=null
+          ARG <this>: GET_OBJECT 'CLASS OBJECT name:Info modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Module]' type=io.github.expo.modules.v2.testdata.Info
+          ARG builder: CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in io.github.expo.modules.v2.testdata'
+        WHEN type=kotlin.String origin=IF
+          BRANCH
+            if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+              ARG arg0: GET_VAR 'val name: kotlin.String? declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String? origin=null
+              ARG arg1: CONST String type=kotlin.String value="Info"
+            then: CONST String type=kotlin.String value="OK"
+          BRANCH
+            if: CONST Boolean type=kotlin.Boolean value=true
+            then: STRING_CONCATENATION type=kotlin.String
+              CONST String type=kotlin.String value="unexpected module name: "
+              GET_VAR 'val name: kotlin.String? declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String? origin=null
+FILE fqName:io.github.expo.modules.v2.hints fileName:io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Info_43a99f4e.kt
+  CLASS GENERATED[io.github.expo.modules.v2.compiler.ModuleHintKey] INTERFACE name:io_github_expo_modules_v2_testdata_Info_43a99f4e modality:FINAL visibility:public superTypes:[kotlin.Any]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.hints.io_github_expo_modules_v2_testdata_Info_43a99f4e
+    FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN returnType:kotlin.Boolean [fake_override,operator]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
+      overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Any
+    FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN returnType:kotlin.Int [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun hashCode (): kotlin.Int declared in kotlin.Any
+    FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
+      overridden:
+        public open fun toString (): kotlin.String declared in kotlin.Any
+    FUN GENERATED[io.github.expo.modules.v2.compiler.ModuleHintKey] name:module visibility:public modality:ABSTRACT returnType:io.github.expo.modules.v2.testdata.Info
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.hints.io_github_expo_modules_v2_testdata_Info_43a99f4e

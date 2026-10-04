@@ -1,0 +1,61 @@
+FILE: moduleConstants.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Item : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Item| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/Constant|() public final val name: R|kotlin/String|
+            public get(): R|kotlin/String| {
+                ^ String(item)
+            }
+
+        @R|io/github/expo/modules/v2/JS|() public final val count: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/JS|() public final val tags: R|kotlin/collections/MutableList<kotlin/String>| = R|kotlin/collections/mutableListOf|<R|kotlin/String|>(vararg(String(a)))
+            public get(): R|kotlin/collections/MutableList<kotlin/String>|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoModule|(classes = <implicitArrayOf>(<getClass>(Q|io/github/expo/modules/v2/testdata/Item|))) public final object Info : R|io/github/expo/modules/v2/Module| {
+        private constructor(): R|io/github/expo/modules/v2/testdata/Info| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/Constant|() public final val applicationId: R|kotlin/String|
+            public get(): R|kotlin/String| {
+                ^ String(dev.expo.payments)
+            }
+
+        @R|io/github/expo/modules/v2/JS|() public final val uptime: R|kotlin/Int|
+            public get(): R|kotlin/Int| {
+                ^ Int(1)
+            }
+
+        @R|io/github/expo/modules/v2/JS|() public final val version: R|kotlin/Int| = Int(3)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/JS|() public final val names: R|kotlin/collections/MutableList<kotlin/String>| = R|kotlin/collections/mutableListOf|<R|kotlin/String|>(vararg(String(a)))
+            public get(): R|kotlin/collections/MutableList<kotlin/String>|
+
+    }
+    public final fun box(): R|kotlin/String| {
+        lval name: R|kotlin/String?| = Q|io/github/expo/modules/v2/testdata/Info|.R|io/github/expo/modules/v2/Module.define$ExpoModulesV2|(R|io/github/expo/modules/v2/modules/ModuleBuilder.ModuleBuilder|())
+        ^box when () {
+            ==(R|<local>/name|, String(Info)) ->  {
+                String(OK)
+            }
+            else ->  {
+                <strcat>(String(unexpected module name: ), R|<local>/name|)
+            }
+        }
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_Info_43a99f4e.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Info_43a99f4e : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Info|
+
+    }

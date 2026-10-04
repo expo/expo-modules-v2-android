@@ -8,6 +8,7 @@ import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.types.typeWith
 import org.jetbrains.kotlin.ir.util.defaultType
 import org.jetbrains.kotlin.ir.util.patchDeclarationParents
+import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
 
 /**
  * Writes the body of `define$ExpoModulesV2`.
@@ -109,12 +110,13 @@ internal class ModuleDefinitionPoet(
     callOn(
       function = symbols.functions.builderProperty,
       receiver = builder,
-      arguments = listOf(
+      arguments = listOfNotNull(
         poet.string(export.jsName),
         anyTypeOf(export.getterPlan),
         poet.boolean(export.property.isVar),
         poet.string(propertyNameOf(export)),
         anyTypeOf(export.setterPlan ?: export.getterPlan),
+        export.isConstant.ifTrue { poet.boolean(true) },
       ),
       returnType = irBuiltIns.unitType,
     )

@@ -9,10 +9,14 @@
 #include <expo-modules-v2/descriptor/HostFunctionSpec.h>
 
 namespace expo::modules::v2::descriptor {
+  /** A property JavaScript reads once and then keeps as a plain value: Kotlin's `@Constant`. */
+  inline constexpr int kPropertyFlagConstant = 1;
+
   struct HostPropertySpec {
     std::string name;
     HostFunctionSpec getter;
     std::optional<HostFunctionSpec> setter;
+    bool isConstant = false;
 
     [[nodiscard]] bool hasSetter() const { return setter.has_value(); }
 

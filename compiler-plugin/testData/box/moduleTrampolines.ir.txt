@@ -164,7 +164,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
             ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Double modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Double
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="scale"
-        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
           ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Buffered.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
           ARG jsName: CONST String type=kotlin.String value="motto"
           ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
@@ -175,7 +175,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
           ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
             ARG descriptor: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
-        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+        CALL 'public final fun property (jsName: kotlin.String, type: io.github.expo.modules.v2.types.AnyType, mutable: kotlin.Boolean, propertyName: kotlin.String, setterType: io.github.expo.modules.v2.types.AnyType, constant: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
           ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Buffered.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
           ARG jsName: CONST String type=kotlin.String value="isReady"
           ARG type: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
@@ -186,6 +186,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTrampolines.kt
           ARG setterType: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
             ARG descriptor: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Bool modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Bool
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG constant: CONST Boolean type=kotlin.Boolean value=true
         RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Buffered'
           CONST String type=kotlin.String value="Buffered"
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:describe__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?

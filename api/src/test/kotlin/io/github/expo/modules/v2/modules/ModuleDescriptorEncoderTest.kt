@@ -117,6 +117,7 @@ class ModuleDescriptorEncoderTest {
 
     assertEquals("version", reader.readString())
     assertEquals("getNativeVersion", reader.readString())
+    assertEquals(0, reader.getInt(), "no property flags")
     assertEquals(listOf(CppType.STRING.code), reader.readIntArray())
     assertEquals(false, reader.getBoolean(), "read-only property")
 
@@ -124,6 +125,7 @@ class ModuleDescriptorEncoderTest {
     // carries the transport of its own direction.
     assertEquals("homepage", reader.readString())
     assertEquals("getHomepage__trampoline", reader.readString())
+    assertEquals(0, reader.getInt(), "no property flags")
     assertEquals(listOf(CppType.STRING.code), reader.readIntArray())
     assertEquals(true, reader.getBoolean(), "mutable property")
     assertEquals("setHomepage__trampoline", reader.readString())
@@ -132,6 +134,30 @@ class ModuleDescriptorEncoderTest {
       reader.readIntArray(),
       "the setter was declared buffered",
     )
+    assertEquals(0, reader.getInt(), "no constructable shared classes declared")
+    assertEquals(0, reader.getInt(), "no events declared")
+    assertEquals(size, reader.position)
+  }
+
+  @Test
+  fun `encodes the flag of a constant property`() {
+    val definition = ModuleBuilder().apply {
+      property("applicationId", AnyType(TypeDescriptor.Simple(String::class.java, false)), constant = true)
+    }
+    val buf = BinaryBuffer.allocate(1024)
+
+    val size = ModuleDescriptorEncoder.encode(buf, definition.functions, definition.properties)
+
+    val reader = buf.duplicateView()
+    reader.limit = size
+    assertEquals(size, reader.getInt())
+    assertEquals(0, reader.getInt(), "no functions declared")
+    assertEquals(1, reader.getInt())
+    assertEquals("applicationId", reader.readString())
+    assertEquals("getApplicationId", reader.readString())
+    assertEquals(ModulePropertyDefinition.FLAG_CONSTANT, reader.getInt())
+    assertEquals(listOf(CppType.STRING.code), reader.readIntArray())
+    assertEquals(false, reader.getBoolean(), "a constant has no setter")
     assertEquals(0, reader.getInt(), "no constructable shared classes declared")
     assertEquals(0, reader.getInt(), "no events declared")
     assertEquals(size, reader.position)

@@ -96,6 +96,33 @@ namespace expo::modules::v2::sharedobjects {
       );
     }
 
+    /**
+     * Keeps a constant's value on [instance] as its own read-only data property, which hides the
+     * prototype's accessor from then on. It is not enumerable, so `Object.keys` and
+     * `JSON.stringify` see the same instance before and after the first read.
+     */
+    void keepOnInstance(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Object& instance,
+      const std::string& name,
+      const facebook::jsi::Value& value
+    ) {
+      facebook::jsi::Object descriptor(rt);
+      descriptor.setProperty(rt, "value", facebook::jsi::Value(rt, value));
+      descriptor.setProperty(rt, "writable", false);
+      descriptor.setProperty(rt, "enumerable", false);
+      descriptor.setProperty(rt, "configurable", false);
+      try {
+        rt.global()
+          .getPropertyAsObject(rt, "Object")
+          .getPropertyAsFunction(rt, "defineProperty")
+          .call(rt, instance, facebook::jsi::String::createFromUtf8(rt, name), descriptor);
+      } catch (const facebook::jsi::JSError&) {
+        // A frozen instance cannot take the property. The value is still right; only the caching
+        // is lost.
+      }
+    }
+
     [[nodiscard]] facebook::jsi::Function hostFunction(
       facebook::jsi::Runtime& rt,
       const std::string& name,
@@ -224,12 +251,18 @@ namespace expo::modules::v2::sharedobjects {
           rt,
           property.name,
           0,
-          [index, name = property.name](
+          [index, name = property.name, isConstant = property.isConstant](
           facebook::jsi::Runtime& rt,
           const facebook::jsi::Value& thisValue,
           const facebook::jsi::Value*,
           size_t) -> facebook::jsi::Value {
-            return liveReceiverOf(rt, thisValue, name)->getProperty(rt, index);
+            facebook::jsi::Value value = liveReceiverOf(rt, thisValue, name)->getProperty(rt, index);
+
+            if (isConstant) {
+              keepOnInstance(rt, thisValue.getObject(rt), name, value);
+            }
+
+            return value;
           }
         ),
         std::move(setter)

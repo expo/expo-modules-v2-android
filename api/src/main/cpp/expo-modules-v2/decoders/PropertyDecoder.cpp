@@ -14,6 +14,8 @@ namespace expo::modules::v2::decoders {
   ) {
     std::string name = reader.readString();
     std::string getterName = reader.readString();
+    const int32_t flags = reader.read<int32_t>();
+    const bool isConstant = (flags & descriptor::kPropertyFlagConstant) != 0;
     ExpectedType getterType = decodeExpectedType(reader, /* allowBufferedHead */ true);
 
     // The setter carries its own type: a write crosses the other way, so it may ride the buffer
@@ -48,6 +50,7 @@ namespace expo::modules::v2::decoders {
       .name = std::move(name),
       .getter = std::move(getter),
       .setter = std::move(setter),
+      .isConstant = isConstant,
     };
   }
 

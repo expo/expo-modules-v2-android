@@ -18,5 +18,6 @@ class ExpoModulesV2FirRegistrar : FirExtensionRegistrar() {
     +::BufferModeCheckers
     +::SharedObjectCheckers
     +::EventCheckers
+    +::ConstantCheckers
   }
 }

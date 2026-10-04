@@ -1,0 +1,116 @@
+// FILE: moduleConstants.kt
+package io.github.expo.modules.v2.testdata
+
+@ExpoSharedObject
+class Item : SharedObject {
+  private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  @JS
+  val count: Int
+    field = 1
+    get
+
+  @JS
+  val tags: MutableList<String>
+    field = mutableListOf<String>(elements = ["a"])
+    get
+
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  constructor() /* primary */ {
+    super/*SharedObject*/()
+    /* <init>() */
+
+  }
+
+  /* static */ fun __construct$ExpoModulesV2(): Item {
+    return Item()
+  }
+
+  /* static */ fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.property(jsName = "name", type = AnyType(descriptor = #STRING, useBuffer = false), mutable = false, propertyName = "name", setterType = AnyType(descriptor = #STRING, useBuffer = false), constant = true)
+    builder.property(jsName = "count", type = AnyType(descriptor = Int, useBuffer = false), mutable = false, propertyName = "count", setterType = AnyType(descriptor = Int, useBuffer = false), constant = true)
+    builder.property(jsName = "tags", type = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), mutable = false, propertyName = "tags__trampoline$ExpoModulesV2", setterType = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true))
+    return "Item"
+  }
+
+  fun getTags__trampoline$ExpoModulesV2(): Int {
+    return Trampoline.writeResult(value = <this>.<get-tags>(), type = #type$0)
+  }
+
+  private /* static */ fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Item::class */))
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "Item", sharedClass = <get-java>(/* $receiver = Item::class */), definition = builder)
+  }
+
+  @JS
+  @Constant
+  val name: String
+    get(): String {
+      return "item"
+    }
+
+}
+
+@ExpoModule(classes = [Item::class])
+object Info : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING]))
+  @JS
+  val version: Int
+    field = 3
+    get
+
+  @JS
+  val names: MutableList<String>
+    field = mutableListOf<String>(elements = ["a"])
+    get
+
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.property(jsName = "applicationId", type = AnyType(descriptor = #STRING, useBuffer = false), mutable = false, propertyName = "applicationId", setterType = AnyType(descriptor = #STRING, useBuffer = false), constant = true)
+    builder.property(jsName = "uptime", type = AnyType(descriptor = Int, useBuffer = false), mutable = false, propertyName = "uptime", setterType = AnyType(descriptor = Int, useBuffer = false))
+    builder.property(jsName = "version", type = AnyType(descriptor = Int, useBuffer = false), mutable = false, propertyName = "version", setterType = AnyType(descriptor = Int, useBuffer = false), constant = true)
+    builder.property(jsName = "names", type = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true), mutable = false, propertyName = "names__trampoline$ExpoModulesV2", setterType = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = true))
+    builder.sharedClass(jsName = "Item", sharedClass = <get-java>(/* $receiver = Item::class */), argTypes = [], trampolineName = "__construct$ExpoModulesV2")
+    return "Info"
+  }
+
+  fun getNames__trampoline$ExpoModulesV2(): Int {
+    return Trampoline.writeResult(value = <this>.<get-names>(), type = #type$0)
+  }
+
+  @JS
+  @Constant
+  val applicationId: String
+    get(): String {
+      return "dev.expo.payments"
+    }
+
+  @JS
+  val uptime: Int
+    get(): Int {
+      return 1
+    }
+
+}
+
+fun box(): String {
+  val name: String? = Info.define$ExpoModulesV2(builder = ModuleBuilder())
+  return when {
+    EQEQ(arg0 = name, arg1 = "Info") -> "OK"
+    else -> "unexpected module name: " + name
+  }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Info_43a99f4e {
+  abstract fun module(): Info
+
+}

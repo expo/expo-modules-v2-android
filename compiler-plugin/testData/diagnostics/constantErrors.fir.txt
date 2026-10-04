@@ -1,0 +1,39 @@
+FILE: constantErrors.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class ConstantShapes : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/ConstantShapes| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/Constant|() public final val fine: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/Constant|() public final val notExported: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/Constant|() public final var mutable: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+            public set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class SharedConstants : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/SharedConstants| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/Constant|() public final val perInstance: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+
+        @R|io/github/expo/modules/v2/JS|() @R|io/github/expo/modules/v2/Constant|() public final var mutable: R|kotlin/Int| = Int(1)
+            public get(): R|kotlin/Int|
+            public set(value: R|kotlin/Int|): R|kotlin/Unit|
+
+    }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_ConstantShapes_2f609c56 : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/ConstantShapes|
+
+    }
