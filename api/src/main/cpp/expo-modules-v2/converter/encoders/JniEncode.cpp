@@ -122,7 +122,7 @@ namespace expo::modules::v2 {
       for (size_t i = 0; i < size; i++) {
         facebook::jsi::String key = names.getValueAtIndex(rt, i).getString(rt);
         const jobject element = encodeToJniDynamic(env, rt, object.getProperty(rt, key));
-        kolibri::JHashMap::put(env, map, key.utf8(rt), encodeToJniDynamic(env, rt, object.getProperty(rt, key)));
+        kolibri::JHashMap::put(env, map, key.utf8(rt), element);
         env->DeleteLocalRef(element);
       }
       return map;
