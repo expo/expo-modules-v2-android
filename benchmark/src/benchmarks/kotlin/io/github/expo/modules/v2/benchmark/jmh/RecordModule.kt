@@ -12,7 +12,7 @@ import io.github.expo.modules.v2.testsupport.HermesRuntime
  * <-> JS object, positional EXTERNAL_SCHEMA buffer format, trampoline payload) next to the same
  * payload crossing as untyped maps — the representation module authors would otherwise use.
  *
- * Dynamic maps are not buffer-safe, so the maps side crosses element-wise as JNI object slots with
+ * Dynamic maps stay off the buffer by default, so the maps side crosses element-wise as JNI object slots with
  * direct invocation; the records side rides the binary buffer through trampolines. [FlaggedItem]
  * sizes the third path: a record whose schema contains a dynamic field crosses decomposed as a Map
  * object slot both ways.

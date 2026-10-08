@@ -39,7 +39,7 @@ import kotlinx.coroutines.delay
 /**
  * List/Map fixture. Buffer-safe complex signatures dispatch through trampolines — hand-written
  * here in exactly the shape a compiler plugin will generate (see [Trampoline] for the contract).
- * [identity] takes `List<Any?>` — a dynamic container is not buffer-safe, so it crosses as a
+ * [identity] takes `List<Any?>` — a dynamic container is not buffered by default, so it crosses as a
  * plain JNI object slot and the user method is invoked directly, no trampoline.
  */
 private class EchoModule : Module() {
@@ -437,6 +437,81 @@ private class DynamicHandleModule : Module() {
   @JS
   fun passthrough(value: Any?): Any? = value
 }
+
+/**
+ * Dynamic (`Any`) values opted into the buffer with `Buffer.YES`: they ride the tagged dynamic
+ * codec, while the `*Slot` twins keep the same value in its JNI object slot. A result that holds a
+ * live handle or `Unit` falls back to its slot.
+ */
+@ExpoModule(name = "DynBuf")
+private class BufferedDynamicModule : Module() {
+  @JS
+  @BufferMode(Buffer.YES)
+  fun echo(value: Any?): Any? = value
+
+  @JS
+  @BufferMode(Buffer.YES)
+  fun kinds(values: List<Any?>): String = describeKinds(values)
+
+  @JS
+  @BufferMode(Buffer.NO)
+  fun kindsSlot(values: List<Any?>): String = describeKinds(values)
+
+  @JS
+  @BufferMode(Buffer.YES)
+  fun keys(map: Map<String, Any?>): String = map.keys.sorted().joinToString(",")
+
+  // The handle keeps its slot between two buffered arguments. The result holds it, so the result
+  // falls back to its slot.
+  @JS
+  @BufferMode(Buffer.YES)
+  fun around(before: Any?, handle: JavaScriptObject, after: List<Any?>): Any =
+    mapOf("before" to before, "handle" to handle, "after" to after)
+
+  @JS
+  @BufferMode(returns = Buffer.YES)
+  fun produce(): Any = kotlinValues()
+
+  @JS
+  @BufferMode(returns = Buffer.NO)
+  fun produceSlot(): Any = kotlinValues()
+
+  @JS
+  @BufferMode(returns = Buffer.YES)
+  fun units(): List<Any?> = listOf(1, Unit)
+
+  @JS
+  @BufferMode(returns = Buffer.YES)
+  fun big(): Any = mapOf("s" to "ż".repeat(200_000))
+
+  @JS
+  @BufferMode(Buffer.YES)
+  var stored: Any? = null
+
+  @JS
+  fun keep(handle: JavaScriptObject) {
+    stored = handle
+  }
+}
+
+private fun kotlinValues(): List<Any?> = listOf(
+  1,
+  2L,
+  1.5f,
+  2.5,
+  "s",
+  true,
+  null,
+  intArrayOf(1, 2),
+  doubleArrayOf(0.5),
+  booleanArrayOf(true, false),
+  listOf(1, null, "x"),
+  mapOf("k" to listOf(1.0, 2.0)),
+  Point(1.0, 2.0, null),
+)
+
+private fun describeKinds(values: List<Any?>): String =
+  values.joinToString(",") { it?.javaClass?.simpleName ?: "null" }
 
 /**
  * JSI-handle fixture: a JS_VALUE / JS_OBJECT slot passes a live reference into the runtime — the
@@ -1490,7 +1565,7 @@ class HermesRuntimeTest {
   fun `registered methods dispatch through JNI slots and trampolines`() {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register("Echo", sharedEcho) {
-        // List<Any?> is not buffer-safe: it crosses as a JNI object slot, no trampoline. The
+        // List<Any?> is not buffered by default: it crosses as a JNI object slot, no trampoline. The
         // elements are declared nullable — a dynamic element still has to say so.
         val dynamicList = AnyType(
           TypeDescriptor.Parametrized(List::class.java, false, arrayOf(TypeDescriptor.Simple(Any::class.java, true))),
@@ -2008,6 +2083,106 @@ class HermesRuntimeTest {
         "try { expo.modules.DynH.passthrough({fn: () => 1}); 'no error'; } catch (e) { String(e); }",
       )
       assertTrue("function" in fn, "expected the JS-function error, got: $fn")
+    }
+  }
+
+  @Test
+  fun `Buffer YES carries Any arguments on the payload`() {
+    HermesRuntime().use { runtime ->
+      runtime.moduleRegistry.register(BufferedDynamicModule())
+
+      // Scalars, null and nested structures round-trip.
+      assertEquals(
+        """[1.5,"x",true,null,{"a":[1,{"b":"c"}]}]""",
+        runtime.evaluateAsString(
+          "JSON.stringify([1.5, 'x', true, null, {a: [1, {b: 'c'}]}].map((v) => expo.modules.DynBuf.echo(v)))",
+        ),
+      )
+
+      // Kotlin sees the same classes on the payload as in the JNI slot.
+      val payload = "[1, 'x', false, null, [1, 'y'], {k: 1}, new Uint8Array([1, 2]).buffer]"
+      val kinds = "Double,String,Boolean,null,ArrayList,HashMap,byte[]"
+      assertEquals(kinds, runtime.evaluateAsString("expo.modules.DynBuf.kinds($payload)"))
+      assertEquals(kinds, runtime.evaluateAsString("expo.modules.DynBuf.kindsSlot($payload)"))
+
+      assertEquals("a,b", runtime.evaluateAsString("expo.modules.DynBuf.keys({b: 1, a: [null]})"))
+
+      // An ArrayBuffer crosses as a ByteArray and comes back as an ArrayBuffer.
+      assertEquals(
+        "1,2,255",
+        runtime.evaluateAsString(
+          "new Uint8Array(expo.modules.DynBuf.echo(new Uint8Array([1, 2, 255]).buffer)).join()",
+        ),
+      )
+
+      // The handle keeps its slot, and the result that holds it falls back to its slot.
+      assertEquals(
+        "true",
+        runtime.evaluateAsString(
+          "var o = {}; var r = expo.modules.DynBuf.around(1, o, ['z']); " +
+            "String(r.handle === o && r.before === 1 && r.after[0] === 'z')",
+        ),
+      )
+
+      // A JS function throws on the payload, as it does in a slot.
+      val fn = runtime.evaluateAsString(
+        "try { expo.modules.DynBuf.echo({fn: () => 1}); 'no error'; } catch (e) { String(e); }",
+      )
+      assertTrue("function" in fn, "expected the JS-function error, got: $fn")
+
+      // A >256 KiB payload overflows the fixed buffer and falls back to the JNI path.
+      assertEquals(
+        "true",
+        runtime.evaluateAsString(
+          "(() => { const s = 'ż'.repeat(200000); return String(expo.modules.DynBuf.echo({s}).s === s); })()",
+        ),
+      )
+    }
+  }
+
+  @Test
+  fun `Buffer YES carries Any results on the payload`() {
+    HermesRuntime().use { runtime ->
+      runtime.moduleRegistry.register(BufferedDynamicModule())
+
+      // JS sees the same value from the payload as from the JNI slot.
+      val produced = runtime.evaluateAsString("JSON.stringify(expo.modules.DynBuf.produce())")
+      assertEquals(
+        runtime.evaluateAsString("JSON.stringify(expo.modules.DynBuf.produceSlot())"),
+        produced,
+      )
+      assertEquals(
+        "[1,2,1.5,2.5,\"s\",true,null,[1,2],[0.5],[true,false],[1,null,\"x\"]," +
+          "{\"k\":[1,2]},{\"x\":1,\"y\":2,\"label\":null}]",
+        produced,
+      )
+
+      // Unit has no wire form, so the result falls back to its slot.
+      assertEquals(
+        "1,undefined",
+        runtime.evaluateAsString("expo.modules.DynBuf.units().map(String).join()"),
+      )
+
+      // A >256 KiB result overflows the fixed buffer and falls back to its slot.
+      assertEquals(
+        "200000",
+        runtime.evaluateAsString("String(expo.modules.DynBuf.big().s.length)"),
+      )
+
+      // A buffered getter: a plain value rides the payload, a handle falls back to its slot.
+      assertEquals(
+        "[1,{\"a\":\"b\"}]",
+        runtime.evaluateAsString(
+          "expo.modules.DynBuf.stored = [1, {a: 'b'}]; JSON.stringify(expo.modules.DynBuf.stored)",
+        ),
+      )
+      assertEquals(
+        "true",
+        runtime.evaluateAsString(
+          "var o = {}; expo.modules.DynBuf.keep(o); String(expo.modules.DynBuf.stored === o)",
+        ),
+      )
+      runtime.evaluate("expo.modules.DynBuf.stored = null")
     }
   }
 

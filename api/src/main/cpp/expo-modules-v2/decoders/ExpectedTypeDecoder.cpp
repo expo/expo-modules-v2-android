@@ -76,11 +76,9 @@ namespace expo::modules::v2::decoders {
         return ExpectedType(static_cast<LeafType>(kind), nullable, usesBuffer);
       }
 
-      // Leaves the binary codec can carry: STRING, the primitive arrays, and boxed scalars.
-      // Unboxed scalars are register-width JNI slots, UNIT is zero-width, and ANY/JSI handles
-      // have no binary encoding — Kotlin rejects those at declaration; this is the decode-side backstop.
       static void requireBufferableLeaf(const CppType kind) {
         switch (kind) {
+          case CppType::ANY:
           case CppType::STRING:
           case CppType::DOUBLE_ARRAY:
           case CppType::INT_ARRAY:
@@ -102,7 +100,7 @@ namespace expo::modules::v2::decoders {
       static void requireBufferSafeIfBuffered(const ExpectedType& type) {
         if (type.usesBuffer() && !type.bufferSafe()) {
           throw std::invalid_argument(
-            "kUsesBufferFlag on a type that is not buffer-safe (it contains ANY or a JSI handle)"
+            "kUsesBufferFlag on a type that is not buffer-safe (it contains a JSI handle)"
           );
         }
       }

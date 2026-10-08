@@ -1,11 +1,13 @@
 package io.github.expo.modules.v2.args
 
-import io.github.expo.modules.v2.binary.newSharedView
-import io.github.expo.modules.v2.binary.rewind
-import io.github.expo.modules.v2.types.TypeDescriptor
-import io.github.expo.modules.v2.types.anyConverter
 import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.binary.SlotOnlyValueException
+import io.github.expo.modules.v2.binary.newSharedView
+import io.github.expo.modules.v2.binary.rewind
+import io.github.expo.modules.v2.converters.TypeConverter
+import io.github.expo.modules.v2.types.TypeDescriptor
+import io.github.expo.modules.v2.types.anyConverter
 import java.nio.BufferOverflowException
 
 @CalledFromNative(by = "expo-modules-v2/jni/JTrampoline.h")
@@ -77,14 +79,20 @@ object Trampoline {
       converter.writeToBuffer(buf, value)
       buf.position
     } catch (_: BufferOverflowException) {
-      overflowResult = if (converter.isPassthrough) {
-        value
-      } else {
-        converter.toJni(value)
-      }
-
-      OVERFLOW_RESULT
+      overflow(converter, value)
+    } catch (_: SlotOnlyValueException) {
+      overflow(converter, value)
     }
+  }
+
+  private fun overflow(converter: TypeConverter<Any>, value: Any?): Int {
+    overflowResult = if (converter.isPassthrough) {
+      value
+    } else {
+      converter.toJni(value)
+    }
+
+    return OVERFLOW_RESULT
   }
 
   @JvmStatic

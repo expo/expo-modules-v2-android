@@ -1,5 +1,7 @@
 package io.github.expo.modules.v2.binary
 
+import io.github.expo.modules.v2.jsi.JavaScriptObject
+import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.records.Record
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.SchemaId
@@ -35,6 +37,7 @@ object BinaryValueCodec {
         for (element in value) buf.putBoolean(element)
       }
       is ByteArray -> buf.putTaggedByteArray(value)
+      is JavaScriptValue, is JavaScriptObject, Unit -> throw SlotOnlyValueException()
       else -> writeDynamicExternalSchema(buf, value)
     }
   }
@@ -150,3 +153,10 @@ object BinaryValueCodec {
     type.anyCodec.encode(value as Record, writer)
   }
 }
+
+/**
+ * Thrown by a buffer write that meets a value only a JNI slot can carry: a JSI handle or `Unit`
+ * inside an `Any`. [io.github.expo.modules.v2.args.Trampoline.writeResult] catches it and hands
+ * the whole value over as an overflow result, the same way as a payload that does not fit.
+ */
+internal class SlotOnlyValueException : RuntimeException()

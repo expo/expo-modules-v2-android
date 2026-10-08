@@ -111,6 +111,24 @@ class TrampolineTest {
   }
 
   @Test
+  fun `writeResult falls back to the slot when an Any result holds Unit`() {
+    val anyList = AnyType(
+      TypeDescriptor.Parametrized(
+        List::class.java,
+        false,
+        arrayOf(TypeDescriptor.Simple(Any::class.java, true)),
+      ),
+    )
+    val value = listOf(1, "x", Unit)
+
+    assertEquals(
+      Trampoline.OVERFLOW_RESULT,
+      Trampoline.writeResultTo(BinaryBuffer.allocate(1024), value, anyList.descriptor),
+    )
+    assertEquals(value, Trampoline.takeOverflowResult())
+  }
+
+  @Test
   fun `reads typed list and map arguments positionally`() {
     val doubleList = AnyType(
       TypeDescriptor.Parametrized(

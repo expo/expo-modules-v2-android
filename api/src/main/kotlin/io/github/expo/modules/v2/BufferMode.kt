@@ -1,5 +1,8 @@
 package io.github.expo.modules.v2
 
+/**
+ * Whether a value crosses the bridge on the shared binary buffer or in its own JNI slot.
+ */
 @Target(
   AnnotationTarget.CLASS,
   AnnotationTarget.FUNCTION,

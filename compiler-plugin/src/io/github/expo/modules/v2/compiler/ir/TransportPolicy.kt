@@ -35,7 +35,11 @@ internal enum class ValueKind {
   BOXED_SCALAR,
   STRING,
 
-  /** `Any`: a dynamically tagged slot with no fixed binary encoding. */
+  /**
+   * `Any`: a dynamically tagged slot with no fixed binary encoding. Only an explicit `Buffer.YES`
+   * rides the buffer, through the tagged dynamic codec. A result that holds a JSI handle or `Unit`
+   * falls back to its JNI slot at run time.
+   */
   DYNAMIC,
   UNIT,
   PRIMITIVE_ARRAY,
@@ -101,7 +105,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
     val kind = kindOf(type)
     val buffered = when (choice) {
       BufferChoice.NO -> false
-      BufferChoice.YES -> canBuffer(kind, type)
+      BufferChoice.YES -> canBuffer(kind, type, allowDynamic = true)
       BufferChoice.AUTO -> canBuffer(kind, type) && prefersBuffer(kind, crossing)
     }
 
@@ -182,10 +186,15 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
         -> false
     }
 
-  /** Whether the wire format can carry this value on the buffer at all. */
-  fun canBuffer(kind: ValueKind, type: IrType): Boolean =
+  /**
+   * Whether the wire format can carry this value on the buffer at all. [allowDynamic] admits `Any`,
+   * alone or inside a List/Map/Set/Array, but never as a record field: a record rides its own
+   * transport.
+   */
+  fun canBuffer(kind: ValueKind, type: IrType, allowDynamic: Boolean = false): Boolean =
     when (kind) {
-      ValueKind.UNBOXED_SCALAR, ValueKind.DYNAMIC, ValueKind.UNIT, ValueKind.JS_HANDLE,
+      ValueKind.DYNAMIC -> allowDynamic
+      ValueKind.UNBOXED_SCALAR, ValueKind.UNIT, ValueKind.JS_HANDLE,
       ValueKind.TYPED_ARRAY, ValueKind.SHARED_OBJECT,
         -> false
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.INT_ENUM -> type.isMarkedNullable()
@@ -195,7 +204,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD ->
         isBufferSafe(
           type,
-          mutableSetOf()
+          mutableSetOf(),
+          allowDynamic,
         )
     }
 
@@ -209,14 +219,21 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       else -> true
     }
 
-  private fun isBufferSafe(type: IrType, visited: MutableSet<String>): Boolean {
+  private fun isBufferSafe(
+    type: IrType,
+    visited: MutableSet<String>,
+    allowDynamic: Boolean = false,
+  ): Boolean {
     val kind = kindOf(type)
-    if (kind == ValueKind.DYNAMIC || kind == ValueKind.JS_HANDLE ||
+    if (kind == ValueKind.DYNAMIC) {
+      return allowDynamic
+    }
+    if (kind == ValueKind.JS_HANDLE ||
       kind == ValueKind.TYPED_ARRAY || kind == ValueKind.SHARED_OBJECT
     ) {
       return false
     }
-    if (!elementTypes(type).all { isBufferSafe(it, visited) }) {
+    if (!elementTypes(type).all { isBufferSafe(it, visited, allowDynamic) }) {
       return false
     }
     if (kind != ValueKind.RECORD) {

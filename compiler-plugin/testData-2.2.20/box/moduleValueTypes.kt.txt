@@ -196,6 +196,8 @@ object Values : Module {
   private /* static final field */ val type$7: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false)
   private /* static final field */ val type$8: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false)]))
   private /* static final field */ val type$9: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false)]))
+  private /* static final field */ val type$10: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#ANY_NULL]))
+  private /* static final field */ val type$11: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #ANY]))
   private constructor() /* primary */ {
     super/*Module*/()
     /* <init>() */
@@ -230,9 +232,32 @@ object Values : Module {
     builder.function(jsName = "points", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false)])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "points__trampoline$ExpoModulesV2")
     builder.function(jsName = "holders", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false)])), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "holders__trampoline$ExpoModulesV2")
     builder.function(jsName = "dynamic", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = false), AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = JavaScriptValue::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "dynamic")
+    builder.function(jsName = "dynamicOptedIn", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = true), AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#ANY_NULL])), useBuffer = true), AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Map<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #ANY])), useBuffer = true), AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = JavaScriptValue::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = #ANY_NULL, useBuffer = true), methodName = "dynamicOptedIn__trampoline$ExpoModulesV2")
+    builder.function(jsName = "dynamicResult", argTypes = [AnyType(descriptor = #ANY_NULL, useBuffer = false)], returns = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#ANY_NULL])), useBuffer = true), methodName = "dynamicResult__trampoline$ExpoModulesV2")
+    builder.function(jsName = "holderOptedIn", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "holderOptedIn__trampoline$ExpoModulesV2")
     builder.function(jsName = "optedOut", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "optedOut")
     builder.function(jsName = "optedIn", argTypes = [AnyType(descriptor = IntArray(isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "optedIn__trampoline$ExpoModulesV2")
     return "Values"
+  }
+
+  @CalledFromNative
+  fun dynamicOptedIn__trampoline$ExpoModulesV2(p3: JavaScriptValue?, payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Any?
+    var v1: List<Any?>
+    var v2: Map<String, Any>
+    try { // BLOCK
+      v0 = args.next<Any?>(type = #ANY_NULL)
+      v1 = args.next<List<Any?>>(type = #type$10)
+      v2 = args.next<Map<String, Any>>(type = #type$11)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.dynamicOptedIn(value = v0, list = v1, map = v2, handle = p3 as JavaScriptValue), type = #ANY_NULL)
+  }
+
+  @CalledFromNative
+  fun dynamicResult__trampoline$ExpoModulesV2(p0: Any?): Int {
+    return Trampoline.writeResult(value = <this>.dynamicResult(value = p0), type = #type$10)
   }
 
   @CalledFromNative
@@ -249,6 +274,11 @@ object Values : Module {
     }
     finally args.finish()
     return Trampoline.writeResult(value = <this>.echoPoint(point = v0), type = #type$6)
+  }
+
+  @CalledFromNative
+  fun holderOptedIn__trampoline$ExpoModulesV2(p0: Map<String, Any?>?): Int {
+    return <this>.holderOptedIn(holder = Bridge.fromJni(value = p0, type = #type$7) as Holder)
   }
 
   @CalledFromNative
@@ -328,6 +358,18 @@ object Values : Module {
   }
 
   @JS
+  @BufferMode(value = Buffer.YES)
+  fun dynamicOptedIn(value: Any?, list: List<Any?>, map: Map<String, Any>, handle: JavaScriptValue): Any? {
+    return value
+  }
+
+  @JS
+  @BufferMode(returns = Buffer.YES)
+  fun dynamicResult(value: Any?): List<Any?> {
+    return listOf<Any?>(element = value)
+  }
+
+  @JS
   fun echoHolder(holder: Holder): Holder {
     return holder
   }
@@ -335,6 +377,11 @@ object Values : Module {
   @JS
   fun echoPoint(point: Point): Point {
     return point
+  }
+
+  @JS
+  fun holderOptedIn(@BufferMode(value = Buffer.YES) holder: Holder): Int {
+    return 0
   }
 
   @JS
@@ -379,7 +426,7 @@ object Values : Module {
 
 fun box(): String {
   val suffix: String = "__trampoline$ExpoModulesV2"
-  val expected: Map<String, String> = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "nullableScalars" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "unboxedScalars" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "arrays" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "containers" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "nullableElements" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "echoPoint" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "echoHolder" + suffix, */ that = "(Ljava/util/Map;)Ljava/util/Map;"), to<String, String>(/* <this> = "points" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "holders" + suffix, */ that = "(Ljava/util/List;)I"), to<String, String>(/* <this> = "dynamic" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "optedOut" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "optedIn" + suffix, */ that = "(I)I")])
+  val expected: Map<String, String> = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "nullableScalars" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "unboxedScalars" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "arrays" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "containers" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "nullableElements" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "echoPoint" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "echoHolder" + suffix, */ that = "(Ljava/util/Map;)Ljava/util/Map;"), to<String, String>(/* <this> = "points" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "holders" + suffix, */ that = "(Ljava/util/List;)I"), to<String, String>(/* <this> = "dynamic" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "dynamicOptedIn" + suffix, */ that = "(Lio/github/expo/modules/v2/jsi/JavaScriptValue;I)I"), to<String, String>(/* <this> = "dynamicResult" + suffix, */ that = "(Ljava/lang/Object;)I"), to<String, String>(/* <this> = "holderOptedIn" + suffix, */ that = "(Ljava/util/Map;)I"), to<String, String>(/* <this> = "optedOut" + suffix, */ that = "<absent>"), to<String, String>(/* <this> = "optedIn" + suffix, */ that = "(I)I")])
   { // BLOCK
     val tmp_2: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = expected */)
     while (tmp_2.hasNext()) { // BLOCK

@@ -62,9 +62,29 @@ object Values : Module() {
     @JS
     fun holders(values: List<Holder>): Int = values.size
 
-    // Any and the JSI handles have no binary encoding, so they always keep their slot.
+    // By default, Any and the JSI handles keep their slot.
     @JS
     fun dynamic(value: Any?, handle: JavaScriptValue): Int = handle.hashCode()
+
+    // Buffer.YES moves Any onto the payload, alone or inside a container, and the Any result too.
+    // The handle has no binary encoding, so it keeps its slot.
+    @JS
+    @BufferMode(Buffer.YES)
+    fun dynamicOptedIn(
+        value: Any?,
+        list: List<Any?>,
+        map: Map<String, Any>,
+        handle: JavaScriptValue,
+    ): Any? = value
+
+    // `returns` alone moves only the Any result onto the payload.
+    @JS
+    @BufferMode(returns = Buffer.YES)
+    fun dynamicResult(value: Any?): List<Any?> = listOf(value)
+
+    // A record rides its own transport, so Buffer.YES does not override an unsafe schema.
+    @JS
+    fun holderOptedIn(@BufferMode(Buffer.YES) holder: Holder): Int = 0
 
     // Buffer.NO on a value the default would have buffered.
     @JS
@@ -115,6 +135,12 @@ fun box(): String {
         "holders$suffix" to "(Ljava/util/List;)I",
         // Any and a handle both stay in slots, and neither needs conversion
         "dynamic$suffix" to "<absent>",
+        // three buffered Any arguments, the handle in its slot, and the buffered Any result
+        "dynamicOptedIn$suffix" to "(Lio/github/expo/modules/v2/jsi/JavaScriptValue;I)I",
+        // the Any argument in its slot, and the buffered result
+        "dynamicResult$suffix" to "(Ljava/lang/Object;)I",
+        // the unsafe record still crosses as a JMap in a slot
+        "holderOptedIn$suffix" to "(Ljava/util/Map;)I",
         // Buffer.NO puts the list back in a slot, but it still needs no conversion
         "optedOut$suffix" to "<absent>",
         // Buffer.YES moves the primitive array onto the payload

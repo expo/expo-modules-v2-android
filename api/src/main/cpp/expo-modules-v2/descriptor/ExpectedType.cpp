@@ -47,10 +47,11 @@ namespace expo::modules::v2 {
     if (nullable && isUnboxedScalar(type)) {
       throw std::invalid_argument("Unboxed scalar ExpectedType cannot carry the nullable flag");
     }
-    if (usesBuffer && (
-          isUnboxedScalar(type) || type == LeafType::ANY ||
-          type == LeafType::JS_VALUE || type == LeafType::JS_OBJECT
-        )) {
+    if (
+      usesBuffer && (
+        isUnboxedScalar(type) || type == LeafType::JS_VALUE || type == LeafType::JS_OBJECT
+      )
+    ) {
       throw std::invalid_argument("This leaf ExpectedType cannot ride the binary buffer");
     }
   }
@@ -274,7 +275,6 @@ namespace expo::modules::v2 {
         return "<unregistered record #" + std::to_string(schemaId) + ">";
       }
     }
-
   } // namespace
 
   std::string ExpectedType::kotlinType() const {
@@ -309,7 +309,7 @@ namespace expo::modules::v2 {
     return std::visit(
       overloads{
         [](const LeafType leaf) {
-          if (leaf == LeafType::ANY || leaf == LeafType::JS_OBJECT || leaf == LeafType::JS_VALUE) {
+          if (leaf == LeafType::JS_OBJECT || leaf == LeafType::JS_VALUE) {
             return false;
           }
 

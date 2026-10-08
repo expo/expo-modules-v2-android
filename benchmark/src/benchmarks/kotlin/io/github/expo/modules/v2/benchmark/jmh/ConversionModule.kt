@@ -16,7 +16,8 @@ import io.github.expo.modules.v2.testsupport.HermesRuntime
  * - Buffer-safe types (`echoTyped`, `sumTyped`, `echoRecords`): trampoline payload — the whole
  *   structure serialized into the shared direct ByteBuffer, one JNI crossing.
  * - Dynamic types (`echo`, `echoMap`, `echoMaps` — `List<Any?>`/`Map<String, Any?>`): JNI object
- *   slots converted element-wise; these can carry JSI handles, so they never ride the buffer.
+ *   slots converted element-wise; by default these never ride the buffer (see
+ *   `DynamicTransportBenchmark` for the `Buffer.YES` opt-in).
  * - `echoArray`: the DoubleArray baseline — bulk JNI copies both ways, no buffer, no payload limit.
  *
  * Each `*Direct`/`*Buffered` pair is two Kotlin functions exported under the names the cases expect,
@@ -25,7 +26,7 @@ import io.github.expo.modules.v2.testsupport.HermesRuntime
  */
 @ExpoModule(name = "Bench")
 class ConversionOps : Module() {
-  // Dynamic containers can carry JSI handles, so they are never buffer-safe: JNI object slots.
+  // Dynamic containers stay in JNI object slots unless an argument opts in with Buffer.YES.
   @JS
   fun echo(values: List<Any?>): List<Any?> = values
 
