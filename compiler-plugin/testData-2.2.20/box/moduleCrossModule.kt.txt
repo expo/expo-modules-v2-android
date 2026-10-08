@@ -108,7 +108,9 @@ object ProducerModule : Module {
   @JS
   var count: Int
     field = 1
+    @CalledFromNative
     get
+    @CalledFromNative
     set
 
   private constructor() /* primary */ {
@@ -117,6 +119,7 @@ object ProducerModule : Module {
 
   }
 
+  @CalledFromNative
   fun bump__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: Shared
@@ -134,6 +137,7 @@ object ProducerModule : Module {
     return "Producer"
   }
 
+  @CalledFromNative
   fun name__trampoline$ExpoModulesV2(payloadLength: Int): String? {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
@@ -182,6 +186,7 @@ object ConsumerModule : Module {
     return "Consumer"
   }
 
+  @CalledFromNative
   fun forward__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: Shared

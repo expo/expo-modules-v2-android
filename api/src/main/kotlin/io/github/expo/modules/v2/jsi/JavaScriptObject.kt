@@ -8,6 +8,7 @@ import io.github.expo.kolibri.NativePointer
 import io.github.expo.modules.v2.ExpoObject
 import java.nio.ByteBuffer
 
+@CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObject.h")
 class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObject.h") private constructor(
   pointer: Long,
 ) : NativeObject(NativePointer(pointer)) {

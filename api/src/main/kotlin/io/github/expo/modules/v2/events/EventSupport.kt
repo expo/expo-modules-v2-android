@@ -13,6 +13,7 @@ import io.github.expo.modules.v2.types.TypeDescriptor
  * The bridge's side of [Event]: binding an event to its name and type, the observation hooks the
  * native side calls, and the delivery of an emit to one runtime.
  */
+@CalledFromNative(by = "expo-modules-v2/jni/JEventSupport.h")
 object EventSupport {
   /** Guards every [Event]'s observer set. */
   internal val lock = Any()
@@ -113,6 +114,7 @@ object EventSupport {
  * happens while the owning object is constructed - never loads the native library; only the first
  * delivery does, and by then a runtime exists.
  */
+@CalledFromNative(by = "expo-modules-v2/jni/JEventSupport.h")
 internal object EventNatives {
   init {
     ExpoModulesV2.load()

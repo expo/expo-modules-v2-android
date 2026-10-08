@@ -9,11 +9,12 @@ import org.jetbrains.kotlin.ir.declarations.IrClass
  * export so the description can point the bridge at it.
  *
  * A member needs one when a value has to be converted or moved onto the binary buffer; anything the
- * bridge can hand over untouched is called directly.
+ * bridge can hand over untouched is called directly. Either way, what the bridge calls is marked
+ * `@CalledFromNative`, so R8 keeps it and nothing more.
  */
 internal class ExportedTrampolines(
   context: IrPluginContext,
-  symbols: SymbolFinder,
+  private val symbols: SymbolFinder,
   poet: TypeDescriptorPoet,
   descriptors: DescriptorFields,
 ) {
@@ -21,12 +22,23 @@ internal class ExportedTrampolines(
 
   fun generate(exportedClass: IrClass, exported: List<Exported>) {
     exported
-      .filter { it.needsTrampoline }
       .forEach { export ->
-        when (export) {
-          is ExportedFunction -> function(exportedClass, export)
-          is ExportedProperty -> property(exportedClass, export)
-          is ExportedEvent -> Unit
+        if (export.needsTrampoline) {
+          when (export) {
+            is ExportedFunction -> function(exportedClass, export)
+            is ExportedProperty -> property(exportedClass, export)
+            is ExportedEvent -> Unit
+          }
+        } else {
+          // Called directly: the function itself, or the accessors `ModuleBuilder` names after the
+          // property.
+          when (export) {
+            is ExportedFunction -> symbols.markCalledFromNative(export.function)
+            is ExportedProperty -> listOfNotNull(export.property.getter, export.property.setter)
+              .forEach(symbols::markCalledFromNative)
+
+            is ExportedEvent -> Unit
+          }
         }
       }
   }

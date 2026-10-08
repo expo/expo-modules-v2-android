@@ -4,6 +4,7 @@ package io.github.expo.modules.v2.testdata
 @ExpoSharedObject
 class Listed : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(p0: Int): Listed {
     return Listed(n = p0)
   }
@@ -26,6 +27,7 @@ class Owner : Module {
   @ExpoSharedObject
   class Nested : SharedObject {
     private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+    @CalledFromNative
     /* static */ fun __construct$ExpoModulesV2(payloadLength: Int): Nested {
       val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
       var v0: String
@@ -75,6 +77,7 @@ class Owner : Module {
 @ExpoSharedObject
 class Player : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Player {
     return Player()
   }
@@ -93,6 +96,7 @@ class Player : SharedObject {
     return SharedObjectRegistry.register(jsName = "Player", sharedClass = <get-java>(/* $receiver = Player::class */), definition = builder)
   }
 
+  @CalledFromNative
   fun rename__trampoline$ExpoModulesV2(payloadLength: Int): String? {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
@@ -117,6 +121,7 @@ class Players : Module {
 @ExpoSharedObject(name = "Renamed")
 class Speaker : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Speaker {
     return Speaker()
   }

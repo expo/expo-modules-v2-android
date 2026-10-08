@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.testapp
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
@@ -74,10 +75,13 @@ private class EchoModule : Module() {
     ),
   )
 
+  @CalledFromNative
   fun identity(values: List<Any?>): List<Any?> = values
 
+  @CalledFromNative
   fun sum(values: List<Double>): Double = values.sum()
 
+  @CalledFromNative
   fun sum__trampoline(payloadLength: Int): Double {
     val args = Trampoline.arguments(payloadLength)
     val values = try {
@@ -88,8 +92,10 @@ private class EchoModule : Module() {
     return sum(values)
   }
 
+  @CalledFromNative
   fun total(map: Map<String, Int>): Int = map.values.sum()
 
+  @CalledFromNative
   fun total__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val map = try {
@@ -100,8 +106,10 @@ private class EchoModule : Module() {
     return total(map)
   }
 
+  @CalledFromNative
   fun holes(values: List<Double?>): List<Double?> = values
 
+  @CalledFromNative
   fun holes__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val values = try {
@@ -112,8 +120,10 @@ private class EchoModule : Module() {
     return Trampoline.writeResult(holes(values), nullableDoubleList.descriptor)
   }
 
+  @CalledFromNative
   fun labels(map: Map<String, String?>): Map<String, String?> = map
 
+  @CalledFromNative
   fun labels__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val map = try {
@@ -138,8 +148,10 @@ private class RecordModule : Module() {
     TypeDescriptor.Parametrized(List::class.java, false, arrayOf(TypeDescriptor.Simple(Point::class.java, false))),
   )
 
+  @CalledFromNative
   fun move(point: Point): Point = Point(point.x + 1.0, point.y + 1.0, point.label)
 
+  @CalledFromNative
   fun move__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val point = try {
@@ -150,8 +162,10 @@ private class RecordModule : Module() {
     return Trampoline.writeResult(move(point), TypeDescriptor.Simple(Point::class.java, false))
   }
 
+  @CalledFromNative
   fun label(point: Point): String = point.label ?: "<none>"
 
+  @CalledFromNative
   fun label__trampoline(payloadLength: Int): String {
     val args = Trampoline.arguments(payloadLength)
     val point = try {
@@ -162,8 +176,10 @@ private class RecordModule : Module() {
     return label(point)
   }
 
+  @CalledFromNative
   fun spread(points: List<Point>): List<Point> = points
 
+  @CalledFromNative
   fun spread__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val points = try {
@@ -174,14 +190,18 @@ private class RecordModule : Module() {
     return Trampoline.writeResult(spread(points), pointList.descriptor)
   }
 
+  @CalledFromNative
   fun explode(count: Int): List<Point> = List(count) { Point(it.toDouble(), it * 2.0, null) }
 
   // No payload parameter -> no payloadLength and no argument-overflow branch; only the buffered
   // RESULT rides the buffer (and may still overflow out-of-band inside writeResult).
+  @CalledFromNative
   fun explode__trampoline(count: Int): Int = Trampoline.writeResult(explode(count), pointList.descriptor)
 
+  @CalledFromNative
   fun make(): Point = Point(1.5, 2.5, "made")
 
+  @CalledFromNative
   fun make__trampoline(): Int = Trampoline.writeResult(make(), TypeDescriptor.Simple(Point::class.java, false))
 }
 
@@ -348,26 +368,32 @@ private data class Listener(
 ) : io.github.expo.modules.v2.records.Record
 
 private class HandleRecordModule : Module() {
+  @CalledFromNative
   fun attach(listener: Listener): Listener {
     listener.target.setProperty("attached", true)
     return listener
   }
 
   // Map-riding only: no payload parameters, so no payloadLength in the trampoline signature.
+  @CalledFromNative
   fun attach__trampoline(listener: Map<String, Any?>): Map<String, Any?> =
     codecFor<Listener>().toMap(attach(codecFor<Listener>().fromMap(listener)))
 
+  @CalledFromNative
   fun extraKind(listener: Listener): String = listener.extra.kind().name
 
+  @CalledFromNative
   fun extraKind__trampoline(listener: Map<String, Any?>): String =
     extraKind(codecFor<Listener>().fromMap(listener))
 
   /** Mixed shape: payload args (buffer-safe record + typed list) alongside object slots. */
+  @CalledFromNative
   fun mixed(prefix: String, rec: MyRecord, flagged: Listener, xs: List<Double>, dyn: Any?): Listener {
     flagged.target.setProperty("sum", xs.sum())
     return flagged.copy(name = prefix + rec.b + (dyn ?: "-"))
   }
 
+  @CalledFromNative
   fun mixed__trampoline(
     prefix: String,
     flagged: Map<String, Any?>,
@@ -394,8 +420,10 @@ private class HandleRecordModule : Module() {
   }
 
   /** A list of flagged records: crosses as a JNI List whose elements are Maps. */
+  @CalledFromNative
   fun first(listeners: List<Listener>): Listener = listeners.first()
 
+  @CalledFromNative
   fun first__trampoline(listeners: List<Map<String, Any?>>): Map<String, Any?> =
     codecFor<Listener>().toMap(first(listeners.map(codecFor<Listener>()::fromMap)))
 }
@@ -439,16 +467,20 @@ private class JsHandleModule : Module() {
  * call dispatches to the trampoline in a single JNI transition.
  */
 private class TrampolineModule : Module() {
+  @CalledFromNative
   fun record(value: MyRecord): MyRecord = value
 
   // A buffer-safe record declared WITHOUT buffered() crosses as a Map object slot; the
   // trampoline rebuilds/decomposes it via the codec, exactly like an inherently
   // non-buffer-safe record.
+  @CalledFromNative
   fun mapRide(value: MyRecord): MyRecord = MyRecord(value.x + 1, value.b + "!")
 
+  @CalledFromNative
   fun mapRide__trampoline(value: Map<String, Any?>): Map<String, Any?> =
     codecFor<MyRecord>().toMap(mapRide(codecFor<MyRecord>().fromMap(value)))
 
+  @CalledFromNative
   fun record__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val value = try {
@@ -459,9 +491,11 @@ private class TrampolineModule : Module() {
     return Trampoline.writeResult(record(value), TypeDescriptor.Simple(MyRecord::class.java, false))
   }
 
+  @CalledFromNative
   fun tag(prefix: String, value: MyRecord, times: Int): String =
     prefix + value.b.repeat(times) + value.x
 
+  @CalledFromNative
   fun tag__trampoline(prefix: String, times: Int, payloadLength: Int): String {
     val args = Trampoline.arguments(payloadLength)
     val value = try {
@@ -472,8 +506,10 @@ private class TrampolineModule : Module() {
     return tag(prefix, value, times)
   }
 
+  @CalledFromNative
   fun combine(a: MyRecord, b: Tagged): MyRecord = MyRecord(a.x + b.v, a.b + (b.note ?: ""))
 
+  @CalledFromNative
   fun combine__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val a: MyRecord
@@ -487,14 +523,18 @@ private class TrampolineModule : Module() {
     return Trampoline.writeResult(combine(a, b), TypeDescriptor.Simple(MyRecord::class.java, false))
   }
 
+  @CalledFromNative
   fun make(x: Int): MyRecord = MyRecord(x, "made")
 
   // Only the RESULT is buffered: no payload parameter means no payloadLength in the signature.
+  @CalledFromNative
   fun make__trampoline(x: Int): Int =
     Trampoline.writeResult(make(x), TypeDescriptor.Simple(MyRecord::class.java, false))
 
+  @CalledFromNative
   fun boom(value: MyRecord): MyRecord = error("boom: ${value.b}")
 
+  @CalledFromNative
   fun boom__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val value = try {
@@ -570,8 +610,10 @@ private class BufferedLeafModule : Module() {
     ),
   )
 
+  @CalledFromNative
   fun shout(value: String): String = value.uppercase()
 
+  @CalledFromNative
   fun shout__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val value = try {
@@ -582,8 +624,10 @@ private class BufferedLeafModule : Module() {
     return Trampoline.writeResult(shout(value), string.descriptor)
   }
 
+  @CalledFromNative
   fun bump(value: Int?): Int? = value?.plus(1)
 
+  @CalledFromNative
   fun bump__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val value = try {
@@ -594,8 +638,10 @@ private class BufferedLeafModule : Module() {
     return Trampoline.writeResult(bump(value), nullableInt.descriptor)
   }
 
+  @CalledFromNative
   fun addOne(values: IntArray): IntArray = IntArray(values.size) { values[it] + 1 }
 
+  @CalledFromNative
   fun addOne__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val values = try {
@@ -606,8 +652,10 @@ private class BufferedLeafModule : Module() {
     return Trampoline.writeResult(addOne(values), TypeDescriptor.IntArray(false))
   }
 
+  @CalledFromNative
   fun reverseBytes(bytes: ByteArray): ByteArray = ByteArray(bytes.size) { bytes[bytes.size - 1 - it] }
 
+  @CalledFromNative
   fun reverseBytes__trampoline(payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val bytes = try {
@@ -620,9 +668,11 @@ private class BufferedLeafModule : Module() {
 
   // Mixed transports in one signature: prefix and n keep their JNI slots; xs and s ride the
   // payload positionally, in declared order.
+  @CalledFromNative
   fun label(prefix: String, xs: List<Double>, n: Int, s: String): String =
     "$prefix|${xs.sum()}|$n|$s"
 
+  @CalledFromNative
   fun label__trampoline(prefix: String, n: Int, payloadLength: Int): Int {
     val args = Trampoline.arguments(payloadLength)
     val xs: List<Double>
@@ -638,8 +688,10 @@ private class BufferedLeafModule : Module() {
 
   // A leaf-bridge converter declared buffered() at the use site: the String bridge rides the
   // payload; the direct String return keeps its JNI slot.
+  @CalledFromNative
   fun visit(url: URL): String = url.host
 
+  @CalledFromNative
   fun visit__trampoline(payloadLength: Int): String {
     val args = Trampoline.arguments(payloadLength)
     val url = try {
@@ -754,34 +806,43 @@ private class UnannotatedModule : Module()
 @ExpoModule(name = "GenLeaves")
 private class GeneratedLeafModule : Module() {
   @JS
+  @CalledFromNative
   fun echoInt(value: Int?): Int? = value
 
   @JS
+  @CalledFromNative
   fun echoLong(value: Long?): Long? = value
 
   @JS
+  @CalledFromNative
   fun echoFloat(value: Float?): Float? = value
 
   @JS
+  @CalledFromNative
   fun echoDouble(value: Double?): Double? = value
 
   @JS
+  @CalledFromNative
   fun echoBoolean(value: Boolean?): Boolean? = value
 
   @JS
+  @CalledFromNative
   fun echoNullableString(value: String?): String? = value
 
   /** `Buffer.YES` on the one shape the default declines, because a bulk region copy usually wins. */
   @JS
   @BufferMode(Buffer.YES)
+  @CalledFromNative
   fun sumBuffered(values: IntArray): Int = values.sum()
 
   @JS
   @BufferMode(Buffer.YES)
+  @CalledFromNative
   fun echoBufferedDoubles(values: DoubleArray): DoubleArray = values
 
   /** Eight buffered arguments in one payload, read back in declared order. */
   @JS
+  @CalledFromNative
   fun join(
     a: String,
     b: String,
@@ -795,6 +856,7 @@ private class GeneratedLeafModule : Module() {
 
   /** Throws after its payload has been read, so the buffer must be left usable. */
   @JS
+  @CalledFromNative
   fun boom(value: String): String = error("boom: $value")
 }
 
@@ -823,16 +885,22 @@ private class PropertyModule : Module() {
     ),
   )
 
+  @get:CalledFromNative
   val version = "1.0"
+  @get:CalledFromNative
+  @set:CalledFromNative
   var count = 1
+  @get:CalledFromNative
   val isReady = true
 
   var homepage: URL = URI("https://expo.dev/home").toURL()
 
   // Converter accessors: the String bridge keeps its JNI slot, so neither accessor takes a
   // payloadLength.
+  @CalledFromNative
   fun getHomepage__trampoline(): String = urlConverter.toJni(homepage) as String
 
+  @CalledFromNative
   fun setHomepage__trampoline(value: String) {
     homepage = requireNotNull(urlConverter.fromJni(value))
   }
@@ -840,9 +908,11 @@ private class PropertyModule : Module() {
   var motto: String = "carpe diem"
 
   // A buffered getter has no payload parameters: no payloadLength, just the result write.
+  @CalledFromNative
   fun getMotto__trampoline(): Int =
     Trampoline.writeResult(motto, TypeDescriptor.Simple(String::class.java, false))
 
+  @CalledFromNative
   fun setMotto__trampoline(payloadLength: Int) {
     val args = Trampoline.arguments(payloadLength)
     val next = try {
@@ -855,8 +925,10 @@ private class PropertyModule : Module() {
 
   var values: List<Int> = listOf(1, 2)
 
+  @CalledFromNative
   fun getValues__trampoline(): Int = Trampoline.writeResult(values, intList.descriptor)
 
+  @CalledFromNative
   fun setValues__trampoline(payloadLength: Int) {
     val args = Trampoline.arguments(payloadLength)
     val next = try {

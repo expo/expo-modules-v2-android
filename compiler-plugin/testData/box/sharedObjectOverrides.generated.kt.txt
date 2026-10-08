@@ -3,6 +3,7 @@ package io.github.expo.modules.v2.testdata
 @ExpoSharedObject
 class Counter : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Counter {
     return Counter()
   }
@@ -23,6 +24,7 @@ class Counter : SharedObject {
 @ExpoSharedObject
 class Delegating : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Delegating {
     return Delegating()
   }
@@ -42,6 +44,7 @@ class Delegating : SharedObject {
 @ExpoSharedObject
 class Plain : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Plain {
     return Plain()
   }
@@ -61,6 +64,7 @@ class Plain : SharedObject {
 @ExpoSharedObject
 class Pressured : SharedObject {
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Pressured {
     return Pressured()
   }

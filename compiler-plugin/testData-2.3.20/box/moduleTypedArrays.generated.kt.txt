@@ -5,6 +5,7 @@ package io.github.expo.modules.v2.testdata
 object TypedArrays : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = TypedArray::class */), isNullable = false)
   private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = TypedArray::class */), isNullable = true)
+  @CalledFromNative
   fun byteLength__trampoline$ExpoModulesV2(p0: JavaScriptObject?): Int {
     return <this>.byteLength(array = Bridge.fromJni(value = p0, type = #type$0) as TypedArray)
   }
@@ -15,6 +16,7 @@ object TypedArrays : Module {
     return "TypedArrays"
   }
 
+  @CalledFromNative
   fun echoArray__trampoline$ExpoModulesV2(p0: JavaScriptObject?): JavaScriptObject? {
     return Bridge.toJni(value = <this>.echoArray(array = Bridge.fromJni(value = p0, type = #type$1) as TypedArray?), type = #type$1) as JavaScriptObject?
   }
@@ -26,3 +28,4 @@ package io.github.expo.modules.v2.hints
 final interface io_github_expo_modules_v2_testdata_TypedArrays_3de337a4 {
   abstract fun module(): TypedArrays
 }
+

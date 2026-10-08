@@ -8,6 +8,7 @@ import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.binary.BinaryBuffer
 import java.nio.BufferOverflowException
 
+@CalledFromNative(by = "expo-modules-v2/jni/JTrampoline.h")
 object Trampoline {
   const val MAX_ARGUMENTS: Int = 8
   const val OVERFLOW_ARGUMENTS: Int = -1

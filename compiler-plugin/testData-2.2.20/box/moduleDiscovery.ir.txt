@@ -108,6 +108,7 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.producer.First
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun one (): kotlin.Int declared in io.github.expo.modules.v2.testdata.producer.First'
           CONST Int type=kotlin.Int value=1

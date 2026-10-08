@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.testsupport
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.core.ExpoModulesV2
 import io.github.expo.modules.v2.jsi.JavaScriptRuntime
 
@@ -15,6 +16,7 @@ import io.github.expo.modules.v2.jsi.JavaScriptRuntime
  * (the one process-wide kolibri/jsi copy), resolved through the library's rpath once it is on
  * `java.library.path`.
  */
+@CalledFromNative(by = "OnLoad.cpp")
 object TestSupport {
   init {
     ExpoModulesV2.load()

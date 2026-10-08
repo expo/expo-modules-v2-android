@@ -14,6 +14,7 @@ class Counter : SharedObject {
 
   }
 
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Counter {
     return Counter()
   }
@@ -43,6 +44,7 @@ class Counter : SharedObject {
   }
 
   @JS
+  @CalledFromNative
   fun value(): Int {
     return <this>.<get-released>()
   }
@@ -63,6 +65,7 @@ class Delegating : SharedObject {
 
   }
 
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Delegating {
     return Delegating()
   }
@@ -102,6 +105,7 @@ class Plain : SharedObject {
 
   }
 
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Plain {
     return Plain()
   }
@@ -128,6 +132,7 @@ class Pressured : SharedObject {
 
   }
 
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Pressured {
     return Pressured()
   }

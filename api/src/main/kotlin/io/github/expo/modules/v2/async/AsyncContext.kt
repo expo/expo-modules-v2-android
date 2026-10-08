@@ -14,6 +14,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.plus
 
+@CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
 class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
   val dispatcher: JSDispatcher = JSDispatcher(scheduler)
 

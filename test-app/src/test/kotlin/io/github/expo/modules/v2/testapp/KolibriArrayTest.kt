@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.testapp
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
 import io.github.expo.modules.v2.testsupport.TestSupport
@@ -12,6 +13,7 @@ import kotlin.test.assertEquals
  * (`ExpoTestSupport.__kolibriArrayBindFixture`), with every JNI signature derived from the C++
  * parameter types (`[D`, `[I`, ...). See test-support/src/main/cpp/KolibriArrayCheck.cpp.
  */
+@CalledFromNative(by = "test-support/src/main/cpp/KolibriArrayCheck.cpp")
 private object KolibriArrayFixture {
   external fun sum(values: DoubleArray): Double
 

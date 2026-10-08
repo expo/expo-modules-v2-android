@@ -30,6 +30,7 @@ object First : Module {
   }
 
   @JS
+  @CalledFromNative
   fun one(): Int {
     return 1
   }

@@ -5,13 +5,15 @@
 // FILE: producer.kt
 package io.github.expo.modules.v2.testdata.producer
 
+import io.github.expo.modules.v2.Enumerable
+
 // Compiled in its own module, so the consumer sees it only through its class files.
-enum class Level(val value: Int) {
+enum class Level(val value: Int) : Enumerable {
     LOW(1),
     HIGH(2),
 }
 
-enum class Mode(val value: String) {
+enum class Mode(val value: String) : Enumerable {
     FAST("fast"),
     SLOW("slow"),
 }

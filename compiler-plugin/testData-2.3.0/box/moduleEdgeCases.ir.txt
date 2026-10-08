@@ -161,6 +161,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.WithNested
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun value (): kotlin.Int declared in io.github.expo.modules.v2.testdata.WithNested'
           CONST Int type=kotlin.Int value=1
@@ -306,6 +307,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:eightBuffered__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Arity
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -370,6 +373,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:Regular name:h index:8 type:kotlin.Int
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun eight (a: kotlin.Int, b: kotlin.Int, c: kotlin.Int, d: kotlin.Int, e: kotlin.Int, f: kotlin.Int, g: kotlin.Int, h: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Arity'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
@@ -428,6 +432,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Arity
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun none (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Arity'
           CONST Int type=kotlin.Int value=0
@@ -436,6 +441,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun one (a: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Arity'
           GET_VAR 'a: kotlin.Int declared in io.github.expo.modules.v2.testdata.Arity.one' type=kotlin.Int origin=null
@@ -515,6 +521,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun own (a: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Derived'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS
@@ -659,6 +666,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='private final fun hidden (a: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Visibility'
           CALL 'public final fun times (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=MUL
@@ -669,6 +677,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEdgeCases.kt
       VALUE_PARAMETER kind:Regular name:a index:1 type:kotlin.Int
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun visible (a: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Visibility'
           CALL 'public final fun plus (other: kotlin.Int): kotlin.Int declared in kotlin.Int' type=kotlin.Int origin=PLUS

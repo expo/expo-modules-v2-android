@@ -15,6 +15,7 @@ class DirectInstance : Module {
   }
 
   @JS
+  @CalledFromNative
   fun echo(value: Long): Long {
     return value
   }
@@ -26,12 +27,15 @@ object Direct : Module {
   @JS
   val answer: Int
     field = 42
+    @CalledFromNative
     get
 
   @JS
   var count: Int
     field = 1
+    @CalledFromNative
     get
+    @CalledFromNative
     set
 
   private constructor() /* primary */ {
@@ -52,16 +56,19 @@ object Direct : Module {
   }
 
   @JS
+  @CalledFromNative
   fun add(a: Int, b: Int): Int {
     return a.plus(other = b)
   }
 
   @JS
+  @CalledFromNative
   fun clear() {
     return Unit
   }
 
   @JS
+  @CalledFromNative
   fun identity(value: Any?): Any? {
     return value
   }
@@ -71,11 +78,13 @@ object Direct : Module {
   }
 
   @JS(name = "renamed")
+  @CalledFromNative
   fun original(flag: Boolean): Boolean {
     return flag.not()
   }
 
   @JS
+  @CalledFromNative
   fun scale(values: DoubleArray, by: Double): Double {
     return sum(/* <this> = values */).times(other = by)
   }

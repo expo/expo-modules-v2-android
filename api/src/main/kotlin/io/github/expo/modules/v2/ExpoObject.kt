@@ -1,11 +1,14 @@
 package io.github.expo.modules.v2
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.events.Event
 import java.lang.ref.WeakReference
 import java.util.concurrent.atomic.AtomicLong
 
+@CalledFromNative(by = "expo-modules-v2/objects/ObjectId.h")
 abstract class ExpoObject {
   @JvmField
+  @field:CalledFromNative(by = "expo-modules-v2/objects/ObjectId.h")
   internal val objectId: Long = nextObjectId.getAndIncrement()
 
   @JvmField

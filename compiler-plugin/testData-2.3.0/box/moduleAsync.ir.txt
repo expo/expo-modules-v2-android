@@ -40,6 +40,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:clear__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:promise index:1 type:io.github.expo.modules.v2.async.Promise
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
           ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.clear__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null
@@ -114,6 +116,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
       VALUE_PARAMETER kind:Regular name:promise index:2 type:io.github.expo.modules.v2.async.Promise
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -143,6 +147,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.Int
       VALUE_PARAMETER kind:Regular name:payloadLength index:2 type:kotlin.Int
       VALUE_PARAMETER kind:Regular name:promise index:3 type:io.github.expo.modules.v2.async.Promise
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -172,6 +178,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.Int
       VALUE_PARAMETER kind:Regular name:promise index:2 type:io.github.expo.modules.v2.async.Promise
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
           ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null

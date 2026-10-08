@@ -21,6 +21,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleConstants.kt
           CONST Int type=kotlin.Int value=1
       FUN DEFAULT_PROPERTY_ACCESSOR name:<get-count> visibility:public modality:FINAL returnType:kotlin.Int
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Item
+        annotations:
+          CalledFromNative(by = <null>)
         correspondingProperty: PROPERTY name:count visibility:public modality:FINAL [val]
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-count> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Item'
@@ -78,6 +80,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleConstants.kt
       overridden:
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.SharedObject
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:__construct$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Item
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun __construct$ExpoModulesV2 (): io.github.expo.modules.v2.testdata.Item declared in io.github.expo.modules.v2.testdata.Item'
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Item' type=io.github.expo.modules.v2.testdata.Item origin=null
@@ -137,6 +141,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleConstants.kt
           CONST String type=kotlin.String value="Item"
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:getTags__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Item
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun getTags__trampoline$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Item'
           CALL 'public final fun writeResult (value: kotlin.Any?, type: io.github.expo.modules.v2.types.TypeDescriptor): kotlin.Int declared in io.github.expo.modules.v2.args.Trampoline' type=kotlin.Int origin=null
@@ -183,6 +189,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleConstants.kt
         Constant
       FUN name:<get-name> visibility:public modality:FINAL returnType:kotlin.String
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Item
+        annotations:
+          CalledFromNative(by = <null>)
         correspondingProperty: PROPERTY name:name visibility:public modality:FINAL [val]
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-name> (): kotlin.String declared in io.github.expo.modules.v2.testdata.Item'
@@ -209,6 +217,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleConstants.kt
           CONST Int type=kotlin.Int value=3
       FUN DEFAULT_PROPERTY_ACCESSOR name:<get-version> visibility:public modality:FINAL returnType:kotlin.Int
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+        annotations:
+          CalledFromNative(by = <null>)
         correspondingProperty: PROPERTY name:version visibility:public modality:FINAL [val]
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-version> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Info'
@@ -335,6 +345,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleConstants.kt
           CONST String type=kotlin.String value="Info"
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:getNames__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun getNames__trampoline$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Info'
           CALL 'public final fun writeResult (value: kotlin.Any?, type: io.github.expo.modules.v2.types.TypeDescriptor): kotlin.Int declared in io.github.expo.modules.v2.args.Trampoline' type=kotlin.Int origin=null
@@ -364,6 +376,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleConstants.kt
         Constant
       FUN name:<get-applicationId> visibility:public modality:FINAL returnType:kotlin.String
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+        annotations:
+          CalledFromNative(by = <null>)
         correspondingProperty: PROPERTY name:applicationId visibility:public modality:FINAL [val]
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-applicationId> (): kotlin.String declared in io.github.expo.modules.v2.testdata.Info'
@@ -373,6 +387,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleConstants.kt
         JS(name = <null>)
       FUN name:<get-uptime> visibility:public modality:FINAL returnType:kotlin.Int
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Info
+        annotations:
+          CalledFromNative(by = <null>)
         correspondingProperty: PROPERTY name:uptime visibility:public modality:FINAL [val]
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-uptime> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Info'

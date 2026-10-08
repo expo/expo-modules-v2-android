@@ -22,6 +22,9 @@ object Identifiers {
     val SHARED_OBJECTS = FqName("io.github.expo.modules.v2.sharedobjects")
     val EVENTS = FqName("io.github.expo.modules.v2.events")
 
+    /** Kolibri, the JNI layer under the bridge. */
+    val KOLIBRI = FqName("io.github.expo.kolibri")
+
     /**
      * Where a compiled `@ExpoModule` leaves its hint. Shared by every module on a classpath, so a
      * later compilation can list the package's classes and find them all.
@@ -66,6 +69,9 @@ object Identifiers {
     val ExpoSharedObjectAnnotation = classId(Packages.API, "ExpoSharedObject")
     val EventAnnotation = classId(Packages.API, "Event")
     val ConstantAnnotation = classId(Packages.API, "Constant")
+
+    /** Kolibri's marker for what native code looks up by name; the consumer R8 rules keep it. */
+    val CalledFromNativeAnnotation = classId(Packages.KOLIBRI, "CalledFromNative")
 
     val RecordInterface = classId(Packages.RECORDS, "Record")
     val RecordCodec = classId(Packages.RECORDS, "RecordCodec")

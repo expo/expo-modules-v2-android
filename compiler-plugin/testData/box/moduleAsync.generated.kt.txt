@@ -4,6 +4,7 @@ package io.github.expo.modules.v2.testdata
 @ExpoModule
 class AsyncShapes : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false)
+  @CalledFromNative
   fun clear__trampoline$ExpoModulesV2(promise: Promise) {
     promise.launch(type = #type$0, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.clear()
@@ -19,6 +20,7 @@ class AsyncShapes : Module {
     return "AsyncShapes"
   }
 
+  @CalledFromNative
   fun greet__trampoline$ExpoModulesV2(payloadLength: Int, promise: Promise) {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
@@ -32,6 +34,7 @@ class AsyncShapes : Module {
 )
   }
 
+  @CalledFromNative
   fun repeat__trampoline$ExpoModulesV2(p0: Int, payloadLength: Int, promise: Promise) {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v1: String
@@ -45,6 +48,7 @@ class AsyncShapes : Module {
 )
   }
 
+  @CalledFromNative
   fun scale__trampoline$ExpoModulesV2(p0: Int, promise: Promise) {
     promise.launch(type = Int, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.scale(value = p0)

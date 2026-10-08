@@ -272,6 +272,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEvents.kt
       overridden:
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.SharedObject
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:__construct$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Player
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun __construct$ExpoModulesV2 (): io.github.expo.modules.v2.testdata.Player declared in io.github.expo.modules.v2.testdata.Player'
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Player' type=io.github.expo.modules.v2.testdata.Player origin=null
@@ -315,6 +317,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEvents.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Player
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun play (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Player'
           CONST Int type=kotlin.Int value=1
@@ -651,6 +654,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEvents.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:describe__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Watcher
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null

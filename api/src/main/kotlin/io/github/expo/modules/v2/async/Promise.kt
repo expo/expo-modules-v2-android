@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.async
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.async.Promise.Companion.SETTLED
 import io.github.expo.modules.v2.errors.ThrowableHelper
 import io.github.expo.modules.v2.types.TypeDescriptor
@@ -8,6 +9,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+@CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
 class Promise internal constructor(
   private val id: Long,
   private val context: AsyncContext,

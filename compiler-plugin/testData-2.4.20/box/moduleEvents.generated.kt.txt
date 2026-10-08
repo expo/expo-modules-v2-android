@@ -44,6 +44,7 @@ class Player : SharedObject {
     field = EventSupport.bind<String>(event = <this>.event<String>(), jsName = "stateChange", descriptor = #STRING, useBuffer = false)
 
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  @CalledFromNative
   companion fun __construct$ExpoModulesV2(): Player {
     return Player()
   }
@@ -116,6 +117,7 @@ class Watcher : Module {
     return "Watcher"
   }
 
+  @CalledFromNative
   fun describe__trampoline$ExpoModulesV2(payloadLength: Int): String? {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: Change

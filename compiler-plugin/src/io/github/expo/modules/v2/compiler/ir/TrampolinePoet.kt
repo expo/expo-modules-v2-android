@@ -295,6 +295,8 @@ internal class TrampolinePoet(
     if (!isStatic) {
       function.createDispatchReceiverParameter()
     }
+    // Every trampoline is what the bridge calls by name.
+    symbols.markCalledFromNative(function)
     return function
   }
 

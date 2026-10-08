@@ -4,6 +4,7 @@ import io.github.expo.modules.v2.cache.Cache
 import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.loader.ExpoClassLoader
 
+@CalledFromNative(by = "expo-modules-v2/jni/JRecordRegistry.h")
 object RecordRegistry {
   private val byClass = Cache<Class<*>, RecordType<*>>()
   private val byId = Cache<SchemaId, RecordType<*>>()

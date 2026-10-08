@@ -632,6 +632,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:containers__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -949,6 +951,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:echoHolder__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.collections.Map<kotlin.String, kotlin.Any?>?
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.collections.Map<kotlin.String, kotlin.Any?>?
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun echoHolder__trampoline$ExpoModulesV2 (p0: kotlin.collections.Map<kotlin.String, kotlin.Any?>?): kotlin.collections.Map<kotlin.String, kotlin.Any?>? declared in io.github.expo.modules.v2.testdata.Values'
           TYPE_OP type=kotlin.collections.Map<kotlin.String, kotlin.Any?>? origin=CAST typeOperand=kotlin.collections.Map<kotlin.String, kotlin.Any?>?
@@ -965,6 +969,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:echoPoint__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -990,6 +996,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:holders__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.collections.List<kotlin.Any?>?
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun holders__trampoline$ExpoModulesV2 (p0: kotlin.collections.List<kotlin.Any?>?): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public final fun holders (values: kotlin.collections.List<io.github.expo.modules.v2.testdata.Holder>): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values' type=kotlin.Int origin=null
@@ -1002,6 +1010,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:nullableElements__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -1031,6 +1041,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:nullableScalars__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -1074,6 +1086,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:optedIn__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -1094,6 +1108,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:points__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Values
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -1120,6 +1136,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:Regular name:c index:3 type:kotlin.ByteArray
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun arrays (a: kotlin.IntArray, b: kotlin.DoubleArray?, c: kotlin.ByteArray): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public final fun <get-size> (): kotlin.Int declared in kotlin.IntArray' type=kotlin.Int origin=GET_PROPERTY
@@ -1151,6 +1168,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:Regular name:handle index:2 type:io.github.expo.modules.v2.jsi.JavaScriptValue
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun dynamic (value: kotlin.Any?, handle: io.github.expo.modules.v2.jsi.JavaScriptValue): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.jsi.JavaScriptValue' type=kotlin.Int origin=null
@@ -1219,6 +1237,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
           BufferMode(value = Buffer.NO, returns = <null>)
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun optedOut (values: kotlin.collections.List<kotlin.String>): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           CALL 'public abstract fun <get-size> (): kotlin.Int declared in kotlin.collections.List' type=kotlin.Int origin=GET_PROPERTY
@@ -1241,6 +1260,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleValueTypes.kt
       VALUE_PARAMETER kind:Regular name:e index:5 type:kotlin.Boolean
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun unboxedScalars (a: kotlin.Int, b: kotlin.Long, c: kotlin.Float, d: kotlin.Double, e: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.testdata.Values'
           GET_VAR 'a: kotlin.Int declared in io.github.expo.modules.v2.testdata.Values.unboxedScalars' type=kotlin.Int origin=null

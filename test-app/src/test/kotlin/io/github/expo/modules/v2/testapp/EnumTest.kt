@@ -1,26 +1,38 @@
 package io.github.expo.modules.v2.testapp
 
+import io.github.expo.modules.v2.Enumerable
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /** No constructor property, so JavaScript sees each entry by its name. */
-private enum class Size { SMALL, LARGE }
+private enum class Size : Enumerable { SMALL, LARGE }
 
 /** One `String` constructor property, so JavaScript sees each entry by that value. */
-private enum class Style(val value: String) {
+private enum class Style(val value: String) : Enumerable {
   LIGHT("light"),
   HEAVY("heavy"),
 }
 
+/** No [Enumerable], so the bridge warns that R8 may strip it in a release build. */
+private enum class Unmarked { FIRST, SECOND }
+
+@ExpoModule
+private class UnmarkedEnums : Module() {
+  @JS
+  fun echo(value: Unmarked): Unmarked = value
+}
+
 /** One `Int` constructor property, so JavaScript sees each entry as that number. */
-private enum class Priority(val value: Int) {
+private enum class Priority(val value: Int) : Enumerable {
   LOW(0),
   NORMAL(5),
   HIGH(10),
@@ -87,6 +99,19 @@ private class Enums : Module() {
 
   @JS
   suspend fun laterPriority(priority: Priority): Priority = priority
+}
+
+/** What [block] writes to `System.err`, where the desktop logger writes. */
+private fun capturingStdErr(block: () -> Unit): String {
+  val original = System.err
+  val captured = ByteArrayOutputStream()
+  System.setErr(PrintStream(captured, true))
+  try {
+    block()
+  } finally {
+    System.setErr(original)
+  }
+  return captured.toString()
 }
 
 private fun HermesRuntime.awaitSettled(script: String): String {
@@ -212,5 +237,17 @@ class EnumTest {
     )
     assertTrue("'7'" in message, "unexpected message: $message")
     assertTrue("0, 5, 10" in message, "unexpected message: $message")
+  }
+
+  @Test
+  fun `a module with an enum that does not implement Enumerable warns, and still crosses`() {
+    HermesRuntime().use { runtime ->
+      val log = capturingStdErr { runtime.moduleRegistry.register(UnmarkedEnums()) }
+      assertTrue(
+        "Unmarked does not implement io.github.expo.modules.v2.Enumerable" in log,
+        "unexpected log: $log",
+      )
+      assertEquals("SECOND", runtime.evaluateAsString("expo.modules.UnmarkedEnums.echo('SECOND')"))
+    }
   }
 }

@@ -14,6 +14,7 @@ object Buffered : Module {
   @JS
   val isReady: Boolean
     field = true
+    @CalledFromNative
     get
 
   private constructor() /* primary */ {
@@ -33,6 +34,7 @@ object Buffered : Module {
     return "Buffered"
   }
 
+  @CalledFromNative
   fun describe__trampoline$ExpoModulesV2(p1: Int, payloadLength: Int): String? {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
@@ -43,10 +45,12 @@ object Buffered : Module {
     return <this>.describe(prefix = v0, count = p1) as String?
   }
 
+  @CalledFromNative
   fun getMotto__trampoline$ExpoModulesV2(): String? {
     return <this>.<get-motto>() as String?
   }
 
+  @CalledFromNative
   fun greet__trampoline$ExpoModulesV2(payloadLength: Int): String? {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
@@ -57,10 +61,12 @@ object Buffered : Module {
     return <this>.greet(name = v0) as String?
   }
 
+  @CalledFromNative
   fun makeNames__trampoline$ExpoModulesV2(p0: Int): Int {
     return Trampoline.writeResult(value = <this>.makeNames(count = p0), type = #type$1)
   }
 
+  @CalledFromNative
   fun setMotto__trampoline$ExpoModulesV2(payloadLength: Int) {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
@@ -71,6 +77,7 @@ object Buffered : Module {
     <this>.<set-motto>(<set-?> = v0)
   }
 
+  @CalledFromNative
   fun sum__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: List<Int>
@@ -100,6 +107,7 @@ object Buffered : Module {
   }
 
   @JS
+  @CalledFromNative
   fun scale(values: DoubleArray): Double {
     return sum(/* <this> = values */)
   }
@@ -129,14 +137,17 @@ object Converted : Module {
     return "Converted"
   }
 
+  @CalledFromNative
   fun firstHost__trampoline$ExpoModulesV2(p0: List<Any?>?): String? {
     return <this>.firstHost(urls = Bridge.fromJni(value = p0, type = #type$2) as List<URL>) as String?
   }
 
+  @CalledFromNative
   fun host__trampoline$ExpoModulesV2(p0: String?): String? {
     return <this>.host(url = Bridge.fromJni(value = p0, type = #type$1) as URL) as String?
   }
 
+  @CalledFromNative
   fun total__trampoline$ExpoModulesV2(p0: Double, p1: Double): Double {
     return Bridge.toJni(value = <this>.total(a = Bridge.fromJni(value = p0, type = #type$0) as Duration, b = Bridge.fromJni(value = p1, type = #type$0) as Duration), type = #type$0) as Double
   }

@@ -9,6 +9,7 @@ import io.github.expo.modules.v2.core.ExpoModulesV2
 import io.github.expo.modules.v2.ExpoContext
 import java.nio.BufferOverflowException
 
+@CalledFromNative(by = "expo-modules-v2/jni/JModuleRegistry.h")
 class ModuleRegistry internal constructor(private val context: ExpoContext) {
   private class Entry(
     val module: Module,

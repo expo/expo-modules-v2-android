@@ -50,6 +50,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
       overridden:
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.SharedObject
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:__construct$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Counter [companion]
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun __construct$ExpoModulesV2 (): io.github.expo.modules.v2.testdata.Counter declared in io.github.expo.modules.v2.testdata.Counter'
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Counter' type=io.github.expo.modules.v2.testdata.Counter origin=null
@@ -109,6 +111,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Counter
       annotations:
         JS(name = <null>)
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun value (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Counter'
           CALL 'public final fun <get-released> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Counter' type=kotlin.Int origin=GET_PROPERTY
@@ -180,6 +183,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
       overridden:
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.SharedObject
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:__construct$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Delegating [companion]
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun __construct$ExpoModulesV2 (): io.github.expo.modules.v2.testdata.Delegating declared in io.github.expo.modules.v2.testdata.Delegating'
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Delegating' type=io.github.expo.modules.v2.testdata.Delegating origin=null
@@ -288,6 +293,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
       overridden:
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.SharedObject
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:__construct$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Plain [companion]
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun __construct$ExpoModulesV2 (): io.github.expo.modules.v2.testdata.Plain declared in io.github.expo.modules.v2.testdata.Plain'
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Plain' type=io.github.expo.modules.v2.testdata.Plain origin=null
@@ -365,6 +372,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
       overridden:
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.SharedObject
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:__construct$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Pressured [companion]
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun __construct$ExpoModulesV2 (): io.github.expo.modules.v2.testdata.Pressured declared in io.github.expo.modules.v2.testdata.Pressured'
           CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.testdata.Pressured' type=io.github.expo.modules.v2.testdata.Pressured origin=null
@@ -503,6 +512,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObjectOverrides.k
         public open nativeRefType: kotlin.String declared in io.github.expo.modules.v2.SharedRef
       FUN FAKE_OVERRIDE name:<get-nativeRefType> visibility:public modality:OPEN returnType:kotlin.String [fake_override]
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.SharedRef<java.lang.StringBuilder>
+        annotations:
+          CalledFromNative(by = "expo-modules-v2/descriptor/HostFunctionSpec.cpp")
         correspondingProperty: PROPERTY FAKE_OVERRIDE name:nativeRefType visibility:public modality:OPEN [fake_override,val]
         overridden:
           public open fun <get-nativeRefType> (): kotlin.String declared in io.github.expo.modules.v2.SharedRef

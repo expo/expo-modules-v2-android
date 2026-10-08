@@ -1,7 +1,7 @@
 FILE: moduleEnums.kt
     package io.github.expo.modules.v2.testdata
 
-    public final enum class Style : R|kotlin/Enum<io/github/expo/modules/v2/testdata/Style>| {
+    public final enum class Style : R|io/github/expo/modules/v2/Enumerable|, R|kotlin/Enum<io/github/expo/modules/v2/testdata/Style>| {
         private constructor(value: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/Style| {
             super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/Style>|>()
         }
@@ -33,7 +33,7 @@ FILE: moduleEnums.kt
             public static get(): R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/Style>|
 
     }
-    public final enum class Priority : R|kotlin/Enum<io/github/expo/modules/v2/testdata/Priority>| {
+    public final enum class Priority : R|io/github/expo/modules/v2/Enumerable|, R|kotlin/Enum<io/github/expo/modules/v2/testdata/Priority>| {
         private constructor(value: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/Priority| {
             super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/Priority>|>()
         }

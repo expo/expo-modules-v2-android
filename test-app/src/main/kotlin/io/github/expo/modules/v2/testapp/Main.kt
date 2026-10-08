@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.testapp
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
@@ -594,6 +595,9 @@ private fun run() {
  */
 @ExpoModule
 class MathUtils : Module() {
+  // Not an export: tests describe it by hand on a second registration, so it carries the mark the
+  // compiler plugin would have added.
+  @get:CalledFromNative
   val answer = 42
 
   @JS
@@ -773,10 +777,12 @@ class AsyncModule : Module() {
 class Counter : Module() {
   private var count = 0
 
+  @CalledFromNative
   fun increment(): Int {
     count += 1
     return count
   }
 
+  @CalledFromNative
   fun value(): Int = count
 }

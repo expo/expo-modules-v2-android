@@ -46,6 +46,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTypedArrays.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:byteLength__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.TypedArrays
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:io.github.expo.modules.v2.jsi.JavaScriptObject?
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun byteLength__trampoline$ExpoModulesV2 (p0: io.github.expo.modules.v2.jsi.JavaScriptObject?): kotlin.Int declared in io.github.expo.modules.v2.testdata.TypedArrays'
           CALL 'public final fun byteLength (array: io.github.expo.modules.v2.TypedArray): kotlin.Int declared in io.github.expo.modules.v2.testdata.TypedArrays' type=kotlin.Int origin=null
@@ -97,6 +99,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTypedArrays.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:echoArray__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.jsi.JavaScriptObject?
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.TypedArrays
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:io.github.expo.modules.v2.jsi.JavaScriptObject?
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun echoArray__trampoline$ExpoModulesV2 (p0: io.github.expo.modules.v2.jsi.JavaScriptObject?): io.github.expo.modules.v2.jsi.JavaScriptObject? declared in io.github.expo.modules.v2.testdata.TypedArrays'
           TYPE_OP type=io.github.expo.modules.v2.jsi.JavaScriptObject? origin=CAST typeOperand=io.github.expo.modules.v2.jsi.JavaScriptObject?

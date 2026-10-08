@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.react
 
 import com.facebook.react.bridge.ReactApplicationContext
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.NativePointer
 import io.github.expo.modules.v2.async.AsyncContext
 import io.github.expo.modules.v2.jsi.JavaScriptRuntime
@@ -26,6 +27,7 @@ import io.github.expo.modules.v2.modules.ModuleRegistry
  * `expo.modules` then serves the classic Expo modules first and these after them, so JavaScript
  * reaches both through `requireNativeModule`.
  */
+@CalledFromNative(by = "expo-modules-v2-react/ReactRuntime.h")
 class ReactRuntime private constructor(
   context: ReactExpoContext,
   ownsContext: Boolean,

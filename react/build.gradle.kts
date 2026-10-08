@@ -57,6 +57,9 @@ android {
   defaultConfig {
     minSdk = 24
 
+    // Published in the AAR as `proguard.txt`, which AGP merges into a consuming app's R8 run.
+    consumerProguardFiles("consumer-rules.pro")
+
     ndk {
       abiFilters += listOf("arm64-v8a")
     }

@@ -1,8 +1,10 @@
 package io.github.expo.modules.v2
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.jsi.CurrentRuntime
 import java.lang.ref.WeakReference
 
+@CalledFromNative(by = "expo-modules-v2/jni/JSharedObject.h")
 abstract class SharedObject : ExpoObject {
 
   constructor() {

@@ -7,6 +7,7 @@ class Item : SharedObject {
   @JS
   val count: Int
     field = 1
+    @CalledFromNative
     get
 
   @JS
@@ -21,6 +22,7 @@ class Item : SharedObject {
 
   }
 
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Item {
     return Item()
   }
@@ -32,6 +34,7 @@ class Item : SharedObject {
     return "Item"
   }
 
+  @CalledFromNative
   fun getTags__trampoline$ExpoModulesV2(): Int {
     return Trampoline.writeResult(value = <this>.<get-tags>(), type = #type$0)
   }
@@ -46,6 +49,7 @@ class Item : SharedObject {
   @JS
   @Constant
   val name: String
+    @CalledFromNative
     get(): String {
       return "item"
     }
@@ -58,6 +62,7 @@ object Info : Module {
   @JS
   val version: Int
     field = 3
+    @CalledFromNative
     get
 
   @JS
@@ -80,6 +85,7 @@ object Info : Module {
     return "Info"
   }
 
+  @CalledFromNative
   fun getNames__trampoline$ExpoModulesV2(): Int {
     return Trampoline.writeResult(value = <this>.<get-names>(), type = #type$0)
   }
@@ -87,12 +93,14 @@ object Info : Module {
   @JS
   @Constant
   val applicationId: String
+    @CalledFromNative
     get(): String {
       return "dev.expo.payments"
     }
 
   @JS
   val uptime: Int
+    @CalledFromNative
     get(): Int {
       return 1
     }

@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.jsi
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.NativeMethod
 import io.github.expo.kolibri.NativeObject
 import io.github.expo.kolibri.NativePointer
@@ -19,6 +20,7 @@ import kotlin.time.TimeSource
  * @param ownsContext whether [close] closes [context] too: true for a context the runtime created
  * for itself, false for one the caller passed in and still owns.
  */
+@CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptRuntime.h")
 abstract class JavaScriptRuntime protected constructor(
   val asyncContext: AsyncContext,
   pointer: NativePointer,

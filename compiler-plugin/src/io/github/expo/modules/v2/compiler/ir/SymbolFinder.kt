@@ -86,6 +86,11 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `class AnyType(descriptor, useBuffer)` */
     val anyType: IrClassSymbol by lazy { clazz(Identifiers.Classes.AnyType) }
 
+    /** `annotation class CalledFromNative(by: String = "")`, from kolibri. */
+    val calledFromNative: IrClassSymbol by lazy {
+      clazz(Identifiers.Classes.CalledFromNativeAnnotation)
+    }
+
     /** `object Trampoline` */
     val trampoline: IrClassSymbol by lazy { clazz(Identifiers.Classes.Trampoline) }
 

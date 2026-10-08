@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.testapp
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.ExpoSharedObject
@@ -37,10 +38,13 @@ private class Counter : io.github.expo.modules.v2.SharedObject() {
   var releaseCount: Int = 0
     private set
 
+  @CalledFromNative
   fun increment(): Int = ++count
 
+  @CalledFromNative
   fun getValue(): Int = count
 
+  @CalledFromNative
   fun setValue(value: Int) {
     count = value
   }
@@ -52,6 +56,7 @@ private class Counter : io.github.expo.modules.v2.SharedObject() {
 
 /** A second class, so a declared parameter type can be shown to reject the wrong one. */
 private class Tag : io.github.expo.modules.v2.SharedObject() {
+  @CalledFromNative
   fun label(): String = "tag"
 }
 
@@ -63,10 +68,13 @@ private class CounterModule : Module() {
   var last: Counter? = null
     private set
 
+  @CalledFromNative
   fun create(): Counter = Counter().also { last = it }
 
+  @CalledFromNative
   fun current(): Counter = requireNotNull(last)
 
+  @CalledFromNative
   fun bumpTwice(counter: Counter): Int {
     counter.increment()
     return counter.increment()
@@ -74,6 +82,7 @@ private class CounterModule : Module() {
 }
 
 private class TagModule : Module() {
+  @CalledFromNative
   fun create(): Tag = Tag()
 }
 

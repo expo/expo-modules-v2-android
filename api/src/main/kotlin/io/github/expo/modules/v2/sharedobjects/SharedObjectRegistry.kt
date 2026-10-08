@@ -16,6 +16,7 @@ import io.github.expo.modules.v2.types.TypeDescriptor
 import java.nio.BufferOverflowException
 import java.util.concurrent.ConcurrentHashMap
 
+@CalledFromNative(by = "expo-modules-v2/jni/JSharedObjectRegistry.h")
 object SharedObjectRegistry {
   internal class ClassEntry(
     val id: SharedClassId,

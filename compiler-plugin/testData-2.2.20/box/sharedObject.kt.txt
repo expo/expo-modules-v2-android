@@ -14,6 +14,7 @@ class Listed : SharedObject {
 
   }
 
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(p0: Int): Listed {
     return Listed(n = p0)
   }
@@ -31,6 +32,7 @@ class Listed : SharedObject {
   }
 
   @JS
+  @CalledFromNative
   fun value(): Int {
     return <this>.<get-n>()
   }
@@ -52,6 +54,7 @@ class Owner : Module {
 
     }
 
+    @CalledFromNative
     /* static */ fun __construct$ExpoModulesV2(payloadLength: Int): Nested {
       val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
       var v0: String
@@ -75,6 +78,7 @@ class Owner : Module {
     }
 
     @JS
+    @CalledFromNative
     fun render(): String {
       return <this>.<get-text>()
     }
@@ -103,6 +107,7 @@ class Owner : Module {
     }
 
     @JS
+    @CalledFromNative
     fun name(): String {
       return "hidden"
     }
@@ -128,7 +133,9 @@ class Player : SharedObject {
   @JS
   var volume: Double
     field = 1.0
+    @CalledFromNative
     get
+    @CalledFromNative
     set
 
   private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
@@ -138,6 +145,7 @@ class Player : SharedObject {
 
   }
 
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Player {
     return Player()
   }
@@ -156,6 +164,7 @@ class Player : SharedObject {
     return SharedObjectRegistry.register(jsName = "Player", sharedClass = <get-java>(/* $receiver = Player::class */), definition = builder)
   }
 
+  @CalledFromNative
   fun rename__trampoline$ExpoModulesV2(payloadLength: Int): String? {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
@@ -167,6 +176,7 @@ class Player : SharedObject {
   }
 
   @JS
+  @CalledFromNative
   fun play(): Int {
     return 1
   }
@@ -194,11 +204,13 @@ class Players : Module {
   }
 
   @JS
+  @CalledFromNative
   fun create(): Player {
     return Player()
   }
 
   @JS
+  @CalledFromNative
   fun maybe(player: Player?): Int {
     return when {
       EQEQ(arg0 = player, arg1 = null) -> 0
@@ -207,6 +219,7 @@ class Players : Module {
   }
 
   @JS
+  @CalledFromNative
   fun volumeOf(player: Player): Double {
     return player.<get-volume>()
   }
@@ -222,6 +235,7 @@ class Speaker : SharedObject {
 
   }
 
+  @CalledFromNative
   /* static */ fun __construct$ExpoModulesV2(): Speaker {
     return Speaker()
   }
@@ -239,6 +253,7 @@ class Speaker : SharedObject {
   }
 
   @JS
+  @CalledFromNative
   fun mute() {
     return Unit
   }
@@ -267,6 +282,7 @@ class TextRef : SharedRef<StringBuilder> {
   }
 
   @JS
+  @CalledFromNative
   fun length(): Int {
     return <this>.<get-ref>().<get-length>()
   }

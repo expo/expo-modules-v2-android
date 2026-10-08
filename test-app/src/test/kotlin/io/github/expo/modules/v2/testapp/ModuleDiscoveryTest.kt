@@ -16,6 +16,13 @@ private object DiscoveredModule : Module() {
   fun answer(): Int = 42
 }
 
+/** A `class` rather than an `object`, so a host creates it with its no-argument constructor. */
+@ExpoModule(name = "DiscoveredClass")
+private class DiscoveredClassModule : Module() {
+  @JS
+  fun answer(): Int = 7
+}
+
 /**
  * `discoveredExpoModules()` through the real Gradle compilation, not the compiler test framework:
  * the plugin is on this source set's compiler classpath the way a consuming app has it.
@@ -41,6 +48,20 @@ class ModuleDiscoveryTest {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register(instance)
       assertEquals(42, runtime.evaluate("globalThis.expo.modules.Discovered.answer()").getInt())
+    }
+  }
+
+  @Test
+  fun `a discovered class module is created through its constructor`() {
+    ExpoHermes.ensureLoaded()
+
+    // The way a host creates it.
+    val discovered = discoveredExpoModules().single { it == DiscoveredClassModule::class.java }
+    val instance = discovered.getDeclaredConstructor().apply { isAccessible = true }.newInstance()
+
+    HermesRuntime().use { runtime ->
+      runtime.moduleRegistry.register(instance)
+      assertEquals(7, runtime.evaluate("globalThis.expo.modules.DiscoveredClass.answer()").getInt())
     }
   }
 }

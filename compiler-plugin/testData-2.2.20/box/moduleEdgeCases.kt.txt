@@ -54,6 +54,7 @@ class WithNested : Module {
   }
 
   @JS
+  @CalledFromNative
   fun value(): Int {
     return 1
   }
@@ -76,6 +77,7 @@ object Arity : Module {
     return "Arity"
   }
 
+  @CalledFromNative
   fun eightBuffered__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
@@ -101,6 +103,7 @@ object Arity : Module {
   }
 
   @JS
+  @CalledFromNative
   fun eight(a: Int, b: Int, c: Int, d: Int, e: Int, f: Int, g: Int, h: Int): Int {
     return a.plus(other = b).plus(other = c).plus(other = d).plus(other = e).plus(other = f).plus(other = g).plus(other = h)
   }
@@ -111,11 +114,13 @@ object Arity : Module {
   }
 
   @JS
+  @CalledFromNative
   fun none(): Int {
     return 0
   }
 
   @JS
+  @CalledFromNative
   fun one(a: Int): Int {
     return a
   }
@@ -136,6 +141,7 @@ object Derived : BaseModule {
   }
 
   @JS
+  @CalledFromNative
   fun own(a: Int): Int {
     return a.plus(other = 1)
   }
@@ -171,11 +177,13 @@ object Visibility : Module {
   }
 
   @JS
+  @CalledFromNative
   private fun hidden(a: Int): Int {
     return a.times(other = 2)
   }
 
   @JS
+  @CalledFromNative
   fun visible(a: Int): Int {
     return a.plus(other = 1)
   }

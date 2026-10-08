@@ -5,6 +5,7 @@ import io.github.expo.kolibri.NativeMethod
 import io.github.expo.kolibri.NativeObject
 import io.github.expo.kolibri.NativePointer
 
+@CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptValue.h")
 class JavaScriptValue @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptValue.h") private constructor(
   pointer: Long,
 ) : NativeObject(NativePointer(pointer)) {

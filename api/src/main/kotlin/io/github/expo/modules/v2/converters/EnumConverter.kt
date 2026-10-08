@@ -1,17 +1,34 @@
 package io.github.expo.modules.v2.converters
 
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.Enumerable
+import io.github.expo.modules.v2.logging.platformLogger
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeCodes
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
+import java.util.concurrent.ConcurrentHashMap
 
 class EnumConverter(
   private val enumClass: Class<out Enum<*>>,
   isNullable: Boolean,
 ) : TypeConverter<Enum<*>>(isNullable) {
+  init {
+    // Checked first: under R8, an enum without the marker may have lost the entries read below.
+    if (!Enumerable::class.java.isAssignableFrom(enumClass) && warnedEnums.add(enumClass)) {
+      // The interface by its source name: R8 may rename it.
+      platformLogger.warn(
+        "${enumClass.name} does not implement io.github.expo.modules.v2.Enumerable. It crosses to " +
+          "JavaScript here, but R8 keeps an enum's entries and its property only when it does, so " +
+          "a release build may fail on it or send its entry names instead",
+      )
+    }
+  }
+
+  // Null only when R8 removed `values()`, which it keeps for an `Enumerable`.
   private val constants: Array<out Enum<*>> = requireNotNull(enumClass.enumConstants) {
-    "${enumClass.name} is not an enum class"
+    "${enumClass.name} lost its entries to R8: an enum that crosses to JavaScript must implement " +
+      "io.github.expo.modules.v2.Enumerable"
   }
 
   /** The one property the entries cross by, or null when they cross by name. */
@@ -72,6 +89,9 @@ class EnumConverter(
     )
 
   private companion object {
+    /** The enums already warned about: one converter is made per enum and nullability. */
+    private val warnedEnums: MutableSet<Class<*>> = ConcurrentHashMap.newKeySet()
+
     fun propertyOf(enumClass: Class<out Enum<*>>): Field? {
       // TODO(@lukmccall): remove reflection
       val properties = enumClass.declaredFields.filter {

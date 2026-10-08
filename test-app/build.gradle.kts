@@ -55,6 +55,13 @@ tasks.withType<JavaExec>().configureEach {
   systemProperty("java.library.path", nativeLibsPath)
 }
 
+// JniSurfaceTest reads the classes and members the C++ names through JNI from its sources.
+val bridgeCppDir = project(":api").layout.projectDirectory.dir("src/main/cpp/expo-modules-v2")
+tasks.withType<Test>().configureEach {
+  systemProperty("expo.modules.v2.cppDir", bridgeCppDir.asFile.path)
+  inputs.dir(bridgeCppDir).withPropertyName("bridgeCpp").withPathSensitivity(PathSensitivity.RELATIVE)
+}
+
 tasks.named<Test>("test") {
   useJUnitPlatform()
   dependsOn(nativeLibsTasks)

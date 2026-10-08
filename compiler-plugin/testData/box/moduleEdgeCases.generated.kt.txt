@@ -28,6 +28,7 @@ object Arity : Module {
     return "Arity"
   }
 
+  @CalledFromNative
   fun eightBuffered__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String

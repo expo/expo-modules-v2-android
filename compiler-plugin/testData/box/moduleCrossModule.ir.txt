@@ -302,6 +302,8 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
           CONST Int type=kotlin.Int value=1
       FUN DEFAULT_PROPERTY_ACCESSOR name:<get-count> visibility:public modality:FINAL returnType:kotlin.Int
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.producer.ProducerModule
+        annotations:
+          CalledFromNative(by = <null>)
         correspondingProperty: PROPERTY name:count visibility:public modality:FINAL [var]
         BLOCK_BODY
           RETURN type=kotlin.Nothing from='public final fun <get-count> (): kotlin.Int declared in io.github.expo.modules.v2.testdata.producer.ProducerModule'
@@ -310,6 +312,8 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
       FUN DEFAULT_PROPERTY_ACCESSOR name:<set-count> visibility:public modality:FINAL returnType:kotlin.Unit
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.producer.ProducerModule
         VALUE_PARAMETER kind:Regular name:<set-?> index:1 type:kotlin.Int
+        annotations:
+          CalledFromNative(by = <null>)
         correspondingProperty: PROPERTY name:count visibility:public modality:FINAL [var]
         BLOCK_BODY
           SET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:count type:kotlin.Int visibility:private' type=kotlin.Unit origin=null
@@ -346,6 +350,8 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:bump__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.producer.ProducerModule
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -418,6 +424,8 @@ FILE fqName:io.github.expo.modules.v2.testdata.producer fileName:/producer.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:name__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.producer.ProducerModule
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -562,6 +570,8 @@ FILE fqName:io.github.expo.modules.v2.testdata.consumer fileName:/consumer.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:forward__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.consumer.ConsumerModule
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null

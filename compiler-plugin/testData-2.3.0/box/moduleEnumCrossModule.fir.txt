@@ -2,7 +2,7 @@ Module: producer
 FILE: producer.kt
     package io.github.expo.modules.v2.testdata.producer
 
-    public final enum class Level : R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Level>| {
+    public final enum class Level : R|io/github/expo/modules/v2/Enumerable|, R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Level>| {
         private constructor(value: R|kotlin/Int|): R|io/github/expo/modules/v2/testdata/producer/Level| {
             super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Level>|>()
         }
@@ -34,7 +34,7 @@ FILE: producer.kt
             public get(): R|kotlin/enums/EnumEntries<io/github/expo/modules/v2/testdata/producer/Level>|
 
     }
-    public final enum class Mode : R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Mode>| {
+    public final enum class Mode : R|io/github/expo/modules/v2/Enumerable|, R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Mode>| {
         private constructor(value: R|kotlin/String|): R|io/github/expo/modules/v2/testdata/producer/Mode| {
             super<R|kotlin/Enum<io/github/expo/modules/v2/testdata/producer/Mode>|>()
         }

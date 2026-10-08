@@ -5,16 +5,17 @@ package io.github.expo.modules.v2.testdata
 
 import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.Enumerable
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 
-enum class Style(val value: String) {
+enum class Style(val value: String) : Enumerable {
     LIGHT("light"),
     HEAVY("heavy"),
 }
 
-enum class Priority(val value: Int) {
+enum class Priority(val value: Int) : Enumerable {
     LOW(0),
     HIGH(10),
 }

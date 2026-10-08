@@ -2,10 +2,10 @@
 // FILE: producer.kt
 package io.github.expo.modules.v2.testdata.producer
 
-enum class Level : Enum<Level> {
+enum class Level : Enum<Level>, Enumerable {
 }
 
-enum class Mode : Enum<Mode> {
+enum class Mode : Enum<Mode>, Enumerable {
 }
 
 // MODULE: consumer
@@ -24,14 +24,17 @@ object Levels : Module {
     return "Levels"
   }
 
+  @CalledFromNative
   fun echo__trampoline$ExpoModulesV2(p0: Int): Int {
     return Bridge.toJni(value = <this>.echo(level = Bridge.fromJni(value = p0, type = #type$0) as Level), type = #type$0) as Int
   }
 
+  @CalledFromNative
   fun maybe__trampoline$ExpoModulesV2(p0: Int?): Int? {
     return Bridge.toJni(value = <this>.maybe(level = Bridge.fromJni(value = p0, type = #type$1) as Level?), type = #type$1) as Int?
   }
 
+  @CalledFromNative
   fun mode__trampoline$ExpoModulesV2(p0: String?): String? {
     return Bridge.toJni(value = <this>.mode(mode = Bridge.fromJni(value = p0, type = #type$2) as Mode), type = #type$2) as String?
   }
@@ -43,3 +46,4 @@ package io.github.expo.modules.v2.hints
 final interface io_github_expo_modules_v2_testdata_consumer_Levels_2578cc07 {
   abstract fun module(): Levels
 }
+

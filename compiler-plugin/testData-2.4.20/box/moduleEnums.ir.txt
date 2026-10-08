@@ -1,5 +1,5 @@
 FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
-  CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]
+  CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Priority
     PROPERTY name:value visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:value type:kotlin.Int visibility:private [final]
@@ -25,7 +25,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
       BLOCK_BODY
         ENUM_CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, ordinal: kotlin.Int) declared in kotlin.Enum'
           TYPE_ARG E: io.github.expo.modules.v2.testdata.Priority
-        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.Unit
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.Unit
     FUN ENUM_CLASS_SPECIAL_MEMBER name:valueOf visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Priority [companion]
       VALUE_PARAMETER kind:Regular name:value index:0 type:kotlin.String
       SYNTHETIC_BODY kind=ENUM_VALUEOF
@@ -41,17 +41,20 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
       overridden:
         public final fun describeConstable (): @[FlexibleNullability] java.util.Optional<@[FlexibleNullability] java.lang.Enum.EnumDesc<@[FlexibleNullability] E of kotlin.Enum?>?>? declared in kotlin.Enum
     FUN FAKE_OVERRIDE name:equals visibility:public modality:FINAL returnType:kotlin.Boolean [fake_override,operator]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.Enumerable
         public final fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Enum
     FUN FAKE_OVERRIDE name:hashCode visibility:public modality:FINAL returnType:kotlin.Int [fake_override]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.Enumerable
         public final fun hashCode (): kotlin.Int declared in kotlin.Enum
     FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.Enumerable
         public open fun toString (): kotlin.String declared in kotlin.Enum
     PROPERTY ENUM_CLASS_SPECIAL_MEMBER name:entries visibility:public modality:FINAL [val]
       FUN ENUM_CLASS_SPECIAL_MEMBER name:<get-entries> visibility:public modality:FINAL returnType:kotlin.enums.EnumEntries<io.github.expo.modules.v2.testdata.Priority> [companion]
@@ -75,7 +78,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
         correspondingProperty: PROPERTY FAKE_OVERRIDE name:ordinal visibility:public modality:FINAL [fake_override,val]
         overridden:
           public final fun <get-ordinal> (): kotlin.Int declared in kotlin.Enum
-  CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]
+  CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]
     thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:io.github.expo.modules.v2.testdata.Style
     PROPERTY name:value visibility:public modality:FINAL [val]
       FIELD PROPERTY_BACKING_FIELD name:value type:kotlin.String visibility:private [final]
@@ -101,7 +104,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
       BLOCK_BODY
         ENUM_CONSTRUCTOR_CALL 'public constructor <init> (name: kotlin.String, ordinal: kotlin.Int) declared in kotlin.Enum'
           TYPE_ARG E: io.github.expo.modules.v2.testdata.Style
-        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.Unit
+        INSTANCE_INITIALIZER_CALL classDescriptor='CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.Unit
     FUN ENUM_CLASS_SPECIAL_MEMBER name:valueOf visibility:public modality:FINAL returnType:io.github.expo.modules.v2.testdata.Style [companion]
       VALUE_PARAMETER kind:Regular name:value index:0 type:kotlin.String
       SYNTHETIC_BODY kind=ENUM_VALUEOF
@@ -117,17 +120,20 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
       overridden:
         public final fun describeConstable (): @[FlexibleNullability] java.util.Optional<@[FlexibleNullability] java.lang.Enum.EnumDesc<@[FlexibleNullability] E of kotlin.Enum?>?>? declared in kotlin.Enum
     FUN FAKE_OVERRIDE name:equals visibility:public modality:FINAL returnType:kotlin.Boolean [fake_override,operator]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Enum<io.github.expo.modules.v2.testdata.Style>
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       VALUE_PARAMETER kind:Regular name:other index:1 type:kotlin.Any?
       overridden:
+        public open fun equals (other: kotlin.Any?): kotlin.Boolean declared in io.github.expo.modules.v2.Enumerable
         public final fun equals (other: kotlin.Any?): kotlin.Boolean declared in kotlin.Enum
     FUN FAKE_OVERRIDE name:hashCode visibility:public modality:FINAL returnType:kotlin.Int [fake_override]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Enum<io.github.expo.modules.v2.testdata.Style>
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
+        public open fun hashCode (): kotlin.Int declared in io.github.expo.modules.v2.Enumerable
         public final fun hashCode (): kotlin.Int declared in kotlin.Enum
     FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN returnType:kotlin.String [fake_override]
-      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Enum<io.github.expo.modules.v2.testdata.Style>
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:kotlin.Any
       overridden:
+        public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.Enumerable
         public open fun toString (): kotlin.String declared in kotlin.Enum
     PROPERTY ENUM_CLASS_SPECIAL_MEMBER name:entries visibility:public modality:FINAL [val]
       FUN ENUM_CLASS_SPECIAL_MEMBER name:<get-entries> visibility:public modality:FINAL returnType:kotlin.enums.EnumEntries<io.github.expo.modules.v2.testdata.Style> [companion]
@@ -159,25 +165,25 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
       EXPRESSION_BODY
         CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Style> origin=null
-            ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
+            ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
           ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$1 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
         CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Style> origin=null
-            ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
+            ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
           ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$2 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
         CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Priority> origin=null
-            ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
+            ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
           ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$3 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
         CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Priority> origin=null
-            ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
+            ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
           ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
     CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.Enums [primary]
       BLOCK_BODY
@@ -220,13 +226,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
               ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                 ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Style> origin=null
-                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
+                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
                 ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
           ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
             ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
               ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Style> origin=null
-                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
+                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
               ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
           ARG methodName: CONST String type=kotlin.String value="echoStyle__trampoline$ExpoModulesV2"
@@ -237,13 +243,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
               ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                 ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Style> origin=null
-                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
+                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
                 ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
             ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
               ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Style> origin=null
-                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
+                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Style modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Style>]' type=kotlin.reflect.KClass<*>
               ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="styleSlot__trampoline$ExpoModulesV2"
@@ -254,13 +260,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
               ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                 ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Priority> origin=null
-                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
+                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
                 ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
             ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
               ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Priority> origin=null
-                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
+                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
               ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="echoPriority__trampoline$ExpoModulesV2"
@@ -271,13 +277,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
               ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                 ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Priority> origin=null
-                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
+                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
                 ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
           ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
             ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
               ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Priority> origin=null
-                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
+                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
               ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=true
           ARG methodName: CONST String type=kotlin.String value="maybePriority__trampoline$ExpoModulesV2"
@@ -288,13 +294,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
               ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                 ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Priority> origin=null
-                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
+                  ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
                 ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
             ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
               ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Priority> origin=null
-                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
+                ARG $receiver: CLASS_REFERENCE 'CLASS ENUM_CLASS name:Priority modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.Enumerable; kotlin.Enum<io.github.expo.modules.v2.testdata.Priority>]' type=kotlin.reflect.KClass<*>
               ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="priorityNoBuffer__trampoline$ExpoModulesV2"
@@ -303,6 +309,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:echoPriority__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Enums
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun echoPriority__trampoline$ExpoModulesV2 (p0: kotlin.Int): kotlin.Int declared in io.github.expo.modules.v2.testdata.Enums'
           TYPE_OP type=kotlin.Int origin=CAST typeOperand=kotlin.Int
@@ -319,6 +327,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:echoStyle__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Enums
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -344,6 +354,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:maybePriority__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Enums
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         VAR name:args type:io.github.expo.modules.v2.args.TrampolineArguments [val]
           CALL 'public final fun arguments (payloadLength: kotlin.Int): io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.args.Trampoline' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
@@ -369,6 +381,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:priorityNoBuffer__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Int?
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Enums
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.Int?
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun priorityNoBuffer__trampoline$ExpoModulesV2 (p0: kotlin.Int?): kotlin.Int? declared in io.github.expo.modules.v2.testdata.Enums'
           TYPE_OP type=kotlin.Int? origin=CAST typeOperand=kotlin.Int?
@@ -385,6 +399,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEnums.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:styleSlot__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Enums
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.String?
+      annotations:
+        CalledFromNative(by = <null>)
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun styleSlot__trampoline$ExpoModulesV2 (p0: kotlin.String?): kotlin.String? declared in io.github.expo.modules.v2.testdata.Enums'
           TYPE_OP type=kotlin.String? origin=CAST typeOperand=kotlin.String?

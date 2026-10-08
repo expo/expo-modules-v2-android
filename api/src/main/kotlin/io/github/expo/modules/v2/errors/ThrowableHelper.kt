@@ -3,6 +3,7 @@ package io.github.expo.modules.v2.errors
 import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.JavaScriptThrowable
 
+@CalledFromNative(by = "expo-modules-v2/jni/JThrowableHelper.h")
 object ThrowableHelper {
   fun codeOf(throwable: Throwable): String =
     if (throwable is JavaScriptThrowable) {

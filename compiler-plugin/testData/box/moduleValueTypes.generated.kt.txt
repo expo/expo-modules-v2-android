@@ -86,6 +86,7 @@ object Values : Module {
   private /* static final field */ val type$7: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false)
   private /* static final field */ val type$8: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false)]))
   private /* static final field */ val type$9: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Holder::class */), isNullable = false)]))
+  @CalledFromNative
   fun containers__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: List<String>
@@ -118,10 +119,12 @@ object Values : Module {
     return "Values"
   }
 
+  @CalledFromNative
   fun echoHolder__trampoline$ExpoModulesV2(p0: Map<String, Any?>?): Map<String, Any?>? {
     return Bridge.toJni(value = <this>.echoHolder(holder = Bridge.fromJni(value = p0, type = #type$7) as Holder), type = #type$7) as Map<String, Any?>?
   }
 
+  @CalledFromNative
   fun echoPoint__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: Point
@@ -132,10 +135,12 @@ object Values : Module {
     return Trampoline.writeResult(value = <this>.echoPoint(point = v0), type = #type$6)
   }
 
+  @CalledFromNative
   fun holders__trampoline$ExpoModulesV2(p0: List<Any?>?): Int {
     return <this>.holders(values = Bridge.fromJni(value = p0, type = #type$9) as List<Holder>)
   }
 
+  @CalledFromNative
   fun nullableElements__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: List<String?>
@@ -148,6 +153,7 @@ object Values : Module {
     return <this>.nullableElements(values = v0, nullableList = v1)
   }
 
+  @CalledFromNative
   fun nullableScalars__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: Int?
@@ -166,6 +172,7 @@ object Values : Module {
     return Trampoline.writeResult(value = <this>.nullableScalars(a = v0, b = v1, c = v2, d = v3, e = v4), type = #INT_BOXED_NULL)
   }
 
+  @CalledFromNative
   fun optedIn__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: IntArray
@@ -176,6 +183,7 @@ object Values : Module {
     return <this>.optedIn(values = v0)
   }
 
+  @CalledFromNative
   fun points__trampoline$ExpoModulesV2(payloadLength: Int): Int {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: List<Point>
