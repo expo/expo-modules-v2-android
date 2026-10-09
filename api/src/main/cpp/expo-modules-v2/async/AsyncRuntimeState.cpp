@@ -155,7 +155,7 @@ namespace expo::modules::v2::async {
     return std::move(promise);
   }
 
-  kolibri::Ref<JPromise> AsyncRuntimeState::newKotlinPromise(JNIEnv* env, const uint64_t id) const {
+  kolibri::Ref<JPromiseHandle> AsyncRuntimeState::newKotlinPromise(JNIEnv* env, const uint64_t id) const {
     return jContext_->createPromise(env, id);
   }
 
@@ -230,6 +230,10 @@ namespace expo::modules::v2::async {
     }
 
     settle(id, decodeFromJni(env, rt, value, found->second.returnType), false);
+  }
+
+  void AsyncRuntimeState::resolveWithValue(const uint64_t id, facebook::jsi::Value&& value) {
+    settle(id, std::move(value), false);
   }
 
   void AsyncRuntimeState::resolveFromBuffer(

@@ -31,7 +31,11 @@ import org.jetbrains.kotlin.fir.resolve.defaultType
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
+import org.jetbrains.kotlin.fir.types.ConeStarProjection
+import org.jetbrains.kotlin.fir.types.classId
+import org.jetbrains.kotlin.fir.types.coneType
 import org.jetbrains.kotlin.fir.types.constructClassLikeType
+import org.jetbrains.kotlin.fir.types.isMarkedNullable
 import org.jetbrains.kotlin.fir.types.isSubtypeOf
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
@@ -92,7 +96,7 @@ class JSCheckers(session: FirSession) : FirAdditionalCheckersExtension(session) 
           "declare more than ${Identifiers.MAX_ARGUMENTS} arguments (this one declares " +
             "${parameters.size})"
 
-        else -> null
+        else -> promiseShape(declaration)
       }
       if (shape != null) {
         reporter.reportOn(
@@ -141,6 +145,33 @@ class JSCheckers(session: FirSession) : FirAdditionalCheckersExtension(session) 
         return
       }
     }
+  }
+}
+
+private fun promiseShape(declaration: FirFunction): String? {
+  val takesPromise = declaration.valueParameters.any {
+    it.returnTypeRef.coneType.classId == Identifiers.Classes.Promise
+  }
+  if (takesPromise) {
+    return "take a `Promise` argument - return one instead, and settle it when the result is ready"
+  }
+
+  val returnType = declaration.returnTypeRef.coneType
+  if (returnType.classId != Identifiers.Classes.Promise) {
+    return null
+  }
+  return when {
+    declaration.status.isSuspend ->
+      "be `suspend` and return a `Promise` - return the value itself, or drop `suspend`"
+
+    returnType.isMarkedNullable ->
+      "return a nullable `Promise` - JavaScript always gets a promise, so return one that " +
+        "resolves with null instead"
+
+    returnType.typeArguments.singleOrNull() is ConeStarProjection ->
+      "return `Promise<*>` - the bridge needs the type the promise resolves with"
+
+    else -> null
   }
 }
 

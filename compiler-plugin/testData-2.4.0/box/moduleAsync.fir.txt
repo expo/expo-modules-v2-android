@@ -29,23 +29,23 @@ FILE: moduleAsync.kt
     public final fun box(): R|kotlin/String| {
         lval clazz: R|java/lang/Class<io/github/expo/modules/v2/testdata/AsyncShapes>| = <getClass>(Q|io/github/expo/modules/v2/testdata/AsyncShapes|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/AsyncShapes|>
         lval int: R|java/lang/Class<kotlin/Int>?| = <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>
-        lval promise: R|java/lang/Class<*>!| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.async.Promise))
-        lval scale: R|java/lang/reflect/Method!| = R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(scale), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/int|, R|<local>/promise|))
+        lval handle: R|java/lang/Class<*>!| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.async.PromiseHandle))
+        lval scale: R|java/lang/reflect/Method!| = R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(scale), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/int|, R|<local>/handle|))
         when () {
             !=(R|<local>/scale|.R|java/lang/reflect/Method.returnType|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
                 ^box <strcat>(String(scale returns ), R|<local>/scale|.R|java/lang/reflect/Method.returnType|)
             }
         }
 
-        lval greet: R|java/lang/reflect/Method!| = R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(greet), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/int|, R|<local>/promise|))
+        lval greet: R|java/lang/reflect/Method!| = R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(greet), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/int|, R|<local>/handle|))
         when () {
             !=(R|<local>/greet|.R|java/lang/reflect/Method.returnType|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
                 ^box <strcat>(String(greet returns ), R|<local>/greet|.R|java/lang/reflect/Method.returnType|)
             }
         }
 
-        R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(repeat), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/int|, R|<local>/int|, R|<local>/promise|))
-        lval clear: R|java/lang/reflect/Method!| = R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(clear), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/promise|))
+        R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(repeat), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/int|, R|<local>/int|, R|<local>/handle|))
+        lval clear: R|java/lang/reflect/Method!| = R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(<strcat>(String(clear), R|io/github/expo/modules/v2/testdata/TRAMPOLINE|), vararg(R|<local>/handle|))
         when () {
             !=(R|<local>/clear|.R|java/lang/reflect/Method.returnType|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
                 ^box <strcat>(String(clear returns ), R|<local>/clear|.R|java/lang/reflect/Method.returnType|)
@@ -57,7 +57,7 @@ FILE: moduleAsync.kt
         R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(greet), vararg(<getClass>(Q|kotlin/String|).R|kotlin/jvm/java|<R|kotlin/String|>, R|<local>/continuation|))
         when () {
             R|<local>/clazz|.R|java/lang/Class.declaredMethods|.R|kotlin/collections/any|<R|java/lang/reflect/Method!|>(<L> = any@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
-                ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, String(scale)) && R|<local>/it|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/contains|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(R|<local>/promise|)
+                ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, String(scale)) && R|<local>/it|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/contains|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(R|<local>/handle|)
             }
             ) ->  {
                 ^box String(the user's own method was rewritten)

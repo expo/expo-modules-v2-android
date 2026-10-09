@@ -33,7 +33,7 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
   }
 
   @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
-  fun createPromise(id: Long): Promise = Promise(id, this)
+  fun createPromise(id: Long): PromiseHandle = PromiseHandle(id, this)
 
   @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
   fun invalidate() {
@@ -101,10 +101,11 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
     }
 
     try {
-      if (buffered) {
-        nativeResolveBuffered(pointer, id, Trampoline.writeResult(value, type))
-      } else {
-        nativeResolve(pointer, id, Bridge.toJni(value, type))
+      when {
+        buffered -> nativeResolveBuffered(pointer, id, Trampoline.writeResult(value, type))
+        type === TypeDescriptor.Bool -> nativeResolveBoolean(pointer, id, value as Boolean)
+        type is TypeDescriptor.Primitive -> nativeResolveNumber(pointer, id, (value as Number).toDouble())
+        else -> nativeResolve(pointer, id, Bridge.toJni(value, type))
       }
     } catch (throwable: Throwable) {
       // The body succeeded but its result would not cross. JS must still see one settled promise,
@@ -137,6 +138,12 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
 
     @JvmStatic
     private external fun nativeResolve(runtimePointer: Long, id: Long, value: Any?)
+
+    @JvmStatic
+    private external fun nativeResolveNumber(runtimePointer: Long, id: Long, value: Double)
+
+    @JvmStatic
+    private external fun nativeResolveBoolean(runtimePointer: Long, id: Long, value: Boolean)
 
     @JvmStatic
     private external fun nativeReject(

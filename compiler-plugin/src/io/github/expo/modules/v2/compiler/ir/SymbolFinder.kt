@@ -100,8 +100,11 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `object Bridge` */
     val bridge: IrClassSymbol by lazy { clazz(Identifiers.Classes.Bridge) }
 
-    /** `class Promise` */
+    /** `class Promise<T>` */
     val promise: IrClassSymbol by lazy { clazz(Identifiers.Classes.Promise) }
+
+    /** `class PromiseHandle` */
+    val promiseHandle: IrClassSymbol by lazy { clazz(Identifiers.Classes.PromiseHandle) }
 
     /** `java.lang.Class` */
     val javaLangClass: IrClassSymbol by lazy { clazz(ClassId.topLevel(FqName("java.lang.Class"))) }
@@ -254,9 +257,14 @@ class SymbolFinder(private val context: IrPluginContext) {
       classes.bridge.functions.single { it.owner.name == Identifiers.Names.TO_JNI }
     }
 
-    /** `Promise.launch(type, buffered, block): Job` */
+    /** `PromiseHandle.launch(type, buffered, block): Job` */
     val promiseLaunch: IrSimpleFunctionSymbol by lazy {
-      classes.promise.functions.single { it.owner.name == Identifiers.Names.LAUNCH }
+      classes.promiseHandle.functions.single { it.owner.name == Identifiers.Names.LAUNCH }
+    }
+
+    /** `PromiseHandle.subscribeTo(promise, type, buffered)` */
+    val promiseSubscribeTo: IrSimpleFunctionSymbol by lazy {
+      classes.promiseHandle.functions.single { it.owner.name == Identifiers.Names.SUBSCRIBE_TO }
     }
   }
 }

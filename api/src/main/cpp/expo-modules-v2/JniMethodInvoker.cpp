@@ -499,7 +499,7 @@ namespace expo::modules::v2 {
       // TODO(@lukmccall): can we pass reference instead of cloning
       const uint64_t id = state->beginCall(spec.returnType.clone());
 
-      // +1 over the argument slots for the trailing Promise.
+      // +1 over the argument slots for the trailing PromiseHandle.
       std::array<jvalue, FunctionSpec::kMaxArgs + 1> values{};
       const kolibri::LocalFrame frame{env, FunctionSpec::kMaxArgs + 1};
 
@@ -520,7 +520,7 @@ namespace expo::modules::v2 {
         throw;
       }
 
-      const kolibri::Ref<JPromise> kotlinPromise = state->newKotlinPromise(env, id);
+      const kolibri::Ref<JPromiseHandle> kotlinPromise = state->newKotlinPromise(env, id);
       values[slot].l = kotlinPromise.get();
 
       env->CallNonvirtualVoidMethodA(receiver, spec.declaringClass, spec.method, values.data());

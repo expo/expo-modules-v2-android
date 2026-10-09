@@ -212,7 +212,7 @@ class ModuleDescriptorEncoderTest {
     assertEquals(
       ModuleFunctionDefinition.FLAG_ASYNC,
       reader.getInt(),
-      "bit 0 tells native to hand the trampoline a Promise",
+      "bit 0 tells native to hand the trampoline a PromiseHandle",
     )
     assertEquals(0, reader.getInt(), "no arguments")
   }

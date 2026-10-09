@@ -526,7 +526,7 @@ private fun run() {
     println("typeof Promise = $promiseKind, drainMicrotasks() = $empty, .then fired = $hit")
 
     // 17. Async exports. `@JS` on a `suspend` function generates the whole thing: the bridge hands
-    // the trampoline a `Promise`, the trampoline starts a coroutine, and JavaScript gets a real
+    // the trampoline a `PromiseHandle`, the trampoline starts a coroutine, and JavaScript gets a real
     // Promise back straight away.
     runtime.moduleRegistry.register(AsyncModule())
 
@@ -744,7 +744,7 @@ class DefaultsUtils : Module() {
  * The shape `@JS` generates for a `suspend` export, written out by hand.
  *
  * Each trampoline is what the bridge actually calls: it takes the declared arguments plus a
- * trailing [Promise], starts the user's body as a coroutine, and returns nothing. The result
+ * trailing `PromiseHandle`, starts the user's body as a coroutine, and returns nothing. The result
  * crosses when the coroutine finishes, not when the trampoline returns.
  */
 @ExpoModule(name = "Async")

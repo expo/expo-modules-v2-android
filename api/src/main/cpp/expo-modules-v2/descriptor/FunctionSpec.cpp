@@ -53,9 +53,9 @@ namespace expo::modules::v2::descriptor {
     }
 
     if (async) {
-      // The promise comes last, after payloadLength, which is the order TrampolinePoet declares.
-      // An async trampoline hands its result to the promise, so it always returns void.
-      signature += kPromiseDescriptor;
+      // The promise handle comes last, after payloadLength, which is the order TrampolinePoet
+      // declares. An async trampoline hands its result to the handle, so it always returns void.
+      signature += kPromiseHandleDescriptor;
       signature += ")";
       signature += kolibri::jni_descriptor_string_v<void>();
       return signature;

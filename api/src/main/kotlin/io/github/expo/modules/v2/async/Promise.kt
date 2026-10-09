@@ -1,89 +1,157 @@
 package io.github.expo.modules.v2.async
 
-import io.github.expo.kolibri.CalledFromNative
-import io.github.expo.modules.v2.async.Promise.Companion.SETTLED
-import io.github.expo.modules.v2.errors.ThrowableHelper
-import io.github.expo.modules.v2.types.TypeDescriptor
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater
 
-@CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
-class Promise internal constructor(
-  private val id: Long,
-  private val context: AsyncContext,
-) {
-  /**
-   * Updated by the [SETTLED]
-   */
-  @Suppress("PropertyName")
+typealias Resolve<T> = (T) -> Unit
+typealias Reject = (Throwable) -> Unit
+
+/**
+ * A value a synchronous `@JS` function hands back before it exists, so its body does not have to
+ * be `suspend`.
+ *
+ * ```
+ * @JS
+ * fun load(url: String): Promise<String> {
+ *   val promise = Promise<String>()
+ *   executor.execute { promise.resolve(fetch(url)) }
+ *   return promise
+ * }
+ *
+ * // The same, the way JavaScript's `new Promise` spells it.
+ * @JS
+ * fun load(url: String): Promise<String> = Promise { resolve, reject ->
+ *   executor.execute {
+ *     try { resolve(fetch(url)) } catch (e: IOException) { reject(e) }
+ *   }
+ * }
+ *
+ * // Already settled, like `Promise.resolve(...)` and `Promise.reject(...)`.
+ * @JS
+ * fun cached(key: String): Promise<String> =
+ *   cache[key]?.let { Promise.resolve(it) } ?: Promise.reject(NoSuchElementException(key))
+ * ```
+ *
+ * JavaScript gets a real promise as soon as the function returns, and it settles with whatever this
+ * one settles with. [resolve] and [reject] may be called from any thread, before or after the
+ * function returns, and only the first call counts. A promise that is never settled leaves
+ * JavaScript waiting forever.
+ */
+class Promise<T>() {
+
+  /** Written once, by the first [resolve] or [reject]. */
   @Volatile
-  @JvmField
-  internal var _settled: Int = 0
+  private var _state: State = State.Pending
 
-  // TODO(@lukmccall): we can probably assume that promise is not going to be used from only one thread at time
-  @Suppress("NOTHING_TO_INLINE")
-  private inline fun settled(): Boolean {
-    return SETTLED.compareAndSet(this, 0, 1)
-  }
+  @Volatile
+  private var _subscribers: PromiseHandle? = null
 
-  /**
-   * Runs [block] as the export's body and settles this promise with whatever it produces.
-   *
-   * [Dispatchers.Unconfined] starts the body inline on the calling JS thread, so an export that
-   * never actually suspends costs no thread hop. After a real suspension the body continues on
-   * whichever thread resumed it - settling stays correct because [resolve] posts, but a JSI handle
-   * would not, which is why a `suspend` export may not take or return one.
-   */
-  fun launch(
-    type: TypeDescriptor,
-    buffered: Boolean,
-    block: suspend () -> Any?
-  ): Job {
-    return context.inlineWindow {
-      exportScope.launch {
-        try {
-          resolve(block(), type, buffered)
-        } catch (cancellation: CancellationException) {
-          // Leaving it pending would hang every `await` on the JS side, so a cancelled body is a
-          // rejection like any other. Rethrown so the scope still sees the cancellation.
-          reject(cancellation)
-          throw cancellation
-        } catch (throwable: Throwable) {
-          reject(throwable)
-        }
-      }
+  constructor(executor: (resolve: Resolve<T>, reject: Reject) -> Unit) : this() {
+    try {
+      executor(
+        { value -> resolve(value) },
+        { throwable -> reject(throwable) }
+      )
+    } catch (throwable: Throwable) {
+      reject(throwable)
     }
   }
 
-  fun resolve(value: Any?, type: TypeDescriptor, buffered: Boolean) {
-    if (!settled()) {
-      return
-    }
-    context.postSettle { context.resolveOnJSThread(id, value, type, buffered) }
+  fun resolve(value: T) {
+    settle(State.resolved(value))
   }
 
   fun reject(throwable: Throwable) {
-    if (!settled()) {
+    settle(State.rejected(throwable))
+  }
+
+  private fun settle(state: State) {
+    if (OUTCOME.compareAndSet(this, State.Pending.raw, state.raw)) {
+      notifySubscribers(state)
+    }
+  }
+
+  internal fun subscribe(handle: PromiseHandle) {
+    val outcome = _state
+    if (outcome.isSettled) {
+      outcome.deliverTo(handle)
       return
     }
 
-    val code = if (throwable is CancellationException) {
-      CANCELLED_CODE
-    } else {
-      ThrowableHelper.codeOf(throwable)
+    while (true) {
+      val head = _subscribers
+      handle.nextSubscriber = head
+      if (SUBSCRIBERS.compareAndSet(this, head, handle)) {
+        break
+      }
     }
-    val message = ThrowableHelper.messageOf(throwable)
-    val stack = throwable.stackTraceToString()
 
-    context.postSettle { context.rejectOnJSThread(id, code, message, stack) }
+    // [settle] may have taken the list just before [handle] joined it, and then nothing else would
+    // deliver to it.
+    val settled = _state
+    if (settled.isSettled) {
+      notifySubscribers(settled)
+    }
   }
 
-  private companion object {
-    const val CANCELLED_CODE = "ERR_CANCELED"
-
-    private val SETTLED: AtomicIntegerFieldUpdater<Promise> =
-      AtomicIntegerFieldUpdater.newUpdater(Promise::class.java, "_settled")
+  private fun notifySubscribers(state: State) {
+    var subscriber = SUBSCRIBERS.getAndSet(this, null)
+    while (subscriber != null) {
+      val next = subscriber.nextSubscriber
+      state.deliverTo(subscriber)
+      subscriber = next
+    }
   }
+
+  @JvmInline
+  private value class State private constructor(val raw: Any?) {
+    val isSettled: Boolean
+      get() = raw !== PENDING
+
+    /** Settles [handle] with this outcome, which must be settled. */
+    fun deliverTo(handle: PromiseHandle) {
+      when (raw) {
+        is Rejected -> handle.reject(raw.throwable)
+        else -> handle.resolveFollowed(raw)
+      }
+    }
+
+    private class Rejected(val throwable: Throwable)
+
+    private object PENDING
+
+    companion object {
+      val Pending = State(PENDING)
+
+      fun resolved(value: Any?) = State(value)
+
+      fun rejected(throwable: Throwable) = State(Rejected(throwable))
+    }
+  }
+
+  companion object {
+    /**
+     * A promise already resolved with [value].
+     */
+    fun <T> resolve(value: T): Promise<T> = settled(State.resolved(value))
+
+    /** A promise already resolved with no value - JavaScript sees `undefined`. */
+    fun resolve(): Promise<Unit> = settled(State.resolved(Unit))
+
+    /** A promise already rejected with [throwable]. */
+    fun <T> reject(throwable: Throwable): Promise<T> = settled(State.rejected(throwable))
+
+    private fun <T> settled(state: State): Promise<T> =
+      Promise<T>().apply { _state = state }
+
+    private val OUTCOME: AtomicReferenceFieldUpdater<Promise<*>, Any?> =
+      AtomicReferenceFieldUpdater.newUpdater(Promise::class.java, Any::class.java, "_state")
+
+    private val SUBSCRIBERS: AtomicReferenceFieldUpdater<Promise<*>, PromiseHandle?> =
+      AtomicReferenceFieldUpdater.newUpdater(Promise::class.java, PromiseHandle::class.java, "_subscribers")
+  }
+}
+
+/** Resolves a promise that carries no value; JavaScript sees `undefined`. */
+fun Promise<Unit>.resolve() {
+  resolve(Unit)
 }

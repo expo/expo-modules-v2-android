@@ -1,0 +1,114 @@
+// FILE: modulePromise.kt
+package io.github.expo.modules.v2.testdata
+
+@ExpoModule
+class PromiseShapes : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false)
+  constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  @CalledFromNative
+  fun clear__trampoline$ExpoModulesV2(handle: PromiseHandle) {
+    handle.subscribeTo(promise = <this>.clear(), type = #type$0, buffered = false)
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "scale", argTypes = [AnyType(descriptor = Int, useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "scale__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "greet", argTypes = [AnyType(descriptor = #STRING, useBuffer = true)], returns = AnyType(descriptor = #STRING, useBuffer = false), methodName = "greet__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "clear", argTypes = [], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "clear__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "maybe", argTypes = [], returns = AnyType(descriptor = #STRING_NULL, useBuffer = false), methodName = "maybe__trampoline$ExpoModulesV2", isAsync = true)
+    return "PromiseShapes"
+  }
+
+  @CalledFromNative
+  fun greet__trampoline$ExpoModulesV2(payloadLength: Int, handle: PromiseHandle) {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: String
+    try { // BLOCK
+      v0 = args.nextString()
+    }
+    finally args.finish()
+    handle.subscribeTo(promise = <this>.greet(name = v0), type = #STRING, buffered = false)
+  }
+
+  @CalledFromNative
+  fun maybe__trampoline$ExpoModulesV2(handle: PromiseHandle) {
+    handle.subscribeTo(promise = <this>.maybe(), type = #STRING_NULL, buffered = false)
+  }
+
+  @CalledFromNative
+  fun scale__trampoline$ExpoModulesV2(p0: Int, handle: PromiseHandle) {
+    handle.subscribeTo(promise = <this>.scale(value = p0), type = Int, buffered = false)
+  }
+
+  @JS
+  fun clear(): Promise<Unit> {
+    return apply<Promise<Unit>>(/* <this> = Promise<Unit>(), */ block = local fun Promise<Unit>.<anonymous>() {
+      resolve(/* <this> = $this$apply */)
+    }
+)
+  }
+
+  @JS
+  fun greet(name: String): Promise<String> {
+    val promise: Promise<String> = Promise<String>()
+    promise.resolve(value = "Hello, " + name + "!")
+    return promise
+  }
+
+  @JS
+  fun maybe(): Promise<String?> {
+    return apply<Promise<String?>>(/* <this> = Promise<String?>(), */ block = local fun Promise<String?>.<anonymous>() {
+      $this$apply.resolve(value = null)
+    }
+)
+  }
+
+  @JS
+  @BufferMode(value = Buffer.NO)
+  fun scale(value: Int): Promise<Int> {
+    return apply<Promise<Int>>(/* <this> = Promise<Int>(), */ block = local fun Promise<Int>.<anonymous>() {
+      $this$apply.resolve(value = value.times(other = 2))
+    }
+)
+  }
+
+}
+
+fun box(): String {
+  val clazz: Class<PromiseShapes> = <get-java><PromiseShapes>(/* <this> = PromiseShapes::class */)
+  val int: Class<Int>? = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)
+  val handle: @FlexibleNullability Class<*>? = forName(p0 = "io.github.expo.modules.v2.async.PromiseHandle")
+  val promise: @FlexibleNullability Class<*>? = forName(p0 = "io.github.expo.modules.v2.async.Promise")
+  val scale: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "scale" + "__trampoline$ExpoModulesV2", p1 = [int, handle])
+  when {
+    EQEQ(arg0 = scale.getReturnType(), arg1 = super<Void>.#TYPE).not() -> return "scale returns " + scale.getReturnType()
+  }
+  val greet: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "greet" + "__trampoline$ExpoModulesV2", p1 = [int, handle])
+  when {
+    EQEQ(arg0 = greet.getReturnType(), arg1 = super<Void>.#TYPE).not() -> return "greet returns " + greet.getReturnType()
+  }
+  clazz.getDeclaredMethod(p0 = "clear" + "__trampoline$ExpoModulesV2", p1 = [handle]) /*~> Unit */
+  clazz.getDeclaredMethod(p0 = "maybe" + "__trampoline$ExpoModulesV2", p1 = [handle]) /*~> Unit */
+  val own: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "scale", p1 = [int])
+  when {
+    EQEQ(arg0 = own.getReturnType(), arg1 = promise).not() -> return "scale returns " + own.getReturnType()
+  }
+  return "OK"
+}
+
+private const val TRAMPOLINE: String
+  field = "__trampoline$ExpoModulesV2"
+  private get
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_PromiseShapes_ba84834d {
+  abstract fun module(): PromiseShapes
+
+}
+

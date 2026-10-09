@@ -7,21 +7,20 @@ import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
-import io.github.expo.modules.v2.async.Promise
 import io.github.expo.modules.v2.Module
 import kotlinx.coroutines.delay
 
 /**
  * A `suspend` export's generated trampoline.
  *
- * The shape it pins: `Unit` return whatever the export declares, a trailing `Promise` after
+ * The shape it pins: `Unit` return whatever the export declares, a trailing `PromiseHandle` after
  * `payloadLength`, buffered arguments still decoded eagerly and synchronously, and the user's body
- * wrapped in a `suspend` lambda handed to `Promise.launch`. The result reaches JavaScript through
- * the promise, so it never appears in the JVM signature.
+ * wrapped in a `suspend` lambda handed to `PromiseHandle.launch`. The result reaches JavaScript
+ * through the handle, so it never appears in the JVM signature.
  */
 @ExpoModule
 class AsyncShapes : Module() {
-    // No buffered value anywhere: slots only, so the trampoline is (I, Promise)V.
+    // No buffered value anywhere: slots only, so the trampoline is (I, PromiseHandle)V.
     @JS
     @BufferMode(Buffer.NO)
     suspend fun scale(value: Int): Int {
@@ -29,12 +28,13 @@ class AsyncShapes : Module() {
         return value * 2
     }
 
-    // A buffered argument AND a buffered result: (I, Promise)V, where the leading I is payloadLength.
+    // A buffered argument AND a buffered result: (I, PromiseHandle)V, where the leading I is
+    // payloadLength.
     @JS
     suspend fun greet(name: String): String = "Hello, $name!"
 
     // A buffered argument beside a slot argument, so payloadLength sits between them and the
-    // Promise still comes last: (I, I, Promise)V.
+    // PromiseHandle still comes last: (I, I, PromiseHandle)V.
     @JS
     suspend fun repeat(@BufferMode(Buffer.NO) times: Int, value: String): String = value.repeat(times)
 
@@ -48,20 +48,20 @@ private const val TRAMPOLINE = "__trampoline\$ExpoModulesV2"
 fun box(): String {
     val clazz = AsyncShapes::class.java
     val int = Int::class.javaPrimitiveType
-    val promise = Class.forName("io.github.expo.modules.v2.async.Promise")
+    val handle = Class.forName("io.github.expo.modules.v2.async.PromiseHandle")
 
     // Every suspend export gets a trampoline, even one whose values would all cross unchanged.
-    val scale = clazz.getDeclaredMethod("scale$TRAMPOLINE", int, promise)
+    val scale = clazz.getDeclaredMethod("scale$TRAMPOLINE", int, handle)
     if (scale.returnType != Void.TYPE) return "scale returns ${scale.returnType}"
 
-    // The buffered argument collapses into payloadLength, and the Promise follows it.
-    val greet = clazz.getDeclaredMethod("greet$TRAMPOLINE", int, promise)
+    // The buffered argument collapses into payloadLength, and the PromiseHandle follows it.
+    val greet = clazz.getDeclaredMethod("greet$TRAMPOLINE", int, handle)
     if (greet.returnType != Void.TYPE) return "greet returns ${greet.returnType}"
 
-    // Slot argument, then payloadLength, then the Promise.
-    clazz.getDeclaredMethod("repeat$TRAMPOLINE", int, int, promise)
+    // Slot argument, then payloadLength, then the PromiseHandle.
+    clazz.getDeclaredMethod("repeat$TRAMPOLINE", int, int, handle)
 
-    val clear = clazz.getDeclaredMethod("clear$TRAMPOLINE", promise)
+    val clear = clazz.getDeclaredMethod("clear$TRAMPOLINE", handle)
     if (clear.returnType != Void.TYPE) return "clear returns ${clear.returnType}"
 
     // The user's own methods keep their suspend signature: a trailing Continuation, untouched.
@@ -69,8 +69,8 @@ fun box(): String {
     clazz.getDeclaredMethod("scale", int, continuation)
     clazz.getDeclaredMethod("greet", String::class.java, continuation)
 
-    // A synchronous export in the same module must be unaffected: no Promise, no trampoline.
-    if (clazz.declaredMethods.any { it.name == "scale" && it.parameterTypes.contains(promise) }) {
+    // A synchronous export in the same module must be unaffected: no PromiseHandle, no trampoline.
+    if (clazz.declaredMethods.any { it.name == "scale" && it.parameterTypes.contains(handle) }) {
         return "the user's own method was rewritten"
     }
 

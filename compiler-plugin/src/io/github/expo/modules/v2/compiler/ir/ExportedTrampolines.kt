@@ -61,6 +61,7 @@ internal class ExportedTrampolines(
       target = export.function,
       arguments = export.arguments,
       result = export.result,
+      returnsPromise = export.returnsPromise,
     )
     export.trampolineName = name
   }

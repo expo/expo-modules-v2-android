@@ -15,7 +15,7 @@ import io.github.expo.kolibri.binary.BinaryBuffer
  * functionCount x {
  *   jsName: string                    // i32 UTF-8 byte length + bytes
  *   methodName: string                // selected JVM method
- *   flags: i32                        // bit 0 = async (returns a Promise, takes one)
+ *   flags: i32                        // bit 0 = async (returns a Promise, takes a PromiseHandle)
  *   argCount: i32
  *   argCount x { typeCodes: intArray }   // i32 count + count x i32
  *   returnTypeCodes: intArray

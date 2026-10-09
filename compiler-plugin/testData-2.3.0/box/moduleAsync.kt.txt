@@ -11,8 +11,8 @@ class AsyncShapes : Module {
   }
 
   @CalledFromNative
-  fun clear__trampoline$ExpoModulesV2(promise: Promise) {
-    promise.launch(type = #type$0, buffered = false, block = local suspend fun <anonymous>(): Any? {
+  fun clear__trampoline$ExpoModulesV2(handle: PromiseHandle) {
+    handle.launch(type = #type$0, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.clear()
     }
 )
@@ -27,36 +27,36 @@ class AsyncShapes : Module {
   }
 
   @CalledFromNative
-  fun greet__trampoline$ExpoModulesV2(payloadLength: Int, promise: Promise) {
+  fun greet__trampoline$ExpoModulesV2(payloadLength: Int, handle: PromiseHandle) {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
     try { // BLOCK
       v0 = args.nextString()
     }
     finally args.finish()
-    promise.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
+    handle.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.greet(name = v0)
     }
 )
   }
 
   @CalledFromNative
-  fun repeat__trampoline$ExpoModulesV2(p0: Int, payloadLength: Int, promise: Promise) {
+  fun repeat__trampoline$ExpoModulesV2(p0: Int, payloadLength: Int, handle: PromiseHandle) {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v1: String
     try { // BLOCK
       v1 = args.nextString()
     }
     finally args.finish()
-    promise.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
+    handle.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.repeat(times = p0, value = v1)
     }
 )
   }
 
   @CalledFromNative
-  fun scale__trampoline$ExpoModulesV2(p0: Int, promise: Promise) {
-    promise.launch(type = Int, buffered = false, block = local suspend fun <anonymous>(): Any? {
+  fun scale__trampoline$ExpoModulesV2(p0: Int, handle: PromiseHandle) {
+    handle.launch(type = Int, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.scale(value = p0)
     }
 )
@@ -89,17 +89,17 @@ class AsyncShapes : Module {
 fun box(): String {
   val clazz: Class<AsyncShapes> = <get-java><AsyncShapes>(/* <this> = AsyncShapes::class */)
   val int: Class<Int>? = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)
-  val promise: @FlexibleNullability Class<*>? = forName(p0 = "io.github.expo.modules.v2.async.Promise")
-  val scale: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "scale" + "__trampoline$ExpoModulesV2", p1 = [int, promise])
+  val handle: @FlexibleNullability Class<*>? = forName(p0 = "io.github.expo.modules.v2.async.PromiseHandle")
+  val scale: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "scale" + "__trampoline$ExpoModulesV2", p1 = [int, handle])
   when {
     EQEQ(arg0 = scale /*!! Method */.getReturnType(), arg1 = super<Void>.#TYPE).not() -> return "scale returns " + scale /*!! Method */.getReturnType()
   }
-  val greet: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "greet" + "__trampoline$ExpoModulesV2", p1 = [int, promise])
+  val greet: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "greet" + "__trampoline$ExpoModulesV2", p1 = [int, handle])
   when {
     EQEQ(arg0 = greet /*!! Method */.getReturnType(), arg1 = super<Void>.#TYPE).not() -> return "greet returns " + greet /*!! Method */.getReturnType()
   }
-  clazz.getDeclaredMethod(p0 = "repeat" + "__trampoline$ExpoModulesV2", p1 = [int, int, promise]) /*~> Unit */
-  val clear: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "clear" + "__trampoline$ExpoModulesV2", p1 = [promise])
+  clazz.getDeclaredMethod(p0 = "repeat" + "__trampoline$ExpoModulesV2", p1 = [int, int, handle]) /*~> Unit */
+  val clear: @FlexibleNullability Method? = clazz.getDeclaredMethod(p0 = "clear" + "__trampoline$ExpoModulesV2", p1 = [handle])
   when {
     EQEQ(arg0 = clear /*!! Method */.getReturnType(), arg1 = super<Void>.#TYPE).not() -> return "clear returns " + clear /*!! Method */.getReturnType()
   }
@@ -109,7 +109,7 @@ fun box(): String {
   when {
     any<@FlexibleNullability Method?>(/* <this> = clazz.getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
       return when {
-        EQEQ(arg0 = it /*!! Method */.getName(), arg1 = "scale") -> contains<@FlexibleNullability Class<*>?>(/* <this> = it /*!! Method */.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ element = promise)
+        EQEQ(arg0 = it /*!! Method */.getName(), arg1 = "scale") -> contains<@FlexibleNullability Class<*>?>(/* <this> = it /*!! Method */.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ element = handle)
         else -> false
       }
     }

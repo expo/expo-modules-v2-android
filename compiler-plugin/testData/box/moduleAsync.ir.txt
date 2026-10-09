@@ -39,12 +39,12 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
         public open fun toString (): kotlin.String declared in io.github.expo.modules.v2.Module
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:clear__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
-      VALUE_PARAMETER kind:Regular name:promise index:1 type:io.github.expo.modules.v2.async.Promise
+      VALUE_PARAMETER kind:Regular name:handle index:1 type:io.github.expo.modules.v2.async.PromiseHandle
       annotations:
         CalledFromNative(by = <null>)
       BLOCK_BODY
-        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
-          ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.clear__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null
+        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.PromiseHandle' type=kotlinx.coroutines.Job origin=null
+          ARG <this>: GET_VAR 'handle: io.github.expo.modules.v2.async.PromiseHandle declared in io.github.expo.modules.v2.testdata.AsyncShapes.clear__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.PromiseHandle origin=null
           ARG type: GET_FIELD 'FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$0 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static] declared in io.github.expo.modules.v2.testdata.AsyncShapes' type=io.github.expo.modules.v2.types.TypeDescriptor origin=null
           ARG buffered: CONST Boolean type=kotlin.Boolean value=false
           ARG block: FUN_EXPR type=kotlin.coroutines.SuspendFunction0<kotlin.Any?> origin=LAMBDA
@@ -115,7 +115,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:greet__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
-      VALUE_PARAMETER kind:Regular name:promise index:2 type:io.github.expo.modules.v2.async.Promise
+      VALUE_PARAMETER kind:Regular name:handle index:2 type:io.github.expo.modules.v2.async.PromiseHandle
       annotations:
         CalledFromNative(by = <null>)
       BLOCK_BODY
@@ -131,8 +131,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
                 ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
           finally: CALL 'public abstract fun finish (): kotlin.Unit declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.Unit origin=null
             ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
-        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
-          ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null
+        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.PromiseHandle' type=kotlinx.coroutines.Job origin=null
+          ARG <this>: GET_VAR 'handle: io.github.expo.modules.v2.async.PromiseHandle declared in io.github.expo.modules.v2.testdata.AsyncShapes.greet__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.PromiseHandle origin=null
           ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG buffered: CONST Boolean type=kotlin.Boolean value=false
           ARG block: FUN_EXPR type=kotlin.coroutines.SuspendFunction0<kotlin.Any?> origin=LAMBDA
@@ -146,7 +146,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.Int
       VALUE_PARAMETER kind:Regular name:payloadLength index:2 type:kotlin.Int
-      VALUE_PARAMETER kind:Regular name:promise index:3 type:io.github.expo.modules.v2.async.Promise
+      VALUE_PARAMETER kind:Regular name:handle index:3 type:io.github.expo.modules.v2.async.PromiseHandle
       annotations:
         CalledFromNative(by = <null>)
       BLOCK_BODY
@@ -162,8 +162,8 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
                 ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
           finally: CALL 'public abstract fun finish (): kotlin.Unit declared in io.github.expo.modules.v2.args.TrampolineArguments' type=kotlin.Unit origin=null
             ARG <this>: GET_VAR 'val args: io.github.expo.modules.v2.args.TrampolineArguments declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.args.TrampolineArguments origin=null
-        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
-          ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null
+        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.PromiseHandle' type=kotlinx.coroutines.Job origin=null
+          ARG <this>: GET_VAR 'handle: io.github.expo.modules.v2.async.PromiseHandle declared in io.github.expo.modules.v2.testdata.AsyncShapes.repeat__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.PromiseHandle origin=null
           ARG type: GET_FIELD 'FIELD IR_EXTERNAL_DECLARATION_STUB name:STRING type:io.github.expo.modules.v2.types.TypeDescriptor.Simple visibility:public [final,static] declared in io.github.expo.modules.v2.types.CommonDescriptors' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG buffered: CONST Boolean type=kotlin.Boolean value=false
           ARG block: FUN_EXPR type=kotlin.coroutines.SuspendFunction0<kotlin.Any?> origin=LAMBDA
@@ -177,12 +177,12 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:scale__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.Unit
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.AsyncShapes
       VALUE_PARAMETER kind:Regular name:p0 index:1 type:kotlin.Int
-      VALUE_PARAMETER kind:Regular name:promise index:2 type:io.github.expo.modules.v2.async.Promise
+      VALUE_PARAMETER kind:Regular name:handle index:2 type:io.github.expo.modules.v2.async.PromiseHandle
       annotations:
         CalledFromNative(by = <null>)
       BLOCK_BODY
-        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.Promise' type=kotlinx.coroutines.Job origin=null
-          ARG <this>: GET_VAR 'promise: io.github.expo.modules.v2.async.Promise declared in io.github.expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.Promise origin=null
+        CALL 'public final fun launch (type: io.github.expo.modules.v2.types.TypeDescriptor, buffered: kotlin.Boolean, block: kotlin.coroutines.SuspendFunction0<kotlin.Any?>): kotlinx.coroutines.Job declared in io.github.expo.modules.v2.async.PromiseHandle' type=kotlinx.coroutines.Job origin=null
+          ARG <this>: GET_VAR 'handle: io.github.expo.modules.v2.async.PromiseHandle declared in io.github.expo.modules.v2.testdata.AsyncShapes.scale__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.async.PromiseHandle origin=null
           ARG type: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Int modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.types.TypeDescriptor.Primitive]' type=io.github.expo.modules.v2.types.TypeDescriptor.Int
           ARG buffered: CONST Boolean type=kotlin.Boolean value=false
           ARG block: FUN_EXPR type=kotlin.coroutines.SuspendFunction0<kotlin.Any?> origin=LAMBDA
@@ -263,9 +263,9 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
         CALL 'public final fun <get-javaPrimitiveType> <T> (<this>: kotlin.reflect.KClass<T of kotlin.jvm.<get-javaPrimitiveType>>): java.lang.Class<T of kotlin.jvm.<get-javaPrimitiveType>>? declared in kotlin.jvm' type=java.lang.Class<kotlin.Int>? origin=GET_PROPERTY
           TYPE_ARG T: kotlin.Int
           ARG <this>: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Int modality:FINAL visibility:public superTypes:[kotlin.Number; kotlin.Comparable<kotlin.Int>; java.io.Serializable]' type=kotlin.reflect.KClass<kotlin.Int>
-      VAR name:promise type:@[FlexibleNullability] java.lang.Class<*>? [val]
+      VAR name:handle type:@[FlexibleNullability] java.lang.Class<*>? [val]
         CALL 'public open fun forName (p0: @[FlexibleNullability] kotlin.String?): @[FlexibleNullability] java.lang.Class<*>? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
-          ARG p0: CONST String type=kotlin.String value="io.github.expo.modules.v2.async.Promise"
+          ARG p0: CONST String type=kotlin.String value="io.github.expo.modules.v2.async.PromiseHandle"
       VAR name:scale type:@[FlexibleNullability] java.lang.reflect.Method? [val]
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
           ARG <this>: GET_VAR 'val clazz: java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=null
@@ -274,7 +274,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
             CONST String type=kotlin.String value="__trampoline$ExpoModulesV2"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
             GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
-            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val handle: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
@@ -295,7 +295,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
             CONST String type=kotlin.String value="__trampoline$ExpoModulesV2"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
             GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
-            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val handle: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
@@ -317,7 +317,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
             GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
             GET_VAR 'val int: java.lang.Class<kotlin.Int>? declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<kotlin.Int>? origin=null
-            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val handle: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       VAR name:clear type:@[FlexibleNullability] java.lang.reflect.Method? [val]
         CALL 'public open fun getDeclaredMethod (p0: @[FlexibleNullability] kotlin.String?, vararg p1: @[FlexibleNullability] java.lang.Class<*>?): @[FlexibleNullability] java.lang.reflect.Method? declared in java.lang.Class' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
           ARG <this>: GET_VAR 'val clazz: java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> declared in io.github.expo.modules.v2.testdata.box' type=java.lang.Class<io.github.expo.modules.v2.testdata.AsyncShapes> origin=null
@@ -325,7 +325,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
             CONST String type=kotlin.String value="clear"
             CONST String type=kotlin.String value="__trampoline$ExpoModulesV2"
           ARG p1: VARARG type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? varargElementType=@[FlexibleNullability] java.lang.Class<*>?
-            GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+            GET_VAR 'val handle: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
       WHEN type=kotlin.Unit origin=IF
         BRANCH
           if: CALL 'public final fun not (): kotlin.Boolean declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
@@ -380,7 +380,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleAsync.kt
                           ARG <this>: TYPE_OP type=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?> origin=IMPLICIT_NOTNULL typeOperand=@[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>
                             CALL 'public open fun getParameterTypes (): @[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? declared in java.lang.reflect.Method' type=@[FlexibleNullability] @[FlexibleArrayElementVariance] kotlin.Array<out @[FlexibleNullability] java.lang.Class<*>?>? origin=GET_PROPERTY
                               ARG <this>: GET_VAR 'it: @[FlexibleNullability] java.lang.reflect.Method? declared in io.github.expo.modules.v2.testdata.box.<anonymous>' type=@[FlexibleNullability] java.lang.reflect.Method? origin=null
-                          ARG element: GET_VAR 'val promise: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
+                          ARG element: GET_VAR 'val handle: @[FlexibleNullability] java.lang.Class<*>? declared in io.github.expo.modules.v2.testdata.box' type=@[FlexibleNullability] java.lang.Class<*>? origin=null
                       BRANCH
                         if: CONST Boolean type=kotlin.Boolean value=true
                         then: CONST Boolean type=kotlin.Boolean value=false

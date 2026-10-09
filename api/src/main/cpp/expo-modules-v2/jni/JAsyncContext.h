@@ -9,8 +9,8 @@
 #include <kolibri/members/Method.h>
 
 namespace expo::modules::v2 {
-  struct JPromise : kolibri::JavaClass<JPromise> {
-    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/async/Promise";
+  struct JPromiseHandle : kolibri::JavaClass<JPromiseHandle> {
+    static constexpr std::string_view descriptor = "io/github/expo/modules/v2/async/PromiseHandle";
   };
 
   struct JAsyncContext : kolibri::JavaClass<JAsyncContext> {
@@ -19,7 +19,7 @@ namespace expo::modules::v2 {
     static void registerNatives(JNIEnv* env);
 
     struct Accessors : BaseAccessors {
-      [[nodiscard]] kolibri::Ref<JPromise> createPromise(JNIEnv* env, jlong id) const;
+      [[nodiscard]] kolibri::Ref<JPromiseHandle> createPromise(JNIEnv* env, jlong id) const;
 
       void invalidate(JNIEnv* env) const;
 
@@ -27,7 +27,7 @@ namespace expo::modules::v2 {
     };
 
   private:
-    static constexpr Method<"createPromise", kolibri::Ref<JPromise>(jlong)> createPromise_{};
+    static constexpr Method<"createPromise", kolibri::Ref<JPromiseHandle>(jlong)> createPromise_{};
     static constexpr Method<"invalidate", void()> invalidate_{};
     static constexpr Method<"drainInlineSettles", void()> drainInlineSettles_{};
   };

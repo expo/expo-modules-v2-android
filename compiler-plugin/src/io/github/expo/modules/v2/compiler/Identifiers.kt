@@ -105,7 +105,11 @@ object Identifiers {
     val TrampolineArguments = classId(Packages.ARGS, "TrampolineArguments")
     val Bridge = classId(Packages.ARGS, "Bridge")
 
+    /** `class Promise<T>` - what a synchronous export returns to settle later. */
     val Promise = classId(Packages.ASYNC, "Promise")
+
+    /** `class PromiseHandle` - the bridge's side of one async call, handed to its trampoline. */
+    val PromiseHandle = classId(Packages.ASYNC, "PromiseHandle")
 
     val JavaScriptValue = classId(Packages.JSI, "JavaScriptValue")
     val JavaScriptObject = classId(Packages.JSI, "JavaScriptObject")
@@ -125,6 +129,7 @@ object Identifiers {
     val SHARED_OBJECT_ANNOTATION: FqName = Classes.ExpoSharedObjectAnnotation.asSingleFqName()
     val EVENT_ANNOTATION: FqName = Classes.EventAnnotation.asSingleFqName()
     val CONSTANT_ANNOTATION: FqName = Classes.ConstantAnnotation.asSingleFqName()
+    val PROMISE: FqName = Classes.Promise.asSingleFqName()
   }
 
   object Names {
@@ -157,6 +162,7 @@ object Identifiers {
     val FROM_JNI = Name.identifier("fromJni")
     val TO_JNI = Name.identifier("toJni")
     val LAUNCH = Name.identifier("launch")
+    val SUBSCRIBE_TO = Name.identifier("subscribeTo")
 
     // Annotation arguments.
     val ARG_NAME = Name.identifier("name")
@@ -173,7 +179,7 @@ object Identifiers {
     const val TRAMPOLINE_SUFFIX = "__trampoline\$ExpoModulesV2"
 
     const val CONSTRUCTOR_TRAMPOLINE = "__construct\$ExpoModulesV2"
-    const val PROMISE_PARAMETER = "promise"
+    const val HANDLE_PARAMETER = "handle"
     const val BUILDER_PARAMETER = "builder"
 
     const val REGISTRATION_FIELD = "sharedClassId\$ExpoModulesV2"

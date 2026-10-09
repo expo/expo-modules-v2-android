@@ -12,9 +12,12 @@ import org.jetbrains.kotlin.ir.declarations.IrProperty
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
 import org.jetbrains.kotlin.ir.types.IrSimpleType
+import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.IrTypeProjection
+import org.jetbrains.kotlin.ir.types.classOrNull
 import org.jetbrains.kotlin.ir.util.getAnnotation
 import org.jetbrains.kotlin.ir.util.hasAnnotation
+import org.jetbrains.kotlin.ir.util.kotlinFqName
 import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
 
 /** One `@JS` or `@Event` member of an exported class, as the builder will describe it. */
@@ -27,12 +30,15 @@ internal class ExportedFunction(
   override val jsName: String,
   val function: IrSimpleFunction,
   val arguments: List<ValuePlan>,
+  /** What JavaScript receives - for a [returnsPromise] export, what the promise resolves with. */
   val result: ValuePlan,
+  /** Whether the function returns a `Promise<T>` instead of suspending to produce its `T`. */
+  val returnsPromise: Boolean,
 ) : Exported {
   var trampolineName: String? = null
 
   val isAsync: Boolean
-    get() = function.isSuspend
+    get() = function.isSuspend || returnsPromise
 
   override val needsTrampoline: Boolean
     get() = isAsync || (arguments + result).any { it.buffered || !it.passthrough }
@@ -129,6 +135,7 @@ internal class ExportedMembers(private val policy: TransportPolicy) {
         )
       }
 
+    val promised = function.returnType.promisedType()
     return ExportedFunction(
       jsName = annotation
         .stringArgument(Identifiers.Names.ARG_NAME)
@@ -136,8 +143,18 @@ internal class ExportedMembers(private val policy: TransportPolicy) {
         ?: function.name.asString(),
       function = function,
       arguments = arguments,
-      result = policy.plan(function.returnType, returnChoice, Crossing.RESULT),
+      result = policy.plan(promised ?: function.returnType, returnChoice, Crossing.RESULT),
+      returnsPromise = promised != null,
     )
+  }
+
+  /** The `T` of a `Promise<T>`, or null when this is not a promise. */
+  private fun IrType.promisedType(): IrType? {
+    if (classOrNull?.owner?.kotlinFqName != Identifiers.FqNames.PROMISE) {
+      return null
+    }
+    return ((this as? IrSimpleType)?.arguments?.singleOrNull() as? IrTypeProjection)?.type
+      ?: error("@JS: $this names no type to resolve with - the frontend should have rejected it")
   }
 
   private fun event(

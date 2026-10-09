@@ -17,7 +17,8 @@ namespace expo::modules::v2::descriptor {
     static constexpr size_t kMaxArgs = 8;
 
     /** The trailing parameter of an async trampoline. */
-    static constexpr std::string_view kPromiseDescriptor = "Lio/github/expo/modules/v2/async/Promise;";
+    static constexpr std::string_view kPromiseHandleDescriptor =
+      "Lio/github/expo/modules/v2/async/PromiseHandle;";
 
     std::string name;
     std::string methodName;

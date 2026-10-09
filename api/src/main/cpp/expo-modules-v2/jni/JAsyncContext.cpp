@@ -44,6 +44,36 @@ namespace expo::modules::v2 {
       }
     }
 
+    void nativeResolveNumber(
+      JNIEnv*,
+      const jlong runtimePointer,
+      const jlong id,
+      const jdouble value
+    ) {
+      jsi::JavaScriptRuntime* runtime = runtimeFor(runtimePointer);
+      if (runtime == nullptr) {
+        return;
+      }
+      if (async::AsyncRuntimeState* state = runtime->asyncState()) {
+        state->resolveWithValue(static_cast<uint64_t>(id), facebook::jsi::Value(value));
+      }
+    }
+
+    void nativeResolveBoolean(
+      JNIEnv*,
+      const jlong runtimePointer,
+      const jlong id,
+      const jboolean value
+    ) {
+      jsi::JavaScriptRuntime* runtime = runtimeFor(runtimePointer);
+      if (runtime == nullptr) {
+        return;
+      }
+      if (async::AsyncRuntimeState* state = runtime->asyncState()) {
+        state->resolveWithValue(static_cast<uint64_t>(id), facebook::jsi::Value(value != JNI_FALSE));
+      }
+    }
+
     void nativeReject(
       JNIEnv* env,
       const jlong runtimePointer,
@@ -72,6 +102,8 @@ namespace expo::modules::v2 {
     kolibri::registerNative<JAsyncContext>(env)
       .method<&nativeResolveBuffered>("nativeResolveBuffered", "(JJI)V")
       .method<&nativeResolve>("nativeResolve", "(JJLjava/lang/Object;)V")
+      .method<&nativeResolveNumber>("nativeResolveNumber", "(JJD)V")
+      .method<&nativeResolveBoolean>("nativeResolveBoolean", "(JJZ)V")
       .method<&nativeReject>(
         "nativeReject",
         "(JJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V"
@@ -79,7 +111,7 @@ namespace expo::modules::v2 {
       .commit();
   }
 
-  kolibri::Ref<JPromise> JAsyncContext::Accessors::createPromise(JNIEnv* env, const jlong id) const {
+  kolibri::Ref<JPromiseHandle> JAsyncContext::Accessors::createPromise(JNIEnv* env, const jlong id) const {
     return callToken(env, Owner::createPromise_, id);
   }
 

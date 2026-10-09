@@ -32,7 +32,7 @@ namespace expo::modules::v2::async {
 
     [[nodiscard]] facebook::jsi::Value finishCall(facebook::jsi::Runtime& rt, uint64_t id);
 
-    [[nodiscard]] kolibri::Ref<JPromise> newKotlinPromise(JNIEnv* env, uint64_t id) const;
+    [[nodiscard]] kolibri::Ref<JPromiseHandle> newKotlinPromise(JNIEnv* env, uint64_t id) const;
 
     /**
      * Settles whatever the trampoline just produced without suspending.
@@ -44,6 +44,9 @@ namespace expo::modules::v2::async {
 
     /** The result arrived in a JNI slot. */
     void resolveFromJni(facebook::jsi::Runtime& rt, JNIEnv* env, uint64_t id, jobject value);
+
+    /** The result arrived as the JavaScript value it is, with nothing left to decode. */
+    void resolveWithValue(uint64_t id, facebook::jsi::Value&& value);
 
     /** The result arrived on the shared binary buffer, [payloadLength] bytes of it. */
     void resolveFromBuffer(

@@ -5,8 +5,8 @@ package io.github.expo.modules.v2.testdata
 class AsyncShapes : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false)
   @CalledFromNative
-  fun clear__trampoline$ExpoModulesV2(promise: Promise) {
-    promise.launch(type = #type$0, buffered = false, block = local suspend fun <anonymous>(): Any? {
+  fun clear__trampoline$ExpoModulesV2(handle: PromiseHandle) {
+    handle.launch(type = #type$0, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.clear()
     }
 )
@@ -21,36 +21,36 @@ class AsyncShapes : Module {
   }
 
   @CalledFromNative
-  fun greet__trampoline$ExpoModulesV2(payloadLength: Int, promise: Promise) {
+  fun greet__trampoline$ExpoModulesV2(payloadLength: Int, handle: PromiseHandle) {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v0: String
     try { // BLOCK
       v0 = args.nextString()
     }
     finally args.finish()
-    promise.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
+    handle.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.greet(name = v0)
     }
 )
   }
 
   @CalledFromNative
-  fun repeat__trampoline$ExpoModulesV2(p0: Int, payloadLength: Int, promise: Promise) {
+  fun repeat__trampoline$ExpoModulesV2(p0: Int, payloadLength: Int, handle: PromiseHandle) {
     val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
     var v1: String
     try { // BLOCK
       v1 = args.nextString()
     }
     finally args.finish()
-    promise.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
+    handle.launch(type = #STRING, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.repeat(times = p0, value = v1)
     }
 )
   }
 
   @CalledFromNative
-  fun scale__trampoline$ExpoModulesV2(p0: Int, promise: Promise) {
-    promise.launch(type = Int, buffered = false, block = local suspend fun <anonymous>(): Any? {
+  fun scale__trampoline$ExpoModulesV2(p0: Int, handle: PromiseHandle) {
+    handle.launch(type = Int, buffered = false, block = local suspend fun <anonymous>(): Any? {
       return <this>.scale(value = p0)
     }
 )

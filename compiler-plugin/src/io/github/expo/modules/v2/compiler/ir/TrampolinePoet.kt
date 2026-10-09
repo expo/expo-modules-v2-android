@@ -48,8 +48,9 @@ internal class TrampolinePoet(
     target: IrSimpleFunction,
     arguments: List<ValuePlan>,
     result: ValuePlan,
+    returnsPromise: Boolean,
   ): IrSimpleFunction {
-    val isAsync = target.isSuspend
+    val isAsync = target.isSuspend || returnsPromise
     val trampoline = declare(
       moduleClass,
       name,
@@ -72,10 +73,10 @@ internal class TrampolinePoet(
       null
     }
     // Last, after payloadLength - the order `HostFunctionSpec::functionSignature` builds.
-    val promise = if (isAsync) {
+    val handle = if (isAsync) {
       trampoline.addValueParameter(
-        Name.identifier(Identifiers.Literals.PROMISE_PARAMETER),
-        symbols.classes.promise.owner.defaultType,
+        Name.identifier(Identifiers.Literals.HANDLE_PARAMETER),
+        symbols.classes.promiseHandle.owner.defaultType,
         IrDeclarationOrigin.DEFINED,
       )
     } else {
@@ -101,8 +102,10 @@ internal class TrampolinePoet(
       arguments = callArguments,
       returnType = target.returnType,
     )
-    if (promise != null) {
-      statements += startCoroutine(moduleClass, trampoline, promise, call, result)
+    if (handle != null && returnsPromise) {
+      statements += subscribeToPromise(moduleClass, handle, call, result)
+    } else if (handle != null) {
+      statements += startCoroutine(moduleClass, trampoline, handle, call, result)
     } else {
       finishWithResult(moduleClass, trampoline, call, result, statements)
     }
@@ -115,7 +118,28 @@ internal class TrampolinePoet(
   }
 
   /**
-   * `promise.launch(<descriptor>, <buffered>) { <call> }` - the entire async half of the emitter.
+   * `handle.subscribeTo(<call>, <descriptor>, <buffered>)` - the async half for an export that
+   * returns a `Promise<T>`. The body runs right here, on the calling JS thread, and the handle
+   * settles with whatever the promise it returned settles with.
+   */
+  private fun subscribeToPromise(
+    moduleClass: IrClass,
+    handle: IrValueParameter,
+    call: IrExpression,
+    result: ValuePlan,
+  ): IrExpression =
+    callOn(
+      symbols.functions.promiseSubscribeTo,
+      receiver = handle.get(),
+      arguments = listOf(
+        call,
+        descriptors.read(moduleClass, result.type),
+        poet.boolean(result.buffered),
+      ),
+    )
+
+  /**
+   * `handle.launch(<descriptor>, <buffered>) { <call> }` - the async half for a `suspend` export.
    *
    * Every buffered argument has already been read into a local by the time this runs, which is what
    * makes the shared binary buffer safe: it is thread-local and reused per call, and the coroutine
@@ -124,12 +148,12 @@ internal class TrampolinePoet(
    * The block is a real `suspend` lambda - an [IrFunctionExpressionImpl] over a function with
    * `isSuspend = true`. `IrGenerationExtension` runs before the JVM backend's coroutine lowering,
    * so the state machine is built for us. Its result type is `Any?`, so a primitive return boxes
-   * here and `Promise` converts it with the descriptor it was handed.
+   * here and `PromiseHandle` converts it with the descriptor it was handed.
    */
   private fun startCoroutine(
     moduleClass: IrClass,
     owner: IrSimpleFunction,
-    promise: IrValueParameter,
+    handle: IrValueParameter,
     call: IrExpression,
     result: ValuePlan,
   ): IrExpression {
@@ -149,7 +173,7 @@ internal class TrampolinePoet(
 
     return callOn(
       symbols.functions.promiseLaunch,
-      receiver = promise.get(),
+      receiver = handle.get(),
       arguments = listOf(
         descriptors.read(moduleClass, result.type),
         poet.boolean(result.buffered),

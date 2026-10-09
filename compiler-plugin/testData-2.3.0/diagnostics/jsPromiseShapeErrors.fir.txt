@@ -1,0 +1,36 @@
+FILE: jsPromiseShapeErrors.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class BadPromises : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/BadPromises| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun takesPromise(value: R|kotlin/Int|, promise: R|io/github/expo/modules/v2/async/Promise<kotlin/Int>|): R|kotlin/Unit| {
+            R|<local>/promise|.R|SubstitutionOverride<io/github/expo/modules/v2/async/Promise.resolve: R|kotlin/Unit|>|(R|<local>/value|)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun suspendsAndPromises(): R|io/github/expo/modules/v2/async/Promise<kotlin/Int>| {
+            ^suspendsAndPromises R|io/github/expo/modules/v2/async/Promise.Promise|<R|kotlin/Int|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun nullablePromise(): R|io/github/expo/modules/v2/async/Promise<kotlin/Int>?| {
+            ^nullablePromise Null(null)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun starPromise(): R|io/github/expo/modules/v2/async/Promise<*>| {
+            ^starPromise R|io/github/expo/modules/v2/async/Promise.Promise|<R|kotlin/Int|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun nullableValue(): R|io/github/expo/modules/v2/async/Promise<kotlin/Int?>| {
+            ^nullableValue R|io/github/expo/modules/v2/async/Promise.Promise|<R|kotlin/Int?|>()
+        }
+
+    }
+FILE: io/github/expo/modules/v2/hints/io_github_expo_modules_v2_testdata_BadPromises_990a073d.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_BadPromises_990a073d : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/BadPromises|
+
+    }
