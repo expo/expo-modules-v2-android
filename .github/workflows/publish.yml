@@ -11,8 +11,8 @@ env:
 jobs:
   # Everything but the compiler plugin is the same for every Kotlin release, so it is published once,
   # built with the catalog's Kotlin (the oldest supported release).
-  publish-universal:
-    name: Publish react and gradle-plugin
+  stage-universal:
+    name: Stage react and gradle-plugin
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -33,14 +33,24 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Publish to Maven Central
-        run: ./gradlew :react:publishToMavenCentral :gradle-plugin:publishToMavenCentral -PskipHermesEnvBuild
+      - name: Stage signed artifacts
+        run: ./gradlew :react:publishAllPublicationsToCentralBundleRepository :gradle-plugin:publishAllPublicationsToCentralBundleRepository -PskipHermesEnvBuild
         env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
+
+      # Every compiler-plugin build writes its own compiler-plugin maven-metadata.xml, which would
+      # collide in the `publish` job. Central does not need it, so it stays out of every bundle.
+      - name: Upload staged artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: central-bundle-universal
+          path: |
+            build/central-bundle/
+            !build/central-bundle/**/maven-metadata.xml*
+          if-no-files-found: error
+          retention-days: 7
 
   kotlin-versions:
     name: Kotlin versions
@@ -57,9 +67,9 @@ jobs:
 
   # A compiler plugin is bound to the exact compiler it was built against, so it is published once
   # per supported Kotlin release, as `expo-modules-v2-compiler-plugin:<version>-<kotlin>`.
-  publish-compiler:
-    name: Publish compiler-plugin for Kotlin ${{ matrix.kotlin-version }}
-    needs: [publish-universal, kotlin-versions]
+  stage-compiler:
+    name: Stage compiler-plugin for Kotlin ${{ matrix.kotlin-version }}
+    needs: kotlin-versions
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -78,11 +88,43 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Publish to Maven Central
-        run: ./gradlew :compiler-plugin:publishToMavenCentral -PkotlinVersion=${{ matrix.kotlin-version }} -PskipHermesEnvBuild -PskipDesktopNative
+      - name: Stage signed artifacts
+        run: ./gradlew :compiler-plugin:publishAllPublicationsToCentralBundleRepository -PkotlinVersion=${{ matrix.kotlin-version }} -PskipHermesEnvBuild -PskipDesktopNative
         env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
+
+      - name: Upload staged artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: central-bundle-kotlin-${{ matrix.kotlin-version }}
+          path: |
+            build/central-bundle/
+            !build/central-bundle/**/maven-metadata.xml*
+          if-no-files-found: error
+          retention-days: 7
+
+  # Each job above only stages its signed artifacts. They are uploaded here as one deployment, so a
+  # release lands on Maven Central completely or not at all.
+  publish:
+    name: Publish to Maven Central
+    needs: [stage-universal, stage-compiler]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Download staged artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: central-bundle-*
+          path: build/central-bundle/
+          merge-multiple: true
+
+      - name: Upload one deployment to Maven Central
+        run: scripts/publish-to-maven-central.sh build/central-bundle "$DEPLOYMENT_NAME"
+        env:
+          DEPLOYMENT_NAME: expo-modules-v2-${{ github.ref_name }}
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}

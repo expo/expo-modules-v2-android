@@ -87,5 +87,16 @@ fun Project.configureCentralPublishing() {
         }
       }
     }
+
+    // A local repository that CI fills with signed artifacts from every job, and then uploads to
+    // Maven Central as one deployment (see scripts/publish-to-maven-central.sh).
+    extensions.configure<PublishingExtension> {
+      repositories {
+        maven {
+          name = "centralBundle"
+          url = uri(rootProject.layout.buildDirectory.dir("central-bundle"))
+        }
+      }
+    }
   }
 }
