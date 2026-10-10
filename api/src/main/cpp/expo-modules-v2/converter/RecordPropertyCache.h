@@ -1,10 +1,12 @@
 #pragma once
 
+#include <string_view>
 #include <unordered_map>
 #include <vector>
 
 #include <jsi/jsi.h>
 
+#include <expo-modules-v2/converter/AsciiKeyCache.h>
 #include <expo-modules-v2/records/RecordSchema.h>
 
 namespace expo::modules::v2 {
@@ -24,6 +26,11 @@ namespace expo::modules::v2 {
       int32_t schemaId
     );
 
+    [[nodiscard]] const facebook::jsi::PropNameID* asciiKey(
+      facebook::jsi::Runtime& rt,
+      std::string_view key
+    );
+
   private:
     static RecordPropertyCache& threadLocal();
 
@@ -33,5 +40,6 @@ namespace expo::modules::v2 {
 
     facebook::jsi::Runtime* runtime_ = nullptr;
     std::unordered_map<int32_t, RecordAccessPlan> plansBySchema_;
+    AsciiKeyCache asciiKeys_;
   };
 }

@@ -32,7 +32,16 @@ namespace expo::modules::v2 {
 
   void RecordPropertyCache::clear() noexcept {
     plansBySchema_.clear();
+    asciiKeys_.clear();
     runtime_ = nullptr;
+  }
+
+  const facebook::jsi::PropNameID* RecordPropertyCache::asciiKey(
+    facebook::jsi::Runtime& rt,
+    const std::string_view key
+  ) {
+    activate(rt);
+    return asciiKeys_.get(rt, key);
   }
 
   const RecordAccessPlan& RecordPropertyCache::planFor(

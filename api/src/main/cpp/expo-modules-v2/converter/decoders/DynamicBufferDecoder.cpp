@@ -82,18 +82,25 @@ namespace expo::modules::v2 {
   template<>
   facebook::jsi::Value DynamicBufferDecoder::operator()<Tag::MAP>() const {
     const size_t count = in.readCount();
+    RecordPropertyCache& names = RecordPropertyCache::get(rt);
     facebook::jsi::Object result(rt);
     for (size_t i = 0; i < count; i++) {
-      facebook::jsi::PropNameID name = readAdaptiveString(
+      readAdaptiveString(
         in,
         [&](const char* bytes, const size_t length) {
-          return facebook::jsi::PropNameID::forAscii(rt, bytes, length);
+          facebook::jsi::Value value = decodeFromBufferDynamic(rt, in);
+          if (const facebook::jsi::PropNameID* name = names.asciiKey(rt, {bytes, length})) {
+            result.setProperty(rt, *name, std::move(value));
+          } else {
+            const auto uncached = facebook::jsi::PropNameID::forAscii(rt, bytes, length);
+            result.setProperty(rt, uncached, std::move(value));
+          }
         },
         [&](const char16_t* units, const size_t stringCount) {
-          return facebook::jsi::PropNameID::forUtf16(rt, units, stringCount);
+          const auto name = facebook::jsi::PropNameID::forUtf16(rt, units, stringCount);
+          result.setProperty(rt, name, decodeFromBufferDynamic(rt, in));
         }
       );
-      result.setProperty(rt, name, decodeFromBufferDynamic(rt, in));
     }
     return result;
   }
