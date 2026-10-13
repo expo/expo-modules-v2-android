@@ -1,5 +1,6 @@
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 
+#include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <kolibri/string_utils.h>
 
@@ -107,7 +108,7 @@ namespace expo::modules::v2::jsi {
   jstring JavaScriptValue::getString(JNIEnv* env) const {
     facebook::jsi::Runtime& rt = runtime();
     const facebook::jsi::Value& v = value();
-    return kolibri::toJString(env, v.getString(rt).utf8(rt));
+    return jstringFromJsiString(env, rt, v.getString(rt));
   }
 
   jobject JavaScriptValue::getObject(JNIEnv* env) const {

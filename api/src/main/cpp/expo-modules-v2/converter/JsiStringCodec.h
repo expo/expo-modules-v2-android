@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <cstring>
+#include <memory>
 #include <jni.h>
 
 #include <jsi/jsi.h>
@@ -120,6 +121,39 @@ namespace expo::modules::v2 {
     }
 
     return utf16String(rt, env, value, length);
+  }
+
+  inline jstring jstringFromJsiString(
+    JNIEnv* env,
+    facebook::jsi::Runtime& rt,
+    const facebook::jsi::String& str
+  ) {
+    constexpr size_t kStackUnits = 256;
+    const size_t length = str.length(rt);
+
+    jchar stackUnits[kStackUnits];
+    std::unique_ptr<jchar[]> heapUnits;
+    jchar* units = stackUnits;
+    if (length > kStackUnits) {
+      heapUnits = std::make_unique_for_overwrite<jchar[]>(length);
+      units = heapUnits.get();
+    }
+
+    size_t count = 0;
+    auto copy = [&](const bool ascii, const void* data, const size_t num) {
+      if (ascii) {
+        const auto* bytes = static_cast<const uint8_t*>(data);
+        for (size_t i = 0; i < num; i++) {
+          units[count + i] = bytes[i];
+        }
+      } else {
+        std::memcpy(units + count, data, num * sizeof(jchar));
+      }
+      count += num;
+    };
+    str.getStringData(rt, copy);
+
+    return env->NewString(units, static_cast<jsize>(count));
   }
 
   inline void writeJsiString(
