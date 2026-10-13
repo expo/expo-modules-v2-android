@@ -1,7 +1,9 @@
 #pragma once
 
+#include <algorithm>
 #include <cstdint>
 #include <cstring>
+#include <memory>
 #include <jni.h>
 
 #include <jsi/jsi.h>
@@ -120,6 +122,46 @@ namespace expo::modules::v2 {
     }
 
     return utf16String(rt, env, value, length);
+  }
+
+  /**
+   * A JS string as a new Java string local reference, copied straight out of the runtime's own
+   * ASCII or UTF-16 chunks. Going through `utf8()` instead converts the text into a heap
+   * `std::string`, only for kolibri to decode that back into UTF-16 for `NewString`.
+   */
+  inline jstring jstringFromJsiString(
+    JNIEnv* env,
+    facebook::jsi::Runtime& rt,
+    const facebook::jsi::String& str
+  ) {
+    constexpr size_t kStackUnits = 256;
+    const size_t length = str.length(rt);
+
+    jchar stackUnits[kStackUnits];
+    std::unique_ptr<jchar[]> heapUnits;
+    jchar* units = stackUnits;
+    if (length > kStackUnits) {
+      heapUnits = std::make_unique_for_overwrite<jchar[]>(length);
+      units = heapUnits.get();
+    }
+
+    size_t count = 0;
+    auto copy = [&](const bool ascii, const void* data, const size_t num) {
+      // The chunks add up to `length`; the clamp only keeps a misbehaving runtime in bounds.
+      const size_t take = std::min(num, length - count);
+      if (ascii) {
+        const auto* bytes = static_cast<const uint8_t*>(data);
+        for (size_t i = 0; i < take; i++) {
+          units[count + i] = bytes[i];
+        }
+      } else {
+        std::memcpy(units + count, data, take * sizeof(jchar));
+      }
+      count += take;
+    };
+    str.getStringData(rt, copy);
+
+    return env->NewString(units, static_cast<jsize>(count));
   }
 
   inline void writeJsiString(

@@ -1,6 +1,7 @@
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
 
 #include <expo-modules-v2/converter/encoders/EncodeCommon.h>
+#include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/encoders/JniEncoder.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <expo-modules-v2/utils/Throw.h>
@@ -86,8 +87,7 @@ namespace expo::modules::v2 {
     }
 
     if (value.isString()) {
-      // TODO(@lukmccall): optimize
-      return kolibri::toJString(env, value.getString(rt).utf8(rt));
+      return jstringFromJsiString(env, rt, value.getString(rt));
     }
 
     if (value.isObject()) {
@@ -123,7 +123,8 @@ namespace expo::modules::v2 {
       for (size_t i = 0; i < size; i++) {
         facebook::jsi::String key = names.getValueAtIndex(rt, i).getString(rt);
         const jobject element = encodeToJniDynamic(env, rt, object.getProperty(rt, key));
-        kolibri::JHashMap::put(env, map, key.utf8(rt), element);
+        const kolibri::Ref<> javaKey = kolibri::Ref<>::adopt(env, jstringFromJsiString(env, rt, key));
+        kolibri::JHashMap::put(env, map, javaKey.get(), element);
         env->DeleteLocalRef(element);
       }
       return map;

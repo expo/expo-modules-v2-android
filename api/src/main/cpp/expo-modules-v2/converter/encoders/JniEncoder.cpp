@@ -6,6 +6,7 @@
 #include <expo-modules-v2/converter/ByteView.h>
 #include <expo-modules-v2/converter/encoders/EncodeCommon.h>
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
+#include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
@@ -46,7 +47,6 @@ namespace expo::modules::v2 {
     const size_t size = names.size(rt);
     const jobject map = kolibri::JHashMap::constructor.createRaw(env);
     for (size_t i = 0; i < size; i++) {
-      // TODO(@lukmccall): optimize key
       facebook::jsi::String key = names.getValueAtIndex(rt, i).getString(rt);
       const jobject element = encodeToJni(
         env,
@@ -54,7 +54,8 @@ namespace expo::modules::v2 {
         object.getProperty(rt, key),
         valueType
       );
-      kolibri::JHashMap::put(env, map, key.utf8(rt), element);
+      const kolibri::Ref<> javaKey = kolibri::Ref<>::adopt(env, jstringFromJsiString(env, rt, key));
+      kolibri::JHashMap::put(env, map, javaKey.get(), element);
       env->DeleteLocalRef(element);
     }
     return map;
@@ -187,8 +188,7 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::STRING>() const {
-    // TODO(@lukmccall): optimize
-    return kolibri::toJString(env, value.asString(rt).utf8(rt));
+    return jstringFromJsiString(env, rt, value.asString(rt));
   }
 
   template<>
