@@ -20,19 +20,19 @@ namespace expo::modules::v2 {
 
     switch (type.kind()) {
       case CppType::BOOLEAN:
-        out.z = value.asBool() != 0;
+        out.z = boolOf(rt, value) != 0;
         return out;
       case CppType::INT:
-        out.i = static_cast<int32_t>(value.asNumber());
+        out.i = static_cast<int32_t>(numberOf(rt, value));
         return out;
       case CppType::LONG:
-        out.j = static_cast<int64_t>(value.asNumber());
+        out.j = static_cast<int64_t>(numberOf(rt, value));
         return out;
       case CppType::FLOAT:
-        out.f = static_cast<float>(value.asNumber());
+        out.f = static_cast<float>(numberOf(rt, value));
         return out;
       case CppType::DOUBLE:
-        out.d = value.asNumber();
+        out.d = numberOf(rt, value);
         return out;
       default:
         out.l = encodeToJni(env, rt, value, type);

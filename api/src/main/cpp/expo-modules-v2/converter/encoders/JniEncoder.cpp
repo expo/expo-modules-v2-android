@@ -132,52 +132,52 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::INT>() const {
-    return kolibri::JInteger::valueOf(env, static_cast<jint>(value.asNumber())).release();
+    return kolibri::JInteger::valueOf(env, static_cast<jint>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_INT>() const {
-    return kolibri::JInteger::valueOf(env, static_cast<jint>(value.asNumber())).release();
+    return kolibri::JInteger::valueOf(env, static_cast<jint>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::LONG>() const {
-    return kolibri::JLong::valueOf(env, static_cast<jlong>(value.asNumber())).release();
+    return kolibri::JLong::valueOf(env, static_cast<jlong>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_LONG>() const {
-    return kolibri::JLong::valueOf(env, static_cast<jlong>(value.asNumber())).release();
+    return kolibri::JLong::valueOf(env, static_cast<jlong>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::FLOAT>() const {
-    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(value.asNumber())).release();
+    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_FLOAT>() const {
-    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(value.asNumber())).release();
+    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::DOUBLE>() const {
-    return kolibri::JDouble::valueOf(env, value.asNumber()).release();
+    return kolibri::JDouble::valueOf(env, numberOf(rt, value)).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_DOUBLE>() const {
-    return kolibri::JDouble::valueOf(env, value.asNumber()).release();
+    return kolibri::JDouble::valueOf(env, numberOf(rt, value)).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOOLEAN>() const {
-    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(value.asBool())).release();
+    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(boolOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_BOOLEAN>() const {
-    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(value.asBool())).release();
+    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(boolOf(rt, value))).release();
   }
 
   template<>
@@ -193,36 +193,36 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::DOUBLE_ARRAY>() const {
-    return encodeJsArrayToJni<jdouble>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return value.asNumber();
+    return encodeJsArrayToJni<jdouble>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return numberOf(rt, element);
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::INT_ARRAY>() const {
-    return encodeJsArrayToJni<jint>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return static_cast<jint>(value.asNumber());
+    return encodeJsArrayToJni<jint>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return static_cast<jint>(numberOf(rt, element));
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::LONG_ARRAY>() const {
-    return encodeJsArrayToJni<jlong>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return static_cast<jlong>(value.asNumber());
+    return encodeJsArrayToJni<jlong>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return static_cast<jlong>(numberOf(rt, element));
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::FLOAT_ARRAY>() const {
-    return encodeJsArrayToJni<jfloat>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return static_cast<jfloat>(value.asNumber());
+    return encodeJsArrayToJni<jfloat>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return static_cast<jfloat>(numberOf(rt, element));
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOOLEAN_ARRAY>() const {
-    return encodeJsArrayToJni<jboolean>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return static_cast<jboolean>(value.asBool());
+    return encodeJsArrayToJni<jboolean>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return static_cast<jboolean>(boolOf(rt, element));
     });
   }
 
