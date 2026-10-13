@@ -6,6 +6,7 @@
 #include <jsi/jsi.h>
 
 #include <kolibri/array.h>
+#include <kolibri/binary/BinaryBuffer.h>
 
 #include <expo-modules-v2/records/RecordRegistry.h>
 #include <expo-modules-v2/descriptor/ExpectedType.h>
@@ -53,6 +54,27 @@ namespace expo::modules::v2 {
       type.kotlinType(),
       " slot",
     });
+  }
+
+  /**
+   * Writes the presence byte a nullable [type] leads with, and reports whether a payload for
+   * [value] follows it. Null in a non-nullable slot throws.
+   */
+  [[nodiscard]] ALWAYS_INLINE bool writePresence(
+    facebook::jsi::Runtime& rt,
+    const facebook::jsi::Value& value,
+    const ExpectedType& type,
+    kolibri::binary::BinaryBuffer& out
+  ) {
+    const bool isNull = value.isUndefined() || value.isNull();
+    if (isNull && !type.nullable()) [[unlikely]] {
+      throwNullInNonNullable(rt, type);
+    }
+
+    if (type.nullable()) {
+      out.write<uint8_t>(isNull ? 0 : 1);
+    }
+    return !isNull;
   }
 
   [[nodiscard]] ALWAYS_INLINE bool isAbsentOptionalField(

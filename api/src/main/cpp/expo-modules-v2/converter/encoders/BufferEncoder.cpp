@@ -7,6 +7,39 @@
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 
 namespace expo::modules::v2 {
+  namespace {
+    /** The fields of [object] in schema order, as [plan] names them. */
+    void encodeRecordFields(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Object& object,
+      const RecordAccessPlan& plan,
+      kolibri::binary::BinaryBuffer& out
+    ) {
+      const RecordSchema& schema = *plan.schema;
+      for (size_t i = 0; i < schema.fields.size(); i++) {
+        const RecordFieldSpec& field = schema.fields[i];
+        const facebook::jsi::Value fieldValue = readRecordField(
+          rt,
+          object,
+          schema,
+          field,
+          plan.fieldNames[i]
+        );
+
+        // Handle optional fields
+        if (field.optional) [[unlikely]] {
+          const bool present = !fieldValue.isUndefined();
+          out.write<uint8_t>(present ? 1 : 0);
+          if (!present) {
+            continue;
+          }
+        }
+
+        encodeToBuffer(rt, fieldValue, field.type, out);
+      }
+    }
+  } // namespace
+
   template<>
   void BufferEncoder::operator()<CppType::INT>() const {
     out.write<int32_t>(static_cast<int32_t>(numberOf(rt, value)));
@@ -146,6 +179,21 @@ namespace expo::modules::v2 {
 
     out.write<>(static_cast<int32_t>(size));
 
+    if (elementType.kind() == CppType::RECORD) {
+      // Every element shares one plan, so it is resolved once rather than per element. And each
+      // element is a value of our own, so its object is moved out of it instead of being cloned
+      // the way a lone record's is.
+      const RecordAccessPlan& plan =
+        RecordPropertyCache::get(rt).planFor(rt, elementType.recordSchemaId());
+      for (size_t i = 0; i < size; i++) {
+        facebook::jsi::Value element = array.getValueAtIndex(rt, i);
+        if (writePresence(rt, element, elementType, out)) {
+          encodeRecordFields(rt, std::move(element).asObject(rt), plan, out);
+        }
+      }
+      return;
+    }
+
     for (size_t i = 0; i < size; i++) {
       encodeToBuffer(rt, array.getValueAtIndex(rt, i), elementType, out);
     }
@@ -167,30 +215,7 @@ namespace expo::modules::v2 {
   }
 
   void BufferEncoder::operator()(const ExpectedType::Record& recordType) const {
-    RecordPropertyCache& recordProperties = RecordPropertyCache::get(rt);
-    const RecordAccessPlan& plan = recordProperties.planFor(rt, recordType.schemaId);
-    const RecordSchema& schema = *plan.schema;
-    const facebook::jsi::Object object = value.asObject(rt);
-    for (size_t i = 0; i < schema.fields.size(); i++) {
-      const RecordFieldSpec& field = schema.fields[i];
-      const facebook::jsi::Value fieldValue = readRecordField(
-        rt,
-        object,
-        schema,
-        field,
-        plan.fieldNames[i]
-      );
-
-      // Handle optional fields
-      if (field.optional) [[unlikely]] {
-        const bool present = !fieldValue.isUndefined();
-        out.write<uint8_t>(present ? 1 : 0);
-        if (!present) {
-          continue;
-        }
-      }
-
-      encodeToBuffer(rt, fieldValue, field.type, out);
-    }
+    const RecordAccessPlan& plan = RecordPropertyCache::get(rt).planFor(rt, recordType.schemaId);
+    encodeRecordFields(rt, value.asObject(rt), plan, out);
   }
 } // namespace expo::modules::v2

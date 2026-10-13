@@ -68,16 +68,7 @@ namespace expo::modules::v2 {
     const ExpectedType& type,
     BinaryBuffer& out
   ) {
-    const bool isNull = value.isUndefined() || value.isNull();
-    if (isNull && !type.nullable()) [[unlikely]] {
-      throwNullInNonNullable(rt, type);
-    }
-
-    if (type.nullable()) {
-      out.write<uint8_t>(isNull ? 0 : 1);
-    }
-
-    if (isNull) {
+    if (!writePresence(rt, value, type, out)) {
       return;
     }
 

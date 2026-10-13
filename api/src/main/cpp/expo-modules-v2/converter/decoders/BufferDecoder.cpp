@@ -11,6 +11,26 @@
 #include <kolibri/binary/BinaryString.h>
 
 namespace expo::modules::v2 {
+  namespace {
+    /** A record's fields in schema order, into a new object whose properties [plan] names. */
+    facebook::jsi::Value decodeRecordFields(
+      facebook::jsi::Runtime& rt,
+      kolibri::binary::Reader& in,
+      const RecordAccessPlan& plan
+    ) {
+      const RecordSchema& schema = *plan.schema;
+      facebook::jsi::Object result(rt);
+      for (size_t i = 0; i < schema.fields.size(); i++) {
+        result.setProperty(
+          rt,
+          plan.fieldNames[i],
+          decodeFromBuffer(rt, in, schema.fields[i].type)
+        );
+      }
+      return result;
+    }
+  } // namespace
+
   template<>
   facebook::jsi::Value BufferDecoder::operator()<CppType::INT>() const {
     return facebook::jsi::Value(static_cast<double>(in.read<int32_t>()));
@@ -139,6 +159,19 @@ namespace expo::modules::v2 {
     const ExpectedType& elementType = *listType.element;
     const size_t count = in.readCount();
 
+    if (elementType.kind() == CppType::RECORD) {
+      // Every element shares one plan, so it is resolved once rather than per element.
+      const RecordAccessPlan& plan =
+        RecordPropertyCache::get(rt).planFor(rt, elementType.recordSchemaId());
+      const bool nullable = elementType.nullable();
+      return buildJsArray(rt, count, [&](size_t) {
+        if (nullable && !in.readPresence()) {
+          return facebook::jsi::Value::null();
+        }
+        return decodeRecordFields(rt, in, plan);
+      });
+    }
+
     return buildJsArray(rt, count, [&](size_t) {
       return decodeFromBuffer(rt, in, elementType);
     });
@@ -171,19 +204,7 @@ namespace expo::modules::v2 {
   }
 
   facebook::jsi::Value BufferDecoder::operator()(const ExpectedType::Record& recordType) const {
-    RecordPropertyCache& recordProperties = RecordPropertyCache::get(rt);
-    const RecordAccessPlan& plan = recordProperties.planFor(rt, recordType.schemaId);
-    const RecordSchema& schema = *plan.schema;
-
-    facebook::jsi::Object result(rt);
-    for (size_t i = 0; i < schema.fields.size(); i++) {
-      const RecordFieldSpec& field = schema.fields[i];
-      result.setProperty(
-        rt,
-        plan.fieldNames[i],
-        decodeFromBuffer(rt, in, field.type)
-      );
-    }
-    return result;
+    const RecordAccessPlan& plan = RecordPropertyCache::get(rt).planFor(rt, recordType.schemaId);
+    return decodeRecordFields(rt, in, plan);
   }
 }
