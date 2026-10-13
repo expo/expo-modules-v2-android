@@ -5,6 +5,8 @@
 #include <jni.h>
 #include <jsi/jsi.h>
 
+#include <kolibri/defines.h>
+
 namespace expo::modules::v2 {
   /**
    * A JavaScript `Error` for a failure on the native side: [message] as its message, [code] as its
@@ -18,9 +20,15 @@ namespace expo::modules::v2 {
     const std::string& stack
   );
 
+  COLD NOINLINE void throwPendingAsJSError(facebook::jsi::Runtime& rt, JNIEnv* env);
+
   /**
    * Throws the pending Java exception, if there is one, as a [createNativeError] error that
    * JavaScript catches. Does nothing when no exception is pending.
    */
-  void rethrowPendingAsJSError(facebook::jsi::Runtime& rt, JNIEnv* env);
+  ALWAYS_INLINE void rethrowPendingAsJSError(facebook::jsi::Runtime& rt, JNIEnv* env) {
+    if (env->ExceptionCheck()) [[unlikely]] {
+      throwPendingAsJSError(rt, env);
+    }
+  }
 }
