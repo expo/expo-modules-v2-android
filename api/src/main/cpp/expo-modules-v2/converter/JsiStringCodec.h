@@ -84,32 +84,46 @@ namespace expo::modules::v2 {
       return facebook::jsi::String::createFromAscii(rt, "", 0);
     }
 
-    constexpr jsize kAsciiWindow = 32;
-    constexpr jsize kWindowMinLength = 256;
+    // A string up to this long is copied out with one `GetStringRegion` and classified here. The
+    // UTF-8 route below takes two JNI calls instead - `GetStringUTFLength` only to learn the text is
+    // ASCII, then the copy - and both of them walk the string encoding modified UTF-8.
+    constexpr jsize kUnitsMax = 1024;
+    if (length <= kUnitsMax) {
+      jchar units[kUnitsMax];
+      env->GetStringRegion(value, 0, length, units);
 
-    if (length >= kWindowMinLength) {
-      jchar head[kAsciiWindow];
-      env->GetStringRegion(value, 0, kAsciiWindow, head);
+      // Narrowed speculatively, the way `narrowIfAscii` does; the accumulator says afterwards
+      // whether that was allowed.
+      char ascii[kUnitsMax];
       jchar accumulator = 0;
-      for (jsize i = 0; i < kAsciiWindow; ++i) {
-        accumulator |= head[i];
+      for (jsize i = 0; i < length; ++i) {
+        accumulator |= units[i];
+        ascii[i] = static_cast<char>(units[i]);
       }
-      if (accumulator >= 0x80) {
-        return utf16String(rt, env, value, length);
+
+      if (accumulator < 0x80) [[likely]] {
+        return facebook::jsi::String::createFromAscii(rt, ascii, static_cast<size_t>(length));
       }
+      return facebook::jsi::String::createFromUtf16(
+        rt,
+        reinterpret_cast<const char16_t*>(units),
+        static_cast<size_t>(length)
+      );
+    }
+
+    // A long string: sniff its head before paying for a UTF-8 walk of all of it.
+    constexpr jsize kAsciiWindow = 32;
+    jchar head[kAsciiWindow];
+    env->GetStringRegion(value, 0, kAsciiWindow, head);
+    jchar accumulator = 0;
+    for (jsize i = 0; i < kAsciiWindow; ++i) {
+      accumulator |= head[i];
+    }
+    if (accumulator >= 0x80) {
+      return utf16String(rt, env, value, length);
     }
 
     if (env->GetStringUTFLength(value) == length) {
-      // Pure ASCII. Short strings are read with `GetStringUTFRegion` into a stack buffer: it saves
-      // the malloc and free `GetStringUTFChars` does inside ART.
-      constexpr jsize kRegionMax = 96;
-      if (length <= kRegionMax) {
-        // `GetStringUTFRegion` NUL-terminates what it writes, so the buffer needs one byte more.
-        char bytes[kRegionMax + 1];
-        env->GetStringUTFRegion(value, 0, length, bytes);
-        return facebook::jsi::String::createFromAscii(rt, bytes, static_cast<size_t>(length));
-      }
-
       const char* bytes = env->GetStringUTFChars(value, nullptr);
       auto result = facebook::jsi::String::createFromAscii(
         rt,
