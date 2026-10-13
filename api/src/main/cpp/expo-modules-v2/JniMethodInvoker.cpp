@@ -552,8 +552,8 @@ namespace expo::modules::v2 {
         state->reject(rt, id, "ERR_TRAMPOLINE", e.what(), "");
       }
 
-      state->drainInlineSettles(env);
-
+      // A body that settled without suspending has delivered its outcome before the trampoline
+      // returned (see `AsyncContext.inlineWindow`), so the promise below is born settled.
       return state->finishCall(rt, id);
     }
 

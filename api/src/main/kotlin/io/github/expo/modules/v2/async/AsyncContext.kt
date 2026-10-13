@@ -59,8 +59,8 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
   private var inlineThread: Thread? = null
 
   /**
-   * Hands [job] to the JS thread, or holds it for [drainInlineSettles] when the JS thread is
-   * already inside the very call it belongs to.
+   * Hands [job] to the JS thread, or holds it until the [inlineWindow] it was settled in closes,
+   * when the JS thread is already inside the very call it belongs to.
    */
   internal fun postSettle(job: Runnable) {
     if (inlineThread === Thread.currentThread() && inlineSettle == null) {
@@ -70,17 +70,29 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
     scheduler.post(job)
   }
 
+  /**
+   * Runs [body], the start of an export, with settles on this thread held back until it returns.
+   * The held settle is then delivered before the trampoline returns, so the native caller finds the
+   * outcome in place and hands JavaScript a promise that is born settled - without a separate
+   * call back into Kotlin to collect it.
+   */
   internal inline fun <T> inlineWindow(body: AsyncContext.() -> T): T {
-    return try {
+    val result = try {
       inlineThread = Thread.currentThread()
       body()
+    } catch (throwable: Throwable) {
+      // The trampoline fails and the native caller rejects the promise; a settle held so far must
+      // not leak into the next call.
+      inlineSettle = null
+      throw throwable
     } finally {
       inlineThread = null
     }
+    drainInlineSettle()
+    return result
   }
 
-  @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
-  fun drainInlineSettles() {
+  private fun drainInlineSettle() {
     val job = inlineSettle ?: return
     // Cleared before it runs: a settle that throws must not leave the slot occupied for the
     // next call.

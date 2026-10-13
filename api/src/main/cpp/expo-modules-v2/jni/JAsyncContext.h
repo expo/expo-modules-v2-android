@@ -22,13 +22,10 @@ namespace expo::modules::v2 {
       [[nodiscard]] kolibri::Ref<JPromiseHandle> createPromise(JNIEnv* env, jlong id) const;
 
       void invalidate(JNIEnv* env) const;
-
-      void drainInlineSettles(JNIEnv* env) const;
     };
 
   private:
     static constexpr Method<"createPromise", kolibri::Ref<JPromiseHandle>(jlong)> createPromise_{};
     static constexpr Method<"invalidate", void()> invalidate_{};
-    static constexpr Method<"drainInlineSettles", void()> drainInlineSettles_{};
   };
 }
