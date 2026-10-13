@@ -16,61 +16,62 @@ object Trampoline {
   const val OVERFLOW_ARGUMENTS: Int = -1
   const val OVERFLOW_RESULT: Int = -1
 
-  private val _overflowArguments = ThreadLocal.withInitial {
-    object {
-      val slots = arrayOfNulls<Any?>(MAX_ARGUMENTS)
+  /**
+   * What a trampoline call borrows from its thread. Another thread that reads this state through
+   * [last] looks at nothing but [thread], which is final, so a racy read never finds it unset.
+   */
+  private class ThreadState(val thread: Thread) {
+    val overflowSlots = arrayOfNulls<Any?>(MAX_ARGUMENTS)
+    var overflowResult: Any? = null
 
-      fun prepare(): Array<Any?> {
-        slots.fill(null)
-        return slots
+    // The views over the shared buffer are made on first use, so a call whose payload only ever
+    // overflows never asks native code for the buffer.
+    private var _argumentsView: BufferTrampolineArguments? = null
+    private var _resultView: BinaryBuffer? = null
+
+    val argumentsView: BufferTrampolineArguments
+      get() = _argumentsView
+        ?: BufferTrampolineArguments(BinaryBuffer.newSharedView()).also { _argumentsView = it }
+
+    val resultView: BinaryBuffer
+      get() = _resultView ?: BinaryBuffer.newSharedView().also { _resultView = it }
+  }
+
+  private val states = ThreadLocal.withInitial { ThreadState(Thread.currentThread()) }
+
+  /**
+   * The state of the thread that called last. Bridge calls come from the JS thread, so this answers
+   * nearly every call without a [ThreadLocal] lookup. Deliberately not volatile: a stale or foreign
+   * value only sends the caller on to [states].
+   */
+  private var last: ThreadState? = null
+
+  private val state: ThreadState
+    get() {
+      val cached = last
+      if (cached != null && cached.thread === Thread.currentThread()) {
+        return cached
       }
+      return states.get().also { last = it }
     }
-  }
-
-  private val overflowArguments
-    get() = _overflowArguments.get()
-
-
-  private val _overflowResult = ThreadLocal.withInitial {
-    object {
-      var value: Any? = null
-    }
-  }
-
-  private var overflowResult
-    get() = _overflowResult.get().value
-    set(value) {
-      _overflowResult.get().value = value
-    }
-
-  private val _argumentsView = ThreadLocal.withInitial {
-    BufferTrampolineArguments(BinaryBuffer.newSharedView())
-  }
-
-  private val argumentsView get() = _argumentsView.get()
-
-  private val _resultView = ThreadLocal.withInitial {
-    BinaryBuffer.newSharedView()
-  }
-
-  private val resultView get() = _resultView.get().also { it.rewind() }
 
   @JvmStatic
   fun arguments(payloadLength: Int): TrampolineArguments {
+    val state = state
     if (payloadLength == OVERFLOW_ARGUMENTS) {
-      return OverflowTrampolineArguments(overflowArguments.slots)
+      return OverflowTrampolineArguments(state.overflowSlots)
     }
 
-    return argumentsView.also { it.rewind(payloadLength) }
+    return state.argumentsView.also { it.rewind(payloadLength) }
   }
 
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JTrampoline.h")
-  fun prepareOverflowArguments(): Array<Any?> = overflowArguments.prepare()
+  fun prepareOverflowArguments(): Array<Any?> = state.overflowSlots.also { it.fill(null) }
 
   @JvmStatic
   fun writeResult(value: Any?, type: TypeDescriptor): Int =
-    writeResultTo(resultView, value, type)
+    writeResultTo(state.resultView.also { it.rewind() }, value, type)
 
   internal fun writeResultTo(buf: BinaryBuffer, value: Any?, type: TypeDescriptor): Int {
     val converter = type.anyConverter
@@ -86,7 +87,7 @@ object Trampoline {
   }
 
   private fun overflow(converter: TypeConverter<Any>, value: Any?): Int {
-    overflowResult = if (converter.isPassthrough) {
+    state.overflowResult = if (converter.isPassthrough) {
       value
     } else {
       converter.toJni(value)
@@ -98,6 +99,6 @@ object Trampoline {
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JTrampoline.h")
   fun takeOverflowResult(): Any? {
-    return overflowResult
+    return state.overflowResult
   }
 }
