@@ -33,14 +33,20 @@ class JsiValueBenchmark {
   private lateinit var runtime: HermesRuntime
   private lateinit var global: JavaScriptObject
   private lateinit var number: JavaScriptValue
+  private lateinit var record: JavaScriptObject
 
   @Setup
   fun setUp() {
     NativeLibraries.load()
     runtime = HermesRuntime()
-    runtime.evaluate("globalThis.n = 42;")
+    runtime.evaluate(
+      "globalThis.n = 42;" +
+        "globalThis.record = {};" +
+        "for (let i = 0; i < 16; i++) record['field' + i] = i;",
+    )
     global = runtime.global()
     number = global.getProperty("n")
+    record = global.getProperty("record").getObject()
     check(number.isNumber()) { "isNumber() should be true for 42" }
     check(number.getDouble() == 42.0) { "getDouble() should be 42.0, got ${number.getDouble()}" }
   }
@@ -67,4 +73,12 @@ class JsiValueBenchmark {
   fun setDoubleProperty() {
     global.setProperty("plain", 1.0)
   }
+
+  /** A property read from Kotlin, which hands back a new [JavaScriptValue]. */
+  @Benchmark
+  fun getProperty(): JavaScriptValue = record.getProperty("field7")
+
+  /** The names of a 16-property object, as Java strings. */
+  @Benchmark
+  fun getPropertyNames(): Array<String> = record.getPropertyNames()
 }
