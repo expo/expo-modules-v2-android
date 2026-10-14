@@ -125,12 +125,16 @@ class PromiseHandle internal constructor(
 
   /** Hands the outcome to JavaScript. Runs on the JS thread, once, after the handle settled. */
   override fun run() {
+    // Native code holds a batch of handles for a while after they settle, so this one lets go of
+    // its outcome once it hands it over.
+    val outcome = value
+    value = null
     if (rejected) {
       @Suppress("UNCHECKED_CAST")
-      val description = value as Array<String>
+      val description = outcome as Array<String>
       context.rejectOnJSThread(id, description[0], description[1], description[2])
     } else {
-      context.resolveOnJSThread(id, value, checkNotNull(type), buffered)
+      context.resolveOnJSThread(id, outcome, checkNotNull(type), buffered)
     }
   }
 

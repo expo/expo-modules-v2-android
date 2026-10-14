@@ -32,7 +32,7 @@ namespace expo::modules::v2::async {
 
     [[nodiscard]] facebook::jsi::Value finishCall(facebook::jsi::Runtime& rt, uint64_t id);
 
-    [[nodiscard]] kolibri::Ref<JPromiseHandle> newKotlinPromise(JNIEnv* env, uint64_t id) const;
+    [[nodiscard]] kolibri::Ref<JPromiseHandle> newKotlinPromise(JNIEnv* env, uint64_t id);
 
     /**
      * Settles whatever the trampoline just produced without suspending.
@@ -99,8 +99,15 @@ namespace expo::modules::v2::async {
       facebook::jsi::Value result
     );
 
+    // How many Kotlin promise handles one call into Kotlin makes.
+    static constexpr uint64_t kHandleBatch = 32;
+
     facebook::jsi::Runtime* runtime_;
     kolibri::GlobalRef<JAsyncContext> jContext_;
+
+    // The handles for the ids from [handlesFirstId_] on, [kHandleBatch] of them.
+    kolibri::GlobalRef<kolibri::JArray<JPromiseHandle>> handles_;
+    uint64_t handlesFirstId_ = 0;
 
     std::optional<facebook::jsi::Function> factory_;
 

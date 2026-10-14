@@ -6,6 +6,7 @@
 
 #include <kolibri/JavaClass.h>
 #include <kolibri/Ref.h>
+#include <kolibri/array.h>
 #include <kolibri/members/Method.h>
 
 namespace expo::modules::v2 {
@@ -19,7 +20,12 @@ namespace expo::modules::v2 {
     static void registerNatives(JNIEnv* env);
 
     struct Accessors : BaseAccessors {
-      [[nodiscard]] kolibri::Ref<JPromiseHandle> createPromise(JNIEnv* env, jlong id) const;
+      /** The handles for the [count] promises from [firstId] on, in id order. */
+      [[nodiscard]] kolibri::Ref<kolibri::JArray<JPromiseHandle>> createPromises(
+        JNIEnv* env,
+        jlong firstId,
+        jint count
+      ) const;
 
       void invalidate(JNIEnv* env) const;
 
@@ -27,7 +33,10 @@ namespace expo::modules::v2 {
     };
 
   private:
-    static constexpr Method<"createPromise", kolibri::Ref<JPromiseHandle>(jlong)> createPromise_{};
+    static constexpr Method<
+      "createPromises",
+      kolibri::Ref<kolibri::JArray<JPromiseHandle>>(jlong, jint)
+    > createPromises_{};
     static constexpr Method<"invalidate", void()> invalidate_{};
     static constexpr Method<"drainInlineSettles", void()> drainInlineSettles_{};
   };
