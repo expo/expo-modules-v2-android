@@ -1,5 +1,6 @@
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 
+#include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <expo-modules-v2/objects/ObjectId.h>
 #include <expo-modules-v2/objects/ObjectNativeState.h>
@@ -57,15 +58,16 @@ namespace expo::modules::v2::jsi {
     if (size < kolibri::kMaxLocalFrameSize) [[likely]] {
       env->PushLocalFrame(size);
       for (size_t i = 0; i < size; i++) {
-        std::string name = names.getValueAtIndex(rt, i).getString(rt).utf8(rt);
-        jstring element = kolibri::toJString(env, name);
+        const jstring element = jstringFromJsiString(env, rt, names.getValueAtIndex(rt, i).getString(rt));
         env->SetObjectArrayElement(result, static_cast<jsize>(i), element);
       }
       env->PopLocalFrame(nullptr);
     } else {
       for (size_t i = 0; i < size; i++) {
-        std::string name = names.getValueAtIndex(rt, i).getString(rt).utf8(rt);
-        kolibri::Ref<> element = kolibri::Ref<>::adopt(env, kolibri::toJString(env, name));
+        const kolibri::Ref<> element = kolibri::Ref<>::adopt(
+          env,
+          jstringFromJsiString(env, rt, names.getValueAtIndex(rt, i).getString(rt))
+        );
         env->SetObjectArrayElement(result, static_cast<jsize>(i), element);
       }
     }
