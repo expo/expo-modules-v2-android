@@ -25,7 +25,9 @@ namespace expo::modules::v2 {
     const auto size = static_cast<size_t>(list->size(env));
     return buildJsArray(rt, size, [&](const size_t i) {
       const kolibri::Ref<> element = list->get(env, static_cast<jint>(i));
-      return decodeFromJni(env, rt, element.get(), elementType);
+      return slotWalk
+        ? decodeFromJniSlot(env, rt, element.get(), elementType)
+        : decodeFromJni(env, rt, element.get(), elementType);
     });
   }
 
@@ -50,7 +52,9 @@ namespace expo::modules::v2 {
           rt,
           kolibri::toStdString(env, reinterpret_cast<jstring>(key.get()))
         ),
-        decodeFromJni(env, rt, value.get(), valueType)
+        slotWalk
+          ? decodeFromJniSlot(env, rt, value.get(), valueType)
+          : decodeFromJni(env, rt, value.get(), valueType)
       );
     }
 

@@ -11,6 +11,9 @@ namespace expo::modules::v2 {
     JNIEnv* env;
     facebook::jsi::Runtime& rt;
     jobject object;
+    // Set while walking a value the shared buffer could not take, so its parts are not offered to
+    // the buffer again one by one.
+    bool slotWalk = false;
 
     template<CppType K>
     facebook::jsi::Value operator()() const = delete;

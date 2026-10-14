@@ -484,6 +484,23 @@ private class BufferedDynamicModule : Module() {
   @BufferMode(returns = Buffer.YES)
   fun big(): Any = mapOf("s" to "ż".repeat(200_000))
 
+  // Slot results that native code reads off the buffer when it can, and walks when it cannot.
+  @JS
+  @BufferMode(returns = Buffer.NO)
+  fun producePlainSlot(): Any = kotlinValues().filter { it !is Point }
+
+  @JS
+  @BufferMode(returns = Buffer.NO)
+  fun bytesSlot(): Map<String, Any?> = mapOf("b" to byteArrayOf(1, 2, -1))
+
+  @JS
+  @BufferMode(returns = Buffer.NO)
+  fun unitsSlot(): List<Any?> = listOf(1, Unit)
+
+  @JS
+  @BufferMode(returns = Buffer.NO)
+  fun bigSlot(): Any = mapOf("s" to "ż".repeat(200_000))
+
   @JS
   @BufferMode(Buffer.YES)
   var stored: Any? = null
@@ -2183,6 +2200,33 @@ class HermesRuntimeTest {
         ),
       )
       runtime.evaluate("expo.modules.DynBuf.stored = null")
+    }
+  }
+
+  @Test
+  fun `Any results in a JNI slot read the same off the buffer as from a walk`() {
+    HermesRuntime().use { runtime ->
+      runtime.moduleRegistry.register(BufferedDynamicModule())
+
+      // Without a record inside, the slot result is read off the buffer.
+      assertEquals(
+        "[1,2,1.5,2.5,\"s\",true,null,[1,2],[0.5],[true,false],[1,null,\"x\"],{\"k\":[1,2]}]",
+        runtime.evaluateAsString("JSON.stringify(expo.modules.DynBuf.producePlainSlot())"),
+      )
+      assertEquals(
+        "1,2,255",
+        runtime.evaluateAsString("new Uint8Array(expo.modules.DynBuf.bytesSlot().b).join()"),
+      )
+
+      // Unit, and a value larger than the buffer, are walked in the slot instead.
+      assertEquals(
+        "1,undefined",
+        runtime.evaluateAsString("expo.modules.DynBuf.unitsSlot().map(String).join()"),
+      )
+      assertEquals(
+        "200000",
+        runtime.evaluateAsString("String(expo.modules.DynBuf.bigSlot().s.length)"),
+      )
     }
   }
 

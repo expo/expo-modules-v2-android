@@ -17,7 +17,16 @@ import io.github.expo.kolibri.binary.BinaryTag
  */
 object BinaryValueCodec {
 
-  internal fun writeDynamic(buf: BinaryBuffer, value: Any?) {
+  internal fun writeDynamic(buf: BinaryBuffer, value: Any?) = writeDynamic(buf, value, plain = false)
+
+  /**
+   * [writeDynamic] for a value native code holds in a JNI slot and would otherwise walk with a JNI
+   * call per element. A record or a map key that is not a String throws [SlotOnlyValueException]
+   * instead, so such a value keeps that walk and what it makes of them.
+   */
+  internal fun writePlainDynamic(buf: BinaryBuffer, value: Any?) = writeDynamic(buf, value, plain = true)
+
+  private fun writeDynamic(buf: BinaryBuffer, value: Any?, plain: Boolean) {
     when (value) {
       null -> buf.putTaggedNull()
       is Boolean -> buf.putTaggedBoolean(value)
@@ -26,8 +35,8 @@ object BinaryValueCodec {
       is Float -> buf.putTaggedFloat(value)
       is Double -> buf.putTaggedDouble(value)
       is String -> buf.putTaggedString(value)
-      is List<*> -> writeDynamicList(buf, value)
-      is Map<*, *> -> writeDynamicMap(buf, value)
+      is List<*> -> writeDynamicList(buf, value, plain)
+      is Map<*, *> -> writeDynamicMap(buf, value, plain)
       is DoubleArray -> buf.putListHeader(value.size, BinaryTag.DOUBLE).putDoubles(value)
       is IntArray -> buf.putListHeader(value.size, BinaryTag.INT).putInts(value)
       is LongArray -> buf.putListHeader(value.size, BinaryTag.LONG).putLongs(value)
@@ -38,7 +47,7 @@ object BinaryValueCodec {
       }
       is ByteArray -> buf.putTaggedByteArray(value)
       is JavaScriptValue, is JavaScriptObject, Unit -> throw SlotOnlyValueException()
-      else -> writeDynamicExternalSchema(buf, value)
+      else -> if (plain) throw SlotOnlyValueException() else writeDynamicExternalSchema(buf, value)
     }
   }
 
@@ -63,13 +72,13 @@ object BinaryValueCodec {
     }
   }
 
-  private fun writeDynamicList(buf: BinaryBuffer, list: List<*>) {
+  private fun writeDynamicList(buf: BinaryBuffer, list: List<*>, plain: Boolean) {
     // A list whose elements are all one non-null scalar type rides an untagged bulk run; anything
     // else (mixed types, nulls, nested values) needs self-describing entries.
     val scalarTag = dynamicScalarTagOf(list)
     if (scalarTag == null) {
       buf.putListHeader(list.size, BinaryTag.TAGGED)
-      for (element in list) writeDynamic(buf, element)
+      for (element in list) writeDynamic(buf, element, plain)
       return
     }
     buf.putListHeader(list.size, scalarTag)
@@ -123,12 +132,15 @@ object BinaryValueCodec {
     }
   }
 
-  private fun writeDynamicMap(buf: BinaryBuffer, map: Map<*, *>) {
+  private fun writeDynamicMap(buf: BinaryBuffer, map: Map<*, *>, plain: Boolean) {
     buf.putMapHeader(map.size)
     for ((key, value) in map) {
+      if (plain && key !is String) {
+        throw SlotOnlyValueException()
+      }
       require(key is String) { "Cannot binary-encode a Map with non-String key" }
       buf.putString(key)
-      writeDynamic(buf, value)
+      writeDynamic(buf, value, plain)
     }
   }
 
@@ -156,7 +168,11 @@ object BinaryValueCodec {
 
 /**
  * Thrown by a buffer write that meets a value only a JNI slot can carry: a JSI handle or `Unit`
- * inside an `Any`. [io.github.expo.modules.v2.args.Trampoline.writeResult] catches it and hands
- * the whole value over as an overflow result, the same way as a payload that does not fit.
+ * inside an `Any`, and for [BinaryValueCodec.writePlainDynamic] a record too.
+ * [io.github.expo.modules.v2.args.Trampoline.writeResult] catches it and hands the whole value over
+ * as an overflow result, the same way as a payload that does not fit.
+ *
+ * Without a stack trace: it is always caught, and a result that holds such a value throws it on
+ * every call.
  */
-internal class SlotOnlyValueException : RuntimeException()
+internal class SlotOnlyValueException : RuntimeException(null, null, false, false)
