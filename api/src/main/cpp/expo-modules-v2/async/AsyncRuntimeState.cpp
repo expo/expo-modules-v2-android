@@ -78,6 +78,7 @@ namespace expo::modules::v2::async {
 
     // Destroys every pending resolve/reject. Runs wherever the runtime is destroyed, which must be
     // the JS thread - the same requirement the rest of the runtime's teardown already has.
+    current_.reset();
     pending_.clear();
     factory_.reset();
     promiseResolve_.reset();
@@ -115,31 +116,50 @@ namespace expo::modules::v2::async {
 
   uint64_t AsyncRuntimeState::beginCall(ExpectedType returnType) {
     const uint64_t id = nextId_++;
-    pending_.emplace(
-      id,
-      Pending{
-        .returnType = std::move(returnType),
-        .deferred = std::nullopt,
-        .outcome = std::nullopt
-      }
-    );
+    Pending pending{
+      .returnType = std::move(returnType),
+      .deferred = std::nullopt,
+      .outcome = std::nullopt
+    };
+    // Taken only by a call that starts while another one is still inside its own.
+    if (current_.has_value()) [[unlikely]] {
+      pending_.emplace(id, std::move(pending));
+    } else {
+      current_.emplace(std::move(pending));
+      currentId_ = id;
+    }
     return id;
+  }
+
+  AsyncRuntimeState::Pending* AsyncRuntimeState::findPending(const uint64_t id) noexcept {
+    if (current_.has_value() && currentId_ == id) [[likely]] {
+      return &*current_;
+    }
+    const auto found = pending_.find(id);
+    return found == pending_.end() ? nullptr : &found->second;
+  }
+
+  void AsyncRuntimeState::erasePending(const uint64_t id) noexcept {
+    if (current_.has_value() && currentId_ == id) [[likely]] {
+      current_.reset();
+      return;
+    }
+    pending_.erase(id);
   }
 
   facebook::jsi::Value AsyncRuntimeState::finishCall(
     facebook::jsi::Runtime& rt,
     const uint64_t id
   ) {
-    const auto found = pending_.find(id);
-    if (found == pending_.end()) [[unlikely]] {
+    Pending* pending = findPending(id);
+    if (pending == nullptr) [[unlikely]] {
       throwRuntimeError({"Unexpected error"});
     }
 
-    auto& pending = found->second;
-    if (pending.outcome.has_value()) {
-      facebook::jsi::Value outcome = std::move(*pending.outcome);
-      const bool rejected = pending.rejected;
-      pending_.erase(found);
+    if (pending->outcome.has_value()) {
+      facebook::jsi::Value outcome = std::move(*pending->outcome);
+      const bool rejected = pending->rejected;
+      erasePending(id);
 
       if (rejected) [[unlikely]] {
         return callPromiseReject(rt, std::move(outcome));
@@ -148,8 +168,15 @@ namespace expo::modules::v2::async {
       return callPromiseResolve(rt, std::move(outcome));
     }
 
+    // Still pending, so it leaves the slot to the calls after it - before the promise is made,
+    // which runs JavaScript. The map's entries stay where they are as it grows.
+    if (pending == &*current_) {
+      pending = &pending_.emplace(id, std::move(*current_)).first->second;
+      current_.reset();
+    }
+
     auto [promise, resolveFn, rejectFn] = createJSPromise(rt);
-    pending.deferred.emplace(
+    pending->deferred.emplace(
       Deferred{
         .resolveFn = std::move(resolveFn),
         .rejectFn = std::move(rejectFn),
@@ -167,7 +194,7 @@ namespace expo::modules::v2::async {
   }
 
   void AsyncRuntimeState::discard(const uint64_t id) noexcept {
-    pending_.erase(id);
+    erasePending(id);
   }
 
   void AsyncRuntimeState::settle(
@@ -175,23 +202,22 @@ namespace expo::modules::v2::async {
     facebook::jsi::Value&& value,
     const bool rejected
   ) {
-    const auto found = pending_.find(id);
-    if (found == pending_.end()) [[unlikely]] {
+    Pending* pending = findPending(id);
+    if (pending == nullptr) [[unlikely]] {
       return;
     }
 
-    auto& pending = found->second;
-    if (!pending.deferred.has_value()) {
+    if (!pending->deferred.has_value()) {
       // Still inside the call that started this. `finishCall` is a few instructions away and turns
       // the outcome into a promise that is born settled.
-      pending.outcome.emplace(std::move(value));
-      pending.rejected = rejected;
+      pending->outcome.emplace(std::move(value));
+      pending->rejected = rejected;
       return;
     }
 
-    const Deferred deferred = std::move(*pending.deferred);
+    const Deferred deferred = std::move(*pending->deferred);
     facebook::jsi::Runtime& rt = *runtime_;
-    pending_.erase(found);
+    erasePending(id);
     (rejected ? deferred.rejectFn : deferred.resolveFn).call(rt, value);
   }
 
@@ -227,12 +253,12 @@ namespace expo::modules::v2::async {
     const uint64_t id,
     jobject value
   ) {
-    const auto found = pending_.find(id);
-    if (found == pending_.end()) [[unlikely]] {
+    const Pending* pending = findPending(id);
+    if (pending == nullptr) [[unlikely]] {
       return;
     }
 
-    settle(id, decodeFromJni(env, rt, value, found->second.returnType), false);
+    settle(id, decodeFromJni(env, rt, value, pending->returnType), false);
   }
 
   void AsyncRuntimeState::resolveWithValue(const uint64_t id, facebook::jsi::Value&& value) {
@@ -245,11 +271,11 @@ namespace expo::modules::v2::async {
     const uint64_t id,
     const jint payloadLength
   ) {
-    const auto found = pending_.find(id);
-    if (found == pending_.end()) [[unlikely]] {
+    const Pending* pending = findPending(id);
+    if (pending == nullptr) [[unlikely]] {
       return;
     }
-    const ExpectedType& returnType = found->second.returnType;
+    const ExpectedType& returnType = pending->returnType;
 
     if (payloadLength == JTrampoline::kOverflowArgumentsSentinel) [[unlikely]] {
       const kolibri::Ref<> overflowed = JTrampoline::takeOverflowResult(env);
@@ -279,7 +305,7 @@ namespace expo::modules::v2::async {
     const std::string& message,
     const std::string& stack
   ) {
-    if (!pending_.contains(id)) {
+    if (findPending(id) == nullptr) {
       return;
     }
 
