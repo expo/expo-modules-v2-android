@@ -511,6 +511,26 @@ private class BufferedDynamicModule : Module() {
   }
 }
 
+/** `Any` arguments in JNI slots, which native code builds through the shared buffer when it can. */
+@ExpoModule(name = "DynSlot")
+private class SlotDynamicModule : Module() {
+  @JS
+  @BufferMode(Buffer.NO)
+  fun keys(map: Map<String, Any?>): String = map.keys.joinToString(",")
+
+  @JS
+  @BufferMode(Buffer.NO)
+  fun kinds(values: List<Any?>): String = describeKinds(values)
+
+  @JS
+  @BufferMode(Buffer.NO)
+  fun strict(values: List<Any>): Int = values.size
+
+  @JS
+  @BufferMode(Buffer.NO)
+  fun rows(rows: List<Map<String, Any?>>): String = rows.joinToString("|") { it.keys.joinToString(",") }
+}
+
 private fun kotlinValues(): List<Any?> = listOf(
   1,
   2L,
@@ -2226,6 +2246,46 @@ class HermesRuntimeTest {
       assertEquals(
         "200000",
         runtime.evaluateAsString("String(expo.modules.DynBuf.bigSlot().s.length)"),
+      )
+    }
+  }
+
+  @Test
+  fun `Any arguments in a JNI slot built through the buffer match a JNI build`() {
+    HermesRuntime().use { runtime ->
+      runtime.moduleRegistry.register(SlotDynamicModule())
+
+      // Kotlin iterates the map in the order of a HashMap built key by key, past a resize too.
+      val names = (0 until 20).map { "key$it" }
+      assertEquals(
+        HashMap<String, Any?>().apply { names.forEach { put(it, null) } }.keys.joinToString(","),
+        runtime.evaluateAsString(
+          "expo.modules.DynSlot.keys({${names.joinToString { "$it: 1" }}})",
+        ),
+      )
+
+      // The values have the classes a JNI build gives them.
+      assertEquals(
+        "Double,String,Boolean,null,ArrayList,HashMap,byte[]",
+        runtime.evaluateAsString(
+          "expo.modules.DynSlot.kinds([1, 'x', false, null, [1, 'y'], {k: 1}, new Uint8Array([1, 2]).buffer])",
+        ),
+      )
+
+      // Shapes the JNI build reads its own way still reach it: an array where a map is declared,
+      // alone or inside a list.
+      assertEquals("0,1", runtime.evaluateAsString("expo.modules.DynSlot.keys(['a', 'b'])"))
+      assertEquals(
+        "a|0,1",
+        runtime.evaluateAsString("expo.modules.DynSlot.rows([{a: 1}, ['x', 'y']])"),
+      )
+
+      // A null where the type takes none still throws.
+      assertEquals(
+        "threw",
+        runtime.evaluateAsString(
+          "try { expo.modules.DynSlot.strict([1, null]); 'no error' } catch (e) { 'threw' }",
+        ),
       )
     }
   }
