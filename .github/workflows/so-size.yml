@@ -1,0 +1,98 @@
+name: Native library size
+
+on:
+  pull_request:
+
+concurrency:
+  group: so-size-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false -Dkotlin.incremental=false"
+
+jobs:
+  # Builds libexpo-modules-v2.so twice, once at the base branch and once with this PR merged into
+  # it, and comments how much the stripped arm64-v8a library grew or shrank. The AAR ships no .so
+  # (a consuming app compiles the C++ itself), so this is the closest measure of what an app pays.
+  so-size:
+    name: Compare libexpo-modules-v2.so
+    runs-on: ubuntu-latest
+    steps:
+      # A pull_request run checks out the test merge commit; its first parent is the base branch
+      # tip the PR is compared against.
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Install the NDK :react pins
+        run: |
+          NDK_VERSION="$(sed -n 's/^ *ndkVersion *= *"\(.*\)"/\1/p' react/build.gradle.kts)"
+          echo "Installing NDK $NDK_VERSION"
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;$NDK_VERSION"
+          echo "NDK_BIN=$ANDROID_HOME/ndk/$NDK_VERSION/toolchains/llvm/prebuilt/linux-x86_64/bin" >> "$GITHUB_ENV"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # The release variant builds RelWithDebInfo. `--strip-unneeded` is what AGP's own strip task
+      # runs on the libraries it packages into an APK.
+      - name: Build the library at the base and with this PR
+        run: |
+          build() {
+            local name="$1" dir="$2"
+            echo "::group::Build $name ($(git -C "$dir" rev-parse --short HEAD))"
+            (cd "$dir" && ./gradlew :react:externalNativeBuildRelease -PskipHermesEnvBuild -PskipDesktopNative --stacktrace)
+            echo "::endgroup::"
+
+            local libs=("$dir"/react/build/intermediates/cxx/RelWithDebInfo/*/obj/arm64-v8a/libexpo-modules-v2.so)
+            if [[ ${#libs[@]} -ne 1 || ! -f "${libs[0]}" ]]; then
+              echo "::error::Expected one libexpo-modules-v2.so in the $name build, found: ${libs[*]}"
+              exit 1
+            fi
+            "$NDK_BIN/llvm-strip" --strip-unneeded -o "$RUNNER_TEMP/$name.so" "${libs[0]}"
+          }
+
+          git worktree add --detach "$RUNNER_TEMP/base" HEAD^1
+          build head "$GITHUB_WORKSPACE"
+          build base "$RUNNER_TEMP/base"
+
+      - name: Write the report
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          base_sha="$(git rev-parse --short HEAD^1)"
+          head_sha="${HEAD_SHA:0:7}"
+          python3 -I scripts/so-size-report.py "$RUNNER_TEMP/base.so" "$RUNNER_TEMP/head.so" \
+            --title '`libexpo-modules-v2.so` size (arm64-v8a, stripped)' \
+            --footer "Base: \`$BASE_REF\` at $base_sha. This PR: $head_sha, merged into the base." \
+            > "$RUNNER_TEMP/report.md"
+          cat "$RUNNER_TEMP/report.md" >> "$GITHUB_STEP_SUMMARY"
+
+      # The token of a PR from a fork cannot comment; such a PR still gets the job summary above.
+      # One comment per PR, edited in place on every push.
+      - name: Comment on the PR
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          comment_id="$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- so-size-report -->"))) | .id' \
+            | tail -n 1)"
+          if [[ -n "$comment_id" ]]; then
+            gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" -F body=@"$RUNNER_TEMP/report.md" > /dev/null
+          else
+            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -F body=@"$RUNNER_TEMP/report.md" > /dev/null
+          fi
