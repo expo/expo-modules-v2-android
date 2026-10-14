@@ -66,7 +66,7 @@ namespace expo::modules::v2 {
     facebook::jsi::Object result(rt);
     for (size_t i = 0; i < schema.fields.size(); i++) {
       const RecordFieldSpec& field = schema.fields[i];
-      kolibri::Ref<> value = map->get(env, field.name);
+      kolibri::Ref<> value = map->get(env, field.javaName);
       result.setProperty(
         rt,
         plan.fieldNames[i],
