@@ -11,6 +11,7 @@
 #include <expo-modules-v2/utils/Throw.h>
 
 #include <array>
+#include <optional>
 #include <string>
 
 #include <kolibri/binary/BinaryBuffer.h>
@@ -485,7 +486,7 @@ namespace expo::modules::v2 {
      * The return-kind axis the synchronous invokers switch on collapses here - every async
      * trampoline returns void - so only the buffered-arguments axis remains.
      */
-    template<bool HasBufferedArgs>
+    template<bool HasBufferedArgs, bool NeedsLocalFrame>
     facebook::jsi::Value invokeAsyncFunction(
       facebook::jsi::Runtime& rt,
       JNIEnv* env,
@@ -502,7 +503,7 @@ namespace expo::modules::v2 {
           receiver,
           args,
           count,
-          &invokeAsyncFunction<HasBufferedArgs>
+          &invokeAsyncFunction<HasBufferedArgs, NeedsLocalFrame>
         );
       }
 
@@ -519,7 +520,14 @@ namespace expo::modules::v2 {
 
       // +1 over the argument slots for the trailing PromiseHandle.
       std::array<jvalue, FunctionSpec::kMaxArgs + 1> values{};
-      const kolibri::LocalFrame frame{env, FunctionSpec::kMaxArgs + 1};
+
+      // The frame owns the locals that object arguments create until the call returns. Arguments
+      // that are primitives or ride the buffer create none - the handle below deletes its own - so
+      // they skip the push and pop, unless a payload overflows into JNI objects after all.
+      std::optional<kolibri::LocalFrame> frame;
+      if constexpr (NeedsLocalFrame) {
+        frame.emplace(env, FunctionSpec::kMaxArgs + 1);
+      }
 
       size_t slot;
       try {
@@ -527,6 +535,9 @@ namespace expo::modules::v2 {
           try {
             slot = encodeBufferedArgs(rt, env, spec, args, values.data());
           } catch (const kolibri::binary::BufferOverflow&) {
+            if (!frame.has_value()) {
+              frame.emplace(env, FunctionSpec::kMaxArgs + 1);
+            }
             slot = encodeOverflowArgs(rt, env, spec, args, values.data());
           }
         } else {
@@ -607,9 +618,14 @@ namespace expo::modules::v2 {
     const bool async
   ) {
     if (async) {
-      return hasBufferedArgs
-               ? &invokeAsyncFunction<true>
-               : &invokeAsyncFunction<false>;
+      if (hasBufferedArgs) {
+        return needsLocalFrame
+                 ? &invokeAsyncFunction<true, true>
+                 : &invokeAsyncFunction<true, false>;
+      }
+      return needsLocalFrame
+               ? &invokeAsyncFunction<false, true>
+               : &invokeAsyncFunction<false, false>;
     }
 
     if (hasBufferedArgs) {
