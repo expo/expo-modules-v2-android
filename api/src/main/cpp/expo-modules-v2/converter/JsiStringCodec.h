@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstdint>
 #include <cstring>
 #include <memory>
@@ -10,100 +11,69 @@
 #include <kolibri/binary/BinaryBuffer.h>
 
 namespace expo::modules::v2 {
-  inline void widenAscii(
-    const uint8_t* src,
-    uint8_t* dst,
-    const size_t num
-  ) {
-    for (size_t k = num; k-- > 0;) {
-      const char16_t unit = src[k];
-      std::memcpy(
-        dst + k * sizeof(char16_t),
-        &unit,
-        sizeof(char16_t)
-      );
-    }
-  }
-
-  /**
-   * Writes [num] UTF-16 units as one byte each and reports whether that was legal.
-   */
-  [[nodiscard]] inline bool narrowIfAscii(
-    const char16_t* src,
-    const size_t num,
-    kolibri::binary::BinaryBuffer& out
-  ) {
-    out.require(num);
-    uint8_t* dst = out.data() + out.size();
-
-    char16_t accumulator = 0;
-    for (size_t k = 0; k < num; ++k) {
-      const char16_t unit = src[k];
-      accumulator |= unit;
-      dst[k] = static_cast<uint8_t>(unit);
+  namespace detail {
+    inline void widenAscii(
+      const uint8_t* src,
+      uint8_t* dst,
+      const size_t num
+    ) {
+      for (size_t k = num; k-- > 0;) {
+        const char16_t unit = src[k];
+        std::memcpy(
+          dst + k * sizeof(char16_t),
+          &unit,
+          sizeof(char16_t)
+        );
+      }
     }
 
-    if ((accumulator & 0xFF80) != 0) {
-      return false;
+    /**
+     * Writes [num] UTF-16 units to [dst] as one byte each and reports whether that was legal.
+     */
+    [[nodiscard]] inline bool narrowIfAscii(
+      const char16_t* src,
+      const size_t num,
+      uint8_t* dst
+    ) {
+      char16_t accumulator = 0;
+      for (size_t k = 0; k < num; ++k) {
+        const char16_t unit = src[k];
+        accumulator |= unit;
+        dst[k] = static_cast<uint8_t>(unit);
+      }
+      return (accumulator & 0xFF80) == 0;
     }
 
-    out.setSize(out.size() + num);
-    return true;
-  }
-
-  inline facebook::jsi::String utf16String(
-    facebook::jsi::Runtime& rt,
-    JNIEnv* env,
-    jstring value,
-    const jsize length
-  ) {
-    const jchar* units = env->GetStringChars(value, nullptr);
-
-    struct Release {
-      JNIEnv* env;
-      jstring value;
-      const jchar* units;
-
-      ~Release() { env->ReleaseStringChars(value, units); }
-    } release{.env = env, .value = value, .units = units};
-
-    return facebook::jsi::String::createFromUtf16(
-      rt,
-      reinterpret_cast<const char16_t*>(units),
-      static_cast<size_t>(length)
-    );
-  }
-
-  inline facebook::jsi::String jsiStringFromJString(
-    facebook::jsi::Runtime& rt,
-    JNIEnv* env,
-    jstring value
-  ) {
-    const jsize length = env->GetStringLength(value);
-    if (length == 0) {
-      return facebook::jsi::String::createFromAscii(rt, "", 0);
-    }
-
-    // A string up to this long is copied out with one `GetStringRegion` and classified here. The
-    // UTF-8 route below takes two JNI calls instead - `GetStringUTFLength` only to learn the text is
-    // ASCII, then the copy - and both of them walk the string encoding modified UTF-8.
-    constexpr jsize kUnitsMax = 1024;
-    if (length <= kUnitsMax) {
-      jchar units[kUnitsMax];
-      env->GetStringRegion(value, 0, length, units);
-
-      // Narrowed speculatively, the way `narrowIfAscii` does; the accumulator says afterwards
-      // whether that was allowed.
-      char ascii[kUnitsMax];
-      jchar accumulator = 0;
-      for (jsize i = 0; i < length; ++i) {
-        accumulator |= units[i];
-        ascii[i] = static_cast<char>(units[i]);
+    [[nodiscard]] inline bool narrowIfAscii(
+      const char16_t* src,
+      const size_t num,
+      kolibri::binary::BinaryBuffer& out
+    ) {
+      out.require(num);
+      if (!narrowIfAscii(src, num, out.data() + out.size())) {
+        return false;
       }
 
-      if (accumulator < 0x80) [[likely]] {
-        return facebook::jsi::String::createFromAscii(rt, ascii, static_cast<size_t>(length));
-      }
+      out.setSize(out.size() + num);
+      return true;
+    }
+
+    inline facebook::jsi::String utf16String(
+      facebook::jsi::Runtime& rt,
+      JNIEnv* env,
+      jstring value,
+      const jsize length
+    ) {
+      const jchar* units = env->GetStringChars(value, nullptr);
+
+      struct Release {
+        JNIEnv* env;
+        jstring value;
+        const jchar* units;
+
+        ~Release() { env->ReleaseStringChars(value, units); }
+      } release{.env = env, .value = value, .units = units};
+
       return facebook::jsi::String::createFromUtf16(
         rt,
         reinterpret_cast<const char16_t*>(units),
@@ -111,30 +81,62 @@ namespace expo::modules::v2 {
       );
     }
 
-    // A long string: sniff its head before paying for a UTF-8 walk of all of it.
-    constexpr jsize kAsciiWindow = 32;
-    jchar head[kAsciiWindow];
-    env->GetStringRegion(value, 0, kAsciiWindow, head);
-    jchar accumulator = 0;
-    for (jsize i = 0; i < kAsciiWindow; ++i) {
-      accumulator |= head[i];
-    }
-    if (accumulator >= 0x80) {
+    /**
+     * A string too long for the stack buffer is copied out once, by the JNI call that suits its
+     * text.
+     */
+    inline facebook::jsi::String longJsiStringFromJString(
+      facebook::jsi::Runtime& rt,
+      JNIEnv* env,
+      jstring value,
+      const jsize length
+    ) {
+      constexpr jsize kHeadUnits = 32;
+      char16_t head[kHeadUnits];
+      env->GetStringRegion(value, 0, kHeadUnits, reinterpret_cast<jchar*>(head));
+      const bool headIsAscii = std::ranges::all_of(head, [](const char16_t unit) {
+        return unit < 0x80;
+      });
+
+      if (headIsAscii && env->GetStringUTFLength(value) == length) {
+        const char* bytes = env->GetStringUTFChars(value, nullptr);
+        auto result = facebook::jsi::String::createFromAscii(
+          rt,
+          bytes,
+          static_cast<size_t>(length)
+        );
+        env->ReleaseStringUTFChars(value, bytes);
+        return result;
+      }
+
       return utf16String(rt, env, value, length);
     }
+  } // namespace detail
 
-    if (env->GetStringUTFLength(value) == length) {
-      const char* bytes = env->GetStringUTFChars(value, nullptr);
-      auto result = facebook::jsi::String::createFromAscii(
-        rt,
-        bytes,
-        static_cast<size_t>(length)
-      );
-      env->ReleaseStringUTFChars(value, bytes);
-      return result;
+  inline facebook::jsi::String jsiStringFromJString(
+    facebook::jsi::Runtime& rt,
+    JNIEnv* env,
+    jstring value
+  ) {
+    const jsize length = env->GetStringLength(value);
+
+    constexpr jsize kStackUnits = 1024;
+    if (length > kStackUnits) [[unlikely]] {
+      return detail::longJsiStringFromJString(rt, env, value, length);
     }
 
-    return utf16String(rt, env, value, length);
+    char16_t units[kStackUnits];
+    env->GetStringRegion(value, 0, length, reinterpret_cast<jchar*>(units));
+
+    uint8_t ascii[kStackUnits];
+    if (detail::narrowIfAscii(units, static_cast<size_t>(length), ascii)) [[likely]] {
+      return facebook::jsi::String::createFromAscii(
+        rt,
+        reinterpret_cast<const char*>(ascii),
+        static_cast<size_t>(length)
+      );
+    }
+    return facebook::jsi::String::createFromUtf16(rt, units, static_cast<size_t>(length));
   }
 
   inline jstring jstringFromJsiString(
@@ -204,7 +206,7 @@ namespace expo::modules::v2 {
         // So narrow speculatively and let the OR-accumulator say afterwards whether that was
         // allowed. The narrowing loop costs about what reading the units costs, and nothing is
         // committed until the answer is in, so the UTF-16 patch below still sees an untouched buffer.
-        if (narrowIfAscii(static_cast<const char16_t*>(data), num, out)) {
+        if (detail::narrowIfAscii(static_cast<const char16_t*>(data), num, out)) {
           count += num;
           return;
         }
@@ -213,7 +215,7 @@ namespace expo::modules::v2 {
           // Earlier chunks went in 8-bit and this one cannot, so what is already there has to grow.
           out.require(count);
           uint8_t* payload = out.data() + payloadOffset;
-          widenAscii(payload, payload, count);
+          detail::widenAscii(payload, payload, count);
           out.setSize(payloadOffset + count * sizeof(char16_t));
         }
 
@@ -223,7 +225,7 @@ namespace expo::modules::v2 {
       const size_t bytes = num * sizeof(char16_t);
       if (ascii) {
         out.require(bytes);
-        widenAscii(static_cast<const uint8_t*>(data), out.data() + out.size(), num);
+        detail::widenAscii(static_cast<const uint8_t*>(data), out.data() + out.size(), num);
         out.setSize(out.size() + bytes);
       } else [[likely]] {
         out.writeBytes(data, bytes);
