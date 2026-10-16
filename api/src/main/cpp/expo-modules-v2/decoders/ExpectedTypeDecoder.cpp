@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include <expo-modules-v2/utils/Throw.h>
 
@@ -61,6 +63,31 @@ namespace expo::modules::v2::decoders {
             throwInvalidArgument({"A shared object cannot carry kUsesBufferFlag"});
           }
           return ExpectedType::sharedObject(read(), nullable);
+        }
+
+        if (kind == CppType::FUNCTION) {
+          // A function is a live JavaScript handle, so there is nothing to put on the buffer.
+          if (usesBuffer) {
+            throwInvalidArgument({"A function cannot carry kUsesBufferFlag"});
+          }
+
+          const bool isSuspend = read() != 0;
+          const int paramCount = read();
+          if (paramCount < 0) {
+            throwInvalidArgument({"Invalid payload"});
+          }
+
+          std::vector<ExpectedType> params;
+          params.reserve(static_cast<size_t>(paramCount));
+          for (int i = 0; i < paramCount; i++) {
+            params.push_back(decodeImp(false));
+          }
+          ExpectedType returns = decodeImp(false);
+
+          return ExpectedType::function(
+            FunctionSignature{std::move(params), std::move(returns), isSuspend},
+            nullable
+          );
         }
 
         if (nullable && (

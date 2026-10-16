@@ -77,6 +77,9 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `class JavaScriptObject` - the JNI slot a `TypedArray` crosses in. */
     val javaScriptObject: IrClassSymbol by lazy { clazz(Identifiers.Classes.JavaScriptObject) }
 
+    /** `class JavaScriptFunction` - the JNI slot a lambda parameter crosses in. */
+    val javaScriptFunction: IrClassSymbol by lazy { clazz(Identifiers.Classes.JavaScriptFunction) }
+
     /** `class Event<T>` - what `event<T>(...)` returns. */
     val event: IrClassSymbol by lazy { clazz(Identifiers.Classes.Event) }
 
@@ -128,6 +131,11 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `TypeDescriptor.Parametrized(javaClass, isNullable, params)` */
     val parametrizedDescriptor: IrConstructorSymbol by lazy {
       descriptor(Identifiers.Classes.TypeDescriptorParametrized)
+    }
+
+    /** `TypeDescriptor.Function(params, returns, isSuspend, isNullable)` */
+    val functionDescriptor: IrConstructorSymbol by lazy {
+      descriptor(Identifiers.Classes.TypeDescriptorFunction)
     }
 
     /** `AnyType(descriptor, useBuffer)` */

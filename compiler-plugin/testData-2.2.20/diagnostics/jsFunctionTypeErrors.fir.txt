@@ -1,0 +1,54 @@
+FILE: jsFunctionTypeErrors.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class BadFunctionTypes : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/BadFunctionTypes| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun plain(callback: R|(kotlin/Int, kotlin/String) -> kotlin/Unit|): R|kotlin/Unit| {
+            ^plain R|<local>/callback|.R|SubstitutionOverride<kotlin/Function2.invoke: R|kotlin/Unit|>|(Int(1), String())
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun suspending(callback: R|suspend (kotlin/Int) -> kotlin/String?|, other: R|((kotlin/Int) -> kotlin/Unit)?|): R|kotlin/String?| {
+            ^suspending R|<local>/callback|.R|SubstitutionOverride<kotlin/coroutines/SuspendFunction1.invoke: R|kotlin/String?|>|(Int(1))
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun withReceiver(callback: R|kotlin/String.() -> kotlin/Unit|): R|kotlin/Unit| {
+            R|<local>/callback|.R|SubstitutionOverride<kotlin/Function1.invoke: R|kotlin/Unit|>|(String())
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun returnsLambda(): R|(kotlin/Int) -> kotlin/Int| {
+            ^returnsLambda fun <anonymous>(it: R|kotlin/Int|): R|kotlin/Int| <inline=Unknown>  {
+                ^ R|<local>/it|
+            }
+
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun takesLambdaOfLambda(callback: R|(kotlin/Function1<kotlin/Int, kotlin/Unit>) -> kotlin/Unit|): R|kotlin/Unit| {
+            R|<local>/callback|.R|SubstitutionOverride<kotlin/Function1.invoke: R|kotlin/Unit|>|(<L> = callback@fun <anonymous>(it: R|kotlin/Int|): R|kotlin/Unit| <inline=NoInline>  {
+                ^@callback Unit
+            }
+            )
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun returnsLambdaFromLambda(callback: R|() -> kotlin/Function1<kotlin/Int, kotlin/Unit>|): R|kotlin/Unit| {
+            R|<local>/callback|.R|SubstitutionOverride<kotlin/Function0.invoke: R|(kotlin/Int) -> kotlin/Unit|>|()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun eight(callback: R|(kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int) -> kotlin/Unit|): R|kotlin/Unit| {
+            ^eight R|<local>/callback|.R|SubstitutionOverride<kotlin/Function8.invoke: R|kotlin/Unit|>|(Int(1), Int(2), Int(3), Int(4), Int(5), Int(6), Int(7), Int(8))
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun nine(callback: R|(kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Int) -> kotlin/Unit|): R|kotlin/Unit| {
+            ^nine R|<local>/callback|.R|SubstitutionOverride<kotlin/Function9.invoke: R|kotlin/Unit|>|(Int(1), Int(2), Int(3), Int(4), Int(5), Int(6), Int(7), Int(8), Int(9))
+        }
+
+    }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_BadFunctionTypes_dae10a1c : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/BadFunctionTypes|
+
+    }

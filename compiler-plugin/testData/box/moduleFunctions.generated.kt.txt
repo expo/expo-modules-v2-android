@@ -1,0 +1,77 @@
+// FILE: moduleFunctions.kt
+package io.github.expo.modules.v2.testdata
+
+@ExpoModule
+class Lambdas : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Function(params = arrayOf<ObjectLike>(elements = [#INT_BOXED]), returns = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), isSuspend = false, isNullable = false)
+  private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))
+  private /* static final field */ val type$2: TypeDescriptor = Function(params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED_NULL]), returns = #STRING_NULL, isSuspend = false, isNullable = false)
+  private /* static final field */ val type$3: TypeDescriptor = Function(params = arrayOf<ObjectLike>(elements = [#INT_BOXED]), returns = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), isSuspend = false, isNullable = true)
+  private /* static final field */ val type$4: TypeDescriptor = Function(params = arrayOf<ObjectLike>(elements = [#INT_BOXED]), returns = #INT_BOXED, isSuspend = true, isNullable = false)
+  private /* static final field */ val type$5: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false)
+  private /* static final field */ val type$6: TypeDescriptor = Function(params = arrayOf<ObjectLike>(elements = []), returns = #STRING, isSuspend = true, isNullable = false)
+  @CalledFromNative
+  fun call__trampoline$ExpoModulesV2(p0: JavaScriptFunction?) {
+    <this>.call(callback = Bridge.fromJni(value = p0, type = #type$0) as Function1<Int, Unit>)
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "call", argTypes = [AnyType(descriptor = Function(params = arrayOf<ObjectLike>(elements = [#INT_BOXED]), returns = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), isSuspend = false, isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "call__trampoline$ExpoModulesV2")
+    builder.function(jsName = "each", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED])), useBuffer = true), AnyType(descriptor = Function(params = arrayOf<ObjectLike>(elements = [#INT_BOXED]), returns = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), isSuspend = false, isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "each__trampoline$ExpoModulesV2")
+    builder.function(jsName = "transform", argTypes = [AnyType(descriptor = Function(params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED_NULL]), returns = #STRING_NULL, isSuspend = false, isNullable = false), useBuffer = false)], returns = AnyType(descriptor = #STRING_NULL, useBuffer = false), methodName = "transform__trampoline$ExpoModulesV2")
+    builder.function(jsName = "optional", argTypes = [AnyType(descriptor = Function(params = arrayOf<ObjectLike>(elements = [#INT_BOXED]), returns = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), isSuspend = false, isNullable = true), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "optional__trampoline$ExpoModulesV2")
+    builder.function(jsName = "later", argTypes = [AnyType(descriptor = Function(params = arrayOf<ObjectLike>(elements = [#INT_BOXED]), returns = #INT_BOXED, isSuspend = true, isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "later__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "plainInAsync", argTypes = [AnyType(descriptor = Function(params = arrayOf<ObjectLike>(elements = [#INT_BOXED]), returns = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), isSuspend = false, isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Unit::class */), isNullable = false), useBuffer = false), methodName = "plainInAsync__trampoline$ExpoModulesV2", isAsync = true)
+    builder.function(jsName = "promised", argTypes = [AnyType(descriptor = Function(params = arrayOf<ObjectLike>(elements = []), returns = #STRING, isSuspend = true, isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "promised__trampoline$ExpoModulesV2", isAsync = true)
+    return "Lambdas"
+  }
+
+  @CalledFromNative
+  fun each__trampoline$ExpoModulesV2(p1: JavaScriptFunction?, payloadLength: Int) {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: List<Int>
+    try { // BLOCK
+      v0 = args.next<List<Int>>(type = #type$1)
+    }
+    finally args.finish()
+    <this>.each(values = v0, callback = Bridge.fromJni(value = p1, type = #type$0) as Function1<Int, Unit>)
+  }
+
+  @CalledFromNative
+  fun later__trampoline$ExpoModulesV2(p0: JavaScriptFunction?, handle: PromiseHandle) {
+    handle.launch(type = Int, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.later(callback = Bridge.fromJni(value = p0, type = #type$4) as SuspendFunction1<Int, Int>)
+    }
+)
+  }
+
+  @CalledFromNative
+  fun optional__trampoline$ExpoModulesV2(p0: JavaScriptFunction?) {
+    <this>.optional(callback = Bridge.fromJni(value = p0, type = #type$3) as Function1<Int, Unit>?)
+  }
+
+  @CalledFromNative
+  fun plainInAsync__trampoline$ExpoModulesV2(p0: JavaScriptFunction?, handle: PromiseHandle) {
+    handle.launch(type = #type$5, buffered = false, block = local suspend fun <anonymous>(): Any? {
+      return <this>.plainInAsync(callback = Bridge.fromJni(value = p0, type = #type$0) as Function1<Int, Unit>)
+    }
+)
+  }
+
+  @CalledFromNative
+  fun promised__trampoline$ExpoModulesV2(p0: JavaScriptFunction?, handle: PromiseHandle) {
+    handle.subscribeTo(promise = <this>.promised(callback = Bridge.fromJni(value = p0, type = #type$6) as SuspendFunction0<String>), type = Int, buffered = false)
+  }
+
+  @CalledFromNative
+  fun transform__trampoline$ExpoModulesV2(p0: JavaScriptFunction?): String? {
+    return <this>.transform(callback = Bridge.fromJni(value = p0, type = #type$2) as Function2<String, Int?, String?>)
+  }
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Lambdas_810366ec {
+  abstract fun module(): Lambdas
+}

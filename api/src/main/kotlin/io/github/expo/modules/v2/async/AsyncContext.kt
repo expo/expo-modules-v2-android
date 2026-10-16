@@ -71,11 +71,14 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
   }
 
   internal inline fun <T> inlineWindow(body: AsyncContext.() -> T): T {
+    // A body can call a JavaScript function that starts another async export, so windows nest: the
+    // outer one has to be back in place when the inner one closes.
+    val enclosing = inlineThread
     return try {
       inlineThread = Thread.currentThread()
       body()
     } finally {
-      inlineThread = null
+      inlineThread = enclosing
     }
   }
 
