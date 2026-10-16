@@ -2,6 +2,7 @@ package io.github.expo.modules.v2.args
 
 import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.binary.BinaryValueCodec
 import io.github.expo.modules.v2.binary.SlotOnlyValueException
 import io.github.expo.modules.v2.binary.newSharedView
 import io.github.expo.modules.v2.binary.rewind
@@ -93,6 +94,26 @@ object Trampoline {
     }
 
     return OVERFLOW_RESULT
+  }
+
+  /**
+   * Writes [value] - an `Any`, or a List or Map of it, that native code holds in a JNI slot - onto
+   * the shared buffer, so native code reads it in one pass instead of with JNI calls per element.
+   * Returns the payload length, or [OVERFLOW_RESULT] when it does not fit or holds a value the
+   * native walk has to see: a record, a JSI handle, `Unit`, or a map key that is not a String.
+   */
+  @JvmStatic
+  @CalledFromNative(by = "expo-modules-v2/jni/JTrampoline.h")
+  fun writeSlotDynamic(value: Any?): Int {
+    val buf = resultView
+    return try {
+      BinaryValueCodec.writePlainDynamic(buf, value)
+      buf.position
+    } catch (_: BufferOverflowException) {
+      OVERFLOW_RESULT
+    } catch (_: SlotOnlyValueException) {
+      OVERFLOW_RESULT
+    }
   }
 
   @JvmStatic
