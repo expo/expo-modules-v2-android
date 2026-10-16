@@ -29,6 +29,27 @@ object TestSupport {
   }
 
   /**
+   * Adds the modules written with the C++ API that this library carries - `CppCalc`,
+   * `ShadowedByKotlin` and `CppLifecycle` - to [runtime] alone. Registering them statically would
+   * put them in every runtime of the process, and the tests that list `expo.modules` would see them.
+   */
+  fun installCppModules(runtime: JavaScriptRuntime) {
+    nativeInstallCppModules(runtime.nativePointer)
+  }
+
+  /**
+   * Registers `CppStaticProbe` the way an app's C++ modules are: process-wide, as a library loads.
+   * Pair it with [unregisterStaticCppModule].
+   */
+  fun registerStaticCppModule() {
+    nativeRegisterStaticCppModule()
+  }
+
+  fun unregisterStaticCppModule() {
+    nativeUnregisterStaticCppModule()
+  }
+
+  /**
    * Moves the host object [expression] evaluates to in [from] into [to], as
    * `globalThis.<globalName>` — the same move `react-native-worklets` makes when a host object is
    * passed into a worklet, so what worklets can and cannot carry is testable without an app.
@@ -49,6 +70,15 @@ object TestSupport {
 
   @JvmStatic
   private external fun nativeInstall(runtimePointer: Long)
+
+  @JvmStatic
+  private external fun nativeInstallCppModules(runtimePointer: Long)
+
+  @JvmStatic
+  private external fun nativeRegisterStaticCppModule()
+
+  @JvmStatic
+  private external fun nativeUnregisterStaticCppModule()
 
   @JvmStatic
   private external fun nativeTransplantHostObject(

@@ -117,9 +117,11 @@ namespace expo::modules::v2::jsi {
   ModulesHostObject::ModulesHostObject(
     JNIEnv* env,
     jobject registry,
+    std::shared_ptr<facebook::jsi::HostObject> cppModules,
     std::optional<facebook::jsi::Object> hostModules
   )
     : registry_(kolibri::GlobalRef<JModuleRegistry>::make(env, registry)),
+      cppModules_(std::move(cppModules)),
       hostModules_(std::move(hostModules)) {
   }
 
@@ -174,6 +176,17 @@ namespace expo::modules::v2::jsi {
       );
 
       if (!desc.has_value()) {
+        // No Kotlin module by that name. A module written with the C++ API may have it; cached like
+        // the others, because JavaScript reads `expo.modules.X` again every time it uses it.
+        if (cppModules_ != nullptr) {
+          facebook::jsi::Value cppModule = cppModules_->get(rt, name);
+          if (cppModule.isObject()) {
+            return facebook::jsi::Value(
+              rt,
+              materialized_.emplace(moduleName, cppModule.getObject(rt)).first->second
+            );
+          }
+        }
         // TODO(@lukmccall): consider throwing
         return facebook::jsi::Value::undefined();
       }
@@ -274,6 +287,12 @@ namespace expo::modules::v2::jsi {
 
     for (std::string& name: names) {
       list(std::move(name));
+    }
+
+    if (cppModules_ != nullptr) {
+      for (const facebook::jsi::PropNameID& name: cppModules_->getPropertyNames(rt)) {
+        list(name.utf8(rt));
+      }
     }
 
     return output;

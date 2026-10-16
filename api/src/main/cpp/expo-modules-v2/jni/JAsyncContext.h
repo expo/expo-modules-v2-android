@@ -24,11 +24,19 @@ namespace expo::modules::v2 {
       void invalidate(JNIEnv* env) const;
 
       void drainInlineSettles(JNIEnv* env) const;
+
+      /** Whether the calling thread is the JS thread of the runtime this context belongs to. */
+      [[nodiscard]] bool isOnJSThread(JNIEnv* env) const;
+
+      /** Has the context's scheduler run the native job [id] on the JS thread. */
+      void postNative(JNIEnv* env, jlong id) const;
     };
 
   private:
     static constexpr Method<"createPromise", kolibri::Ref<JPromiseHandle>(jlong)> createPromise_{};
     static constexpr Method<"invalidate", void()> invalidate_{};
     static constexpr Method<"drainInlineSettles", void()> drainInlineSettles_{};
+    static constexpr Method<"isOnJSThread", jboolean()> isOnJSThread_{};
+    static constexpr Method<"postNative", void(jlong)> postNative_{};
   };
 }

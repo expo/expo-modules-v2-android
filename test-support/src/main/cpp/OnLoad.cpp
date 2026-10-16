@@ -6,6 +6,7 @@
 #include <kolibri/string_utils.h>
 
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
+#include "CppTestModules.h"
 #include "TestSupportObject.h"
 
 namespace {
@@ -28,6 +29,16 @@ namespace {
             expo::modules::v2::installTestSupport(runtime->runtime());
           }
         )
+        .method(
+          "nativeInstallCppModules",
+          [](jlong runtimePointer) {
+            auto* runtime =
+                reinterpret_cast<expo::modules::v2::jsi::JavaScriptRuntime*>(runtimePointer);
+            expo::modules::v2::installCppTestModules(*runtime->cppContext());
+          }
+        )
+        .method("nativeRegisterStaticCppModule", []() { expo::modules::v2::registerStaticProbe(); })
+        .method("nativeUnregisterStaticCppModule", []() { expo::modules::v2::unregisterStaticProbe(); })
         .method(
           "nativeTransplantHostObject",
           [](JNIEnv* env, jlong fromPointer, jlong toPointer, jstring expression, jstring globalName) {

@@ -69,6 +69,7 @@ set_target_properties(expo-api-bridge PROPERTIES
 target_include_directories(expo-api-bridge INTERFACE
         ${EXPO_API_CPP_DIR}
         ${EXPO_API_CPP_DIR}/expo-jsi
+        ${EXPO_API_CPP_DIR}/expo-modules-cpp
         ${KOLIBRI_DIR}
         ${JAVA_HOME}/include
         ${JAVA_HOME}/include/${JNI_MD_SUBDIR}
@@ -80,6 +81,7 @@ target_include_directories(expo-api-bridge INTERFACE
 # `TestSupport.install` entry point (OnLoad.cpp).
 add_library(expo-test-support SHARED
         BinaryTestPipeline.cpp
+        CppTestModules.cpp
         FollyBenchmark.cpp
         KolibriArrayCheck.cpp
         OnLoad.cpp

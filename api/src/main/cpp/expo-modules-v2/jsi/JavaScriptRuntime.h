@@ -11,6 +11,11 @@
 #include <expo-modules-v2/jsi/ModulesHostObject.h>
 #include <expo-modules-v2/objects/RuntimeObjects.h>
 
+namespace expo::modules::v2::cpp {
+  class AttachedRuntime;
+  class Context;
+} // namespace expo::modules::v2::cpp
+
 namespace expo::modules::v2::jsi {
   class JavaScriptValue;
 
@@ -25,6 +30,13 @@ namespace expo::modules::v2::jsi {
     [[nodiscard]] const std::shared_ptr<ModulesHostObject>& modules() const;
 
     jboolean drainMicrotasks() const;
+
+    /**
+     * The context of the modules written with the C++ API that this runtime serves, or null in a
+     * build without that API. Add a module by hand with `emplace`; the ones registered with
+     * `EXPO_MODULE` are already served.
+     */
+    [[nodiscard]] cpp::Context* cppContext() const { return cppContext_.get(); }
 
     /** The promise table for this runtime, or null if async support failed to attach. */
     [[nodiscard]] async::AsyncRuntimeState* asyncState() {
@@ -84,6 +96,16 @@ namespace expo::modules::v2::jsi {
      */
     jobject jsObjectOf(JNIEnv* env, jobject instance);
 
+    /**
+     * Gives modules written with the C++ API a context of this runtime's own, and the way to reach
+     * its JS thread. Nothing is installed in JavaScript: `modules_` asks for them. Does nothing in a
+     * build without that API.
+     */
+    void attachCppModules(JNIEnv* env, jobject asyncContext);
+
+    /** What serves the modules written with the C++ API, or null in a build without it. */
+    [[nodiscard]] std::shared_ptr<facebook::jsi::HostObject> cppModulesHost() const;
+
     void installExpoModulesHostObject(
       JNIEnv* env,
       jobject registry,
@@ -112,6 +134,15 @@ namespace expo::modules::v2::jsi {
      * runtime's thread while the runtime is still alive.
      */
     std::optional<objects::RuntimeObjects> objects_;
+
+    /**
+     * The modules written with the C++ API, and the context that owns them; both null in a build
+     * without that API. Always declared, so that the layout of this class does not depend on the
+     * build option: the test-support library includes this header without it. Declared after
+     * `runtime_` and before `modules_`, which holds a host object of this attachment.
+     */
+    std::shared_ptr<cpp::Context> cppContext_;
+    std::shared_ptr<cpp::AttachedRuntime> cppRuntime_;
 
     /**
      * Shared with the JavaScript global that holds it. Declared after `runtime_` so it is released

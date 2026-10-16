@@ -3,6 +3,7 @@
 #include <jni.h>
 #include <jsi/jsi.h>
 
+#include <memory>
 #include <optional>
 #include <string>
 #include <unordered_map>
@@ -15,9 +16,14 @@
 namespace expo::modules::v2::jsi {
   class ModulesHostObject : public facebook::jsi::HostObject {
   public:
+    /**
+     * [cppModules] serves the modules written with the C++ API. It is asked for a name only after the
+     * registry and the host have none, so a Kotlin module wins a name both define.
+     */
     ModulesHostObject(
       JNIEnv* env,
       jobject registry,
+      std::shared_ptr<facebook::jsi::HostObject> cppModules = nullptr,
       std::optional<facebook::jsi::Object> hostModules = std::nullopt
     );
 
@@ -40,6 +46,7 @@ namespace expo::modules::v2::jsi {
 
   private:
     kolibri::GlobalRef<JModuleRegistry> registry_;
+    std::shared_ptr<facebook::jsi::HostObject> cppModules_;
     std::optional<facebook::jsi::Object> hostModules_;
     std::unordered_map<std::string, facebook::jsi::Object> materialized_;
   };

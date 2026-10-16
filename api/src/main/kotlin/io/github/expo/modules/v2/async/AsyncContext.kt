@@ -35,6 +35,23 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
   @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
   fun createPromise(id: Long): PromiseHandle = PromiseHandle(id, this)
 
+  /**
+   * Whether the calling thread is the JS thread. Asked by the C++ API, which needs to know whether
+   * it can deliver at once or has to post.
+   */
+  @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
+  fun isOnJSThread(): Boolean = scheduler.isOnJSThread
+
+  /**
+   * Runs the native job [id] on the JS thread. The job is a C++ function the native side keeps;
+   * the scheduler only carries its id, and [nativeRunJob] gives it back. Like any job, it is dropped
+   * silently once the runtime has been closed, and the native side frees it.
+   */
+  @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
+  fun postNative(id: Long) {
+    scheduler.post { nativeRunJob(id) }
+  }
+
   @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
   fun invalidate() {
     runtimePointer = 0
@@ -132,6 +149,9 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
     init {
       ExpoModulesV2.load()
     }
+
+    @JvmStatic
+    private external fun nativeRunJob(id: Long)
 
     @JvmStatic
     private external fun nativeResolveBuffered(runtimePointer: Long, id: Long, payloadLength: Int)

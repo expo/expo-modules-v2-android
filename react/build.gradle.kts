@@ -133,7 +133,7 @@ val cppSourcesZip by tasks.registering(Zip::class) {
   archiveClassifier = "cpp"
 
   from(apiCppDir) {
-    include("expo-modules-v2/**", "expo-jsi/**")
+    include("expo-modules-v2/**", "expo-jsi/**", "expo-modules-cpp/**")
   }
   from(layout.projectDirectory.dir("src/main/cpp")) {
     include("expo-modules-v2-react/**", "CMakeLists.txt")

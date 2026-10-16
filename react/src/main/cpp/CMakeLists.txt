@@ -31,10 +31,20 @@ find_package(kolibri-android REQUIRED CONFIG)
 
 add_subdirectory(${EXPO_API_CPP_DIR}/expo-jsi expo-jsi-build)
 
+# The C++ API for writing modules. It adds code to this library whether or not the app has a C++
+# module, so an app that has none can turn it off: -DEXPO_MODULES_V2_CPP_API=OFF.
+option(EXPO_MODULES_V2_CPP_API "Serve modules written with the C++ API next to the Kotlin ones" ON)
+if (EXPO_MODULES_V2_CPP_API)
+  add_subdirectory(${EXPO_API_CPP_DIR}/expo-modules-cpp expo-modules-cpp-build)
+endif ()
+
 file(GLOB_RECURSE EXPO_MODULES_V2_SOURCES CONFIGURE_DEPENDS
         "${EXPO_API_CPP_DIR}/expo-modules-v2/*.cpp"
 )
 list(REMOVE_ITEM EXPO_MODULES_V2_SOURCES "${EXPO_API_CPP_DIR}/expo-modules-v2/OnLoad.cpp")
+if (NOT EXPO_MODULES_V2_CPP_API)
+  list(REMOVE_ITEM EXPO_MODULES_V2_SOURCES "${EXPO_API_CPP_DIR}/expo-modules-v2/async/JniScheduler.cpp")
+endif ()
 
 file(GLOB_RECURSE EXPO_MODULES_V2_REACT_SOURCES CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/expo-modules-v2-react/*.cpp"
@@ -72,9 +82,14 @@ target_link_options(expo-modules-v2 PRIVATE
 )
 
 # `log` is for __android_log_print, the only place ExpoModulesCore.nativeLog can write on Android.
-# jsi is not listed: expo-jsi links it PUBLIC.
+# jsi is not listed: expo-jsi links it PUBLIC. expo-modules-cpp, the C++ API for modules, is linked
+# into this library, which is where an app compiles its own C++ modules.
 target_link_libraries(expo-modules-v2 PRIVATE
         kolibri-android::kolibri
         expo-jsi
         log
 )
+if (EXPO_MODULES_V2_CPP_API)
+  target_compile_definitions(expo-modules-v2 PRIVATE EXPO_MODULES_V2_CPP_API=1)
+  target_link_libraries(expo-modules-v2 PRIVATE expo-modules-cpp)
+endif ()

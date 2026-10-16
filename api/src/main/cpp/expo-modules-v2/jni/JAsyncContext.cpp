@@ -6,12 +6,21 @@
 #include <kolibri/string_utils.h>
 
 #include <expo-modules-v2/async/AsyncRuntimeState.h>
+#ifdef EXPO_MODULES_V2_CPP_API
+#include <expo-modules-v2/async/JniScheduler.h>
+#endif
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
 
 namespace expo::modules::v2 {
   namespace {
     jsi::JavaScriptRuntime* runtimeFor(const jlong runtimePointer) noexcept {
       return reinterpret_cast<jsi::JavaScriptRuntime*>(runtimePointer);
+    }
+
+    void nativeRunJob(JNIEnv*, [[maybe_unused]] const jlong id) {
+#ifdef EXPO_MODULES_V2_CPP_API
+      async::JniScheduler::run(static_cast<uint64_t>(id));
+#endif
     }
 
     void nativeResolveBuffered(
@@ -100,6 +109,7 @@ namespace expo::modules::v2 {
 
   void JAsyncContext::registerNatives(JNIEnv* env) {
     kolibri::registerNative<JAsyncContext>(env)
+      .method<&nativeRunJob>("nativeRunJob", "(J)V")
       .method<&nativeResolveBuffered>("nativeResolveBuffered", "(JJI)V")
       .method<&nativeResolve>("nativeResolve", "(JJLjava/lang/Object;)V")
       .method<&nativeResolveNumber>("nativeResolveNumber", "(JJD)V")
@@ -121,5 +131,13 @@ namespace expo::modules::v2 {
 
   void JAsyncContext::Accessors::drainInlineSettles(JNIEnv* env) const {
     callToken(env, Owner::drainInlineSettles_);
+  }
+
+  bool JAsyncContext::Accessors::isOnJSThread(JNIEnv* env) const {
+    return callToken(env, Owner::isOnJSThread_) != JNI_FALSE;
+  }
+
+  void JAsyncContext::Accessors::postNative(JNIEnv* env, const jlong id) const {
+    callToken(env, Owner::postNative_, id);
   }
 } // namespace expo::modules::v2

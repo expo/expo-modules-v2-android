@@ -1,6 +1,11 @@
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
 
 #include <expo-jsi/LazyObject.h>
+#ifdef EXPO_MODULES_V2_CPP_API
+#include <expo-modules-cpp/AttachedRuntime.h>
+#include <expo-modules-cpp/Context.h>
+#include <expo-modules-v2/async/JniScheduler.h>
+#endif
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
@@ -23,6 +28,7 @@ namespace expo::modules::v2::jsi {
   ) : ownedRuntime_(std::move(runtime)), runtime_(ownedRuntime_.get()) {
     asyncState_.emplace(env, *runtime_, asyncContext);
     objects_.emplace(*runtime_);
+    attachCppModules(env, asyncContext);
     installExpoModulesHostObject(env, registry, engineName, globalName);
   }
 
@@ -36,10 +42,20 @@ namespace expo::modules::v2::jsi {
   ) : ownedRuntime_(nullptr), runtime_(&runtime) {
     asyncState_.emplace(env, *runtime_, asyncContext);
     objects_.emplace(*runtime_);
+    attachCppModules(env, asyncContext);
     installExpoModulesHostObject(env, registry, engineName, globalName);
   }
 
   JavaScriptRuntime::~JavaScriptRuntime() {
+#ifdef EXPO_MODULES_V2_CPP_API
+    // First, while the runtime, Kotlin and the scheduler are all alive: the C++ modules' stop hooks
+    // run and a module's `onDestroy` can still reach the others.
+    cppRuntime_.reset();
+    if (cppContext_ != nullptr) {
+      cppContext_->close();
+    }
+    cppContext_.reset();
+#endif
     // Before the async state goes: every event listener this runtime holds dies with it, and Kotlin
     // hears about each one through the context the async state still owns, so an event whose last
     // observer was this runtime fires its stop hook.
@@ -137,6 +153,26 @@ namespace expo::modules::v2::jsi {
     return core;
   }
 
+  void JavaScriptRuntime::attachCppModules([[maybe_unused]] JNIEnv* env, [[maybe_unused]] jobject asyncContext) {
+#ifdef EXPO_MODULES_V2_CPP_API
+    cppContext_ = cpp::Context::create();
+    cppRuntime_ = cpp::AttachedRuntime::attach(
+      *runtime_,
+      cppContext_,
+      std::make_shared<async::JniScheduler>(env, asyncContext),
+      {.installGlobal = false}
+    );
+#endif
+  }
+
+  std::shared_ptr<facebook::jsi::HostObject> JavaScriptRuntime::cppModulesHost() const {
+#ifdef EXPO_MODULES_V2_CPP_API
+    return cppRuntime_->modulesHost();
+#else
+    return nullptr;
+#endif
+  }
+
   void JavaScriptRuntime::installExpoModulesHostObject(
     JNIEnv* env,
     jobject registry,
@@ -158,6 +194,7 @@ namespace expo::modules::v2::jsi {
       modules_ = std::make_shared<ModulesHostObject>(
         env,
         registry,
+        cppModulesHost(),
         hostModules.isObject()
           ? std::optional(hostModules.getObject(rt))
           : std::nullopt
@@ -168,7 +205,7 @@ namespace expo::modules::v2::jsi {
         facebook::jsi::Object::createFromHostObject(rt, modules_)
       );
     } else {
-      modules_ = std::make_shared<ModulesHostObject>(env, registry);
+      modules_ = std::make_shared<ModulesHostObject>(env, registry, cppModulesHost());
 
       auto expoNamespace = facebook::jsi::Object(rt);
       expoNamespace.setProperty(

@@ -63,6 +63,15 @@ add_subdirectory(${KOLIBRI_DIR} kolibri-build)
 # Static library under expo-jsi/; depends only on the jsi target above.
 add_subdirectory(expo-jsi)
 
+# --- expo::modules::v2::cpp (the C++ API for writing modules) ------------------------------------
+# Static library under expo-modules-cpp/; JNI-free, depends on the jsi target and on expo-jsi. The
+# bridge links it to serve modules written in C++ next to the ones written in Kotlin. It adds code to
+# the library whether or not a C++ module exists, so a build that has none can leave it out.
+option(EXPO_MODULES_V2_CPP_API "Serve modules written with the C++ API next to the Kotlin ones" ON)
+if (EXPO_MODULES_V2_CPP_API)
+  add_subdirectory(expo-modules-cpp)
+endif ()
+
 # --- The Expo Modules API v2 JNI bridge ------------------------------------------------
 # Every .cpp under expo-modules-v2/ is part of the bridge; its headers are included as
 # #include <expo-modules-v2/...>, mirroring the kolibri/expo-jsi include-root convention.
@@ -71,6 +80,9 @@ add_subdirectory(expo-jsi)
 file(GLOB_RECURSE EXPO_MODULES_V2_SOURCES CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/expo-modules-v2/*.cpp"
 )
+if (NOT EXPO_MODULES_V2_CPP_API)
+  list(FILTER EXPO_MODULES_V2_SOURCES EXCLUDE REGEX "/async/JniScheduler\\.cpp$")
+endif ()
 add_library(expo-modules-v2 SHARED ${EXPO_MODULES_V2_SOURCES})
 
 target_include_directories(expo-modules-v2 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
@@ -84,6 +96,26 @@ target_link_libraries(expo-modules-v2 PRIVATE
         kolibri
         expo-jsi
 )
+if (EXPO_MODULES_V2_CPP_API)
+  target_compile_definitions(expo-modules-v2 PRIVATE EXPO_MODULES_V2_CPP_API=1)
+  target_link_libraries(expo-modules-v2 PRIVATE expo-modules-cpp)
+endif ()
+
+# The bridge itself uses only part of the C++ API, and a static library contributes only the objects
+# something references. A module library that links this one - libexpo-test-support, and any module
+# written in C++ outside the bridge - needs all of it, from this one copy, because the module
+# registry and the per-runtime state must exist once per process. So on the desktop, where the size
+# of the library is no concern, it is linked whole. (Android builds modules into the library itself,
+# and does not.)
+option(EXPO_MODULES_V2_EXPORT_CPP_API "Link the whole C++ API, for module libraries that link this one" ON)
+if (EXPO_MODULES_V2_CPP_API AND EXPO_MODULES_V2_EXPORT_CPP_API)
+  if (APPLE)
+    target_link_options(expo-modules-v2 PRIVATE "-Wl,-force_load,$<TARGET_FILE:expo-modules-cpp>")
+  else ()
+    target_link_options(expo-modules-v2 PRIVATE
+            "-Wl,--whole-archive" "$<TARGET_FILE:expo-modules-cpp>" "-Wl,--no-whole-archive")
+  endif ()
+endif ()
 
 # Resolve @rpath/libhermes-test-env.dylib at runtime against the directory the engine artifact is
 # unpacked into.
