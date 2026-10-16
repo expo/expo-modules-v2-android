@@ -141,6 +141,12 @@ jobs:
         working-directory: expo-modules-v2-android
         run: ./gradlew :test-app:test --stacktrace -PskipHermesEnvBuild
 
+      # The C++ API's own suite: real JavaScript on the Hermes built above, no JVM. It compiles
+      # against the Hermes checkout next to this one, for <hermes/hermes.h>.
+      - name: Run the C++ API tests
+        working-directory: expo-modules-v2-android
+        run: ./gradlew :api:testCpp --stacktrace -PskipHermesEnvBuild
+
       - name: Upload test reports
         if: failure()
         uses: actions/upload-artifact@v4

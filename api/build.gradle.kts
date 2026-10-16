@@ -157,6 +157,70 @@ if (desktopNativeEnabled) {
   tasks.named("classes") { dependsOn(copyNativeLibs) }
 }
 
+// --- C++ API tests (CMake + Ninja) --------------------------------------------------------------
+// The Hermes suite of src/test/cpp: real JavaScript on a real Hermes, with no JVM, for the C++ API
+// in src/main/cpp/expo-modules-cpp. It needs <hermes/hermes.h>, which the host artifact does not
+// ship, so it builds against the Hermes checkout settings.gradle.kts builds the host from
+// (-PhermesEnvDir=<path> to use another) and is skipped when there is none.
+val cppTestsDir = layout.projectDirectory.dir("src/test/cpp")
+val cppTestsBuildDir = layout.buildDirectory.dir("native-cpp-tests")
+val hermesSourceDir = rootProject.layout.projectDirectory
+  .dir(providers.gradleProperty("hermesEnvDir").getOrElse("../hermes-tests-environment"))
+  .dir("third-party/hermes")
+val cppTestsRunnable = provider {
+  desktopNativeEnabled && hermesSourceDir.file("API/hermes/hermes.h").asFile.exists()
+}
+
+val configureCppTests by tasks.registering(Exec::class) {
+  onlyIf { cppTestsRunnable.get() }
+  dependsOn(unpackHermesEnvJsi, unpackHermesEnvLibs)
+  inputs.dir(cppTestsDir)
+  inputs.dir(cppDir.dir("expo-modules-cpp"))
+  inputs.dir(cppDir.dir("expo-jsi"))
+  inputs.property("nativeBuildType", nativeBuildType)
+  outputs.dir(cppTestsBuildDir)
+
+  workingDir = rootDir
+  commandLine(
+    "cmake",
+    "-S", cppTestsDir.asFile.path,
+    "-B", cppTestsBuildDir.get().asFile.path,
+    "-G", "Ninja",
+    "-DCMAKE_BUILD_TYPE=${nativeBuildType.get()}",
+    "-DJSI_DIR=${hermesEnvJsiDir.get().asFile.path}",
+    "-DHERMES_ENV_LIBS_DIR=${hermesEnvLibsDir.get().asFile.path}",
+    "-DHERMES_API_DIR=${hermesSourceDir.asFile.path}",
+  )
+}
+
+val buildCppTests by tasks.registering(Exec::class) {
+  onlyIf { cppTestsRunnable.get() }
+  dependsOn(configureCppTests)
+  inputs.dir(cppTestsDir)
+  inputs.dir(cppDir.dir("expo-modules-cpp"))
+  inputs.dir(cppDir.dir("expo-jsi"))
+  inputs.property("nativeBuildType", nativeBuildType)
+  outputs.dir(cppTestsBuildDir)
+
+  workingDir = rootDir
+  commandLine("cmake", "--build", cppTestsBuildDir.get().asFile.path, "--", "-k", "0")
+}
+
+val testCpp by tasks.registering(Exec::class) {
+  group = "verification"
+  description = "Runs the C++ API tests against a real Hermes"
+  onlyIf { cppTestsRunnable.get() }
+  dependsOn(buildCppTests)
+  // A test that did not change its inputs would otherwise be skipped as up to date.
+  inputs.dir(cppTestsBuildDir)
+  outputs.upToDateWhen { false }
+
+  workingDir = rootDir
+  commandLine(cppTestsBuildDir.get().file("expo-modules-cpp-tests").asFile.path)
+}
+
+tasks.named("check") { dependsOn(testCpp) }
+
 // Expose the directories that hold the runtime .dylib files so consumers (e.g. :test-app) can put
 // them on java.library.path, and the tasks that produce them. The engine's library sits in its own
 // directory because it is unpacked from a published artifact rather than built here.
