@@ -111,8 +111,12 @@ namespace expo::modules::v2 {
       .commit();
   }
 
-  kolibri::Ref<JPromiseHandle> JAsyncContext::Accessors::createPromise(JNIEnv* env, const jlong id) const {
-    return callToken(env, Owner::createPromise_, id);
+  kolibri::Ref<kolibri::JArray<JPromiseHandle>> JAsyncContext::Accessors::createPromises(
+    JNIEnv* env,
+    const jlong firstId,
+    const jint count
+  ) const {
+    return callToken(env, Owner::createPromises_, firstId, count);
   }
 
   void JAsyncContext::Accessors::invalidate(JNIEnv* env) const {
