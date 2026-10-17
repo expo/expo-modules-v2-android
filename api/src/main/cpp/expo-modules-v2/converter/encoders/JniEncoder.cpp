@@ -124,8 +124,7 @@ namespace expo::modules::v2 {
       }
 
       const jobject element = encodeToJni(env, rt, fieldValue, field.type);
-      // TODO(@lukmccall): optimize
-      kolibri::JHashMap::put(env, map, field.name, element);
+      kolibri::JHashMap::put(env, map, field.javaName, element);
       env->DeleteLocalRef(element);
     }
     return map;

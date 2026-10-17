@@ -42,12 +42,13 @@ namespace expo::modules::v2 {
     result.reserve(fieldCount);
 
     for (jsize i = 0; i < fieldCount; i++) {
-      auto fieldName = fieldNames->getUnsafeElement(env, i)->toStdString(env);
+      const auto javaName = fieldNames->getUnsafeElement(env, i);
       result.push_back(
         RecordFieldSpec{
-          .name = std::move(fieldName),
+          .name = javaName->toStdString(env),
           .type = decoders::decodeExpectedType(reader),
           .optional = fieldOptional[i] != JNI_FALSE,
+          .javaName = static_cast<jstring>(env->NewGlobalRef(javaName.get())),
         }
       );
     }
