@@ -3193,6 +3193,26 @@ class HermesRuntimeTest {
   }
 
   @Test
+  fun `suspended and inline calls in between settle their own promises`() {
+    HermesRuntime().use { runtime ->
+      runtime.moduleRegistry.register(sharedAsync)
+
+      // Calls that settle inline start while others are still suspended, and the other way round.
+      runtime.evaluate(
+        "globalThis.out = null;" +
+          "const A = expo.modules.Async;" +
+          "Promise.all([A.delayed(1), A.immediate(2), A.delayed(3), A.immediate(4), A.twice(5)," +
+          "  A.boom().catch((e) => e.message), A.delayed(6)])" +
+          "  .then((values) => { globalThis.out = values.join(); });",
+      )
+      assertEquals(
+        "delayed:1,immediate:2,delayed:3,immediate:4,10,kaboom,delayed:6",
+        runtime.awaitSettled("globalThis.out"),
+      )
+    }
+  }
+
+  @Test
   fun `an exception from a suspend export rejects the promise`() {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register(sharedAsync)
