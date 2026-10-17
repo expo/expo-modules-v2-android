@@ -2,7 +2,7 @@
 expo-modules-v2 = "0.2.5"
 
 # https://github.com/expo/kolibri
-kolibri = "0.2.3"
+kolibri = "0.2.4"
 
 # https://github.com/JetBrains/kotlin
 # The oldest supported release. Every release in gradle/kotlin-versions.txt is built and tested;
