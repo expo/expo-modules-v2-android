@@ -45,7 +45,8 @@ namespace expo::modules::v2 {
   ) : shape_(type),
       kind_(toCppType(type)),
       nullable_(nullable),
-      usesBuffer_(usesBuffer) {
+      usesBuffer_(usesBuffer),
+      plainDynamic_(type == LeafType::ANY) {
     if (nullable && isUnboxedScalar(type)) {
       throwInvalidArgument({"Unboxed scalar ExpectedType cannot carry the nullable flag"});
     }
@@ -329,6 +330,20 @@ namespace expo::modules::v2 {
   ) : shape_(std::move(shape)),
       kind_(kindOf(shape_)),
       nullable_(nullable),
-      usesBuffer_(usesBuffer) {
+      usesBuffer_(usesBuffer),
+      plainDynamic_(isPlainDynamic(shape_)) {
+  }
+
+  bool ExpectedType::isPlainDynamic(const Shape& shape) noexcept {
+    return std::visit(
+      overloads{
+        [](const LeafType leaf) { return leaf == LeafType::ANY; },
+        [](const List& list) { return list.element->plainDynamic(); },
+        [](const Map& map) { return map.value->plainDynamic(); },
+        [](const Record&) { return false; },
+        [](const SharedObject&) { return false; },
+      },
+      shape
+    );
   }
 }

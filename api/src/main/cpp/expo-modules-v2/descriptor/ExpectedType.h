@@ -90,6 +90,12 @@ namespace expo::modules::v2 {
 
     [[nodiscard]] bool usesBuffer() const noexcept { return usesBuffer_; }
 
+    /**
+     * Whether this is `Any`, or a List or Map of such: a type whose value in a JNI slot the tagged
+     * dynamic codec carries to the same JS value as a walk of the slot does.
+     */
+    [[nodiscard]] bool plainDynamic() const noexcept { return plainDynamic_; }
+
     [[nodiscard]] const ExpectedType& listElement() const;
 
     [[nodiscard]] const ExpectedType& mapValue() const;
@@ -111,10 +117,13 @@ namespace expo::modules::v2 {
 
     [[nodiscard]] static CppType kindOf(const Shape& shape) noexcept;
 
+    [[nodiscard]] static bool isPlainDynamic(const Shape& shape) noexcept;
+
     Shape shape_;
     // Derived from shape_
     CppType kind_;
     bool nullable_ = false;
     bool usesBuffer_ = false;
+    bool plainDynamic_ = false;
   };
 } // namespace expo::modules::v2

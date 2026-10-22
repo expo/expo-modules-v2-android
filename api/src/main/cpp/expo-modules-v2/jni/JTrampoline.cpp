@@ -8,4 +8,8 @@ namespace expo::modules::v2 {
   kolibri::Ref<kolibri::JObjectArray> JTrampoline::prepareOverflowArguments(JNIEnv* env) {
     return prepareOverflowArguments_(env);
   }
+
+  jint JTrampoline::writeSlotDynamic(JNIEnv* env, jobject value) {
+    return writeSlotDynamic_(env, value);
+  }
 }
