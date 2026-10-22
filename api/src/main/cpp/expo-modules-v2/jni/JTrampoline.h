@@ -25,6 +25,9 @@ namespace expo::modules::v2 {
      */
     static jint writeSlotDynamic(JNIEnv* env, jobject value);
 
+    /** Has Kotlin read back the dynamic value written onto the shared buffer for a JNI slot. */
+    static kolibri::Ref<> readSlotDynamic(JNIEnv* env, jint payloadLength);
+
   private:
     static constexpr StaticMethod<"takeOverflowResult", kolibri::Ref<>()> takeOverflowResult_{};
     static constexpr StaticMethod<
@@ -32,5 +35,6 @@ namespace expo::modules::v2 {
       kolibri::Ref<kolibri::JObjectArray>()
     > prepareOverflowArguments_{};
     static constexpr StaticMethod<"writeSlotDynamic", jint(jobject)> writeSlotDynamic_{};
+    static constexpr StaticMethod<"readSlotDynamic", kolibri::Ref<>(jint)> readSlotDynamic_{};
   };
 }

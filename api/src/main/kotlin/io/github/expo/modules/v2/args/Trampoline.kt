@@ -56,6 +56,11 @@ object Trampoline {
 
   private val resultView get() = _resultView.get().also { it.rewind() }
 
+  /** Reads a slot value's payload, whose length sets this view's limit. */
+  private val _slotView = ThreadLocal.withInitial {
+    BinaryBuffer.newSharedView()
+  }
+
   @JvmStatic
   fun arguments(payloadLength: Int): TrampolineArguments {
     if (payloadLength == OVERFLOW_ARGUMENTS) {
@@ -115,6 +120,15 @@ object Trampoline {
       OVERFLOW_RESULT
     }
   }
+
+  /**
+   * Reads the dynamic value native code wrote onto the shared buffer for a JNI slot - an `Any`, or
+   * a List or Map of it - as the Java value a JNI build of that slot would have made.
+   */
+  @JvmStatic
+  @CalledFromNative(by = "expo-modules-v2/jni/JTrampoline.h")
+  fun readSlotDynamic(payloadLength: Int): Any? =
+    BinaryValueCodec.readPlainDynamic(_slotView.get().also { it.rewind(payloadLength) })
 
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JTrampoline.h")

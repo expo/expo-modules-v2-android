@@ -51,7 +51,15 @@ object BinaryValueCodec {
     }
   }
 
-  internal fun readDynamic(buf: BinaryBuffer): Any? {
+  internal fun readDynamic(buf: BinaryBuffer): Any? = readDynamic(buf, plain = false)
+
+  /**
+   * [readDynamic] for a value native code would otherwise build in a JNI slot. Its maps start at
+   * the default capacity, as that build's do, so they iterate in the same order.
+   */
+  internal fun readPlainDynamic(buf: BinaryBuffer): Any? = readDynamic(buf, plain = true)
+
+  private fun readDynamic(buf: BinaryBuffer, plain: Boolean): Any? {
     return when (val tag = buf.getTag()) {
       BinaryTag.NULL -> null
       BinaryTag.BOOLEAN -> buf.getBoolean()
@@ -60,8 +68,8 @@ object BinaryValueCodec {
       BinaryTag.FLOAT -> buf.getFloat()
       BinaryTag.DOUBLE -> buf.getDouble()
       BinaryTag.STRING -> buf.getString()
-      BinaryTag.LIST -> readDynamicList(buf)
-      BinaryTag.MAP -> readDynamicMap(buf)
+      BinaryTag.LIST -> readDynamicList(buf, plain)
+      BinaryTag.MAP -> readDynamicMap(buf, plain)
       BinaryTag.BYTE_ARRAY -> buf.getByteArray()
       BinaryTag.EXTERNAL_SCHEMA -> {
         val schemaId = SchemaId(buf.getExternalSchemaId())
@@ -85,11 +93,11 @@ object BinaryValueCodec {
     for (element in list) writeDynamicScalar(buf, element!!, scalarTag)
   }
 
-  private fun readDynamicList(buf: BinaryBuffer): ArrayList<Any?> {
+  private fun readDynamicList(buf: BinaryBuffer, plain: Boolean): ArrayList<Any?> {
     val (count, elementTag) = buf.getListHeader()
     val list = ArrayList<Any?>(count)
     when (elementTag) {
-      BinaryTag.TAGGED -> repeat(count) { list.add(readDynamic(buf)) }
+      BinaryTag.TAGGED -> repeat(count) { list.add(readDynamic(buf, plain)) }
       BinaryTag.DOUBLE -> buf.getDoubles(count).forEach { list.add(it) }
       BinaryTag.INT -> buf.getInts(count).forEach { list.add(it) }
       BinaryTag.LONG -> buf.getLongs(count).forEach { list.add(it) }
@@ -144,11 +152,11 @@ object BinaryValueCodec {
     }
   }
 
-  private fun readDynamicMap(buf: BinaryBuffer): HashMap<String, Any?> {
+  private fun readDynamicMap(buf: BinaryBuffer, plain: Boolean): HashMap<String, Any?> {
     val count = buf.getMapSize()
-    val map = HashMap<String, Any?>(count * 4 / 3 + 1)
+    val map = if (plain) HashMap() else HashMap<String, Any?>(count * 4 / 3 + 1)
     repeat(count) {
-      map[buf.getString()] = readDynamic(buf)
+      map[buf.getString()] = readDynamic(buf, plain)
     }
     return map
   }

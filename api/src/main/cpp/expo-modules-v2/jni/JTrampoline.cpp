@@ -12,4 +12,8 @@ namespace expo::modules::v2 {
   jint JTrampoline::writeSlotDynamic(JNIEnv* env, jobject value) {
     return writeSlotDynamic_(env, value);
   }
+
+  kolibri::Ref<> JTrampoline::readSlotDynamic(JNIEnv* env, const jint payloadLength) {
+    return readSlotDynamic_(env, payloadLength);
+  }
 }

@@ -20,6 +20,17 @@ namespace expo::modules::v2 {
     const ExpectedType& type
   );
 
+  /**
+   * [encodeToJni] that builds the Java value with JNI calls throughout, without offering the value
+   * or its parts to the shared buffer first.
+   */
+  jobject encodeToJniSlot(
+    JNIEnv* env,
+    facebook::jsi::Runtime& rt,
+    const facebook::jsi::Value& value,
+    const ExpectedType& type
+  );
+
   jobject encodeToJniDynamic(
     JNIEnv* env,
     facebook::jsi::Runtime& rt,

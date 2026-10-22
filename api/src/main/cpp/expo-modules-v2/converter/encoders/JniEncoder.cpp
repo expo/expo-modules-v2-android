@@ -28,12 +28,10 @@ namespace expo::modules::v2 {
     const size_t size = array.size(rt);
     const jobject result = kolibri::JArrayList::constructor.createRaw(env, static_cast<jint>(size));
     for (size_t i = 0; i < size; i++) {
-      const jobject element = encodeToJni(
-        env,
-        rt,
-        array.getValueAtIndex(rt, i),
-        elementType
-      );
+      const facebook::jsi::Value item = array.getValueAtIndex(rt, i);
+      const jobject element = slotWalk
+        ? encodeToJniSlot(env, rt, item, elementType)
+        : encodeToJni(env, rt, item, elementType);
       kolibri::JArrayList::add(env, result, element);
       env->DeleteLocalRef(element);
     }
@@ -48,12 +46,10 @@ namespace expo::modules::v2 {
     const jobject map = kolibri::JHashMap::constructor.createRaw(env);
     for (size_t i = 0; i < size; i++) {
       facebook::jsi::String key = names.getValueAtIndex(rt, i).getString(rt);
-      const jobject element = encodeToJni(
-        env,
-        rt,
-        object.getProperty(rt, key),
-        valueType
-      );
+      const facebook::jsi::Value item = object.getProperty(rt, key);
+      const jobject element = slotWalk
+        ? encodeToJniSlot(env, rt, item, valueType)
+        : encodeToJni(env, rt, item, valueType);
       const kolibri::Ref<> javaKey = kolibri::Ref<>::adopt(env, jstringFromJsiString(env, rt, key));
       kolibri::JHashMap::put(env, map, javaKey.get(), element);
       env->DeleteLocalRef(element);
