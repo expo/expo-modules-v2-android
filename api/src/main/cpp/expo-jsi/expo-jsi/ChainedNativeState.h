@@ -51,6 +51,17 @@ namespace expo::jsi {
       return static_cast<T*>(findBorrowed(rt, object, T::staticTag()));
     }
 
+    /**
+     * [findBorrowed] for an [object] the caller knows carries a native state, which skips the
+     * `hasNativeState` property lookup. Hermes' `getNativeState` only asserts that the state exists:
+     * in a release build an object without one is undefined behavior, so never call this with an
+     * object that came from script unchecked. Debug builds still assert.
+     */
+    template<typename T>
+    static T* findBorrowedTrusted(facebook::jsi::Runtime& rt, const facebook::jsi::Object& object) {
+      return static_cast<T*>(findBorrowedTrusted(rt, object, T::staticTag()));
+    }
+
   protected:
     using StateTag = const void*;
 
@@ -64,6 +75,12 @@ namespace expo::jsi {
     );
 
     static ChainedNativeState* findBorrowed(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Object& object,
+      StateTag tag
+    );
+
+    static ChainedNativeState* findBorrowedTrusted(
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Object& object,
       StateTag tag
