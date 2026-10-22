@@ -1,5 +1,7 @@
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 
+#include <expo-modules-v2/converter/JsiStringCodec.h>
+#include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <expo-modules-v2/objects/ObjectId.h>
 #include <expo-modules-v2/objects/ObjectNativeState.h>
@@ -8,6 +10,38 @@
 #include <kolibri/array.h>
 
 namespace expo::modules::v2::jsi {
+  namespace {
+    /**
+     * [name] as a property name of [rt]. A short ASCII name - nearly every one - is copied out with
+     * one `GetStringRegion` and comes from the runtime's key cache, instead of turning into a heap
+     * `std::string` and then a new JS string the runtime looks up in its identifier table on every
+     * access. A copy of the cached name, because a getter or setter that the access runs can evict
+     * it. Any other name crosses as UTF-16, so it keeps every character.
+     */
+    facebook::jsi::PropNameID propertyName(JNIEnv* env, facebook::jsi::Runtime& rt, jstring name) {
+      constexpr jsize kCachedLengthMax = 64;
+      const jsize length = env->GetStringLength(name);
+      if (length <= kCachedLengthMax) [[likely]] {
+        jchar units[kCachedLengthMax];
+        env->GetStringRegion(name, 0, length, units);
+        char ascii[kCachedLengthMax];
+        jchar accumulator = 0;
+        for (jsize i = 0; i < length; ++i) {
+          accumulator |= units[i];
+          ascii[i] = static_cast<char>(units[i]);
+        }
+
+        if (accumulator < 0x80) [[likely]] {
+          const std::string_view key{ascii, static_cast<size_t>(length)};
+          if (const facebook::jsi::PropNameID* cached = RecordPropertyCache::get(rt).asciiKey(rt, key)) {
+            return facebook::jsi::PropNameID(rt, *cached);
+          }
+        }
+      }
+      return facebook::jsi::PropNameID::forString(rt, jsiStringFromJString(rt, env, name));
+    }
+  } // namespace
+
   jobject JavaScriptObject::create(
     JNIEnv* env,
     facebook::jsi::Runtime* runtime,
@@ -34,17 +68,13 @@ namespace expo::modules::v2::jsi {
   }
 
   jboolean JavaScriptObject::hasProperty(JNIEnv* env, jstring name) const {
-    const std::string propertyName = kolibri::toStdString(env, name);
-    return object().hasProperty(
-      runtime(),
-      propertyName.c_str()
-    );
+    facebook::jsi::Runtime& rt = runtime();
+    return object().hasProperty(rt, propertyName(env, rt, name));
   }
 
   jobject JavaScriptObject::getProperty(JNIEnv* env, jstring name) const {
     facebook::jsi::Runtime& rt = runtime();
-    const std::string propertyName = kolibri::toStdString(env, name);
-    facebook::jsi::Value value = object().getProperty(rt, propertyName.c_str());
+    facebook::jsi::Value value = object().getProperty(rt, propertyName(env, rt, name));
     return JavaScriptValue::create(env, &rt, std::move(value));
   }
 
@@ -98,31 +128,22 @@ namespace expo::modules::v2::jsi {
   }
 
   void JavaScriptObject::setBoolProperty(JNIEnv* env, jstring name, jboolean value) const {
-    const std::string propertyName = kolibri::toStdString(env, name);
-    object().setProperty(
-      runtime(),
-      propertyName.c_str(),
-      facebook::jsi::Value(static_cast<bool>(value))
-    );
+    facebook::jsi::Runtime& rt = runtime();
+    object().setProperty(rt, propertyName(env, rt, name), facebook::jsi::Value(static_cast<bool>(value)));
   }
 
   void JavaScriptObject::setDoubleProperty(JNIEnv* env, jstring name, jdouble value) const {
-    const std::string propertyName = kolibri::toStdString(env, name);
-    object().setProperty(
-      runtime(),
-      propertyName.c_str(),
-      facebook::jsi::Value(value)
-    );
+    facebook::jsi::Runtime& rt = runtime();
+    object().setProperty(rt, propertyName(env, rt, name), facebook::jsi::Value(value));
   }
 
   void JavaScriptObject::setStringProperty(JNIEnv* env, jstring name, jstring value) const {
     facebook::jsi::Runtime& rt = runtime();
-    const std::string propertyName = kolibri::toStdString(env, name);
     facebook::jsi::Value jsValue =
       value
-        ? facebook::jsi::Value(facebook::jsi::String::createFromUtf8(rt, kolibri::toStdString(env, value)))
+        ? facebook::jsi::Value(jsiStringFromJString(rt, env, value))
         : facebook::jsi::Value::null();
-    object().setProperty(rt, propertyName.c_str(), std::move(jsValue));
+    object().setProperty(rt, propertyName(env, rt, name), std::move(jsValue));
   }
 
   void JavaScriptObject::setJSValueProperty(
@@ -131,12 +152,11 @@ namespace expo::modules::v2::jsi {
     JavaScriptValue* value
   ) const {
     facebook::jsi::Runtime& rt = runtime();
-    const std::string propertyName = kolibri::toStdString(env, name);
     facebook::jsi::Value jsValue =
       value
         ? facebook::jsi::Value(rt, value->value())
         : facebook::jsi::Value::null();
-    object().setProperty(rt, propertyName.c_str(), jsValue);
+    object().setProperty(rt, propertyName(env, rt, name), jsValue);
   }
 
   void JavaScriptObject::setObjectProperty(
@@ -145,18 +165,16 @@ namespace expo::modules::v2::jsi {
     JavaScriptObject* value
   ) const {
     facebook::jsi::Runtime& rt = runtime();
-    const std::string propertyName = kolibri::toStdString(env, name);
     facebook::jsi::Value jsValue =
       value
         ? facebook::jsi::Value(rt, value->object())
         : facebook::jsi::Value::null();
-    object().setProperty(rt, propertyName.c_str(), std::move(jsValue));
+    object().setProperty(rt, propertyName(env, rt, name), std::move(jsValue));
   }
 
   void JavaScriptObject::unsetProperty(JNIEnv* env, jstring name) const {
     facebook::jsi::Runtime& rt = runtime();
-    const std::string propertyName = kolibri::toStdString(env, name);
-    object().setProperty(rt, propertyName.c_str(), facebook::jsi::Value::undefined());
+    object().setProperty(rt, propertyName(env, rt, name), facebook::jsi::Value::undefined());
   }
 
   JavaScriptObject::JavaScriptObject(
