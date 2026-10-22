@@ -4,6 +4,7 @@
 #include <optional>
 #include <type_traits>
 #include <variant>
+#include <vector>
 
 #include <expo-modules-v2/descriptor/CppType.h>
 #include <expo-modules-v2/descriptor/CppTypeVisit.h>
@@ -37,6 +38,8 @@ namespace expo::modules::v2 {
     return static_cast<CppType>(type);
   }
 
+  struct FunctionSignature;
+
   class ExpectedType {
   public:
     struct List {
@@ -55,6 +58,14 @@ namespace expo::modules::v2 {
       int classId;
     };
 
+    /**
+     * A JavaScript function handed to Kotlin as a lambda. The signature is shared, because every
+     * function object created from it keeps it alive for as long as it lives.
+     */
+    struct Function {
+      std::shared_ptr<const FunctionSignature> signature;
+    };
+
     explicit ExpectedType(LeafType type, bool nullable = false, bool usesBuffer = false);
 
     // clang-format off
@@ -67,6 +78,7 @@ namespace expo::modules::v2 {
     [[nodiscard]] static ExpectedType map(ExpectedType value, bool nullable = false, bool usesBuffer = false);
     [[nodiscard]] static ExpectedType record(int schemaId, bool nullable = false, bool usesBuffer = false);
     [[nodiscard]] static ExpectedType sharedObject(int classId, bool nullable = false);
+    [[nodiscard]] static ExpectedType function(FunctionSignature signature, bool nullable = false);
     // clang-format on
 
     [[nodiscard]] ExpectedType clone() const;
@@ -80,7 +92,8 @@ namespace expo::modules::v2 {
         case 1: return invokeWith<R, CppType::LIST>(v, *std::get_if<List>(&shape_));
         case 2: return invokeWith<R, CppType::MAP>(v, *std::get_if<Map>(&shape_));
         case 3: return invokeWith<R, CppType::RECORD>(v, *std::get_if<Record>(&shape_));
-        default: return invokeWith<R, CppType::SHARED_OBJECT>(v, *std::get_if<SharedObject>(&shape_));
+        case 4: return invokeWith<R, CppType::SHARED_OBJECT>(v, *std::get_if<SharedObject>(&shape_));
+        default: return invokeWith<R, CppType::FUNCTION>(v, *std::get_if<Function>(&shape_));
       }
     }
 
@@ -105,7 +118,7 @@ namespace expo::modules::v2 {
     bool bufferSafe() const;
 
   private:
-    using Shape = std::variant<LeafType, List, Map, Record, SharedObject>;
+    using Shape = std::variant<LeafType, List, Map, Record, SharedObject, Function>;
 
     explicit ExpectedType(Shape shape, bool nullable, bool usesBuffer);
 
@@ -116,5 +129,13 @@ namespace expo::modules::v2 {
     CppType kind_;
     bool nullable_ = false;
     bool usesBuffer_ = false;
+  };
+
+  /** The parameters and result of a JavaScript function, as its Kotlin lambda declares them. */
+  struct FunctionSignature {
+    std::vector<ExpectedType> params;
+    ExpectedType returns;
+    /** Whether the lambda is `suspend`, so a promise the function returns is waited for. */
+    bool isSuspend;
   };
 } // namespace expo::modules::v2
