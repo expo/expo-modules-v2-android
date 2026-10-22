@@ -118,8 +118,4 @@ namespace expo::modules::v2 {
   void JAsyncContext::Accessors::invalidate(JNIEnv* env) const {
     callToken(env, Owner::invalidate_);
   }
-
-  void JAsyncContext::Accessors::drainInlineSettles(JNIEnv* env) const {
-    callToken(env, Owner::drainInlineSettles_);
-  }
 } // namespace expo::modules::v2

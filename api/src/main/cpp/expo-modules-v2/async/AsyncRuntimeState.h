@@ -34,11 +34,6 @@ namespace expo::modules::v2::async {
 
     [[nodiscard]] kolibri::Ref<JPromiseHandle> newKotlinPromise(JNIEnv* env, uint64_t id) const;
 
-    /**
-     * Settles whatever the trampoline just produced without suspending.
-     */
-    void drainInlineSettles(JNIEnv* env) const;
-
     /** Drops a pending entry without settling it, for a call that failed before it ever started. */
     void discard(uint64_t id) noexcept;
 
