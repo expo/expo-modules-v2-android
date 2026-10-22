@@ -1,7 +1,7 @@
 #pragma once
 
+#include <memory>
 #include <string_view>
-#include <unordered_map>
 #include <vector>
 
 #include <jsi/jsi.h>
@@ -38,8 +38,10 @@ namespace expo::modules::v2 {
 
     void clear() noexcept;
 
+    [[nodiscard]] const RecordAccessPlan& createPlan(facebook::jsi::Runtime& rt, int32_t schemaId);
+
     facebook::jsi::Runtime* runtime_ = nullptr;
-    std::unordered_map<int32_t, RecordAccessPlan> plansBySchema_;
+    std::vector<std::unique_ptr<RecordAccessPlan>> plansBySchema_;
     AsciiKeyCache asciiKeys_;
   };
 }

@@ -162,10 +162,6 @@ namespace expo::modules::v2::async {
     return jContext_->createPromise(env, id);
   }
 
-  void AsyncRuntimeState::drainInlineSettles(JNIEnv* env) const {
-    jContext_->drainInlineSettles(env);
-  }
-
   void AsyncRuntimeState::discard(const uint64_t id) noexcept {
     pending_.erase(id);
   }

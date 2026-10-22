@@ -1,6 +1,8 @@
 #pragma once
 
+#include <cstddef>
 #include <memory>
+#include <new>
 #include <span>
 #include <stdexcept>
 #include <string>
@@ -17,12 +19,70 @@
 #include <expo-modules-v2/utils/Throw.h>
 
 namespace expo::modules::v2 {
+  class JsArrayAppender {
+  public:
+    // ReSharper disable CppPossiblyUninitializedMember
+    JsArrayAppender(
+      facebook::jsi::Runtime& rt,
+      facebook::jsi::Array& array
+    ) : rt_(rt),
+        jsArray_(array) {
+    }
+
+    // ReSharper restore CppPossiblyUninitializedMember
+
+    JsArrayAppender(const JsArrayAppender&) = delete;
+
+    JsArrayAppender& operator=(const JsArrayAppender&) = delete;
+
+    ~JsArrayAppender() { release(); }
+
+    ALWAYS_INLINE void append(facebook::jsi::Value value) {
+      std::byte* index = storage_ + pending_ * sizeof(facebook::jsi::Value);
+      new(index) facebook::jsi::Value(std::move(value));
+      if (++pending_ == kChunkSize) [[unlikely]] {
+        flush();
+      }
+    }
+
+    void flush() {
+      if (pending_ != 0) {
+        jsArray_.push(rt_, slot(0), pending_);
+        release();
+      }
+    }
+
+  private:
+    static constexpr size_t kChunkSize = 64;
+
+    ALWAYS_INLINE const facebook::jsi::Value* slot(const size_t index) const {
+      const std::byte* slotPtr = storage_ + index * sizeof(facebook::jsi::Value);
+      return std::launder(
+        reinterpret_cast<const facebook::jsi::Value*>(slotPtr)
+      );
+    }
+
+    void release() noexcept {
+      for (size_t i = 0; i < pending_; i++) {
+        slot(i)->~Value();
+      }
+      pending_ = 0;
+    }
+
+    facebook::jsi::Runtime& rt_;
+    facebook::jsi::Array& jsArray_;
+    alignas(facebook::jsi::Value) std::byte storage_[kChunkSize * sizeof(facebook::jsi::Value)];
+    size_t pending_ = 0;
+  };
+
   template<typename MakeOne>
   ALWAYS_INLINE facebook::jsi::Value buildJsArray(facebook::jsi::Runtime& rt, size_t count, MakeOne&& makeOne) {
-    facebook::jsi::Array result(rt, count);
+    facebook::jsi::Array result(rt, 0);
+    JsArrayAppender appender(rt, result);
     for (size_t i = 0; i < count; i++) {
-      result.setValueAtIndex(rt, i, makeOne(i));
+      appender.append(makeOne(i));
     }
+    appender.flush();
     return result;
   }
 
@@ -39,10 +99,12 @@ namespace expo::modules::v2 {
     MakeOne&& makeOne
   ) {
     const kolibri::UnownedRef<kolibri::JArray<Element>> array(object);
-    facebook::jsi::Array result(rt, static_cast<size_t>(array->size(env)));
-    array->forEach(env, [&](const jsize index, const Element element) {
-      result.setValueAtIndex(rt, static_cast<size_t>(index), makeOne(element));
+    facebook::jsi::Array result(rt, 0);
+    JsArrayAppender appender(rt, result);
+    array->forEach(env, [&](const jsize, const Element element) {
+      appender.append(makeOne(element));
     });
+    appender.flush();
     return result;
   }
 

@@ -44,6 +44,7 @@ namespace expo::modules::v2 {
     bool nullable,
     bool usesBuffer
   ) : shape_(type),
+      kind_(toCppType(type)),
       nullable_(nullable),
       usesBuffer_(usesBuffer) {
     if (nullable && isUnboxedScalar(type)) {
@@ -126,27 +127,6 @@ namespace expo::modules::v2 {
     );
   }
 
-  CppType ExpectedType::kind() const noexcept {
-    return std::visit(
-      overloads{
-        [](const LeafType leaf) { return toCppType(leaf); },
-        [](const List&) { return CppType::LIST; },
-        [](const Map&) { return CppType::MAP; },
-        [](const Record&) { return CppType::RECORD; },
-        [](const SharedObject&) { return CppType::SHARED_OBJECT; },
-        [](const Function&) { return CppType::FUNCTION; },
-      },
-      shape_
-    );
-  }
-
-  bool ExpectedType::nullable() const noexcept {
-    return nullable_;
-  }
-
-  bool ExpectedType::usesBuffer() const noexcept {
-    return usesBuffer_;
-  }
 
   const ExpectedType& ExpectedType::listElement() const {
     return *std::get<List>(shape_).element;
@@ -356,11 +336,26 @@ namespace expo::modules::v2 {
     );
   }
 
+  CppType ExpectedType::kindOf(const Shape& shape) noexcept {
+    return std::visit(
+      overloads{
+        [](const LeafType leaf) { return toCppType(leaf); },
+        [](const List&) { return CppType::LIST; },
+        [](const Map&) { return CppType::MAP; },
+        [](const Record&) { return CppType::RECORD; },
+        [](const SharedObject&) { return CppType::SHARED_OBJECT; },
+        [](const Function&) { return CppType::FUNCTION; },
+      },
+      shape
+    );
+  }
+
   ExpectedType::ExpectedType(
     Shape shape,
     bool nullable,
     bool usesBuffer
   ) : shape_(std::move(shape)),
+      kind_(kindOf(shape_)),
       nullable_(nullable),
       usesBuffer_(usesBuffer) {
   }
