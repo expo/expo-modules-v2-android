@@ -26,7 +26,7 @@ namespace expo::modules::v2::sharedobjects {
     ) {
       if (thisValue.isObject()) {
         const facebook::jsi::Object self = thisValue.asObject(rt);
-        if (SharedObjectState* state = SharedObjects::stateOf(rt, self)) {
+        if (SharedObjectState* state = SharedObjects::receiverStateOf(rt, self)) {
           return state;
         }
       }

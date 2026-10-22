@@ -25,5 +25,16 @@ namespace expo::modules::v2::sharedobjects {
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Object& object
     );
+
+    /**
+     * [stateOf] for a member's receiver, skipping the check that [object] has a native state at all.
+     * Members live on the prototype of shared objects, so `this` is one of them; null still means
+     * "not this kind of object", but a plain object with no native state is not handled (debug
+     * builds assert). Arguments come from script and keep going through [stateOf].
+     */
+    static SharedObjectState* receiverStateOf(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Object& object
+    );
   };
 }
