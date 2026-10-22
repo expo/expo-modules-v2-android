@@ -1,4 +1,4 @@
-name: Native library size
+name: Library size
 
 on:
   pull_request:
@@ -15,11 +15,13 @@ env:
   GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false -Dkotlin.incremental=false"
 
 jobs:
-  # Builds libexpo-modules-v2.so twice, once at the base branch and once with this PR merged into
-  # it, and comments how much the stripped arm64-v8a library grew or shrank. The AAR ships no .so
-  # (a consuming app compiles the C++ itself), so this is the closest measure of what an app pays.
+  # Builds :react twice, once at the base branch and once with this PR merged into it, and comments
+  # how much it grew or shrank: the stripped arm64-v8a libexpo-modules-v2.so, and the Kotlin
+  # classes dexed. The AAR ships no .so (a consuming app compiles the C++ itself), so the .so is the
+  # closest measure of what an app pays for the C++; the dex is what it pays for the Kotlin, before
+  # its own R8 run.
   so-size:
-    name: Compare libexpo-modules-v2.so
+    name: Compare libexpo-modules-v2.so and the Kotlin classes
     runs-on: ubuntu-latest
     steps:
       # A pull_request run checks out the test merge commit; its first parent is the base branch
@@ -46,13 +48,19 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       # The release variant builds RelWithDebInfo. `--strip-unneeded` is what AGP's own strip task
-      # runs on the libraries it packages into an APK.
+      # runs on the libraries it packages into an APK. The Kotlin is dexed the way an app's D8 would,
+      # at :react's minSdk and against its compileSdk's android.jar.
       - name: Build the library at the base and with this PR
         run: |
+          MIN_SDK="$(sed -n 's/^ *minSdk *= *\([0-9]*\).*/\1/p' react/build.gradle.kts)"
+          COMPILE_SDK="$(sed -n 's/^ *compileSdk *= *\([0-9]*\).*/\1/p' react/build.gradle.kts)"
+          D8="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -n 1)d8"
+          ANDROID_JAR="$ANDROID_HOME/platforms/android-$COMPILE_SDK/android.jar"
+
           build() {
             local name="$1" dir="$2"
             echo "::group::Build $name ($(git -C "$dir" rev-parse --short HEAD))"
-            (cd "$dir" && ./gradlew :react:externalNativeBuildRelease -PskipHermesEnvBuild -PskipDesktopNative --stacktrace)
+            (cd "$dir" && ./gradlew :react:externalNativeBuildRelease :react:bundleLibRuntimeToJarRelease -PskipHermesEnvBuild -PskipDesktopNative --stacktrace)
             echo "::endgroup::"
 
             local libs=("$dir"/react/build/intermediates/cxx/RelWithDebInfo/*/obj/arm64-v8a/libexpo-modules-v2.so)
@@ -61,6 +69,19 @@ jobs:
               exit 1
             fi
             "$NDK_BIN/llvm-strip" --strip-unneeded -o "$RUNNER_TEMP/$name.so" "${libs[0]}"
+
+            local jar="$dir/react/build/intermediates/runtime_library_classes_jar/release/bundleLibRuntimeToJarRelease/classes.jar"
+            if [[ ! -f "$jar" ]]; then
+              echo "::error::No classes.jar in the $name build at $jar"
+              exit 1
+            fi
+            cp "$jar" "$RUNNER_TEMP/$name.jar"
+            mkdir "$RUNNER_TEMP/$name-dex"
+            "$D8" --release --min-api "$MIN_SDK" --lib "$ANDROID_JAR" --output "$RUNNER_TEMP/$name-dex" "$jar"
+            if [[ ! -f "$RUNNER_TEMP/$name-dex/classes.dex" || -f "$RUNNER_TEMP/$name-dex/classes2.dex" ]]; then
+              echo "::error::Expected exactly one classes.dex in the $name build, found: $(ls "$RUNNER_TEMP/$name-dex")"
+              exit 1
+            fi
           }
 
           git worktree add --detach "$RUNNER_TEMP/base" HEAD^1
@@ -74,10 +95,17 @@ jobs:
         run: |
           base_sha="$(git rev-parse --short HEAD^1)"
           head_sha="${HEAD_SHA:0:7}"
-          python3 -I scripts/so-size-report.py "$RUNNER_TEMP/base.so" "$RUNNER_TEMP/head.so" \
-            --title '`libexpo-modules-v2.so` size (arm64-v8a, stripped)' \
-            --footer "Base: \`$BASE_REF\` at $base_sha. This PR: $head_sha, merged into the base." \
-            > "$RUNNER_TEMP/report.md"
+          {
+            python3 -I scripts/so-size-report.py "$RUNNER_TEMP/base.so" "$RUNNER_TEMP/head.so" \
+              --title '`libexpo-modules-v2.so` size (arm64-v8a, stripped)'
+            echo
+            python3 -I scripts/kotlin-size-report.py \
+              "$RUNNER_TEMP/base.jar" "$RUNNER_TEMP/base-dex/classes.dex" \
+              "$RUNNER_TEMP/head.jar" "$RUNNER_TEMP/head-dex/classes.dex" \
+              --title 'Kotlin code size (`:react`, dexed by D8, not shrunk)'
+            echo
+            echo "Base: \`$BASE_REF\` at $base_sha. This PR: $head_sha, merged into the base."
+          } > "$RUNNER_TEMP/report.md"
           cat "$RUNNER_TEMP/report.md" >> "$GITHUB_STEP_SUMMARY"
 
       # The token of a PR from a fork cannot comment; such a PR still gets the job summary above.

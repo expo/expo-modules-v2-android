@@ -31,6 +31,22 @@ namespace expo::modules::v2 {
     });
   }
 
+  [[nodiscard]] ALWAYS_INLINE double numberOf(facebook::jsi::Runtime& rt, const facebook::jsi::Value& value) {
+    if (!value.isNumber()) [[unlikely]] {
+      throwTypeMismatch(rt, value, "a number");
+    }
+
+    return value.getNumber();
+  }
+
+  [[nodiscard]] ALWAYS_INLINE bool boolOf(facebook::jsi::Runtime& rt, const facebook::jsi::Value& value) {
+    if (!value.isBool()) [[unlikely]] {
+      throwTypeMismatch(rt, value, "a boolean");
+    }
+
+    return value.getBool();
+  }
+
   [[noreturn]] ALWAYS_INLINE void throwNullInNonNullable(facebook::jsi::Runtime& rt, const ExpectedType& type) {
     throwJSError(rt, {
       "Cannot convert null/undefined into a non-nullable ",

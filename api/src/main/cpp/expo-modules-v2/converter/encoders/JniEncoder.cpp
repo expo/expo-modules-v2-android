@@ -6,6 +6,7 @@
 #include <expo-modules-v2/converter/ByteView.h>
 #include <expo-modules-v2/converter/encoders/EncodeCommon.h>
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
+#include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
@@ -46,7 +47,6 @@ namespace expo::modules::v2 {
     const size_t size = names.size(rt);
     const jobject map = kolibri::JHashMap::constructor.createRaw(env);
     for (size_t i = 0; i < size; i++) {
-      // TODO(@lukmccall): optimize key
       facebook::jsi::String key = names.getValueAtIndex(rt, i).getString(rt);
       const jobject element = encodeToJni(
         env,
@@ -54,7 +54,8 @@ namespace expo::modules::v2 {
         object.getProperty(rt, key),
         valueType
       );
-      kolibri::JHashMap::put(env, map, key.utf8(rt), element);
+      const kolibri::Ref<> javaKey = kolibri::Ref<>::adopt(env, jstringFromJsiString(env, rt, key));
+      kolibri::JHashMap::put(env, map, javaKey.get(), element);
       env->DeleteLocalRef(element);
     }
     return map;
@@ -132,52 +133,52 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::INT>() const {
-    return kolibri::JInteger::valueOf(env, static_cast<jint>(value.asNumber())).release();
+    return kolibri::JInteger::valueOf(env, static_cast<jint>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_INT>() const {
-    return kolibri::JInteger::valueOf(env, static_cast<jint>(value.asNumber())).release();
+    return kolibri::JInteger::valueOf(env, static_cast<jint>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::LONG>() const {
-    return kolibri::JLong::valueOf(env, static_cast<jlong>(value.asNumber())).release();
+    return kolibri::JLong::valueOf(env, static_cast<jlong>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_LONG>() const {
-    return kolibri::JLong::valueOf(env, static_cast<jlong>(value.asNumber())).release();
+    return kolibri::JLong::valueOf(env, static_cast<jlong>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::FLOAT>() const {
-    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(value.asNumber())).release();
+    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_FLOAT>() const {
-    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(value.asNumber())).release();
+    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(numberOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::DOUBLE>() const {
-    return kolibri::JDouble::valueOf(env, value.asNumber()).release();
+    return kolibri::JDouble::valueOf(env, numberOf(rt, value)).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_DOUBLE>() const {
-    return kolibri::JDouble::valueOf(env, value.asNumber()).release();
+    return kolibri::JDouble::valueOf(env, numberOf(rt, value)).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOOLEAN>() const {
-    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(value.asBool())).release();
+    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(boolOf(rt, value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOX_BOOLEAN>() const {
-    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(value.asBool())).release();
+    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(boolOf(rt, value))).release();
   }
 
   template<>
@@ -187,42 +188,41 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::STRING>() const {
-    // TODO(@lukmccall): optimize
-    return kolibri::toJString(env, value.asString(rt).utf8(rt));
+    return jstringFromJsiString(env, rt, value.asString(rt));
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::DOUBLE_ARRAY>() const {
-    return encodeJsArrayToJni<jdouble>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return value.asNumber();
+    return encodeJsArrayToJni<jdouble>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return numberOf(rt, element);
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::INT_ARRAY>() const {
-    return encodeJsArrayToJni<jint>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return static_cast<jint>(value.asNumber());
+    return encodeJsArrayToJni<jint>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return static_cast<jint>(numberOf(rt, element));
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::LONG_ARRAY>() const {
-    return encodeJsArrayToJni<jlong>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return static_cast<jlong>(value.asNumber());
+    return encodeJsArrayToJni<jlong>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return static_cast<jlong>(numberOf(rt, element));
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::FLOAT_ARRAY>() const {
-    return encodeJsArrayToJni<jfloat>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return static_cast<jfloat>(value.asNumber());
+    return encodeJsArrayToJni<jfloat>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return static_cast<jfloat>(numberOf(rt, element));
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOOLEAN_ARRAY>() const {
-    return encodeJsArrayToJni<jboolean>(env, rt, value, [](const facebook::jsi::Value& value) {
-      return static_cast<jboolean>(value.asBool());
+    return encodeJsArrayToJni<jboolean>(env, rt, value, [this](const facebook::jsi::Value& element) {
+      return static_cast<jboolean>(boolOf(rt, element));
     });
   }
 
