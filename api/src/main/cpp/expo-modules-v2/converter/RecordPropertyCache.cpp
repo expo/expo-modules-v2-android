@@ -1,6 +1,9 @@
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 
+#include <string>
+
 #include <expo-modules-v2/records/RecordRegistry.h>
+#include <expo-modules-v2/utils/Throw.h>
 
 namespace expo::modules::v2 {
   RecordPropertyCache& RecordPropertyCache::threadLocal() {
@@ -50,8 +53,20 @@ namespace expo::modules::v2 {
   ) {
     activate(rt);
 
-    if (const auto cached = plansBySchema_.find(schemaId); cached != plansBySchema_.end()) {
-      return cached->second;
+    const size_t index = static_cast<size_t>(schemaId);
+    const bool hasPlan = index < plansBySchema_.size() && plansBySchema_[index] != nullptr;
+    if (hasPlan) [[likely]] {
+      return *plansBySchema_[index];
+    }
+    return createPlan(rt, schemaId);
+  }
+
+  const RecordAccessPlan& RecordPropertyCache::createPlan(
+    facebook::jsi::Runtime& rt,
+    const int32_t schemaId
+  ) {
+    if (schemaId < 0) {
+      throwInvalidArgument({"Invalid record schema id ", std::to_string(schemaId)});
     }
 
     const RecordSchema& schema = RecordRegistry::get(schemaId);
@@ -61,12 +76,14 @@ namespace expo::modules::v2 {
       names.emplace_back(facebook::jsi::PropNameID::forUtf8(rt, field.name));
     }
 
-    return plansBySchema_.emplace(
-      schemaId,
-      RecordAccessPlan{
-        .schema = &schema,
-        .fieldNames = std::move(names)
-      }
-    ).first->second;
+    const auto index = static_cast<size_t>(schemaId);
+    if (index >= plansBySchema_.size()) {
+      plansBySchema_.resize(index + 1);
+    }
+    plansBySchema_[index] = std::make_unique<RecordAccessPlan>(RecordAccessPlan{
+      .schema = &schema,
+      .fieldNames = std::move(names)
+    });
+    return *plansBySchema_[index];
   }
 }

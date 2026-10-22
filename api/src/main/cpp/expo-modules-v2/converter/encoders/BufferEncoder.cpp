@@ -9,52 +9,52 @@
 namespace expo::modules::v2 {
   template<>
   void BufferEncoder::operator()<CppType::INT>() const {
-    out.write<int32_t>(static_cast<int32_t>(value.asNumber()));
+    out.write<int32_t>(static_cast<int32_t>(numberOf(rt, value)));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::BOX_INT>() const {
-    out.write<int32_t>(static_cast<int32_t>(value.asNumber()));
+    out.write<int32_t>(static_cast<int32_t>(numberOf(rt, value)));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::LONG>() const {
-    out.write<int64_t>(static_cast<int64_t>(value.asNumber()));
+    out.write<int64_t>(static_cast<int64_t>(numberOf(rt, value)));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::BOX_LONG>() const {
-    out.write<int64_t>(static_cast<int64_t>(value.asNumber()));
+    out.write<int64_t>(static_cast<int64_t>(numberOf(rt, value)));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::FLOAT>() const {
-    out.write<float>(static_cast<float>(value.asNumber()));
+    out.write<float>(static_cast<float>(numberOf(rt, value)));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::BOX_FLOAT>() const {
-    out.write<float>(static_cast<float>(value.asNumber()));
+    out.write<float>(static_cast<float>(numberOf(rt, value)));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::DOUBLE>() const {
-    out.write<double>(value.asNumber());
+    out.write<double>(numberOf(rt, value));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::BOX_DOUBLE>() const {
-    out.write<double>(value.asNumber());
+    out.write<double>(numberOf(rt, value));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::BOOLEAN>() const {
-    out.write<uint8_t>(value.asBool());
+    out.write<uint8_t>(boolOf(rt, value));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::BOX_BOOLEAN>() const {
-    out.write<uint8_t>(value.asBool());
+    out.write<uint8_t>(boolOf(rt, value));
   }
 
   template<>
@@ -65,7 +65,7 @@ namespace expo::modules::v2 {
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<uint8_t>(array.getValueAtIndex(rt, i).asBool());
+      out.write<uint8_t>(boolOf(rt, array.getValueAtIndex(rt, i)));
     }
   }
 
@@ -77,7 +77,7 @@ namespace expo::modules::v2 {
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<int32_t>(static_cast<int32_t>(array.getValueAtIndex(rt, i).asNumber()));
+      out.write<int32_t>(static_cast<int32_t>(numberOf(rt, array.getValueAtIndex(rt, i))));
     }
   }
 
@@ -89,7 +89,7 @@ namespace expo::modules::v2 {
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<int64_t>(static_cast<int64_t>(array.getValueAtIndex(rt, i).asNumber()));
+      out.write<int64_t>(static_cast<int64_t>(numberOf(rt, array.getValueAtIndex(rt, i))));
     }
   }
 
@@ -101,7 +101,7 @@ namespace expo::modules::v2 {
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<float>(static_cast<float>(array.getValueAtIndex(rt, i).asNumber()));
+      out.write<float>(static_cast<float>(numberOf(rt, array.getValueAtIndex(rt, i))));
     }
   }
 
@@ -113,7 +113,7 @@ namespace expo::modules::v2 {
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<double>(array.getValueAtIndex(rt, i).asNumber());
+      out.write<double>(numberOf(rt, array.getValueAtIndex(rt, i)));
     }
   }
 

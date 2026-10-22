@@ -26,9 +26,9 @@ namespace expo::modules::v2 {
     return error;
   }
 
-  void rethrowPendingAsJSError(facebook::jsi::Runtime& rt, JNIEnv* env) {
+  void throwPendingAsJSError(facebook::jsi::Runtime& rt, JNIEnv* env) {
     const auto details = JThrowableHelper::takePending(env);
-    if (!details) [[likely]] {
+    if (!details) {
       return;
     }
 

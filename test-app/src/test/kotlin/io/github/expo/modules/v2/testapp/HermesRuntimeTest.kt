@@ -908,6 +908,16 @@ private fun ModuleRegistry.registerRecordFixture(
 /** Not annotated, so `register(module)` has no definition to read. */
 private class UnannotatedModule : Module()
 
+/** Hands JavaScript a String made in Kotlin, which crosses in its result slot. */
+@ExpoModule(name = "GenText")
+private class GeneratedTextModule : Module() {
+  var next: String = ""
+
+  @JS
+  @CalledFromNative
+  fun take(): String = next
+}
+
 /**
  * The buffered leaf readers, reached through generated trampolines rather than hand-written ones.
  *
@@ -2338,6 +2348,42 @@ class HermesRuntimeTest {
       val arrayValue = runtime.global().getProperty("handleArray")
       assertEquals(listOf(10, 20, 30), arrayValue.getArray().map { it.getInt() })
       assertEquals(listOf(10, 20, 30), arrayValue.getObject().getArray().map { it.getInt() })
+    }
+  }
+
+  @Test
+  fun `Kotlin strings reach JavaScript intact at every length and in every encoding`() {
+    HermesRuntime().use { runtime ->
+      val module = GeneratedTextModule()
+      runtime.moduleRegistry.register(module)
+      val alphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
+      fun ascii(length: Int) = alphabet.repeat(length / alphabet.length + 1).take(length)
+      fun digest(text: String) = "${text.length}:${text.fold(0) { hash, unit -> 31 * hash + unit.code }}"
+
+      // Lengths around the 1024-unit stack buffer, each also with one unit that does not narrow -
+      // Latin-1, wider, a pair, a lone surrogate - at the start, on either side of the 32 units a long
+      // string is judged by, in the middle, across unit 1023 and at the end. NUL narrows, but
+      // modified UTF-8 spells it in two bytes.
+      for (length in intArrayOf(0, 1, 1023, 1024, 1025, 5000)) {
+        val texts = mutableListOf(ascii(length))
+        for (odd in listOf("é", "ż", "\u0000", "\uD83D\uDE00", "\uD800")) {
+          for (at in sortedSetOf(0, 31, 32, length / 2, 1023, length).filter { it <= length }) {
+            texts += ascii(at) + odd + ascii(length - at)
+          }
+        }
+
+        for (text in texts) {
+          module.next = text
+          assertEquals(
+            digest(text),
+            runtime.evaluateAsString(
+              "(() => { const t = expo.modules.GenText.take(); let h = 0; " +
+                "for (let i = 0; i < t.length; i++) h = (31 * h + t.charCodeAt(i)) | 0; " +
+                "return t.length + ':' + h; })()",
+            ),
+          )
+        }
+      }
     }
   }
 

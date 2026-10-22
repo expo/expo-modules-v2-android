@@ -84,11 +84,11 @@ namespace expo::modules::v2 {
       }
     }
 
-    [[nodiscard]] CppType kind() const noexcept;
+    [[nodiscard]] CppType kind() const noexcept { return kind_; }
 
-    [[nodiscard]] bool nullable() const noexcept;
+    [[nodiscard]] bool nullable() const noexcept { return nullable_; }
 
-    [[nodiscard]] bool usesBuffer() const noexcept;
+    [[nodiscard]] bool usesBuffer() const noexcept { return usesBuffer_; }
 
     /**
      * Whether this is `Any`, or a List or Map of such: a type whose value in a JNI slot the tagged
@@ -115,9 +115,13 @@ namespace expo::modules::v2 {
 
     explicit ExpectedType(Shape shape, bool nullable, bool usesBuffer);
 
+    [[nodiscard]] static CppType kindOf(const Shape& shape) noexcept;
+
     [[nodiscard]] static bool isPlainDynamic(const Shape& shape) noexcept;
 
     Shape shape_;
+    // Derived from shape_
+    CppType kind_;
     bool nullable_ = false;
     bool usesBuffer_ = false;
     bool plainDynamic_ = false;
