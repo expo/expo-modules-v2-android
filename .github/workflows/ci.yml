@@ -75,8 +75,12 @@ jobs:
   # The JSI-level suites: they drive a real Hermes runtime through :test-support, which needs the
   # desktop Hermes host from expo/hermes-test-environment. It is published only to mavenLocal, so
   # this job builds it from a checkout next to this one and caches what it publishes.
+  #
+  # Pinned to ubuntu-24.04, not ubuntu-latest: the cached host links against the runner's system
+  # libraries (libicuuc.so.74 here), so it must be built and run on the same image. ubuntu-latest
+  # moved to 26.04, which has no ICU 74, and every suite failed with an UnsatisfiedLinkError.
   test-app:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out code
         uses: actions/checkout@v4
