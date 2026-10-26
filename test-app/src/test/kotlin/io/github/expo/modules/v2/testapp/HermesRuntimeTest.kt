@@ -2284,6 +2284,62 @@ class HermesRuntimeTest {
   }
 
   @Test
+  fun `property names keep every character and their meaning`() {
+    HermesRuntime().use { runtime ->
+      val labels = AnyType(
+        TypeDescriptor.Parametrized(
+          Map::class.java,
+          false,
+          arrayOf(
+            TypeDescriptor.Simple(String::class.java, false),
+            TypeDescriptor.Simple(String::class.java, true),
+          ),
+        ),
+      ).buffered()
+      runtime.moduleRegistry.register("Echo", sharedEcho) {
+        function("labels", labels, returns = labels, methodName = "labels__trampoline")
+      }
+      val target = runtime.evaluate("globalThis.target = {}").getObject()
+
+      // Non-ASCII and longer than the name cache takes: both cross as the same JS name.
+      val long = "k".repeat(100)
+      target.setProperty("zażółć", 1)
+      target.setProperty("名前", "value")
+      target.setProperty(long, true)
+      assertEquals(
+        "1,value,true",
+        runtime.evaluateAsString("[target['zażółć'], target['名前'], target['$long']].join()"),
+      )
+      assertTrue(target.hasProperty("名前"))
+      assertEquals(1, target.getProperty("zażółć").getInt())
+
+      // An index-like name on an array is still an index.
+      val array = runtime.evaluate("globalThis.array = [10, 20]").getObject()
+      array.setProperty("1", 21)
+      array.setProperty("2", 30)
+      assertEquals("10,21,30", runtime.evaluateAsString("array.join()"))
+      assertEquals(3, array.getProperty("length").getInt())
+
+      // A setter whose map result pushes every cached name out of the runtime's name cache while
+      // the access that looked one up is still running.
+      runtime.evaluate(
+        "Object.defineProperty(target, 'watched', {" +
+          "  set(v) {" +
+          "    const keys = {};" +
+          "    for (let i = 0; i < 600; i++) keys['key' + i] = 'v';" +
+          "    this.flooded = Object.keys(expo.modules.Echo.labels(keys)).length;" +
+          "    this.seen = v;" +
+          "  }," +
+          "});",
+      )
+      target.setProperty("watched", 6)
+      target.setProperty("watched", 7)
+      assertEquals(7, target.getProperty("seen").getInt())
+      assertEquals(600, target.getProperty("flooded").getInt())
+    }
+  }
+
+  @Test
   fun `unsetProperty writes undefined and keeps the key`() {
     HermesRuntime().use { runtime ->
       val target = runtime.evaluate("globalThis.target = {kept: 1, dropped: 2}").getObject()
