@@ -55,8 +55,9 @@ jobs:
       # -PskipDesktopNative: :compiler-plugin's tests compile against :api, whose classes would
       # otherwise pull in the desktop native build and the Hermes host it needs. The test-app job
       # is the one that builds and exercises that side.
+      # -PskipReact: nothing here builds :react, and configuring it downloads the NDK it pins.
       - name: Run checks against Kotlin ${{ matrix.kotlin-version }}
-        run: ./gradlew :compiler-plugin:test :gradle-plugin:build :api:test -PkotlinVersion=${{ matrix.kotlin-version }} --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
+        run: ./gradlew :compiler-plugin:test :gradle-plugin:build :api:test -PkotlinVersion=${{ matrix.kotlin-version }} --stacktrace -PskipHermesEnvBuild -PskipDesktopNative -PskipReact
 
       # always(), not failure(): the reports are the only record of how many tests actually ran.
       - name: Upload test reports
@@ -141,9 +142,11 @@ jobs:
 
       # -PskipHermesEnvBuild: the host is already in mavenLocal, built above or restored from the
       # cache, so settings.gradle.kts must not compare source timestamps and publish it again.
+      # -PskipReact: :test-app does not depend on :react, and configuring it downloads the NDK it
+      # pins.
       - name: Run tests
         working-directory: expo-modules-v2-android
-        run: ./gradlew :test-app:test --stacktrace -PskipHermesEnvBuild
+        run: ./gradlew :test-app:test --stacktrace -PskipHermesEnvBuild -PskipReact
 
       - name: Upload test reports
         if: failure()

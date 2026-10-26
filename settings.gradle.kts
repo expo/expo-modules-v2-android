@@ -87,7 +87,11 @@ run {
 
 
 include("api")
-include("react")
+// -PskipReact leaves :react out. Configuring it makes AGP install the NDK its `ndkVersion` pins,
+// which CI jobs that never build :react would otherwise download on every run.
+if (!providers.gradleProperty("skipReact").isPresent) {
+  include("react")
+}
 include("compiler-plugin")
 include("gradle-plugin")
 
