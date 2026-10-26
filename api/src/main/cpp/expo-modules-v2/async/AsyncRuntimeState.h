@@ -80,6 +80,10 @@ namespace expo::modules::v2::async {
 
     void settle(uint64_t id, facebook::jsi::Value&& value, bool rejected);
 
+    [[nodiscard]] Pending* findPending(uint64_t id) noexcept;
+
+    void erasePending(uint64_t id) noexcept;
+
     JSPromise createJSPromise(
       facebook::jsi::Runtime& rt
     );
@@ -107,6 +111,10 @@ namespace expo::modules::v2::async {
 
     void ensureSettledFactories(facebook::jsi::Runtime& rt);
 
+    // The newest call keeps its entry here rather than in [pending_]: most settle before they
+    // return, and then never touch the map. One that is still pending when it returns moves there.
+    std::optional<Pending> current_;
+    uint64_t currentId_ = 0;
     std::unordered_map<uint64_t, Pending> pending_;
     uint64_t nextId_ = 1;
   };
