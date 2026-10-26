@@ -89,7 +89,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Stage signed artifacts
-        run: ./gradlew :compiler-plugin:publishAllPublicationsToCentralBundleRepository -PkotlinVersion=${{ matrix.kotlin-version }} -PskipHermesEnvBuild -PskipDesktopNative
+        run: ./gradlew :compiler-plugin:publishAllPublicationsToCentralBundleRepository -PkotlinVersion=${{ matrix.kotlin-version }} -PskipHermesEnvBuild -PskipDesktopNative -PskipReact
         env:
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
