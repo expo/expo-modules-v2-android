@@ -85,6 +85,17 @@ namespace expo::modules::v2::objects {
       return ::expo::jsi::ChainedNativeState::findBorrowed<ObjectNativeState>(rt, object);
     }
 
+    /**
+     * [borrow] for an [object] known to carry a native state; see
+     * `ChainedNativeState::findBorrowedTrusted` for what that rules out.
+     */
+    static ObjectNativeState* borrowTrusted(
+      facebook::jsi::Runtime& rt,
+      const facebook::jsi::Object& object
+    ) {
+      return ::expo::jsi::ChainedNativeState::findBorrowedTrusted<ObjectNativeState>(rt, object);
+    }
+
     /** The borrowed instance state as `T`, or null if it is not of `T::kKind`. */
     template<typename T>
     [[nodiscard]] T* stateAs() const {

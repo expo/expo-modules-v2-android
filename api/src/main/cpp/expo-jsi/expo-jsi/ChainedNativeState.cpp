@@ -1,5 +1,6 @@
 #include <expo-jsi/ChainedNativeState.h>
 
+#include <cassert>
 #include <stdexcept>
 #include <utility>
 
@@ -51,6 +52,15 @@ namespace expo::jsi {
     if (!object.hasNativeState(rt)) {
       return nullptr;
     }
+    return findBorrowedTrusted(rt, object, tag);
+  }
+
+  ChainedNativeState* ChainedNativeState::findBorrowedTrusted(
+    facebook::jsi::Runtime& rt,
+    const facebook::jsi::Object& object,
+    StateTag tag
+  ) {
+    assert(object.hasNativeState(rt) && "the caller vouched for a native state");
     // The object keeps the chain alive for as long as the caller holds the object, so the walk can
     // borrow: one copy out of JSI, then plain pointers.
     const std::shared_ptr<facebook::jsi::NativeState> head = object.getNativeState(rt);

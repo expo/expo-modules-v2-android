@@ -69,4 +69,12 @@ namespace expo::modules::v2::sharedobjects {
     return node == nullptr ? nullptr : node->stateAs<SharedObjectState>();
   }
 
+  SharedObjectState* SharedObjects::receiverStateOf(
+    facebook::jsi::Runtime& rt,
+    const facebook::jsi::Object& object
+  ) {
+    const objects::ObjectNativeState* node = objects::ObjectNativeState::borrowTrusted(rt, object);
+    return node == nullptr ? nullptr : node->stateAs<SharedObjectState>();
+  }
+
 } // namespace expo::modules::v2::sharedobjects
