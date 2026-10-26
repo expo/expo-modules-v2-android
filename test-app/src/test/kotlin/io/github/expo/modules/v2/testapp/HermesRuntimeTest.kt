@@ -3249,6 +3249,31 @@ class HermesRuntimeTest {
   }
 
   @Test
+  fun `promises across many batches of handles settle their own values`() {
+    HermesRuntime().use { runtime ->
+      runtime.moduleRegistry.register(sharedAsync)
+
+      // Native code takes Kotlin promise handles in batches. A call that fails on its argument
+      // never takes the handle of its id, and the calls after it must still get their own.
+      runtime.evaluate(
+        "globalThis.out = null; globalThis.failed = 0;" +
+          "const A = expo.modules.Async;" +
+          "const calls = [];" +
+          "for (let i = 0; i < 100; i++) {" +
+          "  if (i % 7 === 3) { try { A.immediate('not a number'); } catch (e) { globalThis.failed++; } }" +
+          "  calls.push(i % 5 === 0 ? A.delayed(i) : A.immediate(i));" +
+          "}" +
+          "Promise.all(calls).then((values) => { globalThis.out = values.join(); });",
+      )
+      val expected = (0 until 100).joinToString(",") { i ->
+        if (i % 5 == 0) "delayed:$i" else "immediate:$i"
+      }
+      assertEquals(expected, runtime.awaitSettled("globalThis.out"))
+      assertEquals(14.0, runtime.evaluate("globalThis.failed").getDouble())
+    }
+  }
+
+  @Test
   fun `an exception from a suspend export rejects the promise`() {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register(sharedAsync)

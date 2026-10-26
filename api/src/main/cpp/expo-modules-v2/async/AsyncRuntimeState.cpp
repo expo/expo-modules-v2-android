@@ -75,6 +75,7 @@ namespace expo::modules::v2::async {
       jContext_->invalidate(env);
       jContext_.reset();
     }
+    handles_.reset();
 
     // Destroys every pending resolve/reject. Runs wherever the runtime is destroyed, which must be
     // the JS thread - the same requirement the rest of the runtime's teardown already has.
@@ -158,8 +159,19 @@ namespace expo::modules::v2::async {
     return std::move(promise);
   }
 
-  kolibri::Ref<JPromiseHandle> AsyncRuntimeState::newKotlinPromise(JNIEnv* env, const uint64_t id) const {
-    return jContext_->createPromise(env, id);
+  kolibri::Ref<JPromiseHandle> AsyncRuntimeState::newKotlinPromise(JNIEnv* env, const uint64_t id) {
+    // Ids only grow, so a call past the batch starts the next one at its own id. The handle of a
+    // call that failed before it started is never taken.
+    if (!handles_ || id - handlesFirstId_ >= kHandleBatch) [[unlikely]] {
+      const kolibri::Ref<kolibri::JArray<JPromiseHandle>> batch = jContext_->createPromises(
+        env,
+        static_cast<jlong>(id),
+        static_cast<jint>(kHandleBatch)
+      );
+      handles_ = kolibri::GlobalRef<kolibri::JArray<JPromiseHandle>>::make(env, batch.get());
+      handlesFirstId_ = id;
+    }
+    return handles_->getUnsafeElement(env, static_cast<jsize>(id - handlesFirstId_));
   }
 
   void AsyncRuntimeState::discard(const uint64_t id) noexcept {

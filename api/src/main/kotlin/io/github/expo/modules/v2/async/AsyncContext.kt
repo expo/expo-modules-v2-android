@@ -32,8 +32,15 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
     runtimePointer = pointer
   }
 
-  @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
   fun createPromise(id: Long): PromiseHandle = PromiseHandle(id, this)
+
+  /**
+   * The handles for the [count] promises from [firstId] on, in id order. Native code takes one per
+   * async call, so a call into Kotlin makes many handles instead of one.
+   */
+  @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
+  fun createPromises(firstId: Long, count: Int): Array<PromiseHandle> =
+    Array(count) { PromiseHandle(firstId + it, this) }
 
   @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
   fun invalidate() {
