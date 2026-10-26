@@ -2,6 +2,19 @@ name: Library size
 
 on:
   pull_request:
+    # Only what can change :react's .so or classes, or the report itself. :react compiles :api's
+    # sources and runs :compiler-plugin on its Kotlin.
+    paths:
+      - 'react/**'
+      - 'api/src/main/**'
+      - 'compiler-plugin/src/main/**'
+      - 'compiler-plugin/build.gradle.kts'
+      - 'gradle/**'
+      - '*.gradle.kts'
+      - 'gradle.properties'
+      - 'scripts/so-size-report.py'
+      - 'scripts/kotlin-size-report.py'
+      - '.github/workflows/so-size.yml'
 
 concurrency:
   group: so-size-${{ github.event.pull_request.number }}
