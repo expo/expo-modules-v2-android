@@ -1,5 +1,8 @@
 package io.github.expo.modules.v2.types
 
+import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.SharedRef
+import io.github.expo.modules.v2.TypedArray
 import io.github.expo.modules.v2.cache.classCacheOf
 import io.github.expo.modules.v2.converters.ArrayConverter
 import io.github.expo.modules.v2.converters.BoxedBooleanConverter
@@ -29,10 +32,7 @@ import io.github.expo.modules.v2.converters.selectJsHandleConverter
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.records.RecordRegistry
-import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
-import io.github.expo.modules.v2.SharedRef
-import io.github.expo.modules.v2.TypedArray
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -116,11 +116,14 @@ object TypeConverterRegistry {
       ::UriConverter
     )
 
-    // TODO(@lukmccall): Fix path for Android < 26
-    +entry(
-      Path::class.java,
-      ::PathConverter
-    )
+    // java.nio.file only exists on Android 8+ (API 26). Below that, resolving Path::class throws
+    // NoClassDefFoundError inside this initializer
+    runCatching {
+      +entry(
+        Path::class.java,
+        ::PathConverter
+      )
+    }
   }
 
   fun converter(typeDescriptor: TypeDescriptor.Simple): TypeConverter<*> {
