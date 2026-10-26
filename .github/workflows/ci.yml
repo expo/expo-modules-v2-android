@@ -1,9 +1,12 @@
 name: CI
 
+# Documentation alone builds nothing.
 on:
   push:
     branches: [ main ]
+    paths-ignore: [ '**.md', 'LICENSE.txt' ]
   pull_request:
+    paths-ignore: [ '**.md', 'LICENSE.txt' ]
 
 concurrency:
   group: ci-${{ github.ref }}
