@@ -10,9 +10,11 @@ namespace expo::modules::v2::sharedobjects {
   SharedObjectState::SharedObjectState(
     kolibri::GlobalRef<> instance,
     const objects::ObjectId::Value objectId,
-    const SharedObjectClassSpec& spec
+    const SharedObjectClassSpec& spec,
+    const size_t additionalMemoryPressure
   ) : ObjectState(kKind, objectId, std::move(instance)),
-      spec_(&spec) {
+      spec_(&spec),
+      additionalMemoryPressure_(additionalMemoryPressure) {
   }
 
   SharedObjectState::~SharedObjectState() {

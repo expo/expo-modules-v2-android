@@ -3,6 +3,7 @@
 #include <jni.h>
 
 #include <atomic>
+#include <cstddef>
 
 #include <kolibri/Ref.h>
 
@@ -11,9 +12,9 @@
 
 namespace expo::modules::v2::sharedobjects {
   /**
-   * The runtime-agnostic state of one shared object: its instance and its released flag. The
-   * export table belongs to the class spec, one for every instance. Every runtime's facade of the
-   * instance shares this state, so release is global.
+   * The runtime-agnostic state of one shared object: its instance, its released flag and the
+   * memory it reported holding. The export table belongs to the class spec, one for every instance.
+   * Every runtime's facade of the instance shares this state, so release is global.
    */
   class SharedObjectState final : public objects::ObjectState {
   public:
@@ -22,12 +23,19 @@ namespace expo::modules::v2::sharedobjects {
     SharedObjectState(
       kolibri::GlobalRef<> instance,
       objects::ObjectId::Value objectId,
-      const SharedObjectClassSpec& spec
+      const SharedObjectClassSpec& spec,
+      size_t additionalMemoryPressure
     );
 
     ~SharedObjectState() override;
 
     [[nodiscard]] const SharedObjectClassSpec& spec() const { return *spec_; }
+
+    /**
+     * The native memory, in bytes, the instance said it holds beyond its JavaScript facade. Asked
+     * once, when the state is made, and charged to every facade so the collector weighs it.
+     */
+    [[nodiscard]] size_t additionalMemoryPressure() const { return additionalMemoryPressure_; }
 
     [[nodiscard]] bool released() const { return released_.load(std::memory_order_acquire); }
 
@@ -54,6 +62,8 @@ namespace expo::modules::v2::sharedobjects {
   private:
     /** Owned by `SharedObjectClassRegistry` for the life of the process. */
     const SharedObjectClassSpec* spec_;
+
+    size_t additionalMemoryPressure_;
 
     std::atomic<bool> released_{false};
   };
