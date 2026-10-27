@@ -1,5 +1,6 @@
 #include <expo-modules-v2/JniMethodInvoker.h>
 
+#include <expo-modules-v2/Config.h>
 #include <expo-modules-v2/async/AsyncRuntimeState.h>
 #include <expo-modules-v2/jni/JThrowableHelper.h>
 #include <expo-modules-v2/jni/JTrampoline.h>
@@ -57,15 +58,15 @@ namespace expo::modules::v2 {
 
     /**
      * [args], with `undefined` for each argument JavaScript left out. A spec takes at most
-     * [FunctionSpec::kMaxArgs] arguments, so they fit on the stack.
+     * [config::kMaxFunctionArgs] arguments, so they fit on the stack.
      */
-    std::array<facebook::jsi::Value, FunctionSpec::kMaxArgs> padOmittedArgs(
+    std::array<facebook::jsi::Value, config::kMaxFunctionArgs> padOmittedArgs(
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Value* args,
       const size_t count
     ) {
       // A default `jsi::Value` is `undefined`, so only the passed arguments need copying in.
-      std::array<facebook::jsi::Value, FunctionSpec::kMaxArgs> padded;
+      std::array<facebook::jsi::Value, config::kMaxFunctionArgs> padded;
       for (size_t i = 0; i < count; i++) {
         padded[i] = facebook::jsi::Value(rt, args[i]);
       }
@@ -252,8 +253,8 @@ namespace expo::modules::v2 {
       jobject receiver,
       const facebook::jsi::Value* args
     ) {
-      std::array<jvalue, FunctionSpec::kMaxArgs> values{};
-      const kolibri::LocalFrame frame{env, FunctionSpec::kMaxArgs};
+      std::array<jvalue, config::kMaxFunctionArgs> values{};
+      const kolibri::LocalFrame frame{env, config::kMaxFunctionArgs};
 
       encodeOverflowArgs(rt, env, spec, args, values.data());
 
@@ -328,7 +329,7 @@ namespace expo::modules::v2 {
       jobject receiver,
       const facebook::jsi::Value* args
     ) {
-      std::array<jvalue, FunctionSpec::kMaxArgs> values{};
+      std::array<jvalue, config::kMaxFunctionArgs> values{};
 
       encodeDirectArgs(rt, env, spec, args, values.data());
 
@@ -352,7 +353,7 @@ namespace expo::modules::v2 {
       const facebook::jsi::Value* args
     ) {
       // We need to encode size, so +1
-      std::array<jvalue, FunctionSpec::kMaxArgs + 1> values{};
+      std::array<jvalue, config::kMaxFunctionArgs + 1> values{};
 
       try {
         encodeBufferedArgs(rt, env, spec, args, values.data());
@@ -389,7 +390,7 @@ namespace expo::modules::v2 {
         // The frame owns every local created by direct object conversions until the Java call
         // completes. Primitive-only signatures instantiate the other branch and pay no JNI frame
         // cost or runtime condition.
-        const kolibri::LocalFrame frame{env, FunctionSpec::kMaxArgs};
+        const kolibri::LocalFrame frame{env, config::kMaxFunctionArgs};
         return invokeWithDirectArgsBody<Method>(
           rt,
           env,
@@ -417,7 +418,7 @@ namespace expo::modules::v2 {
       const facebook::jsi::Value* args
     ) {
       if constexpr (NeedsLocalFrame) {
-        const kolibri::LocalFrame frame{env, FunctionSpec::kMaxArgs};
+        const kolibri::LocalFrame frame{env, config::kMaxFunctionArgs};
         return invokeWithBufferedArgsBody<Method>(
           rt,
           env,
@@ -519,14 +520,14 @@ namespace expo::modules::v2 {
       const uint64_t id = state->beginCall(spec.returnType.clone());
 
       // +1 over the argument slots for the trailing PromiseHandle.
-      std::array<jvalue, FunctionSpec::kMaxArgs + 1> values{};
+      std::array<jvalue, config::kMaxFunctionArgs + 1> values{};
 
       // The frame owns the locals that object arguments create until the call returns. Arguments
       // that are primitives or ride the buffer create none - the handle below deletes its own - so
       // they skip the push and pop, unless a payload overflows into JNI objects after all.
       std::optional<kolibri::LocalFrame> frame;
       if constexpr (NeedsLocalFrame) {
-        frame.emplace(env, FunctionSpec::kMaxArgs + 1);
+        frame.emplace(env, config::kMaxFunctionArgs + 1);
       }
 
       size_t slot;
@@ -536,7 +537,7 @@ namespace expo::modules::v2 {
             slot = encodeBufferedArgs(rt, env, spec, args, values.data());
           } catch (const kolibri::binary::BufferOverflow&) {
             if (!frame.has_value()) {
-              frame.emplace(env, FunctionSpec::kMaxArgs + 1);
+              frame.emplace(env, config::kMaxFunctionArgs + 1);
             }
             slot = encodeOverflowArgs(rt, env, spec, args, values.data());
           }

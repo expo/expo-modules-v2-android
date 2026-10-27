@@ -10,6 +10,8 @@
 
 #include <kolibri/binary/BinaryBuffer.h>
 
+#include <expo-modules-v2/Config.h>
+
 namespace expo::modules::v2 {
   namespace detail {
     inline void widenAscii(
@@ -91,9 +93,13 @@ namespace expo::modules::v2 {
       jstring value,
       const jsize length
     ) {
-      constexpr jsize kHeadUnits = 32;
-      char16_t head[kHeadUnits];
-      env->GetStringRegion(value, 0, kHeadUnits, reinterpret_cast<jchar*>(head));
+      char16_t head[config::kJavaStringAsciiProbeUnits];
+      env->GetStringRegion(
+        value,
+        0,
+        config::kJavaStringAsciiProbeUnits,
+        reinterpret_cast<jchar*>(head)
+      );
       const bool headIsAscii = std::ranges::all_of(head, [](const char16_t unit) {
         return unit < 0x80;
       });
@@ -120,15 +126,14 @@ namespace expo::modules::v2 {
   ) {
     const jsize length = env->GetStringLength(value);
 
-    constexpr jsize kStackUnits = 1024;
-    if (length > kStackUnits) [[unlikely]] {
+    if (length > config::kJavaStringStackUnits) [[unlikely]] {
       return detail::longJsiStringFromJString(rt, env, value, length);
     }
 
-    char16_t units[kStackUnits];
+    char16_t units[config::kJavaStringStackUnits];
     env->GetStringRegion(value, 0, length, reinterpret_cast<jchar*>(units));
 
-    uint8_t ascii[kStackUnits];
+    uint8_t ascii[config::kJavaStringStackUnits];
     if (detail::narrowIfAscii(units, static_cast<size_t>(length), ascii)) [[likely]] {
       return facebook::jsi::String::createFromAscii(
         rt,
@@ -144,13 +149,12 @@ namespace expo::modules::v2 {
     facebook::jsi::Runtime& rt,
     const facebook::jsi::String& str
   ) {
-    constexpr size_t kStackUnits = 256;
     const size_t length = str.length(rt);
 
-    jchar stackUnits[kStackUnits];
+    jchar stackUnits[config::kJsStringStackUnits];
     std::unique_ptr<jchar[]> heapUnits;
     jchar* units = stackUnits;
-    if (length > kStackUnits) {
+    if (length > config::kJsStringStackUnits) {
       heapUnits = std::make_unique_for_overwrite<jchar[]>(length);
       units = heapUnits.get();
     }

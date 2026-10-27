@@ -9,6 +9,7 @@
 
 #include <kolibri/Ref.h>
 
+#include <expo-modules-v2/Config.h>
 #include <expo-modules-v2/jni/JAsyncContext.h>
 #include <expo-modules-v2/descriptor/HostFunctionSpec.h>
 
@@ -94,13 +95,10 @@ namespace expo::modules::v2::async {
       facebook::jsi::Value result
     );
 
-    // How many Kotlin promise handles one call into Kotlin makes.
-    static constexpr uint64_t kHandleBatch = 32;
-
     facebook::jsi::Runtime* runtime_;
     kolibri::GlobalRef<JAsyncContext> jContext_;
 
-    // The handles for the ids from [handlesFirstId_] on, [kHandleBatch] of them.
+    // The handles for the ids from [handlesFirstId_] on, [config::kPromiseHandleBatch] of them.
     kolibri::GlobalRef<kolibri::JArray<JPromiseHandle>> handles_;
     uint64_t handlesFirstId_ = 0;
 

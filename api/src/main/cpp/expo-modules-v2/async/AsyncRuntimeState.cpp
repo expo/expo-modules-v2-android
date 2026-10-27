@@ -162,11 +162,11 @@ namespace expo::modules::v2::async {
   kolibri::Ref<JPromiseHandle> AsyncRuntimeState::newKotlinPromise(JNIEnv* env, const uint64_t id) {
     // Ids only grow, so a call past the batch starts the next one at its own id. The handle of a
     // call that failed before it started is never taken.
-    if (!handles_ || id - handlesFirstId_ >= kHandleBatch) [[unlikely]] {
+    if (!handles_ || id - handlesFirstId_ >= config::kPromiseHandleBatch) [[unlikely]] {
       const kolibri::Ref<kolibri::JArray<JPromiseHandle>> batch = jContext_->createPromises(
         env,
         static_cast<jlong>(id),
-        static_cast<jint>(kHandleBatch)
+        static_cast<jint>(config::kPromiseHandleBatch)
       );
       handles_ = kolibri::GlobalRef<kolibri::JArray<JPromiseHandle>>::make(env, batch.get());
       handlesFirstId_ = id;

@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 
+#include <expo-modules-v2/Config.h>
 #include <expo-modules-v2/decoders/ExpectedTypeDecoder.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 #include <expo-modules-v2/utils/Throw.h>
@@ -23,14 +24,14 @@ namespace expo::modules::v2::decoders {
     }
 
     const size_t argsCount = reader.readCount();
-    if (argsCount > descriptor::FunctionSpec::kMaxArgs) {
+    if (argsCount > config::kMaxFunctionArgs) {
       throwInvalidArgument({
         "Constructor of ",
         jsName,
         " declares ",
         std::to_string(argsCount),
         " arguments; at most ",
-        std::to_string(descriptor::FunctionSpec::kMaxArgs),
+        std::to_string(config::kMaxFunctionArgs),
         " are supported",
       });
     }

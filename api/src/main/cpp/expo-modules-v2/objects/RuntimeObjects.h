@@ -5,6 +5,7 @@
 #include <optional>
 #include <unordered_map>
 
+#include <expo-modules-v2/Config.h>
 #include <expo-modules-v2/events/ListenerTable.h>
 #include <expo-modules-v2/objects/ObjectId.h>
 
@@ -87,8 +88,6 @@ namespace expo::modules::v2::objects {
     std::unordered_map<int, Prototype> prototypes_;
     std::optional<facebook::jsi::Object> eventEmitterPrototype_;
     events::ListenerTable listeners_;
-    size_t sweepThreshold_ = kMinSweepThreshold;
-
-    static constexpr size_t kMinSweepThreshold = 32;
+    size_t sweepThreshold_ = config::kObjectSweepMinThreshold;
   };
 } // namespace expo::modules::v2::objects
