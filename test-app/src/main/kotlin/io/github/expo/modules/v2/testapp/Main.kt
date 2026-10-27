@@ -530,11 +530,12 @@ private fun run() {
     // Promise back straight away.
     runtime.moduleRegistry.register(AsyncModule())
 
-    // A Promise arrives immediately, before any Kotlin result exists.
-    val promiseType = runtime.evaluate(
-      "globalThis.p = expo.modules.Async.immediate(1); Object.prototype.toString.call(globalThis.p)",
-    ).getString()
-    check(promiseType == "[object Promise]") { "expected a Promise, got $promiseType" }
+    // A Promise arrives immediately, before any Kotlin result exists. `instanceof`, not
+    // `Object.prototype.toString`: the Hermes React Native ships has no Promise @@toStringTag.
+    val isPromise = runtime.evaluate(
+      "globalThis.p = expo.modules.Async.immediate(1); globalThis.p instanceof Promise",
+    ).getBool()
+    check(isPromise) { "expected a Promise" }
 
     // Nothing settles until the JS thread runs its jobs, so `.then` has not fired yet.
     runtime.evaluate("globalThis.out = null; globalThis.p.then((v) => { globalThis.out = v; });")
@@ -545,7 +546,7 @@ private fun run() {
     runtime.runEventLoop { !runtime.evaluate("globalThis.out === null").getBool() }
     val immediate = runtime.evaluate("globalThis.out").getString()
     check(immediate == "immediate:1") { "immediate: got $immediate" }
-    println("expo.modules.Async.immediate(1) -> $promiseType -> $immediate")
+    println("expo.modules.Async.immediate(1) -> Promise -> $immediate")
 
     // A real suspension resumes off the JS thread; the settle still lands on it.
     runtime.evaluate(
