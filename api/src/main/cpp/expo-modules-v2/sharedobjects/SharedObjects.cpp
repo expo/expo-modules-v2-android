@@ -5,6 +5,7 @@
 #include <expo-jsi/ChainedNativeState.h>
 #include <kolibri/Ref.h>
 
+#include <expo-modules-v2/jni/JSharedObject.h>
 #include <expo-modules-v2/jni/JSharedObjectRegistry.h>
 #include <expo-modules-v2/objects/ObjectId.h>
 #include <expo-modules-v2/objects/ObjectRegistry.h>
@@ -32,11 +33,18 @@ namespace expo::modules::v2::sharedobjects {
     std::shared_ptr<SharedObjectState> state =
       objects::ObjectRegistry::find<SharedObjectState>(objectId);
     if (state == nullptr) {
-      // Slow path, once per instance lifetime: the class id is the only thing Kotlin still answers.
+      // Slow path, once per instance lifetime: the class id and the memory pressure are the only
+      // things Kotlin still answers.
       const int classId = JSharedObjectRegistry::classIdOf(env, instance);
       const SharedObjectClassSpec& spec = SharedObjectClassRegistry::get(classId);
+      const int pressure = JSharedObject::additionalMemoryPressureOf(env, instance);
       state = objects::ObjectRegistry::adopt(
-        std::make_shared<SharedObjectState>(kolibri::GlobalRef<>::make(env, instance), objectId, spec)
+        std::make_shared<SharedObjectState>(
+          kolibri::GlobalRef<>::make(env, instance),
+          objectId,
+          spec,
+          pressure > 0 ? static_cast<size_t>(pressure) : 0
+        )
       );
     }
 
@@ -46,6 +54,10 @@ namespace expo::modules::v2::sharedobjects {
       facade,
       std::make_shared<SharedObjectNativeState>(state)
     );
+    const size_t pressure = state->additionalMemoryPressure();
+    if (pressure > 0) {
+      facade.setExternalMemoryPressure(rt, pressure);
+    }
 
     if (table != nullptr) {
       facade.setPrototype(

@@ -18,6 +18,9 @@ abstract class SharedObject : ExpoObject {
 
   open fun sharedObjectDidRelease() = Unit
 
-  // TODO(@lukmccall): use it in cpp
+  /**
+   * The native memory, in bytes, this object holds beyond what the JavaScript heap sees.
+   */
+  @CalledFromNative(by = "expo-modules-v2/jni/JSharedObject.h")
   open fun getAdditionalMemoryPressure(): Int = 0
 }

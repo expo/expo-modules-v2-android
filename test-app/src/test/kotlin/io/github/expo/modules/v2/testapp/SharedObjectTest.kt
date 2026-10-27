@@ -218,6 +218,30 @@ private class Refs : Module() {
   @JS fun readAny(ref: SharedRef<StringBuilder>): String = ref.ref.toString()
 }
 
+/** Holds memory the JavaScript heap cannot see, and counts how often it was asked how much. */
+@ExpoSharedObject
+private class Bitmap(private val bytes: Int) : SharedObject() {
+  var pressureReads: Int = 0
+    private set
+
+  override fun getAdditionalMemoryPressure(): Int {
+    pressureReads++
+    return bytes
+  }
+
+  @JS fun size(): Int = bytes
+}
+
+@ExpoModule(classes = [Bitmap::class])
+private class Bitmaps : Module() {
+  var last: Bitmap? = null
+    private set
+
+  @JS fun create(bytes: Int): Bitmap = Bitmap(bytes).also { last = it }
+
+  @JS fun current(): Bitmap = requireNotNull(last)
+}
+
 @ExpoModule
 private class Timers : Module() {
   private var last: Timer? = null
@@ -931,6 +955,28 @@ class SharedObjectTest {
       assertEquals("undefined", runtime.evaluateAsString("typeof expo.modules.Widgets.Hidden"))
       // It still works as a shared object when Kotlin hands one over.
       assertEquals("hidden", runtime.evaluateAsString("expo.modules.Widgets.hidden().name()"))
+    }
+  }
+
+  @Test
+  fun `a shared object's memory pressure is charged to its facade`() {
+    HermesRuntime().use { runtime ->
+      val module = Bitmaps()
+      runtime.moduleRegistry.register(module)
+      fun externalBytes() =
+        runtime.evaluateAsString("HermesInternal.getInstrumentedStats().js_externalBytes").toLong()
+
+      // Other external allocations come and go too, so the totals are compared, not their exact difference.
+      val bytes = 8 * 1024 * 1024
+      val before = externalBytes()
+      assertTrue(before < bytes, "external bytes were already $before")
+      runtime.evaluate("globalThis.b = expo.modules.Bitmaps.create($bytes); 0")
+      val after = externalBytes()
+      assertTrue(after >= bytes, "external bytes went from $before to $after")
+
+      // Handed over again, the instance keeps its facade and is not asked a second time.
+      assertEquals("true", runtime.evaluateAsString("b === expo.modules.Bitmaps.current()"))
+      assertEquals(1, requireNotNull(module.last).pressureReads)
     }
   }
 }
