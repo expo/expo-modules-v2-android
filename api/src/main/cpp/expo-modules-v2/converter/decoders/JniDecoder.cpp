@@ -10,8 +10,11 @@
 #include <expo-modules-v2/converter/decoders/JniDecode.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/converter/JsiBuilders.h>
+#include <expo-modules-v2/jni/JUnionValue.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
+#include <expo-modules-v2/unions/UnionDispatch.h>
+#include <expo-modules-v2/unions/UnionRegistry.h>
 #include <kolibri/Ref.h>
 #include <kolibri/array.h>
 #include <kolibri/box.h>
@@ -74,6 +77,17 @@ namespace expo::modules::v2 {
       );
     }
     return result;
+  }
+
+  facebook::jsi::Value JniDecoder::operator()(const ExpectedType::Union& unionType) const {
+    const UnionSchema& schema = UnionRegistry::get(unionType.unionId);
+    const UnionVariantSpec& variant = unionVariantAt(rt, schema, JUnionValue::indexOf(env, object));
+    if (variant.kind == UnionVariantKind::LITERAL) {
+      return finishUnionValue(rt, schema, variant, facebook::jsi::Value::undefined());
+    }
+
+    const kolibri::Ref<> payload = JUnionValue::payloadOf(env, object);
+    return finishUnionValue(rt, schema, variant, decodeFromJni(env, rt, payload.get(), variant.type));
   }
 
   facebook::jsi::Value JniDecoder::operator()(const ExpectedType::SharedObject&) const {

@@ -5,6 +5,8 @@ import org.jetbrains.kotlin.ir.expressions.IrStatementOrigin
 
 object RecordKey : GeneratedDeclarationKey()
 
+object UnionKey : GeneratedDeclarationKey()
+
 /** Marks everything this transformer adds, so a box-test dump can single it out. */
 object JSModuleKey : GeneratedDeclarationKey()
 

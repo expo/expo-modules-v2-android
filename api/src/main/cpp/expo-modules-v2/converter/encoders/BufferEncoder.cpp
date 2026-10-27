@@ -5,6 +5,8 @@
 #include <expo-modules-v2/converter/encoders/EncodeCommon.h>
 #include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
+#include <expo-modules-v2/unions/UnionDispatch.h>
+#include <expo-modules-v2/unions/UnionRegistry.h>
 
 namespace expo::modules::v2 {
   template<>
@@ -163,6 +165,17 @@ namespace expo::modules::v2 {
       facebook::jsi::String key = names.getValueAtIndex(rt, i).getString(rt);
       writeJsiString(rt, key, out);
       encodeToBuffer(rt, object.getProperty(rt, key), valueType, out);
+    }
+  }
+
+  void BufferEncoder::operator()(const ExpectedType::Union& unionType) const {
+    const UnionSchema& schema = UnionRegistry::get(unionType.unionId);
+    const size_t index = selectUnionVariant(rt, schema, value);
+    const UnionVariantSpec& variant = schema.variants[index];
+
+    out.write<int32_t>(static_cast<int32_t>(index));
+    if (variant.kind != UnionVariantKind::LITERAL) {
+      encodeToBuffer(rt, value, variant.type, out);
     }
   }
 

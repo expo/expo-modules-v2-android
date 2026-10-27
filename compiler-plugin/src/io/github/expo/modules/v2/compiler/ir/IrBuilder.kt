@@ -269,6 +269,12 @@ object IrSyntheticConstImpl {
 
   fun boolean(type: IrType, value: Boolean): IrConst =
     IrConstImpl.boolean(SYNTHETIC_OFFSET, SYNTHETIC_OFFSET, type, value)
+
+  fun int(type: IrType, value: Int): IrConst =
+    IrConstImpl.int(SYNTHETIC_OFFSET, SYNTHETIC_OFFSET, type, value)
+
+  fun constNull(type: IrType): IrConst =
+    IrConstImpl.constNull(SYNTHETIC_OFFSET, SYNTHETIC_OFFSET, type)
 }
 
 /** Reads a value - a parameter or a local - as an expression. */

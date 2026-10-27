@@ -68,6 +68,9 @@ internal enum class ValueKind {
   RECORD,
 
   SHARED_OBJECT,
+
+  /** An `@Union` type, whose bridge is a `UnionValue`: its variant's index and that variant's value. */
+  UNION,
 }
 
 internal enum class Crossing {
@@ -153,6 +156,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       else -> {
         val owner = type.classOrNull?.owner
         when {
+          owner?.hasAnnotation(Identifiers.Classes.UnionAnnotation) == true -> ValueKind.UNION
           owner?.hasAnnotation(Identifiers.Classes.RecordAnnotation) == true -> ValueKind.RECORD
           owner?.isSubclassOf(symbols.classes.sharedObject.owner) == true -> ValueKind.SHARED_OBJECT
           owner?.kind == ClassKind.ENUM_CLASS ->
@@ -180,7 +184,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.LIST -> elementTypes(type).all { isPassthrough(kindOf(it), it) }
       ValueKind.MAP -> elementTypes(type).drop(1).all { isPassthrough(kindOf(it), it) }
       // A Set or an Array always rebuilds its container, and a record always rebuilds itself.
-      ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD,
+      ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD, ValueKind.UNION,
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
       ValueKind.TYPED_ARRAY,
         -> false
@@ -201,7 +205,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.CONVERTED_TO_STRING,
       ValueKind.ENUM,
         -> true
-      ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD ->
+      ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD, ValueKind.UNION ->
         isBufferSafe(
           type,
           mutableSetOf(),
@@ -219,6 +223,12 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       else -> true
     }
 
+  /**
+   * Whether every value of [type] can ride the buffer - what a union's schema records for its
+   * variants, so the runtime agrees with the transport chosen here.
+   */
+  fun isBufferSafe(type: IrType): Boolean = isBufferSafe(type, mutableSetOf())
+
   private fun isBufferSafe(
     type: IrType,
     visited: MutableSet<String>,
@@ -235,6 +245,15 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
     }
     if (!elementTypes(type).all { isBufferSafe(it, visited, allowDynamic) }) {
       return false
+    }
+    if (kind == ValueKind.UNION) {
+      val unionClass = type.classOrNull?.owner ?: return true
+      if (!visited.add(unionClass.kotlinFqName.asString())) {
+        return true
+      }
+      return unionVariants(unionClass).all { variant ->
+        variant.valueType?.let { isBufferSafe(it, visited) } ?: true
+      }
     }
     if (kind != ValueKind.RECORD) {
       return true
@@ -306,6 +325,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.TYPED_ARRAY -> symbols.classes.javaScriptObject.owner.defaultType.makeNullable()
       ValueKind.LIST, ValueKind.SET, ValueKind.ARRAY ->
         irBuiltIns.listClass.typeWith(irBuiltIns.anyType.makeNullable()).makeNullable()
+
+      ValueKind.UNION -> symbols.classes.unionValue.owner.defaultType.makeNullable()
 
       ValueKind.MAP, ValueKind.RECORD ->
         irBuiltIns.mapClass

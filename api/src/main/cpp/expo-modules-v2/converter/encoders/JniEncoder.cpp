@@ -8,10 +8,13 @@
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
 #include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
+#include <expo-modules-v2/jni/JUnionValue.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectState.h>
 #include <expo-modules-v2/sharedobjects/SharedObjects.h>
+#include <expo-modules-v2/unions/UnionDispatch.h>
+#include <expo-modules-v2/unions/UnionRegistry.h>
 #include <expo-modules-v2/utils/Throw.h>
 #include <kolibri/Ref.h>
 #include <kolibri/array.h>
@@ -100,6 +103,21 @@ namespace expo::modules::v2 {
     }
 
     return env->NewLocalRef(state->instance());
+  }
+
+  jobject JniEncoder::operator()(const ExpectedType::Union& unionType) const {
+    const UnionSchema& schema = UnionRegistry::get(unionType.unionId);
+    const size_t index = selectUnionVariant(rt, schema, value);
+    const UnionVariantSpec& variant = schema.variants[index];
+
+    const jobject payload = variant.kind == UnionVariantKind::LITERAL
+      ? nullptr
+      : encodeToJni(env, rt, value, variant.type);
+    const jobject result = JUnionValue::create(env, static_cast<jint>(index), payload);
+    if (payload != nullptr) {
+      env->DeleteLocalRef(payload);
+    }
+    return result;
   }
 
   jobject JniEncoder::operator()(const ExpectedType::Record& recordType) const {
