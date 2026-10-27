@@ -4,8 +4,6 @@
 #include <memory>
 #include <new>
 #include <span>
-#include <stdexcept>
-#include <string>
 #include <utility>
 
 #include <jni.h>
@@ -24,9 +22,16 @@ namespace expo::modules::v2 {
     // ReSharper disable CppPossiblyUninitializedMember
     JsArrayAppender(
       facebook::jsi::Runtime& rt,
-      facebook::jsi::Array& array
+      facebook::jsi::Array& array,
+      const size_t expectedCount = 0
     ) : rt_(rt),
-        jsArray_(array) {
+        jsArray_(array),
+        storage_(inlineStorage_),
+        capacity_(kChunkSize) {
+      if (expectedCount > kChunkSize) {
+        capacity_ = expectedCount < kMaxBufferedValues ? expectedCount : kMaxBufferedValues;
+        storage_ = static_cast<std::byte*>(::operator new(capacity_ * sizeof(facebook::jsi::Value)));
+      }
     }
 
     // ReSharper restore CppPossiblyUninitializedMember
@@ -35,12 +40,17 @@ namespace expo::modules::v2 {
 
     JsArrayAppender& operator=(const JsArrayAppender&) = delete;
 
-    ~JsArrayAppender() { release(); }
+    ~JsArrayAppender() {
+      release();
+      if (storage_ != inlineStorage_) {
+        delete(storage_);
+      }
+    }
 
     ALWAYS_INLINE void append(facebook::jsi::Value value) {
       std::byte* index = storage_ + pending_ * sizeof(facebook::jsi::Value);
       new(index) facebook::jsi::Value(std::move(value));
-      if (++pending_ == kChunkSize) [[unlikely]] {
+      if (++pending_ == capacity_) [[unlikely]] {
         flush();
       }
     }
@@ -54,6 +64,8 @@ namespace expo::modules::v2 {
 
   private:
     static constexpr size_t kChunkSize = 64;
+    // 16K values, 256 KiB: the most a single call stages on the heap.
+    static constexpr size_t kMaxBufferedValues = 16 * 1024;
 
     ALWAYS_INLINE const facebook::jsi::Value* slot(const size_t index) const {
       const std::byte* slotPtr = storage_ + index * sizeof(facebook::jsi::Value);
@@ -71,7 +83,9 @@ namespace expo::modules::v2 {
 
     facebook::jsi::Runtime& rt_;
     facebook::jsi::Array& jsArray_;
-    alignas(facebook::jsi::Value) std::byte storage_[kChunkSize * sizeof(facebook::jsi::Value)];
+    alignas(facebook::jsi::Value) std::byte inlineStorage_[kChunkSize * sizeof(facebook::jsi::Value)];
+    std::byte* storage_;
+    size_t capacity_;
     size_t pending_ = 0;
   };
 
@@ -88,7 +102,8 @@ namespace expo::modules::v2 {
 
   /**
    * Decodes a primitive Java array into a JS array. The elements stream through kolibri's stack
-   * chunk (`forEach`), so no native buffer the size of the array is allocated per call.
+   * chunk (`forEach`) into the appender, which, knowing the length up front, pushes them in one go
+   * (up to `JsArrayAppender::kMaxBufferedValues` at a time).
    * `makeOne(element)` converts one element into a `jsi::Value`.
    */
   template<typename Element, typename MakeOne>
@@ -100,7 +115,7 @@ namespace expo::modules::v2 {
   ) {
     const kolibri::UnownedRef<kolibri::JArray<Element>> array(object);
     facebook::jsi::Array result(rt, 0);
-    JsArrayAppender appender(rt, result);
+    JsArrayAppender appender(rt, result, static_cast<size_t>(array->size(env)));
     array->forEach(env, [&](const jsize, const Element element) {
       appender.append(makeOne(element));
     });
