@@ -1,5 +1,6 @@
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 
+#include <expo-modules-v2/Config.h>
 #include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
@@ -19,12 +20,11 @@ namespace expo::modules::v2::jsi {
      * it. Any other name crosses as UTF-16, so it keeps every character.
      */
     facebook::jsi::PropNameID propertyName(JNIEnv* env, facebook::jsi::Runtime& rt, jstring name) {
-      constexpr jsize kCachedLengthMax = 64;
       const jsize length = env->GetStringLength(name);
-      if (length <= kCachedLengthMax) [[likely]] {
-        jchar units[kCachedLengthMax];
+      if (static_cast<size_t>(length) <= config::kMaxCachedPropertyNameLength) [[likely]] {
+        jchar units[config::kMaxCachedPropertyNameLength];
         env->GetStringRegion(name, 0, length, units);
-        char ascii[kCachedLengthMax];
+        char ascii[config::kMaxCachedPropertyNameLength];
         jchar accumulator = 0;
         for (jsize i = 0; i < length; ++i) {
           accumulator |= units[i];

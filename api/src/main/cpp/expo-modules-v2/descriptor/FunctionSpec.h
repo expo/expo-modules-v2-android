@@ -13,9 +13,6 @@ namespace expo::modules::v2::descriptor {
   inline constexpr int kFunctionFlagAsync = 1;
 
   struct FunctionSpec {
-    // MUST stay in sync with Kotlin `Trampoline.MAX_ARGUMENTS`.
-    static constexpr size_t kMaxArgs = 8;
-
     /** The trailing parameter of an async trampoline. */
     static constexpr std::string_view kPromiseHandleDescriptor =
       "Lio/github/expo/modules/v2/async/PromiseHandle;";

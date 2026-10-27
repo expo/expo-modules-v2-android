@@ -12,6 +12,8 @@ import java.nio.BufferOverflowException
 
 @CalledFromNative(by = "expo-modules-v2/jni/JTrampoline.h")
 object Trampoline {
+  // MUST stay in sync with `config::kMaxFunctionArgs` in `expo-modules-v2/Config.h` and the
+  // compiler plugin's `Identifiers.MAX_ARGUMENTS`.
   const val MAX_ARGUMENTS: Int = 8
   const val OVERFLOW_ARGUMENTS: Int = -1
   const val OVERFLOW_RESULT: Int = -1

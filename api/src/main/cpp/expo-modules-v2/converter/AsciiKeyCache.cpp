@@ -2,7 +2,7 @@
 
 namespace expo::modules::v2 {
   AsciiKeyCache::AsciiKeyCache() {
-    keys_.reserve(kSlots);
+    keys_.reserve(config::kPropertyNameCacheSlots);
   }
 
   const facebook::jsi::PropNameID* AsciiKeyCache::get(
@@ -14,7 +14,7 @@ namespace expo::modules::v2 {
       return &cached->second.name;
     }
 
-    if (key.size() > kMaxKeyLength) {
+    if (key.size() > config::kMaxCachedPropertyNameLength) {
       return nullptr;
     }
 

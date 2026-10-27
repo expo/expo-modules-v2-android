@@ -8,6 +8,8 @@
 
 #include <jsi/jsi.h>
 
+#include <expo-modules-v2/Config.h>
+
 namespace expo::modules::v2 {
   class AsciiKeyCache {
   public:
@@ -21,9 +23,8 @@ namespace expo::modules::v2 {
     void clear() noexcept;
 
   private:
-    static constexpr size_t kSlots = 256;
-    static constexpr size_t kCapacity = kSlots - 1;
-    static constexpr size_t kMaxKeyLength = 64;
+    // A new name goes in before the evicted one comes out, so one slot of the map stays free.
+    static constexpr size_t kCapacity = config::kPropertyNameCacheSlots - 1;
 
     struct KeyHash {
       using is_transparent = void;

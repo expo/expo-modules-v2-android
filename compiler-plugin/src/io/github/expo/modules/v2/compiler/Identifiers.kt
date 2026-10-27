@@ -204,5 +204,7 @@ object Identifiers {
     const val BUFFER_NO = "NO"
   }
 
+  // MUST stay in sync with `Trampoline.MAX_ARGUMENTS` in `:api` and `config::kMaxFunctionArgs` in
+  // `expo-modules-v2/Config.h`.
   const val MAX_ARGUMENTS = 8
 }

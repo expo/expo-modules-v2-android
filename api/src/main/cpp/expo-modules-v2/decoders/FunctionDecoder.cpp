@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 
+#include <expo-modules-v2/Config.h>
 #include <expo-modules-v2/descriptor/HostFunctionSpec.h>
 #include <expo-modules-v2/decoders/ExpectedTypeDecoder.h>
 #include <expo-modules-v2/utils/Throw.h>
@@ -19,14 +20,14 @@ namespace expo::modules::v2::decoders {
     const bool async = (flags & descriptor::kFunctionFlagAsync) != 0;
 
     const size_t argsCount = reader.readCount();
-    if (argsCount > descriptor::FunctionSpec::kMaxArgs) {
+    if (argsCount > config::kMaxFunctionArgs) {
       throwInvalidArgument({
         "Function ",
         name,
         " declares ",
         std::to_string(argsCount),
         " arguments; at most ",
-        std::to_string(descriptor::FunctionSpec::kMaxArgs),
+        std::to_string(config::kMaxFunctionArgs),
         " are supported",
       });
     }

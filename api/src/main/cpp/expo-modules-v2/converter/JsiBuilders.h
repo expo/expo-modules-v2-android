@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <memory>
 #include <new>
@@ -14,6 +15,7 @@
 #include <kolibri/Ref.h>
 #include <kolibri/array.h>
 
+#include <expo-modules-v2/Config.h>
 #include <expo-modules-v2/utils/Throw.h>
 
 namespace expo::modules::v2 {
@@ -27,9 +29,9 @@ namespace expo::modules::v2 {
     ) : rt_(rt),
         jsArray_(array),
         storage_(inlineStorage_),
-        capacity_(kChunkSize) {
-      if (expectedCount > kChunkSize) {
-        capacity_ = expectedCount < kMaxBufferedValues ? expectedCount : kMaxBufferedValues;
+        capacity_(config::kJsArrayInlineValues) {
+      if (expectedCount > config::kJsArrayInlineValues) {
+        capacity_ = std::min(expectedCount, config::kJsArrayMaxBufferedValues);
         storage_ = static_cast<std::byte*>(::operator new(capacity_ * sizeof(facebook::jsi::Value)));
       }
     }
@@ -63,10 +65,6 @@ namespace expo::modules::v2 {
     }
 
   private:
-    static constexpr size_t kChunkSize = 64;
-    // 16K values, 256 KiB: the most a single call stages on the heap.
-    static constexpr size_t kMaxBufferedValues = 16 * 1024;
-
     ALWAYS_INLINE const facebook::jsi::Value* slot(const size_t index) const {
       const std::byte* slotPtr = storage_ + index * sizeof(facebook::jsi::Value);
       return std::launder(
@@ -83,7 +81,7 @@ namespace expo::modules::v2 {
 
     facebook::jsi::Runtime& rt_;
     facebook::jsi::Array& jsArray_;
-    alignas(facebook::jsi::Value) std::byte inlineStorage_[kChunkSize * sizeof(facebook::jsi::Value)];
+    alignas(facebook::jsi::Value) std::byte inlineStorage_[config::kJsArrayInlineValues * sizeof(facebook::jsi::Value)];
     std::byte* storage_;
     size_t capacity_;
     size_t pending_ = 0;
@@ -103,7 +101,7 @@ namespace expo::modules::v2 {
   /**
    * Decodes a primitive Java array into a JS array. The elements stream through kolibri's stack
    * chunk (`forEach`) into the appender, which, knowing the length up front, pushes them in one go
-   * (up to `JsArrayAppender::kMaxBufferedValues` at a time).
+   * (up to `config::kJsArrayMaxBufferedValues` at a time).
    * `makeOne(element)` converts one element into a `jsi::Value`.
    */
   template<typename Element, typename MakeOne>

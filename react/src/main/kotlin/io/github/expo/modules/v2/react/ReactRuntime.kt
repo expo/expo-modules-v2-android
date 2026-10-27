@@ -4,6 +4,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.NativePointer
 import io.github.expo.modules.v2.async.AsyncContext
+import io.github.expo.modules.v2.jsi.AttachedRuntime
 import io.github.expo.modules.v2.jsi.JavaScriptRuntime
 import io.github.expo.modules.v2.modules.ModuleRegistry
 
@@ -43,7 +44,7 @@ class ReactRuntime private constructor(
   val reactContext: ReactApplicationContext = context.reactContext
 
   companion object {
-    const val DEFAULT_GLOBAL_NAME = "expo"
+    const val DEFAULT_GLOBAL_NAME = AttachedRuntime.DEFAULT_GLOBAL_NAME
 
     init {
       ExpoModulesV2React.ensureLoaded()

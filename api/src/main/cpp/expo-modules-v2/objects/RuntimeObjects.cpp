@@ -154,7 +154,7 @@ namespace expo::modules::v2::objects {
       }
     }
 
-    sweepThreshold_ = std::max(kMinSweepThreshold, entries_.size() * 2);
+    sweepThreshold_ = std::max(config::kObjectSweepMinThreshold, entries_.size() * 2);
   }
 
   namespace {
