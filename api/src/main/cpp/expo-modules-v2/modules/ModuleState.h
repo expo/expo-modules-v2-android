@@ -17,7 +17,7 @@ namespace expo::modules::v2 {
   public:
     static constexpr Kind kKind = Kind::Module;
 
-    ModuleState(JNIEnv* env, objects::ObjectId::Value objectId, kolibri::GlobalRef<> instance);
+    ModuleState(JNIEnv* env, objects::ObjectId::Value objectId, objects::InstanceRef instance);
 
     ~ModuleState() override;
 

@@ -37,8 +37,8 @@ namespace expo::modules::v2::objects {
 
     [[nodiscard]] ObjectId::Value objectId() const { return state_->objectId(); }
 
-    /** The Kotlin instance, or null once it was released. */
-    [[nodiscard]] jobject instance() const { return state_->instance(); }
+    /** Whether the Kotlin instance is still held: false once it was released. */
+    [[nodiscard]] bool holdsInstance() const { return state_->holdsInstance(); }
 
     /** The events this JavaScript object can emit; the emitter members check names against it. */
     [[nodiscard]] virtual std::span<const descriptor::EventSpec> events() const { return {}; }

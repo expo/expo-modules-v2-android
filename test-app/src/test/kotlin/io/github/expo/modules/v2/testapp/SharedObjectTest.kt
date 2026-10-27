@@ -156,6 +156,31 @@ private class Markers : Module() {
   fun describeOf(marker: Marker): String = marker.describe()
 }
 
+/** How many [Spot]s Kotlin has not seen released yet. */
+private val unreleasedSpots = java.util.concurrent.atomic.AtomicInteger()
+
+@ExpoSharedObject
+private class Spot(private val id: Int) : SharedObject() {
+  init {
+    unreleasedSpots.incrementAndGet()
+  }
+
+  @JS var label: String = ""
+
+  @JS
+  fun id(): Int = id
+
+  override fun sharedObjectDidRelease() {
+    unreleasedSpots.decrementAndGet()
+  }
+}
+
+@ExpoModule(classes = [Spot::class])
+private class Spots : Module() {
+  @JS
+  fun idOf(spot: Spot): Int = spot.id()
+}
+
 @ExpoSharedObject
 private class Window(private val span: kotlin.time.Duration) : SharedObject() {
   @JS
@@ -926,6 +951,83 @@ class SharedObjectTest {
         ),
       )
       assertEquals("true", runtime.evaluateAsString("w instanceof expo.modules.Windows.Window"))
+    }
+  }
+
+  @Test
+  fun `JavaScript can hold more shared objects than there are global refs to give them`() {
+    HermesRuntime().use { runtime ->
+      TestSupport.install(runtime)
+      runtime.moduleRegistry.register(Spots())
+
+      // Android aborts at 51,200 global refs, so past a budget the instances share a few of them
+      // instead of taking one each. Every one of them still has to answer as itself.
+      runtime.evaluate(
+        "globalThis.spots = []; " +
+          "for (let i = 0; i < 40000; i++) { spots.push(new expo.modules.Spots.Spot(i)); } 0",
+      )
+      assertEquals(
+        "true",
+        runtime.evaluateAsString(
+          "const c = ExpoTestSupport.__instanceRefCounts(); c.globals <= 1024 && c.slots >= 40000 - 1024",
+        ),
+      )
+      assertEquals("false", runtime.evaluateAsString("ExpoTestSupport.__holdsGlobalRef(spots[39999])"))
+      assertEquals(
+        "-1",
+        runtime.evaluateAsString(
+          "spots.findIndex((s, i) => s.id() !== i || expo.modules.Spots.idOf(s) !== i)",
+        ),
+      )
+
+      // Properties read and write the instance in the slot too.
+      assertEquals("spot-39999", runtime.evaluateAsString("const last = spots[39999]; last.label = 'spot-' + last.id(); last.label"))
+
+      // An explicit release gives its slot back, and the next object takes it rather than a new
+      // chunk - even from a chunk that was full, with every other chunk full too.
+      assertEquals(
+        "true",
+        runtime.evaluateAsString(
+          "const t = ExpoTestSupport.__instanceRefCounts(); globalThis.topUp = []; " +
+            "for (let i = 0; i < t.chunks * 1024 - t.slots; i++) { topUp.push(new expo.modules.Spots.Spot(-1)); } " +
+            "globalThis.chunks = ExpoTestSupport.__instanceRefCounts().chunks; " +
+            "spots[2000].release(); spots[2000] = new expo.modules.Spots.Spot(2000); " +
+            "ExpoTestSupport.__instanceRefCounts().chunks === chunks",
+        ),
+      )
+      assertEquals("2000", runtime.evaluateAsString("expo.modules.Spots.idOf(spots[2000])"))
+
+      // And so does a facade JavaScript dropped, once Hermes finalizes it.
+      runtime.evaluate("spots = null; topUp = null; 0")
+      var passes = 0
+      while (unreleasedSpots.get() > 0 && passes < 20) {
+        runtime.evaluate("ExpoTestSupport.__collectGarbage(); 0")
+        Thread.sleep(10)
+        passes++
+      }
+      assertEquals(0, unreleasedSpots.get(), "objects were not released in $passes passes")
+      // Every chunk emptied out and was freed, but for one kept as a spare.
+      assertEquals(
+        "0,1",
+        runtime.evaluateAsString("const e = ExpoTestSupport.__instanceRefCounts(); [e.slots, e.chunks].join()"),
+      )
+
+      // Their global refs went back to the budget, so the next object pays nothing for the slots.
+      assertEquals(
+        "true",
+        runtime.evaluateAsString("ExpoTestSupport.__holdsGlobalRef(new expo.modules.Spots.Spot(0))"),
+      )
+
+      // The next chunk's worth past the budget goes into the spare, not a new chunk.
+      assertEquals(
+        "1024,1,-1",
+        runtime.evaluateAsString(
+          "const f = ExpoTestSupport.__instanceRefCounts(); globalThis.spots = []; " +
+            "for (let i = 0; i < 1024 - f.globals + 1024; i++) { spots.push(new expo.modules.Spots.Spot(i)); } " +
+            "const g = ExpoTestSupport.__instanceRefCounts(); " +
+            "[g.slots, g.chunks, spots.findIndex((s, i) => s.id() !== i)].join()",
+        ),
+      )
     }
   }
 

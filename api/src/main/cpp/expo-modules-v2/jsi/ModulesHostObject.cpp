@@ -22,12 +22,13 @@ namespace expo::modules::v2::jsi {
     /**
      * A host function calling [spec] on whatever [receiver] holds at call time. Both are captured by
      * pointer: the spec lives in the module object's node and the receiver ref in the state that
-     * node owns, so neither dies before a function reachable from the module object.
+     * node owns, so neither dies before a function reachable from the module object. A module is
+     * always pinned by a global ref, so the receiver is borrowed as one.
      */
     facebook::jsi::Function hostFunction(
       facebook::jsi::Runtime& rt,
       const descriptor::HostFunctionSpec& spec,
-      const kolibri::GlobalRef<>& receiver
+      const objects::InstanceRef& receiver
     ) {
       return facebook::jsi::Function::createFromHostFunction(
         rt,
@@ -39,7 +40,7 @@ namespace expo::modules::v2::jsi {
         const facebook::jsi::Value* args,
         const size_t count
       ) -> facebook::jsi::Value {
-          return spec->invoke(runtime, receiver->get(), args, count);
+          return spec->invoke(runtime, receiver->global(), args, count);
         }
       );
     }
@@ -60,7 +61,7 @@ namespace expo::modules::v2::jsi {
     facebook::jsi::Function constantGetter(
       facebook::jsi::Runtime& rt,
       const descriptor::HostPropertySpec& property,
-      const kolibri::GlobalRef<>& receiver
+      const objects::InstanceRef& receiver
     ) {
       return facebook::jsi::Function::createFromHostFunction(
         rt,
@@ -71,7 +72,7 @@ namespace expo::modules::v2::jsi {
         const facebook::jsi::Value& thisValue,
         const facebook::jsi::Value*,
         size_t) -> facebook::jsi::Value {
-          facebook::jsi::Value value = property->get(runtime, receiver->get());
+          facebook::jsi::Value value = property->get(runtime, receiver->global());
 
           if (thisValue.isObject()) {
             const facebook::jsi::Object descriptor(runtime);
@@ -95,7 +96,7 @@ namespace expo::modules::v2::jsi {
       facebook::jsi::Runtime& rt,
       const facebook::jsi::Object& moduleObject,
       const descriptor::HostPropertySpec& property,
-      const kolibri::GlobalRef<>& receiver
+      const objects::InstanceRef& receiver
     ) {
       facebook::jsi::Object descriptor(rt);
       if (property.isConstant) {
@@ -166,7 +167,7 @@ namespace expo::modules::v2::jsi {
           shared = objects::ObjectRegistry::find<ModuleState>(objectId);
           if (shared == nullptr) {
             shared = objects::ObjectRegistry::adopt(
-              std::make_shared<ModuleState>(env, objectId, kolibri::GlobalRef<>::make(env, instance))
+              std::make_shared<ModuleState>(env, objectId, objects::InstanceRef::global(env, instance))
             );
           }
           return shared->javaClass();
@@ -196,7 +197,7 @@ namespace expo::modules::v2::jsi {
         moduleObject.setPrototype(rt, facebook::jsi::Value(rt, table->eventEmitterPrototype(rt)));
       }
 
-      const kolibri::GlobalRef<>& receiver = state->moduleState().instanceRef();
+      const objects::InstanceRef& receiver = state->moduleState().instanceRef();
       for (const descriptor::HostFunctionSpec& function: state->functions()) {
         moduleObject.setProperty(
           rt,

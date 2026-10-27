@@ -38,14 +38,13 @@ namespace expo::modules::v2::events {
 
       [[nodiscard]] ListenerTable& listeners() const { return table->listeners(); }
 
-      [[nodiscard]] jobject instance() const { return node->instance(); }
-
       void observe(const int eventIndex, const bool observing) const {
         const jobject context = async->context();
         if (context == nullptr) {
           return;
         }
-        JEventSupport::observe(kolibri::getEnv(), instance(), eventIndex, context, observing);
+        const objects::ScopedInstance instance(node->state()->instanceRef());
+        JEventSupport::observe(kolibri::getEnv(), instance.get(), eventIndex, context, observing);
       }
     };
 
@@ -68,7 +67,7 @@ namespace expo::modules::v2::events {
           "' called on something that is not a module or shared object",
         });
       }
-      if (node->instance() == nullptr) {
+      if (!node->holdsInstance()) {
         throwJSError(rt, {"Cannot call '", std::string(member), "' on a released shared object"});
       }
 

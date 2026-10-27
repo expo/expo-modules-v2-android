@@ -80,13 +80,16 @@ namespace expo::modules::v2::events {
       entries_.erase(found);
 
       const std::shared_ptr<objects::ObjectState> state = entry.state.lock();
-      const jobject instance = state == nullptr ? nullptr : state->instance();
-      if (instance == nullptr) {
+      if (state == nullptr) {
+        return;
+      }
+      const objects::ScopedInstance instance(state->instanceRef());
+      if (instance.get() == nullptr) {
         return;
       }
       for (const EventListeners& named: entry.byEvent) {
         if (!named.listeners.empty()) {
-          onStop(instance, named.eventIndex);
+          onStop(instance.get(), named.eventIndex);
         }
       }
     }

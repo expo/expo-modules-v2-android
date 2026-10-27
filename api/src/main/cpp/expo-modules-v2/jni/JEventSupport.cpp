@@ -55,7 +55,7 @@ namespace expo::modules::v2 {
 
       facebook::jsi::Object object = target.getObject(rt);
       const objects::ObjectNativeState* node = objects::ObjectNativeState::borrow(rt, object);
-      if (node == nullptr || node->instance() == nullptr) {
+      if (node == nullptr || !node->holdsInstance()) {
         return std::nullopt;
       }
       const descriptor::EventSpec* spec = node->eventAt(eventIndex);

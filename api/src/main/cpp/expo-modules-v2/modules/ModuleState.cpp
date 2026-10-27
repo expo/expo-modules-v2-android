@@ -15,9 +15,9 @@ namespace expo::modules::v2 {
   ModuleState::ModuleState(
     JNIEnv* env,
     const objects::ObjectId::Value objectId,
-    kolibri::GlobalRef<> instance
+    objects::InstanceRef instance
   ) : ObjectState(kKind, objectId, std::move(instance)),
-      javaClass_(classOf(env, this->instance())) {
+      javaClass_(classOf(env, instanceRef().global())) {
   }
 
   ModuleState::~ModuleState() {

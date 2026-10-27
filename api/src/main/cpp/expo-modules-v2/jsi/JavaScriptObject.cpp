@@ -213,8 +213,7 @@ namespace expo::modules::v2::jsi {
 
   jobject JavaScriptObject::nativeInstance(JNIEnv* env) const {
     const auto node = objects::ObjectNativeState::of(runtime(), object());
-    const jobject instance = node == nullptr ? nullptr : node->instance();
-    return instance == nullptr ? nullptr : env->NewLocalRef(instance);
+    return node == nullptr ? nullptr : node->state()->instanceRef().newLocal(env);
   }
 
   void JavaScriptObject::registerNatives(JNIEnv* env) {

@@ -83,6 +83,21 @@ namespace expo::modules::v2::config {
    */
   inline constexpr size_t kObjectSweepMinThreshold = 32;
 
+  /**
+   * How many shared objects pin their Kotlin instance with a JNI global ref of their own, which a
+   * call borrows as its receiver for free. Android aborts the process at 51,200 global refs, held by
+   * every library together, so this is 2% of that. Objects past it sit in a slot of a shared Java
+   * array instead, and every call on one costs two more JNI calls (see `InstanceRef`).
+   */
+  inline constexpr size_t kSharedObjectGlobalRefs = 1024;
+
+  /**
+   * How many slotted instances share one Java array, and so one global ref. A new array is made
+   * when every slot so far is taken, and one is freed once none of its slots is, all but one
+   * spare.
+   */
+  inline constexpr jsize kInstanceSlotsPerChunk = 1024;
+
   // --- Sanity checks -----------------------------------------------------------------------------
 
   static_assert(kMaxFunctionArgs > 0);
@@ -98,4 +113,5 @@ namespace expo::modules::v2::config {
   static_assert(kJsArrayMaxBufferedValues >= kJsArrayInlineValues);
   static_assert(kPromiseHandleBatch > 0);
   static_assert(kObjectSweepMinThreshold > 0);
+  static_assert(kInstanceSlotsPerChunk > 0);
 }

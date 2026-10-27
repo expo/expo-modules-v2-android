@@ -5,8 +5,7 @@
 #include <cstdint>
 #include <memory>
 
-#include <kolibri/Ref.h>
-
+#include <expo-modules-v2/objects/InstanceRef.h>
 #include <expo-modules-v2/objects/ObjectId.h>
 
 namespace expo::modules::v2::objects {
@@ -32,14 +31,14 @@ namespace expo::modules::v2::objects {
 
     [[nodiscard]] ObjectId::Value objectId() const { return objectId_; }
 
-    /** The Kotlin instance, or null once it was released. */
-    [[nodiscard]] jobject instance() const { return instance_.get(); }
+    /** Whether the Kotlin instance is still held: false once it was released. */
+    [[nodiscard]] bool holdsInstance() const { return static_cast<bool>(instance_); }
 
     /**
      * The ref a host function reads its receiver from on every call. Such a function is a member of
      * a JavaScript object whose node owns this state, so it never outlives the ref.
      */
-    [[nodiscard]] const kolibri::GlobalRef<>& instanceRef() const { return instance_; }
+    [[nodiscard]] const InstanceRef& instanceRef() const { return instance_; }
 
     /** [state] as the concrete `T`, or null if it is not of `T::kKind`. */
     template<typename T>
@@ -50,9 +49,9 @@ namespace expo::modules::v2::objects {
     }
 
   protected:
-    ObjectState(Kind kind, ObjectId::Value objectId, kolibri::GlobalRef<> instance);
+    ObjectState(Kind kind, ObjectId::Value objectId, InstanceRef instance);
 
-    kolibri::GlobalRef<> instance_;
+    InstanceRef instance_;
 
   private:
     Kind kind_;
