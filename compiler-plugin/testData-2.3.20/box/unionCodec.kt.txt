@@ -1,0 +1,650 @@
+package io.github.expo.modules.v2.testdata
+
+data class Count : Id {
+  val value: Int
+    field = value
+    get
+
+  constructor(value: Int) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Int {
+    return <this>.#value
+  }
+
+  fun copy(value: Int = <this>.#value): Count {
+    return Count(value = value)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Count -> return false
+    }
+    val tmp_0: Count = other /*as Count */
+    when {
+      EQEQ(arg0 = <this>.#value, arg1 = tmp_0.#value).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    return <this>.#value.hashCode()
+  }
+
+  override fun toString(): String {
+    return "Count(" + "value=" + <this>.#value + ")"
+  }
+
+}
+
+@Union(discriminator = "type")
+sealed class Shape : Union {
+  @Record
+  @Tag(value = "circle")
+  data class Circle : Shape, Record {
+    val radius: Double
+      field = radius
+      get
+
+    private class RecordCodec$ExpoModulesV2 : RecordCodec<Circle> {
+      override val recordClass: Class<Circle>
+        field = <get-java>(/* $receiver = Circle::class */)
+        override get
+
+      override val schema: RecordSchema
+        field = RecordSchema(name = "Circle", bufferSafe = true, fields = [RecordField(name = "radius", type = Double, isOptional = false)])
+        override get
+
+      constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+
+        RecordRegistry.register(codec = <this>)
+      }
+
+      override fun decode(reader: RecordReader): Circle {
+        return Circle(radius = reader.readDouble())
+      }
+
+      override fun encode(value: Circle, writer: RecordWriter) {
+        writer.write(value = value.<get-radius>())
+      }
+
+    }
+
+    companion object Companion {
+      val recordCodec$ExpoModulesV2: RecordCodec<Circle>
+        field = RecordCodec$ExpoModulesV2()
+        get
+
+      private constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+
+      }
+
+    }
+
+    constructor(radius: Double) /* primary */ {
+      super/*Shape*/()
+      /* <init>() */
+
+    }
+
+    operator fun component1(): Double {
+      return <this>.#radius
+    }
+
+    fun copy(radius: Double = <this>.#radius): Circle {
+      return Circle(radius = radius)
+    }
+
+    override operator fun equals(other: Any?): Boolean {
+      when {
+        EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+      }
+      when {
+        other !is Circle -> return false
+      }
+      val tmp_1: Circle = other /*as Circle */
+      when {
+        EQEQ(arg0 = <this>.#radius, arg1 = tmp_1.#radius).not() -> return false
+      }
+      return true
+    }
+
+    override fun hashCode(): Int {
+      return <this>.#radius.hashCode()
+    }
+
+    override fun toString(): String {
+      return "Circle(" + "radius=" + <this>.#radius + ")"
+    }
+
+  }
+
+  @Record
+  data class Rect : Shape, Record {
+    val width: Double
+      field = width
+      get
+
+    val height: Double
+      field = height
+      get
+
+    private class RecordCodec$ExpoModulesV2 : RecordCodec<Rect> {
+      override val recordClass: Class<Rect>
+        field = <get-java>(/* $receiver = Rect::class */)
+        override get
+
+      override val schema: RecordSchema
+        field = RecordSchema(name = "Rect", bufferSafe = true, fields = [RecordField(name = "width", type = Double, isOptional = false), RecordField(name = "height", type = Double, isOptional = false)])
+        override get
+
+      constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+
+        RecordRegistry.register(codec = <this>)
+      }
+
+      override fun decode(reader: RecordReader): Rect {
+        return Rect(width = reader.readDouble(), height = reader.readDouble())
+      }
+
+      override fun encode(value: Rect, writer: RecordWriter) {
+        writer.write(value = value.<get-width>())
+        writer.write(value = value.<get-height>())
+      }
+
+    }
+
+    companion object Companion {
+      val recordCodec$ExpoModulesV2: RecordCodec<Rect>
+        field = RecordCodec$ExpoModulesV2()
+        get
+
+      private constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+
+      }
+
+    }
+
+    constructor(width: Double, height: Double) /* primary */ {
+      super/*Shape*/()
+      /* <init>() */
+
+    }
+
+    operator fun component1(): Double {
+      return <this>.#width
+    }
+
+    operator fun component2(): Double {
+      return <this>.#height
+    }
+
+    fun copy(width: Double = <this>.#width, height: Double = <this>.#height): Rect {
+      return Rect(width = width, height = height)
+    }
+
+    override operator fun equals(other: Any?): Boolean {
+      when {
+        EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+      }
+      when {
+        other !is Rect -> return false
+      }
+      val tmp_2: Rect = other /*as Rect */
+      when {
+        EQEQ(arg0 = <this>.#width, arg1 = tmp_2.#width).not() -> return false
+      }
+      when {
+        EQEQ(arg0 = <this>.#height, arg1 = tmp_2.#height).not() -> return false
+      }
+      return true
+    }
+
+    override fun hashCode(): Int {
+      var result: Int = <this>.#width.hashCode()
+      result = result.times(other = 31).plus(other = <this>.#height.hashCode())
+      return result
+    }
+
+    override fun toString(): String {
+      return "Rect(" + "width=" + <this>.#width + ", " + "height=" + <this>.#height + ")"
+    }
+
+  }
+
+  private class UnionCodec$ExpoModulesV2 : UnionCodec<Shape> {
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Circle::class */), isNullable = false)
+    private /* final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Rect::class */), isNullable = false)
+    override val unionClass: Class<Shape>
+      field = <get-java>(/* $receiver = Shape::class */)
+      override get
+
+    override val schema: UnionSchema
+      field = UnionSchema(name = "Shape", discriminator = "type", bufferSafe = true, variants = [UnionVariant(name = "Circle", tag = "circle", type = <this>.#type$0), UnionVariant(name = "Rect", tag = "Rect", type = <this>.#type$1)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      UnionRegistry.register(codec = <this>)
+    }
+
+    override fun indexOf(value: Shape): Int {
+      return when {
+        value is Circle -> 0
+        value is Rect -> 1
+        else -> -1
+      }
+    }
+
+    override fun unwrap(value: Shape): Any? {
+      return when {
+        value is Circle -> value
+        value is Rect -> value
+        else -> null
+      }
+    }
+
+    override fun wrap(index: Int, payload: Any?): Shape {
+      return when {
+        EQEQ(arg0 = index, arg1 = 0) -> payload as Circle
+        EQEQ(arg0 = index, arg1 = 1) -> payload as Rect
+        else -> noSuchVariant(union = "Shape", index = index)
+      }
+    }
+
+  }
+
+  companion object Companion {
+    val unionCodec$ExpoModulesV2: UnionCodec<Shape>
+      field = UnionCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+    const val LABEL: String
+      field = "shape"
+      get
+
+  }
+
+  protected constructor() /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+class Text : Id {
+  val value: String
+    field = value
+    get
+
+  constructor(value: String) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+@Union
+sealed interface Dimension : Union {
+  @Record
+  data class Percent : Record, Dimension {
+    val percent: Double
+      field = percent
+      get
+
+    private class RecordCodec$ExpoModulesV2 : RecordCodec<Percent> {
+      override val recordClass: Class<Percent>
+        field = <get-java>(/* $receiver = Percent::class */)
+        override get
+
+      override val schema: RecordSchema
+        field = RecordSchema(name = "Percent", bufferSafe = true, fields = [RecordField(name = "percent", type = Double, isOptional = false)])
+        override get
+
+      constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+
+        RecordRegistry.register(codec = <this>)
+      }
+
+      override fun decode(reader: RecordReader): Percent {
+        return Percent(percent = reader.readDouble())
+      }
+
+      override fun encode(value: Percent, writer: RecordWriter) {
+        writer.write(value = value.<get-percent>())
+      }
+
+    }
+
+    companion object Companion {
+      val recordCodec$ExpoModulesV2: RecordCodec<Percent>
+        field = RecordCodec$ExpoModulesV2()
+        get
+
+      private constructor() /* primary */ {
+        super/*Any*/()
+        /* <init>() */
+
+      }
+
+    }
+
+    constructor(percent: Double) /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+    operator fun component1(): Double {
+      return <this>.#percent
+    }
+
+    fun copy(percent: Double = <this>.#percent): Percent {
+      return Percent(percent = percent)
+    }
+
+    override operator fun equals(other: Any?): Boolean {
+      when {
+        EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+      }
+      when {
+        other !is Percent -> return false
+      }
+      val tmp_3: Percent = other /*as Percent */
+      when {
+        EQEQ(arg0 = <this>.#percent, arg1 = tmp_3.#percent).not() -> return false
+      }
+      return true
+    }
+
+    override fun hashCode(): Int {
+      return <this>.#percent.hashCode()
+    }
+
+    override fun toString(): String {
+      return "Percent(" + "percent=" + <this>.#percent + ")"
+    }
+
+  }
+
+  @JvmInline
+  value class Points : Dimension {
+    val value: Double
+      field = value
+      get
+
+    constructor(value: Double) /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+    override operator fun equals(other: Any?): Boolean {
+      when {
+        other !is Points -> return false
+      }
+      val tmp_4: Points = other /*as Points */
+      when {
+        EQEQ(arg0 = <this>.#value, arg1 = tmp_4.#value).not() -> return false
+      }
+      return true
+    }
+
+    override fun hashCode(): Int {
+      return <this>.#value.hashCode()
+    }
+
+    override fun toString(): String {
+      return "Points(" + "value=" + <this>.#value + ")"
+    }
+
+  }
+
+  class UnionCodec$ExpoModulesV2 : UnionCodec<Dimension> {
+    private /* final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Percent::class */), isNullable = false)
+    override val unionClass: Class<Dimension>
+      field = <get-java>(/* $receiver = Dimension::class */)
+      override get
+
+    override val schema: UnionSchema
+      field = UnionSchema(name = "Dimension", discriminator = "", bufferSafe = true, variants = [UnionVariant(name = "Points", tag = "Points", type = Double), UnionVariant(name = "Auto", tag = "auto", type = null), UnionVariant(name = "Percent", tag = "Percent", type = <this>.#type$0)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      UnionRegistry.register(codec = <this>)
+    }
+
+    override fun indexOf(value: Dimension): Int {
+      return when {
+        value is Points -> 0
+        value is Auto -> 1
+        value is Percent -> 2
+        else -> -1
+      }
+    }
+
+    override fun unwrap(value: Dimension): Any? {
+      return when {
+        value is Points -> value as Points.<get-value>()
+        value is Percent -> value
+        else -> null
+      }
+    }
+
+    override fun wrap(index: Int, payload: Any?): Dimension {
+      return when {
+        EQEQ(arg0 = index, arg1 = 0) -> Points(value = payload as Double)
+        EQEQ(arg0 = index, arg1 = 1) -> Auto
+        EQEQ(arg0 = index, arg1 = 2) -> payload as Percent
+        else -> noSuchVariant(union = "Dimension", index = index)
+      }
+    }
+
+  }
+
+  companion object Companion {
+    val unionCodec$ExpoModulesV2: UnionCodec<Dimension>
+      field = UnionCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  @Tag(value = "auto")
+  data object Auto : Dimension {
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+    override operator fun equals(other: Any?): Boolean {
+      when {
+        EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+      }
+      when {
+        other !is Auto -> return false
+      }
+      val tmp_5: Auto = other /*as Auto */
+      return true
+    }
+
+    override fun hashCode(): Int {
+      return 469630967
+    }
+
+    override fun toString(): String {
+      return "Auto"
+    }
+
+  }
+
+}
+
+@Union
+sealed interface Id : Union {
+  class UnionCodec$ExpoModulesV2 : UnionCodec<Id> {
+    override val unionClass: Class<Id>
+      field = <get-java>(/* $receiver = Id::class */)
+      override get
+
+    override val schema: UnionSchema
+      field = UnionSchema(name = "Id", discriminator = "", bufferSafe = true, variants = [UnionVariant(name = "Text", tag = "Text", type = #STRING), UnionVariant(name = "Count", tag = "Count", type = Int)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      UnionRegistry.register(codec = <this>)
+    }
+
+    override fun indexOf(value: Id): Int {
+      return when {
+        value is Text -> 0
+        value is Count -> 1
+        else -> -1
+      }
+    }
+
+    override fun unwrap(value: Id): Any? {
+      return when {
+        value is Text -> value as Text.<get-value>()
+        value is Count -> value as Count.<get-value>()
+        else -> null
+      }
+    }
+
+    override fun wrap(index: Int, payload: Any?): Id {
+      return when {
+        EQEQ(arg0 = index, arg1 = 0) -> Text(value = payload as String)
+        EQEQ(arg0 = index, arg1 = 1) -> Count(value = payload as Int)
+        else -> noSuchVariant(union = "Id", index = index)
+      }
+    }
+
+  }
+
+  companion object Companion {
+    val unionCodec$ExpoModulesV2: UnionCodec<Id>
+      field = UnionCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+}
+
+fun box(): String {
+  when {
+    Auto !is Union -> return "Fail: Dimension lost the marker"
+  }
+  val dimension: TypeConverter<Any> = converterOf(type = <get-java><Dimension>(/* <this> = Dimension::class */))
+  val points: UnionValue = dimension.toJni(value = Points(value = 2.5)) as UnionValue
+  when {
+    when {
+      EQEQ(arg0 = points.<get-index>(), arg1 = 0).not() -> true
+      else -> EQEQ(arg0 = points.<get-payload>(), arg1 = 2.5).not()
+    } -> return "Fail: Points crossed as " + points.<get-index>() + "/" + points.<get-payload>()
+  }
+  val auto: UnionValue = dimension.toJni(value = Auto) as UnionValue
+  when {
+    when {
+      EQEQ(arg0 = auto.<get-index>(), arg1 = 1).not() -> true
+      else -> EQEQ(arg0 = auto.<get-payload>(), arg1 = null).not()
+    } -> return "Fail: Auto crossed as " + auto.<get-index>() + "/" + auto.<get-payload>()
+  }
+  val percent: UnionValue = dimension.toJni(value = Percent(percent = 0.5)) as UnionValue
+  when {
+    when {
+      EQEQ(arg0 = percent.<get-index>(), arg1 = 2).not() -> true
+      else -> EQEQ(arg0 = percent.<get-payload>(), arg1 = mapOf<String, Double>(pair = to<String, Double>(/* <this> = "percent", */ that = 0.5))).not()
+    } -> return "Fail: Percent crossed as " + percent.<get-payload>()
+  }
+  when {
+    EQEQ(arg0 = dimension.fromJni(value = UnionValue(index = 0, payload = 3.0)), arg1 = Points(value = 3.0)).not() -> return "Fail: Points round trip"
+  }
+  when {
+    EQEQ(arg0 = dimension.fromJni(value = UnionValue(index = 1, payload = null)), arg1 = Auto).not() -> return "Fail: Auto round trip"
+  }
+  when {
+    EQEQ(arg0 = dimension.fromJni(value = UnionValue(index = 2, payload = mapOf<String, Double>(pair = to<String, Double>(/* <this> = "percent", */ that = 1.0)))), arg1 = Percent(percent = 1.0)).not() -> return "Fail: Percent round trip"
+  }
+  val badIndex: String? = { // BLOCK
+    val tmp_6: Throwable? = runCatching<Any?>(block = local fun <anonymous>(): Any? {
+      return dimension.fromJni(value = UnionValue(index = 3, payload = null))
+    }
+).exceptionOrNull()
+    when {
+      EQEQ(arg0 = tmp_6, arg1 = null) -> null
+      else -> tmp_6 /*as Throwable */.<get-message>()
+    }
+  }
+  when {
+    EQEQ(arg0 = badIndex, arg1 = "Dimension has no variant #3").not() -> return "Fail: an unknown index threw '" + badIndex + "'"
+  }
+  when {
+    EQEQ(arg0 = "shape", arg1 = "shape").not() -> return "Fail: user companion member disappeared"
+  }
+  val shape: TypeConverter<Any> = converterOf(type = <get-java><Shape>(/* <this> = Shape::class */))
+  when {
+    EQEQ(arg0 = shape.fromJni(value = UnionValue(index = 1, payload = mapOf<String, Double>(pairs = [to<String, Double>(/* <this> = "width", */ that = 2.0), to<String, Double>(/* <this> = "height", */ that = 3.0)]))), arg1 = Rect(width = 2.0, height = 3.0)).not() -> { // BLOCK
+      return "Fail: Rect round trip"
+    }
+  }
+  val id: TypeConverter<Any> = converterOf(type = <get-java><Id>(/* <this> = Id::class */))
+  val text: UnionValue = id.toJni(value = Text(value = "a")) as UnionValue
+  when {
+    when {
+      EQEQ(arg0 = text.<get-index>(), arg1 = 0).not() -> true
+      else -> EQEQ(arg0 = text.<get-payload>(), arg1 = "a").not()
+    } -> return "Fail: Text crossed as " + text.<get-index>() + "/" + text.<get-payload>()
+  }
+  when {
+    EQEQ(arg0 = id.fromJni(value = UnionValue(index = 1, payload = 7)), arg1 = Count(value = 7)).not() -> return "Fail: Count round trip"
+  }
+  return "OK"
+}
+
+private fun converterOf(type: Class<*>): TypeConverter<Any> {
+  return <get-anyConverter>(/* <this> = Simple(javaClass = type, isNullable = false) */)
+}

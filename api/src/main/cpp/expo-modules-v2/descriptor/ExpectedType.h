@@ -55,6 +55,10 @@ namespace expo::modules::v2 {
       int classId;
     };
 
+    struct Union {
+      int unionId;
+    };
+
     explicit ExpectedType(LeafType type, bool nullable = false, bool usesBuffer = false);
 
     // clang-format off
@@ -67,6 +71,7 @@ namespace expo::modules::v2 {
     [[nodiscard]] static ExpectedType map(ExpectedType value, bool nullable = false, bool usesBuffer = false);
     [[nodiscard]] static ExpectedType record(int schemaId, bool nullable = false, bool usesBuffer = false);
     [[nodiscard]] static ExpectedType sharedObject(int classId, bool nullable = false);
+    [[nodiscard]] static ExpectedType unionOf(int unionId, bool nullable = false, bool usesBuffer = false);
     // clang-format on
 
     [[nodiscard]] ExpectedType clone() const;
@@ -80,7 +85,8 @@ namespace expo::modules::v2 {
         case 1: return invokeWith<R, CppType::LIST>(v, *std::get_if<List>(&shape_));
         case 2: return invokeWith<R, CppType::MAP>(v, *std::get_if<Map>(&shape_));
         case 3: return invokeWith<R, CppType::RECORD>(v, *std::get_if<Record>(&shape_));
-        default: return invokeWith<R, CppType::SHARED_OBJECT>(v, *std::get_if<SharedObject>(&shape_));
+        case 4: return invokeWith<R, CppType::SHARED_OBJECT>(v, *std::get_if<SharedObject>(&shape_));
+        default: return invokeWith<R, CppType::UNION>(v, *std::get_if<Union>(&shape_));
       }
     }
 
@@ -98,6 +104,8 @@ namespace expo::modules::v2 {
 
     [[nodiscard]] int sharedClassId() const;
 
+    [[nodiscard]] int unionId() const;
+
     std::string jniDescriptor() const;
 
     [[nodiscard]] std::string kotlinType() const;
@@ -105,7 +113,7 @@ namespace expo::modules::v2 {
     bool bufferSafe() const;
 
   private:
-    using Shape = std::variant<LeafType, List, Map, Record, SharedObject>;
+    using Shape = std::variant<LeafType, List, Map, Record, SharedObject, Union>;
 
     explicit ExpectedType(Shape shape, bool nullable, bool usesBuffer);
 

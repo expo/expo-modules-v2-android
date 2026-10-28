@@ -19,6 +19,8 @@ namespace expo::modules::v2 {
     facebook::jsi::Value operator()(const ExpectedType::Map& mapType) const;
 
     facebook::jsi::Value operator()(const ExpectedType::Record& recordType) const;
+
+    facebook::jsi::Value operator()(const ExpectedType::Union& unionType) const;
   };
 
   // clang-format off

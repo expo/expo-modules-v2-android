@@ -13,6 +13,8 @@
 #include <expo-modules-v2/jni/JSharedObject.h>
 #include <expo-modules-v2/records/RecordRegistry.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
+#include <expo-modules-v2/jni/JUnionValue.h>
+#include <expo-modules-v2/unions/UnionRegistry.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/utils/Throw.h>
@@ -83,6 +85,10 @@ namespace expo::modules::v2 {
     return ExpectedType(SharedObject{classId}, nullable, /* usesBuffer = */ false);
   }
 
+  ExpectedType ExpectedType::unionOf(const int unionId, const bool nullable, const bool usesBuffer) {
+    return ExpectedType(Union{unionId}, nullable, usesBuffer);
+  }
+
   ExpectedType ExpectedType::clone() const {
     return std::visit(
       overloads{
@@ -109,6 +115,9 @@ namespace expo::modules::v2 {
         [this](const SharedObject& shared) {
           return ExpectedType(Shape(shared), nullable_, usesBuffer_);
         },
+        [this](const Union& union_) {
+          return ExpectedType(Shape(union_), nullable_, usesBuffer_);
+        },
       },
       shape_
     );
@@ -129,6 +138,10 @@ namespace expo::modules::v2 {
 
   int ExpectedType::sharedClassId() const {
     return std::get<SharedObject>(shape_).classId;
+  }
+
+  int ExpectedType::unionId() const {
+    return std::get<Union>(shape_).unionId;
   }
 
   template<typename T>
@@ -200,6 +213,7 @@ namespace expo::modules::v2 {
             sharedobjects::SharedObjectClassRegistry::descriptorOf(shared.classId);
           return descriptor.empty() ? desc<JSharedObject>() : descriptor;
         },
+        [](const Union&) { return desc<JUnionValue>(); },
       },
       shape_
     );
@@ -257,6 +271,14 @@ namespace expo::modules::v2 {
         return "<unregistered record #" + std::to_string(schemaId) + ">";
       }
     }
+
+    std::string unionKotlinName(const int unionId) {
+      try {
+        return UnionRegistry::get(unionId).name;
+      } catch (const std::exception&) {
+        return "<unregistered union #" + std::to_string(unionId) + ">";
+      }
+    }
   } // namespace
 
   std::string ExpectedType::kotlinType() const {
@@ -275,6 +297,7 @@ namespace expo::modules::v2 {
         [](const SharedObject& shared) {
           return sharedobjects::SharedObjectClassRegistry::nameOf(shared.classId);
         },
+        [](const Union& union_) { return unionKotlinName(union_.unionId); },
       },
       shape_
     );
@@ -304,6 +327,9 @@ namespace expo::modules::v2 {
         },
         // A reference: it identifies a native object, so there is nothing to flatten.
         [](const SharedObject&) { return false; },
+        [](const Union& union_) {
+          return UnionRegistry::get(union_.unionId).bufferSafe;
+        },
       },
       shape_
     );
@@ -317,6 +343,7 @@ namespace expo::modules::v2 {
         [](const Map&) { return CppType::MAP; },
         [](const Record&) { return CppType::RECORD; },
         [](const SharedObject&) { return CppType::SHARED_OBJECT; },
+        [](const Union&) { return CppType::UNION; },
       },
       shape
     );

@@ -25,8 +25,12 @@ for version in "${versions[@]}"; do
   printf 'Kotlin %-8s ' "$version"
   # -PskipDesktopNative: these checks cover the JVM side only; :test-app:test exercises the native
   # side against the catalog's Kotlin.
+  # in-process: by default every Kotlin release starts a compile daemon of its own (~1 GB each) and
+  # leaves it running, so a full run piles up one per release. Compiling inside the Gradle daemon
+  # starts none.
   if ./gradlew :compiler-plugin:test :gradle-plugin:build :api:test \
       -PkotlinVersion="$version" -PskipHermesEnvBuild -PskipDesktopNative --continue \
+      -Pkotlin.compiler.execution.strategy=in-process \
       > "$log_dir/$version.log" 2>&1; then
     echo "PASS"
     rm -f "$log_dir/$version.log"

@@ -7,6 +7,8 @@
 #include <expo-modules-v2/converter/decoders/BufferDecode.h>
 #include <expo-modules-v2/converter/JsiBuilders.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
+#include <expo-modules-v2/unions/UnionDispatch.h>
+#include <expo-modules-v2/unions/UnionRegistry.h>
 
 #include <kolibri/binary/BinaryString.h>
 
@@ -168,6 +170,16 @@ namespace expo::modules::v2 {
       );
     }
     return result;
+  }
+
+  facebook::jsi::Value BufferDecoder::operator()(const ExpectedType::Union& unionType) const {
+    const UnionSchema& schema = UnionRegistry::get(unionType.unionId);
+    const UnionVariantSpec& variant = unionVariantAt(rt, schema, in.read<int32_t>());
+    if (variant.kind == UnionVariantKind::LITERAL) {
+      return finishUnionValue(rt, schema, variant, facebook::jsi::Value::undefined());
+    }
+
+    return finishUnionValue(rt, schema, variant, decodeFromBuffer(rt, in, variant.type));
   }
 
   facebook::jsi::Value BufferDecoder::operator()(const ExpectedType::Record& recordType) const {

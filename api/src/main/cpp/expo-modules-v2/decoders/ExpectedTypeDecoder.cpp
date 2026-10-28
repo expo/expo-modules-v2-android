@@ -55,6 +55,12 @@ namespace expo::modules::v2::decoders {
           return type;
         }
 
+        if (kind == CppType::UNION) {
+          ExpectedType type = ExpectedType::unionOf(read(), nullable, usesBuffer);
+          requireBufferSafeIfBuffered(type);
+          return type;
+        }
+
         if (kind == CppType::SHARED_OBJECT) {
           // TODO(@lukmccall): remove check?
           if (usesBuffer) {

@@ -12,6 +12,7 @@ object Identifiers {
     /** The public surface: the annotations, and the two base classes a user extends. */
     val API = FqName("io.github.expo.modules.v2")
     val RECORDS = FqName("io.github.expo.modules.v2.records")
+    val UNIONS = FqName("io.github.expo.modules.v2.unions")
     val READERS = FqName("io.github.expo.modules.v2.records.readers")
     val WRITERS = FqName("io.github.expo.modules.v2.records.writers")
     val TYPES = FqName("io.github.expo.modules.v2.types")
@@ -59,6 +60,9 @@ object Identifiers {
 
     /** `kotlin.collections.listOf(vararg elements: T)` - what the expansion builds the list with. */
     val listOf = CallableId(FqName("kotlin.collections"), Name.identifier("listOf"))
+
+    /** `fun noSuchVariant(union, index): Nothing` - what a generated `wrap` throws past its variants. */
+    val noSuchVariant = CallableId(Packages.UNIONS, Name.identifier("noSuchVariant"))
   }
 
   object Classes {
@@ -69,6 +73,8 @@ object Identifiers {
     val ExpoSharedObjectAnnotation = classId(Packages.API, "ExpoSharedObject")
     val EventAnnotation = classId(Packages.API, "Event")
     val ConstantAnnotation = classId(Packages.API, "Constant")
+    val UnionAnnotation = classId(Packages.API, "Union")
+    val TagAnnotation = classId(Packages.API, "Tag")
 
     /** Kolibri's marker for what native code looks up by name; the consumer R8 rules keep it. */
     val CalledFromNativeAnnotation = classId(Packages.KOLIBRI, "CalledFromNative")
@@ -80,6 +86,13 @@ object Identifiers {
     val RecordRegistry = classId(Packages.RECORDS, "RecordRegistry")
     val RecordReader = classId(Packages.READERS, "RecordReader")
     val RecordWriter = classId(Packages.WRITERS, "RecordWriter")
+
+    val UnionInterface = classId(Packages.UNIONS, "Union")
+    val UnionCodec = classId(Packages.UNIONS, "UnionCodec")
+    val UnionSchema = classId(Packages.UNIONS, "UnionSchema")
+    val UnionVariant = classId(Packages.UNIONS, "UnionVariant")
+    val UnionRegistry = classId(Packages.UNIONS, "UnionRegistry")
+    val UnionValue = classId(Packages.UNIONS, "UnionValue")
 
     val TypeDescriptor = classId(Packages.TYPES, "TypeDescriptor")
     val TypeDescriptorObjectLike = typeDescriptorNested("ObjectLike")
@@ -113,6 +126,7 @@ object Identifiers {
 
     val JavaScriptValue = classId(Packages.JSI, "JavaScriptValue")
     val JavaScriptObject = classId(Packages.JSI, "JavaScriptObject")
+    val TypedArray = classId(Packages.API, "TypedArray")
 
     fun typeDescriptorNested(simpleName: String): ClassId =
       TypeDescriptor.createNestedClassId(Name.identifier(simpleName))
@@ -129,6 +143,8 @@ object Identifiers {
     val SHARED_OBJECT_ANNOTATION: FqName = Classes.ExpoSharedObjectAnnotation.asSingleFqName()
     val EVENT_ANNOTATION: FqName = Classes.EventAnnotation.asSingleFqName()
     val CONSTANT_ANNOTATION: FqName = Classes.ConstantAnnotation.asSingleFqName()
+    val UNION_ANNOTATION: FqName = Classes.UnionAnnotation.asSingleFqName()
+    val TAG_ANNOTATION: FqName = Classes.TagAnnotation.asSingleFqName()
     val PROMISE: FqName = Classes.Promise.asSingleFqName()
   }
 
@@ -143,6 +159,14 @@ object Identifiers {
     val READ_IS_PRESENT = Name.identifier("readIsPresent")
     val CODEC_CLASS = Name.identifier("RecordCodec\$ExpoModulesV2")
     val CODEC_PROPERTY = Name.identifier(Literals.CODEC_PROPERTY)
+
+    // Union codec members.
+    val UNION_CODEC_CLASS = Name.identifier("UnionCodec\$ExpoModulesV2")
+    val UNION_CODEC_PROPERTY = Name.identifier(Literals.UNION_CODEC_PROPERTY)
+    val UNION_CLASS = Name.identifier("unionClass")
+    val INDEX_OF = Name.identifier("indexOf")
+    val UNWRAP = Name.identifier("unwrap")
+    val WRAP = Name.identifier("wrap")
 
     // Module members.
     val DEFINE_FUNCTION = Name.identifier(Literals.DEFINE_FUNCTION)
@@ -170,10 +194,12 @@ object Identifiers {
     val ARG_VALUE = Name.identifier("value")
     val ARG_RETURNS = Name.identifier("returns")
     val ARG_CLASSES = Name.identifier("classes")
+    val ARG_DISCRIMINATOR = Name.identifier("discriminator")
   }
 
   object Literals {
     const val CODEC_PROPERTY = "recordCodec\$ExpoModulesV2"
+    const val UNION_CODEC_PROPERTY = "unionCodec\$ExpoModulesV2"
     const val DEFINE_FUNCTION = "define\$ExpoModulesV2"
     const val DESCRIPTOR_FIELD_PREFIX = "type\$"
     const val TRAMPOLINE_SUFFIX = "__trampoline\$ExpoModulesV2"
