@@ -18,6 +18,7 @@
 #include <expo-modules-v2/converter/decoders/JniDecode.h>
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
 #include <expo-modules-v2/modules/ModuleNativeState.h>
+#include <expo-modules-v2/objects/InstanceRef.h>
 #include <expo-modules-v2/objects/ObjectNativeState.h>
 
 namespace expo::modules::v2 {
@@ -78,7 +79,7 @@ namespace expo::modules::v2 {
           objects::ObjectNativeState::of(rt, *moduleObject)
         );
         expectSmoke(
-          state != nullptr && state->instance() != nullptr,
+          state != nullptr && state->holdsInstance(),
           "expected a chained ModuleNativeState on the module object"
         );
         expectSmoke(
@@ -294,6 +295,38 @@ namespace expo::modules::v2 {
       }
     );
     suite.setProperty(rt, "__collectGarbage", std::move(collectGarbage));
+
+    // How the instances JavaScript holds are pinned right now: `globals` by a JNI global ref each,
+    // `slots` in a slot of a shared array, out of `chunks` arrays alive (objects/InstanceRef.h).
+    auto instanceRefCounts = facebook::jsi::Function::createFromHostFunction(
+      rt,
+      facebook::jsi::PropNameID::forAscii(rt, "__instanceRefCounts"),
+      0,
+      [](facebook::jsi::Runtime& rt, const facebook::jsi::Value&, const facebook::jsi::Value*, size_t) -> facebook::jsi::Value {
+        facebook::jsi::Object counts(rt);
+        counts.setProperty(rt, "globals", static_cast<double>(objects::InstanceRef::budgetedGlobalCount()));
+        counts.setProperty(rt, "slots", static_cast<double>(objects::InstanceRef::slottedCount()));
+        counts.setProperty(rt, "chunks", static_cast<double>(objects::InstanceRef::slotChunkCount()));
+        return counts;
+      }
+    );
+    suite.setProperty(rt, "__instanceRefCounts", std::move(instanceRefCounts));
+
+    // Whether the instance behind a shared object or module holds a JNI global ref of its own
+    // rather than only a slot.
+    auto holdsGlobalRef = facebook::jsi::Function::createFromHostFunction(
+      rt,
+      facebook::jsi::PropNameID::forAscii(rt, "__holdsGlobalRef"),
+      1,
+      [](facebook::jsi::Runtime& rt, const facebook::jsi::Value&, const facebook::jsi::Value* args, size_t count) -> facebook::jsi::Value {
+        if (count < 1 || !args[0].isObject()) {
+          return false;
+        }
+        const objects::ObjectNativeState* node = objects::ObjectNativeState::borrow(rt, args[0].getObject(rt));
+        return node != nullptr && node->state()->instanceRef().global() != nullptr;
+      }
+    );
+    suite.setProperty(rt, "__holdsGlobalRef", std::move(holdsGlobalRef));
 
     // Exercises the kolibri JNI array API (kolibri/array.h) against the live JVM — creation,
     // regions, pins, object/nested arrays, array-typed method tokens. Returns "ok" or the first

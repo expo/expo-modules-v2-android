@@ -3,10 +3,10 @@
 #include <utility>
 
 #include <expo-jsi/ChainedNativeState.h>
-#include <kolibri/Ref.h>
 
 #include <expo-modules-v2/jni/JSharedObject.h>
 #include <expo-modules-v2/jni/JSharedObjectRegistry.h>
+#include <expo-modules-v2/objects/InstanceRef.h>
 #include <expo-modules-v2/objects/ObjectId.h>
 #include <expo-modules-v2/objects/ObjectRegistry.h>
 #include <expo-modules-v2/objects/RuntimeObjects.h>
@@ -40,7 +40,7 @@ namespace expo::modules::v2::sharedobjects {
       const int pressure = JSharedObject::additionalMemoryPressureOf(env, instance);
       state = objects::ObjectRegistry::adopt(
         std::make_shared<SharedObjectState>(
-          kolibri::GlobalRef<>::make(env, instance),
+          objects::InstanceRef::pin(env, instance),
           objectId,
           spec,
           pressure > 0 ? static_cast<size_t>(pressure) : 0

@@ -38,7 +38,11 @@ private class BenchCounter : SharedObject() {
   var seconds: Int = 0
 }
 
-@ExpoModule(name = "SharedObjectBench")
+/** Constructed from JavaScript with `new`, the way an app makes most of its shared objects. */
+@ExpoSharedObject
+private class BenchPoint @JS constructor(private val x: Double, private val y: Double) : SharedObject()
+
+@ExpoModule(name = "SharedObjectBench", classes = [BenchPoint::class])
 private class SharedObjectOps : Module() {
   private val shared = BenchCounter()
 
@@ -58,6 +62,13 @@ private class SharedObjectOps : Module() {
   @JS
   fun tick(): Int = shared.tick()
 }
+
+/**
+ * Holds more shared objects than get a global ref of their own, so the one made after them sits in
+ * a slot and every call reads it out of there.
+ */
+private const val PAST_BUDGET =
+  "globalThis.__held = Array.from({ length: 2048 }, () => SharedObjectBench.create())"
 
 /** The JS prelude that prepares the call, and the call itself. */
 private class SharedObjectCase(val prelude: String, val call: String)
@@ -86,6 +97,20 @@ private val SHARED_OBJECT_CASES = mapOf(
     SharedObjectCase("const c = SharedObjectBench.current", "(c(), 1)"),
   // Outbound, first time: id assignment, a new state, a new façade, a cache store.
   "return-new" to SharedObjectCase("const n = SharedObjectBench.create", "(n(), 1)"),
+  // The same, from JavaScript: a façade, a Kotlin instance and its state, most of them past budget.
+  "construct" to
+    SharedObjectCase("const P = SharedObjectBench.BenchPoint", "(new P(1.5, 2.5), 1)"),
+  // The receiver cases again, with the receiver in a slot instead of holding a global ref.
+  "method-slotted" to
+    SharedObjectCase("$PAST_BUDGET; const o = SharedObjectBench.create()", "o.tick()"),
+  "property-read-slotted" to
+    SharedObjectCase("$PAST_BUDGET; const o = SharedObjectBench.create()", "o.seconds"),
+  "property-write-slotted" to
+    SharedObjectCase("$PAST_BUDGET; const o = SharedObjectBench.create()", "(o.seconds = i)"),
+  "pass-arg-slotted" to SharedObjectCase(
+    "$PAST_BUDGET; const g = SharedObjectBench.tickOf; const o = SharedObjectBench.create()",
+    "g(o)",
+  ),
 )
 
 /**
@@ -111,6 +136,11 @@ class SharedObjectBenchmark {
     "pass-arg",
     "return-existing",
     "return-new",
+    "construct",
+    "method-slotted",
+    "property-read-slotted",
+    "property-write-slotted",
+    "pass-arg-slotted",
   )
   var case: String = ""
 

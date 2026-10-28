@@ -86,10 +86,13 @@ namespace expo::modules::v2 {
       throwJSError(rt, {"Cannot pass a released ", state->spec().name, " to a native function"});
     }
 
+    const jobject instance = state->instanceRef().newLocal(env);
+
     if (state->spec().classId != sharedType.classId) {
       const jclass declaredClass = SharedObjectClassRegistry::javaClassOf(sharedType.classId);
       // TODO(@lukmccall): move class check to kotlin
-      if (declaredClass == nullptr || !env->IsInstanceOf(state->instance(), declaredClass)) {
+      if (declaredClass == nullptr || !env->IsInstanceOf(instance, declaredClass)) {
+        env->DeleteLocalRef(instance);
         throwJSError(rt, {
           "Expected ",
           SharedObjectClassRegistry::nameOf(sharedType.classId),
@@ -99,7 +102,7 @@ namespace expo::modules::v2 {
       }
     }
 
-    return env->NewLocalRef(state->instance());
+    return instance;
   }
 
   jobject JniEncoder::operator()(const ExpectedType::Record& recordType) const {

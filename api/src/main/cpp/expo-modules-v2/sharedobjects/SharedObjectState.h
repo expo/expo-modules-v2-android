@@ -5,8 +5,9 @@
 #include <atomic>
 #include <cstddef>
 
-#include <kolibri/Ref.h>
+#include <kolibri/defines.h>
 
+#include <expo-modules-v2/objects/InstanceRef.h>
 #include <expo-modules-v2/objects/ObjectState.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassSpec.h>
 
@@ -21,7 +22,7 @@ namespace expo::modules::v2::sharedobjects {
     static constexpr Kind kKind = Kind::SharedObject;
 
     SharedObjectState(
-      kolibri::GlobalRef<> instance,
+      objects::InstanceRef instance,
       objects::ObjectId::Value objectId,
       const SharedObjectClassSpec& spec,
       size_t additionalMemoryPressure
@@ -46,20 +47,47 @@ namespace expo::modules::v2::sharedobjects {
       const facebook::jsi::Value* args,
       const size_t count
     ) const {
-      return spec_->functions[index].invoke(rt, instance_.get(), args, count);
+      // Borrowing the global ref takes nothing to put back after the call, so this stays a tail
+      // call; only an instance in a slot pays for reading it out, off this path.
+      if (const jobject receiver = instance_.global(); receiver != nullptr) [[likely]] {
+        return spec_->functions[index].invoke(rt, receiver, args, count);
+      }
+      return invokeFunctionInSlot(rt, index, args, count);
     }
 
     [[nodiscard]] facebook::jsi::Value getProperty(facebook::jsi::Runtime& rt, const uint32_t index) const {
-      return spec_->properties[index].get(rt, instance_.get());
+      if (const jobject receiver = instance_.global(); receiver != nullptr) [[likely]] {
+        return spec_->properties[index].get(rt, receiver);
+      }
+      return getPropertyInSlot(rt, index);
     }
 
     void setProperty(facebook::jsi::Runtime& rt, const uint32_t index, const facebook::jsi::Value& value) const {
-      spec_->properties[index].set(rt, instance_.get(), value);
+      if (const jobject receiver = instance_.global(); receiver != nullptr) [[likely]] {
+        return spec_->properties[index].set(rt, receiver, value);
+      }
+      setPropertyInSlot(rt, index, value);
     }
 
     void release();
 
   private:
+    /** The same three, for an instance in a slot or already released. */
+    NOINLINE facebook::jsi::Value invokeFunctionInSlot(
+      facebook::jsi::Runtime& rt,
+      uint32_t index,
+      const facebook::jsi::Value* args,
+      size_t count
+    ) const;
+
+    NOINLINE facebook::jsi::Value getPropertyInSlot(facebook::jsi::Runtime& rt, uint32_t index) const;
+
+    NOINLINE void setPropertyInSlot(
+      facebook::jsi::Runtime& rt,
+      uint32_t index,
+      const facebook::jsi::Value& value
+    ) const;
+
     /** Owned by `SharedObjectClassRegistry` for the life of the process. */
     const SharedObjectClassSpec* spec_;
 
