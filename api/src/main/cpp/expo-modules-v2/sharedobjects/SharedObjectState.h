@@ -72,7 +72,10 @@ namespace expo::modules::v2::sharedobjects {
     void release();
 
   private:
-    /** The same three, for an instance in a slot or already released. */
+    /**
+     * The same three, for an instance in a slot or already released. Each promotes the instance on
+     * the way, so the calls after it take the path above.
+     */
     NOINLINE facebook::jsi::Value invokeFunctionInSlot(
       facebook::jsi::Runtime& rt,
       uint32_t index,
