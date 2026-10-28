@@ -84,12 +84,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Listed' type=kotlin.String origin=null
           ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Listed.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Listed'
-          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder, reportsMemoryPressure: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
             ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
             ARG jsName: CONST String type=kotlin.String value="Listed"
             ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Listed> origin=null
               ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Listed modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
             ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Listed.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+            ARG reportsMemoryPressure: CONST Boolean type=kotlin.Boolean value=false
     FUN name:value visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Listed
       annotations:
@@ -216,12 +217,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
           CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Owner.Nested' type=kotlin.String origin=null
             ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.Nested.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
           RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Owner.Nested'
-            CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+            CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder, reportsMemoryPressure: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
               ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
               ARG jsName: CONST String type=kotlin.String value="Nested"
               ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Owner.Nested> origin=null
                 ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Nested modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
               ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.Nested.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+              ARG reportsMemoryPressure: CONST Boolean type=kotlin.Boolean value=false
       FUN name:render visibility:public modality:FINAL returnType:kotlin.String
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Owner.Nested
         annotations:
@@ -312,12 +314,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
           CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable' type=kotlin.String origin=null
             ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
           RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable'
-            CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+            CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder, reportsMemoryPressure: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
               ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
               ARG jsName: CONST String type=kotlin.String value="NotConstructable"
               ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Owner.NotConstructable> origin=null
                 ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:NotConstructable modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
               ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Owner.NotConstructable.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+              ARG reportsMemoryPressure: CONST Boolean type=kotlin.Boolean value=false
       FUN name:name visibility:public modality:FINAL returnType:kotlin.String
         VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Owner.NotConstructable
         annotations:
@@ -532,12 +535,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Player' type=kotlin.String origin=null
           ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Player'
-          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder, reportsMemoryPressure: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
             ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
             ARG jsName: CONST String type=kotlin.String value="Player"
             ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Player> origin=null
               ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
             ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+            ARG reportsMemoryPressure: CONST Boolean type=kotlin.Boolean value=false
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:rename__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:kotlin.String?
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Player
       VALUE_PARAMETER kind:Regular name:payloadLength index:1 type:kotlin.Int
@@ -797,12 +801,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Speaker' type=kotlin.String origin=null
           ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Speaker.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Speaker'
-          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder, reportsMemoryPressure: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
             ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
             ARG jsName: CONST String type=kotlin.String value="Renamed"
             ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Speaker> origin=null
               ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Speaker modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
             ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Speaker.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+            ARG reportsMemoryPressure: CONST Boolean type=kotlin.Boolean value=false
     FUN name:mute visibility:public modality:FINAL returnType:kotlin.Unit
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Speaker
       annotations:
@@ -895,12 +900,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/sharedObject.kt
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.TextRef' type=kotlin.String origin=null
           ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.TextRef.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.TextRef'
-          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder, reportsMemoryPressure: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
             ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
             ARG jsName: CONST String type=kotlin.String value="TextRef"
             ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.TextRef> origin=null
               ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:TextRef modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedRef<java.lang.StringBuilder>]' type=kotlin.reflect.KClass<*>
             ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.TextRef.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+            ARG reportsMemoryPressure: CONST Boolean type=kotlin.Boolean value=false
     FUN name:length visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.TextRef
       annotations:

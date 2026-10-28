@@ -57,6 +57,15 @@ class TextRef(text: StringBuilder) : SharedRef<StringBuilder>(text) {
     override fun getAdditionalMemoryPressure(): Int = ref.length
 }
 
+/** Overrides the pressure for the class below it, without being a shared class itself. */
+abstract class PressuredBase : SharedObject() {
+    override fun getAdditionalMemoryPressure(): Int = 9
+}
+
+/** Inherits its override, which the registration has to see through. */
+@ExpoSharedObject
+class InheritsPressure : PressuredBase()
+
 /** No override at all: the inherited defaults still answer. */
 @ExpoSharedObject
 class Plain : SharedObject()
@@ -90,6 +99,11 @@ fun box(): String {
     val ref: io.github.expo.modules.v2.SharedObject = TextRef(StringBuilder("abcd"))
     if (ref.getAdditionalMemoryPressure() != 4) {
         return "TextRef: ${ref.getAdditionalMemoryPressure()}"
+    }
+
+    val inherits: io.github.expo.modules.v2.SharedObject = InheritsPressure()
+    if (inherits.getAdditionalMemoryPressure() != 9) {
+        return "InheritsPressure: ${inherits.getAdditionalMemoryPressure()}"
     }
 
     val plain: io.github.expo.modules.v2.SharedObject = Plain()

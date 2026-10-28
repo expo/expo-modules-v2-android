@@ -34,10 +34,11 @@ namespace expo::modules::v2::sharedobjects {
       objects::ObjectRegistry::find<SharedObjectState>(objectId);
     if (state == nullptr) {
       // Slow path, once per instance lifetime: the class id and the memory pressure are the only
-      // things Kotlin still answers.
+      // things Kotlin still answers, and the pressure only when the class overrides it.
       const int classId = JSharedObjectRegistry::classIdOf(env, instance);
       const SharedObjectClassSpec& spec = SharedObjectClassRegistry::get(classId);
-      const int pressure = JSharedObject::additionalMemoryPressureOf(env, instance);
+      const int pressure =
+        spec.reportsMemoryPressure ? JSharedObject::additionalMemoryPressureOf(env, instance) : 0;
       state = objects::ObjectRegistry::adopt(
         std::make_shared<SharedObjectState>(
           objects::InstanceRef::pin(env, instance),

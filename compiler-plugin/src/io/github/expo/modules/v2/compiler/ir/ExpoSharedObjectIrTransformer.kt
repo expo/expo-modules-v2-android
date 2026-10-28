@@ -9,10 +9,14 @@ import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.builders.declarations.addValueParameter
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
+import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.types.makeNullable
 import org.jetbrains.kotlin.ir.util.defaultType
+import org.jetbrains.kotlin.ir.util.functions
 import org.jetbrains.kotlin.ir.util.getAnnotation
+import org.jetbrains.kotlin.ir.util.isInterface
+import org.jetbrains.kotlin.ir.util.parentAsClass
 import org.jetbrains.kotlin.ir.util.patchDeclarationParents
 import org.jetbrains.kotlin.ir.util.primaryConstructor
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
@@ -81,6 +85,26 @@ internal class ExpoSharedObjectIrTransformer(
   }
 
   /**
+   * Whether [sharedClass] overrides `SharedObject.getAdditionalMemoryPressure`, itself or through a
+   * base class. Every instance of a class that does not reports 0, so the native side skips asking.
+   */
+  private fun reportsMemoryPressure(sharedClass: IrClass): Boolean {
+    val pressure = sharedClass.functions.single {
+      it.name == Identifiers.Names.GET_ADDITIONAL_MEMORY_PRESSURE &&
+        it.parameters.none { parameter -> parameter.kind == IrParameterKind.Regular }
+    }
+    // An inherited member is a fake override; follow it down the class chain to the body it runs.
+    // An interface can declare the method too, but the class chain's body is the one that wins.
+    val implementation = generateSequence(pressure) { function ->
+      function.takeIf { it.isFakeOverride }
+        ?.overriddenSymbols
+        ?.map { it.owner }
+        ?.firstOrNull { !it.parentAsClass.isInterface }
+    }.last()
+    return implementation.parentAsClass.symbol != symbols.classes.sharedObject
+  }
+
+  /**
    * A private static field whose initializer registers the class, so loading it is what puts the
    * class object within JavaScript's reach.
    */
@@ -131,6 +155,7 @@ internal class ExpoSharedObjectIrTransformer(
             poet.string(jsName),
             poet.javaClass(sharedClass.defaultType),
             builder.get(),
+            poet.boolean(reportsMemoryPressure(sharedClass)),
           ),
           returnType = irBuiltIns.intType,
         ),

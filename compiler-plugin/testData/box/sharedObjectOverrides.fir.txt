@@ -72,6 +72,22 @@ FILE: sharedObjectOverrides.kt
         }
 
     }
+    public abstract class PressuredBase : R|io/github/expo/modules/v2/SharedObject| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/PressuredBase| {
+            super<R|io/github/expo/modules/v2/SharedObject|>()
+        }
+
+        public open override fun getAdditionalMemoryPressure(): R|kotlin/Int| {
+            ^getAdditionalMemoryPressure Int(9)
+        }
+
+    }
+    @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class InheritsPressure : R|io/github/expo/modules/v2/testdata/PressuredBase| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/InheritsPressure| {
+            super<R|io/github/expo/modules/v2/testdata/PressuredBase|>()
+        }
+
+    }
     @R|io/github/expo/modules/v2/ExpoSharedObject|() public final class Plain : R|io/github/expo/modules/v2/SharedObject| {
         public constructor(): R|io/github/expo/modules/v2/testdata/Plain| {
             super<R|io/github/expo/modules/v2/SharedObject|>()
@@ -119,6 +135,13 @@ FILE: sharedObjectOverrides.kt
         when () {
             !=(R|<local>/ref|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|(), Int(4)) ->  {
                 ^box <strcat>(String(TextRef: ), R|<local>/ref|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|())
+            }
+        }
+
+        lval inherits: R|io/github/expo/modules/v2/SharedObject| = R|io/github/expo/modules/v2/testdata/InheritsPressure.InheritsPressure|()
+        when () {
+            !=(R|<local>/inherits|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|(), Int(9)) ->  {
+                ^box <strcat>(String(InheritsPressure: ), R|<local>/inherits|.R|io/github/expo/modules/v2/SharedObject.getAdditionalMemoryPressure|())
             }
         }
 

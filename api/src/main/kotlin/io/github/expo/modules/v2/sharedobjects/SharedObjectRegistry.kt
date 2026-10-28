@@ -24,6 +24,11 @@ object SharedObjectRegistry {
     val jsName: String,
     // TODO(@lukmccall): use immutable structure instead of ModuleBuilder
     val definition: ModuleBuilder,
+    /**
+     * Whether the class overrides [SharedObject.getAdditionalMemoryPressure]. One that does not
+     * always reports 0, so the native side skips asking each of its instances.
+     */
+    val reportsMemoryPressure: Boolean,
   )
 
   private val classes = MultiKeyCache<Class<*>, SharedClassId, ClassEntry>()
@@ -34,7 +39,7 @@ object SharedObjectRegistry {
   private val reservedIds = ConcurrentHashMap<Class<*>, SharedClassId>()
 
   init {
-    register("SharedRef", SharedRef::class.java)
+    register("SharedRef", SharedRef::class.java, reportsMemoryPressure = false)
   }
 
   /**
@@ -49,12 +54,16 @@ object SharedObjectRegistry {
   /**
    * Registers [sharedClass] under the id [reserve] gave it. A class the compiler plugin generated
    * reserved that id before it described its exports; any other class is reserved here.
+   *
+   * [reportsMemoryPressure] says whether the class overrides
+   * [SharedObject.getAdditionalMemoryPressure]; the compiler plugin works it out from the class.
    */
   @JvmStatic
   fun register(
     jsName: String,
     sharedClass: Class<out SharedObject>,
     definition: ModuleBuilder,
+    reportsMemoryPressure: Boolean,
   ): Int {
     classes.get(sharedClass)?.let { return it.id.value }
 
@@ -65,6 +74,7 @@ object SharedObjectRegistry {
       sharedClass = sharedClass,
       jsName = jsName,
       definition = definition,
+      reportsMemoryPressure = reportsMemoryPressure,
     )
     classes.put(sharedClass, entry.id, entry)
     reservedIds.remove(sharedClass)
@@ -72,11 +82,16 @@ object SharedObjectRegistry {
     return entry.id.value
   }
 
+  /**
+   * Registers a class described by hand. Nothing checks whether it overrides
+   * [SharedObject.getAdditionalMemoryPressure], so by default each instance is asked.
+   */
   fun register(
     jsName: String,
     sharedClass: Class<out SharedObject>,
+    reportsMemoryPressure: Boolean = true,
     build: ModuleBuilder.() -> Unit = {},
-  ): Int = register(jsName, sharedClass, ModuleBuilder().apply(build))
+  ): Int = register(jsName, sharedClass, ModuleBuilder().apply(build), reportsMemoryPressure)
 
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JSharedObjectRegistry.h")
@@ -152,11 +167,12 @@ object SharedObjectRegistry {
     val entry = classes.get(SharedClassId(classId)) ?: return null
 
     try {
-      ModuleDescriptorEncoder.encode(
+      ModuleDescriptorEncoder.encodeSharedClass(
         BinaryBuffer.newSharedView(),
         entry.definition.functions,
         entry.definition.properties,
-        events = entry.definition.events,
+        entry.definition.events,
+        entry.reportsMemoryPressure,
       )
     } catch (overflow: BufferOverflowException) {
       throw IllegalArgumentException(

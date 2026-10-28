@@ -116,6 +116,7 @@ namespace expo::modules::v2::sharedobjects {
     auto spec = std::make_unique<SharedObjectClassSpec>();
     spec->classId = classId;
     spec->name = std::move(exports->jsName);
+    spec->reportsMemoryPressure = exports->reportsMemoryPressure;
 
     spec->functions = std::move(exports->descriptor.functions);
     spec->properties = std::move(exports->descriptor.properties);
