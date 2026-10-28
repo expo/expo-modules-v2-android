@@ -36,7 +36,7 @@ androidx-annotation = "1.9.1"
 agp = "9.2.1"
 
 # https://github.com/facebook/react-native
-react-native = "0.87.0"
+react-native = "0.88.1"
 
 # https://github.com/Kotlin/kotlinx-benchmark
 # 0.4.16 is the last release that supports Kotlin 2.0+; 0.4.17 warns on every configuration that it

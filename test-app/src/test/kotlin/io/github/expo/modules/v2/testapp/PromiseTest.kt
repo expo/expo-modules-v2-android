@@ -177,12 +177,12 @@ class PromiseTest {
   @Test
   fun `a promise settled before returning settles inside the call`() = withPromises { runtime ->
     assertEquals(
-      "[object Promise]",
+      "true",
       runtime.evaluateAsString(
         "globalThis.out = null;" +
           "globalThis.p = expo.modules.Promises.immediate(7);" +
           "globalThis.p.then((v) => { globalThis.out = v; });" +
-          "Object.prototype.toString.call(globalThis.p)",
+          "globalThis.p instanceof Promise",
       ),
     )
     // The same fast path as a `suspend` body that never suspends: no job, only the `.then`.

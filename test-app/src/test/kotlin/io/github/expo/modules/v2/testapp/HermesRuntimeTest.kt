@@ -3215,11 +3215,13 @@ class HermesRuntimeTest {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register(sharedAsync)
 
+      // `instanceof`, not `Object.prototype.toString`: the Hermes React Native ships has no
+      // Promise @@toStringTag.
       assertEquals(
-        "[object Promise]",
+        "true",
         runtime.evaluateAsString(
           "globalThis.p = expo.modules.Async.immediate(1);" +
-            "Object.prototype.toString.call(globalThis.p)",
+            "globalThis.p instanceof Promise",
         ),
         "an async export must hand JavaScript a promise straight away",
       )
