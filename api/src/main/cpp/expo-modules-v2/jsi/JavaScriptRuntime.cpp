@@ -5,6 +5,7 @@
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <expo-modules-v2/jsi/ModulesHostObject.h>
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/objects/ObjectId.h>
 #include <expo-modules-v2/utils/Log.h>
 #include <kolibri/ScopedNativeObject.h>
@@ -58,6 +59,7 @@ namespace expo::modules::v2::jsi {
     modules_.reset();
 
     RecordPropertyCache::clearForRuntime(*runtime_);
+    RuntimeGlobals::clearForRuntime(*runtime_);
     kolibri::invalidateScope(runtime_);
   }
 

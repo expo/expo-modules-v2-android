@@ -1,5 +1,6 @@
 #include <expo-modules-v2/sharedobjects/SharedObjectClassObject.h>
 
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/objects/RuntimeObjects.h>
 
 namespace expo::modules::v2::sharedobjects {
@@ -15,9 +16,8 @@ namespace expo::modules::v2::sharedobjects {
       descriptor.setProperty(rt, "enumerable", false);
       descriptor.setProperty(rt, "configurable", false);
 
-      rt.global()
-        .getPropertyAsObject(rt, "Object")
-        .getPropertyAsFunction(rt, "defineProperty")
+      RuntimeGlobals::get(rt)
+        .objectDefineProperty()
         .call(rt, target, name, descriptor);
     }
   } // namespace

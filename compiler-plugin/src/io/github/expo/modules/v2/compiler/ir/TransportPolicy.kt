@@ -47,7 +47,7 @@ internal enum class ValueKind {
   /** `JavaScriptValue`/`JavaScriptObject`: a live handle, so it can never be serialized. */
   JS_HANDLE,
 
-  /** `TypedArray`, whose bridge is the live `JavaScriptObject` it wraps. */
+  /** `TypedArray` or one kind of it, whose bridge is the live `JavaScriptObject` it wraps. */
   TYPED_ARRAY,
 
   /** `Duration`, whose bridge is a `Double` - unboxed when the declaration is not nullable. */
@@ -140,8 +140,6 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       "io.github.expo.modules.v2.jsi.JavaScriptValue", "io.github.expo.modules.v2.jsi.JavaScriptObject" ->
         ValueKind.JS_HANDLE
 
-      "io.github.expo.modules.v2.TypedArray" -> ValueKind.TYPED_ARRAY
-
       "kotlin.time.Duration" -> ValueKind.CONVERTED_TO_DOUBLE
       "java.io.File", "java.net.URL", "java.net.URI", "java.nio.file.Path" ->
         ValueKind.CONVERTED_TO_STRING
@@ -154,6 +152,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
         val owner = type.classOrNull?.owner
         when {
           owner?.hasAnnotation(Identifiers.Classes.RecordAnnotation) == true -> ValueKind.RECORD
+          owner?.isSubclassOf(symbols.classes.typedArray.owner) == true -> ValueKind.TYPED_ARRAY
           owner?.isSubclassOf(symbols.classes.sharedObject.owner) == true -> ValueKind.SHARED_OBJECT
           owner?.kind == ClassKind.ENUM_CLASS ->
             if (owner.isIntBackedEnum()) {

@@ -1,5 +1,6 @@
 #include <expo-modules-v2/converter/ByteView.h>
 
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/utils/Throw.h>
 
 namespace expo::modules::v2 {
@@ -11,9 +12,8 @@ namespace expo::modules::v2 {
         return {.data = buffer.data(rt), .size = buffer.size(rt)};
       }
 
-      const bool isView = rt.global()
-        .getPropertyAsObject(rt, "ArrayBuffer")
-        .getPropertyAsFunction(rt, "isView")
+      const bool isView = RuntimeGlobals::get(rt)
+        .arrayBufferIsView()
         .call(rt, value)
         .getBool();
 

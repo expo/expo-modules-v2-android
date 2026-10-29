@@ -4,14 +4,37 @@
 #include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/objects/ObjectId.h>
 #include <expo-modules-v2/objects/ObjectNativeState.h>
 #include <kolibri/class.h>
 #include <kolibri/string_utils.h>
 #include <kolibri/array.h>
 
+#include <array>
+#include <string_view>
+
 namespace expo::modules::v2::jsi {
   namespace {
+    /**
+     * The `Symbol.toStringTag` of each kind of array buffer view, in the order of the Kotlin
+     * `ArrayBufferViewKind` entries: a kind crosses as its index here.
+     */
+    constexpr std::array<std::string_view, 12> kArrayBufferViewTags = {
+      "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Int32Array",
+      "Uint32Array", "Float32Array", "Float64Array", "BigInt64Array", "BigUint64Array", "DataView",
+    };
+
+    constexpr size_t kDataViewKind = kArrayBufferViewTags.size() - 1;
+    static_assert(kArrayBufferViewTags[kDataViewKind] == "DataView");
+
+    bool isArrayBufferView(facebook::jsi::Runtime& rt, const facebook::jsi::Object& object) {
+      return RuntimeGlobals::get(rt)
+        .arrayBufferIsView()
+        .call(rt, facebook::jsi::Value(rt, object))
+        .getBool();
+    }
+
     /**
      * [name] as a property name of [rt]. A short ASCII name - nearly every one - is copied out with
      * one `GetStringRegion` and comes from the runtime's key cache, instead of turning into a heap
@@ -193,12 +216,7 @@ namespace expo::modules::v2::jsi {
     facebook::jsi::Runtime& rt = runtime();
     const facebook::jsi::Object& view = object();
 
-    const bool isView = rt.global()
-      .getPropertyAsObject(rt, "ArrayBuffer")
-      .getPropertyAsFunction(rt, "isView")
-      .call(rt, facebook::jsi::Value(rt, view))
-      .getBool();
-    if (!isView) {
+    if (!isArrayBufferView(rt, view)) {
       return nullptr;
     }
 
@@ -209,6 +227,26 @@ namespace expo::modules::v2::jsi {
     static uint8_t empty = 0;
     uint8_t* data = length == 0 ? &empty : buffer.data(rt) + offset;
     return env->NewDirectByteBuffer(data, length);
+  }
+
+  jint JavaScriptObject::getArrayBufferViewKind() const {
+    facebook::jsi::Runtime& rt = runtime();
+    const facebook::jsi::Object& view = object();
+
+    const facebook::jsi::Value tag = RuntimeGlobals::get(rt)
+      .typedArrayToStringTag()
+      .callWithThis(rt, view);
+    if (!tag.isString()) {
+      return isArrayBufferView(rt, view) ? static_cast<jint>(kDataViewKind) : -1;
+    }
+
+    const std::string name = tag.getString(rt).utf8(rt);
+    for (size_t i = 0; i < kDataViewKind; ++i) {
+      if (kArrayBufferViewTags[i] == name) {
+        return static_cast<jint>(i);
+      }
+    }
+    return -1;
   }
 
   jobject JavaScriptObject::nativeInstance(JNIEnv* env) const {
@@ -224,6 +262,7 @@ namespace expo::modules::v2::jsi {
         &JavaScriptObject::getArrayBufferViewBytes,
         kolibri::Ref<kolibri::JByteBuffer>(kolibri::NativePointer)
       >("getArrayBufferViewBytes")
+      .method<&JavaScriptObject::getArrayBufferViewKind>("getArrayBufferViewKind")
       .method<&JavaScriptObject::hasProperty>("hasProperty")
       .method<
         &JavaScriptObject::getProperty,

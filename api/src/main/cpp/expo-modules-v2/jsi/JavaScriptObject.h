@@ -40,6 +40,7 @@ namespace expo::modules::v2::jsi {
     jboolean isArray() const noexcept;
     jboolean isArrayBuffer() const noexcept;
     jobject getArrayBufferViewBytes(JNIEnv* env) const;
+    jint getArrayBufferViewKind() const;
     jboolean hasProperty(JNIEnv* env, jstring name) const;
     jobject getProperty(JNIEnv* env, jstring name) const;
     jobjectArray getPropertyNames(JNIEnv* env) const;

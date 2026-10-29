@@ -1,6 +1,7 @@
 #include <expo-modules-v2/jsi/NativeError.h>
 
 #include <expo-modules-v2/jni/JThrowableHelper.h>
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 
 namespace expo::modules::v2 {
   facebook::jsi::Object createNativeError(
@@ -9,8 +10,8 @@ namespace expo::modules::v2 {
     const std::string& message,
     const std::string& stack
   ) {
-    facebook::jsi::Object error = rt.global()
-      .getPropertyAsFunction(rt, "Error")
+    facebook::jsi::Object error = RuntimeGlobals::get(rt)
+      .errorConstructor()
       .callAsConstructor(
         rt,
         facebook::jsi::String::createFromUtf8(rt, message)

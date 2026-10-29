@@ -12,6 +12,7 @@
 #include <expo-modules-v2/descriptor/EventSpec.h>
 #include <expo-modules-v2/events/ListenerTable.h>
 #include <expo-modules-v2/jni/JEventSupport.h>
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/objects/ObjectNativeState.h>
 #include <expo-modules-v2/objects/RuntimeObjects.h>
 #include <expo-modules-v2/utils/Throw.h>
@@ -219,7 +220,14 @@ namespace expo::modules::v2::events {
       const Declared event = eventOf(rt, emitter, args, count, kAddListener);
       const facebook::jsi::Function listener = listenerOf(rt, args, count, kAddListener);
 
-      const bool first = emitter.listeners().add(rt, emitter.node->state(), event.index, listener);
+      const bool first = emitter
+        .listeners()
+        .add(
+          rt,
+          emitter.node->state(),
+          event.index,
+          listener
+        );
       if (first) {
         emitter.observe(event.index, true);
       }
@@ -331,9 +339,8 @@ namespace expo::modules::v2::events {
   } // namespace
 
   void installEmitterMethods(facebook::jsi::Runtime& rt, const facebook::jsi::Object& target) {
-    const facebook::jsi::Function defineProperty = rt.global()
-      .getPropertyAsObject(rt, "Object")
-      .getPropertyAsFunction(rt, "defineProperty");
+    const facebook::jsi::Function& defineProperty = RuntimeGlobals::get(rt)
+      .objectDefineProperty();
 
     defineMember(rt, target, defineProperty, kAddListener, 2, &addListener);
     defineMember(rt, target, defineProperty, kRemoveListener, 2, &removeListenerMember);
