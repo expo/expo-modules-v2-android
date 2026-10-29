@@ -86,8 +86,9 @@ namespace expo::modules::v2::config {
   /**
    * How many shared objects pin their Kotlin instance with a JNI global ref of their own, which a
    * call borrows as its receiver for free. Android aborts the process at 51,200 global refs, held by
-   * every library together, so this is 2% of that. Objects past it sit in a slot of a shared Java
-   * array instead, and every call on one costs two more JNI calls (see `InstanceRef`).
+   * every library together, so this is 2% of that. Every object sits in a slot of a shared Java
+   * array, and the first call on one promotes it to a global ref while this lasts; a call on one
+   * that was not costs two more JNI calls (see `InstanceRef`).
    */
   inline constexpr size_t kSharedObjectGlobalRefs = 1024;
 

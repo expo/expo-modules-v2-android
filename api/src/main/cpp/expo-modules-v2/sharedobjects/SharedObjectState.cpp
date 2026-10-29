@@ -27,7 +27,7 @@ namespace expo::modules::v2::sharedobjects {
     const facebook::jsi::Value* args,
     const size_t count
   ) const {
-    const objects::ScopedInstance receiver(instance_);
+    const objects::ScopedInstance receiver(instance_, objects::ScopedInstance::Promote::Yes);
     return spec_->functions[index].invoke(rt, receiver.get(), args, count);
   }
 
@@ -35,7 +35,7 @@ namespace expo::modules::v2::sharedobjects {
     facebook::jsi::Runtime& rt,
     const uint32_t index
   ) const {
-    const objects::ScopedInstance receiver(instance_);
+    const objects::ScopedInstance receiver(instance_, objects::ScopedInstance::Promote::Yes);
     return spec_->properties[index].get(rt, receiver.get());
   }
 
@@ -44,7 +44,7 @@ namespace expo::modules::v2::sharedobjects {
     const uint32_t index,
     const facebook::jsi::Value& value
   ) const {
-    const objects::ScopedInstance receiver(instance_);
+    const objects::ScopedInstance receiver(instance_, objects::ScopedInstance::Promote::Yes);
     spec_->properties[index].set(rt, receiver.get(), value);
   }
 

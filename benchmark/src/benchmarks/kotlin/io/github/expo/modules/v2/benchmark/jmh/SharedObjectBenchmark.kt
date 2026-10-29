@@ -40,7 +40,10 @@ private class BenchCounter : SharedObject() {
 
 /** Constructed from JavaScript with `new`, the way an app makes most of its shared objects. */
 @ExpoSharedObject
-private class BenchPoint @JS constructor(private val x: Double, private val y: Double) : SharedObject()
+private class BenchPoint @JS constructor(private val x: Double, private val y: Double) : SharedObject() {
+  @JS
+  fun sum(): Double = x + y
+}
 
 @ExpoModule(name = "SharedObjectBench", classes = [BenchPoint::class])
 private class SharedObjectOps : Module() {
@@ -63,12 +66,15 @@ private class SharedObjectOps : Module() {
   fun tick(): Int = shared.tick()
 }
 
-/**
- * Holds more shared objects than get a global ref of their own, so the one made after them sits in
- * a slot and every call reads it out of there.
- */
-private const val PAST_BUDGET =
+/** Holds more shared objects than the budget has global refs for, none of them ever called on. */
+private const val COLD =
   "globalThis.__held = Array.from({ length: 2048 }, () => SharedObjectBench.create())"
+
+/**
+ * The same objects, each called on once, so they were promoted until the budget ran out: the one
+ * made after them stays in a slot and every call reads it out of there.
+ */
+private const val PAST_BUDGET = "$COLD; __held.forEach((o) => o.tick())"
 
 /** The JS prelude that prepares the call, and the call itself. */
 private class SharedObjectCase(val prelude: String, val call: String)
@@ -111,6 +117,33 @@ private val SHARED_OBJECT_CASES = mapOf(
     "$PAST_BUDGET; const g = SharedObjectBench.tickOf; const o = SharedObjectBench.create()",
     "g(o)",
   ),
+  // A few hundred objects called in turn, made after more that are never called: whether the
+  // budget went to the objects that use it.
+  "method-hot-after-cold" to SharedObjectCase(
+    "$COLD; const hot = Array.from({ length: 512 }, () => SharedObjectBench.create())",
+    "hot[i & 511].tick()",
+  ),
+  // The same after objects that were called many times and then no more, which holds the whole
+  // budget unless it can be taken back from them.
+  "method-hot-after-warm" to SharedObjectCase(
+    "$COLD; for (let n = 0; n < 8; n++) __held.forEach((o) => o.tick()); " +
+      "const hot = Array.from({ length: 512 }, () => SharedObjectBench.create())",
+    "hot[i & 511].tick()",
+  ),
+  // More objects called in turn than the budget covers, so most stay in a slot however they are
+  // used: the price of asking for a global ref on every call and not getting one.
+  "method-hot-past-budget" to SharedObjectCase(
+    "const hot = Array.from({ length: 4096 }, () => SharedObjectBench.create())",
+    "hot[i & 4095].tick()",
+  ),
+  // Made from JavaScript, called once and dropped.
+  "construct-call" to
+    SharedObjectCase("const P = SharedObjectBench.BenchPoint", "new P(1.5, 2.5).sum()"),
+  // Made from JavaScript, called a few times and dropped.
+  "construct-call-4" to SharedObjectCase(
+    "const P = SharedObjectBench.BenchPoint",
+    "((p) => p.sum() + p.sum() + p.sum() + p.sum())(new P(1.5, 2.5))",
+  ),
 )
 
 /**
@@ -141,6 +174,11 @@ class SharedObjectBenchmark {
     "property-read-slotted",
     "property-write-slotted",
     "pass-arg-slotted",
+    "method-hot-after-cold",
+    "method-hot-after-warm",
+    "method-hot-past-budget",
+    "construct-call",
+    "construct-call-4",
   )
   var case: String = ""
 

@@ -2,6 +2,7 @@
 
 #include <jni.h>
 
+#include <atomic>
 #include <utility>
 
 #include <kolibri/defines.h>
@@ -13,6 +14,11 @@ namespace expo::modules::v2::objects {
   /**
    * A strong reference to a Kotlin instance JavaScript holds, which does not have to cost a JNI
    * global ref of its own.
+   *
+   * A shared object starts out in a slot and is promoted to a global ref of its own the first time
+   * it is called on, while the budget lasts: an object called once tends to be called again, and
+   * most are never called at all. A promoted instance keeps its slot until it is let go, since a
+   * call on another runtime's thread may be reading it out of there right then.
    */
   class InstanceRef {
   public:
@@ -21,7 +27,7 @@ namespace expo::modules::v2::objects {
     ~InstanceRef() { reset(); }
 
     InstanceRef(InstanceRef&& other) noexcept
-      : global_(std::exchange(other.global_, nullptr)),
+      : global_(other.global_.exchange(nullptr, std::memory_order_relaxed)),
         chunk_(std::exchange(other.chunk_, nullptr)),
         index_(std::exchange(other.index_, 0)),
         budgeted_(std::exchange(other.budgeted_, false)) {
@@ -30,7 +36,7 @@ namespace expo::modules::v2::objects {
     InstanceRef& operator=(InstanceRef&& other) noexcept {
       if (this != &other) {
         reset();
-        global_ = std::exchange(other.global_, nullptr);
+        global_.store(other.global_.exchange(nullptr, std::memory_order_relaxed), std::memory_order_relaxed);
         chunk_ = std::exchange(other.chunk_, nullptr);
         index_ = std::exchange(other.index_, 0);
         budgeted_ = std::exchange(other.budgeted_, false);
@@ -48,26 +54,32 @@ namespace expo::modules::v2::objects {
      */
     static InstanceRef global(JNIEnv* env, jobject instance);
 
-    /** Pins [instance] by a global ref while the budget lasts, and in a slot after that. */
+    /** Pins [instance] in a slot, until `promote` gives it a global ref of its own. */
     static InstanceRef pin(JNIEnv* env, jobject instance);
 
-    explicit operator bool() const { return global_ != nullptr || chunk_ != nullptr; }
+    explicit operator bool() const { return global() != nullptr || chunk_ != nullptr; }
 
-    /** The global ref, or null when the instance sits in a slot or was released. */
-    [[nodiscard]] jobject global() const { return global_; }
+    /** The global ref, or null when the instance only sits in a slot or was released. */
+    [[nodiscard]] jobject global() const { return global_.load(std::memory_order_acquire); }
 
     /** A new local ref to the instance, which the caller deletes. Null once released. */
     [[nodiscard]] jobject newLocal(JNIEnv* env) const {
-      if (global_ != nullptr) [[likely]] {
-        return env->NewLocalRef(global_);
+      if (const jobject global = this->global(); global != nullptr) [[likely]] {
+        return env->NewLocalRef(global);
       }
       return readSlot(env);
     }
 
+    /**
+     * Gives the slotted [instance], a local ref read out of this, a global ref of its own if the
+     * budget has room for one; nothing otherwise, or if it already has one.
+     */
+    void promote(JNIEnv* env, jobject instance) const;
+
     /** Lets the instance go. Attaches the calling thread if it has to: see the definition. */
     void reset();
 
-    /** How many instances hold a global ref out of the budget right now. */
+    /** How many instances were promoted to a global ref out of the budget and hold it right now. */
     [[nodiscard]] static size_t budgetedGlobalCount();
 
     /** How many instances sit in a slot right now. */
@@ -80,10 +92,12 @@ namespace expo::modules::v2::objects {
     /** `newLocal` for an instance in a slot, or null if there is none. */
     [[nodiscard]] jobject readSlot(JNIEnv* env) const;
 
-    jobject global_ = nullptr;
-    /** The chunk holding the instance, or null when it holds a global ref or was released. */
+    /** Set at most once after construction, by `promote`, which any thread may call. */
+    mutable std::atomic<jobject> global_{nullptr};
+    /** The chunk holding the instance, or null for a module or once released. */
     SlotChunk* chunk_ = nullptr;
     jsize index_ = 0;
+    /** Whether the global ref, once there is one, counts against the budget. */
     bool budgeted_ = false;
   };
 
@@ -94,9 +108,13 @@ namespace expo::modules::v2::objects {
    */
   class ScopedInstance {
   public:
-    explicit ScopedInstance(const InstanceRef& ref) : instance_(ref.global()) {
+    /** Whether reading the instance out of its slot also promotes it (`InstanceRef::promote`). */
+    enum class Promote : bool { No, Yes };
+
+    explicit ScopedInstance(const InstanceRef& ref, const Promote promote = Promote::No)
+      : instance_(ref.global()) {
       if (instance_ == nullptr && ref) [[unlikely]] {
-        readSlot(ref);
+        readSlot(ref, promote);
       }
     }
 
@@ -113,9 +131,12 @@ namespace expo::modules::v2::objects {
     [[nodiscard]] jobject get() const { return instance_; }
 
   private:
-    NOINLINE void readSlot(const InstanceRef& ref) {
+    NOINLINE void readSlot(const InstanceRef& ref, const Promote promote) {
       env_ = kolibri::getEnv();
       instance_ = ref.newLocal(env_);
+      if (promote == Promote::Yes && instance_ != nullptr) {
+        ref.promote(env_, instance_);
+      }
     }
 
     jobject instance_;

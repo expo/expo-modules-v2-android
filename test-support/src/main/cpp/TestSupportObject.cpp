@@ -296,8 +296,9 @@ namespace expo::modules::v2 {
     );
     suite.setProperty(rt, "__collectGarbage", std::move(collectGarbage));
 
-    // How the instances JavaScript holds are pinned right now: `globals` by a JNI global ref each,
-    // `slots` in a slot of a shared array, out of `chunks` arrays alive (objects/InstanceRef.h).
+    // How the instances JavaScript holds are pinned right now: `slots` in a slot of a shared array,
+    // out of `chunks` arrays alive, and `globals` of them promoted to a JNI global ref each as well
+    // (objects/InstanceRef.h).
     auto instanceRefCounts = facebook::jsi::Function::createFromHostFunction(
       rt,
       facebook::jsi::PropNameID::forAscii(rt, "__instanceRefCounts"),

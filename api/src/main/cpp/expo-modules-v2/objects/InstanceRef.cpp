@@ -169,24 +169,38 @@ namespace expo::modules::v2::objects {
 
   InstanceRef InstanceRef::global(JNIEnv* env, const jobject instance) {
     InstanceRef ref;
-    ref.global_ = env->NewGlobalRef(instance);
+    ref.global_.store(env->NewGlobalRef(instance), std::memory_order_relaxed);
     return ref;
   }
 
   InstanceRef InstanceRef::pin(JNIEnv* env, const jobject instance) {
     InstanceRef ref;
-    if (budgetedGlobals().fetch_add(1, std::memory_order_relaxed) < kGlobalBudget) [[likely]] {
-      ref.global_ = env->NewGlobalRef(instance);
-      ref.budgeted_ = true;
-      return ref;
-    }
-    budgetedGlobals().fetch_sub(1, std::memory_order_relaxed);
-
     const Slot slot = takeSlot(env);
     env->SetObjectArrayElement(slot.chunk->array, slot.index, instance);
     ref.chunk_ = slot.chunk;
     ref.index_ = slot.index;
+    ref.budgeted_ = true;
     return ref;
+  }
+
+  void InstanceRef::promote(JNIEnv* env, const jobject instance) const {
+    // Read first, so an object past a spent budget pays one load per call and no write.
+    std::atomic<size_t>& budget = budgetedGlobals();
+    if (!budgeted_ || budget.load(std::memory_order_relaxed) >= kGlobalBudget) {
+      return;
+    }
+    if (budget.fetch_add(1, std::memory_order_relaxed) >= kGlobalBudget) {
+      budget.fetch_sub(1, std::memory_order_relaxed);
+      return;
+    }
+
+    const jobject global = env->NewGlobalRef(instance);
+    jobject expected = nullptr;
+    if (!global_.compare_exchange_strong(expected, global, std::memory_order_release, std::memory_order_relaxed)) {
+      // Another thread promoted it first.
+      env->DeleteGlobalRef(global);
+      budget.fetch_sub(1, std::memory_order_relaxed);
+    }
   }
 
   jobject InstanceRef::readSlot(JNIEnv* env) const {
@@ -205,11 +219,14 @@ namespace expo::modules::v2::objects {
     // attach here in case this is that thread.
     JNIEnv* env = kolibri::getEnv();
 
-    if (global_ != nullptr) {
-      env->DeleteGlobalRef(std::exchange(global_, nullptr));
-      if (std::exchange(budgeted_, false)) {
+    if (const jobject global = global_.exchange(nullptr, std::memory_order_relaxed); global != nullptr) {
+      env->DeleteGlobalRef(global);
+      if (budgeted_) {
         budgetedGlobals().fetch_sub(1, std::memory_order_relaxed);
       }
+    }
+    budgeted_ = false;
+    if (chunk_ == nullptr) {
       return;
     }
 

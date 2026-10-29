@@ -960,23 +960,30 @@ class SharedObjectTest {
       TestSupport.install(runtime)
       runtime.moduleRegistry.register(Spots())
 
-      // Android aborts at 51,200 global refs, so past a budget the instances share a few of them
-      // instead of taking one each. Every one of them still has to answer as itself.
+      // Android aborts at 51,200 global refs, so the instances share a few of them instead of
+      // taking one each. Every one of them still has to answer as itself.
       runtime.evaluate(
         "globalThis.spots = []; " +
           "for (let i = 0; i < 40000; i++) { spots.push(new expo.modules.Spots.Spot(i)); } 0",
       )
       assertEquals(
         "true",
-        runtime.evaluateAsString(
-          "const c = ExpoTestSupport.__instanceRefCounts(); c.globals <= 1024 && c.slots >= 40000 - 1024",
-        ),
+        runtime.evaluateAsString("const c = ExpoTestSupport.__instanceRefCounts(); c.slots >= 40000"),
       )
-      assertEquals("false", runtime.evaluateAsString("ExpoTestSupport.__holdsGlobalRef(spots[39999])"))
+      assertEquals("false", runtime.evaluateAsString("ExpoTestSupport.__holdsGlobalRef(spots[0])"))
       assertEquals(
         "-1",
         runtime.evaluateAsString(
           "spots.findIndex((s, i) => s.id() !== i || expo.modules.Spots.idOf(s) !== i)",
+        ),
+      )
+      // The first ones called on were promoted to a global ref of their own, until the budget ran
+      // out; the rest stay in their slot however often they are called.
+      assertEquals(
+        "true,false,1024",
+        runtime.evaluateAsString(
+          "[ExpoTestSupport.__holdsGlobalRef(spots[0]), ExpoTestSupport.__holdsGlobalRef(spots[39999]), " +
+            "ExpoTestSupport.__instanceRefCounts().globals].join()",
         ),
       )
 
@@ -1006,24 +1013,30 @@ class SharedObjectTest {
         passes++
       }
       assertEquals(0, unreleasedSpots.get(), "objects were not released in $passes passes")
-      // Every chunk emptied out and was freed, but for one kept as a spare.
+      // Every chunk emptied out and was freed, but for one kept as a spare, and the promoted ones
+      // gave their global refs back to the budget.
       assertEquals(
-        "0,1",
-        runtime.evaluateAsString("const e = ExpoTestSupport.__instanceRefCounts(); [e.slots, e.chunks].join()"),
+        "0,0,1",
+        runtime.evaluateAsString(
+          "const e = ExpoTestSupport.__instanceRefCounts(); [e.globals, e.slots, e.chunks].join()",
+        ),
       )
 
-      // Their global refs went back to the budget, so the next object pays nothing for the slots.
+      // So the next object called on is promoted again.
       assertEquals(
-        "true",
-        runtime.evaluateAsString("ExpoTestSupport.__holdsGlobalRef(new expo.modules.Spots.Spot(0))"),
+        "false,true",
+        runtime.evaluateAsString(
+          "const fresh = new expo.modules.Spots.Spot(0); const wasGlobal = ExpoTestSupport.__holdsGlobalRef(fresh); " +
+            "fresh.id(); [wasGlobal, ExpoTestSupport.__holdsGlobalRef(fresh)].join()",
+        ),
       )
 
-      // The next chunk's worth past the budget goes into the spare, not a new chunk.
+      // The next chunk's worth goes into the spare, not a new chunk.
       assertEquals(
         "1024,1,-1",
         runtime.evaluateAsString(
           "const f = ExpoTestSupport.__instanceRefCounts(); globalThis.spots = []; " +
-            "for (let i = 0; i < 1024 - f.globals + 1024; i++) { spots.push(new expo.modules.Spots.Spot(i)); } " +
+            "for (let i = 0; i < 1024 - f.slots; i++) { spots.push(new expo.modules.Spots.Spot(i)); } " +
             "const g = ExpoTestSupport.__instanceRefCounts(); " +
             "[g.slots, g.chunks, spots.findIndex((s, i) => s.id() !== i)].join()",
         ),
