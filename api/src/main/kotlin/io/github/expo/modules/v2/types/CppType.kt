@@ -62,6 +62,7 @@ value class CppType(val code: Int) {
       BOX_FLOAT -> "box_float"
       BOX_DOUBLE -> "box_double"
       SHARED_OBJECT -> "shared_object"
+      TUPLE -> "tuple"
       else -> "unknown(code=$code)"
     }
 
@@ -105,6 +106,8 @@ value class CppType(val code: Int) {
     val BOX_DOUBLE = CppType(23)
 
     val SHARED_OBJECT = CppType(24)
+
+    val TUPLE = CppType(25)
     //@formatter:on
 
     const val NULLABLE = 0x100

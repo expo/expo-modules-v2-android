@@ -17,12 +17,14 @@ import io.github.expo.modules.v2.converters.FileConverter
 import io.github.expo.modules.v2.converters.JsHandleConverter
 import io.github.expo.modules.v2.converters.ListConverter
 import io.github.expo.modules.v2.converters.MapConverter
+import io.github.expo.modules.v2.converters.PairConverter
 import io.github.expo.modules.v2.converters.PathConverter
 import io.github.expo.modules.v2.converters.RecordConverter
 import io.github.expo.modules.v2.converters.SetConverter
 import io.github.expo.modules.v2.converters.SharedObjectConverter
 import io.github.expo.modules.v2.converters.SharedRefConverter
 import io.github.expo.modules.v2.converters.StringConverter
+import io.github.expo.modules.v2.converters.TripleConverter
 import io.github.expo.modules.v2.converters.TypeConverter
 import io.github.expo.modules.v2.converters.TypedArrayConverter
 import io.github.expo.modules.v2.converters.UnitConverter
@@ -194,8 +196,16 @@ object TypeConverterRegistry {
       return ArrayConverter<Any>(typeDescriptor)
     }
 
+    if (jClass == Pair::class.java) {
+      return PairConverter(typeDescriptor)
+    }
+
+    if (jClass == Triple::class.java) {
+      return TripleConverter(typeDescriptor)
+    }
+
     throw IllegalArgumentException(
-      "${jClass.name} has no bridge type — describe it with a leaf class, a List/Map, a registered " +
+      "${jClass.name} has no bridge type — describe it with a leaf class, a List/Map/Pair/Triple, a registered " +
         "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register"
     )
   }

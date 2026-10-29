@@ -20,6 +20,8 @@ namespace expo::modules::v2 {
     void operator()(const ExpectedType::Map& mapType) const;
 
     void operator()(const ExpectedType::Record& recordType) const;
+
+    void operator()(const ExpectedType::Tuple& tupleType) const;
   };
 
   // clang-format off

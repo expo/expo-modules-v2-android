@@ -16,8 +16,10 @@ import io.github.expo.modules.v2.converters.FileConverter
 import io.github.expo.modules.v2.converters.FloatArrayConverter
 import io.github.expo.modules.v2.converters.IntArrayConverter
 import io.github.expo.modules.v2.converters.LongArrayConverter
+import io.github.expo.modules.v2.converters.PairConverter
 import io.github.expo.modules.v2.converters.PathConverter
 import io.github.expo.modules.v2.converters.SetConverter
+import io.github.expo.modules.v2.converters.TripleConverter
 import io.github.expo.modules.v2.converters.TypeConverter
 import io.github.expo.modules.v2.converters.UriConverter
 import io.github.expo.modules.v2.converters.UrlConverter
@@ -30,6 +32,7 @@ import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertSame
@@ -60,6 +63,21 @@ private fun arrayDescriptor(
   element: TypeDescriptor.ObjectLike,
   isNullable: Boolean = false,
 ) = TypeDescriptor.Parametrized(arrayClass, isNullable, arrayOf(element))
+
+/** The `Pair<first, second>` declaration a [PairConverter] is built from. */
+private fun pairDescriptor(
+  first: TypeDescriptor.ObjectLike,
+  second: TypeDescriptor.ObjectLike,
+  isNullable: Boolean = false,
+) = TypeDescriptor.Parametrized(Pair::class.java, isNullable, arrayOf(first, second))
+
+/** The `Triple<first, second, third>` declaration a [TripleConverter] is built from. */
+private fun tripleDescriptor(
+  first: TypeDescriptor.ObjectLike,
+  second: TypeDescriptor.ObjectLike,
+  third: TypeDescriptor.ObjectLike,
+  isNullable: Boolean = false,
+) = TypeDescriptor.Parametrized(Triple::class.java, isNullable, arrayOf(first, second, third))
 
 /**
  * Pure-JVM half of the [TypeConverter] contract: converted record fields and converted trampoline
@@ -483,4 +501,120 @@ class TypeConverterTest {
     assertTrue(array.contentEquals(arrayType.descriptor.anyConverter.readFromBuffer(arrayView) as Array<*>))
   }
 
+  @Test
+  fun `pair and triple declarations describe each element after the arity`() {
+    val pair = pairDescriptor(
+      TypeDescriptor.Simple(Int::class.javaObjectType, false),
+      TypeDescriptor.Simple(String::class.java, true),
+    ).converter
+    assertTrue(pair is PairConverter)
+    assertFalse(pair.isPassthrough)
+    assertContentEquals(
+      intArrayOf(CppType.TUPLE.code, 2, CppType.BOX_INT.code, CppType.STRING.code or CppType.NULLABLE),
+      pair.codes.values,
+    )
+
+    // A nested container keeps its own codes inline, so the element after it still lines up.
+    val triple = tripleDescriptor(
+      TypeDescriptor.Parametrized(
+        List::class.java,
+        false,
+        arrayOf(TypeDescriptor.Simple(Double::class.javaObjectType, false)),
+      ),
+      TypeDescriptor.Simple(Boolean::class.javaObjectType, false),
+      TypeDescriptor.Simple(URL::class.java, false),
+      isNullable = true,
+    ).converter
+    assertTrue(triple is TripleConverter)
+    assertContentEquals(
+      intArrayOf(
+        CppType.TUPLE.code or CppType.NULLABLE,
+        3,
+        CppType.LIST.code,
+        CppType.BOX_DOUBLE.code,
+        CppType.BOX_BOOLEAN.code,
+        CppType.STRING.code,
+      ),
+      triple.codes.values,
+    )
+
+    // The arity comes from the class, so a declaration with the wrong number of arguments is a bug.
+    assertFailsWith<IllegalArgumentException> {
+      PairConverter(
+        TypeDescriptor.Parametrized(
+          Pair::class.java,
+          false,
+          arrayOf(TypeDescriptor.Simple(String::class.java, false)),
+        ),
+      )
+    }
+  }
+
+  @Test
+  fun `pair and triple converters cross the bridge as a list of converted elements`() {
+    val pair = PairConverter(
+      pairDescriptor(
+        TypeDescriptor.Simple(URL::class.java, false),
+        TypeDescriptor.Simple(Int::class.javaObjectType, true),
+      ),
+    )
+    val urlAndCount = Pair(URL("https://expo.dev/"), 3)
+    assertEquals(listOf("https://expo.dev/", 3), pair.toJni(urlAndCount))
+    assertEquals(urlAndCount, pair.fromJni(listOf("https://expo.dev/", 3)))
+    assertEquals(Pair(URL("https://expo.dev/"), null), pair.fromJni(listOf("https://expo.dev/", null)))
+
+    val triple = TripleConverter(
+      tripleDescriptor(
+        TypeDescriptor.Simple(String::class.java, false),
+        TypeDescriptor.Simple(Duration::class.java, false),
+        TypeDescriptor.Simple(Boolean::class.javaObjectType, false),
+        isNullable = true,
+      ),
+    )
+    assertEquals(listOf("a", 1.5, true), triple.toJni(Triple("a", 1500.milliseconds, true)))
+    assertEquals(Triple("a", 1500.milliseconds, true), triple.fromJni(listOf("a", 1.5, true)))
+    assertNull(triple.toJni(null))
+    assertNull(triple.fromJni(null))
+  }
+
+  @Test
+  fun `pair and triple converters write their elements back to back`() {
+    val pair = PairConverter(
+      pairDescriptor(
+        TypeDescriptor.Simple(Int::class.javaObjectType, false),
+        TypeDescriptor.Simple(Int::class.javaObjectType, false),
+      ),
+    )
+    // No count on the wire: the arity is part of the type, so two Ints take exactly eight bytes.
+    val writer = buffer.duplicateView()
+    pair.writeToBuffer(writer, Pair(1, 2))
+    assertEquals(8, writer.position)
+    assertEquals(Pair(1, 2), roundTrip(pair, Pair(1, 2)))
+
+    val triple = TripleConverter(
+      tripleDescriptor(
+        TypeDescriptor.Simple(String::class.java, true),
+        TypeDescriptor.Simple(URL::class.java, false),
+        TypeDescriptor.Parametrized(
+          List::class.java,
+          false,
+          arrayOf(TypeDescriptor.Simple(String::class.java, false)),
+        ),
+        isNullable = true,
+      ),
+    )
+    val value = Triple(null, URL("https://expo.dev/"), listOf("x", "y"))
+    assertEquals(value, roundTrip(triple, value))
+
+    val nullWriter = buffer.duplicateView()
+    triple.writeToBuffer(nullWriter, null)
+    assertEquals(1, nullWriter.position)
+    val nullView = buffer.duplicateView()
+    nullView.limit = nullWriter.position
+    assertNull(triple.readFromBuffer(nullView))
+
+    assertFailsWith<IllegalArgumentException> {
+      pair.writeToBuffer(buffer.duplicateView(), null)
+    }
+  }
 }

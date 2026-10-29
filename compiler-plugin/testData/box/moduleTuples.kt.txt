@@ -1,0 +1,390 @@
+// FILE: moduleTuples.kt
+package io.github.expo.modules.v2.testdata
+
+@Record
+data class Point : Record {
+  val x: Double
+    field = x
+    get
+
+  val y: Double
+    field = y
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Point> {
+    override val recordClass: Class<Point>
+      field = <get-java>(/* $receiver = Point::class */)
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Point", bufferSafe = true, fields = [RecordField(name = "x", type = Double, isOptional = false), RecordField(name = "y", type = Double, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Point {
+      return Point(x = reader.readDouble(), y = reader.readDouble())
+    }
+
+    override fun encode(value: Point, writer: RecordWriter) {
+      writer.write(value = value.<get-x>())
+      writer.write(value = value.<get-y>())
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Point>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(x: Double, y: Double) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Double {
+    return <this>.#x
+  }
+
+  operator fun component2(): Double {
+    return <this>.#y
+  }
+
+  fun copy(x: Double = <this>.#x, y: Double = <this>.#y): Point {
+    return Point(x = x, y = y)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Point -> return false
+    }
+    val tmp_0: Point = other as Point
+    when {
+      EQEQ(arg0 = <this>.#x, arg1 = tmp_0.#x).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#y, arg1 = tmp_0.#y).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result: Int = <this>.#x.hashCode()
+    result = result.times(other = 31).plus(other = <this>.#y.hashCode())
+    return result
+  }
+
+  override fun toString(): String {
+    return "Point(" + "x=" + <this>.#x + ", " + "y=" + <this>.#y + ")"
+  }
+
+}
+
+@Record
+data class Segment : Record {
+  val ends: Pair<Point, Point>
+    field = ends
+    get
+
+  val label: Triple<String, Int, Boolean>?
+    field = label
+    get
+
+  private class RecordCodec$ExpoModulesV2 : RecordCodec<Segment> {
+    private /* final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false), Simple(javaClass = <get-java>(/* $receiver = Point::class */), isNullable = false)]))
+    private /* final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Triple<*, *, *>::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED, #BOOLEAN_BOXED]))
+    override val recordClass: Class<Segment>
+      field = <get-java>(/* $receiver = Segment::class */)
+      override get
+
+    override val schema: RecordSchema
+      field = RecordSchema(name = "Segment", bufferSafe = true, fields = [RecordField(name = "ends", type = <this>.#type$0, isOptional = false), RecordField(name = "label", type = <this>.#type$1, isOptional = false)])
+      override get
+
+    constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+      RecordRegistry.register(codec = <this>)
+    }
+
+    override fun decode(reader: RecordReader): Segment {
+      return Segment(ends = reader.read<Pair<Point, Point>>(schema = <this>.#type$0), label = reader.read<Triple<String, Int, Boolean>?>(schema = <this>.#type$1))
+    }
+
+    override fun encode(value: Segment, writer: RecordWriter) {
+      writer.write(value = value.<get-ends>(), schema = <this>.#type$0)
+      writer.write(value = value.<get-label>(), schema = <this>.#type$1)
+    }
+
+  }
+
+  companion object Companion {
+    val recordCodec$ExpoModulesV2: RecordCodec<Segment>
+      field = RecordCodec$ExpoModulesV2()
+      get
+
+    private constructor() /* primary */ {
+      super/*Any*/()
+      /* <init>() */
+
+    }
+
+  }
+
+  constructor(ends: Pair<Point, Point>, label: Triple<String, Int, Boolean>?) /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+  operator fun component1(): Pair<Point, Point> {
+    return <this>.#ends
+  }
+
+  operator fun component2(): Triple<String, Int, Boolean>? {
+    return <this>.#label
+  }
+
+  fun copy(ends: Pair<Point, Point> = <this>.#ends, label: Triple<String, Int, Boolean>? = <this>.#label): Segment {
+    return Segment(ends = ends, label = label)
+  }
+
+  override operator fun equals(other: Any?): Boolean {
+    when {
+      EQEQEQ(arg0 = <this>, arg1 = other) -> return true
+    }
+    when {
+      other !is Segment -> return false
+    }
+    val tmp_1: Segment = other as Segment
+    when {
+      EQEQ(arg0 = <this>.#ends, arg1 = tmp_1.#ends).not() -> return false
+    }
+    when {
+      EQEQ(arg0 = <this>.#label, arg1 = tmp_1.#label).not() -> return false
+    }
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result: Int = <this>.#ends.hashCode()
+    result = result.times(other = 31).plus(other = when {
+      EQEQ(arg0 = <this>.#label, arg1 = null) -> 0
+      else -> <this>.#label.hashCode()
+    })
+    return result
+  }
+
+  override fun toString(): String {
+    return "Segment(" + "ends=" + <this>.#ends + ", " + "label=" + <this>.#label + ")"
+  }
+
+}
+
+@ExpoModule
+object Tuples : Module {
+  private /* static final field */ val type$0: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED, #STRING]))
+  private /* static final field */ val type$1: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))
+  private /* static final field */ val type$2: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Triple<*, *, *>::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED_NULL, #BOOLEAN_BOXED]))
+  private /* static final field */ val type$3: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))]))
+  private /* static final field */ val type$4: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))]))
+  private /* static final field */ val type$5: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Segment::class */), isNullable = false)
+  private /* static final field */ val type$6: TypeDescriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, Simple(javaClass = <get-java>(/* $receiver = JavaScriptValue::class */), isNullable = false)]))
+  private constructor() /* primary */ {
+    super/*Module*/()
+    /* <init>() */
+
+  }
+
+  override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    builder.function(jsName = "swap", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED, #STRING])), useBuffer = true)], returns = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED])), useBuffer = true), methodName = "swap__trampoline$ExpoModulesV2")
+    builder.function(jsName = "triple", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Triple<*, *, *>::class */), isNullable = true, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED_NULL, #BOOLEAN_BOXED])), useBuffer = true)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "triple__trampoline$ExpoModulesV2")
+    builder.function(jsName = "zip", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED]))])), useBuffer = true)], returns = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING])), Parametrized(javaClass = <get-java>(/* $receiver = List<*>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED]))])), useBuffer = true), methodName = "zip__trampoline$ExpoModulesV2")
+    builder.function(jsName = "echoSegment", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Segment::class */), isNullable = false), useBuffer = true)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Segment::class */), isNullable = false), useBuffer = true), methodName = "echoSegment__trampoline$ExpoModulesV2")
+    builder.function(jsName = "handles", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, Simple(javaClass = <get-java>(/* $receiver = JavaScriptValue::class */), isNullable = false)])), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "handles__trampoline$ExpoModulesV2")
+    builder.function(jsName = "swapDirect", argTypes = [AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#INT_BOXED, #STRING])), useBuffer = false)], returns = AnyType(descriptor = Parametrized(javaClass = <get-java>(/* $receiver = Pair<*, *>::class */), isNullable = false, params = arrayOf<ObjectLike>(elements = [#STRING, #INT_BOXED])), useBuffer = false), methodName = "swapDirect__trampoline$ExpoModulesV2")
+    return "Tuples"
+  }
+
+  @CalledFromNative
+  fun echoSegment__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Segment
+    try { // BLOCK
+      v0 = args.next<Segment>(type = #type$5)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.echoSegment(segment = v0), type = #type$5)
+  }
+
+  @CalledFromNative
+  fun handles__trampoline$ExpoModulesV2(p0: List<Any?>?): Int {
+    return <this>.handles(pair = Bridge.fromJni(value = p0, type = #type$6) as Pair<String, JavaScriptValue>)
+  }
+
+  @CalledFromNative
+  fun swapDirect__trampoline$ExpoModulesV2(p0: List<Any?>?): List<Any?>? {
+    return Bridge.toJni(value = <this>.swapDirect(pair = Bridge.fromJni(value = p0, type = #type$0) as Pair<Int, String>), type = #type$1) as List<Any?>?
+  }
+
+  @CalledFromNative
+  fun swap__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Pair<Int, String>
+    try { // BLOCK
+      v0 = args.next<Pair<Int, String>>(type = #type$0)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.swap(pair = v0), type = #type$1)
+  }
+
+  @CalledFromNative
+  fun triple__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: Triple<String, Int?, Boolean>?
+    try { // BLOCK
+      v0 = args.next<Triple<String, Int?, Boolean>?>(type = #type$2)
+    }
+    finally args.finish()
+    return <this>.triple(value = v0)
+  }
+
+  @CalledFromNative
+  fun zip__trampoline$ExpoModulesV2(payloadLength: Int): Int {
+    val args: TrampolineArguments = Trampoline.arguments(payloadLength = payloadLength)
+    var v0: List<Pair<String, Int>>
+    try { // BLOCK
+      v0 = args.next<List<Pair<String, Int>>>(type = #type$3)
+    }
+    finally args.finish()
+    return Trampoline.writeResult(value = <this>.zip(pairs = v0), type = #type$4)
+  }
+
+  @JS
+  fun echoSegment(segment: Segment): Segment {
+    return segment
+  }
+
+  @JS
+  fun handles(pair: Pair<String, JavaScriptValue>): Int {
+    return pair.<get-first>().<get-length>()
+  }
+
+  @JS
+  fun swap(pair: Pair<Int, String>): Pair<String, Int> {
+    return Pair<String, Int>(first = pair.<get-second>(), second = pair.<get-first>())
+  }
+
+  @JS
+  @BufferMode(value = Buffer.NO)
+  fun swapDirect(pair: Pair<Int, String>): Pair<String, Int> {
+    return Pair<String, Int>(first = pair.<get-second>(), second = pair.<get-first>())
+  }
+
+  @JS
+  fun triple(value: Triple<String, Int?, Boolean>?): Int {
+    return { // BLOCK
+      val tmp_2: Int? = { // BLOCK
+        val tmp_3: String? = { // BLOCK
+          val tmp_4: Triple<String, Int?, Boolean>? = value
+          when {
+            EQEQ(arg0 = tmp_4, arg1 = null) -> null
+            else -> tmp_4.<get-first>()
+          }
+        }
+        when {
+          EQEQ(arg0 = tmp_3, arg1 = null) -> null
+          else -> tmp_3.<get-length>()
+        }
+      }
+      when {
+        EQEQ(arg0 = tmp_2, arg1 = null) -> 0
+        else -> tmp_2
+      }
+    }
+  }
+
+  @JS
+  fun zip(pairs: List<Pair<String, Int>>): Pair<List<String>, List<Int>> {
+    return unzip<String, Int>(/* <this> = pairs */)
+  }
+
+}
+
+fun box(): String {
+  val suffix: String = "__trampoline$ExpoModulesV2"
+  val expected: Map<String, String> = mapOf<String, String>(pairs = [to<String, String>(/* <this> = "swap" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "triple" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "zip" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "echoSegment" + suffix, */ that = "(I)I"), to<String, String>(/* <this> = "handles" + suffix, */ that = "(Ljava/util/List;)I"), to<String, String>(/* <this> = "swapDirect" + suffix, */ that = "(Ljava/util/List;)Ljava/util/List;")])
+  { // BLOCK
+    val tmp_5: Iterator<Entry<String, String>> = iterator<String, String>(/* <this> = expected */)
+    while (tmp_5.hasNext()) { // BLOCK
+      val tmp_6: Entry<String, String> = tmp_5.next()
+      val name: String = component1<String, String>(/* <this> = tmp_6 */)
+      val want: String = component2<String, String>(/* <this> = tmp_6 */)
+      { // BLOCK
+        val got: String = descriptorOf(name = name)
+        when {
+          EQEQ(arg0 = got, arg1 = want).not() -> return name + ": expected " + want + ", got " + got
+        }
+      }
+    }
+  }
+  return "OK"
+}
+
+private fun descriptor(type: Class<*>): String {
+  return when {
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Int>(/* <this> = Int::class */)) -> "I"
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Long>(/* <this> = Long::class */)) -> "J"
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Float>(/* <this> = Float::class */)) -> "F"
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Double>(/* <this> = Double::class */)) -> "D"
+    EQEQ(arg0 = type, arg1 = <get-javaPrimitiveType><Boolean>(/* <this> = Boolean::class */)) -> "Z"
+    EQEQ(arg0 = type, arg1 = super<Void>.#TYPE) -> "V"
+    type.isArray() -> "[".plus(other = descriptor(type = type.getComponentType() /*!! Class<*> */))
+    else -> "L".plus(other = replace(/* <this> = type.getName() /*!! String */, */ oldChar = '.', newChar = '/')).plus(other = ";")
+  }
+}
+
+private fun descriptorOf(name: String): String {
+  val method: Method = { // BLOCK
+    val tmp_7: Method? = firstOrNull<@FlexibleNullability Method?>(/* <this> = <get-java><Tuples>(/* <this> = Tuples::class */).getDeclaredMethods() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Method?> */, */ predicate = local fun <anonymous>(it: @FlexibleNullability Method?): Boolean {
+      return EQEQ(arg0 = it.getName(), arg1 = name)
+    }
+)
+    when {
+      EQEQ(arg0 = tmp_7, arg1 = null) -> return "<absent>"
+      else -> tmp_7
+    }
+  }
+  val parameters: String = joinToString<@FlexibleNullability Class<*>?>(/* <this> = method.getParameterTypes() /*!! @FlexibleArrayElementVariance Array<out @FlexibleNullability Class<*>?> */, */ separator = "", transform = local fun <anonymous>(it: @FlexibleNullability Class<*>?): CharSequence {
+    return descriptor(type = it /*!! Class<*> */)
+  }
+)
+  return "(" + parameters + ")" + descriptor(type = method.getReturnType() /*!! Class<*> */)
+}
+
+// FILE: __GENERATED DECLARATIONS__.kt
+package io.github.expo.modules.v2.hints
+
+final interface io_github_expo_modules_v2_testdata_Tuples_12eb844b {
+  abstract fun module(): Tuples
+
+}
