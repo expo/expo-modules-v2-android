@@ -31,13 +31,13 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
   override fun getCompilerPluginId(): String = BuildConfig.KOTLIN_PLUGIN_ID
 
   // A compiler plugin is bound to the exact compiler it was built against, so one compiler-plugin
-  // artifact is published per supported Kotlin release, versioned `<expo-modules-v2>-<kotlin>`.
+  // artifact is published per supported Kotlin release, versioned `<compiler-plugin>-<kotlin>`.
   // Resolving by the project's own Kotlin version keeps the consumer's `plugins {}` block
   // Kotlin-agnostic; a Kotlin release with no build fails resolution with the missing coordinates.
   override fun getPluginArtifact(): SubpluginArtifact = SubpluginArtifact(
     groupId = BuildConfig.KOTLIN_PLUGIN_GROUP,
     artifactId = BuildConfig.KOTLIN_PLUGIN_NAME,
-    version = "${BuildConfig.EXPO_MODULES_V2_VERSION}-${project.getKotlinPluginVersion()}",
+    version = "${BuildConfig.KOTLIN_PLUGIN_VERSION}-${project.getKotlinPluginVersion()}",
   )
 
   override fun applyToCompilation(
