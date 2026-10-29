@@ -7,6 +7,7 @@ import io.github.expo.modules.v2.converters.DoubleArrayConverter
 import io.github.expo.modules.v2.converters.DoubleConverter
 import io.github.expo.modules.v2.converters.FloatArrayConverter
 import io.github.expo.modules.v2.converters.FloatConverter
+import io.github.expo.modules.v2.converters.FunctionConverter
 import io.github.expo.modules.v2.converters.IntArrayConverter
 import io.github.expo.modules.v2.converters.IntConverter
 import io.github.expo.modules.v2.converters.LongArrayConverter
@@ -161,6 +162,26 @@ sealed interface TypeDescriptor {
     operator fun component2(): Boolean = isNullable
     operator fun component3(): Array<out ObjectLike> = params
   }
+
+  /**
+   * A Kotlin lambda a JavaScript function stands behind: `(A, B) -> R`, or `suspend (A, B) -> R`
+   * when the function may return a promise to wait for. It only ever crosses inbound.
+   *
+   * Parameters and the return type are described as boxed values, because that is how they appear
+   * in a lambda's JVM signature.
+   */
+  class Function(
+    val params: Array<out ObjectLike>,
+    val returns: ObjectLike,
+    val isSuspend: Boolean,
+    val isNullable: Boolean,
+  ) : ObjectLike {
+    override val converter: TypeConverter<*> by lazy { FunctionConverter(this) }
+
+    override fun toString(): String =
+      (if (isSuspend) "suspend " else "") +
+        params.joinToString(", ", "(", ") -> $returns").nullableSuffix(isNullable)
+  }
 }
 
 private fun String.nullableSuffix(isNullable: Boolean) = this +  if (isNullable) "?" else ""
@@ -171,6 +192,7 @@ val TypeDescriptor.isNullable: Boolean
     is TypeDescriptor.PrimitiveArray -> isNullable
     is TypeDescriptor.Simple -> isNullable
     is TypeDescriptor.Parametrized -> isNullable
+    is TypeDescriptor.Function -> isNullable
   }
 
 @Suppress("UNCHECKED_CAST")
