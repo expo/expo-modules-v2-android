@@ -188,6 +188,7 @@ class TypeDescriptorPoet(
       "kotlin.collections.List", "kotlin.collections.MutableList" -> irBuiltIns.listClass
       "kotlin.collections.Set", "kotlin.collections.MutableSet" -> irBuiltIns.setClass
       "kotlin.collections.Map", "kotlin.collections.MutableMap" -> irBuiltIns.mapClass
+      "kotlin.Pair", "kotlin.Triple" -> type.classOrNull ?: unsupported(type)
       "kotlin.Array" -> return arrayDescriptor(type, isNullable)
       else -> return null
     }

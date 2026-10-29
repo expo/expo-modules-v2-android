@@ -151,6 +151,14 @@ namespace expo::modules::v2 {
     }
   }
 
+  // The arity is part of the type, so unlike a list no count goes on the wire.
+  void BufferEncoder::operator()(const ExpectedType::Tuple& tupleType) const {
+    const facebook::jsi::Array array = tupleArrayOf(rt, value, tupleType);
+    for (size_t i = 0; i < tupleType.elements.size(); i++) {
+      encodeToBuffer(rt, array.getValueAtIndex(rt, i), tupleType.elements[i], out);
+    }
+  }
+
   void BufferEncoder::operator()(const ExpectedType::Map& mapType) const {
     const facebook::jsi::Object object = value.asObject(rt);
     const ExpectedType& valueType = *mapType.value;

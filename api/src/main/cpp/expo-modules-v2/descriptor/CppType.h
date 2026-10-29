@@ -33,6 +33,8 @@ namespace expo::modules::v2 {
     BOX_DOUBLE = 23,
 
     SHARED_OBJECT = 24,
+
+    TUPLE = 25,
   };
 
   /**
