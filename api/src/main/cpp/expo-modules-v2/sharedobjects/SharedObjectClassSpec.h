@@ -13,6 +13,12 @@ namespace expo::modules::v2::sharedobjects {
 
     std::string name;
 
+    /**
+     * Whether the class overrides `getAdditionalMemoryPressure`. When it does not, every instance
+     * reports 0, so none is asked.
+     */
+    bool reportsMemoryPressure = false;
+
     std::vector<descriptor::HostFunctionSpec> functions;
     std::vector<descriptor::HostPropertySpec> properties;
     std::vector<descriptor::EventSpec> events;

@@ -146,11 +146,11 @@ class SymbolFinder(private val context: IrPluginContext) {
       }
     }
 
-    /** `SharedObjectRegistry.register(jsName, sharedClass, definition): Int` */
+    /** `SharedObjectRegistry.register(jsName, sharedClass, definition, reportsMemoryPressure): Int` */
     val registerSharedClass: IrSimpleFunctionSymbol by lazy {
       classes.sharedObjectRegistry.functions.single {
         it.owner.name == Identifiers.Names.REGISTER_SHARED_CLASS &&
-            it.owner.parameters.last().type.classOrNull == classes.moduleBuilder
+            it.owner.parameters.any { parameter -> parameter.type.classOrNull == classes.moduleBuilder }
       }
     }
 

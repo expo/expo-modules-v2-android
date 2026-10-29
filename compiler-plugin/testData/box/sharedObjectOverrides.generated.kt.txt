@@ -17,7 +17,7 @@ class Counter : SharedObject {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Counter::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "Counter", sharedClass = <get-java>(/* $receiver = Counter::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "Counter", sharedClass = <get-java>(/* $receiver = Counter::class */), definition = builder, reportsMemoryPressure = true)
   }
 }
 
@@ -37,7 +37,27 @@ class Delegating : SharedObject {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Delegating::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "Delegating", sharedClass = <get-java>(/* $receiver = Delegating::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "Delegating", sharedClass = <get-java>(/* $receiver = Delegating::class */), definition = builder, reportsMemoryPressure = true)
+  }
+}
+
+@ExpoSharedObject
+class InheritsPressure : PressuredBase {
+  private /* static final field */ val sharedClassId$ExpoModulesV2: Int = register$ExpoModulesV2()
+  @CalledFromNative
+  /* static */ fun __construct$ExpoModulesV2(): InheritsPressure {
+    return InheritsPressure()
+  }
+
+  /* static */ fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
+    return "InheritsPressure"
+  }
+
+  private /* static */ fun register$ExpoModulesV2(): Int {
+    SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = InheritsPressure::class */))
+    val builder: ModuleBuilder = ModuleBuilder()
+    define$ExpoModulesV2(builder = builder)
+    return SharedObjectRegistry.register(jsName = "InheritsPressure", sharedClass = <get-java>(/* $receiver = InheritsPressure::class */), definition = builder, reportsMemoryPressure = true)
   }
 }
 
@@ -57,7 +77,7 @@ class Plain : SharedObject {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Plain::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "Plain", sharedClass = <get-java>(/* $receiver = Plain::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "Plain", sharedClass = <get-java>(/* $receiver = Plain::class */), definition = builder, reportsMemoryPressure = false)
   }
 }
 
@@ -77,8 +97,11 @@ class Pressured : SharedObject {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Pressured::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "Pressured", sharedClass = <get-java>(/* $receiver = Pressured::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "Pressured", sharedClass = <get-java>(/* $receiver = Pressured::class */), definition = builder, reportsMemoryPressure = true)
   }
+}
+
+abstract class PressuredBase : SharedObject {
 }
 
 @ExpoSharedObject
@@ -92,7 +115,7 @@ class TextRef : SharedRef<StringBuilder> {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = TextRef::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder, reportsMemoryPressure = true)
   }
 }
 

@@ -36,6 +36,7 @@ namespace expo::modules::v2 {
 
     descriptor::ModuleDescriptorPayload payload =
       decoders::decodeModuleDescriptorPayload(reader, declaringClass);
+    const bool reportsMemoryPressure = reader.readPresence();
     if (!reader.isOnEnd()) {
       throwInvalidArgument({"Trailing bytes in the shared object class metadata payload"});
     }
@@ -43,6 +44,7 @@ namespace expo::modules::v2 {
     return ClassExports{
       .jsName = jsName->toStdString(env),
       .descriptor = std::move(payload),
+      .reportsMemoryPressure = reportsMemoryPressure,
     };
   }
 

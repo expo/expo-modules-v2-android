@@ -309,12 +309,13 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleEvents.kt
         CALL 'public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.Player' type=kotlin.String origin=null
           ARG builder: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
         RETURN type=kotlin.Nothing from='private final fun register$ExpoModulesV2 (): kotlin.Int declared in io.github.expo.modules.v2.testdata.Player'
-          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
+          CALL 'public final fun register (jsName: kotlin.String, sharedClass: java.lang.Class<out io.github.expo.modules.v2.SharedObject>, definition: io.github.expo.modules.v2.modules.ModuleBuilder, reportsMemoryPressure: kotlin.Boolean): kotlin.Int declared in io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry' type=kotlin.Int origin=null
             ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:SharedObjectRegistry modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
             ARG jsName: CONST String type=kotlin.String value="Player"
             ARG sharedClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.testdata.Player> origin=null
               ARG $receiver: CLASS_REFERENCE 'CLASS CLASS name:Player modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.SharedObject]' type=kotlin.reflect.KClass<*>
             ARG definition: GET_VAR 'val builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.Player.register$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+            ARG reportsMemoryPressure: CONST Boolean type=kotlin.Boolean value=false
     FUN name:play visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.Player
       annotations:

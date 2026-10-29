@@ -18,7 +18,7 @@ class Listed : SharedObject {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Listed::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "Listed", sharedClass = <get-java>(/* $receiver = Listed::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "Listed", sharedClass = <get-java>(/* $receiver = Listed::class */), definition = builder, reportsMemoryPressure = false)
   }
 }
 
@@ -47,7 +47,7 @@ class Owner : Module {
       SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Nested::class */))
       val builder: ModuleBuilder = ModuleBuilder()
       define$ExpoModulesV2(builder = builder)
-      return SharedObjectRegistry.register(jsName = "Nested", sharedClass = <get-java>(/* $receiver = Nested::class */), definition = builder)
+      return SharedObjectRegistry.register(jsName = "Nested", sharedClass = <get-java>(/* $receiver = Nested::class */), definition = builder, reportsMemoryPressure = false)
     }
   }
 
@@ -63,7 +63,7 @@ class Owner : Module {
       SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = NotConstructable::class */))
       val builder: ModuleBuilder = ModuleBuilder()
       define$ExpoModulesV2(builder = builder)
-      return SharedObjectRegistry.register(jsName = "NotConstructable", sharedClass = <get-java>(/* $receiver = NotConstructable::class */), definition = builder)
+      return SharedObjectRegistry.register(jsName = "NotConstructable", sharedClass = <get-java>(/* $receiver = NotConstructable::class */), definition = builder, reportsMemoryPressure = false)
     }
   }
 
@@ -93,7 +93,7 @@ class Player : SharedObject {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Player::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "Player", sharedClass = <get-java>(/* $receiver = Player::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "Player", sharedClass = <get-java>(/* $receiver = Player::class */), definition = builder, reportsMemoryPressure = false)
   }
 
   @CalledFromNative
@@ -135,7 +135,7 @@ class Speaker : SharedObject {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Speaker::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "Renamed", sharedClass = <get-java>(/* $receiver = Speaker::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "Renamed", sharedClass = <get-java>(/* $receiver = Speaker::class */), definition = builder, reportsMemoryPressure = false)
   }
 }
 
@@ -151,7 +151,7 @@ class TextRef : SharedRef<StringBuilder> {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = TextRef::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "TextRef", sharedClass = <get-java>(/* $receiver = TextRef::class */), definition = builder, reportsMemoryPressure = false)
   }
 }
 

@@ -19,7 +19,7 @@ class SharedObjectRegistryReserveTest {
     assertEquals(id, SharedObjectRegistry.reserve(Reserved::class.java))
     assertEquals(id, SharedObjectRegistry.classIdFor(Reserved::class.java).value)
 
-    assertEquals(id, SharedObjectRegistry.register("Reserved", Reserved::class.java, ModuleBuilder()))
+    assertEquals(id, SharedObjectRegistry.register("Reserved", Reserved::class.java, ModuleBuilder(), reportsMemoryPressure = false))
     assertEquals(id, SharedObjectRegistry.classIdFor(Reserved::class.java).value)
     assertEquals(id, SharedObjectRegistry.reserve(Reserved::class.java))
   }

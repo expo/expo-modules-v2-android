@@ -43,7 +43,7 @@ class Item : SharedObject {
     SharedObjectRegistry.reserve(sharedClass = <get-java>(/* $receiver = Item::class */))
     val builder: ModuleBuilder = ModuleBuilder()
     define$ExpoModulesV2(builder = builder)
-    return SharedObjectRegistry.register(jsName = "Item", sharedClass = <get-java>(/* $receiver = Item::class */), definition = builder)
+    return SharedObjectRegistry.register(jsName = "Item", sharedClass = <get-java>(/* $receiver = Item::class */), definition = builder, reportsMemoryPressure = false)
   }
 
   @JS

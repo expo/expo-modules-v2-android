@@ -22,6 +22,8 @@ namespace expo::modules::v2 {
     struct ClassExports {
       std::string jsName;
       descriptor::ModuleDescriptorPayload descriptor;
+      /** Whether the class overrides `SharedObject.getAdditionalMemoryPressure`. */
+      bool reportsMemoryPressure = false;
     };
 
     /** The shared class id of [instance]; the per-instance id is `objects::ObjectId`. */

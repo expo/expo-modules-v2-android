@@ -42,6 +42,7 @@ import io.github.expo.kolibri.binary.BinaryBuffer
  *   jsName: string                    // the name JavaScript subscribes to
  *   payloadTypeCodes: intArray        // how an emitted payload crosses Kotlin -> JS
  * }
+ * [reportsMemoryPressure: bool]       // shared classes only, see [encodeSharedClass]
  * ```
  */
 internal object ModuleDescriptorEncoder {
@@ -60,6 +61,27 @@ internal object ModuleDescriptorEncoder {
     )
   }
 
+  /**
+   * A shared class's exports, followed by whether its instances are asked for their memory
+   * pressure. A shared class constructs no other classes, so it has none to describe.
+   */
+  fun encodeSharedClass(
+    buf: BinaryBuffer,
+    functions: List<ModuleFunctionDefinition>,
+    properties: List<ModulePropertyDefinition>,
+    events: List<ModuleEventDefinition>,
+    reportsMemoryPressure: Boolean,
+  ): Int {
+    return buf.writeDescriptor(
+      functions,
+      properties,
+      emptyList(),
+      events,
+    ) {
+      putBoolean(reportsMemoryPressure)
+    }
+  }
+
   // Not an `encode` overload: with `buf` first in the public signature, an extension of the same
   // name would erase to the same JVM method.
   private fun BinaryBuffer.writeDescriptor(
@@ -67,6 +89,7 @@ internal object ModuleDescriptorEncoder {
     properties: List<ModulePropertyDefinition>,
     sharedClasses: List<ModuleSharedClassDefinition>,
     events: List<ModuleEventDefinition>,
+    trailer: BinaryBuffer.() -> Unit = {},
   ): Int {
     val currentPosition = position
 
@@ -75,6 +98,7 @@ internal object ModuleDescriptorEncoder {
     writeProperties(properties)
     writeSharedClasses(sharedClasses)
     writeEvents(events)
+    trailer()
 
     val payloadEnd = position
     position = currentPosition
