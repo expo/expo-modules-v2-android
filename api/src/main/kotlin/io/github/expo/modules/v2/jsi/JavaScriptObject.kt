@@ -5,6 +5,7 @@ import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.NativeMethod
 import io.github.expo.kolibri.NativeObject
 import io.github.expo.kolibri.NativePointer
+import io.github.expo.modules.v2.ArrayBufferViewKind
 import io.github.expo.modules.v2.ExpoObject
 import java.nio.ByteBuffer
 
@@ -18,6 +19,12 @@ class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObj
   @NativeMethod external fun isArrayBuffer(): Boolean
 
   @NativeMethod external fun getArrayBufferViewBytes(): ByteBuffer?
+
+  /**
+   * The index of this view's kind in `ArrayBufferViewKind`, or -1 when it is not a typed array or a
+   * `DataView`.
+   */
+  @NativeMethod private external fun getArrayBufferViewKind(): Int
 
   @NativeMethod external fun hasProperty(name: String): Boolean
 
@@ -41,6 +48,10 @@ class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObj
    */
   @NativeMethod external fun nativeInstance(): ExpoObject?
   //@formatter:on
+
+  /** The kind of typed array or `DataView` this object is, or null when it is neither. */
+  internal fun arrayBufferViewKind(): ArrayBufferViewKind? =
+    ArrayBufferViewKind.entries.getOrNull(getArrayBufferViewKind())
 
   fun setProperty(name: String, value: Boolean): Unit = setBoolProperty(name, value)
   fun setProperty(name: String, value: Int): Unit = setDoubleProperty(name, value.toDouble())
