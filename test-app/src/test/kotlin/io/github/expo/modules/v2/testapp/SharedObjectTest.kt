@@ -851,6 +851,42 @@ class SharedObjectTest {
   }
 
   @Test
+  fun `a JavaScript subclass of a shared class keeps its own prototype`() {
+    HermesRuntime().use { runtime ->
+      runtime.moduleRegistry.register(Greeters())
+
+      runtime.evaluate(
+        "globalThis.Polite = class extends expo.modules.Greeters.Greeter { " +
+          "bow(name) { return this.greet(name) + ' *bows*'; } }; " +
+          "globalThis.p = new Polite('Hi');",
+      )
+      assertEquals(
+        "true",
+        runtime.evaluateAsString("Object.getPrototypeOf(p) === Polite.prototype"),
+      )
+      assertEquals("true", runtime.evaluateAsString("p instanceof expo.modules.Greeters.Greeter"))
+      assertEquals("Hi, you! *bows*", runtime.evaluateAsString("p.bow('you')"))
+
+      // Kotlin hands the same object back, still of the subclass.
+      assertEquals(
+        "true",
+        runtime.evaluateAsString(
+          "expo.modules.Greeters.remember(p); expo.modules.Greeters.last() === p",
+        ),
+      )
+
+      // The native class itself is unaffected.
+      assertEquals(
+        "true",
+        runtime.evaluateAsString(
+          "Object.getPrototypeOf(new expo.modules.Greeters.Greeter('Yo')) === " +
+            "expo.modules.Greeters.Greeter.prototype",
+        ),
+      )
+    }
+  }
+
+  @Test
   fun `a constructor reports a wrong argument list`() {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register(Greeters())
