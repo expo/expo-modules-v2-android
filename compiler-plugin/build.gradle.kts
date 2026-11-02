@@ -41,9 +41,11 @@ val kotlinVersionString: String = libs.versions.kotlin.get()
 val kotlinVersion: KotlinVersion = parseKotlinVersion(kotlinVersionString)
 
 // A compiler plugin is bound to the exact compiler it was built against, so this artifact is
-// published once per supported Kotlin release as `<expo-modules-v2>-<kotlin>`. The Gradle plugin
-// picks the one that matches the consumer's Kotlin.
-version = "${libs.versions.expo.modules.v2.get()}-$kotlinVersionString"
+// published once per supported Kotlin release as `<compiler-plugin>-<kotlin>`. The Gradle plugin
+// picks the one that matches the consumer's Kotlin. `<compiler-plugin>` is versioned apart from the
+// rest of the project (see gradle/libs.versions.toml), so an unchanged plugin is not published
+// again.
+version = "${libs.versions.compiler.plugin.get()}-$kotlinVersionString"
 
 val compatSourceDirs: List<File> =
   compatSourceDirsFor(layout.projectDirectory.dir("compat").asFile, kotlinVersion)

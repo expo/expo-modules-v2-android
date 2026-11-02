@@ -1,6 +1,13 @@
 [versions]
 expo-modules-v2 = "0.2.7"
 
+# expo-modules-v2-compiler-plugin keeps the version of the release that last changed it, so a
+# release that does not change it publishes none of its per-Kotlin builds (every file counts against
+# Maven Central's per-organization limit). Set it to the new release's version whenever the plugin's
+# output changes: the publish workflow fails a release whose plugin differs from what Central holds
+# under this version.
+compiler-plugin = "0.2.7"
+
 # https://github.com/expo/kolibri
 kolibri = "0.2.4"
 

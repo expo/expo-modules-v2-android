@@ -66,7 +66,9 @@ jobs:
         run: echo "versions=$(jq -R -s -c 'split("\n") | map(select(length > 0))' gradle/kotlin-versions.txt)" >> "$GITHUB_OUTPUT"
 
   # A compiler plugin is bound to the exact compiler it was built against, so it is published once
-  # per supported Kotlin release, as `expo-modules-v2-compiler-plugin:<version>-<kotlin>`.
+  # per supported Kotlin release, as `expo-modules-v2-compiler-plugin:<version>-<kotlin>`. Its
+  # version is set apart from the rest (see gradle/libs.versions.toml), and a build Maven Central
+  # already holds is not published again.
   stage-compiler:
     name: Stage compiler-plugin for Kotlin ${{ matrix.kotlin-version }}
     needs: kotlin-versions
@@ -88,7 +90,33 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Build the compiler plugin
+        run: ./gradlew :compiler-plugin:jar -PkotlinVersion=${{ matrix.kotlin-version }} -PskipHermesEnvBuild -PskipDesktopNative -PskipReact
+
+      # The build is reproducible, so a jar with the same contents on Central is this exact plugin,
+      # and is skipped. A different one under the same version means the plugin changed without a
+      # bump of `compiler-plugin` in gradle/libs.versions.toml, and fails the release before anything
+      # is uploaded.
+      - name: Compare with Maven Central
+        id: central
+        run: |
+          version="$(sed -n 's/^compiler-plugin *= *"\(.*\)"/\1/p' gradle/libs.versions.toml)-$KOTLIN_VERSION"
+          state=$(scripts/compare-with-maven-central.sh \
+            "compiler-plugin/build/libs/compiler-plugin-$version.jar" \
+            "io/github/expo/expo-modules-v2-compiler-plugin/$version/expo-modules-v2-compiler-plugin-$version.jar") || status=$?
+          if [[ ${status:-0} == 3 ]]; then
+            echo "::error::The compiler plugin changed since $version was published. Bump compiler-plugin in gradle/libs.versions.toml."
+          fi
+          [[ ${status:-0} == 0 ]] || exit 1
+          if [[ $state == published ]]; then
+            echo "::notice::expo-modules-v2-compiler-plugin:$version is already on Maven Central, skipping it."
+          fi
+          echo "state=$state" >> "$GITHUB_OUTPUT"
+        env:
+          KOTLIN_VERSION: ${{ matrix.kotlin-version }}
+
       - name: Stage signed artifacts
+        if: steps.central.outputs.state == 'unpublished'
         run: ./gradlew :compiler-plugin:publishAllPublicationsToCentralBundleRepository -PkotlinVersion=${{ matrix.kotlin-version }} -PskipHermesEnvBuild -PskipDesktopNative -PskipReact
         env:
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
@@ -96,6 +124,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
 
       - name: Upload staged artifacts
+        if: steps.central.outputs.state == 'unpublished'
         uses: actions/upload-artifact@v4
         with:
           name: central-bundle-kotlin-${{ matrix.kotlin-version }}
