@@ -24,6 +24,37 @@ enum class Level(val value: Int) : Enumerable {
     HIGH(10),
 }
 
+/** An entry with a body passes its value from its own class's constructor. */
+enum class Shape(val value: String) : Enumerable {
+    ROUND("round") {
+        override fun corners(): Int = 0
+    },
+    SQUARE("square") {
+        override fun corners(): Int = 4
+    };
+
+    abstract fun corners(): Int
+}
+
+/** An entry that passes nothing takes the parameter's default. */
+enum class Priority(val value: Int = 5) : Enumerable {
+    NORMAL,
+    URGENT(9),
+}
+
+/** A `String?` entry that holds null crosses by its name. */
+enum class Alias(val value: String?) : Enumerable {
+    FIRST("first"),
+    SECOND(null),
+}
+
+interface Crossing : Enumerable
+
+/** `Enumerable` through another interface. */
+enum class Indirect : Crossing {
+    ONLY,
+}
+
 /** Not marked `Enumerable`, but an export names it, so it is described all the same. */
 enum class Unmarked {
     ONE,
@@ -63,6 +94,9 @@ class Shapes : Module() {
 
     @JS
     fun byStyle(): Map<String, Style> = emptyMap()
+
+    @JS
+    fun more(shape: Shape, priority: Priority, alias: Alias): Indirect = Indirect.ONLY
 }
 
 fun box(): String = "OK"

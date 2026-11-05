@@ -16,22 +16,30 @@ import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
 
 /**
  * Wires typegen into a project: the compiler option on each compilation that describes the module,
- * and the scanner task that hands the report to `expo-modules generate-types`.
+ * and the task that builds one of them and writes the scanner `expo-modules generate-types` runs.
+ *
+ * A report describes a whole compilation, so it relies on incremental compilation staying off,
+ * which `ExpoModulesV2GradlePlugin.applyToCompilation` does for every compilation.
  */
 internal class Typegen(private val project: Project, private val options: ExpoModulesV2TypegenOptions) {
-  /** The compilations that write a report, by name, with the path of their compile task. */
-  private val compilations = linkedMapOf<String, String>()
+  /** A compilation that writes a report. */
+  private class Described(val compilationName: String, val compileTask: String, val report: Provider<RegularFile>)
 
-  fun registerScannerTask() {
-    project.tasks.register(SCANNER_TASK, WriteTypegenScanner::class.java) { task ->
+  /**
+   * The compilations that write a report, by compile task: two targets of a multiplatform project
+   * each have a `main` compilation, but never the same compile task.
+   */
+  private val compilations = linkedMapOf<String, Described>()
+
+  fun registerTask() {
+    project.tasks.register(TASK, WriteTypegenScanner::class.java) { task ->
       task.group = "expo"
-      task.description = "Writes the scanner that `expo-modules generate-types --scanner` runs to " +
-        "read this module's JavaScript surface."
+      task.description = "Builds the JavaScript surface of this module for typegen, and writes the " +
+        "scanner that `expo-modules generate-types --scanner` reads it through."
 
       val chosen = project.provider { chosenCompilation() }
-      task.report.set(chosen.flatMap { reportFile(it) }.map { it.asFile.absolutePath })
-      task.compileTask.set(chosen.map { compilations.getValue(it) })
-      task.rootDir.set(project.rootDir.absolutePath)
+      task.report.set(chosen.flatMap { it.report }.map { it.asFile.absolutePath })
+      task.compileTask.set(chosen.map { it.compileTask })
       task.scanner.set(project.layout.buildDirectory.file("$OUTPUT_DIR/scanner"))
       task.dependsOn(task.compileTask)
     }
@@ -42,11 +50,10 @@ internal class Typegen(private val project: Project, private val options: ExpoMo
     if (compilation.isTest()) {
       return project.provider { emptyList() }
     }
-    val report = reportFile(compilation.name)
-    val taskPath = compilation.compileTaskProvider.name.let { name ->
-      if (project.path == ":") ":$name" else "${project.path}:$name"
-    }
-    compilations[compilation.name] = taskPath
+    val taskName = compilation.compileTaskProvider.name
+    val report = project.layout.buildDirectory.file("$OUTPUT_DIR/$taskName/exports.json")
+    val taskPath = if (project.path == ":") ":$taskName" else "${project.path}:$taskName"
+    compilations[taskName] = Described(compilation.name, taskPath, report)
 
     val enabled = options.enabled
     // Declared as an output, so a compilation restored from the build cache restores its report.
@@ -62,40 +69,46 @@ internal class Typegen(private val project: Project, private val options: ExpoMo
     }
   }
 
-  private fun reportFile(compilationName: String): Provider<RegularFile> =
-    project.layout.buildDirectory.file("$OUTPUT_DIR/$compilationName/exports.json")
-
-  private fun chosenCompilation(): String {
+  private fun chosenCompilation(): Described {
+    val described = compilations.values
+    check(described.isNotEmpty()) { "${project.path} has no Kotlin compilation that typegen describes" }
     options.compilation.orNull?.let { name ->
-      check(name in compilations) {
-        "expoModulesV2.typegen.compilation is '$name', but ${project.path} has no such compilation " +
-          "with typegen; it has ${compilations.keys.joinToString().ifEmpty { "none" }}"
-      }
-      return name
+      return described.firstOrNull { it.compilationName == name || it.compileTask.endsWith(":$name") }
+        ?: error(
+          "expoModulesV2.typegen.compilation is '$name', but ${project.path} has no such compilation; " +
+            "typegen describes ${described.joinToString { it.compilationName }}",
+        )
     }
-    return DEFAULT_COMPILATIONS.firstOrNull { it in compilations }
-      ?: compilations.keys.firstOrNull()
-      ?: error("${project.path} has no Kotlin compilation that typegen describes")
+    // What a developer builds already: debug before release, whatever the flavor.
+    return DEFAULT_PREFERENCE.firstNotNullOfOrNull { matches -> described.firstOrNull { matches(it.compilationName) } }
+      ?: described.first()
   }
 
   /** Test compilations only describe test code: `test`, `debugUnitTest`, `debugAndroidTest`. */
   private fun KotlinCompilation<*>.isTest(): Boolean = name.endsWith("test", ignoreCase = true)
 
   companion object {
-    const val SCANNER_TASK = "expoModulesTypegenScanner"
+    const val TASK = "expoModulesTypegen"
 
     /** The compiler plugin's `typegenOutput` option. */
     private const val OPTION = "typegenOutput"
     private const val OUTPUT_DIR = "generated/expo-modules-v2/typegen"
-    private val DEFAULT_COMPILATIONS = listOf("release", "main")
+
+    private val DEFAULT_PREFERENCE: List<(String) -> Boolean> = listOf(
+      { it == "debug" },
+      { it.endsWith("Debug") },
+      { it == "main" },
+      { it == "release" },
+      { it.endsWith("Release") },
+    )
   }
 }
 
 /**
  * Writes `scanner`: an executable that `expo-modules generate-types --scanner` runs as
- * `scanner scan-exports <package dir>` and reads a `scan-exports` report from. It builds the
- * compilation first, so the report is never stale - set `EXPO_MODULES_TYPEGEN_SKIP_BUILD=1` to
- * print the last one instead - and sends the build's output to stderr, leaving stdout to the report.
+ * `scanner scan-exports <package dir>`, and that prints the report the compilation wrote. It does
+ * not build anything itself: the task that writes it builds the compilation first, so run the task
+ * again after the Kotlin changes.
  */
 @DisableCachingByDefault(because = "Writing a few lines is faster than a cache lookup")
 abstract class WriteTypegenScanner : DefaultTask() {
@@ -103,13 +116,9 @@ abstract class WriteTypegenScanner : DefaultTask() {
   @get:Input
   abstract val report: Property<String>
 
-  /** The path of the task that compiles it, such as `:my-module:compileReleaseKotlin`. */
+  /** The path of the task that compiles it, such as `:my-module:compileDebugKotlin`. */
   @get:Input
   abstract val compileTask: Property<String>
-
-  /** The root of the build the task belongs to, where its Gradle wrapper is. */
-  @get:Input
-  abstract val rootDir: Property<String>
 
   @get:OutputFile
   abstract val scanner: RegularFileProperty
@@ -122,26 +131,24 @@ abstract class WriteTypegenScanner : DefaultTask() {
       |#!/bin/sh
       |# Generated by the Expo Modules v2 Gradle plugin, for ${compileTask.get()}.
       |# Prints a scan-exports report, as `expo-modules generate-types --scanner <this file>` expects.
-      |set -e
       |if [ "${'$'}1" != "scan-exports" ]; then
       |  echo "usage: ${'$'}0 scan-exports [paths...]" >&2
       |  exit 64
       |fi
-      |ROOT=${shellQuote(rootDir.get())}
       |REPORT=${shellQuote(report.get())}
-      |if [ -z "${'$'}EXPO_MODULES_TYPEGEN_SKIP_BUILD" ] && [ -x "${'$'}ROOT/gradlew" ]; then
-      |  (cd "${'$'}ROOT" && ./gradlew --quiet ${shellQuote(compileTask.get())}) >&2
-      |fi
       |if [ ! -f "${'$'}REPORT" ]; then
-      |  echo "No typegen report at ${'$'}REPORT. Turn typegen on with expoModulesV2 { typegen { enabled = true } } and build ${compileTask.get()}." >&2
+      |  echo "No typegen report at ${'$'}REPORT. Turn typegen on with expoModulesV2 { typegen { enabled = true } } and run ${shellQuote(taskPath())}." >&2
       |  exit 1
       |fi
-      |cat "${'$'}REPORT"
+      |exec cat "${'$'}REPORT"
       |
       """.trimMargin(),
     )
     file.setExecutable(true)
   }
+
+  /** This task's path, which the build that produces the report runs. */
+  private fun taskPath(): String = path
 
   private fun shellQuote(value: String): String = "'" + value.replace("'", "'\\''") + "'"
 }

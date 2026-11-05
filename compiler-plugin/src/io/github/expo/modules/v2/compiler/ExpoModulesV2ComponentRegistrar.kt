@@ -6,6 +6,7 @@ import io.github.expo.modules.v2.compiler.ir.ModuleHintScanner
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.cli.jvm.config.jvmClasspathRoots
 import org.jetbrains.kotlin.config.CompilerConfiguration
+import org.jetbrains.kotlin.config.messageCollector
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrarAdapter
 import java.io.File
 
@@ -18,6 +19,6 @@ class ExpoModulesV2ComponentRegistrar : ExpoCompilerPluginRegistrar() {
 
     val hints = ModuleHintScanner { configuration.jvmClasspathRoots }
     val typegenOutput = configuration.get(ExpoModulesV2ConfigurationKeys.TYPEGEN_OUTPUT)?.let(::File)
-    IrGenerationExtension.registerExtension(ExpoModulesV2IrGenerationExtension(hints, typegenOutput))
+    IrGenerationExtension.registerExtension(ExpoModulesV2IrGenerationExtension(hints, typegenOutput, configuration.messageCollector))
   }
 }

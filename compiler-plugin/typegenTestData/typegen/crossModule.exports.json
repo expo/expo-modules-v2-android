@@ -1,6 +1,7 @@
 // MODULE: producer
 {
   "schemaVersion": 11,
+  "producer": "expo-modules-v2-android",
   "exports": {
     "modules": [],
     "sharedObjects": [],
@@ -146,6 +147,7 @@
 // MODULE: consumer
 {
   "schemaVersion": 11,
+  "producer": "expo-modules-v2-android",
   "exports": {
     "modules": [
       {
@@ -194,7 +196,7 @@
                 "type": {
                   "kind": "ref",
                   "typeof": "string",
-                  "name": "Mode"
+                  "name": "io.github.expo.modules.v2.testdata.producer.Mode"
                 },
                 "optional": false
               }
@@ -202,7 +204,7 @@
             "returns": {
               "kind": "ref",
               "typeof": "string",
-              "name": "Mode"
+              "name": "io.github.expo.modules.v2.testdata.producer.Mode"
             },
             "async": false,
             "throws": true,
@@ -272,8 +274,7 @@
               "wrapped": {
                 "kind": "ref",
                 "typeof": "string",
-                "name": "Dimension",
-                "refKind": "enum"
+                "name": "io.github.expo.modules.v2.testdata.producer.Dimension"
               }
             },
             "optional": true,
@@ -295,43 +296,7 @@
         ]
       }
     ],
-    "enums": [
-      {
-        "name": "Dimension",
-        "rawType": {
-          "kind": "primitive",
-          "typeof": "string",
-          "name": "String"
-        },
-        "cases": [
-          {
-            "name": "PX",
-            "rawValue": "PX",
-            "platforms": [
-              {
-                "name": "android"
-              }
-            ]
-          },
-          {
-            "name": "DP",
-            "rawValue": "DP",
-            "platforms": [
-              {
-                "name": "android"
-              }
-            ]
-          }
-        ],
-        "file": "",
-        "accessLevel": "public",
-        "platforms": [
-          {
-            "name": "android"
-          }
-        ]
-      }
-    ],
+    "enums": [],
     "unions": [],
     "views": []
   },

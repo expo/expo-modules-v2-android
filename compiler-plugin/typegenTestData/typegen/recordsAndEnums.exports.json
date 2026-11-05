@@ -1,5 +1,6 @@
 {
   "schemaVersion": 11,
+  "producer": "expo-modules-v2-android",
   "exports": {
     "modules": [
       {
@@ -166,6 +167,60 @@
                 "name": "Style",
                 "refKind": "enum"
               }
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "more",
+            "jsName": "more",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "shape",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "string",
+                  "name": "Shape",
+                  "refKind": "enum"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "priority",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "number",
+                  "name": "Priority",
+                  "refKind": "enum"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "alias",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "string",
+                  "name": "Alias",
+                  "refKind": "enum"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "ref",
+              "typeof": "string",
+              "name": "Indirect",
+              "refKind": "enum"
             },
             "async": false,
             "throws": true,
@@ -499,6 +554,137 @@
           {
             "name": "HIGH",
             "rawValue": "10",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Shape",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "ROUND",
+            "rawValue": "round",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "SQUARE",
+            "rawValue": "square",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Priority",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "number",
+          "name": "Int"
+        },
+        "cases": [
+          {
+            "name": "NORMAL",
+            "rawValue": "5",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "URGENT",
+            "rawValue": "9",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Alias",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "FIRST",
+            "rawValue": "first",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "SECOND",
+            "rawValue": "SECOND",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Indirect",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "ONLY",
+            "rawValue": "ONLY",
             "platforms": [
               {
                 "name": "android"

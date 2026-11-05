@@ -1,5 +1,6 @@
 {
   "schemaVersion": 11,
+  "producer": "expo-modules-v2-android",
   "exports": {
     "modules": [
       {
@@ -306,6 +307,81 @@
           {
             "name": "length",
             "jsName": "length",
+            "parameters": [],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "file": "sharedObjects.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "BuilderRef",
+        "jsName": "BuilderRef",
+        "sharedRef": {
+          "native": {
+            "kind": "ref",
+            "typeof": "object",
+            "name": "StringBuilder"
+          }
+        },
+        "functions": [
+          {
+            "name": "size",
+            "jsName": "size",
+            "parameters": [],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "file": "sharedObjects.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Orphan",
+        "jsName": "Orphan",
+        "functions": [
+          {
+            "name": "value",
+            "jsName": "value",
             "parameters": [],
             "returns": {
               "kind": "primitive",

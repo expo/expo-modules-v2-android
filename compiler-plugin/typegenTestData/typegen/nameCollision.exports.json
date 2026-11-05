@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 11,
+  "producer": "expo-modules-v2-android",
+  "exports": {
+    "modules": [
+      {
+        "name": "Settings",
+        "jsName": "Settings",
+        "functions": [
+          {
+            "name": "first",
+            "jsName": "first",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "options",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "object",
+                  "name": "Options",
+                  "refKind": "record"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "second",
+            "jsName": "second",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "options",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "object",
+                  "name": "io.github.expo.modules.v2.testdata.second.Options"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "classes": [],
+        "file": "module.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "sharedObjects": [],
+    "records": [
+      {
+        "name": "Options",
+        "properties": [
+          {
+            "name": "quality",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "optional": false,
+            "required": true,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "first.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "enums": [],
+    "unions": [],
+    "views": []
+  },
+  "stats": {
+    "filesScanned": 4,
+    "filesParsed": 3,
+    "durationMs": 0
+  }
+}

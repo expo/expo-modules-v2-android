@@ -25,7 +25,7 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
   override fun apply(target: Project) {
     project = target
     val extension = target.extensions.create("expoModulesV2", ExpoModulesV2GradleExtension::class.java)
-    typegen = Typegen(target, extension.typegen).apply { registerScannerTask() }
+    typegen = Typegen(target, extension.typegen).apply { registerTask() }
   }
 
   override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean = true

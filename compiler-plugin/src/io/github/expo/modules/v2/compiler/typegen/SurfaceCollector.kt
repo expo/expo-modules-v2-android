@@ -22,6 +22,7 @@ import org.jetbrains.kotlin.ir.declarations.IrValueParameter
 import org.jetbrains.kotlin.ir.expressions.IrConst
 import org.jetbrains.kotlin.ir.expressions.IrEnumConstructorCall
 import org.jetbrains.kotlin.ir.expressions.IrGetValue
+import org.jetbrains.kotlin.ir.symbols.IrTypeParameterSymbol
 import org.jetbrains.kotlin.ir.types.IrSimpleType
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.IrTypeProjection
@@ -29,16 +30,20 @@ import org.jetbrains.kotlin.ir.types.classFqName
 import org.jetbrains.kotlin.ir.types.classOrNull
 import org.jetbrains.kotlin.ir.types.isInt
 import org.jetbrains.kotlin.ir.types.isMarkedNullable
+import org.jetbrains.kotlin.ir.types.isNullableString
 import org.jetbrains.kotlin.ir.types.isString
+import org.jetbrains.kotlin.ir.util.constructors
 import org.jetbrains.kotlin.ir.util.fileOrNull
 import org.jetbrains.kotlin.ir.util.getAnnotation
+import org.jetbrains.kotlin.ir.util.getPackageFragment
 import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.ir.util.isSubclassOf
 import org.jetbrains.kotlin.ir.util.kotlinFqName
-import org.jetbrains.kotlin.ir.util.getPackageFragment
+import org.jetbrains.kotlin.ir.util.parentAsClass
 import org.jetbrains.kotlin.ir.util.primaryConstructor
 import org.jetbrains.kotlin.ir.util.properties
 import org.jetbrains.kotlin.ir.util.render
+import org.jetbrains.kotlin.ir.util.substitute
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import io.github.expo.modules.v2.compiler.ir.ExportedEvent as BridgedEvent
@@ -53,10 +58,11 @@ import io.github.expo.modules.v2.compiler.ir.ExportedProperty as BridgedProperty
  * value is - so the surface it reports is the one the bridge builds. It only reads the IR, and
  * runs before the transformers change it.
  *
- * Records and enums are declared when this compilation declares them, and also when an export
- * names one from another module: the IR of a dependency's class still has its constructor and its
- * entries. An enum whose entries cross by a property is the exception there - a dependency's IR
- * does not keep the arguments of its entries - so it is left a bare reference.
+ * It declares what this compilation declares, plus the records of dependencies its exports name: a
+ * record is an object type in TypeScript, so a copy of a dependency's is the same type. An enum is
+ * not - TypeScript enums are nominal, and a copy would not accept the dependency's own values - so
+ * a dependency's enum, like its shared objects, stays a bare reference the renderer reports as
+ * unresolved.
  */
 internal class SurfaceCollector(context: IrPluginContext, private val symbols: SymbolFinder) {
   private val policy = TransportPolicy(context, symbols)
@@ -66,11 +72,14 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
   /** Every record described so far, by class, in the order they were reached. */
   private val records = LinkedHashMap<IrClass, ExportedRecord>()
 
-  /** Every enum described so far, or null for one that cannot be. */
+  /** Every enum of this compilation described so far, or null for one that cannot be. */
   private val enums = LinkedHashMap<IrClass, ExportedEnum?>()
 
   /** The shared object classes this compilation declares, so a reference can name its kind. */
   private val sharedObjectClasses = mutableSetOf<IrClass>()
+
+  /** Every reference to a declaration of the surface, by the class it names. */
+  private val refs = mutableMapOf<IrClass, MutableList<TypeNode.Ref>>()
 
   fun collect(moduleFragment: IrModuleFragment): Pair<ExportedSurface, ScanStats> {
     val start = System.nanoTime()
@@ -78,17 +87,26 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
     moduleFragment.acceptChildrenVoid(found)
     sharedObjectClasses += found.sharedObjects
 
-    val modules = found.modules.map(::module)
-    val sharedObjects = found.sharedObjects.map(::sharedObject)
+    val modules = found.modules.associateWith(::module)
+    val exposed = modules.values.flatMap { it.classes }.map { it.name }.toSet()
+    val sharedObjects = found.sharedObjects.associateWith { sharedObject(it, it.qualifiedName in exposed) }
     found.records.forEach(::recordOf)
     found.enums.forEach(::enumOf)
 
-    // What this compilation declares, in source order, and then what it only references.
+    // What this compilation declares, in source order, and then what it only references. The
+    // renderer declares them in this order too: enums, records, shared objects, modules.
+    val names = Names()
     val surface = ExportedSurface(
-      modules = modules,
-      sharedObjects = sharedObjects,
-      records = orderedBySource(records, found.records),
-      enums = orderedBySource(enums.filterValues { it != null }.mapValues { it.value!! }, found.enums),
+      enums = orderedBySource(enums.filterValues { it != null }.mapValues { it.value!! }, found.enums)
+        .filter { (enumClass, it) -> names.claim(enumClass, typeName(it.name)) }
+        .map { it.second },
+      records = orderedBySource(records, found.records)
+        .filter { (recordClass, it) -> names.claim(recordClass, typeName(it.name)) }
+        .map { it.second },
+      sharedObjects = sharedObjects.entries
+        .filter { (sharedClass, it) -> names.claim(sharedClass, it.jsName) }
+        .map { it.value },
+      modules = modules.values.toList(),
     )
     val stats = ScanStats(
       filesScanned = moduleFragment.files.size,
@@ -98,14 +116,41 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
     return surface to stats
   }
 
-  private fun <T> orderedBySource(described: Map<IrClass, T>, declared: List<IrClass>): List<T> =
-    declared.mapNotNull { described[it] } + described.filterKeys { it !in declared }.values
+  /**
+   * Settles which declarations keep their names. The renderer names a record or an enum by its
+   * class name alone, resolves a reference by the reported `name`, and keeps the first of two
+   * declarations that share a TypeScript name. Two classes of one name in different packages would
+   * then both resolve to the first, so the later one is left out, and its references become bare
+   * ones under its full name, which the renderer reports as unresolved rather than mistyped.
+   */
+  private inner class Names {
+    private val typeScriptNames = mutableSetOf<String>()
+    private val reportedNames = mutableSetOf<String>()
+
+    fun claim(irClass: IrClass, typeScriptName: String): Boolean {
+      val reported = irClass.qualifiedName
+      if (typeScriptName in typeScriptNames || reported in reportedNames) {
+        refs[irClass].orEmpty().forEach { ref ->
+          ref.name = irClass.kotlinFqName.asString()
+          ref.refKind = null
+        }
+        return false
+      }
+      typeScriptNames += typeScriptName
+      reportedNames += reported
+      return true
+    }
+  }
+
+  private fun <T> orderedBySource(described: Map<IrClass, T>, declared: List<IrClass>): List<Pair<IrClass, T>> =
+    declared.mapNotNull { irClass -> described[irClass]?.let { irClass to it } } +
+      described.filterKeys { it !in declared }.toList()
 
   private fun module(moduleClass: IrClass): ExportedModule {
     val annotation = moduleClass.getAnnotation(Identifiers.FqNames.EXPO_MODULE_ANNOTATION)
     val exported = members.of(moduleClass)
     return ExportedModule(
-      name = qualifiedName(moduleClass),
+      name = moduleClass.qualifiedName,
       jsName = annotation.stringArgument(Identifiers.Names.ARG_NAME)?.takeIf { it.isNotEmpty() }
         ?: moduleClass.name.asString(),
       functions = exported.filterIsInstance<BridgedFunction>().map(::function),
@@ -132,16 +177,20 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
       .distinct()
       .filter { it.hasAnnotation(Identifiers.FqNames.SHARED_OBJECT_ANNOTATION) }
       .mapNotNull { sharedClass ->
-        constructors.describe(sharedClass)?.let { ExportedClass(qualifiedName(sharedClass), it.jsName) }
+        constructors.describe(sharedClass)?.let { ExportedClass(sharedClass.qualifiedName, it.jsName) }
       }
   }
 
-  private fun sharedObject(sharedClass: IrClass): ExportedSharedObject {
+  /**
+   * A shared object. Its constructor is only reported when a module of this compilation exposes the
+   * class: that is the only way JavaScript reaches it, through `new expo.modules.Module.Class()`.
+   */
+  private fun sharedObject(sharedClass: IrClass, exposed: Boolean): ExportedSharedObject {
     val annotation = sharedClass.getAnnotation(Identifiers.FqNames.SHARED_OBJECT_ANNOTATION)
     val exported = members.of(sharedClass)
-    val constructor = constructors.constructorOf(sharedClass)
+    val constructor = constructors.constructorOf(sharedClass)?.takeIf { exposed }
     return ExportedSharedObject(
-      name = qualifiedName(sharedClass),
+      name = sharedClass.qualifiedName,
       jsName = annotation.stringArgument(Identifiers.Names.ARG_NAME)?.takeIf { it.isNotEmpty() }
         ?: sharedClass.name.asString(),
       initializer = constructor?.let {
@@ -159,19 +208,29 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
     )
   }
 
-  /** The `T` a class passes to `SharedRef<T>`, directly or through its superclasses. */
+  /**
+   * The `T` a class passes to `SharedRef<T>`, directly or through generic superclasses: for
+   * `class Image : Base<Bitmap>` and `open class Base<T> : SharedRef<T>`, `Bitmap`.
+   */
   private fun sharedRefNativeOf(sharedClass: IrClass): TypeNode? {
-    val sharedRef = symbols.classes.sharedRef
-    var current: IrClass? = sharedClass
-    while (current != null) {
-      val superType = current.superTypes.firstOrNull { it.classOrNull?.owner?.kind == ClassKind.CLASS }
+    var current = sharedClass
+    var substitution = emptyMap<IrTypeParameterSymbol, IrType>()
+    while (true) {
+      val superType = current.superTypes
+        .firstOrNull { it.classOrNull?.owner?.kind == ClassKind.CLASS }
+        ?.substitute(substitution)
         ?: return null
-      if (superType.classOrNull == sharedRef) {
-        return typeArgumentsOf(superType).singleOrNull()?.let(::nativeType)
+      val superClass = superType.classOrNull?.owner ?: return null
+      val arguments = typeArgumentsOf(superType)
+      if (superClass.symbol == symbols.classes.sharedRef) {
+        return arguments.singleOrNull()?.let(::nativeType) ?: TypeNode.Unknown("*")
       }
-      current = superType.classOrNull?.owner
+      substitution = superClass.typeParameters
+        .zip(arguments)
+        .mapNotNull { (parameter, argument) -> argument?.let { parameter.symbol to it } }
+        .toMap()
+      current = superClass
     }
-    return null
   }
 
   private fun function(exported: BridgedFunction): ExportedFunction =
@@ -219,10 +278,13 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
     )
 
   /** The node for a value of [type], as the bridge converts it. */
-  fun typeOf(type: IrType): TypeNode {
+  private fun typeOf(type: IrType): TypeNode {
     val node = nonNullTypeOf(type)
     return if (type.isMarkedNullable()) TypeNode.Optional(node) else node
   }
+
+  /** The node for a type argument, where null is a star projection. */
+  private fun argumentTypeOf(type: IrType?): TypeNode = type?.let(::typeOf) ?: TypeNode.Unknown("*")
 
   private fun nonNullTypeOf(type: IrType): TypeNode {
     // The frontend rejects every type the bridge cannot carry, so this only fails on a gap in that
@@ -264,34 +326,35 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
       ValueKind.ENUM, ValueKind.INT_ENUM -> {
         val jsType = if (kind == ValueKind.INT_ENUM) JsType.NUMBER else JsType.STRING
         val enumClass = owner!!
-        val refKind = RefKind.ENUM.takeIf { enumOf(enumClass) != null }
-        TypeNode.Ref(qualifiedName(enumClass), refKind, jsType)
+        refTo(enumClass, RefKind.ENUM.takeIf { enumOf(enumClass) != null }, jsType)
       }
 
       ValueKind.LIST, ValueKind.SET, ValueKind.ARRAY ->
-        TypeNode.ArrayOf(typeArgumentsOf(type).firstOrNull()?.let(::typeOf) ?: TypeNode.Unknown("*"))
+        TypeNode.ArrayOf(argumentTypeOf(typeArgumentsOf(type).firstOrNull()))
 
       ValueKind.MAP -> {
-        val (key, value) = typeArgumentsOf(type).let { it.getOrNull(0) to it.getOrNull(1) }
-        TypeNode.Dictionary(
-          key = key?.let(::typeOf) ?: TypeNode.Unknown("*"),
-          value = value?.let(::typeOf) ?: TypeNode.Unknown("*"),
-        )
+        val arguments = typeArgumentsOf(type)
+        TypeNode.Dictionary(key = argumentTypeOf(arguments.getOrNull(0)), value = argumentTypeOf(arguments.getOrNull(1)))
       }
 
-      ValueKind.RECORD -> {
-        recordOf(owner!!)
-        TypeNode.Ref(qualifiedName(owner), RefKind.RECORD, JsType.OBJECT)
-      }
+      ValueKind.RECORD -> refTo(owner!!, RefKind.RECORD.takeIf { recordOf(owner) != null }, JsType.OBJECT)
 
       ValueKind.SHARED_OBJECT ->
         if (type.classOrNull == symbols.classes.sharedRef) {
           TypeNode.SharedRef(typeArgumentsOf(type).singleOrNull()?.let(::nativeType) ?: TypeNode.Unknown("*"))
         } else {
-          val refKind = RefKind.SHARED_OBJECT.takeIf { owner in sharedObjectClasses }
-          TypeNode.Ref(qualifiedName(owner!!), refKind, JsType.OBJECT)
+          refTo(owner!!, RefKind.SHARED_OBJECT.takeIf { owner in sharedObjectClasses }, JsType.OBJECT)
         }
     }
+  }
+
+  /**
+   * A reference to [irClass]. One without a [refKind] names a type this surface does not declare;
+   * the renderer reports it as unresolved, so it goes by the full name that says which one it is.
+   */
+  private fun refTo(irClass: IrClass, refKind: RefKind?, jsType: JsType): TypeNode.Ref {
+    val name = if (refKind != null) irClass.qualifiedName else irClass.kotlinFqName.asString()
+    return TypeNode.Ref(name, refKind, jsType).also { refs.getOrPut(irClass) { mutableListOf() } += it }
   }
 
   /**
@@ -315,7 +378,7 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
     records[recordClass]?.let { return it }
     val constructor = recordClass.primaryConstructor ?: return null
     // Claimed before its fields are described, so a record that names itself ends the walk.
-    val placeholder = ExportedRecord(qualifiedName(recordClass), emptyList(), fileOf(recordClass), "")
+    val placeholder = ExportedRecord(recordClass.qualifiedName, emptyList(), fileOf(recordClass), "")
     records[recordClass] = placeholder
 
     // The fields are the primary constructor's parameters that are properties, the same ones the
@@ -337,7 +400,11 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
       .also { records[recordClass] = it }
   }
 
+  /** The enum, or null when this compilation does not declare it or cannot read its values. */
   private fun enumOf(enumClass: IrClass): ExportedEnum? {
+    if (enumClass.fileOrNull == null) {
+      return null
+    }
     if (enumClass in enums) {
       return enums[enumClass]
     }
@@ -346,31 +413,36 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
 
   /**
    * An enum by the rule `EnumConverter` applies at run time: an entry crosses as its name, or as the
-   * value of the enum's only property when that is a `String` or an `Int`. Null when an entry's
-   * value is not a constant this compilation can read.
+   * value of the enum's only property when that is a `String` or an `Int` - a `String?` entry that
+   * holds null crosses by its name. Null when an entry's value is not a constant.
    */
   private fun describeEnum(enumClass: IrClass): ExportedEnum? {
     val entries = enumClass.declarations.filterIsInstance<IrEnumEntry>()
     val fields = enumClass.declarations
       .filterIsInstance<IrProperty>()
       .filter { it.backingField?.isStatic == false }
-    val property = fields.singleOrNull()
+    val fieldType = fields.singleOrNull()?.backingField?.type
 
     val (rawType, values) = when {
       fields.isEmpty() ->
         TypeNode.Primitive("String", JsType.STRING) to entries.map { it.name.asString() }
 
-      property != null && (property.backingField!!.type.isString() || property.backingField!!.type.isInt()) -> {
-        val isInt = property.backingField!!.type.isInt()
-        val rawType = TypeNode.Primitive(if (isInt) "Int" else "String", if (isInt) JsType.NUMBER else JsType.STRING)
-        rawType to (entries.map { entryValue(it, property) ?: return null })
-      }
+      fieldType != null && fieldType.isInt() ->
+        TypeNode.Primitive("Int", JsType.NUMBER) to entries.map { entry ->
+          entryValue(enumClass, entry, fields.single())?.value?.toString() ?: return null
+        }
+
+      fieldType != null && (fieldType.isString() || fieldType.isNullableString()) ->
+        TypeNode.Primitive("String", JsType.STRING) to entries.map { entry ->
+          val value = entryValue(enumClass, entry, fields.single()) ?: return null
+          value.value as? String ?: entry.name.asString()
+        }
 
       else -> return null
     }
 
     return ExportedEnum(
-      name = qualifiedName(enumClass),
+      name = enumClass.qualifiedName,
       rawType = rawType,
       cases = entries.zip(values) { entry, value -> ExportedEnumCase(entry.name.asString(), value) },
       file = fileOf(enumClass),
@@ -379,31 +451,57 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
   }
 
   /**
-   * The constant an entry passes for [property]: the argument of the primary constructor parameter
-   * that initializes the property. Null when that is not a literal, or when the entry's arguments
-   * are not in this compilation's IR.
+   * The constant an entry passes for [property]: the argument of the constructor parameter that
+   * initializes it, or that parameter's default when the entry passes none. Null when neither is a
+   * literal. An entry with a body calls the enum's constructor from its own class's constructor.
    */
-  private fun entryValue(entry: IrEnumEntry, property: IrProperty): String? {
-    val call = entry.initializerExpression?.expression as? IrEnumConstructorCall ?: return null
+  private fun entryValue(enumClass: IrClass, entry: IrEnumEntry, property: IrProperty): IrConst? {
+    val call = enumConstructorCallOf(enumClass, entry) ?: return null
     val parameter = (property.backingField?.initializer?.expression as? IrGetValue)
       ?.symbol?.owner as? IrValueParameter
       ?: return null
-    val argument = call.arguments.getOrNull(parameter.indexInParameters) as? IrConst ?: return null
-    return argument.value?.toString()
+    val argument = call.arguments.getOrNull(parameter.indexInParameters)
+      ?: parameter.defaultValue?.expression
+    return argument as? IrConst
+  }
+
+  private fun enumConstructorCallOf(enumClass: IrClass, entry: IrEnumEntry): IrEnumConstructorCall? {
+    val entryClass = entry.correspondingClass
+      ?: return (entry.initializerExpression?.expression as? IrEnumConstructorCall)
+        ?.takeIf { it.symbol.owner.parentAsClass == enumClass }
+    var found: IrEnumConstructorCall? = null
+    entryClass.constructors.forEach { constructor ->
+      constructor.acceptChildrenVoid(object : IrVisitorVoid() {
+        override fun visitElement(element: IrElement) {
+          if (found != null) return
+          if (element is IrEnumConstructorCall && element.symbol.owner.parentAsClass == enumClass) {
+            found = element
+            return
+          }
+          element.acceptChildrenVoid(this)
+        }
+      })
+    }
+    return found
   }
 
   /** The class name with the classes it is nested in, without its package: `Outer.Inner`. */
-  private fun qualifiedName(irClass: IrClass): String {
-    val fqName = irClass.kotlinFqName.asString()
-    val packageName = irClass.getPackageFragment().packageFqName.asString()
-    return if (packageName.isEmpty()) fqName else fqName.removePrefix("$packageName.")
-  }
+  private val IrClass.qualifiedName: String
+    get() {
+      val fqName = kotlinFqName.asString()
+      val packageName = getPackageFragment().packageFqName.asString()
+      return if (packageName.isEmpty()) fqName else fqName.removePrefix("$packageName.")
+    }
+
+  /** The TypeScript name the renderer gives a record or an enum: its name without enclosing classes. */
+  private fun typeName(qualifiedName: String): String = qualifiedName.substringAfterLast('.')
 
   /** The source path of a class this compilation declares, or empty for one from a dependency. */
   private fun fileOf(irClass: IrClass): String = irClass.fileOrNull?.fileEntry?.name.orEmpty()
 
-  private fun typeArgumentsOf(type: IrType): List<IrType> =
-    (type as? IrSimpleType)?.arguments?.map { (it as? IrTypeProjection)?.type ?: return emptyList() }.orEmpty()
+  /** The type arguments, with null for a star projection. */
+  private fun typeArgumentsOf(type: IrType): List<IrType?> =
+    (type as? IrSimpleType)?.arguments?.map { (it as? IrTypeProjection)?.type }.orEmpty()
 
   private fun spellingOf(type: IrType): String =
     type.classFqName?.shortName()?.asString() ?: type.render()
@@ -437,8 +535,7 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
         declaration.hasAnnotation(Identifiers.FqNames.RECORD_ANNOTATION) -> records
         // An enum is declared when it marks itself as one that crosses, even if no export of this
         // compilation names it, so a dependent module's exports can.
-        declaration.kind == ClassKind.ENUM_CLASS &&
-          declaration.superTypes.any { it.classFqName == Identifiers.FqNames.ENUMERABLE } -> enums
+        declaration.kind == ClassKind.ENUM_CLASS && declaration.isEnumerable() -> enums
         else -> null
       }
       if (list != null) {
@@ -446,6 +543,12 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
         file?.let(files::add)
       }
       declaration.acceptChildrenVoid(this)
+    }
+
+    /** Whether it implements `Enumerable`, directly or through an interface that extends it. */
+    private fun IrClass.isEnumerable(): Boolean = superTypes.any { superType ->
+      superType.classFqName == Identifiers.FqNames.ENUMERABLE ||
+        superType.classOrNull?.owner?.isEnumerable() == true
     }
   }
 

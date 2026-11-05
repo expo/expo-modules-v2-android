@@ -28,6 +28,9 @@ internal class ExportedSurface(
      * an `android` entry in it would take; the renderer does not read it.
      */
     const val PLATFORM = "android"
+
+    /** The `producer` the report names. */
+    const val PRODUCER = "expo-modules-v2-android"
   }
 }
 
@@ -78,9 +81,10 @@ internal sealed interface TypeNode {
 
   /**
    * A named type. With a [refKind], [name] is the `name` of a declaration in the surface. Without
-   * one, it is a type the renderer knows by name, such as `TypedArray` or `ArrayBuffer`.
+   * one, it is a type the renderer knows by name, such as `TypedArray` or `ArrayBuffer`, or one the
+   * surface does not declare. Settled once the whole surface is known, so both can change.
    */
-  class Ref(val name: String, val refKind: RefKind?, override val jsType: JsType) : TypeNode
+  class Ref(var name: String, var refKind: RefKind?, override val jsType: JsType) : TypeNode
 
   /** `SharedRef<T>` named by its type argument; [native] is the `T`, which JS never sees. */
   class SharedRef(val native: TypeNode) : TypeNode {

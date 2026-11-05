@@ -17,21 +17,25 @@ plugins {
 expoModulesV2 {
   typegen {
     enabled = true
-    // compilation = "release" // the default when there is one, else "main"
+    // compilation = "freeDebug" // by default `debug` (or a flavor's), then `main`, then `release`
   }
 }
 ```
 
 Each non-test Kotlin compilation then writes
-`build/generated/expo-modules-v2/typegen/<compilation>/exports.json`. The
-`expoModulesTypegenScanner` task writes `build/generated/expo-modules-v2/typegen/scanner` next to
-it, which the CLI runs in place of the Swift scanner. The scanner builds the compilation before it
-prints the report:
+`build/generated/expo-modules-v2/typegen/<compile task>/exports.json`. The `expoModulesTypegen`
+task builds one of them and writes `build/generated/expo-modules-v2/typegen/scanner`, which the CLI
+runs in place of the Swift scanner and which prints that report. Run the task again after changing
+the Kotlin, then the CLI:
 
 ```sh
-./gradlew :my-module:expoModulesTypegenScanner
+./gradlew :my-module:expoModulesTypegen
 npx expo-modules generate-types --scanner <module build dir>/generated/expo-modules-v2/typegen/scanner
 ```
+
+The scanner is a POSIX shell script, so this does not work on Windows yet. Both platforms write the
+same `native.types.ts`, so for now a run with this scanner replaces what the Swift one wrote; merging
+the two reports needs support in `expo-modules-cli`.
 
 The report is built from the resolved IR by the bridge's own rules, so it reports how values cross
 at run time:
@@ -54,6 +58,6 @@ at run time:
 | enum | a TS `enum` of the entry names, or of the values of its one `String` or `Int` property |
 | `@ExpoSharedObject` class | a class extending `SharedObject` |
 
-Records and enums declared in another Gradle module are described too, except an enum whose
-entries cross by a property: a dependency's class files do not keep its entries' arguments, so it
-is rendered as `unknown`.
+A record declared in another Gradle module is described as well: a TypeScript object type is
+structural, so a copy is the same type. A dependency's enum and shared objects are not - a TS enum
+is nominal - so they are rendered as `unknown` until a module can import its dependencies' types.

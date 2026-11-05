@@ -1,5 +1,6 @@
 {
   "schemaVersion": 11,
+  "producer": "expo-modules-v2-android",
   "exports": {
     "modules": [
       {

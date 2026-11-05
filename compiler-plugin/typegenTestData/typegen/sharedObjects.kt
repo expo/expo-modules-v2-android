@@ -36,6 +36,22 @@ class TextRef(text: StringBuilder) : SharedRef<StringBuilder>(text) {
     fun length(): Int = ref.length
 }
 
+/** A generic base between the class and `SharedRef`: the native type is the one the class passes. */
+open class BaseRef<T : Any>(ref: T) : SharedRef<T>(ref)
+
+@ExpoSharedObject
+class BuilderRef(ref: StringBuilder) : BaseRef<StringBuilder>(ref) {
+    @JS
+    fun size(): Int = ref.length
+}
+
+/** Constructible, but no module exposes it, so JavaScript has no `new` to call. */
+@ExpoSharedObject
+class Orphan(private val n: Int) : SharedObject() {
+    @JS
+    fun value(): Int = n
+}
+
 @ExpoModule(classes = [Player::class])
 class Media : Module() {
     @ExpoSharedObject

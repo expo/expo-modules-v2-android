@@ -13,6 +13,9 @@ internal object SurfaceJson {
     JsonWriter().apply {
       obj {
         field("schemaVersion", ExportedSurface.SCHEMA_VERSION)
+        // Not in the schema, which only Swift's scanner writes today: what wrote this report, so a
+        // consumer merging the reports of both platforms can tell them apart.
+        field("producer", ExportedSurface.PRODUCER)
         field("exports") { surface(surface) }
         field("stats") {
           obj {
@@ -134,7 +137,8 @@ internal object SurfaceJson {
     field("name", event.name)
     field("jsName", event.jsName)
     event.payload?.let { payload -> field("payload") { type(payload) } }
-    // An Android event is always queued onto the JavaScript thread, the Swift scan's default.
+    // An Android event is delivered at once on the JavaScript thread and posted to it from any other,
+    // which is closest to the Swift default.
     field("dispatch", "scheduled")
     declared(event)
   }
