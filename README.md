@@ -2,6 +2,10 @@
 
 ## TypeScript types (typegen)
 
+> Experimental. The report format, its location, the task and the scanner may all change: the
+> report follows the iOS scanner's format for now so the existing CLI can render it, until the CLI
+> takes reports from both platforms.
+
 The compiler plugin can describe what a module exports to JavaScript, so its TypeScript types come
 from the Kotlin it is compiled from. It writes the same report `ExpoModulesMacros scan-exports`
 writes for the iOS v2 Swift sources, so `expo-modules generate-types` from `expo-modules-cli`

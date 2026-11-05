@@ -161,6 +161,11 @@ kotlin {
     if (kotlinVersion >= KotlinVersion(2, 2, 20) && kotlinVersion < KotlinVersion(2, 4, 0)) {
       freeCompilerArgs.add("-Xcontext-parameters")
     }
+    // 2.4.20 gated reading the message collector off the configuration, which typegen reports its
+    // own failures through. The marker does not exist before.
+    if (kotlinVersion >= KotlinVersion(2, 4, 20)) {
+      optIn.add("org.jetbrains.kotlin.config.MessageCollectorAccess")
+    }
   }
 }
 

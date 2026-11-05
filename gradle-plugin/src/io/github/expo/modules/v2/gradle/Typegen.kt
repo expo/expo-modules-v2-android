@@ -125,6 +125,8 @@ abstract class WriteTypegenScanner : DefaultTask() {
 
   @TaskAction
   fun write() {
+    // The compilation is picked by name when none is configured, so say which one it was.
+    logger.lifecycle("Expo Modules typegen: the scanner prints the report of ${compileTask.get()}")
     val file = scanner.get().asFile
     file.writeText(
       """
@@ -137,7 +139,7 @@ abstract class WriteTypegenScanner : DefaultTask() {
       |fi
       |REPORT=${shellQuote(report.get())}
       |if [ ! -f "${'$'}REPORT" ]; then
-      |  echo "No typegen report at ${'$'}REPORT. Turn typegen on with expoModulesV2 { typegen { enabled = true } } and run ${shellQuote(taskPath())}." >&2
+      |  echo "No typegen report at ${'$'}REPORT. Run ${shellQuote(taskPath())} with expoModulesV2 { typegen { enabled = true } }; if it is on, the compiler's typegen warning says what went wrong." >&2
       |  exit 1
       |fi
       |exec cat "${'$'}REPORT"

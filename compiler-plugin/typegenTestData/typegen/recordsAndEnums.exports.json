@@ -231,6 +231,25 @@
                 "name": "android"
               }
             ]
+          },
+          {
+            "name": "answer",
+            "jsName": "answer",
+            "parameters": [],
+            "returns": {
+              "kind": "ref",
+              "typeof": "string",
+              "name": "io.github.expo.modules.v2.testdata.Answer"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
           }
         ],
         "properties": [],

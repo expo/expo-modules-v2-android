@@ -5,7 +5,22 @@
     "modules": [
       {
         "name": "Settings",
-        "jsName": "Settings",
+        "jsName": "SettingsModule",
+        "functions": [],
+        "properties": [],
+        "events": [],
+        "classes": [],
+        "file": "third.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Preferences",
+        "jsName": "Preferences",
         "functions": [
           {
             "name": "first",
@@ -49,6 +64,36 @@
                   "kind": "ref",
                   "typeof": "object",
                   "name": "io.github.expo.modules.v2.testdata.second.Options"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "settings",
+            "jsName": "settings",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "settings",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "object",
+                  "name": "io.github.expo.modules.v2.testdata.fourth.Settings"
                 },
                 "optional": false
               }
@@ -117,8 +162,8 @@
     "views": []
   },
   "stats": {
-    "filesScanned": 4,
-    "filesParsed": 3,
+    "filesScanned": 6,
+    "filesParsed": 5,
     "durationMs": 0
   }
 }

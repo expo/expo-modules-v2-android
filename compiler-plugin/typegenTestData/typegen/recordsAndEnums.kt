@@ -48,6 +48,13 @@ enum class Alias(val value: String?) : Enumerable {
     SECOND(null),
 }
 
+/** An entry that calls another constructor: its value is computed, so the enum is not described. */
+enum class Answer(val value: String) : Enumerable {
+    YES(true);
+
+    constructor(flag: Boolean) : this(if (flag) "yes" else "no")
+}
+
 interface Crossing : Enumerable
 
 /** `Enumerable` through another interface. */
@@ -97,6 +104,9 @@ class Shapes : Module() {
 
     @JS
     fun more(shape: Shape, priority: Priority, alias: Alias): Indirect = Indirect.ONLY
+
+    @JS
+    fun answer(): Answer = Answer.YES
 }
 
 fun box(): String = "OK"

@@ -26,8 +26,9 @@ internal object Typegen {
       val (surface, stats) = SurfaceCollector(context, symbols).collect(moduleFragment)
       SurfaceJson.report(surface, stats)
     } catch (e: Exception) {
-      // Types are a convenience: a failure here must not fail the build of the module itself. The
-      // old report goes too, so a stale one is never taken for this compilation's.
+      // Types are a convenience: a failure here must not fail the build of the module itself, so it
+      // is a warning (which a build that treats warnings as errors still fails on). The old report
+      // goes too, so a stale one is never taken for this compilation's.
       output.delete()
       messages.report(
         CompilerMessageSeverity.WARNING,

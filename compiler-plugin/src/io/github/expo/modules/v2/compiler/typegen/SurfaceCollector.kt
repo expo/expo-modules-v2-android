@@ -87,15 +87,17 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
     moduleFragment.acceptChildrenVoid(found)
     sharedObjectClasses += found.sharedObjects
 
+    val exposed = found.modules.flatMap(::exposedClassesOf).toSet()
     val modules = found.modules.associateWith(::module)
-    val exposed = modules.values.flatMap { it.classes }.map { it.name }.toSet()
-    val sharedObjects = found.sharedObjects.associateWith { sharedObject(it, it.qualifiedName in exposed) }
+    val sharedObjects = found.sharedObjects.associateWith { sharedObject(it, it in exposed) }
     found.records.forEach(::recordOf)
     found.enums.forEach(::enumOf)
 
     // What this compilation declares, in source order, and then what it only references. The
-    // renderer declares them in this order too: enums, records, shared objects, modules.
+    // renderer declares them in this order too: enums, records, shared objects, modules. A module
+    // is never referenced, but its reported name still takes the renderer's lookup key last.
     val names = Names()
+    modules.keys.forEach(names::reserve)
     val surface = ExportedSurface(
       enums = orderedBySource(enums.filterValues { it != null }.mapValues { it.value!! }, found.enums)
         .filter { (enumClass, it) -> names.claim(enumClass, typeName(it.name)) }
@@ -126,6 +128,11 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
   private inner class Names {
     private val typeScriptNames = mutableSetOf<String>()
     private val reportedNames = mutableSetOf<String>()
+
+    /** Takes the reported name of a module, which the renderer maps to the module last. */
+    fun reserve(moduleClass: IrClass) {
+      reportedNames += moduleClass.qualifiedName
+    }
 
     fun claim(irClass: IrClass, typeScriptName: String): Boolean {
       val reported = irClass.qualifiedName
@@ -166,7 +173,12 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
    * The shared classes a module exposes: those nested in it and those it lists in `classes`, the
    * way `ExpoModuleIrTransformer` finds them. A class `new` cannot reach is not exposed.
    */
-  private fun classesOf(moduleClass: IrClass): List<ExportedClass> {
+  private fun classesOf(moduleClass: IrClass): List<ExportedClass> =
+    exposedClassesOf(moduleClass).mapNotNull { sharedClass ->
+      constructors.describe(sharedClass)?.let { ExportedClass(sharedClass.qualifiedName, it.jsName) }
+    }
+
+  private fun exposedClassesOf(moduleClass: IrClass): List<IrClass> {
     val annotation = moduleClass.getAnnotation(Identifiers.FqNames.EXPO_MODULE_ANNOTATION)
     val nested = moduleClass.declarations
       .filterIsInstance<IrClass>()
@@ -176,9 +188,7 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
     return (nested + listed)
       .distinct()
       .filter { it.hasAnnotation(Identifiers.FqNames.SHARED_OBJECT_ANNOTATION) }
-      .mapNotNull { sharedClass ->
-        constructors.describe(sharedClass)?.let { ExportedClass(sharedClass.qualifiedName, it.jsName) }
-      }
+      .filter { constructors.describe(it) != null }
   }
 
   /**
@@ -453,13 +463,19 @@ internal class SurfaceCollector(context: IrPluginContext, private val symbols: S
   /**
    * The constant an entry passes for [property]: the argument of the constructor parameter that
    * initializes it, or that parameter's default when the entry passes none. Null when neither is a
-   * literal. An entry with a body calls the enum's constructor from its own class's constructor.
+   * literal, or when the entry calls another constructor. An entry with a body calls the enum's
+   * constructor from its own class's constructor.
    */
   private fun entryValue(enumClass: IrClass, entry: IrEnumEntry, property: IrProperty): IrConst? {
     val call = enumConstructorCallOf(enumClass, entry) ?: return null
     val parameter = (property.backingField?.initializer?.expression as? IrGetValue)
       ?.symbol?.owner as? IrValueParameter
       ?: return null
+    // An entry that calls another constructor passes its own arguments, which that constructor
+    // turns into the property's value in a way this does not evaluate.
+    if (call.symbol.owner != parameter.parent) {
+      return null
+    }
     val argument = call.arguments.getOrNull(parameter.indexInParameters)
       ?: parameter.defaultValue?.expression
     return argument as? IrConst
