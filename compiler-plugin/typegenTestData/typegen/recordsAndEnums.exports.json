@@ -750,7 +750,7 @@
     "views": []
   },
   "stats": {
-    "filesScanned": 2,
+    "filesScanned": 0,
     "filesParsed": 1,
     "durationMs": 0
   }

@@ -162,7 +162,7 @@
     "views": []
   },
   "stats": {
-    "filesScanned": 6,
+    "filesScanned": 0,
     "filesParsed": 5,
     "durationMs": 0
   }

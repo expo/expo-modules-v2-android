@@ -14,8 +14,9 @@ import org.jetbrains.kotlin.test.utils.withExtension
  * Compares the typegen report each module's compilation wrote against `<test>.exports.json`, one
  * `// MODULE:` section per module when the test has several.
  *
- * The report names each declaration's source file by its absolute path, and its duration varies, so
- * both are normalized first: a file by its name alone, a duration to 0.
+ * Three things vary with where and how the test runs, so they are normalized first: a source file
+ * goes by its name alone, the duration is 0, and so is the count of files scanned, which includes
+ * the helper files the test framework adds - more of them on some Kotlin releases than others.
  */
 class TypegenReportHandler(
   testServices: TestServices,
@@ -38,11 +39,13 @@ class TypegenReportHandler(
   private fun normalize(report: String): String = report
     .replace(FILE, "$1$2\"")
     .replace(DURATION, "\"durationMs\": 0")
+    .replace(FILES_SCANNED, "\"filesScanned\": 0")
 
   companion object {
     const val DUMP_EXTENSION = "exports.json"
 
     private val FILE = Regex("""("file": ")[^"]*?([^/\\"]*)"""")
     private val DURATION = Regex(""""durationMs": \d+""")
+    private val FILES_SCANNED = Regex(""""filesScanned": \d+""")
   }
 }
