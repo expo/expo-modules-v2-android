@@ -1,16 +1,24 @@
 package io.github.expo.modules.v2.compiler.ir
 
+import io.github.expo.modules.v2.compiler.typegen.Typegen
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
 import org.jetbrains.kotlin.ir.declarations.IrModuleFragment
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.ir.visitors.transformChildrenVoid
+import java.io.File
 
 class ExpoModulesV2IrGenerationExtension(
   private val hints: ModuleHintScanner,
+  /** Where to write the surface for typegen, or null to write none. */
+  private val typegenOutput: File? = null,
 ) : IrGenerationExtension {
   override fun generate(moduleFragment: IrModuleFragment, pluginContext: IrPluginContext) {
     val symbols = SymbolFinder(pluginContext)
+
+    // First, while the IR is still what the user wrote: the transformers below add to it.
+    typegenOutput?.let { Typegen.write(moduleFragment, pluginContext, symbols, it) }
+
     val poet = TypeDescriptorPoet(pluginContext, symbols, moduleFragment)
 
     val visitors = listOf(

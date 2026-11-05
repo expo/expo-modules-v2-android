@@ -1,0 +1,769 @@
+{
+  "schemaVersion": 11,
+  "exports": {
+    "modules": [
+      {
+        "name": "ValuesModule",
+        "jsName": "Values",
+        "functions": [
+          {
+            "name": "scalars",
+            "jsName": "scalars",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "a",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "number",
+                  "name": "Int"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "b",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "number",
+                  "name": "Long"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "c",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "number",
+                  "name": "Float"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "d",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "number",
+                  "name": "Double"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "e",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "boolean",
+                  "name": "Boolean"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "boolean",
+              "name": "Boolean"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "text",
+            "jsName": "text",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "value",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "string",
+                  "name": "String"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "string",
+              "name": "String"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "optionals",
+            "jsName": "optionals",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "first",
+                "type": {
+                  "kind": "optional",
+                  "typeof": "string",
+                  "wrapped": {
+                    "kind": "primitive",
+                    "typeof": "string",
+                    "name": "String"
+                  }
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "second",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "number",
+                  "name": "Int"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "third",
+                "type": {
+                  "kind": "optional",
+                  "typeof": "string",
+                  "wrapped": {
+                    "kind": "primitive",
+                    "typeof": "string",
+                    "name": "String"
+                  }
+                },
+                "optional": true
+              },
+              {
+                "label": "_",
+                "name": "fourth",
+                "type": {
+                  "kind": "optional",
+                  "typeof": "number",
+                  "wrapped": {
+                    "kind": "primitive",
+                    "typeof": "number",
+                    "name": "Double"
+                  }
+                },
+                "optional": true
+              }
+            ],
+            "returns": {
+              "kind": "optional",
+              "typeof": "string",
+              "wrapped": {
+                "kind": "primitive",
+                "typeof": "string",
+                "name": "String"
+              }
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "arrays",
+            "jsName": "arrays",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "ints",
+                "type": {
+                  "kind": "array",
+                  "typeof": "object",
+                  "element": {
+                    "kind": "primitive",
+                    "typeof": "number",
+                    "name": "Int"
+                  }
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "longs",
+                "type": {
+                  "kind": "array",
+                  "typeof": "object",
+                  "element": {
+                    "kind": "primitive",
+                    "typeof": "number",
+                    "name": "Long"
+                  }
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "doubles",
+                "type": {
+                  "kind": "array",
+                  "typeof": "object",
+                  "element": {
+                    "kind": "primitive",
+                    "typeof": "number",
+                    "name": "Double"
+                  }
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "flags",
+                "type": {
+                  "kind": "array",
+                  "typeof": "object",
+                  "element": {
+                    "kind": "primitive",
+                    "typeof": "boolean",
+                    "name": "Boolean"
+                  }
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "array",
+              "typeof": "object",
+              "element": {
+                "kind": "primitive",
+                "typeof": "number",
+                "name": "Float"
+              }
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "bytes",
+            "jsName": "bytes",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "data",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "object",
+                  "name": "ArrayBuffer"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "ref",
+              "typeof": "object",
+              "name": "ArrayBuffer"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "containers",
+            "jsName": "containers",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "list",
+                "type": {
+                  "kind": "array",
+                  "typeof": "object",
+                  "element": {
+                    "kind": "primitive",
+                    "typeof": "string",
+                    "name": "String"
+                  }
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "set",
+                "type": {
+                  "kind": "array",
+                  "typeof": "object",
+                  "element": {
+                    "kind": "primitive",
+                    "typeof": "number",
+                    "name": "Int"
+                  }
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "array",
+                "type": {
+                  "kind": "array",
+                  "typeof": "object",
+                  "element": {
+                    "kind": "optional",
+                    "typeof": "number",
+                    "wrapped": {
+                      "kind": "primitive",
+                      "typeof": "number",
+                      "name": "Double"
+                    }
+                  }
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "map",
+                "type": {
+                  "kind": "dictionary",
+                  "typeof": "object",
+                  "key": {
+                    "kind": "primitive",
+                    "typeof": "string",
+                    "name": "String"
+                  },
+                  "value": {
+                    "kind": "array",
+                    "typeof": "object",
+                    "element": {
+                      "kind": "primitive",
+                      "typeof": "number",
+                      "name": "Int"
+                    }
+                  }
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "dynamic",
+            "jsName": "dynamic",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "value",
+                "type": {
+                  "kind": "optional",
+                  "wrapped": {
+                    "kind": "unknown",
+                    "text": "Any"
+                  }
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "handle",
+                "type": {
+                  "kind": "unknown",
+                  "text": "JavaScriptValue"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "obj",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "object",
+                  "name": "JavaScriptObject"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "optional",
+              "wrapped": {
+                "kind": "unknown",
+                "text": "Any"
+              }
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "typed",
+            "jsName": "typed",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "view",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "object",
+                  "name": "TypedArray"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "converted",
+            "jsName": "converted",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "timeout",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "number",
+                  "name": "Duration"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "file",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "string",
+                  "name": "File"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "url",
+                "type": {
+                  "kind": "optional",
+                  "typeof": "string",
+                  "wrapped": {
+                    "kind": "primitive",
+                    "typeof": "string",
+                    "name": "URL"
+                  }
+                },
+                "optional": true
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Duration"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "nothing",
+            "jsName": "nothing",
+            "parameters": [],
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "later",
+            "jsName": "later",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "name",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "string",
+                  "name": "String"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "string",
+              "name": "String"
+            },
+            "async": true,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "laterUnit",
+            "jsName": "laterUnit",
+            "parameters": [],
+            "async": true,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "promised",
+            "jsName": "promised",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "value",
+                "type": {
+                  "kind": "primitive",
+                  "typeof": "number",
+                  "name": "Int"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": true,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "original",
+            "jsName": "renamed",
+            "parameters": [],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [
+          {
+            "name": "version",
+            "jsName": "version",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "readonly": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "tags",
+            "jsName": "tags",
+            "type": {
+              "kind": "array",
+              "typeof": "object",
+              "element": {
+                "kind": "primitive",
+                "typeof": "string",
+                "name": "String"
+              }
+            },
+            "readonly": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "volume",
+            "jsName": "volume",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Double"
+            },
+            "readonly": false,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "computed",
+            "jsName": "computed",
+            "type": {
+              "kind": "primitive",
+              "typeof": "string",
+              "name": "String"
+            },
+            "readonly": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "name": "onChanged",
+            "jsName": "changed",
+            "payload": {
+              "kind": "primitive",
+              "typeof": "string",
+              "name": "String"
+            },
+            "dispatch": "scheduled",
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "onTimer",
+            "jsName": "tick",
+            "payload": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "dispatch": "scheduled",
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "onPing",
+            "jsName": "ping",
+            "dispatch": "scheduled",
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "classes": [],
+        "file": "module.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "sharedObjects": [],
+    "records": [],
+    "enums": [],
+    "unions": [],
+    "views": []
+  },
+  "stats": {
+    "filesScanned": 2,
+    "filesParsed": 1,
+    "durationMs": 0
+  }
+}

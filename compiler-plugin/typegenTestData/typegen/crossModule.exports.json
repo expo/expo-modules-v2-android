@@ -1,0 +1,343 @@
+// MODULE: producer
+{
+  "schemaVersion": 11,
+  "exports": {
+    "modules": [],
+    "sharedObjects": [],
+    "records": [
+      {
+        "name": "Size",
+        "properties": [
+          {
+            "name": "width",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "optional": false,
+            "required": true,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "height",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "optional": false,
+            "required": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "unit",
+            "type": {
+              "kind": "optional",
+              "typeof": "string",
+              "wrapped": {
+                "kind": "ref",
+                "typeof": "string",
+                "name": "Dimension",
+                "refKind": "enum"
+              }
+            },
+            "optional": true,
+            "required": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "producer.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "enums": [
+      {
+        "name": "Dimension",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "PX",
+            "rawValue": "PX",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "DP",
+            "rawValue": "DP",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "producer.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Mode",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "FAST",
+            "rawValue": "fast",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "producer.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "unions": [],
+    "views": []
+  },
+  "stats": {
+    "filesScanned": 1,
+    "filesParsed": 1,
+    "durationMs": 0
+  }
+}
+// MODULE: consumer
+{
+  "schemaVersion": 11,
+  "exports": {
+    "modules": [
+      {
+        "name": "Layout",
+        "jsName": "Layout",
+        "functions": [
+          {
+            "name": "measure",
+            "jsName": "measure",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "size",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "object",
+                  "name": "Size",
+                  "refKind": "record"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "ref",
+              "typeof": "object",
+              "name": "Size",
+              "refKind": "record"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "mode",
+            "jsName": "mode",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "mode",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "string",
+                  "name": "Mode"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "ref",
+              "typeof": "string",
+              "name": "Mode"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "classes": [],
+        "file": "consumer.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "sharedObjects": [],
+    "records": [
+      {
+        "name": "Size",
+        "properties": [
+          {
+            "name": "width",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "optional": false,
+            "required": true,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "height",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "optional": false,
+            "required": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "unit",
+            "type": {
+              "kind": "optional",
+              "typeof": "string",
+              "wrapped": {
+                "kind": "ref",
+                "typeof": "string",
+                "name": "Dimension",
+                "refKind": "enum"
+              }
+            },
+            "optional": true,
+            "required": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "enums": [
+      {
+        "name": "Dimension",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "PX",
+            "rawValue": "PX",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "DP",
+            "rawValue": "DP",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "unions": [],
+    "views": []
+  },
+  "stats": {
+    "filesScanned": 2,
+    "filesParsed": 1,
+    "durationMs": 0
+  }
+}
