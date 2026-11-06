@@ -1,5 +1,5 @@
 [versions]
-expo-modules-v2 = "0.2.7"
+expo-modules-v2 = "0.2.8"
 
 # expo-modules-v2-compiler-plugin keeps the version of the release that last changed it, so a
 # release that does not change it publishes none of its per-Kotlin builds (every file counts against
