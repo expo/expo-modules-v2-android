@@ -22,6 +22,8 @@ namespace expo::modules::v2 {
     facebook::jsi::Value operator()(const ExpectedType::Record& recordType) const;
 
     facebook::jsi::Value operator()(const ExpectedType::SharedObject& sharedType) const;
+
+    facebook::jsi::Value operator()(const ExpectedType::Tuple& tupleType) const;
   };
 
   // clang-format off
