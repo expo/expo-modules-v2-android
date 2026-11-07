@@ -10,8 +10,28 @@
 #include <kolibri/string_utils.h>
 #include <kolibri/array.h>
 
+#include <array>
+#include <string_view>
+
 namespace expo::modules::v2::jsi {
   namespace {
+    /**
+     * The `Symbol.toStringTag` of each kind of array buffer view, in the order of the Kotlin
+     * `ArrayBufferViewKind` entries: a kind crosses as its index here.
+     */
+    constexpr std::array<std::string_view, 12> kArrayBufferViewTags = {
+      "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Int32Array",
+      "Uint32Array", "Float32Array", "Float64Array", "BigInt64Array", "BigUint64Array", "DataView",
+    };
+
+    bool isArrayBufferView(facebook::jsi::Runtime& rt, const facebook::jsi::Object& object) {
+      return rt.global()
+        .getPropertyAsObject(rt, "ArrayBuffer")
+        .getPropertyAsFunction(rt, "isView")
+        .call(rt, facebook::jsi::Value(rt, object))
+        .getBool();
+    }
+
     /**
      * [name] as a property name of [rt]. A short ASCII name - nearly every one - is copied out with
      * one `GetStringRegion` and comes from the runtime's key cache, instead of turning into a heap
@@ -193,12 +213,7 @@ namespace expo::modules::v2::jsi {
     facebook::jsi::Runtime& rt = runtime();
     const facebook::jsi::Object& view = object();
 
-    const bool isView = rt.global()
-      .getPropertyAsObject(rt, "ArrayBuffer")
-      .getPropertyAsFunction(rt, "isView")
-      .call(rt, facebook::jsi::Value(rt, view))
-      .getBool();
-    if (!isView) {
+    if (!isArrayBufferView(rt, view)) {
       return nullptr;
     }
 
@@ -209,6 +224,40 @@ namespace expo::modules::v2::jsi {
     static uint8_t empty = 0;
     uint8_t* data = length == 0 ? &empty : buffer.data(rt) + offset;
     return env->NewDirectByteBuffer(data, length);
+  }
+
+  jint JavaScriptObject::getArrayBufferViewKind() const {
+    facebook::jsi::Runtime& rt = runtime();
+    const facebook::jsi::Object& view = object();
+
+    if (!isArrayBufferView(rt, view)) {
+      return -1;
+    }
+
+    // `Object.prototype.toString` reads the view's `Symbol.toStringTag`, which for a typed array is
+    // a getter that returns the name of its kind - even for a subclass, unlike `constructor.name`.
+    const std::string description = rt.global()
+      .getPropertyAsObject(rt, "Object")
+      .getPropertyAsObject(rt, "prototype")
+      .getPropertyAsFunction(rt, "toString")
+      .callWithThis(rt, view)
+      .getString(rt)
+      .utf8(rt);
+
+    // "[object Float32Array]"
+    constexpr std::string_view prefix = "[object ";
+    std::string_view tag = description;
+    if (!tag.starts_with(prefix) || !tag.ends_with(']')) {
+      return -1;
+    }
+    tag = tag.substr(prefix.size(), tag.size() - prefix.size() - 1);
+
+    for (size_t i = 0; i < kArrayBufferViewTags.size(); ++i) {
+      if (kArrayBufferViewTags[i] == tag) {
+        return static_cast<jint>(i);
+      }
+    }
+    return -1;
   }
 
   jobject JavaScriptObject::nativeInstance(JNIEnv* env) const {
@@ -224,6 +273,7 @@ namespace expo::modules::v2::jsi {
         &JavaScriptObject::getArrayBufferViewBytes,
         kolibri::Ref<kolibri::JByteBuffer>(kolibri::NativePointer)
       >("getArrayBufferViewBytes")
+      .method<&JavaScriptObject::getArrayBufferViewKind>("getArrayBufferViewKind")
       .method<&JavaScriptObject::hasProperty>("hasProperty")
       .method<
         &JavaScriptObject::getProperty,
