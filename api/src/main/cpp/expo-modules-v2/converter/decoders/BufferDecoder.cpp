@@ -11,6 +11,94 @@
 #include <kolibri/binary/BinaryString.h>
 
 namespace expo::modules::v2 {
+  namespace {
+    facebook::jsi::Value decodeString(facebook::jsi::Runtime& rt, kolibri::binary::Reader& in) {
+      return readAdaptiveString(
+        in,
+        [&](const char* bytes, const size_t length) {
+          return facebook::jsi::String::createFromAscii(rt, bytes, length);
+        },
+        [&](const char16_t* units, const size_t count) {
+          return facebook::jsi::String::createFromUtf16(rt, units, count);
+        }
+      );
+    }
+
+    /**
+     * Reads a non-nullable number, boolean or string [type] into [out] without the out-of-line call
+     * and visit `decodeFromBuffer` makes per value. Returns false, having read nothing, for every
+     * other type.
+     */
+    ALWAYS_INLINE bool decodeLeafInline(
+      facebook::jsi::Runtime& rt,
+      kolibri::binary::Reader& in,
+      const ExpectedType& type,
+      facebook::jsi::Value& out
+    ) {
+      if (type.nullable()) {
+        return false;
+      }
+
+      switch (type.kind()) {
+        case CppType::INT:
+        case CppType::BOX_INT:
+          out = facebook::jsi::Value(static_cast<double>(in.read<int32_t>()));
+          return true;
+        case CppType::LONG:
+        case CppType::BOX_LONG:
+          out = facebook::jsi::Value(static_cast<double>(in.read<int64_t>()));
+          return true;
+        case CppType::FLOAT:
+        case CppType::BOX_FLOAT:
+          out = facebook::jsi::Value(in.read<float>());
+          return true;
+        case CppType::DOUBLE:
+        case CppType::BOX_DOUBLE:
+          out = facebook::jsi::Value(in.read<double>());
+          return true;
+        case CppType::BOOLEAN:
+        case CppType::BOX_BOOLEAN:
+          out = facebook::jsi::Value(in.read<uint8_t>() != 0);
+          return true;
+        case CppType::STRING:
+          out = decodeString(rt, in);
+          return true;
+        default:
+          return false;
+      }
+    }
+
+    ALWAYS_INLINE facebook::jsi::Value decodeValue(
+      facebook::jsi::Runtime& rt,
+      kolibri::binary::Reader& in,
+      const ExpectedType& type
+    ) {
+      facebook::jsi::Value value;
+      if (!decodeLeafInline(rt, in, type, value)) {
+        value = decodeFromBuffer(rt, in, type);
+      }
+      return value;
+    }
+
+    /** A record's fields in schema order, into a new object whose properties [plan] names. */
+    facebook::jsi::Value decodeRecordFields(
+      facebook::jsi::Runtime& rt,
+      kolibri::binary::Reader& in,
+      const RecordAccessPlan& plan
+    ) {
+      const RecordSchema& schema = *plan.schema;
+      facebook::jsi::Object result(rt);
+      for (size_t i = 0; i < schema.fields.size(); i++) {
+        result.setProperty(
+          rt,
+          plan.fieldNames[i],
+          decodeValue(rt, in, schema.fields[i].type)
+        );
+      }
+      return result;
+    }
+  } // namespace
+
   template<>
   facebook::jsi::Value BufferDecoder::operator()<CppType::INT>() const {
     return facebook::jsi::Value(static_cast<double>(in.read<int32_t>()));
@@ -69,15 +157,7 @@ namespace expo::modules::v2 {
 
   template<>
   facebook::jsi::Value BufferDecoder::operator()<CppType::STRING>() const {
-    return readAdaptiveString(
-      in,
-      [&](const char* bytes, const size_t length) {
-        return facebook::jsi::String::createFromAscii(rt, bytes, length);
-      },
-      [&](const char16_t* units, const size_t count) {
-        return facebook::jsi::String::createFromUtf16(rt, units, count);
-      }
-    );
+    return decodeString(rt, in);
   }
 
   template<>
@@ -140,7 +220,7 @@ namespace expo::modules::v2 {
     const size_t count = in.readCount();
 
     return buildJsArray(rt, count, [&](size_t) {
-      return decodeFromBuffer(rt, in, elementType);
+      return decodeValue(rt, in, elementType);
     });
   }
 
@@ -153,7 +233,7 @@ namespace expo::modules::v2 {
       readAdaptiveString(
         in,
         [&](const char* bytes, const size_t length) {
-          facebook::jsi::Value value = decodeFromBuffer(rt, in, valueType);
+          facebook::jsi::Value value = decodeValue(rt, in, valueType);
           if (const facebook::jsi::PropNameID* name = names.asciiKey(rt, {bytes, length})) {
             result.setProperty(rt, *name, std::move(value));
           } else {
@@ -163,7 +243,7 @@ namespace expo::modules::v2 {
         },
         [&](const char16_t* units, const size_t stringCount) {
           const auto name = facebook::jsi::PropNameID::forUtf16(rt, units, stringCount);
-          result.setProperty(rt, name, decodeFromBuffer(rt, in, valueType));
+          result.setProperty(rt, name, decodeValue(rt, in, valueType));
         }
       );
     }
@@ -171,19 +251,7 @@ namespace expo::modules::v2 {
   }
 
   facebook::jsi::Value BufferDecoder::operator()(const ExpectedType::Record& recordType) const {
-    RecordPropertyCache& recordProperties = RecordPropertyCache::get(rt);
-    const RecordAccessPlan& plan = recordProperties.planFor(rt, recordType.schemaId);
-    const RecordSchema& schema = *plan.schema;
-
-    facebook::jsi::Object result(rt);
-    for (size_t i = 0; i < schema.fields.size(); i++) {
-      const RecordFieldSpec& field = schema.fields[i];
-      result.setProperty(
-        rt,
-        plan.fieldNames[i],
-        decodeFromBuffer(rt, in, field.type)
-      );
-    }
-    return result;
+    const RecordAccessPlan& plan = RecordPropertyCache::get(rt).planFor(rt, recordType.schemaId);
+    return decodeRecordFields(rt, in, plan);
   }
 }
