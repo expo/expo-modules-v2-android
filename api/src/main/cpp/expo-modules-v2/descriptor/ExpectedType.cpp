@@ -14,6 +14,7 @@
 #include <expo-modules-v2/records/RecordRegistry.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
+#include <expo-modules-v2/jsi/JavaScriptFunction.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/utils/Throw.h>
 
@@ -83,6 +84,15 @@ namespace expo::modules::v2 {
     return ExpectedType(SharedObject{classId}, nullable, /* usesBuffer = */ false);
   }
 
+  ExpectedType ExpectedType::function(FunctionSignature signature, const bool nullable) {
+    // A function is a live handle, so it can never ride the binary buffer.
+    return ExpectedType(
+      Function{std::make_shared<const FunctionSignature>(std::move(signature))},
+      nullable,
+      /* usesBuffer = */ false
+    );
+  }
+
   ExpectedType ExpectedType::clone() const {
     return std::visit(
       overloads{
@@ -108,6 +118,9 @@ namespace expo::modules::v2 {
         },
         [this](const SharedObject& shared) {
           return ExpectedType(Shape(shared), nullable_, usesBuffer_);
+        },
+        [this](const Function& function) {
+          return ExpectedType(Shape(function), nullable_, usesBuffer_);
         },
       },
       shape_
@@ -200,6 +213,7 @@ namespace expo::modules::v2 {
             sharedobjects::SharedObjectClassRegistry::descriptorOf(shared.classId);
           return descriptor.empty() ? desc<JSharedObject>() : descriptor;
         },
+        [](const Function&) { return desc<jsi::JavaScriptFunction>(); },
       },
       shape_
     );
@@ -275,6 +289,17 @@ namespace expo::modules::v2 {
         [](const SharedObject& shared) {
           return sharedobjects::SharedObjectClassRegistry::nameOf(shared.classId);
         },
+        [](const Function& function) {
+          const FunctionSignature& signature = *function.signature;
+          std::string name = signature.isSuspend ? "suspend (" : "(";
+          for (size_t i = 0; i < signature.params.size(); i++) {
+            if (i > 0) {
+              name += ", ";
+            }
+            name += signature.params[i].kotlinType();
+          }
+          return name + ") -> " + signature.returns.kotlinType();
+        },
       },
       shape_
     );
@@ -304,6 +329,8 @@ namespace expo::modules::v2 {
         },
         // A reference: it identifies a native object, so there is nothing to flatten.
         [](const SharedObject&) { return false; },
+        // A live handle, like a JSI object.
+        [](const Function&) { return false; },
       },
       shape_
     );
@@ -317,6 +344,7 @@ namespace expo::modules::v2 {
         [](const Map&) { return CppType::MAP; },
         [](const Record&) { return CppType::RECORD; },
         [](const SharedObject&) { return CppType::SHARED_OBJECT; },
+        [](const Function&) { return CppType::FUNCTION; },
       },
       shape
     );

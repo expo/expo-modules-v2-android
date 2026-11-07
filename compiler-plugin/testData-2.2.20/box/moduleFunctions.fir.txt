@@ -1,0 +1,133 @@
+FILE: moduleFunctions.kt
+    package io.github.expo.modules.v2.testdata
+
+    @R|io/github/expo/modules/v2/ExpoModule|() public final class Lambdas : R|io/github/expo/modules/v2/Module| {
+        public constructor(): R|io/github/expo/modules/v2/testdata/Lambdas| {
+            super<R|io/github/expo/modules/v2/Module|>()
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun call(callback: R|(kotlin/Int) -> kotlin/Unit|): R|kotlin/Unit| {
+            R|<local>/callback|.R|SubstitutionOverride<kotlin/Function1.invoke: R|kotlin/Unit|>|(Int(1))
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun each(values: R|kotlin/collections/List<kotlin/Int>|, callback: R|(kotlin/Int) -> kotlin/Unit|): R|kotlin/Unit| {
+            R|<local>/values|.R|kotlin/collections/forEach|<R|kotlin/Int|>(R|<local>/callback|)
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun transform(callback: R|(kotlin/String, kotlin/Int?) -> kotlin/String?|): R|kotlin/String?| {
+            ^transform R|<local>/callback|.R|SubstitutionOverride<kotlin/Function2.invoke: R|kotlin/String?|>|(String(x), Null(null))
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun optional(callback: R|((kotlin/Int) -> kotlin/Unit)?|): R|kotlin/Unit| {
+            R|<local>/callback|?.{ $subj$.R|SubstitutionOverride<kotlin/Function1.invoke: R|kotlin/Unit|>|(Int(1)) }
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun later(callback: R|suspend (kotlin/Int) -> kotlin/Int|): R|kotlin/Int| {
+            ^later R|<local>/callback|.R|SubstitutionOverride<kotlin/coroutines/SuspendFunction1.invoke: R|kotlin/Int|>|(Int(1))
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final suspend fun plainInAsync(callback: R|(kotlin/Int) -> kotlin/Unit|): R|kotlin/Unit| {
+            R|<local>/callback|.R|SubstitutionOverride<kotlin/Function1.invoke: R|kotlin/Unit|>|(Int(1))
+        }
+
+        @R|io/github/expo/modules/v2/JS|() public final fun promised(callback: R|suspend () -> kotlin/String|): R|io/github/expo/modules/v2/async/Promise<kotlin/Int>| {
+            ^promised Q|io/github/expo/modules/v2/async/Promise|.R|io/github/expo/modules/v2/async/Promise.Companion.resolve|<R|kotlin/Int|>(Int(1))
+        }
+
+    }
+    private final const val TRAMPOLINE: R|kotlin/String| = String(__trampoline$ExpoModulesV2)
+        private get(): R|kotlin/String|
+    public final fun box(): R|kotlin/String| {
+        lval clazz: R|java/lang/Class<io/github/expo/modules/v2/testdata/Lambdas>| = <getClass>(Q|io/github/expo/modules/v2/testdata/Lambdas|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/Lambdas|>
+        lval loader: R|java/lang/ClassLoader!| = R|<local>/clazz|.R|java/lang/Class.classLoader|
+        lval handle: R|ft<java/lang/Class<*>, java/lang/Class<*>?>| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.async.PromiseHandle), Boolean(false), R|<local>/loader|)
+        lval function: R|ft<java/lang/Class<*>, java/lang/Class<*>?>| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(io.github.expo.modules.v2.jsi.JavaScriptFunction), Boolean(false), R|<local>/loader|)
+        lval int: R|java/lang/Class<kotlin/Int>?| = <getClass>(Q|kotlin/Int|).R|kotlin/jvm/javaPrimitiveType|<R|kotlin/Int|>
+        local final fun trampoline(name: R|kotlin/String|): R|java/lang/reflect/Method!| {
+            ^trampoline R|<local>/clazz|.R|java/lang/Class.declaredMethods|.R|kotlin/collections/single|<R|java/lang/reflect/Method!|>(<L> = single@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
+                ^ ==(R|<local>/it|.R|java/lang/reflect/Method.name|, <strcat>(R|<local>/name|, R|io/github/expo/modules/v2/testdata/TRAMPOLINE|))
+            }
+            )
+        }
+
+        lval call: R|java/lang/reflect/Method!| = R|<local>/trampoline|(String(call))
+        when () {
+            !=(R|<local>/call|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(), R|kotlin/collections/listOf|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(R|<local>/function|)) ->  {
+                ^box <strcat>(String(call takes ), R|<local>/call|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>())
+            }
+        }
+
+        when () {
+            !=(R|<local>/call|.R|java/lang/reflect/Method.returnType|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                ^box <strcat>(String(call returns ), R|<local>/call|.R|java/lang/reflect/Method.returnType|)
+            }
+        }
+
+        lval each: R|java/lang/reflect/Method!| = R|<local>/trampoline|(String(each))
+        when () {
+            !=(R|<local>/each|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(), R|kotlin/collections/listOf|<R|java/lang/Class<out kotlin/Any>?|>(vararg(R|<local>/function|, R|<local>/int|))) ->  {
+                ^box <strcat>(String(each takes ), R|<local>/each|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>())
+            }
+        }
+
+        lval transform: R|java/lang/reflect/Method!| = R|<local>/trampoline|(String(transform))
+        when () {
+            !=(R|<local>/transform|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(), R|kotlin/collections/listOf|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(R|<local>/function|)) ->  {
+                ^box <strcat>(String(transform takes ), R|<local>/transform|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>())
+            }
+        }
+
+        when () {
+            !=(R|<local>/transform|.R|java/lang/reflect/Method.returnType|, <getClass>(Q|kotlin/String|).R|kotlin/jvm/java|<R|kotlin/String|>) ->  {
+                ^box <strcat>(String(transform returns ), R|<local>/transform|.R|java/lang/reflect/Method.returnType|)
+            }
+        }
+
+        lval optional: R|java/lang/reflect/Method!| = R|<local>/trampoline|(String(optional))
+        when () {
+            !=(R|<local>/optional|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(), R|kotlin/collections/listOf|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(R|<local>/function|)) ->  {
+                ^box <strcat>(String(optional takes ), R|<local>/optional|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>())
+            }
+        }
+
+        lval later: R|java/lang/reflect/Method!| = R|<local>/trampoline|(String(later))
+        when () {
+            !=(R|<local>/later|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(), R|kotlin/collections/listOf|<R|ft<java/lang/Class<out kotlin/Any>, java/lang/Class<out kotlin/Any>?>|>(vararg(R|<local>/function|, R|<local>/handle|))) ->  {
+                ^box <strcat>(String(later takes ), R|<local>/later|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>())
+            }
+        }
+
+        when () {
+            !=(R|<local>/later|.R|java/lang/reflect/Method.returnType|, Q|java/lang/Void|.R|java/lang/Void.TYPE*s|) ->  {
+                ^box <strcat>(String(later returns ), R|<local>/later|.R|java/lang/reflect/Method.returnType|)
+            }
+        }
+
+        lval plainInAsync: R|java/lang/reflect/Method!| = R|<local>/trampoline|(String(plainInAsync))
+        when () {
+            !=(R|<local>/plainInAsync|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(), R|kotlin/collections/listOf|<R|ft<java/lang/Class<out kotlin/Any>, java/lang/Class<out kotlin/Any>?>|>(vararg(R|<local>/function|, R|<local>/handle|))) ->  {
+                ^box <strcat>(String(plainInAsync takes ), R|<local>/plainInAsync|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>())
+            }
+        }
+
+        lval promised: R|java/lang/reflect/Method!| = R|<local>/trampoline|(String(promised))
+        when () {
+            !=(R|<local>/promised|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>(), R|kotlin/collections/listOf|<R|ft<java/lang/Class<out kotlin/Any>, java/lang/Class<out kotlin/Any>?>|>(vararg(R|<local>/function|, R|<local>/handle|))) ->  {
+                ^box <strcat>(String(promised takes ), R|<local>/promised|.R|java/lang/reflect/Method.parameterTypes|.R|kotlin/collections/toList|<R|ft<java/lang/Class<*>, java/lang/Class<*>?>|>())
+            }
+        }
+
+        lval function1: R|ft<java/lang/Class<*>, java/lang/Class<*>?>| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(kotlin.jvm.functions.Function1))
+        R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(call), vararg(R|<local>/function1|))
+        lval continuation: R|ft<java/lang/Class<*>, java/lang/Class<*>?>| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(kotlin.coroutines.Continuation))
+        lval function2: R|ft<java/lang/Class<*>, java/lang/Class<*>?>| = Q|java/lang/Class|.R|java/lang/Class.forName*s|(String(kotlin.jvm.functions.Function2))
+        R|<local>/clazz|.R|SubstitutionOverride<java/lang/Class.getDeclaredMethod: R|java/lang/reflect/Method!|>|(String(later), vararg(R|<local>/function2|, R|<local>/continuation|))
+        ^box String(OK)
+    }
+FILE: __GENERATED DECLARATIONS__.kt
+    package io.github.expo.modules.v2.hints
+
+    public final interface io_github_expo_modules_v2_testdata_Lambdas_810366ec : R|kotlin/Any| {
+        public abstract fun module(): R|io/github/expo/modules/v2/testdata/Lambdas|
+
+    }
