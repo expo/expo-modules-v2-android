@@ -70,6 +70,9 @@ object Identifiers {
     val EventAnnotation = classId(Packages.API, "Event")
     val ConstantAnnotation = classId(Packages.API, "Constant")
 
+    /** The marker of an enum that crosses to JavaScript. */
+    val EnumerableInterface = classId(Packages.API, "Enumerable")
+
     /** Kolibri's marker for what native code looks up by name; the consumer R8 rules keep it. */
     val CalledFromNativeAnnotation = classId(Packages.KOLIBRI, "CalledFromNative")
 
@@ -129,6 +132,7 @@ object Identifiers {
     val SHARED_OBJECT_ANNOTATION: FqName = Classes.ExpoSharedObjectAnnotation.asSingleFqName()
     val EVENT_ANNOTATION: FqName = Classes.EventAnnotation.asSingleFqName()
     val CONSTANT_ANNOTATION: FqName = Classes.ConstantAnnotation.asSingleFqName()
+    val ENUMERABLE: FqName = Classes.EnumerableInterface.asSingleFqName()
     val PROMISE: FqName = Classes.Promise.asSingleFqName()
   }
 

@@ -1,0 +1,757 @@
+{
+  "schemaVersion": 11,
+  "producer": "expo-modules-v2-android",
+  "exports": {
+    "modules": [
+      {
+        "name": "Shapes",
+        "jsName": "Shapes",
+        "functions": [
+          {
+            "name": "move",
+            "jsName": "move",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "point",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "object",
+                  "name": "Point",
+                  "refKind": "record"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "direction",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "string",
+                  "name": "Direction",
+                  "refKind": "enum"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "level",
+                "type": {
+                  "kind": "optional",
+                  "typeof": "number",
+                  "wrapped": {
+                    "kind": "ref",
+                    "typeof": "number",
+                    "name": "Level",
+                    "refKind": "enum"
+                  }
+                },
+                "optional": true
+              }
+            ],
+            "returns": {
+              "kind": "ref",
+              "typeof": "object",
+              "name": "Point",
+              "refKind": "record"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "configure",
+            "jsName": "configure",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "options",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "object",
+                  "name": "Options",
+                  "refKind": "record"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "ref",
+              "typeof": "object",
+              "name": "Options",
+              "refKind": "record"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "tree",
+            "jsName": "tree",
+            "parameters": [],
+            "returns": {
+              "kind": "ref",
+              "typeof": "object",
+              "name": "Node",
+              "refKind": "record"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "unmarked",
+            "jsName": "unmarked",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "value",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "string",
+                  "name": "Unmarked",
+                  "refKind": "enum"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "ref",
+              "typeof": "string",
+              "name": "Unmarked",
+              "refKind": "enum"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "byStyle",
+            "jsName": "byStyle",
+            "parameters": [],
+            "returns": {
+              "kind": "dictionary",
+              "typeof": "object",
+              "key": {
+                "kind": "primitive",
+                "typeof": "string",
+                "name": "String"
+              },
+              "value": {
+                "kind": "ref",
+                "typeof": "string",
+                "name": "Style",
+                "refKind": "enum"
+              }
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "more",
+            "jsName": "more",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "shape",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "string",
+                  "name": "Shape",
+                  "refKind": "enum"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "priority",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "number",
+                  "name": "Priority",
+                  "refKind": "enum"
+                },
+                "optional": false
+              },
+              {
+                "label": "_",
+                "name": "alias",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "string",
+                  "name": "Alias",
+                  "refKind": "enum"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "ref",
+              "typeof": "string",
+              "name": "Indirect",
+              "refKind": "enum"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "answer",
+            "jsName": "answer",
+            "parameters": [],
+            "returns": {
+              "kind": "ref",
+              "typeof": "string",
+              "name": "io.github.expo.modules.v2.testdata.Answer"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "classes": [],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "sharedObjects": [],
+    "records": [
+      {
+        "name": "Point",
+        "properties": [
+          {
+            "name": "x",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Double"
+            },
+            "optional": false,
+            "required": true,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "y",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Double"
+            },
+            "optional": false,
+            "required": true,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Options",
+        "properties": [
+          {
+            "name": "name",
+            "type": {
+              "kind": "primitive",
+              "typeof": "string",
+              "name": "String"
+            },
+            "optional": false,
+            "required": true,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "quality",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "optional": false,
+            "required": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "label",
+            "type": {
+              "kind": "optional",
+              "typeof": "string",
+              "wrapped": {
+                "kind": "primitive",
+                "typeof": "string",
+                "name": "String"
+              }
+            },
+            "optional": true,
+            "required": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "style",
+            "type": {
+              "kind": "ref",
+              "typeof": "string",
+              "name": "Style",
+              "refKind": "enum"
+            },
+            "optional": false,
+            "required": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "tags",
+            "type": {
+              "kind": "array",
+              "typeof": "object",
+              "element": {
+                "kind": "primitive",
+                "typeof": "string",
+                "name": "String"
+              }
+            },
+            "optional": false,
+            "required": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "origin",
+            "type": {
+              "kind": "optional",
+              "typeof": "object",
+              "wrapped": {
+                "kind": "ref",
+                "typeof": "object",
+                "name": "Point",
+                "refKind": "record"
+              }
+            },
+            "optional": true,
+            "required": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Node",
+        "properties": [
+          {
+            "name": "value",
+            "type": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "optional": false,
+            "required": true,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "children",
+            "type": {
+              "kind": "array",
+              "typeof": "object",
+              "element": {
+                "kind": "ref",
+                "typeof": "object",
+                "name": "Node",
+                "refKind": "record"
+              }
+            },
+            "optional": false,
+            "required": true,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "enums": [
+      {
+        "name": "Direction",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "UP",
+            "rawValue": "UP",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "DOWN",
+            "rawValue": "DOWN",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Style",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "LIGHT",
+            "rawValue": "light",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "HEAVY",
+            "rawValue": "heavy",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Level",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "number",
+          "name": "Int"
+        },
+        "cases": [
+          {
+            "name": "LOW",
+            "rawValue": "1",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "HIGH",
+            "rawValue": "10",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Shape",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "ROUND",
+            "rawValue": "round",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "SQUARE",
+            "rawValue": "square",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Priority",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "number",
+          "name": "Int"
+        },
+        "cases": [
+          {
+            "name": "NORMAL",
+            "rawValue": "5",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "URGENT",
+            "rawValue": "9",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Alias",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "FIRST",
+            "rawValue": "first",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "SECOND",
+            "rawValue": "SECOND",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Indirect",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "ONLY",
+            "rawValue": "ONLY",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Unmarked",
+        "rawType": {
+          "kind": "primitive",
+          "typeof": "string",
+          "name": "String"
+        },
+        "cases": [
+          {
+            "name": "ONE",
+            "rawValue": "ONE",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "recordsAndEnums.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "unions": [],
+    "views": []
+  },
+  "stats": {
+    "filesScanned": 0,
+    "filesParsed": 1,
+    "durationMs": 0
+  }
+}
