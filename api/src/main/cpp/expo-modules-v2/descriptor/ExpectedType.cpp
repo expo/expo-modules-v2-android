@@ -83,6 +83,10 @@ namespace expo::modules::v2 {
     return ExpectedType(SharedObject{classId}, nullable, /* usesBuffer = */ false);
   }
 
+  ExpectedType ExpectedType::tuple(std::vector<ExpectedType> elements, bool nullable, bool usesBuffer) {
+    return ExpectedType(Tuple{std::move(elements)}, nullable, usesBuffer);
+  }
+
   ExpectedType ExpectedType::clone() const {
     return std::visit(
       overloads{
@@ -108,6 +112,14 @@ namespace expo::modules::v2 {
         },
         [this](const SharedObject& shared) {
           return ExpectedType(Shape(shared), nullable_, usesBuffer_);
+        },
+        [this](const Tuple& tuple) {
+          std::vector<ExpectedType> elements;
+          elements.reserve(tuple.elements.size());
+          for (const ExpectedType& element : tuple.elements) {
+            elements.push_back(element.clone());
+          }
+          return ExpectedType(Tuple{std::move(elements)}, nullable_, usesBuffer_);
         },
       },
       shape_
@@ -200,6 +212,7 @@ namespace expo::modules::v2 {
             sharedobjects::SharedObjectClassRegistry::descriptorOf(shared.classId);
           return descriptor.empty() ? desc<JSharedObject>() : descriptor;
         },
+        [](const Tuple&) { return desc<kolibri::JList>(); },
       },
       shape_
     );
@@ -257,6 +270,29 @@ namespace expo::modules::v2 {
         return "<unregistered record #" + std::to_string(schemaId) + ">";
       }
     }
+
+    std::string tupleKotlinName(const ExpectedType::Tuple& tuple) {
+      std::string name;
+      switch (tuple.elements.size()) {
+        case 2:
+          name = "Pair<";
+          break;
+        case 3:
+          name = "Triple<";
+          break;
+        default:
+          name = "Tuple<";
+          break;
+      }
+
+      for (size_t i = 0; i < tuple.elements.size(); i++) {
+        if (i != 0) {
+          name += ", ";
+        }
+        name += tuple.elements[i].kotlinType();
+      }
+      return name + ">";
+    }
   } // namespace
 
   std::string ExpectedType::kotlinType() const {
@@ -275,6 +311,7 @@ namespace expo::modules::v2 {
         [](const SharedObject& shared) {
           return sharedobjects::SharedObjectClassRegistry::nameOf(shared.classId);
         },
+        [](const Tuple& tuple) { return tupleKotlinName(tuple); },
       },
       shape_
     );
@@ -304,6 +341,14 @@ namespace expo::modules::v2 {
         },
         // A reference: it identifies a native object, so there is nothing to flatten.
         [](const SharedObject&) { return false; },
+        [](const Tuple& tuple) {
+          for (const ExpectedType& element : tuple.elements) {
+            if (!element.bufferSafe()) {
+              return false;
+            }
+          }
+          return true;
+        },
       },
       shape_
     );
@@ -317,6 +362,7 @@ namespace expo::modules::v2 {
         [](const Map&) { return CppType::MAP; },
         [](const Record&) { return CppType::RECORD; },
         [](const SharedObject&) { return CppType::SHARED_OBJECT; },
+        [](const Tuple&) { return CppType::TUPLE; },
       },
       shape
     );

@@ -29,6 +29,14 @@ namespace expo::modules::v2 {
     });
   }
 
+  facebook::jsi::Value JniDecoder::operator()(const ExpectedType::Tuple& tupleType) const {
+    const auto list = kolibri::UnownedRef<kolibri::JList>(object);
+    return buildJsArray(rt, tupleType.elements.size(), [&](const size_t i) {
+      const kolibri::Ref<> element = list->get(env, static_cast<jint>(i));
+      return decodeFromJni(env, rt, element.get(), tupleType.elements[i]);
+    });
+  }
+
   facebook::jsi::Value JniDecoder::operator()(const ExpectedType::Map& mapType) const {
     const ExpectedType& valueType = *mapType.value;
     facebook::jsi::Object result(rt);

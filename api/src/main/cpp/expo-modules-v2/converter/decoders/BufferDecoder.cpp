@@ -144,6 +144,12 @@ namespace expo::modules::v2 {
     });
   }
 
+  facebook::jsi::Value BufferDecoder::operator()(const ExpectedType::Tuple& tupleType) const {
+    return buildJsArray(rt, tupleType.elements.size(), [&](const size_t i) {
+      return decodeFromBuffer(rt, in, tupleType.elements[i]);
+    });
+  }
+
   facebook::jsi::Value BufferDecoder::operator()(const ExpectedType::Map& mapType) const {
     const ExpectedType& valueType = *mapType.value;
     const size_t count = in.readCount();

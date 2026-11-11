@@ -40,6 +40,23 @@ namespace expo::modules::v2 {
     return result;
   }
 
+  jobject JniEncoder::operator()(const ExpectedType::Tuple& tupleType) const {
+    const facebook::jsi::Array array = tupleArrayOf(rt, value, tupleType);
+    const size_t size = tupleType.elements.size();
+    const jobject result = kolibri::JArrayList::constructor.createRaw(env, static_cast<jint>(size));
+    for (size_t i = 0; i < size; i++) {
+      const jobject element = encodeToJni(
+        env,
+        rt,
+        array.getValueAtIndex(rt, i),
+        tupleType.elements[i]
+      );
+      kolibri::JArrayList::add(env, result, element);
+      env->DeleteLocalRef(element);
+    }
+    return result;
+  }
+
   jobject JniEncoder::operator()(const ExpectedType::Map& mapType) const {
     const facebook::jsi::Object object = value.asObject(rt);
     const ExpectedType& valueType = *mapType.value;

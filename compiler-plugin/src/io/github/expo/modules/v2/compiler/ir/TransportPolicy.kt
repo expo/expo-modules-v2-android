@@ -65,6 +65,9 @@ internal enum class ValueKind {
   MAP,
   SET,
   ARRAY,
+
+  /** `Pair`/`Triple`, whose bridge is a `List` of its elements - a fixed-length array in JavaScript. */
+  TUPLE,
   RECORD,
 
   SHARED_OBJECT,
@@ -150,6 +153,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       "kotlin.collections.Map", "kotlin.collections.MutableMap" -> ValueKind.MAP
       "kotlin.collections.Set", "kotlin.collections.MutableSet" -> ValueKind.SET
       "kotlin.Array" -> ValueKind.ARRAY
+      "kotlin.Pair", "kotlin.Triple" -> ValueKind.TUPLE
       else -> {
         val owner = type.classOrNull?.owner
         when {
@@ -179,8 +183,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       // A List or Map hands its elements straight through when they need no conversion themselves.
       ValueKind.LIST -> elementTypes(type).all { isPassthrough(kindOf(it), it) }
       ValueKind.MAP -> elementTypes(type).drop(1).all { isPassthrough(kindOf(it), it) }
-      // A Set or an Array always rebuilds its container, and a record always rebuilds itself.
-      ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD,
+      // A Set, an Array or a tuple always rebuilds its container, and a record always rebuilds itself.
+      ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD,
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
       ValueKind.TYPED_ARRAY,
         -> false
@@ -188,7 +192,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
 
   /**
    * Whether the wire format can carry this value on the buffer at all. [allowDynamic] admits `Any`,
-   * alone or inside a List/Map/Set/Array, but never as a record field: a record rides its own
+   * alone or inside a List/Map/Set/Array/Pair/Triple, but never as a record field: a record rides its own
    * transport.
    */
   fun canBuffer(kind: ValueKind, type: IrType, allowDynamic: Boolean = false): Boolean =
@@ -201,7 +205,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.CONVERTED_TO_STRING,
       ValueKind.ENUM,
         -> true
-      ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.RECORD ->
+      ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD ->
         isBufferSafe(
           type,
           mutableSetOf(),
@@ -304,7 +308,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.INT_ENUM ->
         if (type.isMarkedNullable()) irBuiltIns.intType.makeNullable() else irBuiltIns.intType
       ValueKind.TYPED_ARRAY -> symbols.classes.javaScriptObject.owner.defaultType.makeNullable()
-      ValueKind.LIST, ValueKind.SET, ValueKind.ARRAY ->
+      ValueKind.LIST, ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE ->
         irBuiltIns.listClass.typeWith(irBuiltIns.anyType.makeNullable()).makeNullable()
 
       ValueKind.MAP, ValueKind.RECORD ->

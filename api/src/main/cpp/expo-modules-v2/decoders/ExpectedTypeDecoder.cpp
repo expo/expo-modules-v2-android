@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include <expo-modules-v2/utils/Throw.h>
 
@@ -51,6 +53,24 @@ namespace expo::modules::v2::decoders {
 
         if (kind == CppType::RECORD) {
           ExpectedType type = ExpectedType::record(read(), nullable, usesBuffer);
+          requireBufferSafeIfBuffered(type);
+          return type;
+        }
+
+        if (kind == CppType::TUPLE) {
+          const int arity = read();
+          // Every element takes at least one code, so a larger arity cannot be a valid payload.
+          if (arity <= 0 || static_cast<size_t>(arity) > remaining) {
+            throwInvalidArgument({"Invalid tuple arity ", std::to_string(arity)});
+          }
+
+          std::vector<ExpectedType> elements;
+          elements.reserve(static_cast<size_t>(arity));
+          for (int i = 0; i < arity; i++) {
+            elements.push_back(decodeImp(false));
+          }
+
+          ExpectedType type = ExpectedType::tuple(std::move(elements), nullable, usesBuffer);
           requireBufferSafeIfBuffered(type);
           return type;
         }
