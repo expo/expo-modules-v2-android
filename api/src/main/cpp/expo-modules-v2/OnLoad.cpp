@@ -5,6 +5,7 @@
 #include <expo-modules-v2/jni/JModuleRegistry.h>
 #include <expo-modules-v2/jni/JSharedObjectRegistry.h>
 #include <expo-modules-v2/jsi/AttachedRuntime.h>
+#include <expo-modules-v2/jsi/JavaScriptFunction.h>
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
@@ -19,6 +20,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
   expo::kolibri::binary::BinaryBuffer::registerNatives(env);
   expo::modules::v2::jsi::JavaScriptValue::registerNatives(env);
   expo::modules::v2::jsi::JavaScriptObject::registerNatives(env);
+  expo::modules::v2::jsi::JavaScriptFunction::registerNatives(env);
   expo::modules::v2::jsi::JavaScriptRuntime::registerNatives(env);
   expo::modules::v2::jsi::AttachedRuntime::registerNatives(env);
   expo::modules::v2::JAsyncContext::registerNatives(env);
