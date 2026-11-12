@@ -14,6 +14,10 @@ FILE: moduleTypedArrays.kt
             ^echoArray R|<local>/array|
         }
 
+        @R|io/github/expo/modules/v2/JS|() public final fun echoSamples(samples: R|io/github/expo/modules/v2/Float32Array|): R|io/github/expo/modules/v2/Float32Array| {
+            ^echoSamples R|<local>/samples|
+        }
+
     }
     private final fun descriptorOf(name: R|kotlin/String|): R|kotlin/String| {
         lval method: R|java/lang/reflect/Method| = <getClass>(Q|io/github/expo/modules/v2/testdata/TypedArrays|).R|kotlin/jvm/java|<R|io/github/expo/modules/v2/testdata/TypedArrays|>.R|java/lang/Class.declaredMethods|.R|kotlin/collections/firstOrNull|<R|java/lang/reflect/Method!|>(<L> = firstOrNull@fun <anonymous>(it: R|java/lang/reflect/Method!|): R|kotlin/Boolean| <inline=Inline, kind=UNKNOWN>  {
@@ -43,7 +47,7 @@ FILE: moduleTypedArrays.kt
     public final fun box(): R|kotlin/String| {
         lval suffix: R|kotlin/String| = String(__trampoline$ExpoModulesV2)
         lval jsObject: R|kotlin/String| = String(Lio/github/expo/modules/v2/jsi/JavaScriptObject;)
-        lval expected: R|kotlin/collections/Map<kotlin/String, kotlin/String>| = R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(byteLength), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(<strcat>(String((), R|<local>/jsObject|, String()I))), <strcat>(String(echoArray), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(<strcat>(String((), R|<local>/jsObject|, String()), R|<local>/jsObject|))))
+        lval expected: R|kotlin/collections/Map<kotlin/String, kotlin/String>| = R|kotlin/collections/mapOf|<R|kotlin/String|, R|kotlin/String|>(vararg(<strcat>(String(byteLength), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(<strcat>(String((), R|<local>/jsObject|, String()I))), <strcat>(String(echoArray), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(<strcat>(String((), R|<local>/jsObject|, String()), R|<local>/jsObject|)), <strcat>(String(echoSamples), R|<local>/suffix|).R|kotlin/to|<R|kotlin/String|, R|kotlin/String|>(<strcat>(String((), R|<local>/jsObject|, String()), R|<local>/jsObject|))))
          {
             lval <iterator>: R|kotlin/collections/Iterator<kotlin/collections/Map.Entry<kotlin/String, kotlin/String>>| = R|<local>/expected|.R|kotlin/collections/iterator|<R|kotlin/String|, R|kotlin/String|>()
             while(R|<local>/<iterator>|.R|SubstitutionOverride<kotlin/collections/Iterator.hasNext: R|kotlin/Boolean|>|()) {

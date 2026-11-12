@@ -7,14 +7,20 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTypedArrays.kt
       EXPRESSION_BODY
         CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.TypedArray> origin=null
-            ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
+            ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:SEALED visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
           ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
     FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$1 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
       EXPRESSION_BODY
         CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
           ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.TypedArray> origin=null
-            ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
+            ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:SEALED visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
           ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
+    FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$2 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static]
+      EXPRESSION_BODY
+        CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+          ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.Float32Array> origin=null
+            ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Float32Array modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.TypedArray; kotlin.collections.Iterable<kotlin.Float>]' type=kotlin.reflect.KClass<*>
+          ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
     CONSTRUCTOR visibility:private returnType:io.github.expo.modules.v2.testdata.TypedArrays [primary]
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in io.github.expo.modules.v2.Module'
@@ -70,7 +76,7 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTypedArrays.kt
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
               ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                 ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.TypedArray> origin=null
-                  ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
+                  ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:SEALED visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
                 ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
@@ -84,16 +90,33 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTypedArrays.kt
             CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
               ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
                 ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.TypedArray> origin=null
-                  ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
+                  ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:SEALED visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
                 ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
               ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
             ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
               ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.TypedArray> origin=null
-                ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
+                ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:TypedArray modality:SEALED visibility:public superTypes:[kotlin.Any]' type=kotlin.reflect.KClass<*>
               ARG isNullable: CONST Boolean type=kotlin.Boolean value=true
             ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
           ARG methodName: CONST String type=kotlin.String value="echoArray__trampoline$ExpoModulesV2"
+        CALL 'public final fun function (jsName: kotlin.String, vararg argTypes: io.github.expo.modules.v2.types.AnyType, returns: io.github.expo.modules.v2.types.AnyType, methodName: kotlin.String, isAsync: kotlin.Boolean): kotlin.Unit declared in io.github.expo.modules.v2.modules.ModuleBuilder' type=kotlin.Unit origin=null
+          ARG <this>: GET_VAR 'builder: io.github.expo.modules.v2.modules.ModuleBuilder declared in io.github.expo.modules.v2.testdata.TypedArrays.define$ExpoModulesV2' type=io.github.expo.modules.v2.modules.ModuleBuilder origin=null
+          ARG jsName: CONST String type=kotlin.String value="echoSamples"
+          ARG argTypes: VARARG type=kotlin.Array<io.github.expo.modules.v2.types.AnyType> varargElementType=io.github.expo.modules.v2.types.AnyType
+            CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+              ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+                ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.Float32Array> origin=null
+                  ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Float32Array modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.TypedArray; kotlin.collections.Iterable<kotlin.Float>]' type=kotlin.reflect.KClass<*>
+                ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+              ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG returns: CONSTRUCTOR_CALL 'public constructor <init> (descriptor: io.github.expo.modules.v2.types.TypeDescriptor, useBuffer: kotlin.Boolean) declared in io.github.expo.modules.v2.types.AnyType' type=io.github.expo.modules.v2.types.AnyType origin=null
+            ARG descriptor: CONSTRUCTOR_CALL 'public constructor <init> (javaClass: java.lang.Class<*>, isNullable: kotlin.Boolean) declared in io.github.expo.modules.v2.types.TypeDescriptor.Simple' type=io.github.expo.modules.v2.types.TypeDescriptor.Simple origin=null
+              ARG javaClass: CALL 'public final fun <get-java> ($receiver: kotlin.reflect.KClass<*>): java.lang.Class<T of java.lang.Class> declared in kotlin.jvm' type=java.lang.Class<io.github.expo.modules.v2.Float32Array> origin=null
+                ARG $receiver: CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB CLASS name:Float32Array modality:FINAL visibility:public superTypes:[io.github.expo.modules.v2.TypedArray; kotlin.collections.Iterable<kotlin.Float>]' type=kotlin.reflect.KClass<*>
+              ARG isNullable: CONST Boolean type=kotlin.Boolean value=false
+            ARG useBuffer: CONST Boolean type=kotlin.Boolean value=false
+          ARG methodName: CONST String type=kotlin.String value="echoSamples__trampoline$ExpoModulesV2"
         RETURN type=kotlin.Nothing from='public final fun define$ExpoModulesV2 (builder: io.github.expo.modules.v2.modules.ModuleBuilder): kotlin.String? declared in io.github.expo.modules.v2.testdata.TypedArrays'
           CONST String type=kotlin.String value="TypedArrays"
     FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:echoArray__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.jsi.JavaScriptObject?
@@ -114,6 +137,24 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTypedArrays.kt
                     ARG value: GET_VAR 'p0: io.github.expo.modules.v2.jsi.JavaScriptObject? declared in io.github.expo.modules.v2.testdata.TypedArrays.echoArray__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.jsi.JavaScriptObject? origin=null
                     ARG type: GET_FIELD 'FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$1 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static] declared in io.github.expo.modules.v2.testdata.TypedArrays' type=io.github.expo.modules.v2.types.TypeDescriptor origin=null
               ARG type: GET_FIELD 'FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$1 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static] declared in io.github.expo.modules.v2.testdata.TypedArrays' type=io.github.expo.modules.v2.types.TypeDescriptor origin=null
+    FUN GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:echoSamples__trampoline$ExpoModulesV2 visibility:public modality:FINAL returnType:io.github.expo.modules.v2.jsi.JavaScriptObject?
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.TypedArrays
+      VALUE_PARAMETER kind:Regular name:p0 index:1 type:io.github.expo.modules.v2.jsi.JavaScriptObject?
+      annotations:
+        CalledFromNative(by = <null>)
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun echoSamples__trampoline$ExpoModulesV2 (p0: io.github.expo.modules.v2.jsi.JavaScriptObject?): io.github.expo.modules.v2.jsi.JavaScriptObject? declared in io.github.expo.modules.v2.testdata.TypedArrays'
+          TYPE_OP type=io.github.expo.modules.v2.jsi.JavaScriptObject? origin=CAST typeOperand=io.github.expo.modules.v2.jsi.JavaScriptObject?
+            CALL 'public final fun toJni (value: kotlin.Any?, type: io.github.expo.modules.v2.types.TypeDescriptor): kotlin.Any? declared in io.github.expo.modules.v2.args.Bridge' type=kotlin.Any? origin=null
+              ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Bridge modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.args.Bridge
+              ARG value: CALL 'public final fun echoSamples (samples: io.github.expo.modules.v2.Float32Array): io.github.expo.modules.v2.Float32Array declared in io.github.expo.modules.v2.testdata.TypedArrays' type=io.github.expo.modules.v2.Float32Array origin=null
+                ARG <this>: GET_VAR '<this>: io.github.expo.modules.v2.testdata.TypedArrays declared in io.github.expo.modules.v2.testdata.TypedArrays.echoSamples__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.testdata.TypedArrays origin=null
+                ARG samples: TYPE_OP type=io.github.expo.modules.v2.Float32Array origin=CAST typeOperand=io.github.expo.modules.v2.Float32Array
+                  CALL 'public final fun fromJni (value: kotlin.Any?, type: io.github.expo.modules.v2.types.TypeDescriptor): kotlin.Any? declared in io.github.expo.modules.v2.args.Bridge' type=kotlin.Any? origin=null
+                    ARG <this>: GET_OBJECT 'CLASS IR_EXTERNAL_DECLARATION_STUB OBJECT name:Bridge modality:FINAL visibility:public superTypes:[kotlin.Any]' type=io.github.expo.modules.v2.args.Bridge
+                    ARG value: GET_VAR 'p0: io.github.expo.modules.v2.jsi.JavaScriptObject? declared in io.github.expo.modules.v2.testdata.TypedArrays.echoSamples__trampoline$ExpoModulesV2' type=io.github.expo.modules.v2.jsi.JavaScriptObject? origin=null
+                    ARG type: GET_FIELD 'FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$2 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static] declared in io.github.expo.modules.v2.testdata.TypedArrays' type=io.github.expo.modules.v2.types.TypeDescriptor origin=null
+              ARG type: GET_FIELD 'FIELD GENERATED[io.github.expo.modules.v2.compiler.JSModuleKey] name:type$2 type:io.github.expo.modules.v2.types.TypeDescriptor visibility:private [final,static] declared in io.github.expo.modules.v2.testdata.TypedArrays' type=io.github.expo.modules.v2.types.TypeDescriptor origin=null
     FUN name:byteLength visibility:public modality:FINAL returnType:kotlin.Int
       VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.TypedArrays
       VALUE_PARAMETER kind:Regular name:array index:1 type:io.github.expo.modules.v2.TypedArray
@@ -131,6 +172,14 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTypedArrays.kt
       BLOCK_BODY
         RETURN type=kotlin.Nothing from='public final fun echoArray (array: io.github.expo.modules.v2.TypedArray?): io.github.expo.modules.v2.TypedArray? declared in io.github.expo.modules.v2.testdata.TypedArrays'
           GET_VAR 'array: io.github.expo.modules.v2.TypedArray? declared in io.github.expo.modules.v2.testdata.TypedArrays.echoArray' type=io.github.expo.modules.v2.TypedArray? origin=null
+    FUN name:echoSamples visibility:public modality:FINAL returnType:io.github.expo.modules.v2.Float32Array
+      VALUE_PARAMETER kind:DispatchReceiver name:<this> index:0 type:io.github.expo.modules.v2.testdata.TypedArrays
+      VALUE_PARAMETER kind:Regular name:samples index:1 type:io.github.expo.modules.v2.Float32Array
+      annotations:
+        JS(name = <null>)
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun echoSamples (samples: io.github.expo.modules.v2.Float32Array): io.github.expo.modules.v2.Float32Array declared in io.github.expo.modules.v2.testdata.TypedArrays'
+          GET_VAR 'samples: io.github.expo.modules.v2.Float32Array declared in io.github.expo.modules.v2.testdata.TypedArrays.echoSamples' type=io.github.expo.modules.v2.Float32Array origin=null
     PROPERTY FAKE_OVERRIDE name:context visibility:public modality:FINAL [fake_override,val]
       overridden:
         public final context: io.github.expo.modules.v2.ExpoContext declared in io.github.expo.modules.v2.Module
@@ -173,6 +222,17 @@ FILE fqName:io.github.expo.modules.v2.testdata fileName:/moduleTypedArrays.kt
               TYPE_ARG B: kotlin.String
               ARG <this>: STRING_CONCATENATION type=kotlin.String
                 CONST String type=kotlin.String value="echoArray"
+                GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+              ARG that: STRING_CONCATENATION type=kotlin.String
+                CONST String type=kotlin.String value="("
+                GET_VAR 'val jsObject: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+                CONST String type=kotlin.String value=")"
+                GET_VAR 'val jsObject: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
+            CALL 'public final fun to <A, B> (<this>: A of kotlin.to, that: B of kotlin.to): kotlin.Pair<A of kotlin.to, B of kotlin.to> declared in kotlin' type=kotlin.Pair<kotlin.String, kotlin.String> origin=null
+              TYPE_ARG A: kotlin.String
+              TYPE_ARG B: kotlin.String
+              ARG <this>: STRING_CONCATENATION type=kotlin.String
+                CONST String type=kotlin.String value="echoSamples"
                 GET_VAR 'val suffix: kotlin.String declared in io.github.expo.modules.v2.testdata.box' type=kotlin.String origin=null
               ARG that: STRING_CONCATENATION type=kotlin.String
                 CONST String type=kotlin.String value="("

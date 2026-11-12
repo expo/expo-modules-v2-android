@@ -4,6 +4,7 @@
 package io.github.expo.modules.v2.testdata
 
 import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.Float32Array
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.TypedArray
@@ -20,6 +21,10 @@ object TypedArrays : Module() {
 
     @JS
     fun echoArray(array: TypedArray?): TypedArray? = array
+
+    // One kind of typed array crosses the same way: the runtime checks the kind, not the plugin.
+    @JS
+    fun echoSamples(samples: Float32Array): Float32Array = samples
 }
 
 private fun descriptorOf(name: String): String {
@@ -41,6 +46,7 @@ fun box(): String {
     val expected = mapOf(
         "byteLength$suffix" to "($jsObject)I",
         "echoArray$suffix" to "($jsObject)$jsObject",
+        "echoSamples$suffix" to "($jsObject)$jsObject",
     )
     for ((name, want) in expected) {
         val got = descriptorOf(name)

@@ -5,6 +5,7 @@ package io.github.expo.modules.v2.testdata
 object TypedArrays : Module {
   private /* static final field */ val type$0: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = TypedArray::class */), isNullable = false)
   private /* static final field */ val type$1: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = TypedArray::class */), isNullable = true)
+  private /* static final field */ val type$2: TypeDescriptor = Simple(javaClass = <get-java>(/* $receiver = Float32Array::class */), isNullable = false)
   @CalledFromNative
   fun byteLength__trampoline$ExpoModulesV2(p0: JavaScriptObject?): Int {
     return <this>.byteLength(array = Bridge.fromJni(value = p0, type = #type$0) as TypedArray)
@@ -13,12 +14,18 @@ object TypedArrays : Module {
   override fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
     builder.function(jsName = "byteLength", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = TypedArray::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Int, useBuffer = false), methodName = "byteLength__trampoline$ExpoModulesV2")
     builder.function(jsName = "echoArray", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = TypedArray::class */), isNullable = true), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = TypedArray::class */), isNullable = true), useBuffer = false), methodName = "echoArray__trampoline$ExpoModulesV2")
+    builder.function(jsName = "echoSamples", argTypes = [AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Float32Array::class */), isNullable = false), useBuffer = false)], returns = AnyType(descriptor = Simple(javaClass = <get-java>(/* $receiver = Float32Array::class */), isNullable = false), useBuffer = false), methodName = "echoSamples__trampoline$ExpoModulesV2")
     return "TypedArrays"
   }
 
   @CalledFromNative
   fun echoArray__trampoline$ExpoModulesV2(p0: JavaScriptObject?): JavaScriptObject? {
     return Bridge.toJni(value = <this>.echoArray(array = Bridge.fromJni(value = p0, type = #type$1) as TypedArray?), type = #type$1) as JavaScriptObject?
+  }
+
+  @CalledFromNative
+  fun echoSamples__trampoline$ExpoModulesV2(p0: JavaScriptObject?): JavaScriptObject? {
+    return Bridge.toJni(value = <this>.echoSamples(samples = Bridge.fromJni(value = p0, type = #type$2) as Float32Array), type = #type$2) as JavaScriptObject?
   }
 }
 
