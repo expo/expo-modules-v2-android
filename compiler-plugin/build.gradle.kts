@@ -53,6 +53,8 @@ val testFixturesCompatSourceDirs: List<File> =
   compatSourceDirsFor(layout.projectDirectory.dir("test-fixtures-compat").asFile, kotlinVersion)
 
 val testDataDir: Directory = testDataDirFor(layout.projectDirectory, kotlinVersion)
+// Typegen's tests read the same on every Kotlin release, so they keep one directory, outside the tiers.
+val typegenTestDataDir: Directory = layout.projectDirectory.dir("typegenTestData")
 val testGenDirectory = layout.buildDirectory.dir("test-gen")
 
 sourceSets {
@@ -159,12 +161,20 @@ kotlin {
     if (kotlinVersion >= KotlinVersion(2, 2, 20) && kotlinVersion < KotlinVersion(2, 4, 0)) {
       freeCompilerArgs.add("-Xcontext-parameters")
     }
+    // 2.4.20 gated reading the message collector off the configuration, which typegen reports its
+    // own failures through. The marker does not exist before.
+    if (kotlinVersion >= KotlinVersion(2, 4, 20)) {
+      optIn.add("org.jetbrains.kotlin.config.MessageCollectorAccess")
+    }
   }
 }
 
 val generateTests by tasks.registering(JavaExec::class) {
   inputs.dir(testDataDir)
     .withPropertyName("testData")
+    .withPathSensitivity(PathSensitivity.RELATIVE)
+  inputs.dir(typegenTestDataDir)
+    .withPropertyName("typegenTestData")
     .withPathSensitivity(PathSensitivity.RELATIVE)
   outputs.dir(testGenDirectory)
     .withPropertyName("generatedTests")
@@ -176,6 +186,7 @@ val generateTests by tasks.registering(JavaExec::class) {
     listOf(
       testGenDirectory.get().asFile.absolutePath,
       testDataDir.asFile.absolutePath,
+      typegenTestDataDir.asFile.absolutePath,
     ),
   )
 }
