@@ -63,6 +63,7 @@ value class CppType(val code: Int) {
       BOX_DOUBLE -> "box_double"
       SHARED_OBJECT -> "shared_object"
       TUPLE -> "tuple"
+      FUNCTION -> "function"
       else -> "unknown(code=$code)"
     }
 
@@ -108,6 +109,12 @@ value class CppType(val code: Int) {
     val SHARED_OBJECT = CppType(24)
 
     val TUPLE = CppType(25)
+
+    /**
+     * A JavaScript function handed to Kotlin as a lambda. The head code is followed by a suspend
+     * flag, the parameter count, each parameter's codes and the return type's codes.
+     */
+    val FUNCTION = CppType(26)
     //@formatter:on
 
     const val NULLABLE = 0x100

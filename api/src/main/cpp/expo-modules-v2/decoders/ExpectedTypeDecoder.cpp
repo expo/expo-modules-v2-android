@@ -82,6 +82,31 @@ namespace expo::modules::v2::decoders {
           return ExpectedType::sharedObject(read(), nullable);
         }
 
+        if (kind == CppType::FUNCTION) {
+          // A function is a live JavaScript handle, so there is nothing to put on the buffer.
+          if (usesBuffer) {
+            throwInvalidArgument({"A function cannot carry kUsesBufferFlag"});
+          }
+
+          const bool isSuspend = read() != 0;
+          const int paramCount = read();
+          if (paramCount < 0) {
+            throwInvalidArgument({"Invalid payload"});
+          }
+
+          std::vector<ExpectedType> params;
+          params.reserve(static_cast<size_t>(paramCount));
+          for (int i = 0; i < paramCount; i++) {
+            params.push_back(decodeImp(false));
+          }
+          ExpectedType returns = decodeImp(false);
+
+          return ExpectedType::function(
+            FunctionSignature{std::move(params), std::move(returns), isSuspend},
+            nullable
+          );
+        }
+
         if (nullable && (
               kind == CppType::BOOLEAN || kind == CppType::INT || kind == CppType::LONG ||
               kind == CppType::FLOAT || kind == CppType::DOUBLE || kind == CppType::UNIT

@@ -171,9 +171,45 @@ class TypeDescriptorPoet(
       )
     }
 
+    functionDescriptor(type, isNullable, fqName)?.let { return it }
+
     containerDescriptor(type, isNullable, fqName)?.let { return it }
 
     return simpleDescriptor(type, isNullable)
+  }
+
+  /**
+   * `TypeDescriptor.Function(params, returns, isSuspend, isNullable)` for a lambda type. Its
+   * arguments are the parameters followed by the return type, all described as boxed values, which
+   * is how a lambda sees them on the JVM.
+   */
+  private fun functionDescriptor(
+    type: IrSimpleType,
+    isNullable: Boolean,
+    fqName: String,
+  ): IrExpression? {
+    if (!FunctionTypes.isFunction(fqName)) {
+      return null
+    }
+
+    val arguments = type.arguments.map { argument ->
+      (argument as? IrTypeProjection)?.type ?: unsupported(type)
+    }
+    val constructor = symbols.constructors.functionDescriptor
+
+    return constructorCall(
+      constructor = constructor,
+      type = constructor.owner.returnType,
+      arguments = listOf(
+        arrayOf(
+          symbols.classes.typeDescriptorObjectLike.owner.defaultType,
+          arguments.dropLast(1).map(::boxedDescriptorFor),
+        ),
+        boxedDescriptorFor(arguments.last()),
+        boolean(FunctionTypes.isSuspendFunction(fqName)),
+        boolean(isNullable),
+      ),
+    )
   }
 
   private fun containerDescriptor(

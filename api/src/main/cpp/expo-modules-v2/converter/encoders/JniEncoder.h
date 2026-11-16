@@ -24,6 +24,8 @@ namespace expo::modules::v2 {
     jobject operator()(const ExpectedType::SharedObject& sharedType) const;
 
     jobject operator()(const ExpectedType::Tuple& tupleType) const;
+
+    jobject operator()(const ExpectedType::Function& functionType) const;
   };
 
   // clang-format off
