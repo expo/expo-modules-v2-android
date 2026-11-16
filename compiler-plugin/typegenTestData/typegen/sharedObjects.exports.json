@@ -1,0 +1,477 @@
+{
+  "schemaVersion": 11,
+  "producer": "expo-modules-v2-android",
+  "exports": {
+    "modules": [
+      {
+        "name": "Media",
+        "jsName": "Media",
+        "functions": [
+          {
+            "name": "current",
+            "jsName": "current",
+            "parameters": [],
+            "returns": {
+              "kind": "optional",
+              "typeof": "object",
+              "wrapped": {
+                "kind": "ref",
+                "typeof": "object",
+                "name": "Player",
+                "refKind": "sharedObject"
+              }
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "tracks",
+            "jsName": "tracks",
+            "parameters": [],
+            "returns": {
+              "kind": "array",
+              "typeof": "object",
+              "element": {
+                "kind": "ref",
+                "typeof": "object",
+                "name": "Media.Track",
+                "refKind": "sharedObject"
+              }
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "wrap",
+            "jsName": "wrap",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "text",
+                "type": {
+                  "kind": "ref",
+                  "typeof": "object",
+                  "name": "TextRef",
+                  "refKind": "sharedObject"
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          },
+          {
+            "name": "raw",
+            "jsName": "raw",
+            "parameters": [
+              {
+                "label": "_",
+                "name": "ref",
+                "type": {
+                  "kind": "sharedRef",
+                  "typeof": "object",
+                  "native": {
+                    "kind": "ref",
+                    "typeof": "object",
+                    "name": "StringBuilder"
+                  }
+                },
+                "optional": false
+              }
+            ],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [
+          {
+            "name": "onTrack",
+            "jsName": "track",
+            "payload": {
+              "kind": "ref",
+              "typeof": "object",
+              "name": "Media.Track",
+              "refKind": "sharedObject"
+            },
+            "dispatch": "scheduled",
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "classes": [
+          {
+            "name": "Media.Track",
+            "jsName": "Track"
+          },
+          {
+            "name": "Player",
+            "jsName": "Player"
+          }
+        ],
+        "file": "sharedObjects.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "sharedObjects": [
+      {
+        "name": "Player",
+        "jsName": "Player",
+        "initializer": {
+          "parameters": [
+            {
+              "label": "_",
+              "name": "url",
+              "type": {
+                "kind": "primitive",
+                "typeof": "string",
+                "name": "String"
+              },
+              "optional": false
+            },
+            {
+              "label": "_",
+              "name": "volume",
+              "type": {
+                "kind": "optional",
+                "typeof": "number",
+                "wrapped": {
+                  "kind": "primitive",
+                  "typeof": "number",
+                  "name": "Double"
+                }
+              },
+              "optional": true
+            }
+          ],
+          "accessLevel": "public",
+          "platforms": [
+            {
+              "name": "android"
+            }
+          ]
+        },
+        "functions": [
+          {
+            "name": "play",
+            "jsName": "play",
+            "parameters": [],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "boolean",
+              "name": "Boolean"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [
+          {
+            "name": "looping",
+            "jsName": "looping",
+            "type": {
+              "kind": "primitive",
+              "typeof": "boolean",
+              "name": "Boolean"
+            },
+            "readonly": false,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "name": "onStatus",
+            "jsName": "status",
+            "payload": {
+              "kind": "primitive",
+              "typeof": "string",
+              "name": "String"
+            },
+            "dispatch": "scheduled",
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "file": "sharedObjects.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "SpeakerObject",
+        "jsName": "Speaker",
+        "functions": [
+          {
+            "name": "mute",
+            "jsName": "mute",
+            "parameters": [],
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "file": "sharedObjects.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "TextRef",
+        "jsName": "TextRef",
+        "sharedRef": {
+          "native": {
+            "kind": "ref",
+            "typeof": "object",
+            "name": "StringBuilder"
+          }
+        },
+        "functions": [
+          {
+            "name": "length",
+            "jsName": "length",
+            "parameters": [],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "file": "sharedObjects.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "BuilderRef",
+        "jsName": "BuilderRef",
+        "sharedRef": {
+          "native": {
+            "kind": "ref",
+            "typeof": "object",
+            "name": "StringBuilder"
+          }
+        },
+        "functions": [
+          {
+            "name": "size",
+            "jsName": "size",
+            "parameters": [],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "file": "sharedObjects.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Orphan",
+        "jsName": "Orphan",
+        "functions": [
+          {
+            "name": "value",
+            "jsName": "value",
+            "parameters": [],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "number",
+              "name": "Int"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "file": "sharedObjects.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      },
+      {
+        "name": "Media.Track",
+        "jsName": "Track",
+        "initializer": {
+          "parameters": [
+            {
+              "label": "_",
+              "name": "title",
+              "type": {
+                "kind": "primitive",
+                "typeof": "string",
+                "name": "String"
+              },
+              "optional": false
+            }
+          ],
+          "accessLevel": "public",
+          "platforms": [
+            {
+              "name": "android"
+            }
+          ]
+        },
+        "functions": [
+          {
+            "name": "title",
+            "jsName": "title",
+            "parameters": [],
+            "returns": {
+              "kind": "primitive",
+              "typeof": "string",
+              "name": "String"
+            },
+            "async": false,
+            "throws": true,
+            "static": false,
+            "accessLevel": "public",
+            "platforms": [
+              {
+                "name": "android"
+              }
+            ]
+          }
+        ],
+        "properties": [],
+        "events": [],
+        "file": "sharedObjects.kt",
+        "accessLevel": "public",
+        "platforms": [
+          {
+            "name": "android"
+          }
+        ]
+      }
+    ],
+    "records": [],
+    "enums": [],
+    "unions": [],
+    "views": []
+  },
+  "stats": {
+    "filesScanned": 0,
+    "filesParsed": 1,
+    "durationMs": 0
+  }
+}

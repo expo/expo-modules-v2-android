@@ -20,10 +20,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 @Suppress("unused") // Used via reflection.
 class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
   private lateinit var project: Project
+  private lateinit var typegen: Typegen
 
   override fun apply(target: Project) {
     project = target
-    target.extensions.create("expoModulesV2", ExpoModulesV2GradleExtension::class.java)
+    val extension = target.extensions.create("expoModulesV2", ExpoModulesV2GradleExtension::class.java)
+    typegen = Typegen(target, extension.typegen).apply { registerTask() }
   }
 
   override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean = true
@@ -51,8 +53,6 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
       (task as? KotlinCompile)?.incremental = false
     }
 
-    // No options yet. The lambda must not capture the Project — KGP serializes this provider into
-    // the compile task's inputs, and a Project reference breaks the configuration cache.
-    return project.provider { emptyList() }
+    return typegen.optionsFor(kotlinCompilation)
   }
 }
