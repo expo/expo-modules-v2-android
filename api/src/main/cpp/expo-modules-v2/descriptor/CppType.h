@@ -35,6 +35,8 @@ namespace expo::modules::v2 {
     SHARED_OBJECT = 24,
 
     TUPLE = 25,
+
+    FUNCTION = 26,
   };
 
   /**

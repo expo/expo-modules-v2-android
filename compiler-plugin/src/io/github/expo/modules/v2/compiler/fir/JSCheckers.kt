@@ -33,7 +33,10 @@ import org.jetbrains.kotlin.fir.symbols.impl.FirNamedFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirRegularClassSymbol
 import org.jetbrains.kotlin.fir.types.ConeStarProjection
 import org.jetbrains.kotlin.fir.types.classId
+import org.jetbrains.kotlin.fir.types.ConeKotlinType
 import org.jetbrains.kotlin.fir.types.coneType
+import org.jetbrains.kotlin.fir.types.isExtensionFunctionType
+import org.jetbrains.kotlin.fir.types.type
 import org.jetbrains.kotlin.fir.types.constructClassLikeType
 import org.jetbrains.kotlin.fir.types.isMarkedNullable
 import org.jetbrains.kotlin.fir.types.isSubtypeOf
@@ -96,7 +99,7 @@ class JSCheckers(session: FirSession) : FirAdditionalCheckersExtension(session) 
           "declare more than ${Identifiers.MAX_ARGUMENTS} arguments (this one declares " +
             "${parameters.size})"
 
-        else -> promiseShape(declaration)
+        else -> promiseShape(declaration) ?: functionTypeShape(declaration, session)
       }
       if (shape != null) {
         reporter.reportOn(
@@ -173,6 +176,42 @@ private fun promiseShape(declaration: FirFunction): String? {
 
     else -> null
   }
+}
+
+private val FUNCTION_TYPE_NAME = Regex("kotlin/(coroutines/Suspend)?Function\\d+")
+
+private fun ConeKotlinType.isLambdaType(): Boolean =
+  classId?.asString()?.let(FUNCTION_TYPE_NAME::matches) == true
+
+/**
+ * What is wrong with the lambdas a function takes, if anything. A lambda parameter stands for a
+ * JavaScript function, so it has to be one that a plain call can reach.
+ */
+private fun functionTypeShape(declaration: FirFunction, session: FirSession): String? {
+  for (parameter in declaration.valueParameters) {
+    val type = parameter.returnTypeRef.coneType
+    if (!type.isLambdaType()) {
+      continue
+    }
+
+    return when {
+      type.isExtensionFunctionType(session) ->
+        "take a function type with a receiver - JavaScript passes its arguments by position"
+
+      type.typeArguments.size - 1 > Identifiers.MAX_ARGUMENTS ->
+        "take a function type with more than ${Identifiers.MAX_ARGUMENTS} parameters"
+
+      type.typeArguments.any { it.type?.isLambdaType() == true } ->
+        "take a function type that takes or returns another function type"
+
+      else -> continue
+    }
+  }
+
+  if (declaration.returnTypeRef.coneType.isLambdaType()) {
+    return "return a function type - a Kotlin lambda cannot be handed to JavaScript"
+  }
+  return null
 }
 
 /** Whether this class extends `SharedObject`, so JavaScript can hold a reference to one. */
