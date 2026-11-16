@@ -14,6 +14,7 @@
 #include <expo-modules-v2/objects/ObjectId.h>
 #include <expo-modules-v2/objects/ObjectRegistry.h>
 #include <expo-modules-v2/objects/RuntimeObjects.h>
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassObject.h>
 #include <expo-modules-v2/utils/Throw.h>
 
@@ -52,9 +53,8 @@ namespace expo::modules::v2::jsi {
       const std::string& name,
       const facebook::jsi::Object& descriptor
     ) {
-      rt.global()
-        .getPropertyAsObject(rt, "Object")
-        .getPropertyAsFunction(rt, "defineProperty")
+      RuntimeGlobals::get(rt)
+        .objectDefineProperty()
         .call(rt, object, name, descriptor);
     }
 

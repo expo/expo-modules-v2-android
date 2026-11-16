@@ -94,11 +94,6 @@ object TypeConverterRegistry {
     )
 
     +entry(
-      TypedArray::class.java,
-      ::TypedArrayConverter
-    )
-
-    +entry(
       Duration::class.java,
       ::DurationConverter
     )
@@ -143,6 +138,11 @@ object TypeConverterRegistry {
           sharedClass,
           isNullable,
         )
+      }
+
+      if (TypedArray::class.java.isAssignableFrom(type)) {
+        @Suppress("UNCHECKED_CAST")
+        return@getOrPut TypedArrayConverter(type as Class<out TypedArray>, isNullable)
       }
 
       if (type.isEnum) {

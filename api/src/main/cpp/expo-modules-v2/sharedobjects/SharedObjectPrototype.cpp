@@ -7,6 +7,7 @@
 
 #include <expo-jsi/ChainedNativeState.h>
 
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassSpec.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectState.h>
 #include <expo-modules-v2/utils/Throw.h>
@@ -117,9 +118,8 @@ namespace expo::modules::v2::sharedobjects {
       descriptor.setProperty(rt, "enumerable", false);
       descriptor.setProperty(rt, "configurable", false);
       try {
-        rt.global()
-          .getPropertyAsObject(rt, "Object")
-          .getPropertyAsFunction(rt, "defineProperty")
+        RuntimeGlobals::get(rt)
+          .objectDefineProperty()
           .call(rt, instance, facebook::jsi::String::createFromUtf8(rt, name), descriptor);
       } catch (const facebook::jsi::JSError&) {
         // A frozen instance cannot take the property. The value is still right; only the caching
@@ -170,9 +170,8 @@ namespace expo::modules::v2::sharedobjects {
     const facebook::jsi::Object& prototype,
     const SharedObjectClassSpec& spec
   ) {
-    const facebook::jsi::Function defineProperty = rt.global()
-      .getPropertyAsObject(rt, "Object")
-      .getPropertyAsFunction(rt, "defineProperty");
+    const facebook::jsi::Function& defineProperty = RuntimeGlobals::get(rt)
+      .objectDefineProperty();
 
     const std::string release(kRelease);
     defineMember(

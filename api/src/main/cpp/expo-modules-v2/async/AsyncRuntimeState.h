@@ -104,13 +104,7 @@ namespace expo::modules::v2::async {
 
     std::optional<facebook::jsi::Function> factory_;
 
-    std::optional<facebook::jsi::Object> promiseClass_;
-    std::optional<facebook::jsi::Function> promiseResolve_;
-    std::optional<facebook::jsi::Function> promiseReject_;
-
     void ensureFactory(facebook::jsi::Runtime& rt);
-
-    void ensureSettledFactories(facebook::jsi::Runtime& rt);
 
     std::unordered_map<uint64_t, Pending> pending_;
     uint64_t nextId_ = 1;

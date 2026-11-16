@@ -93,6 +93,7 @@ object Identifiers {
 
     val SharedObject = classId(Packages.API, "SharedObject")
     val SharedRef = classId(Packages.API, "SharedRef")
+    val TypedArray = classId(Packages.API, "TypedArray")
     val SharedObjectRegistry = classId(Packages.SHARED_OBJECTS, "SharedObjectRegistry")
 
     val ExpoObject = classId(Packages.API, "ExpoObject")

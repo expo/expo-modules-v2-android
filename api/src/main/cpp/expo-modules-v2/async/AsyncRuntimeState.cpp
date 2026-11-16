@@ -11,6 +11,7 @@
 #include <expo-modules-v2/converter/decoders/BufferDecode.h>
 #include <expo-modules-v2/jni/JTrampoline.h>
 #include <expo-modules-v2/jsi/NativeError.h>
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/converter/decoders/JniDecode.h>
 #include <expo-modules-v2/utils/Throw.h>
 
@@ -81,9 +82,6 @@ namespace expo::modules::v2::async {
     // the JS thread - the same requirement the rest of the runtime's teardown already has.
     pending_.clear();
     factory_.reset();
-    promiseResolve_.reset();
-    promiseReject_.reset();
-    promiseClass_.reset();
   }
 
   AsyncRuntimeState* AsyncRuntimeState::find(const facebook::jsi::Runtime& rt) noexcept {
@@ -101,17 +99,6 @@ namespace expo::modules::v2::async {
     if (!factory_.has_value()) {
       factory_.emplace(makeDeferredFactory(rt));
     }
-  }
-
-  void AsyncRuntimeState::ensureSettledFactories(facebook::jsi::Runtime& rt) {
-    if (promiseResolve_.has_value()) {
-      return;
-    }
-    facebook::jsi::Object promiseClass = rt.global().getPropertyAsObject(rt, "Promise");
-    promiseResolve_.emplace(promiseClass.getPropertyAsFunction(rt, "resolve"));
-    promiseReject_.emplace(promiseClass.getPropertyAsFunction(rt, "reject"));
-    // Last, because `Promise.resolve` needs it as the receiver and moving it invalidates nothing else.
-    promiseClass_.emplace(std::move(promiseClass));
   }
 
   uint64_t AsyncRuntimeState::beginCall(ExpectedType returnType) {
@@ -220,13 +207,13 @@ namespace expo::modules::v2::async {
     facebook::jsi::Runtime& rt,
     facebook::jsi::Value result
   ) {
-    ensureSettledFactories(rt);
-    return promiseResolve_->callWithThis(rt, *promiseClass_, std::move(result));
+    RuntimeGlobals& globals = RuntimeGlobals::get(rt);
+    return globals.promiseResolve().callWithThis(rt, globals.promise(), std::move(result));
   }
 
   facebook::jsi::Value AsyncRuntimeState::callPromiseReject(facebook::jsi::Runtime& rt, facebook::jsi::Value result) {
-    ensureSettledFactories(rt);
-    return promiseReject_->callWithThis(rt, *promiseClass_, std::move(result));
+    RuntimeGlobals& globals = RuntimeGlobals::get(rt);
+    return globals.promiseReject().callWithThis(rt, globals.promise(), std::move(result));
   }
 
   void AsyncRuntimeState::resolveFromJni(
