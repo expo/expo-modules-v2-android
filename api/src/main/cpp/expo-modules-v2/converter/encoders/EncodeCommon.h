@@ -47,6 +47,37 @@ namespace expo::modules::v2 {
     return value.getBool();
   }
 
+  [[nodiscard]] inline facebook::jsi::Array tupleArrayOf(
+    facebook::jsi::Runtime& rt,
+    const facebook::jsi::Value& value,
+    const ExpectedType::Tuple& tupleType
+  ) {
+    if (!value.isObject()) [[unlikely]] {
+      throwTypeMismatch(rt, value, "an array");
+    }
+
+    const facebook::jsi::Object object = value.getObject(rt);
+    if (!object.isArray(rt)) [[unlikely]] {
+      throwTypeMismatch(rt, value, "an array");
+    }
+
+    facebook::jsi::Array array = object.getArray(rt);
+    const size_t size = array.size(rt);
+    if (size != tupleType.elements.size()) [[unlikely]] {
+      throwJSError(
+        rt,
+        {
+          "Expected an array of ",
+          std::to_string(tupleType.elements.size()),
+          " elements, got ",
+          std::to_string(size),
+        }
+      );
+    }
+
+    return array;
+  }
+
   [[noreturn]] ALWAYS_INLINE void throwNullInNonNullable(facebook::jsi::Runtime& rt, const ExpectedType& type) {
     throwJSError(rt, {
       "Cannot convert null/undefined into a non-nullable ",
