@@ -1,12 +1,10 @@
 package io.github.expo.modules.v2.converters
 
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
 import io.github.expo.kolibri.binary.BinaryBuffer
 
 class IntArrayConverter(isNullable: Boolean) : TypeConverter<IntArray>(isNullable) {
-  override val codes: TypeCodes
-    get() = CppType.INT_ARRAY.nullable(isNullable).toTypeCodes()
+  override val kind: CppType get() = CppType.INT_ARRAY
 
   override val isPassthrough: Boolean get() = true
 
@@ -23,8 +21,7 @@ class IntArrayConverter(isNullable: Boolean) : TypeConverter<IntArray>(isNullabl
 }
 
 class LongArrayConverter(isNullable: Boolean) : TypeConverter<LongArray>(isNullable) {
-  override val codes: TypeCodes
-    get() = CppType.LONG_ARRAY.nullable(isNullable).toTypeCodes()
+  override val kind: CppType get() = CppType.LONG_ARRAY
 
   override val isPassthrough: Boolean get() = true
 
@@ -41,8 +38,7 @@ class LongArrayConverter(isNullable: Boolean) : TypeConverter<LongArray>(isNulla
 }
 
 class FloatArrayConverter(isNullable: Boolean) : TypeConverter<FloatArray>(isNullable) {
-  override val codes: TypeCodes
-    get() = CppType.FLOAT_ARRAY.nullable(isNullable).toTypeCodes()
+  override val kind: CppType get() = CppType.FLOAT_ARRAY
 
   override val isPassthrough: Boolean get() = true
 
@@ -59,8 +55,7 @@ class FloatArrayConverter(isNullable: Boolean) : TypeConverter<FloatArray>(isNul
 }
 
 class DoubleArrayConverter(isNullable: Boolean) : TypeConverter<DoubleArray>(isNullable) {
-  override val codes: TypeCodes
-    get() = CppType.DOUBLE_ARRAY.nullable(isNullable).toTypeCodes()
+  override val kind: CppType get() = CppType.DOUBLE_ARRAY
 
   override val isPassthrough: Boolean get() = true
 
@@ -77,8 +72,7 @@ class DoubleArrayConverter(isNullable: Boolean) : TypeConverter<DoubleArray>(isN
 }
 
 class BooleanArrayConverter(isNullable: Boolean) : TypeConverter<BooleanArray>(isNullable) {
-  override val codes: TypeCodes
-    get() = CppType.BOOLEAN_ARRAY.nullable(isNullable).toTypeCodes()
+  override val kind: CppType get() = CppType.BOOLEAN_ARRAY
 
   override val isPassthrough: Boolean get() = true
 
@@ -95,8 +89,7 @@ class BooleanArrayConverter(isNullable: Boolean) : TypeConverter<BooleanArray>(i
 }
 
 class ByteArrayConverter(isNullable: Boolean) : TypeConverter<ByteArray>(isNullable) {
-  override val codes: TypeCodes
-    get() = CppType.BYTE_ARRAY.nullable(isNullable).toTypeCodes()
+  override val kind: CppType get() = CppType.BYTE_ARRAY
 
   override val isPassthrough: Boolean get() = true
 

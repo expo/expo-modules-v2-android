@@ -1,117 +1,62 @@
 package io.github.expo.modules.v2.types
 
-import io.github.expo.modules.v2.records.SchemaId
-import io.github.expo.modules.v2.sharedobjects.SharedClassId
+/**
+ * The kind of a value on the bridge: the first code of its type codes, without flags. [code] MUST
+ * match `CppType` in `expo-modules-v2/descriptor/CppType.h`.
+ *
+ * A scalar kind is a register-width JNI slot when it stands alone and cannot be null; when it is
+ * nullable, or inside a container, it crosses boxed (`java.lang.Integer` and so on).
+ */
+enum class CppType(val code: Int) {
+  BOOLEAN(0),
+  STRING(1),
+  INT(2),
+  LONG(3),
+  FLOAT(4),
+  DOUBLE(5),
 
-@JvmInline
-value class CppType(val code: Int) {
-  fun nullable(isNullable: Boolean = true): CppType =
+  LIST(6),
+  MAP(7),
+
+  ANY(8),
+
+  DOUBLE_ARRAY(9),
+  INT_ARRAY(10),
+  LONG_ARRAY(11),
+  FLOAT_ARRAY(12),
+  BOOLEAN_ARRAY(13),
+  BYTE_ARRAY(14),
+
+  RECORD(15),
+
+  JS_VALUE(16),
+  JS_OBJECT(17),
+
+  UNIT(18),
+
+  SHARED_OBJECT(19),
+
+  TUPLE(20),
+  UNION(21),
+
+  /** A union the codes are already inside of, followed by how many unions out it is. */
+  UNION_REF(22);
+
+  /** [code], with the [NULLABLE] flag when [isNullable]: the head code of a value of this kind. */
+  fun nullableCode(isNullable: Boolean = true): Int =
     if (isNullable) {
-      CppType(code or NULLABLE)
+      code or NULLABLE
     } else {
-      this
+      code
     }
 
-  operator fun plus(tail: TypeCodes): TypeCodes {
-    val out = IntArray(1 + tail.size)
-    out[0] = code
-    tail.values.copyInto(out, 1)
-    return TypeCodes(out)
-  }
-
-  internal operator fun plus(schemaId: SchemaId): TypeCodes {
-    return TypeCodes.of(code, schemaId.value)
-  }
-
-  internal operator fun plus(classId: SharedClassId): TypeCodes {
-    return TypeCodes.of(code, classId.value)
-  }
-
-  fun toTypeCodes(): TypeCodes =
-    TypeCodes.of(this.code)
-
-  val codeWithoutHeader get() = code and HEAD_FLAGS.inv()
-  val isNullable: Boolean get() = code and NULLABLE != 0
-
-  val usesBuffer: Boolean get() = code and USES_BUFFER != 0
-
-  override fun toString(): String {
-    val name = when (CppType(codeWithoutHeader)) {
-      BOOLEAN -> "boolean"
-      STRING -> "string"
-      INT -> "int"
-      LONG -> "long"
-      FLOAT -> "float"
-      DOUBLE -> "double"
-      LIST -> "list"
-      MAP -> "map"
-      ANY -> "any"
-      DOUBLE_ARRAY -> "double_array"
-      INT_ARRAY -> "int_array"
-      LONG_ARRAY -> "long_array"
-      FLOAT_ARRAY -> "float_array"
-      BOOLEAN_ARRAY -> "boolean_array"
-      BYTE_ARRAY -> "byte_array"
-      RECORD -> "record"
-      JS_VALUE -> "js_value"
-      JS_OBJECT -> "js_object"
-      UNIT -> "unit"
-      BOX_INT -> "box_int"
-      BOX_BOOLEAN -> "box_boolean"
-      BOX_LONG -> "box_long"
-      BOX_FLOAT -> "box_float"
-      BOX_DOUBLE -> "box_double"
-      SHARED_OBJECT -> "shared_object"
-      TUPLE -> "tuple"
-      else -> "unknown(code=$code)"
-    }
-
-    return name +
-      (if (isNullable) "?" else "") +
-      (if (usesBuffer) " (buffered)" else "")
-  }
+  override fun toString(): String = name.lowercase()
 
   companion object {
-    //@formatter:off
-    val BOOLEAN = CppType(0)
-    val STRING = CppType(1)
-    val INT = CppType(2)
-    val LONG = CppType(3)
-    val FLOAT = CppType(4)
-    val DOUBLE = CppType(5)
-
-    val LIST = CppType(6)
-    val MAP = CppType(7)
-
-    val ANY = CppType(8)
-
-    val DOUBLE_ARRAY = CppType(9)
-    val INT_ARRAY = CppType(10)
-    val LONG_ARRAY = CppType(11)
-    val FLOAT_ARRAY = CppType(12)
-    val BOOLEAN_ARRAY = CppType(13)
-    val BYTE_ARRAY = CppType(14)
-
-    val RECORD = CppType(15)
-
-    val JS_VALUE = CppType(16)
-    val JS_OBJECT = CppType(17)
-
-    val UNIT = CppType(18)
-
-    val BOX_INT = CppType(19)
-    val BOX_BOOLEAN = CppType(20)
-    val BOX_LONG = CppType(21)
-    val BOX_FLOAT = CppType(22)
-    val BOX_DOUBLE = CppType(23)
-
-    val SHARED_OBJECT = CppType(24)
-
-    val TUPLE = CppType(25)
-    //@formatter:on
-
+    /** Marks a head code nullable. MUST stay in sync with `kNullableFlag` in `CppType.h`. */
     const val NULLABLE = 0x100
+
+    /** Marks a head code as riding the binary buffer. MUST stay in sync with `kUsesBufferFlag`. */
     const val USES_BUFFER = 0x200
-    internal const val HEAD_FLAGS = NULLABLE or USES_BUFFER
   }
 }

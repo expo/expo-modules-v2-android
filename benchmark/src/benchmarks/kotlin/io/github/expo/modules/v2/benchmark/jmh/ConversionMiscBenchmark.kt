@@ -14,7 +14,7 @@ import kotlinx.benchmark.TearDown
 import org.openjdk.jmh.annotations.OperationsPerInvocation
 
 /**
- * Shapes with only one sensible transport — kept for regression tracking, no binary/direct pair.
+ * Shapes with only one sensible transport - kept for regression tracking, no binary/direct pair.
  */
 private const val OPS_MISC = 5_000
 

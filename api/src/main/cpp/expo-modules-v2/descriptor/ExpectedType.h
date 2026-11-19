@@ -27,16 +27,13 @@ namespace expo::modules::v2 {
     JS_VALUE = static_cast<int>(CppType::JS_VALUE),
     JS_OBJECT = static_cast<int>(CppType::JS_OBJECT),
     UNIT = static_cast<int>(CppType::UNIT),
-    BOX_INT = static_cast<int>(CppType::BOX_INT),
-    BOX_BOOLEAN = static_cast<int>(CppType::BOX_BOOLEAN),
-    BOX_LONG = static_cast<int>(CppType::BOX_LONG),
-    BOX_FLOAT = static_cast<int>(CppType::BOX_FLOAT),
-    BOX_DOUBLE = static_cast<int>(CppType::BOX_DOUBLE),
   };
 
   [[nodiscard]] ALWAYS_INLINE constexpr CppType toCppType(LeafType type) noexcept {
     return static_cast<CppType>(type);
   }
+
+  struct UnionSchema;
 
   class ExpectedType {
   public:
@@ -60,6 +57,14 @@ namespace expo::modules::v2 {
       std::vector<ExpectedType> elements;
     };
 
+    struct Union {
+      // TODO(@lukmccall): Reconsider shape of this struct
+      // Set where the union is spelled out. Null where the type points back at a union it is
+      // inside of: that union owns [schema], and outlives every type nested in it.
+      std::shared_ptr<const UnionSchema> owner;
+      const UnionSchema* schema;
+    };
+
     explicit ExpectedType(LeafType type, bool nullable = false, bool usesBuffer = false);
 
     // clang-format off
@@ -73,6 +78,8 @@ namespace expo::modules::v2 {
     [[nodiscard]] static ExpectedType record(int schemaId, bool nullable = false, bool usesBuffer = false);
     [[nodiscard]] static ExpectedType sharedObject(int classId, bool nullable = false);
     [[nodiscard]] static ExpectedType tuple(std::vector<ExpectedType> elements, bool nullable = false, bool usesBuffer = false);
+    [[nodiscard]] static ExpectedType unionOf(std::shared_ptr<const UnionSchema> schema, bool nullable = false, bool usesBuffer = false);
+    [[nodiscard]] static ExpectedType unionRef(const UnionSchema* schema, bool nullable = false);
     // clang-format on
 
     [[nodiscard]] ExpectedType clone() const;
@@ -87,7 +94,8 @@ namespace expo::modules::v2 {
         case 2: return invokeWith<R, CppType::MAP>(v, *std::get_if<Map>(&shape_));
         case 3: return invokeWith<R, CppType::RECORD>(v, *std::get_if<Record>(&shape_));
         case 4: return invokeWith<R, CppType::SHARED_OBJECT>(v, *std::get_if<SharedObject>(&shape_));
-        default: return invokeWith<R, CppType::TUPLE>(v, *std::get_if<Tuple>(&shape_));
+        case 5: return invokeWith<R, CppType::TUPLE>(v, *std::get_if<Tuple>(&shape_));
+        default: return invokeWith<R, CppType::UNION>(v, *std::get_if<Union>(&shape_));
       }
     }
 
@@ -97,6 +105,8 @@ namespace expo::modules::v2 {
 
     [[nodiscard]] bool usesBuffer() const noexcept { return usesBuffer_; }
 
+    [[nodiscard]] bool isPrimitive() const noexcept;
+
     [[nodiscard]] const ExpectedType& listElement() const;
 
     [[nodiscard]] const ExpectedType& mapValue() const;
@@ -105,6 +115,8 @@ namespace expo::modules::v2 {
 
     [[nodiscard]] int sharedClassId() const;
 
+    [[nodiscard]] const UnionSchema& unionSchema() const;
+
     std::string jniDescriptor() const;
 
     [[nodiscard]] std::string kotlinType() const;
@@ -112,7 +124,7 @@ namespace expo::modules::v2 {
     bool bufferSafe() const;
 
   private:
-    using Shape = std::variant<LeafType, List, Map, Record, SharedObject, Tuple>;
+    using Shape = std::variant<LeafType, List, Map, Record, SharedObject, Tuple, Union>;
 
     explicit ExpectedType(Shape shape, bool nullable, bool usesBuffer);
 

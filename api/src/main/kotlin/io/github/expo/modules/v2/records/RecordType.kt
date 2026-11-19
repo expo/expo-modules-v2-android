@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.records
 
 import io.github.expo.modules.v2.jni.jniDescriptor
+import io.github.expo.modules.v2.types.TypeCodesWriter
 
 internal data class RecordType<T : Record>(
   val schemaId: SchemaId,
@@ -22,22 +23,15 @@ internal data class RecordType<T : Record>(
     )
   }
 
+  /** Each field's type codes, length-prefixed, written through one writer. */
   private fun marshallCodes(): IntArray {
-    val codes = IntArray(fieldCodesSize())
-    var at = 0
-    val fields = schema.fields
-    fields.forEach { field ->
-      val fieldCodes = field.type.converter.codes
-      codes[at++] = fieldCodes.size
-      fieldCodes.forEach { codes[at++] = it }
+    val codes = TypeCodesWriter()
+    schema.fields.forEach { field ->
+      val count = codes.size
+      codes.add(0) // the field's code count, set below
+      field.type.converter.writeTypeCodes(codes)
+      codes.set(count, codes.size - count - 1)
     }
-    return codes
-  }
-
-  private fun fieldCodesSize(): Int {
-    val fields = schema.fields
-    return fields.fold(0) { acc, field ->
-      acc + 1 + field.type.converter.codes.size // +1 because we have to include code sizes
-    }
+    return codes.toIntArray()
   }
 }

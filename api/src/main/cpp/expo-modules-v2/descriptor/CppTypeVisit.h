@@ -37,11 +37,6 @@ namespace expo::modules::v2 {
       case CppType::JS_VALUE: return invokeFor<R, CppType::JS_VALUE>(v);
       case CppType::JS_OBJECT: return invokeFor<R, CppType::JS_OBJECT>(v);
       case CppType::UNIT: return invokeFor<R, CppType::UNIT>(v);
-      case CppType::BOX_INT: return invokeFor<R, CppType::BOX_INT>(v);
-      case CppType::BOX_BOOLEAN: return invokeFor<R, CppType::BOX_BOOLEAN>(v);
-      case CppType::BOX_LONG: return invokeFor<R, CppType::BOX_LONG>(v);
-      case CppType::BOX_FLOAT: return invokeFor<R, CppType::BOX_FLOAT>(v);
-      case CppType::BOX_DOUBLE: return invokeFor<R, CppType::BOX_DOUBLE>(v);
       default:
         throwUnknown(kind);
     }

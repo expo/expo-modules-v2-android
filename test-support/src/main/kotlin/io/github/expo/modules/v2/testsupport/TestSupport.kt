@@ -8,8 +8,8 @@ import io.github.expo.modules.v2.jsi.JavaScriptRuntime
  * Test/benchmark-only entry point into this module's native library (`libexpo-test-support`). Not
  * product surface.
  *
- * [install] adds `globalThis.ExpoTestSupport` — the round-trip/smoke/benchmark host-function
- * suite (`__convertRoundTrip`, `__binaryNativeRoundTrip`, `__nativeStateChainSmoke`, ...) — to the given
+ * [install] adds `globalThis.ExpoTestSupport` - the round-trip/smoke/benchmark host-function
+ * suite (`__convertRoundTrip`, `__binaryNativeRoundTrip`, `__nativeStateChainSmoke`, ...) - to the given
  * runtime. Production runtimes never carry these; tests and benchmarks install them explicitly.
  *
  * The bridge library must be loaded first: `libexpo-test-support` links against `libexpo-modules-v2`
@@ -30,7 +30,7 @@ object TestSupport {
 
   /**
    * Moves the host object [expression] evaluates to in [from] into [to], as
-   * `globalThis.<globalName>` — the same move `react-native-worklets` makes when a host object is
+   * `globalThis.<globalName>` - the same move `react-native-worklets` makes when a host object is
    * passed into a worklet, so what worklets can and cannot carry is testable without an app.
    *
    * Throws when [expression] is not a host object. A shared object's façade is a plain object, so

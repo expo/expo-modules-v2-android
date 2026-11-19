@@ -85,7 +85,7 @@ private val SHARED_OBJECT_CASES = mapOf(
   // The same call through a façade, which mints a jsi::Function on every property read.
   "method" to SharedObjectCase("const o = SharedObjectBench.current()", "o.tick()"),
   // Bound once, called many times. A method lives on the prototype, so a bare `const f = o.tick`
-  // has no receiver — `bind` is what a JavaScript author reaches for, and this is what it costs.
+  // has no receiver - `bind` is what a JavaScript author reaches for, and this is what it costs.
   "method-bound" to SharedObjectCase(
     "const o = SharedObjectBench.current(); const f = o.tick.bind(o)",
     "f()",

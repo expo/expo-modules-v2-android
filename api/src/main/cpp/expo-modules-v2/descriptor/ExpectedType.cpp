@@ -13,6 +13,8 @@
 #include <expo-modules-v2/jni/JSharedObject.h>
 #include <expo-modules-v2/records/RecordRegistry.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
+#include <expo-modules-v2/jni/JUnionValue.h>
+#include <expo-modules-v2/unions/UnionSchema.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/utils/Throw.h>
@@ -23,14 +25,13 @@ namespace expo::modules::v2 {
   }
 
   namespace {
-    bool isUnboxedScalar(LeafType type) {
-      switch (type) {
-        case LeafType::BOOLEAN:
-        case LeafType::INT:
-        case LeafType::LONG:
-        case LeafType::FLOAT:
-        case LeafType::DOUBLE:
-        case LeafType::UNIT:
+    bool isScalar(const CppType kind) {
+      switch (kind) {
+        case CppType::BOOLEAN:
+        case CppType::INT:
+        case CppType::LONG:
+        case CppType::FLOAT:
+        case CppType::DOUBLE:
           return true;
         default:
           return false;
@@ -46,12 +47,17 @@ namespace expo::modules::v2 {
       kind_(toCppType(type)),
       nullable_(nullable),
       usesBuffer_(usesBuffer) {
-    if (nullable && isUnboxedScalar(type)) {
-      throwInvalidArgument({"Unboxed scalar ExpectedType cannot carry the nullable flag"});
+    if (nullable && type == LeafType::UNIT) {
+      throwInvalidArgument({"A UNIT ExpectedType cannot carry the nullable flag"});
     }
+
+    // A buffered value crosses as an object; a scalar does that only when it is nullable.
     if (
       usesBuffer && (
-        isUnboxedScalar(type) || type == LeafType::JS_VALUE || type == LeafType::JS_OBJECT
+        isPrimitive() ||
+        type == LeafType::UNIT ||
+        type == LeafType::JS_VALUE ||
+        type == LeafType::JS_OBJECT
       )
     ) {
       throwInvalidArgument({"This leaf ExpectedType cannot ride the binary buffer"});
@@ -60,7 +66,7 @@ namespace expo::modules::v2 {
 
   ExpectedType ExpectedType::list(ExpectedType element, bool nullable, bool usesBuffer) {
     return ExpectedType(
-      List{std::make_unique<ExpectedType>(std::move(element))},
+      List{.element = std::make_unique<ExpectedType>(std::move(element))},
       nullable,
       usesBuffer
     );
@@ -68,7 +74,7 @@ namespace expo::modules::v2 {
 
   ExpectedType ExpectedType::map(ExpectedType value, bool nullable, bool usesBuffer) {
     return ExpectedType(
-      Map{std::make_unique<ExpectedType>(std::move(value))},
+      Map{.value = std::make_unique<ExpectedType>(std::move(value))},
       nullable,
       usesBuffer
     );
@@ -85,6 +91,38 @@ namespace expo::modules::v2 {
 
   ExpectedType ExpectedType::tuple(std::vector<ExpectedType> elements, bool nullable, bool usesBuffer) {
     return ExpectedType(Tuple{std::move(elements)}, nullable, usesBuffer);
+  }
+
+  ExpectedType ExpectedType::unionOf(
+    std::shared_ptr<const UnionSchema> schema,
+    const bool nullable,
+    const bool usesBuffer
+  ) {
+    const UnionSchema* target = schema.get();
+    const Union union_{
+      .owner = std::move(schema),
+      .schema = target
+    };
+
+    return ExpectedType(
+      std::move(union_),
+      nullable,
+      usesBuffer
+    );
+  }
+
+  ExpectedType ExpectedType::unionRef(const UnionSchema* schema, const bool nullable) {
+    Union union_{
+      .owner = nullptr,
+      .schema = schema
+    };
+
+    // Nested by construction, so it never carries the buffer flag: that is head-position only.
+    return ExpectedType(
+      std::move(union_),
+      nullable,
+      /* usesBuffer = */ false
+    );
   }
 
   ExpectedType ExpectedType::clone() const {
@@ -116,10 +154,17 @@ namespace expo::modules::v2 {
         [this](const Tuple& tuple) {
           std::vector<ExpectedType> elements;
           elements.reserve(tuple.elements.size());
-          for (const ExpectedType& element : tuple.elements) {
+          for (const ExpectedType& element: tuple.elements) {
             elements.push_back(element.clone());
           }
           return ExpectedType(Tuple{std::move(elements)}, nullable_, usesBuffer_);
+        },
+        [this](const Union& union_) {
+          return ExpectedType(
+            Union{.owner = union_.owner, .schema = union_.schema},
+            nullable_,
+            usesBuffer_
+          );
         },
       },
       shape_
@@ -143,26 +188,35 @@ namespace expo::modules::v2 {
     return std::get<SharedObject>(shape_).classId;
   }
 
+  const UnionSchema& ExpectedType::unionSchema() const {
+    return *std::get<Union>(shape_).schema;
+  }
+
   template<typename T>
   static std::string desc() {
     return kolibri::jni_descriptor_string_v<T>();
   }
 
+  bool ExpectedType::isPrimitive() const noexcept {
+    return !nullable_ && isScalar(kind_);
+  }
+
   std::string ExpectedType::jniDescriptor() const {
+    const bool boxed = nullable_;
     return std::visit(
       overloads{
-        [](const LeafType leaf) {
+        [boxed](const LeafType leaf) {
           switch (leaf) {
             case LeafType::BOOLEAN:
-              return desc<jboolean>();
+              return boxed ? desc<kolibri::JBoolean>() : desc<jboolean>();
             case LeafType::INT:
-              return desc<jint>();
+              return boxed ? desc<kolibri::JInteger>() : desc<jint>();
             case LeafType::LONG:
-              return desc<jlong>();
+              return boxed ? desc<kolibri::JLong>() : desc<jlong>();
             case LeafType::FLOAT:
-              return desc<jfloat>();
+              return boxed ? desc<kolibri::JFloat>() : desc<jfloat>();
             case LeafType::DOUBLE:
-              return desc<jdouble>();
+              return boxed ? desc<kolibri::JDouble>() : desc<jdouble>();
             case LeafType::STRING:
               return desc<jstring>();
             case LeafType::ANY:
@@ -185,16 +239,6 @@ namespace expo::modules::v2 {
               return desc<jsi::JavaScriptObject>();
             case LeafType::UNIT:
               return desc<kolibri::JUnit>();
-            case LeafType::BOX_INT:
-              return desc<kolibri::JInteger>();
-            case LeafType::BOX_BOOLEAN:
-              return desc<kolibri::JBoolean>();
-            case LeafType::BOX_LONG:
-              return desc<kolibri::JLong>();
-            case LeafType::BOX_FLOAT:
-              return desc<kolibri::JFloat>();
-            case LeafType::BOX_DOUBLE:
-              return desc<kolibri::JDouble>();
           }
 
           assert(false && "Unsupported type");
@@ -213,6 +257,7 @@ namespace expo::modules::v2 {
           return descriptor.empty() ? desc<JSharedObject>() : descriptor;
         },
         [](const Tuple&) { return desc<kolibri::JList>(); },
+        [](const Union&) { return desc<JUnionValue>(); },
       },
       shape_
     );
@@ -222,21 +267,16 @@ namespace expo::modules::v2 {
     std::string leafKotlinName(const LeafType leaf) {
       switch (leaf) {
         case LeafType::BOOLEAN:
-        case LeafType::BOX_BOOLEAN:
           return "Boolean";
         case LeafType::STRING:
           return "String";
         case LeafType::INT:
-        case LeafType::BOX_INT:
           return "Int";
         case LeafType::LONG:
-        case LeafType::BOX_LONG:
           return "Long";
         case LeafType::FLOAT:
-        case LeafType::BOX_FLOAT:
           return "Float";
         case LeafType::DOUBLE:
-        case LeafType::BOX_DOUBLE:
           return "Double";
         case LeafType::ANY:
           return "Any";
@@ -312,6 +352,7 @@ namespace expo::modules::v2 {
           return sharedobjects::SharedObjectClassRegistry::nameOf(shared.classId);
         },
         [](const Tuple& tuple) { return tupleKotlinName(tuple); },
+        [](const Union& union_) { return union_.schema->name; },
       },
       shape_
     );
@@ -342,12 +383,25 @@ namespace expo::modules::v2 {
         // A reference: it identifies a native object, so there is nothing to flatten.
         [](const SharedObject&) { return false; },
         [](const Tuple& tuple) {
-          for (const ExpectedType& element : tuple.elements) {
+          for (const ExpectedType& element: tuple.elements) {
             if (!element.bufferSafe()) {
               return false;
             }
           }
           return true;
+        },
+        [](const Union& union_) {
+          // A back-reference sits inside the union it points at, whose variants decide.
+          if (union_.owner == nullptr) {
+            return true;
+          }
+
+          return std::ranges::all_of(
+            union_.schema->variants,
+            [](const UnionVariantSpec& variant) -> bool {
+              return variant.type.bufferSafe();
+            }
+          );
         },
       },
       shape_
@@ -363,6 +417,7 @@ namespace expo::modules::v2 {
         [](const Record&) { return CppType::RECORD; },
         [](const SharedObject&) { return CppType::SHARED_OBJECT; },
         [](const Tuple&) { return CppType::TUPLE; },
+        [](const Union&) { return CppType::UNION; },
       },
       shape
     );

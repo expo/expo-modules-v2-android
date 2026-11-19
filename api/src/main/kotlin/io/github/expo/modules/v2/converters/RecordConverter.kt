@@ -7,15 +7,18 @@ import io.github.expo.modules.v2.records.readers.MapRecordReader
 import io.github.expo.modules.v2.records.writers.BufferRecordWriter
 import io.github.expo.modules.v2.records.writers.MapRecordWriter
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
+import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.kolibri.binary.BinaryBuffer
 
 internal class RecordConverter(
   private val recordType: RecordType<*>,
   isNullable: Boolean,
 ) : TypeConverter<Record>(isNullable) {
-  override val codes: TypeCodes =
-    CppType.RECORD.nullable(isNullable) + recordType.schemaId
+  override val kind: CppType get() = CppType.RECORD
+
+  override fun writeTypeParameters(out: TypeCodesWriter) {
+    out.add(recordType.schemaId.value)
+  }
 
   override val isPassthrough: Boolean get() = false
 

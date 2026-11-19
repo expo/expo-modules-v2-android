@@ -29,7 +29,7 @@ import kotlin.test.assertTrue
  * A shared object: one Kotlin instance JavaScript holds a reference to, rather than a value copied
  * across the bridge.
  *
- * Described by hand here, in the shape the compiler plugin will generate — the same arrangement
+ * Described by hand here, in the shape the compiler plugin will generate - the same arrangement
  * [HermesRuntimeTest]'s trampoline fixtures use.
  */
 private class Counter : io.github.expo.modules.v2.SharedObject() {
@@ -207,7 +207,7 @@ private class Greeters : Module() {
 }
 
 /**
- * The same thing again, declared with `@ExpoSharedObject` instead of by hand — what an author actually
+ * The same thing again, declared with `@ExpoSharedObject` instead of by hand - what an author actually
  * writes. The plugin fills the same [io.github.expo.modules.v2.modules.ModuleBuilder] for both
  * bases, and adds the `ExpoSharedObject` supertype this class never names.
  */
@@ -281,7 +281,6 @@ private class Timers : Module() {
 class SharedObjectTest {
   companion object {
     private val intType = AnyType(TypeDescriptor.Int)
-    private val boolType = AnyType(TypeDescriptor.Bool)
     private val stringType = AnyType(TypeDescriptor.Simple(String::class.java, false))
     private val counterType = AnyType(TypeDescriptor.Simple(Counter::class.java, false))
     private val tagType = AnyType(TypeDescriptor.Simple(Tag::class.java, false))
@@ -290,7 +289,7 @@ class SharedObjectTest {
       ExpoHermes.ensureLoaded()
 
       // The registry is process-wide by design, so a class is described once per JVM rather than
-      // once per runtime — which is what lets one instance serve every runtime.
+      // once per runtime - which is what lets one instance serve every runtime.
       SharedObjectRegistry.register("Counter", Counter::class.java) {
         function("increment", returns = intType)
         property("value", intType, mutable = true)
@@ -515,8 +514,8 @@ class SharedObjectTest {
     HermesRuntime().use { runtime ->
       runtime.registerCounters()
 
-      // Foreign code probes objects it is handed with arbitrary keys — React Native asks for
-      // `$$typeof`, for one — so an unknown key stays quiet, as it would on any plain object. It
+      // Foreign code probes objects it is handed with arbitrary keys - React Native asks for
+      // `$$typeof`, for one - so an unknown key stays quiet, as it would on any plain object. It
       // costs nothing either: the read misses the whole prototype chain without entering C++.
       assertEquals(
         "undefined",
@@ -531,7 +530,7 @@ class SharedObjectTest {
       runtime.registerCounters()
 
       // One function per class serves every instance and reads its receiver from `this`, so
-      // `const inc = c.increment` loses it — the same thing that happens to a method plucked off an
+      // `const inc = c.increment` loses it - the same thing that happens to a method plucked off an
       // instance of a real class. `bind` is the fix, and it keeps the object alive.
       runtime.evaluate("globalThis.c = expo.modules.Counters.create();")
       val error = runtime.evaluateAsString(
@@ -553,7 +552,7 @@ class SharedObjectTest {
       runtime.evaluate("globalThis.c = expo.modules.Counters.create(); c.value = 7;")
 
       // Nothing lives on the instance: the exports are on the class's prototype, so `Object.keys`
-      // — own enumerable properties only — sees nothing, exactly as on an instance of a JavaScript
+      // - own enumerable properties only - sees nothing, exactly as on an instance of a JavaScript
       // class whose fields are accessors.
       assertEquals("0", runtime.evaluateAsString("Object.keys(c).length"))
       // `in` and `for...in` walk the chain, and the properties are enumerable there while the
@@ -575,7 +574,6 @@ class SharedObjectTest {
       }
       assertEquals("tag", runtime.evaluateAsString("expo.modules.Flags.create().label()"))
       assertEquals("boolean", runtime.evaluateAsString("typeof true"))
-      assertTrue(boolType.codes.size == 1)
     }
   }
 
@@ -585,7 +583,7 @@ class SharedObjectTest {
     val context = ExpoContext()
     // The whole point of the design: the registry belongs to the context the runtimes share and the
     // façade is a host object, so a second runtime reaching the same Kotlin instance shares its state
-    // rather than proxying it. Two live runtimes is an established pattern here — see HermesRuntimeTest's
+    // rather than proxying it. Two live runtimes is an established pattern here - see HermesRuntimeTest's
     // `each runtime asks its own registry`.
     val module = CounterModule()
     HermesRuntime(context = context).use { first ->
@@ -638,7 +636,7 @@ class SharedObjectTest {
     // The runtimes share instances, and so must share the context those instances belong to.
     val context = ExpoContext()
     // The chosen semantics: a call runs synchronously on whichever JS thread made it. Nothing here
-    // hops threads, and nothing needs to — the argument buffer is thread-local on both sides and
+    // hops threads, and nothing needs to - the argument buffer is thread-local on both sides and
     // kolibri attaches an unattached thread on demand.
     val module = CounterModule()
     HermesRuntime(context = context).use { first ->
@@ -674,7 +672,7 @@ class SharedObjectTest {
     // A known limitation, pinned down here so it cannot change by accident.
     //
     // `react-native-worklets` carries a value into a worklet runtime by reference only when it is a
-    // `jsi::HostObject` — it holds the same `shared_ptr` and calls `Object::createFromHostObject`
+    // `jsi::HostObject` - it holds the same `shared_ptr` and calls `Object::createFromHostObject`
     // in the target. A façade is a plain object behind a class prototype, which worklets classifies
     // as neither a host object nor a plain JavaScript object (its prototype is not
     // `Object.prototype`), so it refuses to clone one. Reaching the same native object from a
@@ -727,7 +725,7 @@ class SharedObjectTest {
       runtime.moduleRegistry.register(Refs())
 
       assertEquals("5", runtime.evaluateAsString("globalThis.r = expo.modules.Refs.text('hello'); r.length()"))
-      // The value itself is not exposed — only what the class chose to export, plus release().
+      // The value itself is not exposed - only what the class chose to export, plus release().
       assertEquals("undefined", runtime.evaluateAsString("typeof r.ref"))
       assertEquals("StringBuilder", runtime.evaluateAsString("r.nativeRefType"))
 
@@ -768,7 +766,7 @@ class SharedObjectTest {
       runtime.registerCounters()
 
       // A method lives on the class's prototype, so repeated reads answer the same object rather
-      // than a fresh one — which is both what a JavaScript class does and what makes a method
+      // than a fresh one - which is both what a JavaScript class does and what makes a method
       // access cheap.
       assertEquals(
         "true",
@@ -839,7 +837,7 @@ class SharedObjectTest {
       )
       assertEquals(module.last(), requireNotNull(module.lastOrNull()))
 
-      // The same JavaScript object on the way back, and still of its class — however it was made.
+      // The same JavaScript object on the way back, and still of its class - however it was made.
       assertEquals("true", runtime.evaluateAsString("expo.modules.Greeters.last() === g2"))
       assertEquals(
         "true",
@@ -947,7 +945,7 @@ class SharedObjectTest {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register(Badges())
 
-      // `Badge` carries @ExpoSharedObject(name = "Renamed"), so that is the name the class object takes — the
+      // `Badge` carries @ExpoSharedObject(name = "Renamed"), so that is the name the class object takes - the
       // same rule every other export follows.
       assertEquals(
         "7",

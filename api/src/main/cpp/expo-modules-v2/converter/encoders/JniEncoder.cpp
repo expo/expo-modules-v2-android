@@ -8,22 +8,26 @@
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
 #include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
+#include <expo-modules-v2/jni/JUnionValue.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectState.h>
 #include <expo-modules-v2/sharedobjects/SharedObjects.h>
+#include <expo-modules-v2/unions/UnionDispatch.h>
 #include <expo-modules-v2/utils/Throw.h>
 #include <kolibri/Ref.h>
 #include <kolibri/array.h>
 #include <kolibri/box.h>
 #include <kolibri/class.h>
-#include <kolibri/string_utils.h>
 
 namespace expo::modules::v2 {
+  namespace {
+    /** The local references one union attempt starts with room for: its payload and the wrapper. */
+    constexpr jint kUnionAttemptFrame = 4;
+  }
+
   jobject JniEncoder::operator()(const ExpectedType::List& listType) const {
-    const facebook::jsi::Array array = value
-      .asObject(rt)
-      .asArray(rt);
+    const facebook::jsi::Array array = arrayOf(rt, value);
     const ExpectedType& elementType = *listType.element;
     const size_t size = array.size(rt);
     const jobject result = kolibri::JArrayList::constructor.createRaw(env, static_cast<jint>(size));
@@ -58,7 +62,7 @@ namespace expo::modules::v2 {
   }
 
   jobject JniEncoder::operator()(const ExpectedType::Map& mapType) const {
-    const facebook::jsi::Object object = value.asObject(rt);
+    const facebook::jsi::Object object = objectOf(rt, value);
     const ExpectedType& valueType = *mapType.value;
     const facebook::jsi::Array names = object.getPropertyNames(rt);
     const size_t size = names.size(rt);
@@ -82,7 +86,7 @@ namespace expo::modules::v2 {
     using sharedobjects::SharedObjectClassRegistry;
 
     if (!value.isObject()) {
-      throwJSError(rt, {
+      throwConversionError({
         "Expected ",
         SharedObjectClassRegistry::nameOf(sharedType.classId),
         ", got a value that is not an object",
@@ -92,7 +96,7 @@ namespace expo::modules::v2 {
     const facebook::jsi::Object object = value.getObject(rt);
     const auto* state = sharedobjects::SharedObjects::stateOf(rt, object);
     if (state == nullptr) {
-      throwJSError(rt, {
+      throwConversionError({
         "Expected ",
         SharedObjectClassRegistry::nameOf(sharedType.classId),
         ", got an object that is not a shared object",
@@ -100,7 +104,7 @@ namespace expo::modules::v2 {
     }
 
     if (state->released()) {
-      throwJSError(rt, {"Cannot pass a released ", state->spec().name, " to a native function"});
+      throwConversionError({"Cannot pass a released ", state->spec().name, " to a native function"});
     }
 
     const jobject instance = state->instanceRef().newLocal(env);
@@ -110,7 +114,7 @@ namespace expo::modules::v2 {
       // TODO(@lukmccall): move class check to kotlin
       if (declaredClass == nullptr || !env->IsInstanceOf(instance, declaredClass)) {
         env->DeleteLocalRef(instance);
-        throwJSError(rt, {
+        throwConversionError({
           "Expected ",
           SharedObjectClassRegistry::nameOf(sharedType.classId),
           ", got ",
@@ -122,11 +126,29 @@ namespace expo::modules::v2 {
     return instance;
   }
 
+  jobject JniEncoder::operator()(const ExpectedType::Union& unionType) const {
+    return convertUnion(rt, *unionType.schema, value, [&](const size_t index, const UnionVariantSpec& variant) {
+      if (variant.kind == UnionVariantKind::LITERAL) {
+        return JUnionValue::create(env, static_cast<jint>(index), nullptr);
+      }
+
+      // A variant that refuses the value can leave local references behind: the frame drops them.
+      env->PushLocalFrame(kUnionAttemptFrame);
+      try {
+        const jobject payload = encodeToJni(env, rt, value, variant.type);
+        return env->PopLocalFrame(JUnionValue::create(env, static_cast<jint>(index), payload));
+      } catch (...) {
+        env->PopLocalFrame(nullptr);
+        throw;
+      } 
+    });
+  }
+
   jobject JniEncoder::operator()(const ExpectedType::Record& recordType) const {
     RecordPropertyCache& recordProperties = RecordPropertyCache::get(rt);
     const RecordAccessPlan& plan = recordProperties.planFor(rt, recordType.schemaId);
     const RecordSchema& schema = *plan.schema;
-    const facebook::jsi::Object object = value.asObject(rt);
+    const facebook::jsi::Object object = objectOf(rt, value);
     const jobject map = kolibri::JHashMap::constructor.createRaw(env);
     for (size_t i = 0; i < schema.fields.size(); i++) {
       const RecordFieldSpec& field = schema.fields[i];
@@ -153,52 +175,27 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::INT>() const {
-    return kolibri::JInteger::valueOf(env, static_cast<jint>(numberOf(rt, value))).release();
-  }
-
-  template<>
-  jobject JniEncoder::operator()<CppType::BOX_INT>() const {
-    return kolibri::JInteger::valueOf(env, static_cast<jint>(numberOf(rt, value))).release();
+    return kolibri::JInteger::valueOf(env, static_cast<jint>(numberOf(value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::LONG>() const {
-    return kolibri::JLong::valueOf(env, static_cast<jlong>(numberOf(rt, value))).release();
-  }
-
-  template<>
-  jobject JniEncoder::operator()<CppType::BOX_LONG>() const {
-    return kolibri::JLong::valueOf(env, static_cast<jlong>(numberOf(rt, value))).release();
+    return kolibri::JLong::valueOf(env, static_cast<jlong>(numberOf(value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::FLOAT>() const {
-    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(numberOf(rt, value))).release();
-  }
-
-  template<>
-  jobject JniEncoder::operator()<CppType::BOX_FLOAT>() const {
-    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(numberOf(rt, value))).release();
+    return kolibri::JFloat::valueOf(env, static_cast<jfloat>(numberOf(value))).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::DOUBLE>() const {
-    return kolibri::JDouble::valueOf(env, numberOf(rt, value)).release();
-  }
-
-  template<>
-  jobject JniEncoder::operator()<CppType::BOX_DOUBLE>() const {
-    return kolibri::JDouble::valueOf(env, numberOf(rt, value)).release();
+    return kolibri::JDouble::valueOf(env, numberOf(value)).release();
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOOLEAN>() const {
-    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(boolOf(rt, value))).release();
-  }
-
-  template<>
-  jobject JniEncoder::operator()<CppType::BOX_BOOLEAN>() const {
-    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(boolOf(rt, value))).release();
+    return kolibri::JBoolean::valueOf(env, static_cast<jboolean>(boolOf(value))).release();
   }
 
   template<>
@@ -208,41 +205,41 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::STRING>() const {
-    return jstringFromJsiString(env, rt, value.asString(rt));
+    return jstringFromJsiString(env, rt, stringOf(rt, value));
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::DOUBLE_ARRAY>() const {
-    return encodeJsArrayToJni<jdouble>(env, rt, value, [this](const facebook::jsi::Value& element) {
-      return numberOf(rt, element);
+    return encodeJsArrayToJni<jdouble>(env, rt, value, [](const facebook::jsi::Value& element) {
+      return numberOf(element);
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::INT_ARRAY>() const {
-    return encodeJsArrayToJni<jint>(env, rt, value, [this](const facebook::jsi::Value& element) {
-      return static_cast<jint>(numberOf(rt, element));
+    return encodeJsArrayToJni<jint>(env, rt, value, [](const facebook::jsi::Value& element) {
+      return static_cast<jint>(numberOf(element));
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::LONG_ARRAY>() const {
-    return encodeJsArrayToJni<jlong>(env, rt, value, [this](const facebook::jsi::Value& element) {
-      return static_cast<jlong>(numberOf(rt, element));
+    return encodeJsArrayToJni<jlong>(env, rt, value, [](const facebook::jsi::Value& element) {
+      return static_cast<jlong>(numberOf(element));
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::FLOAT_ARRAY>() const {
-    return encodeJsArrayToJni<jfloat>(env, rt, value, [this](const facebook::jsi::Value& element) {
-      return static_cast<jfloat>(numberOf(rt, element));
+    return encodeJsArrayToJni<jfloat>(env, rt, value, [](const facebook::jsi::Value& element) {
+      return static_cast<jfloat>(numberOf(element));
     });
   }
 
   template<>
   jobject JniEncoder::operator()<CppType::BOOLEAN_ARRAY>() const {
-    return encodeJsArrayToJni<jboolean>(env, rt, value, [this](const facebook::jsi::Value& element) {
-      return static_cast<jboolean>(boolOf(rt, element));
+    return encodeJsArrayToJni<jboolean>(env, rt, value, [](const facebook::jsi::Value& element) {
+      return static_cast<jboolean>(boolOf(element));
     });
   }
 
@@ -257,7 +254,7 @@ namespace expo::modules::v2 {
 
   template<>
   jobject JniEncoder::operator()<CppType::JS_OBJECT>() const {
-    return jsi::JavaScriptObject::create(env, &rt, value.asObject(rt));
+    return jsi::JavaScriptObject::create(env, &rt, objectOf(rt, value));
   }
 
   template<>

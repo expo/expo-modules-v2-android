@@ -23,7 +23,7 @@ import org.openjdk.jmh.annotations.OperationsPerInvocation
 /**
  * FunctionBinder dispatch: what a host call costs end to end, per declaration shape.
  *
- * The direct/buffered pairs price a `buffered()` declaration on a leaf — the same value through a
+ * The direct/buffered pairs price a `buffered()` declaration on a leaf - the same value through a
  * JNI slot and through the trampoline payload. `buffer-list[0]` and `buffer-list[1]` are the
  * payload floor: an empty and a one-element list.
  */

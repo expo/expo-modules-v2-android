@@ -12,8 +12,8 @@ import io.github.expo.modules.v2.Module
  * depends on: that the JVM backend emits a member the frontend never declared, and that the emitted
  * member really overrides `Module.define$ExpoModulesV2`.
  *
- * Every value here is a non-null scalar, an `Any` or a JSI-free array — all of which keep their JNI
- * slot — so no trampoline is involved and the bridge calls each method directly.
+ * Every value here is a non-null scalar, an `Any` or a JSI-free array - all of which keep their JNI
+ * slot - so no trampoline is involved and the bridge calls each method directly.
  */
 @ExpoModule
 object Direct : Module() {

@@ -18,7 +18,7 @@ import org.openjdk.jmh.annotations.OperationsPerInvocation
  * Data classes vs untyped maps, over identical JS payloads: records cross positionally through the
  * buffer, maps carry key strings through JNI object slots.
  *
- * Each case runs as two rows — `record` and `map` — and the directions covered are full echo
+ * Each case runs as two rows - `record` and `map` - and the directions covered are full echo
  * (argument + return), argument-only (JS -> Kotlin, primitive back), return-only (Kotlin-built
  * values out) and nested records. Tiering works as in [ConversionTransportFastBenchmark].
  */

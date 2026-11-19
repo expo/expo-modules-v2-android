@@ -39,8 +39,8 @@ private class TaintedX(val y: TaintedY?) : io.github.expo.modules.v2.records.Rec
 private class TaintedY(val x: TaintedX?, val handle: JavaScriptValue) : io.github.expo.modules.v2.records.Record
 
 /**
- * Pins the routing predicate: a type is buffer-safe iff nothing in its tree — through containers
- * and reachable record schemas — is ANY or a JSI handle. Non-buffer-safe types cross JNI as
+ * Pins the routing predicate: a type is buffer-safe iff nothing in its tree - through containers
+ * and reachable record schemas - is ANY or a JSI handle. Non-buffer-safe types cross JNI as
  * plain object slots instead of trampoline payloads.
  *
  * The flag is an `@Record(bufferSafe = ...)` argument rather than something the plugin infers:

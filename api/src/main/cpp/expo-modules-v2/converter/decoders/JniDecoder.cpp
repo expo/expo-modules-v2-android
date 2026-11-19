@@ -10,8 +10,10 @@
 #include <expo-modules-v2/converter/decoders/JniDecode.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/converter/JsiBuilders.h>
+#include <expo-modules-v2/jni/JUnionValue.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
+#include <expo-modules-v2/unions/UnionDispatch.h>
 #include <kolibri/Ref.h>
 #include <kolibri/array.h>
 #include <kolibri/box.h>
@@ -85,19 +87,23 @@ namespace expo::modules::v2 {
     return result;
   }
 
+  facebook::jsi::Value JniDecoder::operator()(const ExpectedType::Union& unionType) const {
+    const UnionSchema& schema = *unionType.schema;
+    const UnionVariantSpec& variant = unionVariantAt(schema, JUnionValue::indexOf(env, object));
+    if (variant.kind == UnionVariantKind::LITERAL) [[unlikely]] {
+      return facebook::jsi::String::createFromUtf8(rt, variant.tag);
+    }
+
+    const kolibri::Ref<> payload = JUnionValue::payloadOf(env, object);
+    return decodeFromJni(env, rt, payload.get(), variant.type);
+  }
+
   facebook::jsi::Value JniDecoder::operator()(const ExpectedType::SharedObject&) const {
     return sharedobjects::SharedObjects::facadeFor(env, rt, object);
   }
 
   template<>
   facebook::jsi::Value JniDecoder::operator()<CppType::INT>() const {
-    return facebook::jsi::Value(
-      static_cast<double>(kolibri::UnownedRef<kolibri::JInteger>(object)->intValue(env))
-    );
-  }
-
-  template<>
-  facebook::jsi::Value JniDecoder::operator()<CppType::BOX_INT>() const {
     return facebook::jsi::Value(
       static_cast<double>(kolibri::UnownedRef<kolibri::JInteger>(object)->intValue(env))
     );
@@ -112,21 +118,7 @@ namespace expo::modules::v2 {
   }
 
   template<>
-  facebook::jsi::Value JniDecoder::operator()<CppType::BOX_LONG>() const {
-    return facebook::jsi::Value(
-      static_cast<double>(kolibri::UnownedRef<kolibri::JLong>(object)->longValue(env))
-    );
-  }
-
-  template<>
   facebook::jsi::Value JniDecoder::operator()<CppType::FLOAT>() const {
-    return facebook::jsi::Value(
-      kolibri::UnownedRef<kolibri::JFloat>(object)->floatValue(env)
-    );
-  }
-
-  template<>
-  facebook::jsi::Value JniDecoder::operator()<CppType::BOX_FLOAT>() const {
     return facebook::jsi::Value(
       kolibri::UnownedRef<kolibri::JFloat>(object)->floatValue(env)
     );
@@ -140,21 +132,7 @@ namespace expo::modules::v2 {
   }
 
   template<>
-  facebook::jsi::Value JniDecoder::operator()<CppType::BOX_DOUBLE>() const {
-    return facebook::jsi::Value(
-      kolibri::UnownedRef<kolibri::JDouble>(object)->doubleValue(env)
-    );
-  }
-
-  template<>
   facebook::jsi::Value JniDecoder::operator()<CppType::BOOLEAN>() const {
-    return facebook::jsi::Value(
-      kolibri::UnownedRef<kolibri::JBoolean>(object)->booleanValue(env) != 0
-    );
-  }
-
-  template<>
-  facebook::jsi::Value JniDecoder::operator()<CppType::BOX_BOOLEAN>() const {
     return facebook::jsi::Value(
       kolibri::UnownedRef<kolibri::JBoolean>(object)->booleanValue(env) != 0
     );

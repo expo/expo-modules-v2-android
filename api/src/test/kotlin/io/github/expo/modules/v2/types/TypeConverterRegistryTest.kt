@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.types
 
 import io.github.expo.modules.v2.converters.ArrayConverter
+import io.github.expo.modules.v2.converters.typeCodes
 import io.github.expo.modules.v2.converters.DurationConverter
 import io.github.expo.modules.v2.converters.IntArrayConverter
 import io.github.expo.modules.v2.converters.PathConverter
@@ -72,7 +73,7 @@ class TypeConverterRegistryTest {
       arrayOf(TypeDescriptor.Simple(URI::class.java, false)),
     ).converter
     assertTrue(uris is ArrayConverter<*>)
-    assertContentEquals(intArrayOf(CppType.LIST.code, CppType.STRING.code), uris.codes.values)
+    assertContentEquals(intArrayOf(CppType.LIST.code, CppType.STRING.code), uris.typeCodes())
 
     @Suppress("UNCHECKED_CAST")
     val asAny = uris as TypeConverter<Array<URI>>
@@ -97,7 +98,7 @@ class TypeConverterRegistryTest {
     assertTrue(nullableElements is ArrayConverter<*>)
     assertContentEquals(
       intArrayOf(CppType.LIST.code, CppType.STRING.code or CppType.NULLABLE),
-      nullableElements.codes.values,
+      nullableElements.typeCodes(),
     )
 
     @Suppress("UNCHECKED_CAST")
@@ -118,7 +119,7 @@ class TypeConverterRegistryTest {
       arrayOf(TypeDescriptor.Simple(URL::class.java, false)),
     ).converter
     assertTrue(urls is SetConverter<*>)
-    assertContentEquals(intArrayOf(CppType.LIST.code, CppType.STRING.code), urls.codes.values)
+    assertContentEquals(intArrayOf(CppType.LIST.code, CppType.STRING.code), urls.typeCodes())
 
     @Suppress("UNCHECKED_CAST")
     val asAny = urls as TypeConverter<Set<URL>>
@@ -147,7 +148,7 @@ class TypeConverterRegistryTest {
       val converter = descriptor.converter
       assertTrue(converter.isNullable, descriptor.toString())
       assertTrue(
-        converter.codes.isNullable,
+        converter.typeCodes()[0] and CppType.NULLABLE != 0,
         "$descriptor must mark its head nullable",
       )
       @Suppress("UNCHECKED_CAST")

@@ -3,7 +3,7 @@ package io.github.expo.modules.v2.records
 /**
  * The [RecordCodec] the compiler plugin generated for [T].
  *
- * @throws IllegalArgumentException when [T] carries no generated codec — the class is missing
+ * @throws IllegalArgumentException when [T] carries no generated codec - the class is missing
  *   `@io.github.expo.modules.v2.Record`, or the module that declares it was built without the
  *   Expo Modules Gradle plugin.
  */

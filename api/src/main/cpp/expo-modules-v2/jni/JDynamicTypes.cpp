@@ -10,7 +10,7 @@ namespace expo::modules::v2 {
     if (raw < 0) {
       throwRuntimeError({
         "Cannot convert Java object to a JS value: unsupported class. If it is a record, its "
-        "codec is not registered — declare the codec as the record class's companion object with "
+        "codec is not registered - declare the codec as the record class's companion object with "
         "`init { RecordRegistry.register(this) }`.",
       });
     }

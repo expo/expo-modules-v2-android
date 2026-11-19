@@ -13,12 +13,12 @@ import io.github.expo.modules.v2.testsupport.HermesRuntime
  * per transport, so a payload can be measured through the buffered path and the element-wise /
  * direct-JNI path without changing anything else.
  *
- * - Buffer-safe types (`echoTyped`, `sumTyped`, `echoRecords`): trampoline payload — the whole
+ * - Buffer-safe types (`echoTyped`, `sumTyped`, `echoRecords`): trampoline payload - the whole
  *   structure serialized into the shared direct ByteBuffer, one JNI crossing.
- * - Dynamic types (`echo`, `echoMap`, `echoMaps` — `List<Any?>`/`Map<String, Any?>`): JNI object
+ * - Dynamic types (`echo`, `echoMap`, `echoMaps` - `List<Any?>`/`Map<String, Any?>`): JNI object
  *   slots converted element-wise; by default these never ride the buffer (see
  *   `DynamicTransportBenchmark` for the `Buffer.YES` opt-in).
- * - `echoArray`: the DoubleArray baseline — bulk JNI copies both ways, no buffer, no payload limit.
+ * - `echoArray`: the DoubleArray baseline - bulk JNI copies both ways, no buffer, no payload limit.
  *
  * Each `*Direct`/`*Buffered` pair is two Kotlin functions exported under the names the cases expect,
  * because one function carries exactly one transport. `Buffer.NO` and `Buffer.YES` name the side that

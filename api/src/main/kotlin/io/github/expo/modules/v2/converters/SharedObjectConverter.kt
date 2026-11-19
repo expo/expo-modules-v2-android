@@ -3,16 +3,19 @@ package io.github.expo.modules.v2.converters
 import io.github.expo.modules.v2.sharedobjects.SharedClassId
 import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
+import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.kolibri.binary.BinaryBuffer
 
 internal class SharedObjectConverter(
-  classId: SharedClassId,
+  private val classId: SharedClassId,
   private val sharedClass: Class<out SharedObject>,
   isNullable: Boolean,
 ) : TypeConverter<SharedObject>(isNullable) {
-  override val codes: TypeCodes =
-    CppType.SHARED_OBJECT.nullable(isNullable) + classId
+  override val kind: CppType get() = CppType.SHARED_OBJECT
+
+  override fun writeTypeParameters(out: TypeCodesWriter) {
+    out.add(classId.value)
+  }
 
   override val isPassthrough: Boolean get() = true
 

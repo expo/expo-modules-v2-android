@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.sharedobjects
 
 import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.types.codes
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.Event
 import io.github.expo.modules.v2.ExpoModule
@@ -60,10 +61,10 @@ class GeneratedSharedObjectTest {
   private val moduleDefinition = ModuleBuilder().also { Players().`define$ExpoModulesV2`(it) }
 
   private fun args(jsName: String): List<IntArray> =
-    moduleDefinition.functions.single { it.jsName == jsName }.argTypes.toList()
+    moduleDefinition.functions.single { it.jsName == jsName }.argTypes.map { it.codes }
 
   private fun returns(jsName: String): IntArray =
-    moduleDefinition.functions.single { it.jsName == jsName }.returnType
+    moduleDefinition.functions.single { it.jsName == jsName }.returnType.codes
 
   private val playerClassId = SharedObjectRegistry.classIdFor(Player::class.java).value
 

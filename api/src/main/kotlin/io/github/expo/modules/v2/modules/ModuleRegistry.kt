@@ -33,7 +33,7 @@ class ModuleRegistry internal constructor(private val context: ExpoContext) {
   fun register(module: Module) {
     val builder = ModuleBuilder()
     val name = requireNotNull(module.`define$ExpoModulesV2`(builder)) {
-      "${module.javaClass.name} is not annotated with @JS, so it declares no exports — annotate it, " +
+      "${module.javaClass.name} is not annotated with @JS, so it declares no exports - annotate it, " +
         "or register it with register(name, module) { ... }"
     }
     add(name, module, builder)

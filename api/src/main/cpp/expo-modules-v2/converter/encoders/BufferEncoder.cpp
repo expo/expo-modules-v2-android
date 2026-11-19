@@ -5,115 +5,91 @@
 #include <expo-modules-v2/converter/encoders/EncodeCommon.h>
 #include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
+#include <expo-modules-v2/unions/UnionDispatch.h>
 
 namespace expo::modules::v2 {
   template<>
   void BufferEncoder::operator()<CppType::INT>() const {
-    out.write<int32_t>(static_cast<int32_t>(numberOf(rt, value)));
-  }
-
-  template<>
-  void BufferEncoder::operator()<CppType::BOX_INT>() const {
-    out.write<int32_t>(static_cast<int32_t>(numberOf(rt, value)));
+    out.write<int32_t>(static_cast<int32_t>(numberOf(value)));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::LONG>() const {
-    out.write<int64_t>(static_cast<int64_t>(numberOf(rt, value)));
-  }
-
-  template<>
-  void BufferEncoder::operator()<CppType::BOX_LONG>() const {
-    out.write<int64_t>(static_cast<int64_t>(numberOf(rt, value)));
+    out.write<int64_t>(static_cast<int64_t>(numberOf(value)));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::FLOAT>() const {
-    out.write<float>(static_cast<float>(numberOf(rt, value)));
-  }
-
-  template<>
-  void BufferEncoder::operator()<CppType::BOX_FLOAT>() const {
-    out.write<float>(static_cast<float>(numberOf(rt, value)));
+    out.write<float>(static_cast<float>(numberOf(value)));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::DOUBLE>() const {
-    out.write<double>(numberOf(rt, value));
-  }
-
-  template<>
-  void BufferEncoder::operator()<CppType::BOX_DOUBLE>() const {
-    out.write<double>(numberOf(rt, value));
+    out.write<double>(numberOf(value));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::BOOLEAN>() const {
-    out.write<uint8_t>(boolOf(rt, value));
-  }
-
-  template<>
-  void BufferEncoder::operator()<CppType::BOX_BOOLEAN>() const {
-    out.write<uint8_t>(boolOf(rt, value));
+    out.write<uint8_t>(boolOf(value));
   }
 
   template<>
   void BufferEncoder::operator()<CppType::BOOLEAN_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
+    const facebook::jsi::Array array = arrayOf(rt, value);
     const size_t size = array.size(rt);
 
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<uint8_t>(boolOf(rt, array.getValueAtIndex(rt, i)));
+      out.write<uint8_t>(boolOf(array.getValueAtIndex(rt, i)));
     }
   }
 
   template<>
   void BufferEncoder::operator()<CppType::INT_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
+    const facebook::jsi::Array array = arrayOf(rt, value);
     const size_t size = array.size(rt);
 
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<int32_t>(static_cast<int32_t>(numberOf(rt, array.getValueAtIndex(rt, i))));
+      out.write<int32_t>(static_cast<int32_t>(numberOf(array.getValueAtIndex(rt, i))));
     }
   }
 
   template<>
   void BufferEncoder::operator()<CppType::LONG_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
+    const facebook::jsi::Array array = arrayOf(rt, value);
     const size_t size = array.size(rt);
 
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<int64_t>(static_cast<int64_t>(numberOf(rt, array.getValueAtIndex(rt, i))));
+      out.write<int64_t>(static_cast<int64_t>(numberOf(array.getValueAtIndex(rt, i))));
     }
   }
 
   template<>
   void BufferEncoder::operator()<CppType::FLOAT_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
+    const facebook::jsi::Array array = arrayOf(rt, value);
     const size_t size = array.size(rt);
 
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<float>(static_cast<float>(numberOf(rt, array.getValueAtIndex(rt, i))));
+      out.write<float>(static_cast<float>(numberOf(array.getValueAtIndex(rt, i))));
     }
   }
 
   template<>
   void BufferEncoder::operator()<CppType::DOUBLE_ARRAY>() const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
+    const facebook::jsi::Array array = arrayOf(rt, value);
     const size_t size = array.size(rt);
 
     out.write<>(static_cast<int32_t>(size));
 
     for (size_t i = 0; i < size; i++) {
-      out.write<double>(numberOf(rt, array.getValueAtIndex(rt, i)));
+      out.write<double>(numberOf(array.getValueAtIndex(rt, i)));
     }
   }
 
@@ -131,7 +107,7 @@ namespace expo::modules::v2 {
 
   template<>
   void BufferEncoder::operator()<CppType::STRING>() const {
-    writeJsiString(rt, value.asString(rt), out);
+    writeJsiString(rt, stringOf(rt, value), out);
   }
 
   template<>
@@ -140,7 +116,7 @@ namespace expo::modules::v2 {
   }
 
   void BufferEncoder::operator()(const ExpectedType::List& listType) const {
-    const facebook::jsi::Array array = value.asObject(rt).asArray(rt);
+    const facebook::jsi::Array array = arrayOf(rt, value);
     const ExpectedType& elementType = *listType.element;
     const size_t size = array.size(rt);
 
@@ -159,7 +135,7 @@ namespace expo::modules::v2 {
   }
 
   void BufferEncoder::operator()(const ExpectedType::Map& mapType) const {
-    const facebook::jsi::Object object = value.asObject(rt);
+    const facebook::jsi::Object object = objectOf(rt, value);
     const ExpectedType& valueType = *mapType.value;
     const facebook::jsi::Array names = object.getPropertyNames(rt);
     const size_t size = names.size(rt);
@@ -173,11 +149,32 @@ namespace expo::modules::v2 {
     }
   }
 
+  void BufferEncoder::operator()(const ExpectedType::Union& unionType) const {
+    convertUnion(
+      rt,
+      *unionType.schema,
+      value,
+      [&](const size_t index, const UnionVariantSpec& variant) {
+        // A variant that refuses the value may have written part of it: the next one starts over.
+        const size_t start = out.size();
+        try {
+          out.write<int32_t>(static_cast<int32_t>(index));
+          if (variant.kind != UnionVariantKind::LITERAL) [[likely]] {
+            encodeToBuffer(rt, value, variant.type, out);
+          }
+        } catch (const ConversionError&) {
+          out.setSize(start);
+          throw;
+        }
+      }
+    );
+  }
+
   void BufferEncoder::operator()(const ExpectedType::Record& recordType) const {
     RecordPropertyCache& recordProperties = RecordPropertyCache::get(rt);
     const RecordAccessPlan& plan = recordProperties.planFor(rt, recordType.schemaId);
     const RecordSchema& schema = *plan.schema;
-    const facebook::jsi::Object object = value.asObject(rt);
+    const facebook::jsi::Object object = objectOf(rt, value);
     for (size_t i = 0; i < schema.fields.size(); i++) {
       const RecordFieldSpec& field = schema.fields[i];
       const facebook::jsi::Value fieldValue = readRecordField(

@@ -8,9 +8,9 @@
 
 namespace expo::modules::v2 {
 
-  // The test/benchmark endpoint of the binary codec, JSI side only — no Java crossing. Production
-  // values never route through here: dynamic (`ANY`) values cross element-wise as JNI objects —
-  // they can contain JSI handles, which must never be serialized — and declared complex types
+  // The test/benchmark endpoint of the binary codec, JSI side only - no Java crossing. Production
+  // values never route through here: dynamic (`ANY`) values cross element-wise as JNI objects -
+  // they can contain JSI handles, which must never be serialized - and declared complex types
   // either ride trampoline payloads (buffer-safe) or the same JNI object path (JSFunctions.cpp /
   // Kotlin `Trampoline`). These wrappers back the `__binaryNativeRoundTrip` and
   // `__convertRoundTrip` test host functions and the folly benchmark.
@@ -30,7 +30,7 @@ namespace expo::modules::v2 {
    * Serializes `value` into `out` (dynamic: the JS value picks the encoding, mirroring
    * `encodeToJniDynamic`).
    *
-   * Returns false when the payload exceeds the fixed buffer — the caller falls back to the
+   * Returns false when the payload exceeds the fixed buffer - the caller falls back to the
    * element-wise path. JS functions and other unconvertible values throw
    * `facebook::jsi::JSError`, exactly like the element-wise converters.
    */
@@ -59,7 +59,7 @@ namespace expo::modules::v2 {
   facebook::jsi::Value decodeJSIValue(facebook::jsi::Runtime& rt, const uint8_t* data, size_t size);
 
   /**
-   * Decodes one SCHEMA-DIRECTED (untagged) payload laid out per `type` — the declared type both
+   * Decodes one SCHEMA-DIRECTED (untagged) payload laid out per `type` - the declared type both
    * ends know; the payload carries only data.
    */
   facebook::jsi::Value decodeJSIValue(

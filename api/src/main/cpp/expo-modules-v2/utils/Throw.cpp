@@ -53,12 +53,15 @@ namespace expo::modules::v2 {
     throw facebook::jsi::JSError(rt, concat(parts));
   }
 
+  COLD NOINLINE void throwConversionError(const std::initializer_list<std::string_view> parts) {
+    throw ConversionError(concat(parts));
+  }
+
   COLD NOINLINE void throwTypeMismatch(
-    facebook::jsi::Runtime& rt,
     const facebook::jsi::Value& value,
     const std::string_view expected
   ) {
-    throw facebook::jsi::JSError(rt, concat({"Expected ", expected, ", got ", kindOf(value)}));
+    throw ConversionError(concat({"Expected ", expected, ", got ", kindOf(value)}));
   }
 
   COLD NOINLINE void throwInvalidArgument(const std::initializer_list<std::string_view> parts) {

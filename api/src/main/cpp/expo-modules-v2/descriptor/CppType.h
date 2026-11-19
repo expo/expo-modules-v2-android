@@ -26,15 +26,13 @@ namespace expo::modules::v2 {
 
     UNIT = 18,
 
-    BOX_INT = 19,
-    BOX_BOOLEAN = 20,
-    BOX_LONG = 21,
-    BOX_FLOAT = 22,
-    BOX_DOUBLE = 23,
+    SHARED_OBJECT = 19,
 
-    SHARED_OBJECT = 24,
-
-    TUPLE = 25,
+    TUPLE = 20,
+    UNION = 21,
+    // A union the codes are already inside of, by how many unions out it is: 0 is the nearest.
+    // Never an ExpectedType kind of its own - the decoder turns it into a UNION.
+    UNION_REF = 22,
   };
 
   /**

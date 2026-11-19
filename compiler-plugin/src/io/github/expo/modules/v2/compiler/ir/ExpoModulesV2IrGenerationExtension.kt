@@ -15,6 +15,7 @@ class ExpoModulesV2IrGenerationExtension(
 
     val visitors = listOf(
       RecordCodecIrTransformer(pluginContext, symbols, poet),
+      UnionCodecIrTransformer(pluginContext, symbols, poet),
       ExpoModuleIrTransformer(symbols, pluginContext, poet),
       ExpoSharedObjectIrTransformer(pluginContext, symbols, poet)
     )

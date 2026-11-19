@@ -7,6 +7,14 @@
   static ** recordCodec$ExpoModulesV2;
 }
 
+-keepclassmembers class * implements io.github.expo.modules.v2.unions.Union {
+  static ** unionCodec$ExpoModulesV2;
+  static ** Companion;
+}
+-keepclassmembers class **$Companion {
+  static ** unionCodec$ExpoModulesV2;
+}
+
 -keepclassmembers enum * implements io.github.expo.modules.v2.Enumerable {
   public static **[] values();
 }

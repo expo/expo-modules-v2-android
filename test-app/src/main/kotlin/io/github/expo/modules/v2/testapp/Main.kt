@@ -7,6 +7,7 @@ import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
 import io.github.expo.modules.v2.testsupport.TestSupport
@@ -21,7 +22,7 @@ import kotlinx.coroutines.delay
 
 // Interning a record is eager and native-free: this initializer runs before main() loads the
 // native library, and the schema is pushed to native when ensureLoaded() flushes the queue.
-private val eagerRecordCodes = AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)).codes
+private val eagerRecordSchemaId = RecordRegistry.schemaIdOf(MyRecord::class.java)
 
 fun main() {
   // Wire kolibri's native bindings to our .dylib before the first native-backed class is touched.
@@ -40,7 +41,7 @@ fun main() {
 }
 
 private fun run() {
-  println("=== Expo Modules API v2 — Hermes runtime smoke test ===")
+  println("=== Expo Modules API v2 - Hermes runtime smoke test ===")
 
   // The two hand-written registrations left in this file (sections 8 and 9) still name their types
   // through descriptors; every @ExpoModule has them generated instead.
@@ -50,7 +51,7 @@ private fun run() {
     // Sections 5-6 drive the :test-support round-trip hooks (globalThis.ExpoTestSupport).
     TestSupport.install(runtime)
 
-    // 1. Plain arithmetic — proves the VM compiles & executes JS.
+    // 1. Plain arithmetic - proves the VM compiles & executes JS.
     val sum = runtime.evaluate("const a = 40, b = 2; a + b;").getInt()
     check(sum == 42) { "expected 42, got $sum" }
     println("40 + 2 = $sum")
@@ -80,87 +81,34 @@ private fun run() {
     // JS; comparing JSON.stringify(out) proves both directions preserve the value.
     // `type` is a pre-order list of CppType codes, exactly what the native side
     // would hand the bridge.
-    fun roundTrip(expr: String, type: AnyType): String {
-      // TypeCodes renders as `[6, 19]`, which is already a JS array literal.
-      val codes = type.codes
+    fun roundTrip(expr: String, codes: IntArray): String {
       return runtime.evaluate(
-        "JSON.stringify(ExpoTestSupport.__convertRoundTrip($expr, $codes))",
+        "JSON.stringify(ExpoTestSupport.__convertRoundTrip($expr, ${codes.joinToString(", ", "[", "]")}))",
       ).getString()
     }
 
-    data class Case(val expr: String, val type: AnyType, val expected: String)
+    data class Case(val expr: String, val codes: IntArray, val expected: String)
 
     val conversions = listOf(
-      Case("true", AnyType(TypeDescriptor.Bool), "true"),
-      Case("42", AnyType(TypeDescriptor.Int), "42"),
-      Case("42", AnyType(TypeDescriptor.Long), "42"),
-      Case("3.5", AnyType(TypeDescriptor.Double), "3.5"),
-      Case("3.5", AnyType(TypeDescriptor.Float), "3.5"),
-      Case("'hello'", AnyType(TypeDescriptor.Simple(String::class.java, false)), "\"hello\""),
-      Case(
-        "[1, 2, 3]",
-        AnyType(
-          TypeDescriptor.Parametrized(
-            List::class.java,
-            false,
-            arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, false)),
-          ),
-        ),
-        "[1,2,3]",
-      ),
-      Case(
-        "{ a: 1, b: 2 }",
-        AnyType(
-          TypeDescriptor.Parametrized(
-            Map::class.java,
-            false,
-            arrayOf(
-              TypeDescriptor.Simple(String::class.java, false),
-              TypeDescriptor.Simple(Double::class.javaObjectType, false),
-            ),
-          ),
-        ),
-        """{"a":1,"b":2}""",
-      ),
-      Case(
-        "[[1], [2, 3]]",
-        AnyType(
-          TypeDescriptor.Parametrized(
-            List::class.java,
-            false,
-            arrayOf(
-              TypeDescriptor.Parametrized(
-                List::class.java,
-                false,
-                arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, false)),
-              ),
-            ),
-          ),
-        ),
-        "[[1],[2,3]]",
-      ),
+      Case("true", intArrayOf(CppType.BOOLEAN.code), "true"),
+      Case("42", intArrayOf(CppType.INT.code), "42"),
+      Case("42", intArrayOf(CppType.LONG.code), "42"),
+      Case("3.5", intArrayOf(CppType.DOUBLE.code), "3.5"),
+      Case("3.5", intArrayOf(CppType.FLOAT.code), "3.5"),
+      Case("'hello'", intArrayOf(CppType.STRING.code), "\"hello\""),
+      Case("[1, 2, 3]", intArrayOf(CppType.LIST.code, CppType.INT.code), "[1,2,3]"),
+      Case("{ a: 1, b: 2 }", intArrayOf(CppType.MAP.code, CppType.DOUBLE.code), """{"a":1,"b":2}"""),
+      Case("[[1], [2, 3]]", intArrayOf(CppType.LIST.code, CppType.LIST.code, CppType.INT.code), "[[1],[2,3]]"),
       Case(
         "{ nested: [true, false] }",
-        AnyType(
-          TypeDescriptor.Parametrized(
-            Map::class.java,
-            false,
-            arrayOf(
-              TypeDescriptor.Simple(String::class.java, false),
-              TypeDescriptor.Parametrized(
-                List::class.java,
-                false,
-                arrayOf(TypeDescriptor.Simple(Boolean::class.javaObjectType, false)),
-              ),
-            ),
-          ),
-        ),
+        intArrayOf(CppType.MAP.code, CppType.LIST.code, CppType.BOOLEAN.code),
         """{"nested":[true,false]}""",
       ),
-      Case("null", AnyType(TypeDescriptor.Simple(Int::class.javaObjectType, true)), "null"),
+      Case("null", intArrayOf(CppType.INT.nullableCode()), "null"),
     )
-    for ((expr, type, expected) in conversions) {
-      val actual = roundTrip(expr, type)
+    for ((expr, codes, expected) in conversions) {
+      val type = codes.joinToString(", ", "[", "]")
+      val actual = roundTrip(expr, codes)
       check(actual == expected) { "round trip $expr as $type: expected $expected, got $actual" }
       println("roundTrip($expr, $type) = $actual")
     }
@@ -220,7 +168,7 @@ private fun run() {
     check(mapOk == "ok") { "native round trip map (kind 8): $mapOk" }
     println("nativeRoundTrip({a:1,b:2}, kind=8) = ok")
 
-    // 7. A Kotlin module exported to JS. `moduleRegistry.register` is pure-Kotlin bookkeeping —
+    // 7. A Kotlin module exported to JS. `moduleRegistry.register` is pure-Kotlin bookkeeping -
     // the module's descriptor (function names + CppType signatures) only crosses JNI, in one
     // binary-buffer up-call, when JS first reads `expo.modules.MathUtils`. That access materializes
     // a plain JS object whose native state owns all export metadata and the Kotlin instance's
@@ -248,7 +196,7 @@ private fun run() {
     check(missing == "undefined") { "unregistered module: expected undefined, got $missing" }
     println("expo.modules is lazy, cached, and undefined for unknown names")
 
-    // 8. The same receiver can back several modules — each materialized module owns one global
+    // 8. The same receiver can back several modules - each materialized module owns one global
     // reference and picks its own subset of methods.
     runtime.moduleRegistry.register("Calculator", mathUtils) {
       function("add", intType, intType, returns = intType)
@@ -316,12 +264,10 @@ private fun run() {
 
     // 11. Records through a trampoline. `MyModule.record(value: MyRecord)` cannot be invoked
     // directly over JNI (the record bytes need a schema-directed decode first), so the bridge
-    // dispatches to the hand-written `record__trampoline` — the shape a compiler plugin will
-    // generate — which reads the record from the shared binary buffer, calls the user method,
+    // dispatches to the hand-written `record__trampoline` - the shape a compiler plugin will
+    // generate - which reads the record from the shared binary buffer, calls the user method,
     // and writes the record result back. One JNI transition per JS call, both directions.
-    check(eagerRecordCodes[0] == CppType.RECORD.code) {
-      "eager interning: $eagerRecordCodes"
-    }
+    check(eagerRecordSchemaId > 0) { "eager interning: schema id $eagerRecordSchemaId" }
     runtime.moduleRegistry.register(MyModule())
 
     val echoed = runtime.evaluate(
@@ -349,7 +295,7 @@ private fun run() {
     println("expo.modules.MyModule.describe('rec: ', {x: 9, b: 300k chars}).length = $bigTail")
 
     // Two record arguments: their payloads are concatenated in the shared buffer in declared
-    // order, and the trampoline reads them back positionally — still one JNI transition.
+    // order, and the trampoline reads them back positionally - still one JNI transition.
     val merged = runtime.evaluate(
       "JSON.stringify(expo.modules.MyModule.merge({x: 1, b: 'one'}, {x: 2, b: 'two'}))",
     ).getString()
@@ -358,7 +304,7 @@ private fun run() {
 
     // 12. Converted types (TypeConverter): the user methods take/return URL and Duration, but
     // JS and the JNI signature only ever see the bridge types (STRING, DOUBLE). The trampoline
-    // receives the bridge values and converts on the Kotlin side — no C++ involvement per type.
+    // receives the bridge values and converts on the Kotlin side - no C++ involvement per type.
     runtime.moduleRegistry.register(LinkUtils())
 
     val host = runtime.evaluate("expo.modules.LinkUtils.host('https://expo.dev/path')").getString()
@@ -388,7 +334,7 @@ private fun run() {
     println("expo.modules.Containers.makeFiles(3) = $made")
 
     // 13b. The overflow branches. The shared buffer is 256 KB, so these payloads cannot fit and
-    // the bridge hands each argument over in its object slot instead — element converters then run
+    // the bridge hands each argument over in its object slot instead - element converters then run
     // on the JNI shape rather than on buffer bytes.
     val overflowCount = runtime.evaluate(
       "expo.modules.Containers.countFiles(" +
@@ -416,7 +362,7 @@ private fun run() {
     println("expo.modules.LinkUtils.total(1.5, 0.25) = $totalSeconds (seconds)")
 
     // 14. The structural containers that are not List/Map: object arrays and sets. Neither is
-    // registered — the registry resolves them from the descriptor, exactly as it does a List. An
+    // registered - the registry resolves them from the descriptor, exactly as it does a List. An
     // array class already names its element (`URL[]` says URL), so `Array<URL>` needs only its class
     // token; a parameter states what a class cannot, which is what `Array<String?>` needs.
     runtime.moduleRegistry.register(ArrayUtils())
@@ -471,8 +417,8 @@ private fun run() {
     check(setHosts == "expo.dev,docs.expo.dev") { "Set<URL>: got $setHosts" }
     println("expo.modules.SetUtils.hostsOf(['…/a','…/a','docs…/b']) = $setHosts (deduplicated)")
 
-    // 15. Optional record fields. A field declared with `hasDefault = true` keeps its own type —
-    // `count` is still INT — and gains one inbound presence byte, so native can tell a missing or
+    // 15. Optional record fields. A field declared with `hasDefault = true` keeps its own type -
+    // `count` is still INT - and gains one inbound presence byte, so native can tell a missing or
     // `undefined` JS property apart from an explicit null. Absent means the codec applies the
     // Kotlin default; null stays null. Nothing is written the other way round, because Kotlin
     // always has a value for every field.
@@ -590,7 +536,7 @@ private fun run() {
 /**
  * A plain Kotlin class whose methods are exported to JS in [run] (sections 7 & 8).
  *
- * `@JS` generates the whole registration — every argument and return type, the transport for each
+ * `@JS` generates the whole registration - every argument and return type, the transport for each
  * value, and the trampolines. Section 8 registers this same object a second time through the
  * hand-written DSL, which is how one receiver still backs two module names.
  */
@@ -609,7 +555,7 @@ class MathUtils : Module() {
   @JS
   fun greet(name: String): String = "Hello, $name!"
 
-  // A typed List always rides the payload — 8-14x faster than a JList slot of boxed elements.
+  // A typed List always rides the payload - 8-14x faster than a JList slot of boxed elements.
   @JS
   fun sum(values: List<Int>): Int = values.sum()
 
@@ -700,7 +646,7 @@ class ArrayUtils : Module() {
   @JS
   fun makeUrls(count: Int): Array<URL> = Array(count) { URL("https://expo.dev/$it") }
 
-  /** A nullable array declaration — the whole array, not its elements, may be absent. */
+  /** A nullable array declaration - the whole array, not its elements, may be absent. */
   @JS
   fun countUrls(urls: Array<URL>?): Int = urls?.size ?: -1
 }
@@ -733,7 +679,7 @@ class DefaultsUtils : Module() {
 
   /**
    * The same record over the other crossing shape. `Buffer.NO` sends it as a `Map<String, Any?>`
-   * instead of a payload, so an absent optional field is a key that is simply not there — which is
+   * instead of a payload, so an absent optional field is a key that is simply not there - which is
    * what makes both halves of the optional-field contract observable from one module.
    */
   @JS(name = "describeMap")

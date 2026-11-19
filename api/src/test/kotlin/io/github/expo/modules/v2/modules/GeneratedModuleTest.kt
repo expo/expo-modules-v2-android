@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.modules
 
 import io.github.expo.modules.v2.Buffer
+import io.github.expo.modules.v2.types.codes
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.Event
 import io.github.expo.modules.v2.ExpoModule
@@ -65,10 +66,10 @@ class GeneratedModuleTest {
   private val definition = ModuleBuilder().also { shapes.`define$ExpoModulesV2`(it) }
 
   private fun args(jsName: String): List<IntArray> =
-    definition.functions.single { it.jsName == jsName }.argTypes.toList()
+    definition.functions.single { it.jsName == jsName }.argTypes.map { it.codes }
 
   private fun returns(jsName: String): IntArray =
-    definition.functions.single { it.jsName == jsName }.returnType
+    definition.functions.single { it.jsName == jsName }.returnType.codes
 
   private fun methodName(jsName: String): String =
     definition.functions.single { it.jsName == jsName }.methodName
@@ -93,14 +94,14 @@ class GeneratedModuleTest {
   fun `a nullable scalar boxes and rides the buffer`() {
     assertContentEquals(
       listOf(
-        intArrayOf(CppType.BOX_INT.code or nullable or buffered),
-        intArrayOf(CppType.BOX_DOUBLE.code or nullable or buffered),
-        intArrayOf(CppType.BOX_BOOLEAN.code or nullable or buffered),
+        intArrayOf(CppType.INT.code or nullable or buffered),
+        intArrayOf(CppType.DOUBLE.code or nullable or buffered),
+        intArrayOf(CppType.BOOLEAN.code or nullable or buffered),
       ).map { it.toList() },
       args("boxed").map { it.toList() },
     )
     assertContentEquals(
-      intArrayOf(CppType.BOX_INT.code or nullable or buffered).toList(),
+      intArrayOf(CppType.INT.code or nullable or buffered).toList(),
       returns("boxed").toList(),
     )
   }
@@ -149,13 +150,13 @@ class GeneratedModuleTest {
     assertContentEquals(
       listOf(
         // head + element, the element boxed because Parametrized.params is ObjectLike
-        intArrayOf(CppType.LIST.code or buffered, CppType.BOX_INT.code),
+        intArrayOf(CppType.LIST.code or buffered, CppType.INT.code),
         intArrayOf(CppType.LIST.code or buffered, CppType.STRING.code or nullable),
       ).map { it.toList() },
       args("lists").map { it.toList() },
     )
     assertContentEquals(
-      intArrayOf(CppType.MAP.code or buffered, CppType.BOX_INT.code).toList(),
+      intArrayOf(CppType.MAP.code or buffered, CppType.INT.code).toList(),
       args("maps").single().toList(),
     )
     // A Set and an object Array both bridge as a list.
@@ -179,9 +180,9 @@ class GeneratedModuleTest {
     )
     // A non-null Duration bridges as an unboxed Double, which the buffer cannot carry at all.
     assertContentEquals(intArrayOf(CppType.DOUBLE.code).toList(), converted[1].toList())
-    // Nullable, it boxes — and then it can.
+    // Nullable, it boxes - and then it can.
     assertContentEquals(
-      intArrayOf(CppType.BOX_DOUBLE.code or nullable or buffered).toList(),
+      intArrayOf(CppType.DOUBLE.code or nullable or buffered).toList(),
       converted[2].toList(),
     )
   }
@@ -206,7 +207,7 @@ class GeneratedModuleTest {
     assertContentEquals(
       listOf(
         intArrayOf(CppType.STRING.code),
-        intArrayOf(CppType.LIST.code, CppType.BOX_INT.code),
+        intArrayOf(CppType.LIST.code, CppType.INT.code),
       ).map { it.toList() },
       args("optedOut").map { it.toList() },
     )
@@ -245,7 +246,7 @@ class GeneratedModuleTest {
 
     // A String is read out of a JNI slot, which needs no trampoline at all.
     val version = props.getValue("version")
-    assertEquals(CppType.STRING.code, version.getterType.single())
+    assertEquals(CppType.STRING.code, version.getterType.codes.single())
     assertEquals("getVersion", version.getterName)
     assertNull(version.setterName)
     assertNull(version.setterType)
@@ -253,15 +254,15 @@ class GeneratedModuleTest {
     // The same String written the other way rides the buffer, so the pair splits: the setter is a
     // trampoline reading the payload, the getter a plain forwarding method returning the slot.
     val label = props.getValue("label")
-    assertEquals(CppType.STRING.code, label.getterType.single())
-    assertEquals(CppType.STRING.code or buffered, requireNotNull(label.setterType).single())
+    assertEquals(CppType.STRING.code, label.getterType.codes.single())
+    assertEquals(CppType.STRING.code or buffered, requireNotNull(label.setterType).codes.single())
     assertEquals("getLabel__trampoline\$ExpoModulesV2", label.getterName)
     assertEquals("setLabel__trampoline\$ExpoModulesV2", label.setterName)
 
     // An unboxed Int needs neither, so the Kotlin accessors are exported directly.
     val count = props.getValue("count")
-    assertEquals(CppType.INT.code, count.getterType.single())
-    assertEquals(CppType.INT.code, requireNotNull(count.setterType).single())
+    assertEquals(CppType.INT.code, count.getterType.codes.single())
+    assertEquals(CppType.INT.code, requireNotNull(count.setterType).codes.single())
     assertEquals("getCount", count.getterName)
     assertEquals("setCount", count.setterName)
 
@@ -276,7 +277,7 @@ class GeneratedModuleTest {
 
   @Test
   fun `an event is declared under its JavaScript name with its payload's transport`() {
-    val events = definition.events.associate { it.jsName to it.payloadType.toList() }
+    val events = definition.events.associate { it.jsName to it.payloadType.codes.toList() }
     assertEquals(
       listOf("changed", "renamed", "progress", "batch", "slot"),
       definition.events.map { it.jsName },
@@ -286,8 +287,8 @@ class GeneratedModuleTest {
     assertEquals(listOf(CppType.RECORD.code or buffered, events.getValue("changed")[1]), events.getValue("changed"))
     assertEquals(listOf(CppType.INT.code), events.getValue("renamed"))
     assertEquals(listOf(CppType.DOUBLE.code), events.getValue("progress"))
-    assertEquals(listOf(CppType.LIST.code or buffered, CppType.BOX_INT.code), events.getValue("batch"))
-    assertEquals(listOf(CppType.LIST.code, CppType.BOX_INT.code), events.getValue("slot"), "@BufferMode(NO) pins the slot")
+    assertEquals(listOf(CppType.LIST.code or buffered, CppType.INT.code), events.getValue("batch"))
+    assertEquals(listOf(CppType.LIST.code, CppType.INT.code), events.getValue("slot"), "@BufferMode(NO) pins the slot")
   }
 
   @Test

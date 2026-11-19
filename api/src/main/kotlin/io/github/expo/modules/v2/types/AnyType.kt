@@ -12,15 +12,14 @@ class AnyType(
 
   val anyConverter: TypeConverter<Any> get() = descriptor.anyConverter
 
-  val codes: TypeCodes
-    get() {
-      val typeCodes = converter.codes
-      return if (!useBuffer) {
-        typeCodes
-      } else {
-        typeCodes.withBufferFlag()
-      }
+  /** Writes this type's codes into [out], its head marked when it rides the buffer. */
+  internal fun writeTypeCodes(out: TypeCodesWriter) {
+    val head = out.size
+    converter.writeTypeCodes(out)
+    if (useBuffer) {
+      out.addFlags(head, CppType.USES_BUFFER)
     }
+  }
 
   override fun toString(): String {
     val suffix = if (useBuffer) {

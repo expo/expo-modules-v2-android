@@ -28,8 +28,8 @@ class ModuleBuilder {
       ModuleFunctionDefinition(
         jsName = jsName,
         methodName = methodName,
-        argTypes = Array(argTypes.size) { argTypes[it].codes.values },
-        returnType = returns.codes.values,
+        argTypes = resolved(argTypes),
+        returnType = resolved(returns),
         isAsync = isAsync,
       ),
     )
@@ -66,9 +66,9 @@ class ModuleBuilder {
         jsName = jsName,
         getterName = getterName,
         setterName = setterName,
-        getterType = type.codes.values,
+        getterType = resolved(type),
         setterType = if (setterName != null) {
-          setterType.codes.values
+          resolved(setterType)
         } else {
           null
         },
@@ -93,7 +93,7 @@ class ModuleBuilder {
       ModuleSharedClassDefinition(
         jsName = jsName,
         classId = SharedObjectRegistry.classIdFor(sharedClass).value,
-        argTypes = Array(argTypes.size) { argTypes[it].codes.values },
+        argTypes = resolved(argTypes),
         trampolineName = trampolineName,
       ),
     )
@@ -106,7 +106,22 @@ class ModuleBuilder {
   fun event(jsName: String, type: AnyType) {
     requireAvailableExportName(jsName)
 
-    events.add(ModuleEventDefinition(jsName = jsName, payloadType = type.codes.values))
+    events.add(ModuleEventDefinition(jsName = jsName, payloadType = resolved(type)))
+  }
+
+  /**
+   * [type], its converter looked up now: a type with no bridge type fails the registration, not the
+   * first time JavaScript reads the module. The lookup is cached on the type's descriptor; its codes
+   * are written only when the descriptor is encoded.
+   */
+  private fun resolved(type: AnyType): AnyType {
+    type.converter
+    return type
+  }
+
+  private fun resolved(types: Array<out AnyType>): Array<out AnyType> {
+    types.forEach { it.converter }
+    return types
   }
 
   private fun requireAvailableExportName(name: String) {

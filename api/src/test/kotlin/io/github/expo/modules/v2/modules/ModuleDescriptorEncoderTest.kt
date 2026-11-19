@@ -25,7 +25,7 @@ private class EncoderTestSharedObject(
 ) : SharedObject()
 
 /**
- * Exercises the module-descriptor layout on a privately allocated buffer — no natives involved.
+ * Exercises the module-descriptor layout on a privately allocated buffer - no natives involved.
  * The C++ counterpart (`ModulesHostObject::get` in JavaScriptRuntime.cpp) reads exactly this layout.
  */
 class ModuleDescriptorEncoderTest {
@@ -351,7 +351,7 @@ class ModuleDescriptorEncoderTest {
 
     assertEquals("batch", reader.readString())
     assertEquals(
-      listOf(CppType.LIST.code or CppType.USES_BUFFER, CppType.BOX_INT.code),
+      listOf(CppType.LIST.code or CppType.USES_BUFFER, CppType.INT.code),
       reader.readIntArray(),
       "the payload's transport rides the head code, as a result's does",
     )

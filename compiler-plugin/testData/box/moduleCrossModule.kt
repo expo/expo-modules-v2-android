@@ -15,7 +15,7 @@ data class Shared(val n: Int, val label: String?)
 
 /**
  * The registration and every trampoline land in this module's class file, so the consumer below
- * registers it without a plugin run of its own — the same property the record half relies on.
+ * registers it without a plugin run of its own - the same property the record half relies on.
  */
 @ExpoModule(name = "Producer")
 object ProducerModule : Module() {

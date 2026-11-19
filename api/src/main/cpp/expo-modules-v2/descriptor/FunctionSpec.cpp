@@ -19,20 +19,8 @@ namespace expo::modules::v2::descriptor {
     return std::ranges::any_of(
       argTypes,
       [](const ExpectedType& type) {
-        if (type.usesBuffer()) {
-          return false;
-        }
-
-        switch (type.kind()) {
-          case CppType::BOOLEAN:
-          case CppType::INT:
-          case CppType::LONG:
-          case CppType::FLOAT:
-          case CppType::DOUBLE:
-            return false;
-          default:
-            return true;
-        }
+        // A buffered argument or a register-width scalar creates no local reference.
+        return !type.usesBuffer() && !type.isPrimitive();
       }
     );
   }

@@ -28,13 +28,13 @@ rootProject.name = "expo-modules-v2"
 // --- The Hermes host -----------------------------------------------------------------------------
 // `io.github.expo:hermes-test-environment` creates the `jsi::Runtime` everything here attaches to,
 // and ships the one process-wide copy of JSI. It is not released yet, so it is resolved from
-// mavenLocal out of a sibling checkout — and published from here, rather than by hand, so a plain
+// mavenLocal out of a sibling checkout - and published from here, rather than by hand, so a plain
 // `./gradlew :test-app:run` in a fresh clone works.
 //
 // This has to happen while settings are evaluated: by the time :api's tasks exist, Gradle already
 // resolves the configurations that need the artifact. The publish is skipped unless a source file
 // in the host is newer than what it last published, so it costs nothing on a normal build. Bumping
-// the host's Hermes submodule is not tracked — publish it by hand for that.
+// the host's Hermes submodule is not tracked - publish it by hand for that.
 //
 //   -PhermesEnvDir=<path>       use a checkout somewhere else
 //   -PskipHermesEnvBuild        leave mavenLocal alone and use whatever it already holds

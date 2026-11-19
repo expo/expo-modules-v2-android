@@ -20,7 +20,7 @@ object RecordRegistry {
   fun register(codec: RecordCodec<*>) {
     requireNotNull(codec.recordClass) {
       "${codec.javaClass.name} ran `RecordRegistry.register(this)` before `recordClass` was " +
-        "initialized — declare `override val recordClass` above the `init` block"
+        "initialized - declare `override val recordClass` above the `init` block"
     }
     registerCodec(codec)
   }
@@ -41,12 +41,12 @@ object RecordRegistry {
    *
    * A codec registers itself from its owner's `<clinit>`, so a miss can simply mean the class has
    * not been initialized yet. Generated code refers to another record with a bare `Other::class.java`,
-   * which resolves the class but — per JVMS 5.5 — does not initialize it. So on a miss we force
+   * which resolves the class but - per JVMS 5.5 - does not initialize it. So on a miss we force
    * initialization once and look again.
    *
    * The [Record] guard is what keeps the name lookup off the hot path.
    * [io.github.expo.modules.v2.types.DynamicTypes.kindOf] classifies every object crossing an `ANY` slot and
-   * falls through to here for anything it does not recognise — a lambda, a `Set`, any user class —
+   * falls through to here for anything it does not recognise - a lambda, a `Set`, any user class -
    * and none of those can be a record. ([dynamicRecordToMap] never reaches this at all: it runs
    * only after `kindOf` already answered `RECORD`, so `byClass` has the class by then.)
    */
@@ -62,6 +62,10 @@ object RecordRegistry {
 
     return byClass.get(clazz)
   }
+
+  /** The schema id of the record class [clazz], whose codec registers itself first if it must. */
+  fun schemaIdOf(clazz: Class<*>): Int =
+    requireNotNull(typeFor(clazz)) { "${clazz.name} is not a record" }.schemaId.value
 
   @JvmStatic
   @CalledFromNative(by = "expo-modules-v2/jni/JRecordRegistry.h")

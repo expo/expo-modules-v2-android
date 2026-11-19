@@ -27,6 +27,7 @@ import io.github.expo.modules.v2.converters.StringConverter
 import io.github.expo.modules.v2.converters.TripleConverter
 import io.github.expo.modules.v2.converters.TypeConverter
 import io.github.expo.modules.v2.converters.TypedArrayConverter
+import io.github.expo.modules.v2.converters.UnionConverter
 import io.github.expo.modules.v2.converters.UnitConverter
 import io.github.expo.modules.v2.converters.UriConverter
 import io.github.expo.modules.v2.converters.UrlConverter
@@ -35,6 +36,7 @@ import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
+import io.github.expo.modules.v2.unions.UnionRegistry
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -150,6 +152,11 @@ object TypeConverterRegistry {
         return@getOrPut EnumConverter(type as Class<out Enum<*>>, isNullable)
       }
 
+      val unionType = UnionRegistry.typeFor(type)
+      if (unionType != null) {
+        return@getOrPut UnionConverter(unionType, isNullable)
+      }
+
       val recordType = RecordRegistry.typeFor(type)
       if (recordType != null) {
         RecordConverter(recordType, isNullable)
@@ -205,7 +212,7 @@ object TypeConverterRegistry {
     }
 
     throw IllegalArgumentException(
-      "${jClass.name} has no bridge type — describe it with a leaf class, a List/Map/Pair/Triple, a registered " +
+      "${jClass.name} has no bridge type - describe it with a leaf class, a List/Map/Pair/Triple, a registered " +
         "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register"
     )
   }

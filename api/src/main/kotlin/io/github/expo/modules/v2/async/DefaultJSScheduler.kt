@@ -38,7 +38,7 @@ class DefaultJSScheduler : JSScheduler {
       arrivals.tryAcquire()
       ran += 1
       // One failing job must not strand the rest of the queue, and a settle already converts
-      // everything it can into a rejection — so anything reaching here is a bug worth printing.
+      // everything it can into a rejection - so anything reaching here is a bug worth printing.
       try {
         job.run()
       } catch (throwable: Throwable) {

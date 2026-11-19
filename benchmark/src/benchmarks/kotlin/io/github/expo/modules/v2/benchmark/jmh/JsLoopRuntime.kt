@@ -10,7 +10,7 @@ import io.github.expo.modules.v2.testsupport.HermesRuntime
  * There is no Kotlin-side API for calling an already-compiled JS function, so every invocation
  * goes through [HermesRuntime.evaluate]. To keep that fixed cost off the measurement, the loop is
  * compiled once in `@Setup` and stored as a global; an invocation then evaluates only `__name()`.
- * What is left — compiling that one call expression — is what `EvaluateOverheadBenchmark` reports,
+ * What is left - compiling that one call expression - is what `EvaluateOverheadBenchmark` reports,
  * and [ops] is chosen per benchmark class so it stays under ~1% of the invocation.
  *
  * The payload is built once, in the closure that produces the loop, exactly as the `main()`

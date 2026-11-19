@@ -1,4 +1,4 @@
-# expo::jsi — engine-agnostic JSI-only helpers. Depends solely on the jsi target (defined by
+# expo::jsi - engine-agnostic JSI-only helpers. Depends solely on the jsi target (defined by
 # the parent before this subdirectory is added). Headers are included as #include <expo-jsi/...>,
 # mirroring the kolibri include-root convention.
 file(GLOB_RECURSE EXPO_JSI_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/expo-jsi/*.cpp")

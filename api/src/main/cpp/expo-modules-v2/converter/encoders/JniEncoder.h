@@ -24,23 +24,19 @@ namespace expo::modules::v2 {
     jobject operator()(const ExpectedType::SharedObject& sharedType) const;
 
     jobject operator()(const ExpectedType::Tuple& tupleType) const;
+    jobject operator()(const ExpectedType::Union& unionType) const;
   };
 
   // clang-format off
   template<> jobject JniEncoder::operator()<CppType::INT>() const;
-  template<> jobject JniEncoder::operator()<CppType::BOX_INT>() const;
 
   template<> jobject JniEncoder::operator()<CppType::LONG>() const;
-  template<> jobject JniEncoder::operator()<CppType::BOX_LONG>() const;
 
   template<> jobject JniEncoder::operator()<CppType::FLOAT>() const;
-  template<> jobject JniEncoder::operator()<CppType::BOX_FLOAT>() const;
 
   template<> jobject JniEncoder::operator()<CppType::DOUBLE>() const;
-  template<> jobject JniEncoder::operator()<CppType::BOX_DOUBLE>() const;
 
   template<> jobject JniEncoder::operator()<CppType::BOOLEAN>() const;
-  template<> jobject JniEncoder::operator()<CppType::BOX_BOOLEAN>() const;
 
   template<> jobject JniEncoder::operator()<CppType::BOOLEAN_ARRAY>() const;
   template<> jobject JniEncoder::operator()<CppType::INT_ARRAY>() const;

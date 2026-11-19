@@ -40,7 +40,7 @@ val unpackHermesEnvJsi by tasks.registering(Sync::class) {
 }
 
 // fbjni: headers only here, the library rides in the same `native-libs` zip. Nothing in this
-// project links it — :benchmark compares its JNI dispatch against kolibri's.
+// project links it - :benchmark compares its JNI dispatch against kolibri's.
 val unpackHermesEnvFbjni by tasks.registering(Sync::class) {
   from(provider { zipTree(hermesEnvFbjni.singleFile) })
   into(hermesEnvFbjniDir)
@@ -171,8 +171,8 @@ extra["hermesEnvFbjniTask"] = unpackHermesEnvFbjni
 
 // The compiler plugin, registered straight onto every Kotlin compilation here.
 //
-// `id("io.github.expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin
-// publishes — is not available inside this build: a Gradle plugin built here is not on this
+// `id("io.github.expo.modules.v2")` - what a consuming app applies, and what :gradle-plugin
+// publishes - is not available inside this build: a Gradle plugin built here is not on this
 // build's own buildscript classpath. Registering the jar plus switching incremental compilation
 // off is the whole of what that plugin does, so this is the same thing by hand.
 configurations

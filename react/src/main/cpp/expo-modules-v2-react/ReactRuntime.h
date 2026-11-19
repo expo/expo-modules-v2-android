@@ -13,8 +13,8 @@ namespace expo::modules::v2::react {
    *
    * The desktop shape (`:hermes`) mints a VM and owns it. Here the host owns it: the app hands over
    * the address it read from `ReactContext.javaScriptContextHolder`, and this object only installs
-   * the module host object into that runtime's global. Everything else — conversion, dispatch,
-   * promises — is the engine-agnostic base from `:api`.
+   * the module host object into that runtime's global. Everything else - conversion, dispatch,
+   * promises - is the engine-agnostic base from `:api`.
    */
   class ReactRuntime : public ::expo::modules::v2::jsi::JavaScriptRuntime {
   public:
@@ -36,7 +36,7 @@ namespace expo::modules::v2::react {
 
     /**
      * The `nativeCreate` static native. [runtimePointer] is a `facebook::jsi::Runtime*` this object
-     * borrows and never frees — React Native outlives it.
+     * borrows and never frees - React Native outlives it.
      */
     static jlong nativeCreate(
       JNIEnv* env,

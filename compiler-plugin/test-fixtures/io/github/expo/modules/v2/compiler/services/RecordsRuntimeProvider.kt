@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.test.services.TestServices
 import java.io.File
 
 /**
- * Puts `:api` — `@Record`, `Record`, `RecordCodec`, `TypeDescriptor`, the registry — on both the
+ * Puts `:api` - `@Record`, `Record`, `RecordCodec`, `TypeDescriptor`, the registry - on both the
  * compile and the run classpath of every test module. `:compiler-plugin`'s build passes the paths
  * in through the `recordsRuntime.classpath` system property.
  */

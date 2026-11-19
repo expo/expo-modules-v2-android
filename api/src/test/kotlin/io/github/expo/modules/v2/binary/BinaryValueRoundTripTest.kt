@@ -27,12 +27,12 @@ class BinaryValueRoundTripTest {
 
   /** One payload sample per leaf/dynamic kind; containers and records get shaped samples. */
   private fun sampleFor(kind: CppType): Any? = when (kind) {
-    CppType.BOOLEAN, CppType.BOX_BOOLEAN -> true
+    CppType.BOOLEAN -> true
     CppType.STRING -> "żółć ⚡ ascii"
-    CppType.INT, CppType.BOX_INT -> 42
-    CppType.LONG, CppType.BOX_LONG -> 1L shl 60
-    CppType.FLOAT, CppType.BOX_FLOAT -> 1.5f
-    CppType.DOUBLE, CppType.BOX_DOUBLE -> 3.25
+    CppType.INT -> 42
+    CppType.LONG -> 1L shl 60
+    CppType.FLOAT -> 1.5f
+    CppType.DOUBLE -> 3.25
     CppType.ANY -> mapOf("a" to 1.0, "b" to listOf(true, null, "x"))
     CppType.DOUBLE_ARRAY -> doubleArrayOf(0.5, 1.5)
     CppType.INT_ARRAY -> intArrayOf(1, 2, 3)
@@ -42,7 +42,7 @@ class BinaryValueRoundTripTest {
     CppType.BYTE_ARRAY -> byteArrayOf(1, -2, 127)
     CppType.UNIT -> Unit
     else -> fail(
-      "CppType $kind has no round-trip sample — new types must be added to " +
+      "CppType $kind has no round-trip sample - new types must be added to " +
         "BinaryValueRoundTripTest (and handled by BOTH BinaryValueCodec halves)",
     )
   }
@@ -77,11 +77,6 @@ class BinaryValueRoundTripTest {
       CppType.LONG -> TypeDescriptor.Long
       CppType.FLOAT -> TypeDescriptor.Float
       CppType.DOUBLE -> TypeDescriptor.Double
-      CppType.BOX_BOOLEAN -> TypeDescriptor.Simple(Boolean::class.javaObjectType, false)
-      CppType.BOX_INT -> TypeDescriptor.Simple(Int::class.javaObjectType, false)
-      CppType.BOX_LONG -> TypeDescriptor.Simple(Long::class.javaObjectType, false)
-      CppType.BOX_FLOAT -> TypeDescriptor.Simple(Float::class.javaObjectType, false)
-      CppType.BOX_DOUBLE -> TypeDescriptor.Simple(Double::class.javaObjectType, false)
       CppType.STRING -> TypeDescriptor.Simple(String::class.java, false)
       CppType.ANY -> TypeDescriptor.Simple(Any::class.java, false)
       CppType.UNIT -> TypeDescriptor.Simple(Unit::class.java, false)
@@ -92,7 +87,7 @@ class BinaryValueRoundTripTest {
       CppType.FLOAT_ARRAY -> TypeDescriptor.FloatArray(false)
       CppType.DOUBLE_ARRAY -> TypeDescriptor.DoubleArray(false)
       else -> fail(
-        "CppType $kind has no descriptor here — new leaf types must be added to " +
+        "CppType $kind has no descriptor here - new leaf types must be added to " +
           "BinaryValueRoundTripTest.schemaOf",
       )
     },
@@ -171,7 +166,7 @@ class BinaryValueRoundTripTest {
     assertEquals("s", roundTrip("s", nullableString))
     assertNull(roundTrip(null, nullableString))
 
-    // A nullable record is a presence byte plus the positional body — never its Map bridge shape.
+    // A nullable record is a presence byte plus the positional body - never its Map bridge shape.
     val nullablePoint = AnyType(TypeDescriptor.Simple(RoundTripPoint::class.java, true))
     assertEquals(point, roundTrip(point, nullablePoint))
     assertNull(roundTrip(null, nullablePoint))
@@ -180,7 +175,7 @@ class BinaryValueRoundTripTest {
   @Test
   fun `every dynamic BinaryTag round-trips through a declared ANY slot`() {
     // One value per tag in the dynamic universe; a new BinaryTag needs a row here. BinaryTag.NULL
-    // never stands alone under a declared slot — nullability there is the presence byte — so it
+    // never stands alone under a declared slot - nullability there is the presence byte - so it
     // rides the LIST and MAP rows as a nested element instead.
     val perTag = mapOf(
       BinaryTag.BOOLEAN to true,

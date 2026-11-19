@@ -1,15 +1,13 @@
 package io.github.expo.modules.v2.converters
 
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
 import io.github.expo.kolibri.binary.BinaryBuffer
 import java.io.File
 
 class FileConverter(
   isNullable: Boolean
 ) : TypeConverter<File>(isNullable) {
-  override val codes: TypeCodes
-    get() = CppType.STRING.nullable(isNullable).toTypeCodes()
+  override val kind: CppType get() = CppType.STRING
 
   override val isPassthrough: Boolean get() = false
 

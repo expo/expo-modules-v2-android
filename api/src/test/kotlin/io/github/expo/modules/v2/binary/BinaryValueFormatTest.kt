@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.binary
 
 import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.types.codes
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.codecFor
 import io.github.expo.modules.v2.types.AnyType
@@ -23,7 +24,7 @@ private data class TypedPoint(val x: Double, val label: String?) : io.github.exp
 
 /**
  * The optional-field grammar: `count` and `label` carry Kotlin defaults, `x` does not. Inbound
- * only — see the KDoc on [io.github.expo.modules.v2.records.writers.BufferRecordWriter].
+ * only - see the KDoc on [io.github.expo.modules.v2.records.writers.BufferRecordWriter].
  */
 @Record
 private data class TypedOpts(
@@ -213,7 +214,7 @@ class BinaryValueFormatTest {
   }
 
   /**
-   * Builds an INBOUND record payload — the shape the C++ `BufferEncoder` writes — and decodes it.
+   * Builds an INBOUND record payload - the shape the C++ `BufferEncoder` writes - and decodes it.
    * The Kotlin writer cannot produce this shape: it never emits presence bytes.
    */
   private fun decodeInboundOpts(build: BinaryBuffer.() -> Unit): TypedOpts {
@@ -252,7 +253,7 @@ class BinaryValueFormatTest {
     )
 
     // Present but explicitly null: the presence byte says present, the nullable encoding says
-    // null — so the default is NOT applied. Absent, null and a value are three distinct states.
+    // null - so the default is NOT applied. Absent, null and a value are three distinct states.
     assertEquals(
       TypedOpts(3.5, 5, null),
       decodeInboundOpts {
@@ -267,7 +268,7 @@ class BinaryValueFormatTest {
   fun `outbound record payloads carry no presence byte`() {
     // The Kotlin writer's grammar is unchanged by optionality: 8 raw bytes for x, 4 for count,
     // 1 + 4 + 2 for the nullable string. Its output is therefore NOT readable by the codec's own
-    // decode — that asymmetry is the point of an inbound-only flag.
+    // decode - that asymmetry is the point of an inbound-only flag.
     val opts = AnyType(TypeDescriptor.Simple(TypedOpts::class.java, false))
     assertEquals(8 + 4 + 1 + 4 + 2, encode(TypedOpts(1.5, 9, "hi"), opts))
   }

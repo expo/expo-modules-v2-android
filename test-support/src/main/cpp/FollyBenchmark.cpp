@@ -21,7 +21,7 @@ namespace expo::modules::v2 {
 
   namespace {
     // Manually maps a folly::dynamic to the Java object graph a Kotlin module receives in React
-    // Native — the equivalent of ReadableNativeMap.toHashMap() / ReadableNativeArray.toArrayList():
+    // Native - the equivalent of ReadableNativeMap.toHashMap() / ReadableNativeArray.toArrayList():
     // OBJECT -> java.util.HashMap, ARRAY -> java.util.ArrayList, every number -> boxed
     // java.lang.Double (RN's number semantic), BOOL -> Boolean, STRING -> String, NULLT -> null.
     // Returns a fresh local reference (children are released as soon as the container holds them).
@@ -103,7 +103,7 @@ namespace expo::modules::v2 {
           return back.isObject() ? 1.0 : 0.0;
         });
 
-        // Our codec: facebook::jsi::Value -> binary buffer -> facebook::jsi::Value (dynamic flavor — the same
+        // Our codec: facebook::jsi::Value -> binary buffer -> facebook::jsi::Value (dynamic flavor - the same
         // "type unknown until runtime" contract folly::dynamic serves). Production-faithful on
         // oversized payloads: the failed encode attempt is paid, then the value crosses as Java
         // objects instead (the overflow fallback), so this lane never throws.
@@ -133,7 +133,7 @@ namespace expo::modules::v2 {
         });
 
         // The object-slot delivery: Java objects built per-field in C++ straight from JSI, no
-        // intermediate representation — the path dynamic (`Any`) values and buffer overflows
+        // intermediate representation - the path dynamic (`Any`) values and buffer overflows
         // take (encodeToJniDynamic).
         const double elementKtNs = timeNs([&] {
           jobject o = encodeToJniDynamic(env, rt, payload);

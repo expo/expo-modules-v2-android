@@ -5,7 +5,7 @@ package io.github.expo.modules.v2.types
  * fields it can read with a single `getstatic`.
  *
  * Boxing is the reason this exists. `Int::class.java` is `int.class` while `Int::class.javaObjectType`
- * is `Integer.class`, and [TypeConverterRegistry] keys its cache on the boxed class — emitting the
+ * is `Integer.class`, and [TypeConverterRegistry] keys its cache on the boxed class - emitting the
  * right class literal for a boxed primitive from IR is easy to get subtly wrong. Reading a field is
  * not. It also saves one allocation per descriptor.
  */

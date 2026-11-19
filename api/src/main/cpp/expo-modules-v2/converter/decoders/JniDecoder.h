@@ -24,23 +24,19 @@ namespace expo::modules::v2 {
     facebook::jsi::Value operator()(const ExpectedType::SharedObject& sharedType) const;
 
     facebook::jsi::Value operator()(const ExpectedType::Tuple& tupleType) const;
+    facebook::jsi::Value operator()(const ExpectedType::Union& unionType) const;
   };
 
   // clang-format off
   template<> facebook::jsi::Value JniDecoder::operator()<CppType::INT>() const;
-  template<> facebook::jsi::Value JniDecoder::operator()<CppType::BOX_INT>() const;
 
   template<> facebook::jsi::Value JniDecoder::operator()<CppType::LONG>() const;
-  template<> facebook::jsi::Value JniDecoder::operator()<CppType::BOX_LONG>() const;
 
   template<> facebook::jsi::Value JniDecoder::operator()<CppType::FLOAT>() const;
-  template<> facebook::jsi::Value JniDecoder::operator()<CppType::BOX_FLOAT>() const;
 
   template<> facebook::jsi::Value JniDecoder::operator()<CppType::DOUBLE>() const;
-  template<> facebook::jsi::Value JniDecoder::operator()<CppType::BOX_DOUBLE>() const;
 
   template<> facebook::jsi::Value JniDecoder::operator()<CppType::BOOLEAN>() const;
-  template<> facebook::jsi::Value JniDecoder::operator()<CppType::BOX_BOOLEAN>() const;
 
   template<> facebook::jsi::Value JniDecoder::operator()<CppType::BOOLEAN_ARRAY>() const;
   template<> facebook::jsi::Value JniDecoder::operator()<CppType::INT_ARRAY>() const;
