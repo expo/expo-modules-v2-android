@@ -17,7 +17,7 @@ import kotlinx.benchmark.TearDown
  *
  * Every JS-driven benchmark runs `evaluate("__name()")` once per invocation, so this score is the
  * fixed cost each of those invocations carries. Divide it by a class's
- * `@OperationsPerInvocation` to see what it contributes to that class's ns/op — keep it under ~1%
+ * `@OperationsPerInvocation` to see what it contributes to that class's ns/op - keep it under ~1%
  * when choosing the operation count for a new benchmark.
  */
 @State(Scope.Benchmark)

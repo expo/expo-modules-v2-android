@@ -45,7 +45,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # --- The :api bridge dylib (imported) ------------------------------------------------------
-# Provides the kolibri layer (JavaClass tokens, env, native_method) as exported symbols — its
+# Provides the kolibri layer (JavaClass tokens, env, native_method) as exported symbols - its
 # global state must exist exactly once in the process, so it is never re-linked statically here.
 add_library(expo-api-bridge SHARED IMPORTED)
 set_target_properties(expo-api-bridge PROPERTIES

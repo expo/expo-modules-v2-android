@@ -8,7 +8,7 @@ import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.records.codecFor
 
 /**
- * 42 fields, the width of `TextFieldColorsRecord` — the widest record in the expo repo. One
+ * 42 fields, the width of `TextFieldColorsRecord` - the widest record in the expo repo. One
  * `TypeDescriptor.Int` singleton read per field, so the codec carries no descriptor fields at all.
  */
 @Record

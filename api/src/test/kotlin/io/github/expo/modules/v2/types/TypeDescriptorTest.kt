@@ -14,7 +14,7 @@ import kotlin.test.assertTrue
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 
 /**
- * Pins the code stream a descriptor emits. Every expectation is the literal [TypeCodes] sequence
+ * Pins the code stream a descriptor emits. Every expectation is the literal type-codes sequence
  * the resolved converter produces, so a change to the emitter that would desync the C++ `CppType`
  * reader fails mechanically.
  */
@@ -73,7 +73,7 @@ class TypeDescriptorTest {
   fun `ANY carries nullability like every other reference type`() {
     // Dynamic is not optional: the flag is what distinguishes `Any` from `Any?`. It adds no buffer
     // byte (the tagged encoding represents null itself) but it is a declaration either way.
-    assertContentEquals(intArrayOf(CppType.ANY.code or CppType.NULLABLE), nullableAny.codes.values)
+    assertContentEquals(intArrayOf(CppType.ANY.code or CppType.NULLABLE), nullableAny.codes)
     assertTrue(nullableAny.isNullable)
     assertFalse(any.isNullable)
     assertContentEquals(
@@ -84,7 +84,7 @@ class TypeDescriptorTest {
           false,
           arrayOf(TypeDescriptor.Simple(Any::class.java, true)),
         ),
-      ).codes.values,
+      ).codes,
     )
   }
 
@@ -95,26 +95,26 @@ class TypeDescriptorTest {
 
   @Test
   fun `nullable primitives use boxed leaf descriptors`() {
-    assertContentEquals(intArrayOf(CppType.BOX_INT.code or CppType.NULLABLE), nullableInt.codes.values)
+    assertContentEquals(intArrayOf(CppType.INT.code or CppType.NULLABLE), nullableInt.codes)
     assertContentEquals(
-      intArrayOf(CppType.LIST.code, CppType.BOX_INT.code),
+      intArrayOf(CppType.LIST.code, CppType.INT.code),
       AnyType(
         TypeDescriptor.Parametrized(
           List::class.java,
           false,
           arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, false)),
         ),
-      ).codes.values,
+      ).codes,
     )
     assertContentEquals(
-      intArrayOf(CppType.LIST.code, CppType.BOX_INT.code or CppType.NULLABLE),
+      intArrayOf(CppType.LIST.code, CppType.INT.code or CppType.NULLABLE),
       AnyType(
         TypeDescriptor.Parametrized(
           List::class.java,
           false,
           arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, true)),
         ),
-      ).codes.values,
+      ).codes,
     )
     assertFalse(AnyType(TypeDescriptor.Simple(Int::class.javaObjectType, false)).isNullable)
   }
@@ -131,7 +131,7 @@ class TypeDescriptorTest {
         ),
       ),
     )
-    assertContentEquals(intArrayOf(CppType.MAP.code, CppType.BOX_INT.code), intMap.codes.values)
+    assertContentEquals(intArrayOf(CppType.MAP.code, CppType.INT.code), intMap.codes)
     // The key is part of the Kotlin type but never of the code stream.
     assertEquals(2, (intMap.descriptor as TypeDescriptor.Parametrized).params.size)
   }
@@ -139,14 +139,14 @@ class TypeDescriptorTest {
   @Test
   fun `buffered marks the head code only`() {
     assertContentEquals(
-      intArrayOf(CppType.LIST.code or CppType.USES_BUFFER, CppType.BOX_DOUBLE.code),
+      intArrayOf(CppType.LIST.code or CppType.USES_BUFFER, CppType.DOUBLE.code),
       AnyType(
         TypeDescriptor.Parametrized(
           List::class.java,
           false,
           arrayOf(TypeDescriptor.Simple(Double::class.javaObjectType, false)),
         ),
-      ).buffered().codes.values,
+      ).buffered().codes,
     )
   }
 
@@ -154,19 +154,19 @@ class TypeDescriptorTest {
   fun `buffered leaves mark their single code`() {
     assertContentEquals(
       intArrayOf(CppType.STRING.code or CppType.USES_BUFFER),
-      AnyType(TypeDescriptor.Simple(String::class.java, false)).buffered().codes.values,
+      AnyType(TypeDescriptor.Simple(String::class.java, false)).buffered().codes,
     )
     assertContentEquals(
-      intArrayOf(CppType.BOX_INT.code or CppType.NULLABLE or CppType.USES_BUFFER),
-      nullableInt.buffered().codes.values,
+      intArrayOf(CppType.INT.code or CppType.NULLABLE or CppType.USES_BUFFER),
+      nullableInt.buffered().codes,
     )
     assertContentEquals(
       intArrayOf(CppType.DOUBLE_ARRAY.code or CppType.USES_BUFFER),
-      AnyType(TypeDescriptor.DoubleArray(false)).buffered().codes.values,
+      AnyType(TypeDescriptor.DoubleArray(false)).buffered().codes,
     )
     assertContentEquals(
       intArrayOf(CppType.BYTE_ARRAY.code or CppType.USES_BUFFER),
-      AnyType(TypeDescriptor.ByteArray(false)).buffered().codes.values,
+      AnyType(TypeDescriptor.ByteArray(false)).buffered().codes,
     )
   }
 
@@ -182,9 +182,9 @@ class TypeDescriptorTest {
     assertContentEquals(
       intArrayOf(
         CppType.LIST.code or CppType.NULLABLE or CppType.USES_BUFFER,
-        CppType.BOX_INT.code,
+        CppType.INT.code,
       ),
-      nullableInts.buffered().codes.values,
+      nullableInts.buffered().codes,
     )
   }
 
@@ -194,11 +194,11 @@ class TypeDescriptorTest {
     // the bridge head, exactly as they would for a plain slot of that bridge type.
     val url = AnyType(TypeDescriptor.Simple(URL::class.java, false))
     val nullableUrl = AnyType(TypeDescriptor.Simple(URL::class.java, true))
-    assertContentEquals(intArrayOf(CppType.STRING.code), url.codes.values)
-    assertContentEquals(intArrayOf(CppType.STRING.code or CppType.NULLABLE), nullableUrl.codes.values)
+    assertContentEquals(intArrayOf(CppType.STRING.code), url.codes)
+    assertContentEquals(intArrayOf(CppType.STRING.code or CppType.NULLABLE), nullableUrl.codes)
     assertContentEquals(
       intArrayOf(CppType.STRING.code or CppType.USES_BUFFER),
-      url.buffered().codes.values,
+      url.buffered().codes,
     )
     assertTrue(url.converter is UrlConverter)
     // The nullable declaration resolves its own converter, which states the same nullability.
@@ -228,14 +228,14 @@ class TypeDescriptorTest {
           false,
           arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, false)),
         ),
-      ).codes.values,
+      ).codes,
       AnyType(
         TypeDescriptor.Parametrized(
           List::class.java,
           false,
           arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, false)),
         ),
-      ).codes.values,
+      ).codes,
     )
   }
 }

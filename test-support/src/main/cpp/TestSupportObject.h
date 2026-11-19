@@ -6,10 +6,10 @@
 
 namespace expo::modules::v2 {
   /**
-   * Installs `globalThis.ExpoTestSupport` — the test/benchmark host-function suite
+   * Installs `globalThis.ExpoTestSupport` - the test/benchmark host-function suite
    * (`__convertRoundTrip`, `__binaryNativeRoundTrip`, `__nativeRoundTrip`,
    * `__nativeStateChainSmoke`, `__kolibriArrayCheck`, `__kolibriArrayBindFixture` and, when
-   * compiled in, `__follyBench`) — into `rt`. Driven by the
+   * compiled in, `__follyBench`) - into `rt`. Driven by the
    * Kotlin `io.github.expo.modules.v2.testsupport.TestSupport.install` entry point (OnLoad.cpp); production
    * runtimes never carry this object.
    */

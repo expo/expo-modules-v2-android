@@ -15,6 +15,7 @@
 #include "FollyBenchmark.h"
 #include "JSIConverters.h"
 #include "KolibriArrayCheck.h"
+#include <expo-modules-v2/utils/Throw.h>
 #include <expo-modules-v2/converter/decoders/JniDecode.h>
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
 #include <expo-modules-v2/modules/ModuleNativeState.h>
@@ -135,6 +136,9 @@ namespace expo::modules::v2 {
           return decodeFromJniDynamic(env, rt, asJava.get()); // JNI -> JSI
         } catch (const facebook::jsi::JSError&) {
           throw;
+        } catch (const ConversionError& e) {
+          // A value that does not fit: the same message an export's argument would get.
+          throw facebook::jsi::JSError(rt, e.what());
         } catch (const std::exception& e) {
           throw facebook::jsi::JSError(rt, std::string("convertRoundTrip failed: ") + e.what());
         }
@@ -193,22 +197,22 @@ namespace expo::modules::v2 {
               return through.operator()<std::string>(ExpectedType(LeafType::STRING));
             case 6:
               return through.operator()<std::vector<int32_t> >(
-                listOf(ExpectedType(LeafType::BOX_INT))
+                listOf(ExpectedType(LeafType::INT))
               );
             case 7:
               return through.operator()<std::vector<std::vector<int32_t> > >(
-                listOf(listOf(ExpectedType(LeafType::BOX_INT)))
+                listOf(listOf(ExpectedType(LeafType::INT)))
               );
             case 8:
               return through.operator()<std::unordered_map<std::string, double> >(
-                mapOf(ExpectedType(LeafType::BOX_DOUBLE))
+                mapOf(ExpectedType(LeafType::DOUBLE))
               );
             case 9:
               return through.operator()<std::vector<double> >(
-                listOf(ExpectedType(LeafType::BOX_DOUBLE))
+                listOf(ExpectedType(LeafType::DOUBLE))
               );
             case 10: {
-              ExpectedType nullableDouble(LeafType::BOX_DOUBLE, true);
+              ExpectedType nullableDouble(LeafType::DOUBLE, true);
               return through.operator()<std::optional<double> >(nullableDouble);
             }
             case 11:
@@ -218,6 +222,9 @@ namespace expo::modules::v2 {
           }
         } catch (const facebook::jsi::JSError&) {
           throw;
+        } catch (const ConversionError& e) {
+          // A value that does not fit: the same message an export's argument would get.
+          throw facebook::jsi::JSError(rt, e.what());
         } catch (const std::exception& e) {
           throw facebook::jsi::JSError(rt, std::string("__binaryNativeRoundTrip failed: ") + e.what());
         }
@@ -329,7 +336,7 @@ namespace expo::modules::v2 {
     );
     suite.setProperty(rt, "__holdsGlobalRef", std::move(holdsGlobalRef));
 
-    // Exercises the kolibri JNI array API (kolibri/array.h) against the live JVM — creation,
+    // Exercises the kolibri JNI array API (kolibri/array.h) against the live JVM - creation,
     // regions, pins, object/nested arrays, array-typed method tokens. Returns "ok" or the first
     // failure (KolibriArrayCheck.cpp).
     auto kolibriArrayCheck = facebook::jsi::Function::createFromHostFunction(
@@ -347,7 +354,7 @@ namespace expo::modules::v2 {
     suite.setProperty(rt, "__kolibriArrayCheck", std::move(kolibriArrayCheck));
 
     // Registers array-typed native methods (signatures derived from the C++ parameter types) on
-    // the Kotlin test fixture `io.github.expo.modules.v2.testapp.KolibriArrayFixture` — only meaningful on
+    // the Kotlin test fixture `io.github.expo.modules.v2.testapp.KolibriArrayFixture` - only meaningful on
     // the test-app test classpath.
     auto kolibriArrayBindFixture = facebook::jsi::Function::createFromHostFunction(
       rt,
@@ -390,7 +397,7 @@ namespace expo::modules::v2 {
       );
     }
 
-    // The whole of it: one shared_ptr, handed to a second runtime. No copying, no proxy — which is
+    // The whole of it: one shared_ptr, handed to a second runtime. No copying, no proxy - which is
     // why a shared object survives the crossing with its methods and its native state intact.
     std::shared_ptr<facebook::jsi::HostObject> hostObject = object.getHostObject(from);
     to.global().setProperty(

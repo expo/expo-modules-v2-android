@@ -4,7 +4,6 @@ import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.TypedArray
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
 
 /**
  * A [TypedArray], or one kind of it such as a `Float32Array`, whose bridge is the
@@ -14,8 +13,7 @@ class TypedArrayConverter(
   private val type: Class<out TypedArray>,
   isNullable: Boolean,
 ) : TypeConverter<TypedArray>(isNullable) {
-  override val codes: TypeCodes
-    get() = CppType.JS_OBJECT.nullable(isNullable).toTypeCodes()
+  override val kind: CppType get() = CppType.JS_OBJECT
 
   override val isPassthrough: Boolean
     get() = false

@@ -224,7 +224,7 @@ namespace expo::modules::v2 {
       const auto overflowSlots = JTrampoline::prepareOverflowArguments(env);
 
       // Payload values land in the overflow slots CONSECUTIVELY, in the order they would have been
-      // written to the buffer — not at their declared argument index. That is what lets the Kotlin
+      // written to the buffer - not at their declared argument index. That is what lets the Kotlin
       // cursor read them incrementally, so a trampoline body reads its payload the same way whether
       // it arrived in the buffer or in these slots.
       size_t slot = 0;
@@ -594,6 +594,12 @@ namespace expo::modules::v2 {
       if (returnType.usesBuffer()) {
         return &invokeFunction<HasBufferedArgs, NeedsLocalFrame, &callBufferedPayload>;
       }
+
+      // A nullable scalar comes back as a boxed object.
+      if (!returnType.isPrimitive() && returnType.kind() != CppType::UNIT) {
+        return &invokeFunction<HasBufferedArgs, NeedsLocalFrame, &callObject>;
+      }
+
       return invokerForReturnKind<HasBufferedArgs, NeedsLocalFrame>(returnType.kind());
     }
   } // namespace

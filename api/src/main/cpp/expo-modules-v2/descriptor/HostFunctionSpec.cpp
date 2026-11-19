@@ -36,6 +36,9 @@ namespace expo::modules::v2::descriptor {
       return invoker_(rt, env, *this, receiver, args, count);
     } catch (const facebook::jsi::JSError&) {
       throw;
+    } catch (const ConversionError& e) {
+      // An argument or a result that does not fit: JavaScript sees the conversion's own message.
+      throwJSError(rt, {e.what()});
     } catch (const std::exception& e) {
       throwJSError(rt, {"native call failed: ", e.what()});
     }

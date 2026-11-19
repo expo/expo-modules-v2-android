@@ -4,7 +4,6 @@ import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.Enumerable
 import io.github.expo.modules.v2.logging.platformLogger
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 import java.util.concurrent.ConcurrentHashMap
@@ -46,13 +45,12 @@ class EnumConverter(
       .mapIndexed { ordinal, value -> value to constants[ordinal] }
       .toMap()
 
-  override val codes: TypeCodes
-    get() = when {
-      !isIntBacked -> CppType.STRING.nullable(isNullable)
-      // Like any Int: a register-width slot when it cannot be null, a boxed one when it can.
-      isNullable -> CppType.BOX_INT.nullable(true)
-      else -> CppType.INT
-    }.toTypeCodes()
+  override val kind: CppType
+    get() = if (isIntBacked) {
+      CppType.INT
+    } else {
+      CppType.STRING
+    }
 
   override val isPassthrough: Boolean get() = false
 

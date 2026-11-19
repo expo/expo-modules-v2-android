@@ -46,7 +46,7 @@ class TrampolineTest {
     val writer1 = BufferRecordWriter(writer)
     itemType.anyCodec.encode(Item(7, "seven"), writer1)
     // Note has an optional field, so its inbound body carries a presence byte the Kotlin writer
-    // never emits — see BufferRecordWriter's KDoc. Hand-build what native would have written.
+    // never emits - see BufferRecordWriter's KDoc. Hand-build what native would have written.
     writer.putInt(1)
     writer.putBoolean(true)
     nullableStringType.anyConverter.writeToBuffer(writer, "note")
@@ -224,8 +224,8 @@ class TrampolineTest {
         arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, false)),
       ),
     )
-    // Native fills the slots consecutively in payload order — not at the declared argument
-    // index — and the one cursor reads them back the same way.
+    // Native fills the slots consecutively in payload order - not at the declared argument
+    // index - and the one cursor reads them back the same way.
     val slots = Trampoline.prepareOverflowArguments()
     slots[0] = listOf(mapOf("x" to 1, "b" to "a"), mapOf("x" to 2, "b" to "b"))
     slots[1] = null

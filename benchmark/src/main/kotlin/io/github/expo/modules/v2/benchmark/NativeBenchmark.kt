@@ -10,7 +10,7 @@ import io.github.expo.modules.v2.testsupport.ExpoHermes
  * them, not the work being compared. Everything measured from the JVM side lives in
  * `src/benchmarks/kotlin` and runs under `./gradlew :benchmark:benchmarksBenchmark`.
  *
- * - `runJniCallBenchmark` — kolibri's JavaClass tokens vs fbjni for Java method dispatch.
+ * - `runJniCallBenchmark` - kolibri's JavaClass tokens vs fbjni for Java method dispatch.
  */
 fun main() {
   ExpoHermes.ensureLoaded()

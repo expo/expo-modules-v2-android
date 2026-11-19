@@ -14,7 +14,7 @@ import io.github.expo.modules.v2.jsi.AttachedRuntime
  * the modules installed into it, so a test can write `HermesRuntime().use { ... }` and get both
  * halves torn down in the right order.
  *
- * The thread that runs this constructor becomes the runtime's JS thread — a `jsi::Runtime` is
+ * The thread that runs this constructor becomes the runtime's JS thread - a `jsi::Runtime` is
  * thread-affine, and the default [AsyncContext] captures that thread as the one every promise
  * settles on.
  *

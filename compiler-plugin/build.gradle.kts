@@ -29,7 +29,7 @@ mavenPublishing {
 }
 
 // `java-test-fixtures` wires its variants into the `java` component, so the test-fixtures jar and
-// its sources jar would be published too. They exist only for this project's own test framework —
+// its sources jar would be published too. They exist only for this project's own test framework -
 // nothing outside the build consumes them, and every published file counts against Maven Central's
 // per-organization file-count limit.
 (components["java"] as AdhocComponentWithVariants).let { java ->
@@ -79,7 +79,7 @@ idea {
 val testArtifacts: Configuration by configurations.creating
 
 // The runtime the box tests compile against: `io.github.expo.modules.v2.records.*`, `@Record`, the
-// TypeDescriptor hierarchy. :api never depends on :compiler-plugin, so this is not a cycle — the
+// TypeDescriptor hierarchy. :api never depends on :compiler-plugin, so this is not a cycle - the
 // Gradle plugin only injects the compiler jar into :api's *compile* classpath.
 val recordsRuntime: Configuration by configurations.creating
 

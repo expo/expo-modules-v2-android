@@ -3,6 +3,7 @@ package io.github.expo.modules.v2.records
 // An explicit import beats a same-package declaration, so inside this package the annotation's
 // simple name shadows the marker interface. The two hand-written codecs below need the marker.
 import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.types.codes
 import io.github.expo.modules.v2.records.Record as RecordMarker
 import io.github.expo.modules.v2.records.readers.BufferRecordReader
 import io.github.expo.modules.v2.records.readers.RecordReader
@@ -22,8 +23,8 @@ import io.github.expo.modules.v2.types.TypeDescriptor
 
 /**
  * `label` carries no Kotlin default on purpose. A default makes the field optional, and the
- * presence byte an optional field is read through is inbound only — `BufferRecordWriter` never
- * writes one — so a record with a default cannot round-trip Kotlin -> buffer -> Kotlin the way
+ * presence byte an optional field is read through is inbound only - `BufferRecordWriter` never
+ * writes one - so a record with a default cannot round-trip Kotlin -> buffer -> Kotlin the way
  * these tests do. Optional fields are covered by BinaryValueFormatTest, RecordMapCodecTest and
  * TrampolineTest, which each drive one direction.
  */
@@ -156,7 +157,7 @@ class RecordRegistryTest {
   @Test
   fun `constructing a record registers its generated codec`() {
     // No register call in any test: constructing Badge runs its class init, which builds the
-    // generated codec and registers it — so the dynamic encode's class lookup hits.
+    // generated codec and registers it - so the dynamic encode's class lookup hits.
     assertEquals(Badge(7, "gold"), roundTrip(Badge(7, "gold")))
     assertEquals(listOf(Badge(1, "a"), Badge(2, "b")), roundTrip(listOf(Badge(1, "a"), Badge(2, "b"))))
   }
@@ -177,13 +178,13 @@ class RecordRegistryTest {
   fun `record schemas compose with containers`() {
     assertContentEquals(
       intArrayOf(CppType.RECORD.code, pointType.schemaId.value),
-      AnyType(TypeDescriptor.Simple(Point::class.java, false)).codes.values,
+      AnyType(TypeDescriptor.Simple(Point::class.java, false)).codes,
     )
     assertContentEquals(
       intArrayOf(CppType.LIST.code, CppType.RECORD.code, pointType.schemaId.value),
       AnyType(
         TypeDescriptor.Parametrized(List::class.java, false, arrayOf(TypeDescriptor.Simple(Point::class.java, false))),
-      ).codes.values,
+      ).codes,
     )
   }
 

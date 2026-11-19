@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.modules
 
 import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.types.codes
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.codecFor
 import io.github.expo.modules.v2.types.AnyType
@@ -25,7 +26,7 @@ private class FlaggedRec(val h: JavaScriptObject) : io.github.expo.modules.v2.re
 /**
  * Pins what a declaration records: the code stream each argument and return type emits, the
  * transport flag [buffered] marks on it, and the JVM method/accessor names the bridge resolves.
- * A trampoline is a declaration's own statement of which method to call — the builder records it
+ * A trampoline is a declaration's own statement of which method to call - the builder records it
  * and does not second-guess which types need one.
  */
 class ModuleBuilderTest {
@@ -40,8 +41,8 @@ class ModuleBuilderTest {
   fun `ANY-only signatures are invoked directly`() {
     val direct = builder()
     direct.function("f", any, returns = any)
-    assertEquals(CppType.ANY.code, direct.functions[0].argTypes.single().single())
-    assertEquals(CppType.ANY.code, direct.functions[0].returnType.single())
+    assertEquals(CppType.ANY.code, direct.functions[0].argTypes.single().codes.single())
+    assertEquals(CppType.ANY.code, direct.functions[0].returnType.codes.single())
     assertEquals("f", direct.functions[0].methodName)
 
     builder().function(
@@ -72,8 +73,8 @@ class ModuleBuilderTest {
     builder.function("accept", AnyType(TypeDescriptor.Simple(Unit::class.java, false)), returns = string)
     builder.function("clear", returns = AnyType(TypeDescriptor.Simple(Unit::class.java, false)))
 
-    assertEquals(CppType.UNIT.code, builder.functions[0].argTypes.single().single())
-    assertEquals(CppType.UNIT.code, builder.functions[1].returnType.single())
+    assertEquals(CppType.UNIT.code, builder.functions[0].argTypes.single().codes.single())
+    assertEquals(CppType.UNIT.code, builder.functions[1].returnType.codes.single())
   }
 
   @Test
@@ -97,7 +98,7 @@ class ModuleBuilderTest {
     val builder = builder()
     builder.event("changed", int)
     assertEquals(listOf("changed"), builder.events.map { it.jsName })
-    assertContentEquals(intArrayOf(CppType.INT.code), builder.events.single().payloadType)
+    assertContentEquals(intArrayOf(CppType.INT.code), builder.events.single().payloadType.codes)
 
     val function = assertFailsWith<IllegalArgumentException> {
       builder.function("changed", returns = int)
@@ -171,11 +172,11 @@ class ModuleBuilderTest {
       val declared = builder.functions.single()
       assertEquals(
         CppType.USES_BUFFER,
-        declared.argTypes.single()[0] and CppType.USES_BUFFER,
+        declared.argTypes.single().codes[0] and CppType.USES_BUFFER,
         "$type should carry the transport flag on its head code",
       )
       // Only the head code is marked; the element codes stay untouched.
-      assertTrue(declared.argTypes.single().drop(1).none { it and CppType.USES_BUFFER != 0 })
+      assertTrue(declared.argTypes.single().codes.drop(1).none { it and CppType.USES_BUFFER != 0 })
       // The trampoline is the method the bridge resolves; the direct name is never recorded.
       assertEquals("f__trampoline", declared.methodName)
     }
@@ -212,7 +213,7 @@ class ModuleBuilderTest {
       returns = int,
     )
     // The head code carries no transport flag, so native reads a plain object slot.
-    assertEquals(CppType.LIST.code, direct.functions[0].argTypes.single()[0])
+    assertEquals(CppType.LIST.code, direct.functions[0].argTypes.single().codes[0])
 
     // An unbuffered record still Map-rides, so the declaration names the trampoline that does the
     // fromMap/toMap; the builder records that name in place of the direct method.
@@ -243,7 +244,7 @@ class ModuleBuilderTest {
 
     val builder = builder()
     builder.function("f", record, returns = int, methodName = "f__trampoline")
-    assertContentEquals(intArrayOf(CppType.RECORD.code, schemaId), builder.functions[0].argTypes.single())
+    assertContentEquals(intArrayOf(CppType.RECORD.code, schemaId), builder.functions[0].argTypes.single().codes)
 
     // Inside a container the record's pair follows the container head, in the same pre-order.
     builder.function(
@@ -260,12 +261,12 @@ class ModuleBuilderTest {
     )
     assertContentEquals(
       intArrayOf(CppType.LIST.code, CppType.RECORD.code, schemaId),
-      builder.functions[1].argTypes.single(),
+      builder.functions[1].argTypes.single().codes,
     )
 
     // The return position emits the same stream.
     builder.function("h", returns = record, methodName = "h__trampoline")
-    assertContentEquals(intArrayOf(CppType.RECORD.code, schemaId), builder.functions[2].returnType)
+    assertContentEquals(intArrayOf(CppType.RECORD.code, schemaId), builder.functions[2].returnType.codes)
   }
 
   @Test
@@ -306,7 +307,7 @@ class ModuleBuilderTest {
     // does the conversion on the Kotlin side.
     val builder = builder()
     builder.function("f", url, returns = string, methodName = "f__trampoline")
-    assertContentEquals(intArrayOf(CppType.STRING.code), builder.functions[0].argTypes.single())
+    assertContentEquals(intArrayOf(CppType.STRING.code), builder.functions[0].argTypes.single().codes)
   }
 
   @Test
@@ -355,8 +356,8 @@ class ModuleBuilderTest {
     assertEquals("getHomepage__trampoline", property.getterName)
     assertEquals("setHomepage__trampoline", property.setterName)
     // The declared type is the converter's bridge, exactly as in a function signature.
-    assertContentEquals(intArrayOf(CppType.STRING.code), property.getterType)
-    assertContentEquals(intArrayOf(CppType.STRING.code), property.setterType)
+    assertContentEquals(intArrayOf(CppType.STRING.code), property.getterType.codes)
+    assertContentEquals(intArrayOf(CppType.STRING.code), property.setterType?.codes)
   }
 
   @Test
@@ -366,8 +367,8 @@ class ModuleBuilderTest {
     builder.property("readOnly", string, setterType = string.buffered())
 
     val name = builder.properties[0]
-    assertContentEquals(intArrayOf(CppType.STRING.code), name.getterType)
-    assertContentEquals(intArrayOf(CppType.STRING.code or CppType.USES_BUFFER), name.setterType)
+    assertContentEquals(intArrayOf(CppType.STRING.code), name.getterType.codes)
+    assertContentEquals(intArrayOf(CppType.STRING.code or CppType.USES_BUFFER), name.setterType?.codes)
 
     // Nothing writes a `val`, so the setter type is dropped with the setter name.
     assertNull(builder.properties[1].setterType)

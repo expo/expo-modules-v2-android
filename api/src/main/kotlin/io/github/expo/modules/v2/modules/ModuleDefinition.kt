@@ -1,10 +1,12 @@
 package io.github.expo.modules.v2.modules
 
+import io.github.expo.modules.v2.types.AnyType
+
 internal class ModuleFunctionDefinition(
   val jsName: String,
   val methodName: String,
-  val argTypes: Array<IntArray>,
-  val returnType: IntArray,
+  val argTypes: Array<out AnyType>,
+  val returnType: AnyType,
   val isAsync: Boolean = false,
 ) {
   val flags: Int
@@ -23,8 +25,8 @@ internal class ModulePropertyDefinition(
   val jsName: String,
   val getterName: String,
   val setterName: String?,
-  val getterType: IntArray,
-  val setterType: IntArray?,
+  val getterType: AnyType,
+  val setterType: AnyType?,
   val isConstant: Boolean = false,
 ) {
   val flags: Int
@@ -42,11 +44,11 @@ internal class ModulePropertyDefinition(
 internal class ModuleSharedClassDefinition(
   val jsName: String,
   val classId: Int,
-  val argTypes: Array<IntArray>,
+  val argTypes: Array<out AnyType>,
   val trampolineName: String,
 )
 
 internal class ModuleEventDefinition(
   val jsName: String,
-  val payloadType: IntArray,
+  val payloadType: AnyType,
 )

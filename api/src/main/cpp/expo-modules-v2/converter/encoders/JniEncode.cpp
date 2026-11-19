@@ -8,7 +8,6 @@
 #include <kolibri/array.h>
 #include <kolibri/box.h>
 #include <kolibri/class.h>
-#include <kolibri/string_utils.h>
 
 namespace expo::modules::v2 {
   jvalue encodeToJniValue(
@@ -17,28 +16,32 @@ namespace expo::modules::v2 {
     const facebook::jsi::Value& value,
     const ExpectedType& type
   ) {
-    jvalue out{};
+    jvalue out;
 
-    switch (type.kind()) {
-      case CppType::BOOLEAN:
-        out.z = boolOf(rt, value) != 0;
-        return out;
-      case CppType::INT:
-        out.i = static_cast<int32_t>(numberOf(rt, value));
-        return out;
-      case CppType::LONG:
-        out.j = static_cast<int64_t>(numberOf(rt, value));
-        return out;
-      case CppType::FLOAT:
-        out.f = static_cast<float>(numberOf(rt, value));
-        return out;
-      case CppType::DOUBLE:
-        out.d = numberOf(rt, value);
-        return out;
-      default:
-        out.l = encodeToJni(env, rt, value, type);
-        return out;
+    if (type.isPrimitive()) {
+      switch (type.kind()) {
+        case CppType::BOOLEAN:
+          out.z = boolOf(value) != 0;
+          return out;
+        case CppType::INT:
+          out.i = static_cast<int32_t>(numberOf(value));
+          return out;
+        case CppType::LONG:
+          out.j = static_cast<int64_t>(numberOf(value));
+          return out;
+        case CppType::FLOAT:
+          out.f = static_cast<float>(numberOf(value));
+          return out;
+        case CppType::DOUBLE:
+          out.d = numberOf(value);
+          return out;
+        default:
+          break;
+      }
     }
+
+    out.l = encodeToJni(env, rt, value, type);
+    return out;
   }
 
   jobject encodeToJni(
@@ -57,7 +60,7 @@ namespace expo::modules::v2 {
       if (type.nullable()) [[likely]] {
         return nullptr;
       }
-      throwNullInNonNullable(rt, type);
+      throwNullInNonNullable(type);
     }
 
     return type.visit<jobject>(
@@ -106,7 +109,7 @@ namespace expo::modules::v2 {
       }
 
       if (object.isFunction(rt)) {
-        throwJSError(rt, {"Cannot convert a JS function to a Java value"}); // TODO: callbacks
+        throwConversionError({"Cannot convert a JS function to a Java value"}); // TODO: callbacks
       }
 
       if (object.isArrayBuffer(rt)) {
@@ -130,6 +133,6 @@ namespace expo::modules::v2 {
       return map;
     }
 
-    throwJSError(rt, {"Cannot convert this JS value to a Java value"});
+    throwConversionError({"Cannot convert this JS value to a Java value"});
   }
 } // namespace expo::modules::v2

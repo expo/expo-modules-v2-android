@@ -8,7 +8,6 @@ import io.github.expo.modules.v2.records.readers.RecordReader
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.RecordSchema
 import io.github.expo.modules.v2.records.writers.RecordWriter
-import io.github.expo.modules.v2.types.AnyType
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.BenchmarkMode
 import kotlinx.benchmark.BenchmarkTimeUnit
@@ -23,7 +22,7 @@ import io.github.expo.modules.v2.types.TypeDescriptor
 
 /**
  * The Kotlin half of record schema registration: what `RecordRegistry.fetchSchema` costs to build
- * one [RecordSchemaData] — the field-name array, the flat type-code array, the field-optionality
+ * one [RecordSchemaData] - the field-name array, the flat type-code array, the field-optionality
  * array, and the holder.
  *
  * **This is not the whole registration cost.** Native code pulls a schema from inside
@@ -31,13 +30,13 @@ import io.github.expo.modules.v2.types.TypeDescriptor
  * this benchmark cannot reach: `get` caches on first miss, and there is no eviction hook to make it
  * repeat. Treat these numbers as a regression guard on the marshalling, not as the per-schema total.
  *
- * For scale, the earlier callback shape — where Kotlin called back down into `nativeDefineSchema`
- * and the whole crossing was reachable from here — measured 973 / 2695 / 8466 ns at 2 / 11 / 42
+ * For scale, the earlier callback shape - where Kotlin called back down into `nativeDefineSchema`
+ * and the whole crossing was reachable from here - measured 973 / 2695 / 8466 ns at 2 / 11 / 42
  * fields, against 197 / 565 / 1475 ns for the batch push it replaced.
  *
  * Field counts are the real distribution across expo's 345 records: 2 is the median, 11 the p95,
  * 42 the widest (`TextFieldColorsRecord`). Batch sizes bracket it: one schema, a small module, and
- * 96 — the count in expo-ui, the largest single module.
+ * 96 - the count in expo-ui, the largest single module.
  */
 private val FIELD_TYPES = listOf(
   TypeDescriptor.Int,
@@ -55,7 +54,7 @@ private class BenchRecord42 : Record
 
 /**
  * A registration-only codec: the benchmark never encodes a value, so [encode] and [decode] are
- * unreachable. Everything registration touches — the schema, the field types, the record class —
+ * unreachable. Everything registration touches - the schema, the field types, the record class -
  * is real.
  */
 private class BenchCodec<T : Record>(
@@ -86,10 +85,10 @@ private class RegistrationState(private val schemaCount: Int) {
 
   fun setUp(fieldCount: Int) {
     ExpoModulesV2.load()
-    // Reading `codes` interns the codec; the id is stable from then on. Repeating one id across
-    // the batch keeps both arms doing identical work per schema — the only thing a distinct id
+    // Looking the id up interns the codec; the id is stable from then on. Repeating one id across
+    // the batch keeps both arms doing identical work per schema - the only thing a distinct id
     // would change is a fresh map insert instead of a dedup hit, and that is equal on both sides.
-    val id = AnyType(TypeDescriptor.Simple(CODECS.getValue(fieldCount).recordClass, false)).codes[1]
+    val id = RecordRegistry.schemaIdOf(CODECS.getValue(fieldCount).recordClass)
     ids = IntArray(schemaCount) { id }
   }
 

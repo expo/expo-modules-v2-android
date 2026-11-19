@@ -24,7 +24,7 @@ import kotlinx.benchmark.TearDown
  * the same JSI `setProperty` work with no handle argument, so it is the control row.
  *
  * The runtime is created in [setUp] and closed in [tearDown], both of which JMH runs on the same
- * worker thread that runs the measured methods — jsi::Runtime is thread-affine.
+ * worker thread that runs the measured methods - jsi::Runtime is thread-affine.
  */
 @State(Scope.Benchmark)
 @BenchmarkMode(Mode.AverageTime)

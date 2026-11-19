@@ -60,7 +60,7 @@ set_target_properties(hermes-env PROPERTIES
 target_include_directories(hermes-env INTERFACE ${JSI_DIR})
 
 # --- The :api bridge dylib (imported) ------------------------------------------------------
-# Provides — as exported symbols — the kolibri layer (whose global state must exist exactly once
+# Provides - as exported symbols - the kolibri layer (whose global state must exist exactly once
 # in the process), the converters/binary codec and the JavaScriptRuntime base. Its headers come
 # from the source trees.
 add_library(expo-api-bridge SHARED IMPORTED)
@@ -117,7 +117,7 @@ if (EXPO_FOLLY_BENCHMARK)
     if (TARGET Folly::folly)
         # Homebrew's folly bakes the SDK it was built against into its interface include dirs
         # (e.g. the CommandLineTools MacOSX15 SDK). Injecting a second SDK's headers exposes the
-        # macro-style isnan/isfinite from that math.h and breaks every C++ TU — the compiler
+        # macro-style isnan/isfinite from that math.h and breaks every C++ TU - the compiler
         # already provides the right SDK, so drop those entries.
         foreach (folly_target Folly::folly Folly::folly_deps)
             if (TARGET ${folly_target})

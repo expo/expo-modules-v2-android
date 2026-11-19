@@ -14,7 +14,7 @@ import kotlin.test.assertTrue
 
 /**
  * Registration happens in the record's `<clinit>`, and generated code names another record with a
- * bare `Other::class.java` — an `ldc` that resolves the class without initializing it (JVMS 5.5).
+ * bare `Other::class.java` - an `ldc` that resolves the class without initializing it (JVMS 5.5).
  * These tests pin the registry's answer to that: a lookup by class forces initialization once.
  *
  * Nothing here may touch [Unvisited] by any route other than a class literal, or the test proves

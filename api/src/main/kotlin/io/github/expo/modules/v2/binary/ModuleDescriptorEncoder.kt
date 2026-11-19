@@ -4,6 +4,8 @@ import io.github.expo.modules.v2.modules.ModuleEventDefinition
 import io.github.expo.modules.v2.modules.ModuleFunctionDefinition
 import io.github.expo.modules.v2.modules.ModulePropertyDefinition
 import io.github.expo.modules.v2.modules.ModuleSharedClassDefinition
+import io.github.expo.modules.v2.types.AnyType
+import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.kolibri.binary.BinaryBuffer
 
 /**
@@ -92,12 +94,14 @@ internal object ModuleDescriptorEncoder {
     trailer: BinaryBuffer.() -> Unit = {},
   ): Int {
     val currentPosition = position
+    // Every type of the descriptor is written through this one, so none needs an array of its own.
+    val codes = TypeCodesWriter()
 
     putInt(0) // payloadEnd placeholder, patched below
-    writeFunctions(functions)
-    writeProperties(properties)
-    writeSharedClasses(sharedClasses)
-    writeEvents(events)
+    writeFunctions(functions, codes)
+    writeProperties(properties, codes)
+    writeSharedClasses(sharedClasses, codes)
+    writeEvents(events, codes)
     trailer()
 
     val payloadEnd = position
@@ -107,7 +111,17 @@ internal object ModuleDescriptorEncoder {
     return payloadEnd
   }
 
-  private fun BinaryBuffer.writeFunctions(functions: List<ModuleFunctionDefinition>) {
+  /** [type]'s codes as an `intArray`: `count, code...`. */
+  private fun BinaryBuffer.putTypeCodes(type: AnyType, codes: TypeCodesWriter) {
+    codes.reset()
+    type.writeTypeCodes(codes)
+    codes.writeTo(this)
+  }
+
+  private fun BinaryBuffer.writeFunctions(
+    functions: List<ModuleFunctionDefinition>,
+    codes: TypeCodesWriter,
+  ) {
     putInt(functions.size)
     for (function in functions) {
       putString(function.jsName)
@@ -115,13 +129,16 @@ internal object ModuleDescriptorEncoder {
       putInt(function.flags)
       putInt(function.argTypes.size)
       for (argType in function.argTypes) {
-        putIntArray(argType)
+        putTypeCodes(argType, codes)
       }
-      putIntArray(function.returnType)
+      putTypeCodes(function.returnType, codes)
     }
   }
 
-  private fun BinaryBuffer.writeSharedClasses(sharedClasses: List<ModuleSharedClassDefinition>) {
+  private fun BinaryBuffer.writeSharedClasses(
+    sharedClasses: List<ModuleSharedClassDefinition>,
+    codes: TypeCodesWriter,
+  ) {
     putInt(sharedClasses.size)
     for (sharedClass in sharedClasses) {
       putString(sharedClass.jsName)
@@ -129,30 +146,33 @@ internal object ModuleDescriptorEncoder {
       putString(sharedClass.trampolineName)
       putInt(sharedClass.argTypes.size)
       for (argType in sharedClass.argTypes) {
-        putIntArray(argType)
+        putTypeCodes(argType, codes)
       }
     }
   }
 
-  private fun BinaryBuffer.writeEvents(events: List<ModuleEventDefinition>) {
+  private fun BinaryBuffer.writeEvents(events: List<ModuleEventDefinition>, codes: TypeCodesWriter) {
     putInt(events.size)
     for (event in events) {
       putString(event.jsName)
-      putIntArray(event.payloadType)
+      putTypeCodes(event.payloadType, codes)
     }
   }
 
-  private fun BinaryBuffer.writeProperties(properties: List<ModulePropertyDefinition>) {
+  private fun BinaryBuffer.writeProperties(
+    properties: List<ModulePropertyDefinition>,
+    codes: TypeCodesWriter,
+  ) {
     putInt(properties.size)
     for (property in properties) {
       putString(property.jsName)
       putString(property.getterName)
       putInt(property.flags)
-      putIntArray(property.getterType)
+      putTypeCodes(property.getterType, codes)
       putBoolean(property.setterName != null)
       property.setterName?.let { setterName ->
         putString(setterName)
-        putIntArray(requireNotNull(property.setterType))
+        putTypeCodes(requireNotNull(property.setterType), codes)
       }
     }
   }

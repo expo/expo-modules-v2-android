@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.types
 
 import io.github.expo.modules.v2.records.readers.BufferRecordReader
+import io.github.expo.modules.v2.converters.typeCodes
 import io.github.expo.modules.v2.records.writers.BufferRecordWriter
 import io.github.expo.modules.v2.args.BufferTrampolineArguments
 import io.github.expo.modules.v2.modules.ModuleBuilder
@@ -114,7 +115,7 @@ class TypeConverterTest {
   @Test
   fun `converted elements roundtrip inside containers`() {
     // A container's element carries its own conversion; the codec applies it per value, in every
-    // position — no dedicated container converter involved.
+    // position - no dedicated container converter involved.
     val urls = AnyType(
       TypeDescriptor.Parametrized(
         List::class.java,
@@ -186,19 +187,19 @@ class TypeConverterTest {
   fun `a nullable built-in declaration rides a slot that can carry null`() {
     // The string-backed conversions state STRING, which is a JVM object either way...
     val nullableString = intArrayOf(CppType.STRING.code or CppType.NULLABLE)
-    assertContentEquals(nullableString, UrlConverter(isNullable = true).codes.values)
-    assertContentEquals(nullableString, UriConverter(isNullable = true).codes.values)
-    assertContentEquals(nullableString, FileConverter(isNullable = true).codes.values)
-    assertContentEquals(nullableString, PathConverter(isNullable = true).codes.values)
+    assertContentEquals(nullableString, UrlConverter(isNullable = true).typeCodes())
+    assertContentEquals(nullableString, UriConverter(isNullable = true).typeCodes())
+    assertContentEquals(nullableString, FileConverter(isNullable = true).typeCodes())
+    assertContentEquals(nullableString, PathConverter(isNullable = true).typeCodes())
     // ...while a scalar-backed one boxes: an unboxed double slot has no null to hand over, and the
     // native decoder rejects a nullable scalar code.
     assertContentEquals(
       intArrayOf(CppType.DOUBLE.code),
-      DurationConverter(isNullable = false).codes.values,
+      DurationConverter(isNullable = false).typeCodes(),
     )
     assertContentEquals(
-      intArrayOf(CppType.BOX_DOUBLE.code or CppType.NULLABLE),
-      DurationConverter(isNullable = true).codes.values,
+      intArrayOf(CppType.DOUBLE.code or CppType.NULLABLE),
+      DurationConverter(isNullable = true).typeCodes(),
     )
     assertNull(DurationConverter(isNullable = true).toJni(null))
     assertNull(DurationConverter(isNullable = true).fromJni(null))
@@ -237,7 +238,7 @@ class TypeConverterTest {
     assertEquals(stringsWithNull.asList(), nullableStrings.toJni(stringsWithNull))
     assertContentEquals(
       intArrayOf(CppType.LIST.code, CppType.STRING.code or CppType.NULLABLE),
-      nullableStrings.codes.values,
+      nullableStrings.typeCodes(),
     )
   }
 
@@ -257,7 +258,7 @@ class TypeConverterTest {
     )
     assertContentEquals(
       intArrayOf(CppType.LIST.code, CppType.STRING.code),
-      urlSetBridge.codes.values,
+      urlSetBridge.codes,
     )
     assertEquals(urls, urlSet.fromJni(urlStrings))
     assertEquals(urlStrings, urlSet.toJni(urls))
@@ -271,7 +272,7 @@ class TypeConverterTest {
     assertEquals(urlStringsWithNull, nullableUrlArray.toJni(urlsWithNull))
     assertContentEquals(
       intArrayOf(CppType.LIST.code, CppType.STRING.code or CppType.NULLABLE),
-      nullableUrlArray.codes.values,
+      nullableUrlArray.typeCodes(),
     )
 
     // End to end through the binary codec: the bridge list encodes STRING elements.
@@ -292,7 +293,7 @@ class TypeConverterTest {
   @Test
   fun `a nullable object array declaration carries its presence byte`() {
     // Nullability of the array itself belongs to the declaration, so it rides the bridge list's
-    // head code and a presence byte — the element codes stay untouched.
+    // head code and a presence byte - the element codes stay untouched.
     val urls = ArrayConverter<URL>(
       arrayDescriptor(
         Array<URL>::class.java,
@@ -302,7 +303,7 @@ class TypeConverterTest {
     )
     assertContentEquals(
       intArrayOf(CppType.LIST.code or CppType.NULLABLE, CppType.STRING.code),
-      urls.codes.values,
+      urls.typeCodes(),
     )
     assertNull(urls.toJni(null))
 
@@ -328,7 +329,7 @@ class TypeConverterTest {
         isNullable = true,
       ),
     )
-    assertContentEquals(urls.codes.values, declared.codes.values)
+    assertContentEquals(urls.typeCodes(), declared.codes)
     assertTrue(declared.converter.isNullable)
 
     // A non-nullable declaration rejects the null instead of writing a presence byte.
@@ -351,36 +352,36 @@ class TypeConverterTest {
     assertTrue(TypeDescriptor.BooleanArray(false).converter is BooleanArrayConverter)
 
     // The JNI slot is the array itself, so both conversions are the identity and only the buffer
-    // pass does work — one bulk region copy per array.
+    // pass does work - one bulk region copy per array.
     val ints = IntArrayConverter(isNullable = false)
     assertTrue(ints.isPassthrough)
-    assertContentEquals(intArrayOf(CppType.INT_ARRAY.code), ints.codes.values)
+    assertContentEquals(intArrayOf(CppType.INT_ARRAY.code), ints.typeCodes())
     val intValues = intArrayOf(1, -2, 3)
     assertSame(intValues, ints.toJni(intValues))
     assertSame(intValues, ints.fromJni(intValues))
     assertTrue(intValues.contentEquals(roundTrip(ints, intValues)))
 
     val longs = LongArrayConverter(isNullable = false)
-    assertContentEquals(intArrayOf(CppType.LONG_ARRAY.code), longs.codes.values)
+    assertContentEquals(intArrayOf(CppType.LONG_ARRAY.code), longs.typeCodes())
     assertTrue(longArrayOf(1L, -2L).contentEquals(roundTrip(longs, longArrayOf(1L, -2L))))
 
     val floats = FloatArrayConverter(isNullable = false)
-    assertContentEquals(intArrayOf(CppType.FLOAT_ARRAY.code), floats.codes.values)
+    assertContentEquals(intArrayOf(CppType.FLOAT_ARRAY.code), floats.typeCodes())
     assertTrue(floatArrayOf(1.5f, -2.5f).contentEquals(roundTrip(floats, floatArrayOf(1.5f, -2.5f))))
 
     val doubles = DoubleArrayConverter(isNullable = false)
-    assertContentEquals(intArrayOf(CppType.DOUBLE_ARRAY.code), doubles.codes.values)
+    assertContentEquals(intArrayOf(CppType.DOUBLE_ARRAY.code), doubles.typeCodes())
     assertTrue(doubleArrayOf(1.5, -2.5).contentEquals(roundTrip(doubles, doubleArrayOf(1.5, -2.5))))
 
     val booleans = BooleanArrayConverter(isNullable = false)
-    assertContentEquals(intArrayOf(CppType.BOOLEAN_ARRAY.code), booleans.codes.values)
+    assertContentEquals(intArrayOf(CppType.BOOLEAN_ARRAY.code), booleans.typeCodes())
     val flags = booleanArrayOf(true, false, true)
     assertTrue(flags.contentEquals(roundTrip(booleans, flags)))
 
     // ByteArray is declared directly just like every other primitive array.
     assertTrue(TypeDescriptor.ByteArray(false).converter is ByteArrayConverter)
     val bytes = ByteArrayConverter(isNullable = false)
-    assertContentEquals(intArrayOf(CppType.BYTE_ARRAY.code), bytes.codes.values)
+    assertContentEquals(intArrayOf(CppType.BYTE_ARRAY.code), bytes.typeCodes())
     assertTrue(byteArrayOf(1, -2).contentEquals(roundTrip(bytes, byteArrayOf(1, -2))))
   }
 
@@ -394,7 +395,7 @@ class TypeConverterTest {
     // A primitive array has no boxed form, so a nullable declaration keeps its own kind.
     assertContentEquals(
       intArrayOf(CppType.INT_ARRAY.code or CppType.NULLABLE),
-      ints.codes.values,
+      ints.typeCodes(),
     )
     assertNull(ints.toJni(null))
     assertNull(ints.fromJni(null))
@@ -417,7 +418,7 @@ class TypeConverterTest {
     assertFailsWith<IllegalArgumentException> { nonNull.fromJni(null) }
   }
 
-  /** [value] written by [converter] and read back by it — the buffer pass's own round trip. */
+  /** [value] written by [converter] and read back by it - the buffer pass's own round trip. */
   private fun <T> roundTrip(converter: TypeConverter<T>, value: T): T? {
     val writer = buffer.duplicateView()
     converter.writeToBuffer(writer, value)
@@ -510,8 +511,8 @@ class TypeConverterTest {
     assertTrue(pair is PairConverter)
     assertFalse(pair.isPassthrough)
     assertContentEquals(
-      intArrayOf(CppType.TUPLE.code, 2, CppType.BOX_INT.code, CppType.STRING.code or CppType.NULLABLE),
-      pair.codes.values,
+      intArrayOf(CppType.TUPLE.code, 2, CppType.INT.code, CppType.STRING.code or CppType.NULLABLE),
+      pair.typeCodes(),
     )
 
     // A nested container keeps its own codes inline, so the element after it still lines up.
@@ -531,11 +532,11 @@ class TypeConverterTest {
         CppType.TUPLE.code or CppType.NULLABLE,
         3,
         CppType.LIST.code,
-        CppType.BOX_DOUBLE.code,
-        CppType.BOX_BOOLEAN.code,
+        CppType.DOUBLE.code,
+        CppType.BOOLEAN.code,
         CppType.STRING.code,
       ),
-      triple.codes.values,
+      triple.typeCodes(),
     )
 
     // The arity comes from the class, so a declaration with the wrong number of arguments is a bug.

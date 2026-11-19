@@ -10,7 +10,7 @@ import io.github.expo.modules.v2.testsupport.HermesRuntime
 /**
  * The module under test for [RecordPairFastBenchmark] and friends: the record path (data class
  * <-> JS object, positional EXTERNAL_SCHEMA buffer format, trampoline payload) next to the same
- * payload crossing as untyped maps — the representation module authors would otherwise use.
+ * payload crossing as untyped maps - the representation module authors would otherwise use.
  *
  * Dynamic maps stay off the buffer by default, so the maps side crosses element-wise as JNI object slots with
  * direct invocation; the records side rides the binary buffer through trampolines. [FlaggedItem]

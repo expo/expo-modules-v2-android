@@ -22,7 +22,7 @@ namespace expo::modules::v2 {
  * An unsupported `T` is a compile error (the primary template is left undefined); a value of the
  * wrong JS shape throws `facebook::jsi::JSError` at runtime.
  *
- * Test-support only. The production bridge never knows its C++ types at compile time — it is
+ * Test-support only. The production bridge never knows its C++ types at compile time - it is
  * driven by an [ExpectedType] descriptor and goes through `converter/encoders/JniEncode.h` /
  * `converter/decoders/JniDecode.h` instead. This mechanism backs the `__nativeRoundTrip` host
  * function, which pins the leaf coercion rules those encoders are expected to match.

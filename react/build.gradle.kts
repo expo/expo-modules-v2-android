@@ -8,8 +8,8 @@ plugins {
   // No version: the Kotlin Gradle plugin is already on this build's classpath (the JVM modules
   // request it by version), and asking again with one fails the plugin resolution.
   id("org.jetbrains.kotlin.android")
-  // Applies the Kolibri compiler plugin (@NativeMethod rewriting), adds the kolibri runtime, and —
-  // because this is an Android project — the kolibri-android Prefab AAR plus prefab consumption, so
+  // Applies the Kolibri compiler plugin (@NativeMethod rewriting), adds the kolibri runtime, and -
+  // because this is an Android project - the kolibri-android Prefab AAR plus prefab consumption, so
   // the CMake build below can `find_package(kolibri-android)`.
   alias(libs.plugins.kolibri)
   // This is the one artifact a consuming app depends on rather than builds. The POM boilerplate and
@@ -22,7 +22,7 @@ mavenPublishing {
   // everything else Expo releases through it, so the artifact carries the project it belongs to.
   coordinates(artifactId = "expo-modules-v2-react")
 
-  // `release` only — a consumer never wants the debug variant, and every published file counts
+  // `release` only - a consumer never wants the debug variant, and every published file counts
   // against Maven Central's per-organization file-count limit. Central's validator rejects a
   // deployment with no `-javadoc.jar`, so `JavadocJar.Javadoc()` stays; AGP generates it from this
   // variant's sources.
@@ -41,8 +41,8 @@ mavenPublishing {
 }
 
 // This module compiles :api's sources rather than copying them: one Kotlin surface and one C++
-// bridge, two host shapes. Only the pieces that differ — attaching to a runtime the host owns, and
-// posting to the host's JS thread — live under this module's own src/main.
+// bridge, two host shapes. Only the pieces that differ - attaching to a runtime the host owns, and
+// posting to the host's JS thread - live under this module's own src/main.
 val apiKotlinDir = rootProject.layout.projectDirectory.dir("api/src/main/kotlin")
 val apiCppDir = rootProject.layout.projectDirectory.dir("api/src/main/cpp")
 
@@ -123,7 +123,7 @@ dependencies {
 
   // React Native supplies both halves of the host: `libjsi.so` (through the `jsi` prefab this
   // module's CMake links against) and the ReactContext the scheduler posts to. `compileOnly` is not
-  // an option — prefab only sees runtime/implementation dependencies.
+  // an option - prefab only sees runtime/implementation dependencies.
   implementation(libs.react.android)
 
   api(libs.kolibri.android)
@@ -146,8 +146,8 @@ publishing.publications.withType<MavenPublication>()
 
 // The compiler plugin, registered straight onto every Kotlin compilation here.
 //
-// `id("io.github.expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin
-// publishes — is not available inside this build: a Gradle plugin built here is not on this
+// `id("io.github.expo.modules.v2")` - what a consuming app applies, and what :gradle-plugin
+// publishes - is not available inside this build: a Gradle plugin built here is not on this
 // build's own buildscript classpath. Registering the jar plus switching incremental compilation
 // off is the whole of what that plugin does, so this is the same thing by hand.
 configurations

@@ -40,7 +40,7 @@ object Arity : Module() {
 
 /**
  * A private member is exported too. `GetMethodID` resolves a private method, and unlike `internal`
- * the JVM does not mangle its name — which is why the checker rejects only `internal`.
+ * the JVM does not mangle its name - which is why the checker rejects only `internal`.
  */
 @ExpoModule
 object Visibility : Module() {

@@ -49,10 +49,10 @@ benchmark {
   }
   configurations {
     // The values below reach JMH through OptionsBuilder, so they win over
-    // @Warmup/@Measurement/@BenchmarkMode annotations on the classes — keep the run shape here,
+    // @Warmup/@Measurement/@BenchmarkMode annotations on the classes - keep the run shape here,
     // not in the sources. Only @OperationsPerInvocation and @Param stay in the sources.
     named("main") {
-      // `./gradlew :benchmark:benchmarksBenchmark` — the everyday run, one fork per benchmark.
+      // `./gradlew :benchmark:benchmarksBenchmark` - the everyday run, one fork per benchmark.
       warmups = 2
       iterations = 3
       iterationTime = 1
@@ -62,7 +62,7 @@ benchmark {
       advanced("jvmForks", "1")
       benchmarkFilter?.let { include(it) }
     }
-    // `./gradlew :benchmark:benchmarksDeepBenchmark` — for gating a perf change. Three forks let
+    // `./gradlew :benchmark:benchmarksDeepBenchmark` - for gating a perf change. Three forks let
     // JMH price the run-to-run drift this machine shows instead of hiding it inside one process.
     // Use advanced("jvmForks", "definedByJmh") to hand fork control to per-class @Fork instead.
     register("deep") {
@@ -75,7 +75,7 @@ benchmark {
       advanced("jvmForks", "3")
       benchmarkFilter?.let { include(it) }
     }
-    // `./gradlew :benchmark:benchmarksSmokeBenchmark` — a fast correctness check of the harness
+    // `./gradlew :benchmark:benchmarksSmokeBenchmark` - a fast correctness check of the harness
     // (does every benchmark still run?), not a source of numbers.
     register("smoke") {
       warmups = 1
@@ -288,8 +288,8 @@ tasks.register<JavaExec>("profileModulesAsync") {
 
 // The compiler plugin, registered straight onto every Kotlin compilation here.
 //
-// `id("io.github.expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin
-// publishes — is not available inside this build: a Gradle plugin built here is not on this
+// `id("io.github.expo.modules.v2")` - what a consuming app applies, and what :gradle-plugin
+// publishes - is not available inside this build: a Gradle plugin built here is not on this
 // build's own buildscript classpath. Registering the jar plus switching incremental compilation
 // off is the whole of what that plugin does, so this is the same thing by hand.
 configurations

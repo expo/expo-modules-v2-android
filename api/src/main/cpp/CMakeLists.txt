@@ -39,7 +39,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # This build compiles no JSI of its own: exactly one copy may exist in a process, because two
 # would disagree about object layout and carry distinct vtables and typeinfos, breaking
 # dynamic_cast and catch across library boundaries. The copy comes from whoever creates the
-# runtime — hermes-tests-environment here, React Native on Android (see
+# runtime - hermes-tests-environment here, React Native on Android (see
 # react/src/main/cpp/CMakeLists.txt, which aliases this same target name onto
 # ReactAndroid::jsi). The headers are unpacked from that host's published `jsi-cpp` zip, so
 # nothing here vendors Hermes.

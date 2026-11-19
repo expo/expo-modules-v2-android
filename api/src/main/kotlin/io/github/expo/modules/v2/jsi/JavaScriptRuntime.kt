@@ -74,7 +74,7 @@ abstract class JavaScriptRuntime protected constructor(
    * Jobs and microtasks alternate because each feeds the other: settling a promise queues its
    * `.then`, and a `.then` can call another async export whose body finishes immediately.
    *
-   * MUST run on the JS thread, and MUST NOT be called from inside a host function — a settle
+   * MUST run on the JS thread, and MUST NOT be called from inside a host function - a settle
    * writes through the shared binary buffer, which a call in flight has already claimed.
    */
   fun drainJobs(): Boolean {

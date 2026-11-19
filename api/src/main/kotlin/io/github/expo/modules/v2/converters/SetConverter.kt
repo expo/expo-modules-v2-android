@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.converters
 
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
+import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
 import io.github.expo.kolibri.binary.BinaryBuffer
@@ -11,8 +11,11 @@ class SetConverter<T>(
 ) : TypeConverter<Set<T>>(typeDescriptor.isNullable) {
   private val elementConverter: TypeConverter<Any> = typeDescriptor.params[0].anyConverter
 
-  override val codes: TypeCodes
-    get() = CppType.LIST.nullable(isNullable) + elementConverter.codes
+  override val kind: CppType get() = CppType.LIST
+
+  override fun writeTypeParameters(out: TypeCodesWriter) {
+    elementConverter.writeTypeCodes(out)
+  }
 
   override val isPassthrough: Boolean get() = false
 

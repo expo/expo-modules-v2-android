@@ -5,13 +5,13 @@ plugins {
   alias(libs.plugins.kotlin.jvm)
   alias(libs.plugins.buildconfig)
   alias(libs.plugins.gradle.plugin)
-  // Published for the same reason :compiler-plugin is — a consuming app resolves this plugin, it
+  // Published for the same reason :compiler-plugin is - a consuming app resolves this plugin, it
   // does not build it.
   alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 mavenPublishing {
-  // Prefixed for the same reason :react is — see there. Only the jar is renamed: Gradle derives the
+  // Prefixed for the same reason :react is - see there. Only the jar is renamed: Gradle derives the
   // marker's coordinates from the plugin id, and the publish plugin leaves that publication alone.
   coordinates(artifactId = "expo-modules-v2-gradle-plugin")
 

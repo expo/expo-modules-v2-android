@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.converters
 
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
+import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
 import io.github.expo.kolibri.binary.BinaryBuffer
@@ -14,7 +14,11 @@ class ListConverter(
   private val elementConverter: TypeConverter<Any> =
     elementDescriptor.anyConverter
 
-  override val codes: TypeCodes = CppType.LIST.nullable(isNullable) + elementConverter.codes
+  override val kind: CppType get() = CppType.LIST
+
+  override fun writeTypeParameters(out: TypeCodesWriter) {
+    elementConverter.writeTypeCodes(out)
+  }
 
   override val isPassthrough: Boolean get() = elementConverter.isPassthrough
 
@@ -45,12 +49,13 @@ class ListConverter(
       if (fastPath) {
         val elementKind = elementConverter.kind
         when (elementKind) {
-          CppType.BOX_DOUBLE -> return@writePresent iterateOver<Double>(list) { putDouble(it) }
-          CppType.BOX_INT -> return@writePresent iterateOver<Int>(list) { putInt(it) }
-          CppType.BOX_LONG -> return@writePresent iterateOver<Long>(list) { putLong(it) }
-          CppType.BOX_FLOAT -> return@writePresent iterateOver<Float>(list) { putFloat(it) }
-          CppType.BOX_BOOLEAN -> return@writePresent iterateOver<Boolean>(list) { putBoolean(it) }
-          CppType.DOUBLE, CppType.INT, CppType.LONG, CppType.FLOAT, CppType.BOOLEAN -> error("List has to use boxed types")
+          CppType.DOUBLE -> return@writePresent iterateOver<Double>(list) { putDouble(it) }
+          CppType.INT -> return@writePresent iterateOver<Int>(list) { putInt(it) }
+          CppType.LONG -> return@writePresent iterateOver<Long>(list) { putLong(it) }
+          CppType.FLOAT -> return@writePresent iterateOver<Float>(list) { putFloat(it) }
+          CppType.BOOLEAN -> return@writePresent iterateOver<Boolean>(list) { putBoolean(it) }
+          // Any other element writes itself, one at a time, below.
+          else -> Unit
         }
       }
 
@@ -66,19 +71,17 @@ class ListConverter(
     if (fastPath) {
       val elementKind = elementConverter.kind
       val converted = when (elementKind) {
-        CppType.BOX_DOUBLE -> getDoubles(count).toList()
-        CppType.BOX_INT -> getInts(count).toList()
-        CppType.BOX_LONG -> getLongs(count).toList()
-        CppType.BOX_FLOAT -> getFloats(count).toList()
-        CppType.BOX_BOOLEAN -> {
+        CppType.DOUBLE -> getDoubles(count).toList()
+        CppType.INT -> getInts(count).toList()
+        CppType.LONG -> getLongs(count).toList()
+        CppType.FLOAT -> getFloats(count).toList()
+        CppType.BOOLEAN -> {
           val result = ArrayList<Any?>(count)
           repeat(count) {
             result.add(getBoolean())
           }
           result
         }
-
-        CppType.DOUBLE, CppType.INT, CppType.LONG, CppType.FLOAT, CppType.BOOLEAN -> error("List has to use boxed types")
 
         else -> null
       }

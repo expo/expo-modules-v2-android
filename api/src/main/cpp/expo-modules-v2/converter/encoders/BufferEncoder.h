@@ -22,23 +22,19 @@ namespace expo::modules::v2 {
     void operator()(const ExpectedType::Record& recordType) const;
 
     void operator()(const ExpectedType::Tuple& tupleType) const;
+    void operator()(const ExpectedType::Union& unionType) const;
   };
 
   // clang-format off
   template<> void BufferEncoder::operator()<CppType::INT>() const;
-  template<> void BufferEncoder::operator()<CppType::BOX_INT>() const;
 
   template<> void BufferEncoder::operator()<CppType::LONG>() const;
-  template<> void BufferEncoder::operator()<CppType::BOX_LONG>() const;
 
   template<> void BufferEncoder::operator()<CppType::FLOAT>() const;
-  template<> void BufferEncoder::operator()<CppType::BOX_FLOAT>() const;
 
   template<> void BufferEncoder::operator()<CppType::DOUBLE>() const;
-  template<> void BufferEncoder::operator()<CppType::BOX_DOUBLE>() const;
 
   template<> void BufferEncoder::operator()<CppType::BOOLEAN>() const;
-  template<> void BufferEncoder::operator()<CppType::BOX_BOOLEAN>() const;
 
   template<> void BufferEncoder::operator()<CppType::BOOLEAN_ARRAY>() const;
   template<> void BufferEncoder::operator()<CppType::INT_ARRAY>() const;

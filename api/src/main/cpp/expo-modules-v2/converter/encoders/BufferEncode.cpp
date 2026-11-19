@@ -70,7 +70,7 @@ namespace expo::modules::v2 {
   ) {
     const bool isNull = value.isUndefined() || value.isNull();
     if (isNull && !type.nullable()) [[unlikely]] {
-      throwNullInNonNullable(rt, type);
+      throwNullInNonNullable(type);
     }
 
     if (type.nullable()) {
@@ -124,7 +124,7 @@ namespace expo::modules::v2 {
       }
 
       if (object.isFunction(rt)) {
-        throwJSError(rt, {"Cannot convert a JS function to a Java value"}); // TODO: callbacks
+        throwConversionError({"Cannot convert a JS function to a Java value"}); // TODO: callbacks
       }
 
       if (object.isArrayBuffer(rt)) {
@@ -153,6 +153,6 @@ namespace expo::modules::v2 {
       return;
     }
 
-    throwJSError(rt, {"Cannot convert this JS value to a Java value"});
+    throwConversionError({"Cannot convert this JS value to a Java value"});
   }
 } // namespace expo::modules::v2

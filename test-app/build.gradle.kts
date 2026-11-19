@@ -48,7 +48,7 @@ val nativeLibsTasks = listOf(
 
 // Configure every JVM-launching task to find the native libs. This covers the `application`
 // plugin's `run` task as well as the synthetic `...MainKt.main()` tasks IntelliJ generates when
-// you click "Run" in the IDE — both are JavaExec, and without this they fail with
+// you click "Run" in the IDE - both are JavaExec, and without this they fail with
 // `UnsatisfiedLinkError: no expo-modules-v2 in java.library.path`.
 tasks.withType<JavaExec>().configureEach {
   dependsOn(nativeLibsTasks)
@@ -77,8 +77,8 @@ tasks.named<Test>("test") {
 
 // The compiler plugin, registered straight onto every Kotlin compilation here.
 //
-// `id("io.github.expo.modules.v2")` — what a consuming app applies, and what :gradle-plugin
-// publishes — is not available inside this build: a Gradle plugin built here is not on this
+// `id("io.github.expo.modules.v2")` - what a consuming app applies, and what :gradle-plugin
+// publishes - is not available inside this build: a Gradle plugin built here is not on this
 // build's own buildscript classpath. Registering the jar plus switching incremental compilation
 // off is the whole of what that plugin does, so this is the same thing by hand.
 configurations

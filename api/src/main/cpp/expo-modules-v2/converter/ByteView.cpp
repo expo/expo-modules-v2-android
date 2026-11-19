@@ -29,7 +29,7 @@ namespace expo::modules::v2 {
       }
     }
 
-    throwJSError(rt, {
+    throwConversionError({
       "Expected an ArrayBuffer, a typed array such as a Uint8Array, or a DataView for a byte array",
     });
   }

@@ -71,6 +71,13 @@ internal enum class ValueKind {
   RECORD,
 
   SHARED_OBJECT,
+
+  /**
+   * An `@Union` type, whose bridge is a `UnionValue`: its variant's index and that variant's value.
+   * One whose variants all cross as the same bridge value crosses as that value instead (see
+   * [TransportPolicy.sameBridgeOf]).
+   */
+  UNION,
 }
 
 internal enum class Crossing {
@@ -93,6 +100,11 @@ internal class ValuePlan(
   /** The typed `TrampolineArguments` reader for a buffered passthrough leaf, else null. */
   val bufferReader: String?,
 )
+
+/** What every variant of a union crosses as, when they share it - see [TransportPolicy.sameBridgeOf]. */
+internal class UnionBridge(val kind: Kind, /** The first variant's value type. */ val type: IrType) {
+  enum class Kind { STRING, INT, SHARED_OBJECT }
+}
 
 internal class TransportPolicy(context: IrPluginContext, private val symbols: SymbolFinder) {
   private val irBuiltIns = context.irBuiltIns
@@ -155,6 +167,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       else -> {
         val owner = type.classOrNull?.owner
         when {
+          owner?.hasAnnotation(Identifiers.Classes.UnionAnnotation) == true -> ValueKind.UNION
           owner?.hasAnnotation(Identifiers.Classes.RecordAnnotation) == true -> ValueKind.RECORD
           owner?.isSubclassOf(symbols.classes.typedArray.owner) == true -> ValueKind.TYPED_ARRAY
           owner?.isSubclassOf(symbols.classes.sharedObject.owner) == true -> ValueKind.SHARED_OBJECT
@@ -183,7 +196,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.LIST -> elementTypes(type).all { isPassthrough(kindOf(it), it) }
       ValueKind.MAP -> elementTypes(type).drop(1).all { isPassthrough(kindOf(it), it) }
       // A Set, an Array or a tuple always rebuilds its container, and a record always rebuilds itself.
-      ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD,
+      ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD, ValueKind.UNION,
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
       ValueKind.TYPED_ARRAY,
         -> false
@@ -204,7 +217,15 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.CONVERTED_TO_STRING,
       ValueKind.ENUM,
         -> true
-      ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD ->
+      // An Int bridge rides a register-width slot unless it is nullable, like an Int-backed enum.
+      ValueKind.UNION ->
+        if (unionBridgeOf(type)?.kind == UnionBridge.Kind.INT && !type.isMarkedNullable()) {
+          false
+        } else {
+          isBufferSafe(type, mutableSetOf(), allowDynamic)
+        }
+      ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD,
+        ->
         isBufferSafe(
           type,
           mutableSetOf(),
@@ -222,6 +243,12 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       else -> true
     }
 
+  /**
+   * Whether every value of [type] can ride the buffer - what a union's schema records for its
+   * variants, so the runtime agrees with the transport chosen here.
+   */
+  fun isBufferSafe(type: IrType): Boolean = isBufferSafe(type, mutableSetOf())
+
   private fun isBufferSafe(
     type: IrType,
     visited: MutableSet<String>,
@@ -238,6 +265,15 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
     }
     if (!elementTypes(type).all { isBufferSafe(it, visited, allowDynamic) }) {
       return false
+    }
+    if (kind == ValueKind.UNION) {
+      val unionClass = type.classOrNull?.owner ?: return true
+      if (!visited.add(unionClass.kotlinFqName.asString())) {
+        return true
+      }
+      return unionVariants(unionClass).all { variant ->
+        variant.valueType?.let { isBufferSafe(it, visited) } ?: true
+      }
     }
     if (kind != ValueKind.RECORD) {
       return true
@@ -281,6 +317,44 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
     return fields.singleOrNull()?.type?.isInt() == true
   }
 
+  /**
+   * The bridge value every variant of [unionClass] crosses as, when they all cross as the same one:
+   *
+   * - a string: `String`, `File`, `URL`, `URI`, `Path` or a string-backed enum
+   * - an `Int`: `Int` or an `Int`-backed enum
+   * - a shared object of one class, such as `SharedRef<Drawable>` and `SharedRef<Bitmap>`
+   *
+   * Native code cannot tell such variants apart, so the union crosses as that bridge value alone
+   * and Kotlin picks the variant - the first whose conversion takes the value. The generated schema
+   * records the choice, and the runtime's `UnionType` follows it. Null when the variants differ.
+   */
+  fun sameBridgeOf(unionClass: IrClass): UnionBridge? {
+    val types = unionVariants(unionClass).map { variant ->
+      val valueType = variant.valueType
+      if (variant.form != UnionVariant.Form.VALUE || valueType == null || valueType.isMarkedNullable()) {
+        return null
+      }
+      valueType
+    }
+    val kinds = types.map { type ->
+      when (kindOf(type)) {
+        ValueKind.STRING, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM -> UnionBridge.Kind.STRING
+        ValueKind.INT_ENUM -> UnionBridge.Kind.INT
+        ValueKind.UNBOXED_SCALAR -> if (type.isInt()) UnionBridge.Kind.INT else return null
+        ValueKind.SHARED_OBJECT -> UnionBridge.Kind.SHARED_OBJECT
+        else -> return null
+      }
+    }
+    val kind = kinds.distinct().singleOrNull() ?: return null
+    // Shared objects share a bridge only when they are of one class: the JNI slot names it.
+    if (kind == UnionBridge.Kind.SHARED_OBJECT && types.map { it.classOrNull }.distinct().size != 1) {
+      return null
+    }
+    return UnionBridge(kind, types.first())
+  }
+
+  private fun unionBridgeOf(type: IrType): UnionBridge? = type.classOrNull?.owner?.let(::sameBridgeOf)
+
   fun isTypedSharedRef(type: IrType): Boolean {
     val owner = type.classOrNull?.owner ?: return false
     return owner.isSubclassOf(symbols.classes.sharedRef.owner) && elementTypes(type).size == 1
@@ -309,6 +383,17 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.TYPED_ARRAY -> symbols.classes.javaScriptObject.owner.defaultType.makeNullable()
       ValueKind.LIST, ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE ->
         irBuiltIns.listClass.typeWith(irBuiltIns.anyType.makeNullable()).makeNullable()
+
+      ValueKind.UNION -> {
+        val bridge = unionBridgeOf(type)
+        when (bridge?.kind) {
+          UnionBridge.Kind.STRING -> irBuiltIns.stringType.makeNullable()
+          UnionBridge.Kind.INT ->
+            if (type.isMarkedNullable()) irBuiltIns.intType.makeNullable() else irBuiltIns.intType
+          UnionBridge.Kind.SHARED_OBJECT -> bridge.type.makeNullable()
+          null -> symbols.classes.unionValue.owner.defaultType.makeNullable()
+        }
+      }
 
       ValueKind.MAP, ValueKind.RECORD ->
         irBuiltIns.mapClass

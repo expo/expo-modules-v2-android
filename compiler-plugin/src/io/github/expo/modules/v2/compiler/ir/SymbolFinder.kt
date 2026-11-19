@@ -20,7 +20,7 @@ class SymbolFinder(private val context: IrPluginContext) {
 
   private fun clazz(classId: ClassId): IrClassSymbol =
     context.referenceClass(classId)
-      ?: error("$classId not found — is io.github.expo.modules.v2:api on the compile classpath?")
+      ?: error("$classId not found - is io.github.expo.modules.v2:api on the compile classpath?")
 
   inner class Classes internal constructor() {
     /** `interface RecordCodec<T : Record>` */
@@ -34,6 +34,18 @@ class SymbolFinder(private val context: IrPluginContext) {
 
     /** `object RecordRegistry` */
     val recordRegistry: IrClassSymbol by lazy { clazz(Identifiers.Classes.RecordRegistry) }
+
+    /** `class UnionSchema(name, bufferSafe, vararg variants)` */
+    val unionSchema: IrClassSymbol by lazy { clazz(Identifiers.Classes.UnionSchema) }
+
+    /** `class UnionVariant(name, tag, type)` */
+    val unionVariant: IrClassSymbol by lazy { clazz(Identifiers.Classes.UnionVariant) }
+
+    /** `object UnionRegistry` */
+    val unionRegistry: IrClassSymbol by lazy { clazz(Identifiers.Classes.UnionRegistry) }
+
+    /** `class UnionValue(index, payload)` - the JNI slot a union crosses in. */
+    val unionValue: IrClassSymbol by lazy { clazz(Identifiers.Classes.UnionValue) }
 
     val sharedObjectRegistry: IrClassSymbol by lazy {
       clazz(Identifiers.Classes.SharedObjectRegistry)
@@ -123,6 +135,12 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `RecordField(name, type, isOptional)` */
     val recordField: IrConstructorSymbol by lazy { classes.recordField.constructors.single() }
 
+    /** `UnionSchema(name, bufferSafe, vararg variants)` */
+    val unionSchema: IrConstructorSymbol by lazy { classes.unionSchema.constructors.single() }
+
+    /** `UnionVariant(name, tag, type)` */
+    val unionVariant: IrConstructorSymbol by lazy { classes.unionVariant.constructors.single() }
+
     /** `TypeDescriptor.Simple(javaClass, isNullable)` */
     val simpleDescriptor: IrConstructorSymbol by lazy {
       classes.typeDescriptorSimple.constructors.single()
@@ -159,6 +177,16 @@ class SymbolFinder(private val context: IrPluginContext) {
 
     val register: IrSimpleFunctionSymbol by lazy {
       classes.recordRegistry.functions.single { it.owner.name == Identifiers.Names.REGISTER }
+    }
+
+    /** `UnionRegistry.register(codec)` */
+    val registerUnion: IrSimpleFunctionSymbol by lazy {
+      classes.unionRegistry.functions.single { it.owner.name == Identifiers.Names.REGISTER }
+    }
+
+    /** `noSuchVariant(union, index): Nothing` */
+    val noSuchVariant: IrSimpleFunctionSymbol by lazy {
+      context.referenceFunctions(Identifiers.Callables.noSuchVariant).single()
     }
 
     /** `RecordReader.readIsPresent(): Boolean` */

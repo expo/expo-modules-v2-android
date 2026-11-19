@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.converters
 
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
+import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
 import io.github.expo.kolibri.binary.BinaryBuffer
@@ -12,8 +12,11 @@ class MapConverter(
   private val valueConverter: TypeConverter<Any> =
     typeDescriptor.params[1].anyConverter
 
-  override val codes: TypeCodes =
-    CppType.MAP.nullable(isNullable) + valueConverter.codes
+  override val kind: CppType get() = CppType.MAP
+
+  override fun writeTypeParameters(out: TypeCodesWriter) {
+    valueConverter.writeTypeCodes(out)
+  }
 
   override val isPassthrough: Boolean get() = valueConverter.isPassthrough
 

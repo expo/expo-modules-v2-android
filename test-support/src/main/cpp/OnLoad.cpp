@@ -11,8 +11,8 @@
 namespace {
   /**
    * Token for the Kotlin entry point (io.github.expo.modules.v2.testsupport.TestSupport). `nativeInstall`
-   * receives the runtime handle's `nativePointer` — the address of the C++
-   * `expo::modules::v2::jsi::JavaScriptRuntime` minted by the engine's `nativeCreate` — and installs
+   * receives the runtime handle's `nativePointer` - the address of the C++
+   * `expo::modules::v2::jsi::JavaScriptRuntime` minted by the engine's `nativeCreate` - and installs
    * the `globalThis.ExpoTestSupport` host-function suite into that runtime.
    */
   struct JTestSupport : expo::kolibri::JavaClass<JTestSupport> {

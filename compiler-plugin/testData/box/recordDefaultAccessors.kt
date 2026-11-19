@@ -7,7 +7,7 @@ package io.github.expo.modules.v2.testdata
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.records.codecFor
 
-// Private in the file, so the JVM sees a private static on the file facade — the generated `decode`
+// Private in the file, so the JVM sees a private static on the file facade - the generated `decode`
 // lives in another class and needs a synthetic accessor to call it.
 private fun secret(): Int = 11
 

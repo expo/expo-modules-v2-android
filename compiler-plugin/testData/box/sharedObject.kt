@@ -42,8 +42,8 @@ class TextRef(text: StringBuilder) : SharedRef<StringBuilder>(text) {
 }
 
 /**
- * The two ways a class reaches a module. `Nested` is found because it lives inside the module —
- * nesting already says which module owns it — and `Listed` has to be named, being declared outside.
+ * The two ways a class reaches a module. `Nested` is found because it lives inside the module -
+ * nesting already says which module owns it - and `Listed` has to be named, being declared outside.
  */
 @ExpoSharedObject
 class Listed(private val n: Int) : SharedObject() {
@@ -129,7 +129,7 @@ fun box(): String {
             "create$suffix" to "<absent>",
         ),
         // A buffered String argument keeps its trampoline, even on a shared-object class. The
-        // String *result* still crosses in its slot — see TransportPolicy.prefersBuffer.
+        // String *result* still crosses in its slot - see TransportPolicy.prefersBuffer.
         Player::class.java to mapOf(
             "rename$suffix" to "(I)Ljava/lang/String;",
             "play$suffix" to "<absent>",

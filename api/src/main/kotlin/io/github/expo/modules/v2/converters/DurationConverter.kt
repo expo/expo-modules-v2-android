@@ -1,19 +1,13 @@
 package io.github.expo.modules.v2.converters
 
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
 import io.github.expo.kolibri.binary.BinaryBuffer
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 class DurationConverter(isNullable: Boolean) : TypeConverter<Duration>(isNullable) {
-  override val codes: TypeCodes
-    get() = if (isNullable) {
-      CppType.BOX_DOUBLE.nullable(true).toTypeCodes()
-    } else {
-      CppType.DOUBLE.toTypeCodes()
-    }
+  override val kind: CppType get() = CppType.DOUBLE
 
   override val isPassthrough: Boolean get() = false
 

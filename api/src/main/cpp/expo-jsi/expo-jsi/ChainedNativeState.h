@@ -8,7 +8,7 @@ namespace expo::jsi {
    * Chainable native state. A facebook::jsi::Object has exactly ONE NativeState slot, so independent pieces
    * of native data that want to ride on the same JS object must share it: a ChainedNativeState is
    * a singly-linked node in that slot. [attach] pushes a new node in front of whatever chain the
-   * object already carries, and [find] walks the chain by concrete type — so e.g. a module object
+   * object already carries, and [find] walks the chain by concrete type - so e.g. a module object
    * can carry a ModuleNativeState today and gain further states later without either knowing
    * about the other.
    *
@@ -16,7 +16,7 @@ namespace expo::jsi {
    * dynamic_cast. Instead, every concrete state derives through [ChainedNativeStateOf], a CRTP
    * base that mints one process-unique tag per type; [find] compares tags and static-casts.
    *
-   * Invariants (unverifiable without RTTI — keep them by construction):
+   * Invariants (unverifiable without RTTI - keep them by construction):
    * - Every native state attached to a JS object in this codebase goes through [attach]. A
    *   foreign, non-chained NativeState in the slot would be indistinguishable from a chain head
    *   and mis-cast.

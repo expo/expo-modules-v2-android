@@ -65,7 +65,7 @@ private data class Mixed(
  * crosses as a `Map<String, Any?>` built and consumed by the default [RecordCodec.toMap] /
  * [RecordCodec.fromMap], which drive the codec's one `encode`/`decode` pair through the
  * schema-directed map writer/reader. Real JSI-handle fields are covered end-to-end in
- * HermesRuntimeTest — a handle cannot be constructed on a bare JVM.
+ * HermesRuntimeTest - a handle cannot be constructed on a bare JVM.
  */
 class RecordMapCodecTest {
   @Test
@@ -104,7 +104,7 @@ class RecordMapCodecTest {
 
   @Test
   fun `a dynamic field carries null through the map shape untouched`() {
-    // ANY is a passthrough on the map path — the writer and reader state the declared type and
+    // ANY is a passthrough on the map path - the writer and reader state the declared type and
     // nothing else, so a null crosses as the value it is, in either nullability.
     assertNull(codecFor<Wrapper>().fromMap(codecFor<Wrapper>().toMap(Wrapper(null))).value)
     assertEquals("x", codecFor<Wrapper>().fromMap(codecFor<Wrapper>().toMap(Wrapper("x"))).value)
@@ -171,7 +171,7 @@ class RecordMapCodecTest {
   @Test
   fun `toMap writes fields in declaration order`() {
     // MapRecordWriter and MapRecordReader share one moving cursor over schema.fields. If `encode`
-    // ever emitted in a different order from `schema`, the map would silently mislabel fields —
+    // ever emitted in a different order from `schema`, the map would silently mislabel fields -
     // every value would still be present, just under the wrong key. Only an ordered assertion on a
     // record whose fields have distinguishable values can catch that.
     val mixed = Mixed(1, null, "n", listOf("t"), MapPoint(1.0, 2.0, "p"), true)

@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.converters
 
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
+import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
 import io.github.expo.kolibri.binary.BinaryBuffer
@@ -17,10 +17,12 @@ sealed class TupleConverter<T : Any>(
     typeDescriptor.params.map { it.anyConverter }
   }
 
-  final override val codes: TypeCodes =
-    CppType.TUPLE.nullable(isNullable) + TypeCodes(
-      intArrayOf(arity) + elementConverters.flatMap { it.codes.values.asList() }
-    )
+  final override val kind: CppType get() = CppType.TUPLE
+
+  final override fun writeTypeParameters(out: TypeCodesWriter) {
+    out.add(elementConverters.size)
+    elementConverters.forEach { it.writeTypeCodes(out) }
+  }
 
   final override val isPassthrough: Boolean get() = false
 }

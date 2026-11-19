@@ -17,8 +17,8 @@ import org.openjdk.jmh.annotations.OperationsPerInvocation
 /**
  * Binary payload vs element-wise / direct JNI, on identical data.
  *
- * Every case is measured twice — `binary` rides the trampoline payload, `direct` crosses as JNI
- * slots — so the two rows of one `(case)` value are the comparison. The array rows are the
+ * Every case is measured twice - `binary` rides the trampoline payload, `direct` crosses as JNI
+ * slots - so the two rows of one `(case)` value are the comparison. The array rows are the
  * exception: their direct side is a bulk JNI region copy, not an element-wise walk.
  *
  * The classes differ only in `@OperationsPerInvocation`: a JS loop of that many host calls is one
@@ -43,7 +43,7 @@ internal val TRANSPORT_CASES: Map<String, TransportCase> = buildMap {
     )
   }
   // DoubleArray: buffered payload vs bulk JNI region copies (the direct side is NOT element-wise
-  // here — it is the bulk-copy fast path).
+  // here - it is the bulk-copy fast path).
   for (size in listOf(10, 100, 1_000, 10_000)) {
     put(
       "doubles[$size]/array",

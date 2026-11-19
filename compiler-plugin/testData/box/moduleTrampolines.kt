@@ -32,7 +32,7 @@ object Converted : Module() {
 }
 
 /**
- * Buffered values, whose bodies need the shared binary buffer — so only their signatures are checked
+ * Buffered values, whose bodies need the shared binary buffer - so only their signatures are checked
  * here. That is the part the bridge depends on: it resolves each trampoline by name and JNI
  * descriptor, and a buffered argument contributes no parameter while adding one trailing
  * `payloadLength`.
@@ -100,7 +100,7 @@ fun box(): String {
     // Buffered signatures. A buffered argument drops its parameter and adds one payloadLength.
     val expected = mapOf(
         // the argument rides the payload; the String result takes a slot, which AUTO prefers on the
-        // way out — a jstring straight into jsi::String skips the buffer's fixed setup
+        // way out - a jstring straight into jsi::String skips the buffer's fixed setup
         "greet$suffix" to "(I)Ljava/lang/String;",
         // buffered argument, unboxed Int result
         "sum$suffix" to "(I)I",

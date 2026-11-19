@@ -8,18 +8,18 @@ import io.github.expo.modules.v2.testsupport.TestSupport
 /**
  * Compares the three ways a dynamic value can travel from JS to Kotlin, on payloads modeled
  * after REAL Expo module traffic (shapes and sizes taken from a survey of the Expo SDK's
- * Android modules — see the case list), timed C++-side on identical `jsi::Value`s:
+ * Android modules - see the case list), timed C++-side on identical `jsi::Value`s:
  *
  * C++ representation round trip (`jsi::Value` -> repr -> `jsi::Value`):
- *  - `folly` — folly::dynamic (what TurboModules do around a dynamic argument/result);
- *  - `folly+JSON` — the classic-bridge flavor: the dynamic additionally serializes through a
+ *  - `folly` - folly::dynamic (what TurboModules do around a dynamic argument/result);
+ *  - `folly+JSON` - the classic-bridge flavor: the dynamic additionally serializes through a
  *    JSON string (folly::toJson / parseJson);
- *  - `binary` — the binary buffer codec (dynamic/tagged flavor).
+ *  - `binary` - the binary buffer codec (dynamic/tagged flavor).
  *
  * Full delivery to Kotlin-consumable Java objects (HashMap/ArrayList/boxed):
- *  - `folly->Java` — folly::dynamic + manual per-field JNI mapping, i.e. what
+ *  - `folly->Java` - folly::dynamic + manual per-field JNI mapping, i.e. what
  *    ReadableNativeMap.toHashMap() amounts to;
- *  - `cpp->Java` — Java objects built per-field in C++ straight from JSI, no intermediate
+ *  - `cpp->Java` - Java objects built per-field in C++ straight from JSI, no intermediate
  *    representation (our object-slot path: dynamic values and buffer overflows).
  *
  * Case sizing (from the Expo survey): the median module call carries <=~200 B of complex
@@ -86,7 +86,7 @@ private val CASES = listOf(
     "({mediaTypes: 'Images', allowsEditing: true, quality: 0.8, exif: false, base64: false, allowsMultipleSelection: false})",
     100_000,
   ),
-  // Permission responses — the most frequent result record in real apps, ~100 B.
+  // Permission responses - the most frequent result record in real apps, ~100 B.
   FollyCase(
     "permission response",
     "({status: 'granted', expires: 'never', granted: true, canAskAgain: true})",
@@ -100,13 +100,13 @@ private val CASES = listOf(
     "({coords: {latitude: 52.2297, longitude: 21.0122, altitude: 110.5, accuracy: 12.5, altitudeAccuracy: 8.0, heading: 271.2, speed: 1.3}, timestamp: 1752598000000, mocked: false})",
     50_000,
   ),
-  // MediaLibrary.getAssetsAsync default page (first: 20) ~6 KB — the p95 shape.
+  // MediaLibrary.getAssetsAsync default page (first: 20) ~6 KB - the p95 shape.
   FollyCase(
     "mediaLibrary page[20]",
     "({assets: Array.from({length: 20}, (_, i) => __asset(i)), endCursor: 'cursor-20', hasNextPage: true, totalCount: 5231})",
     10_000,
   ),
-  // A big MediaLibrary page (first: 100) ~30 KB — the everyday heavy tail.
+  // A big MediaLibrary page (first: 100) ~30 KB - the everyday heavy tail.
   FollyCase(
     "mediaLibrary page[100]",
     "({assets: Array.from({length: 100}, (_, i) => __asset(i)), endCursor: 'cursor-100', hasNextPage: true, totalCount: 5231})",

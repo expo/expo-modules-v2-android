@@ -2,7 +2,6 @@ package io.github.expo.modules.v2.converters
 
 import io.github.expo.modules.v2.binary.BinaryValueCodec
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.modules.v2.types.TypeCodes
 import io.github.expo.kolibri.binary.BinaryBuffer
 
 /**
@@ -10,12 +9,9 @@ import io.github.expo.kolibri.binary.BinaryBuffer
  * value itself and only the buffer encoding is per-kind.
  */
 internal sealed class PassthroughConverter<T : Any>(
-  val kind: CppType,
+  final override val kind: CppType,
   isNullable: Boolean,
 ) : TypeConverter<T>(isNullable) {
-  final override val codes: TypeCodes =
-    kind.nullable(isNullable).toTypeCodes()
-
   final override val isPassthrough: Boolean get() = true
 
   @Suppress("UNCHECKED_CAST")
@@ -49,7 +45,7 @@ internal class BooleanConverter : NonNullablePassthroughConverter<Boolean>(CppTy
 
 internal class BoxedBooleanConverter(
   isNullable: Boolean,
-) : PassthroughConverter<Boolean>(CppType.BOX_BOOLEAN, isNullable) {
+) : PassthroughConverter<Boolean>(CppType.BOOLEAN, isNullable) {
   override fun writeValue(buf: BinaryBuffer, value: Boolean) {
     buf.putBoolean(value)
   }
@@ -67,7 +63,7 @@ internal class IntConverter : NonNullablePassthroughConverter<Int>(CppType.INT) 
 
 internal class BoxedIntConverter(
   isNullable: Boolean,
-) : PassthroughConverter<Int>(CppType.BOX_INT, isNullable) {
+) : PassthroughConverter<Int>(CppType.INT, isNullable) {
   override fun writeValue(buf: BinaryBuffer, value: Int) {
     buf.putInt(value)
   }
@@ -85,7 +81,7 @@ internal class LongConverter : NonNullablePassthroughConverter<Long>(CppType.LON
 
 internal class BoxedLongConverter(
   isNullable: Boolean,
-) : PassthroughConverter<Long>(CppType.BOX_LONG, isNullable) {
+) : PassthroughConverter<Long>(CppType.LONG, isNullable) {
   override fun writeValue(buf: BinaryBuffer, value: Long) {
     buf.putLong(value)
   }
@@ -103,7 +99,7 @@ internal class FloatConverter : NonNullablePassthroughConverter<Float>(CppType.F
 
 internal class BoxedFloatConverter(
   isNullable: Boolean,
-) : PassthroughConverter<Float>(CppType.BOX_FLOAT, isNullable) {
+) : PassthroughConverter<Float>(CppType.FLOAT, isNullable) {
   override fun writeValue(buf: BinaryBuffer, value: Float) {
     buf.putFloat(value)
   }
@@ -121,7 +117,7 @@ internal class DoubleConverter : NonNullablePassthroughConverter<Double>(CppType
 
 internal class BoxedDoubleConverter(
   isNullable: Boolean,
-) : PassthroughConverter<Double>(CppType.BOX_DOUBLE, isNullable) {
+) : PassthroughConverter<Double>(CppType.DOUBLE, isNullable) {
   override fun writeValue(buf: BinaryBuffer, value: Double) {
     buf.putDouble(value)
   }

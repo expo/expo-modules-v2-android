@@ -13,7 +13,7 @@ import io.github.expo.modules.v2.modules.ModuleRegistry
  *
  * The desktop counterpart (`io.github.expo.modules.v2.testsupport.HermesRuntime`) creates a VM and owns it. Here
  * the host owns it, so this class borrows the address React Native exposes through
- * `ReactContext.javaScriptContextHolder` and never frees the runtime — only the C++ object that
+ * `ReactContext.javaScriptContextHolder` and never frees the runtime - only the C++ object that
  * wraps it.
  *
  * Construct it on React Native's JS thread: a `jsi::Runtime` is thread-affine and installing the
@@ -76,7 +76,7 @@ class ReactRuntime private constructor(
       }
 
       val holder = requireNotNull(reactContext.javaScriptContextHolder) {
-        "ReactContext.javaScriptContextHolder is null — there is no jsi::Runtime to attach to"
+        "ReactContext.javaScriptContextHolder is null - there is no jsi::Runtime to attach to"
       }
       val pointer = holder.get()
       require(pointer != 0L) { "ReactContext.javaScriptContextHolder holds a null runtime" }

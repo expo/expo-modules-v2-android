@@ -5,14 +5,18 @@ import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 class ExpoModulesV2FirRegistrar : FirExtensionRegistrar() {
   override fun ExtensionRegistrarContext.configurePlugin() {
     +::RecordPredicates
+    +::UnionPredicates
     +::JSPredicates
     +::SharedObjectPredicates
     +::EventPredicates
     +::ExpoModulePredicates
     +::RecordSupertypeGenerator
     +::RecordCodecGenerator
+    +::UnionSupertypeGenerator
+    +::UnionCodecGenerator
     +::ModuleHintGenerator
     +::RecordCheckers
+    +::UnionCheckers
     +::JSCheckers
     +::ExpoModuleCheckers
     +::BufferModeCheckers
