@@ -1,6 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
-// FIR_DUMP
 
 package io.github.expo.modules.v2.testdata
 

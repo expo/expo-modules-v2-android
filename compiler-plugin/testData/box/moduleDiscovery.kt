@@ -1,5 +1,5 @@
 // FIR_IDENTICAL
-// DUMP_IR
+// DUMP_GENERATED
 
 // MODULE: producer
 // FILE: producer.kt

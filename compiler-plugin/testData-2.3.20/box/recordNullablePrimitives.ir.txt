@@ -1,1 +1,0 @@
-../../testData-2.2.20/box/recordNullablePrimitives.ir.txt

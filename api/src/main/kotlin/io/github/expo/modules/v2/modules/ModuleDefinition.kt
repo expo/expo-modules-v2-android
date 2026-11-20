@@ -16,6 +16,12 @@ internal class ModuleFunctionDefinition(
       0
     }
 
+  override fun toString(): String = buildString {
+    append("function $jsName(${argTypes.joinToString()}): $returnType")
+    if (isAsync) append("; async")
+    append("; method $methodName")
+  }
+
   internal companion object {
     const val FLAG_ASYNC = 1
   }
@@ -36,6 +42,13 @@ internal class ModulePropertyDefinition(
       0
     }
 
+  override fun toString(): String = buildString {
+    append("property $jsName: $getterType")
+    if (isConstant) append("; constant")
+    append("; getter $getterName")
+    if (setterName != null) append("; setter $setterName($setterType)")
+  }
+
   internal companion object {
     const val FLAG_CONSTANT = 1
   }
@@ -46,9 +59,16 @@ internal class ModuleSharedClassDefinition(
   val classId: Int,
   val argTypes: Array<out AnyType>,
   val trampolineName: String,
-)
+) {
+  // The class id is assigned at registration time, so it is left out: the line names the
+  // constructor JavaScript calls instead.
+  override fun toString(): String =
+    "sharedClass $jsName(${argTypes.joinToString()}); constructor $trampolineName"
+}
 
 internal class ModuleEventDefinition(
   val jsName: String,
   val payloadType: AnyType,
-)
+) {
+  override fun toString(): String = "event $jsName: $payloadType"
+}

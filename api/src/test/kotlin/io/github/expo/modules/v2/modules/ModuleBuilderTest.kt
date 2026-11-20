@@ -373,4 +373,26 @@ class ModuleBuilderTest {
     // Nothing writes a `val`, so the setter type is dropped with the setter name.
     assertNull(builder.properties[1].setterType)
   }
+
+  @Test
+  fun `toString lists every export, grouped by kind`() {
+    val builder = builder()
+    builder.event("changed", int)
+    builder.property("name", string, mutable = true, setterType = string.buffered())
+    builder.property("version", int, constant = true)
+    builder.function("greet", string.buffered(), returns = string, methodName = "greet__trampoline")
+    builder.function("load", returns = int, isAsync = true)
+
+    assertEquals(
+      """
+      function greet(String (buffered)): String; method greet__trampoline
+      function load(): int; async; method load
+      property name: String; getter getName; setter setName(String (buffered))
+      property version: int; constant; getter getVersion
+      event changed: int
+      """.trimIndent(),
+      builder.toString(),
+    )
+    assertEquals("", builder().toString())
+  }
 }

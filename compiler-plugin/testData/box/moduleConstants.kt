@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -9,6 +8,7 @@ import io.github.expo.modules.v2.ExpoSharedObject
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.boxsupport.expectExports
 import io.github.expo.modules.v2.modules.ModuleBuilder
 
 /**
@@ -50,6 +50,25 @@ object Info : Module() {
 }
 
 fun box(): String {
+    expectExports(
+        Info,
+        """
+        property applicationId: String; constant; getter getApplicationId
+        property uptime: int; getter getUptime
+        property version: int; constant; getter getVersion
+        property names: List<String> (buffered); getter getNames__trampoline
+        sharedClass Item(); constructor __construct
+        """,
+    )?.let { return it }
+    expectExports(
+        Item::class.java,
+        """
+        property name: String; constant; getter getName
+        property count: int; constant; getter getCount
+        property tags: List<String> (buffered); getter getTags__trampoline
+        """,
+    )?.let { return it }
+
     val name = Info.`define$ExpoModulesV2`(ModuleBuilder())
     return if (name == "Info") "OK" else "unexpected module name: $name"
 }

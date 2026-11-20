@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -10,6 +9,7 @@ import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.async.Promise
 import io.github.expo.modules.v2.async.resolve
+import io.github.expo.modules.v2.boxsupport.expectExports
 
 /**
  * An export that returns a `Promise<T>` instead of suspending.
@@ -45,6 +45,16 @@ class PromiseShapes : Module() {
 private const val TRAMPOLINE = "__trampoline\$ExpoModulesV2"
 
 fun box(): String {
+    expectExports(
+        PromiseShapes(),
+        """
+        function scale(int): int; async; method scale__trampoline
+        function greet(String (buffered)): String; async; method greet__trampoline
+        function clear(): Unit; async; method clear__trampoline
+        function maybe(): String?; async; method maybe__trampoline
+        """,
+    )?.let { return it }
+
     val clazz = PromiseShapes::class.java
     val int = Int::class.javaPrimitiveType
     val handle = Class.forName("io.github.expo.modules.v2.async.PromiseHandle")

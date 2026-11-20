@@ -1,5 +1,4 @@
 // RUN_PIPELINE_TILL: FRONTEND
-// FIR_DUMP
 
 package io.github.expo.modules.v2.testdata
 

@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -8,6 +7,7 @@ import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.boxsupport.expectExports
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.Module
 
@@ -115,6 +115,27 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
+    expectExports(
+        Values,
+        """
+        function nullableScalars(Integer? (buffered), Long? (buffered), Float? (buffered), Double? (buffered), Boolean? (buffered)): Integer? (buffered); method nullableScalars__trampoline
+        function unboxedScalars(int, long, float, double, boolean): int; method unboxedScalars
+        function arrays(int_array, double_array?, byte_array): int; method arrays
+        function containers(List<String> (buffered), Map<String, Integer> (buffered), Set<String> (buffered), String[]<String> (buffered)): int; method containers__trampoline
+        function nullableElements(List<String?> (buffered), List<Integer>? (buffered)): int; method nullableElements__trampoline
+        function echoPoint(Point (buffered)): Point (buffered); method echoPoint__trampoline
+        function echoHolder(Holder): Holder; method echoHolder__trampoline
+        function points(List<Point> (buffered)): int; method points__trampoline
+        function holders(List<Holder>): int; method holders__trampoline
+        function dynamic(Object?, JavaScriptValue): int; method dynamic
+        function dynamicOptedIn(Object? (buffered), List<Object?> (buffered), Map<String, Object> (buffered), JavaScriptValue): Object? (buffered); method dynamicOptedIn__trampoline
+        function dynamicResult(Object?): List<Object?> (buffered); method dynamicResult__trampoline
+        function holderOptedIn(Holder): int; method holderOptedIn__trampoline
+        function optedOut(List<String>): int; method optedOut
+        function optedIn(int_array (buffered)): int; method optedIn__trampoline
+        """,
+    )?.let { return it }
+
     val suffix = "__trampoline\$ExpoModulesV2"
     val expected = mapOf(
         // all five arguments buffered, plus a buffered Int? result

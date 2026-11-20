@@ -1,6 +1,8 @@
 package io.github.expo.modules.v2.compiler.runners
 
 import io.github.expo.modules.v2.compiler.handlers.RecordKotlinLikeDumpHandler
+import io.github.expo.modules.v2.compiler.handlers.StaleDumpHandler
+import io.github.expo.modules.v2.compiler.services.ExpoTestDirectives
 import io.github.expo.modules.v2.compiler.services.configurePlugin
 import io.github.expo.modules.v2.compiler.services.configureRecordsRuntime
 import org.jetbrains.kotlin.config.JvmTarget
@@ -9,7 +11,6 @@ import org.jetbrains.kotlin.test.backend.handlers.IrPrettyKotlinDumpHandler
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.builders.configureIrHandlersStep
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives
-import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives
 import org.jetbrains.kotlin.test.runners.codegen.AbstractFirBlackBoxCodegenTestBase
 import org.jetbrains.kotlin.test.services.EnvironmentBasedStandardLibrariesPathProvider
@@ -22,11 +23,10 @@ open class AbstractJvmBoxTest : AbstractFirBlackBoxCodegenTestBase(FirParser.Lig
 
   override fun configure(builder: TestConfigurationBuilder) = with(builder) {
     super.configure(this)
+    // No dump is on by default: `box()` checks the behaviour, and a test opts into the dumps it
+    // needs (see ExpoTestDirectives).
+    useDirectives(ExpoTestDirectives)
     defaultDirectives {
-      +CodegenTestDirectives.DUMP_IR
-      // Renders the IR as Kotlin-like source, into `*.fir.kt.txt` and `*.fir.generated.kt.txt`.
-      +CodegenTestDirectives.DUMP_KT_IR
-      +FirDiagnosticsDirectives.FIR_DUMP
       +JvmEnvironmentConfigurationDirectives.FULL_JDK
       // :api is compiled with the build's JDK 17 toolchain; its inline functions (codecFor)
       // cannot be inlined into a lower target.
@@ -36,10 +36,11 @@ open class AbstractJvmBoxTest : AbstractFirBlackBoxCodegenTestBase(FirParser.Lig
     }
 
     // The codegen pipeline registers only IrTextDumpHandler, so DUMP_KT_IR is a no-op until a
-    // pretty-Kotlin handler is added by hand. The stock handler dumps the whole file; ours narrows
-    // the same IR to the declarations the plugin generated.
+    // pretty-Kotlin handler is added by hand. The stock handler dumps the whole file under
+    // DUMP_KT_IR; ours narrows the same IR to the declarations the plugin generated, under
+    // DUMP_GENERATED. StaleDumpHandler catches a `*.fir.txt` left behind without FIR_DUMP.
     configureIrHandlersStep {
-      useHandlers(::IrPrettyKotlinDumpHandler, ::RecordKotlinLikeDumpHandler)
+      useHandlers(::IrPrettyKotlinDumpHandler, ::RecordKotlinLikeDumpHandler, ::StaleDumpHandler)
     }
 
     configurePlugin()

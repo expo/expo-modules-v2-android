@@ -1,5 +1,5 @@
 // FIR_IDENTICAL
-// DUMP_IR
+// DUMP_GENERATED
 
 package io.github.expo.modules.v2.testdata
 
@@ -12,6 +12,7 @@ import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.boxsupport.expectExports
 
 @Record
 data class Change(val value: Int) : io.github.expo.modules.v2.records.Record
@@ -77,6 +78,32 @@ class Player : SharedObject() {
 }
 
 fun box(): String {
+    expectExports(
+        Watcher(),
+        """
+        function describe(Change (buffered)): String; method describe__trampoline
+        event changed: Change (buffered)
+        event renamed: int
+        event progress: double
+        event online: String
+        event batch: List<Integer> (buffered)
+        event slot: List<Integer>
+        """,
+    )?.let { return it }
+    expectExports(
+        Singleton,
+        """
+        event tick: int
+        """,
+    )?.let { return it }
+    expectExports(
+        Player::class.java,
+        """
+        function play(): int; method play
+        event stateChange: String
+        """,
+    )?.let { return it }
+
     val watcher = Watcher()
 
     // Bound at construction: the name JavaScript subscribes to, derived by the plugin.

@@ -1,11 +1,11 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.boxsupport.expectExports
 
 /**
  * The whole module generator adds members in the backend only, so this pins two things the rest
@@ -49,6 +49,25 @@ class DirectInstance : Module() {
 }
 
 fun box(): String {
+    expectExports(
+        Direct,
+        """
+        function add(int, int): int; method add
+        function scale(double_array, double): double; method scale
+        function identity(Object?): Object?; method identity
+        function renamed(boolean): boolean; method original
+        function clear(): Unit; method clear
+        property answer: int; constant; getter getAnswer
+        property count: int; getter getCount; setter setCount(int)
+        """,
+    )?.let { return it }
+    expectExports(
+        DirectInstance(),
+        """
+        function echo(long): long; method echo
+        """,
+    )?.let { return it }
+
     // The generated override is reached through the base declaration, so plain virtual dispatch.
     val method = Module::class.java.getMethod("define\$ExpoModulesV2", Class.forName("io.github.expo.modules.v2.modules.ModuleBuilder"))
     if (method.declaringClass != Module::class.java) return "base lookup: ${method.declaringClass}"

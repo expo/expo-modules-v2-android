@@ -1,11 +1,11 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.boxsupport.expectExports
 
 /** A module with nothing to export: `define` still has to name it, with an empty argument vararg. */
 @ExpoModule
@@ -85,6 +85,36 @@ private fun names(owner: Class<*>): Set<String> =
     owner.declaredMethods.map { it.name }.toSet()
 
 fun box(): String {
+    expectExports(Empty, "")?.let { return it }
+    expectExports(
+        Arity,
+        """
+        function none(): int; method none
+        function one(int): int; method one
+        function eight(int, int, int, int, int, int, int, int): int; method eight
+        function eightBuffered(String (buffered), String (buffered), String (buffered), String (buffered), String (buffered), String (buffered), String (buffered), String (buffered)): int; method eightBuffered__trampoline
+        """,
+    )?.let { return it }
+    expectExports(
+        Visibility,
+        """
+        function hidden(int): int; method hidden
+        function visible(int): int; method visible
+        """,
+    )?.let { return it }
+    expectExports(
+        Derived,
+        """
+        function own(int): int; method own
+        """,
+    )?.let { return it }
+    expectExports(
+        WithNested(),
+        """
+        function value(): int; method value
+        """,
+    )?.let { return it }
+
     val builder = Class.forName("io.github.expo.modules.v2.modules.ModuleBuilder")
 
     // An export-free module still overrides define, and still names itself.

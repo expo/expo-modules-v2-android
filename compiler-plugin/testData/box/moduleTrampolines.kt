@@ -1,5 +1,5 @@
 // FIR_IDENTICAL
-// DUMP_IR
+// DUMP_GENERATED
 
 package io.github.expo.modules.v2.testdata
 
@@ -8,6 +8,7 @@ import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.boxsupport.expectExports
 import java.net.URI
 import java.net.URL
 import kotlin.time.Duration
@@ -78,6 +79,27 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
+    expectExports(
+        Converted,
+        """
+        function total(Duration, Duration): Duration; method total__trampoline
+        function host(URL): String; method host__trampoline
+        function firstHost(List<URL>): String; method firstHost__trampoline
+        """,
+    )?.let { return it }
+    expectExports(
+        Buffered,
+        """
+        function greet(String (buffered)): String; method greet__trampoline
+        function sum(List<Integer> (buffered)): int; method sum__trampoline
+        function describe(String (buffered), int): String; method describe__trampoline
+        function makeNames(int): List<String> (buffered); method makeNames__trampoline
+        function scale(double_array): double; method scale
+        property motto: String; getter getMotto__trampoline; setter setMotto__trampoline(String (buffered))
+        property isReady: boolean; constant; getter isReady
+        """,
+    )?.let { return it }
+
     val suffix = "__trampoline\$ExpoModulesV2"
 
     // A converted value in a JNI slot: the trampoline takes and returns the bridge type.

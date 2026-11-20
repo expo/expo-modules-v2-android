@@ -1,5 +1,5 @@
 // FIR_IDENTICAL
-// DUMP_IR
+// DUMP_GENERATED
 
 package io.github.expo.modules.v2.testdata
 
@@ -9,6 +9,7 @@ import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.SharedRef
+import io.github.expo.modules.v2.boxsupport.expectExports
 
 /**
  * The other export base. A `@ExpoSharedObject` class declares the same shapes a module does and fills
@@ -97,12 +98,65 @@ private fun descriptorOf(owner: Class<*>, name: String): String {
 }
 
 fun box(): String {
+    expectExports(
+        Players(),
+        """
+        function create(): Player; method create
+        function volumeOf(Player): double; method volumeOf
+        function maybe(Player?): int; method maybe
+        """,
+    )?.let { return it }
+    expectExports(
+        Owner(),
+        """
+        sharedClass Nested(String (buffered)); constructor __construct
+        sharedClass Listed(int); constructor __construct
+        """,
+    )?.let { return it }
+    expectExports(
+        Player::class.java,
+        """
+        function play(): int; method play
+        function rename(String (buffered)): String; method rename__trampoline
+        property volume: double; getter getVolume; setter setVolume(double)
+        """,
+    )?.let { return it }
+    expectExports(
+        Speaker::class.java,
+        """
+        function mute(): Unit; method mute
+        """,
+    )?.let { return it }
+    expectExports(
+        TextRef::class.java,
+        """
+        function length(): int; method length
+        """,
+    )?.let { return it }
+    expectExports(
+        Listed::class.java,
+        """
+        function value(): int; method value
+        """,
+    )?.let { return it }
+    expectExports(
+        Owner.Nested::class.java,
+        """
+        function render(): String; method render
+        """,
+    )?.let { return it }
+    expectExports(
+        Owner.NotConstructable::class.java,
+        """
+        function name(): String; method name
+        """,
+    )?.let { return it }
+
     val suffix = "__trampoline\$ExpoModulesV2"
     val player = "Lio/github/expo/modules/v2/testdata/Player;"
 
-    // `ModuleBuilder`'s constructor is internal, so what each base puts *into* it is pinned by the
-    // generated-code dump beside this file and by :api's GeneratedSharedObjectTest. What only a real
-    // compilation can show is checked here: that both bases got the hook, and the JVM signatures.
+    // What each base puts into the builder is checked above. What else only a real compilation can
+    // show is checked here: that both bases got the hook, and the JVM signatures.
     for (owner in listOf(Player::class.java, Speaker::class.java, Players::class.java)) {
         if (descriptorOf(owner, "define\$ExpoModulesV2") == "<absent>") {
             return "${owner.simpleName}: no generated define\$ExpoModulesV2"
@@ -143,8 +197,8 @@ fun box(): String {
     }
 
     // Both discovery routes reach `define$ExpoModulesV2`, and a nested class with no constructor
-    // JavaScript can call is left out of it. What each route emits is pinned by the generated-code dump
-    // beside this file; here we only check the classes themselves compiled as shared objects.
+    // JavaScript can call is left out of it (see Owner's exports above); here we only check the
+    // classes themselves compiled as shared objects.
     for (owner in listOf(Listed::class.java, Owner.Nested::class.java, Owner.NotConstructable::class.java)) {
         if (descriptorOf(owner, "define\$ExpoModulesV2") == "<absent>") {
             return "${owner.simpleName}: no generated define\$ExpoModulesV2"
