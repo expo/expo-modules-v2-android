@@ -8,7 +8,9 @@ import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.SharedRef
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 
 /**
  * The other export base. A `@ExpoSharedObject` class declares the same shapes a module does and fills
@@ -97,59 +99,45 @@ private fun descriptorOf(owner: Class<*>, name: String): String {
 }
 
 fun box(): String {
-    expectExports(
-        Players(),
-        """
-        function create(): Player; method create
-        function volumeOf(Player): double; method volumeOf
-        function maybe(Player?): int; method maybe
-        """,
-    )?.let { return it }
-    expectExports(
-        Owner(),
-        """
-        sharedClass Nested(String (buffered)); constructor __construct
-        sharedClass Listed(int); constructor __construct
-        """,
-    )?.let { return it }
-    expectExports(
-        Player::class.java,
-        """
-        function play(): int; method play
-        function rename(String (buffered)): String; method rename__trampoline
-        property volume: double; getter getVolume; setter setVolume(double)
-        """,
-    )?.let { return it }
-    expectExports(
-        Speaker::class.java,
-        """
-        function mute(): Unit; method mute
-        """,
-    )?.let { return it }
-    expectExports(
-        TextRef::class.java,
-        """
-        function length(): int; method length
-        """,
-    )?.let { return it }
-    expectExports(
-        Listed::class.java,
-        """
-        function value(): int; method value
-        """,
-    )?.let { return it }
-    expectExports(
-        Owner.Nested::class.java,
-        """
-        function render(): String; method render
-        """,
-    )?.let { return it }
-    expectExports(
-        Owner.NotConstructable::class.java,
-        """
-        function name(): String; method name
-        """,
-    )?.let { return it }
+    assertExports(Players()) {
+        function("create") { returns(slot<Player>()) }
+        function("volumeOf") {
+            args(slot<Player>())
+            returns(slot<Double>())
+        }
+        function("maybe") {
+            args(slot<Player?>())
+            returns(slot<Int>())
+        }
+    }
+    assertExports(Owner()) {
+        sharedClass("Nested", Owner.Nested::class, buffered<String>())
+        sharedClass("Listed", Listed::class, slot<Int>())
+    }
+    assertExports(Player::class) {
+        function("play") { returns(slot<Int>()) }
+        function("rename") {
+            args(buffered<String>())
+            returns(slot<String>())
+            trampoline()
+        }
+        property("volume", slot<Double>()) { mutable() }
+    }
+    assertExports(Speaker::class) {
+        function("mute")
+    }
+    assertExports(TextRef::class) {
+        function("length") { returns(slot<Int>()) }
+    }
+    assertExports(Listed::class) {
+        function("value") { returns(slot<Int>()) }
+    }
+    assertExports(Owner.Nested::class) {
+        function("render") { returns(slot<String>()) }
+    }
+    assertExports(Owner.NotConstructable::class) {
+        function("name") { returns(slot<String>()) }
+    }
 
     val suffix = "__trampoline\$ExpoModulesV2"
     val player = "Lio/github/expo/modules/v2/testdata/Player;"

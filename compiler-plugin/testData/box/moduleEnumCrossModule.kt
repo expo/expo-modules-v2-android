@@ -26,7 +26,8 @@ import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.slot
 import io.github.expo.modules.v2.testdata.producer.Level
 import io.github.expo.modules.v2.testdata.producer.Mode
 
@@ -59,14 +60,23 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
-    expectExports(
-        Levels,
-        """
-        function echo(Level): Level; method echo__trampoline
-        function maybe(Level?): Level?; method maybe__trampoline
-        function mode(Mode): Mode; method mode__trampoline
-        """,
-    )?.let { return it }
+    assertExports(Levels) {
+        function("echo") {
+            args(slot<Level>())
+            returns(slot<Level>())
+            trampoline()
+        }
+        function("maybe") {
+            args(slot<Level?>())
+            returns(slot<Level?>())
+            trampoline()
+        }
+        function("mode") {
+            args(slot<Mode>())
+            returns(slot<Mode>())
+            trampoline()
+        }
+    }
 
     val suffix = "__trampoline\$ExpoModulesV2"
     val expected = mapOf(

@@ -34,7 +34,8 @@ package io.github.expo.modules.v2.testdata.consumer
 
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.Module
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.slot
 import io.github.expo.modules.v2.discoveredExpoModules
 import io.github.expo.modules.v2.testdata.producer.First
 import io.github.expo.modules.v2.testdata.producer.Outer
@@ -51,15 +52,12 @@ object Local : Module()
 private fun discovered(): List<Class<out Module>> = discoveredExpoModules()
 
 fun box(): String {
-    expectExports(
-        First,
-        """
-        function one(): int; method one
-        """,
-    )?.let { return it }
-    expectExports(Second(), "")?.let { return it }
-    expectExports(Outer.Nested, "")?.let { return it }
-    expectExports(Local, "")?.let { return it }
+    assertExports(First) {
+        function("one") { returns(slot<Int>()) }
+    }
+    assertExports(Second()) {}
+    assertExports(Outer.Nested) {}
+    assertExports(Local) {}
 
     val modules = discovered()
 

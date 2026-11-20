@@ -8,7 +8,9 @@ import io.github.expo.modules.v2.Enumerable
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 
 enum class Style(val value: String) : Enumerable {
     LIGHT("light"),
@@ -63,16 +65,33 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
-    expectExports(
-        Enums,
-        """
-        function echoStyle(Style (buffered)): Style (buffered); method echoStyle__trampoline
-        function styleSlot(Style?): Style?; method styleSlot__trampoline
-        function echoPriority(Priority): Priority; method echoPriority__trampoline
-        function maybePriority(Priority? (buffered)): Priority? (buffered); method maybePriority__trampoline
-        function priorityNoBuffer(Priority?): Priority?; method priorityNoBuffer__trampoline
-        """,
-    )?.let { return it }
+    assertExports(Enums) {
+        function("echoStyle") {
+            args(buffered<Style>())
+            returns(buffered<Style>())
+            trampoline()
+        }
+        function("styleSlot") {
+            args(slot<Style?>())
+            returns(slot<Style?>())
+            trampoline()
+        }
+        function("echoPriority") {
+            args(slot<Priority>())
+            returns(slot<Priority>())
+            trampoline()
+        }
+        function("maybePriority") {
+            args(buffered<Priority?>())
+            returns(buffered<Priority?>())
+            trampoline()
+        }
+        function("priorityNoBuffer") {
+            args(slot<Priority?>())
+            returns(slot<Priority?>())
+            trampoline()
+        }
+    }
 
     val suffix = "__trampoline\$ExpoModulesV2"
     val expected = mapOf(

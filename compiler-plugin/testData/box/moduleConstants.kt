@@ -8,7 +8,9 @@ import io.github.expo.modules.v2.ExpoSharedObject
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.SharedObject
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 import io.github.expo.modules.v2.modules.ModuleBuilder
 
 /**
@@ -50,24 +52,18 @@ object Info : Module() {
 }
 
 fun box(): String {
-    expectExports(
-        Info,
-        """
-        property applicationId: String; constant; getter getApplicationId
-        property uptime: int; getter getUptime
-        property version: int; constant; getter getVersion
-        property names: List<String> (buffered); getter getNames__trampoline
-        sharedClass Item(); constructor __construct
-        """,
-    )?.let { return it }
-    expectExports(
-        Item::class.java,
-        """
-        property name: String; constant; getter getName
-        property count: int; constant; getter getCount
-        property tags: List<String> (buffered); getter getTags__trampoline
-        """,
-    )?.let { return it }
+    assertExports(Info) {
+        property("applicationId", slot<String>()) { constant() }
+        property("uptime", slot<Int>())
+        property("version", slot<Int>()) { constant() }
+        property("names", buffered<List<String>>()) { trampoline() }
+        sharedClass("Item", Item::class)
+    }
+    assertExports(Item::class) {
+        property("name", slot<String>()) { constant() }
+        property("count", slot<Int>()) { constant() }
+        property("tags", buffered<List<String>>()) { trampoline() }
+    }
 
     val name = Info.`define$ExpoModulesV2`(ModuleBuilder())
     return if (name == "Info") "OK" else "unexpected module name: $name"

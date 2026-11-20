@@ -35,7 +35,9 @@ package io.github.expo.modules.v2.testdata.consumer
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 import io.github.expo.modules.v2.testdata.producer.ProducerModule
 import io.github.expo.modules.v2.testdata.producer.Shared
 
@@ -59,20 +61,26 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
-    expectExports(
-        ProducerModule,
-        """
-        function bump(Shared (buffered)): Shared (buffered); method bump__trampoline
-        function name(String (buffered)): String; method name__trampoline
-        property count: int; getter getCount; setter setCount(int)
-        """,
-    )?.let { return it }
-    expectExports(
-        ConsumerModule,
-        """
-        function forward(Shared (buffered)): Shared (buffered); method forward__trampoline
-        """,
-    )?.let { return it }
+    assertExports(ProducerModule) {
+        function("bump") {
+            args(buffered<Shared>())
+            returns(buffered<Shared>())
+            trampoline()
+        }
+        function("name") {
+            args(buffered<String>())
+            returns(slot<String>())
+            trampoline()
+        }
+        property("count", slot<Int>()) { mutable() }
+    }
+    assertExports(ConsumerModule) {
+        function("forward") {
+            args(buffered<Shared>())
+            returns(buffered<Shared>())
+            trampoline()
+        }
+    }
 
     val suffix = "__trampoline\$ExpoModulesV2"
 

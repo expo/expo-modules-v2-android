@@ -5,7 +5,8 @@ package io.github.expo.modules.v2.testdata
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.slot
 
 /**
  * The whole module generator adds members in the backend only, so this pins two things the rest
@@ -49,24 +50,34 @@ class DirectInstance : Module() {
 }
 
 fun box(): String {
-    expectExports(
-        Direct,
-        """
-        function add(int, int): int; method add
-        function scale(double_array, double): double; method scale
-        function identity(Object?): Object?; method identity
-        function renamed(boolean): boolean; method original
-        function clear(): Unit; method clear
-        property answer: int; constant; getter getAnswer
-        property count: int; getter getCount; setter setCount(int)
-        """,
-    )?.let { return it }
-    expectExports(
-        DirectInstance(),
-        """
-        function echo(long): long; method echo
-        """,
-    )?.let { return it }
+    assertExports(Direct) {
+        function("add") {
+            args(slot<Int>(), slot<Int>())
+            returns(slot<Int>())
+        }
+        function("scale") {
+            args(slot<DoubleArray>(), slot<Double>())
+            returns(slot<Double>())
+        }
+        function("identity") {
+            args(slot<Any?>())
+            returns(slot<Any?>())
+        }
+        function("renamed") {
+            args(slot<Boolean>())
+            returns(slot<Boolean>())
+            method("original")
+        }
+        function("clear")
+        property("answer", slot<Int>()) { constant() }
+        property("count", slot<Int>()) { mutable() }
+    }
+    assertExports(DirectInstance()) {
+        function("echo") {
+            args(slot<Long>())
+            returns(slot<Long>())
+        }
+    }
 
     // The generated override is reached through the base declaration, so plain virtual dispatch.
     val method = Module::class.java.getMethod("define\$ExpoModulesV2", Class.forName("io.github.expo.modules.v2.modules.ModuleBuilder"))

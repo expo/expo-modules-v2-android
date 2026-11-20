@@ -1,6 +1,8 @@
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
+import org.gradle.api.artifacts.component.ProjectComponentIdentifier
 import org.gradle.api.component.AdhocComponentWithVariants
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   alias(libs.plugins.kotlin.jvm)
@@ -105,6 +107,16 @@ dependencies {
   testArtifacts(libs.kotlin.test)
   testArtifacts(libs.kotlin.script.runtime)
   testArtifacts(libs.kotlin.annotations.jvm)
+}
+
+// `assertExports` reads what a generated `define$ExpoModulesV2` recorded on the `ModuleBuilder`, which
+// keeps it in `internal` definitions: compile the helpers as a friend of :api rather than widen its API.
+tasks.named<KotlinCompile>("compileBoxSupportKotlin") {
+  friendPaths.from(
+    configurations["boxSupportCompileClasspath"].incoming
+      .artifactView { componentFilter { it is ProjectComponentIdentifier } }
+      .files,
+  )
 }
 
 buildConfig {

@@ -139,14 +139,6 @@ class ModuleBuilder {
     }
   }
 
-  /**
-   * Every export declared so far, one per line: functions, then properties, shared classes and
-   * events, each kind in declaration order. The compiler plugin's box tests compare it against what
-   * a generated `define$ExpoModulesV2` should have declared, so they need no IR dump to show it.
-   */
-  override fun toString(): String =
-    (functions + properties + sharedClasses + events).joinToString("\n")
-
   private fun hasIsPrefix(propertyName: String): Boolean =
     propertyName.length > 2 && propertyName.startsWith("is") && !propertyName[2].isLowerCase()
 

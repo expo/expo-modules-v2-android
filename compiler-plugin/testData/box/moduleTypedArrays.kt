@@ -7,7 +7,8 @@ import io.github.expo.modules.v2.Float32Array
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.TypedArray
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.slot
 
 /**
  * A typed array's bridge is another type: it crosses as the live `JavaScriptObject` it wraps. It
@@ -41,14 +42,23 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
-    expectExports(
-        TypedArrays,
-        """
-        function byteLength(TypedArray): int; method byteLength__trampoline
-        function echoArray(TypedArray?): TypedArray?; method echoArray__trampoline
-        function echoSamples(Float32Array): Float32Array; method echoSamples__trampoline
-        """,
-    )?.let { return it }
+    assertExports(TypedArrays) {
+        function("byteLength") {
+            args(slot<TypedArray>())
+            returns(slot<Int>())
+            trampoline()
+        }
+        function("echoArray") {
+            args(slot<TypedArray?>())
+            returns(slot<TypedArray?>())
+            trampoline()
+        }
+        function("echoSamples") {
+            args(slot<Float32Array>())
+            returns(slot<Float32Array>())
+            trampoline()
+        }
+    }
 
     val suffix = "__trampoline\$ExpoModulesV2"
     val jsObject = "Lio/github/expo/modules/v2/jsi/JavaScriptObject;"

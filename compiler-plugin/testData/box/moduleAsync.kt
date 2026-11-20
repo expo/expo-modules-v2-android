@@ -7,7 +7,9 @@ import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 import kotlinx.coroutines.delay
 
 /**
@@ -46,15 +48,30 @@ class AsyncShapes : Module() {
 private const val TRAMPOLINE = "__trampoline\$ExpoModulesV2"
 
 fun box(): String {
-    expectExports(
-        AsyncShapes(),
-        """
-        function scale(int): int; async; method scale__trampoline
-        function greet(String (buffered)): String; async; method greet__trampoline
-        function repeat(int, String (buffered)): String; async; method repeat__trampoline
-        function clear(): Unit; async; method clear__trampoline
-        """,
-    )?.let { return it }
+    assertExports(AsyncShapes()) {
+        function("scale") {
+            args(slot<Int>())
+            returns(slot<Int>())
+            trampoline()
+            async()
+        }
+        function("greet") {
+            args(buffered<String>())
+            returns(slot<String>())
+            trampoline()
+            async()
+        }
+        function("repeat") {
+            args(slot<Int>(), buffered<String>())
+            returns(slot<String>())
+            trampoline()
+            async()
+        }
+        function("clear") {
+            trampoline()
+            async()
+        }
+    }
 
     val clazz = AsyncShapes::class.java
     val int = Int::class.javaPrimitiveType

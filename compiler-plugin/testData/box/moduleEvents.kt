@@ -11,7 +11,9 @@ import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.SharedObject
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 
 @Record
 data class Change(val value: Int) : io.github.expo.modules.v2.records.Record
@@ -77,31 +79,26 @@ class Player : SharedObject() {
 }
 
 fun box(): String {
-    expectExports(
-        Watcher(),
-        """
-        function describe(Change (buffered)): String; method describe__trampoline
-        event changed: Change (buffered)
-        event renamed: int
-        event progress: double
-        event online: String
-        event batch: List<Integer> (buffered)
-        event slot: List<Integer>
-        """,
-    )?.let { return it }
-    expectExports(
-        Singleton,
-        """
-        event tick: int
-        """,
-    )?.let { return it }
-    expectExports(
-        Player::class.java,
-        """
-        function play(): int; method play
-        event stateChange: String
-        """,
-    )?.let { return it }
+    assertExports(Watcher()) {
+        function("describe") {
+            args(buffered<Change>())
+            returns(slot<String>())
+            trampoline()
+        }
+        event("changed", buffered<Change>())
+        event("renamed", slot<Int>())
+        event("progress", slot<Double>())
+        event("online", slot<String>())
+        event("batch", buffered<List<Int>>())
+        event("slot", slot<List<Int>>())
+    }
+    assertExports(Singleton) {
+        event("tick", slot<Int>())
+    }
+    assertExports(Player::class) {
+        function("play") { returns(slot<Int>()) }
+        event("stateChange", slot<String>())
+    }
 
     val watcher = Watcher()
 

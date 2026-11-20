@@ -6,7 +6,8 @@ import io.github.expo.modules.v2.ExpoSharedObject
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.SharedRef
-import io.github.expo.modules.v2.boxsupport.expectExports
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.slot
 
 /**
  * `ExpoSharedObject`'s open members stay overridable when the plugin is the one that put the base class
@@ -71,17 +72,14 @@ class InheritsPressure : PressuredBase()
 class Plain : SharedObject()
 
 fun box(): String {
-    expectExports(
-        Counter::class.java,
-        """
-        function value(): int; method value
-        """,
-    )?.let { return it }
-    expectExports(Pressured::class.java, "")?.let { return it }
-    expectExports(Delegating::class.java, "")?.let { return it }
-    expectExports(TextRef::class.java, "")?.let { return it }
-    expectExports(InheritsPressure::class.java, "")?.let { return it }
-    expectExports(Plain::class.java, "")?.let { return it }
+    assertExports(Counter::class) {
+        function("value") { returns(slot<Int>()) }
+    }
+    assertExports(Pressured::class) {}
+    assertExports(Delegating::class) {}
+    assertExports(TextRef::class) {}
+    assertExports(InheritsPressure::class) {}
+    assertExports(Plain::class) {}
 
     val base: io.github.expo.modules.v2.SharedObject = Counter()
 
