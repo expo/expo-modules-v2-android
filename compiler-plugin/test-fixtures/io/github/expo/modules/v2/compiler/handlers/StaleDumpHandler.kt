@@ -12,9 +12,10 @@ import org.jetbrains.kotlin.test.utils.withExtension
 /**
  * Fails a box test that carries a `*.fir.txt` it no longer asks for.
  *
- * The other dumps already police this - the stock handlers and [RecordKotlinLikeDumpHandler] fail
- * when their file exists but nothing was dumped - but the FIR dump handler skips the check, so a
- * test that drops `// FIR_DUMP` would keep a golden file nothing compares against.
+ * Dumps are only made to look at a test locally (see ExpoTestDirectives), and dropping the directive
+ * again should clean up after it. The stock IR handlers and [RecordKotlinLikeDumpHandler] do that -
+ * they fail when their file exists but nothing was dumped, and the test framework deletes the file -
+ * but the FIR dump handler skips the check, so a `*.fir.txt` would be left behind.
  */
 class StaleDumpHandler(
   testServices: TestServices,

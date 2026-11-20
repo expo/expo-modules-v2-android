@@ -53,14 +53,6 @@ val testFixturesCompatSourceDirs: List<File> =
   compatSourceDirsFor(layout.projectDirectory.dir("test-fixtures-compat").asFile, kotlinVersion)
 
 val testDataDir: Directory = layout.projectDirectory.dir("testData")
-
-// The golden dumps in testData are compared on one Kotlin release only: the catalog's own `kotlin`,
-// which a build without `-PkotlinVersion` uses. Every other release still compiles and runs every
-// test - generated code is printed differently from release to release, its behaviour is not.
-val dumpKotlinVersion: String = Regex("""(?m)^kotlin\s*=\s*"([^"]+)"""")
-  .find(rootProject.file("gradle/libs.versions.toml").readText())
-  ?.groupValues?.get(1)
-  ?: error("gradle/libs.versions.toml declares no `kotlin` version")
 val testGenDirectory = layout.buildDirectory.dir("test-gen")
 
 sourceSets {
@@ -137,7 +129,6 @@ tasks.test {
   jvmArgumentProviders.add(
     CommandLineArgumentProvider { listOf("-DrecordsRuntime.classpath=${apiFiles.asPath}") },
   )
-  systemProperty("expoModules.compareDumps", kotlinVersionString == dumpKotlinVersion)
 
   // Properties required to run the internal test framework.
   setLibraryProperty("org.jetbrains.kotlin.test.kotlin-stdlib", "kotlin-stdlib")

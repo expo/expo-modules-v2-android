@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_GENERATED
 
 // MODULE: producer
 // FILE: producer.kt
@@ -35,6 +34,7 @@ package io.github.expo.modules.v2.testdata.consumer
 
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.boxsupport.expectExports
 import io.github.expo.modules.v2.discoveredExpoModules
 import io.github.expo.modules.v2.testdata.producer.First
 import io.github.expo.modules.v2.testdata.producer.Outer
@@ -51,6 +51,16 @@ object Local : Module()
 private fun discovered(): List<Class<out Module>> = discoveredExpoModules()
 
 fun box(): String {
+    expectExports(
+        First,
+        """
+        function one(): int; method one
+        """,
+    )?.let { return it }
+    expectExports(Second(), "")?.let { return it }
+    expectExports(Outer.Nested, "")?.let { return it }
+    expectExports(Local, "")?.let { return it }
+
     val modules = discovered()
 
     val expected = listOf<Class<out Module>>(

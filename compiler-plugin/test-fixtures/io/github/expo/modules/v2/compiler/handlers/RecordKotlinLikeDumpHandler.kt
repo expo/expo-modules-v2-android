@@ -4,7 +4,6 @@ import io.github.expo.modules.v2.compiler.EventBindingOrigin
 import io.github.expo.modules.v2.compiler.ModuleDiscoveryOrigin
 import io.github.expo.modules.v2.compiler.services.ExpoTestDirectives
 import io.github.expo.modules.v2.compiler.services.ExpoTestDirectives.DUMP_GENERATED
-import io.github.expo.modules.v2.compiler.services.compareDumps
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclaration
@@ -37,8 +36,7 @@ import org.jetbrains.kotlin.test.utils.withExtension
 
 /**
  * Dumps the plugin-generated IR as Kotlin-like source into `*.generated.kt.txt`, for a test that asks
- * for it with `// DUMP_GENERATED`. It is compared on the catalog's Kotlin only ([compareDumps]); on
- * every other release the handler does nothing, not even the check for a stale file.
+ * for it with `// DUMP_GENERATED` - a tool for looking at one test locally; see [ExpoTestDirectives].
  *
  * It runs beside the stock `IrPrettyKotlinDumpHandler`, which writes the whole file to `*.kt.txt`
  * under `// DUMP_KT_IR`. That handler is final and hardcodes its dump options, so the narrowed view
@@ -60,7 +58,7 @@ class RecordKotlinLikeDumpHandler(
     get() = listOf(CodegenTestDirectives, ExpoTestDirectives)
 
   override fun processModule(module: TestModule, info: IrBackendInput) {
-    if (!compareDumps || DUMP_GENERATED !in module.directives) return
+    if (DUMP_GENERATED !in module.directives) return
 
     val irFiles = info.irModuleFragment.files
       .groupWithTestFiles(testServices, ordered = true)
@@ -86,7 +84,6 @@ class RecordKotlinLikeDumpHandler(
   }
 
   override fun processAfterAllModules(someAssertionWasFailed: Boolean) {
-    if (!compareDumps) return
     val expectedFile = testServices.moduleStructure.originalTestDataFiles.first()
       .withExtension(DUMP_EXTENSION)
 

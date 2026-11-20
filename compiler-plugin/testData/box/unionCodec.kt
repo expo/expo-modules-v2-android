@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_GENERATED
 
 package io.github.expo.modules.v2.testdata
 
