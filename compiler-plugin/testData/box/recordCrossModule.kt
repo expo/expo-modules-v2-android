@@ -1,6 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
-// FIR_DUMP
 
 // MODULE: producer
 // FILE: producer.kt

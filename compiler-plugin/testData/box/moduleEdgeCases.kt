@@ -1,11 +1,13 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 
 /** A module with nothing to export: `define` still has to name it, with an empty argument vararg. */
 @ExpoModule
@@ -85,6 +87,43 @@ private fun names(owner: Class<*>): Set<String> =
     owner.declaredMethods.map { it.name }.toSet()
 
 fun box(): String {
+    assertExports(Empty) {}
+    assertExports(Arity) {
+        function("none") { returns(slot<Int>()) }
+        function("one") {
+            args(slot<Int>())
+            returns(slot<Int>())
+        }
+        function("eight") {
+            args(slot<Int>(), slot<Int>(), slot<Int>(), slot<Int>(), slot<Int>(), slot<Int>(), slot<Int>(), slot<Int>())
+            returns(slot<Int>())
+        }
+        function("eightBuffered") {
+            args(buffered<String>(), buffered<String>(), buffered<String>(), buffered<String>(), buffered<String>(), buffered<String>(), buffered<String>(), buffered<String>())
+            returns(slot<Int>())
+            trampoline()
+        }
+    }
+    assertExports(Visibility) {
+        function("hidden") {
+            args(slot<Int>())
+            returns(slot<Int>())
+        }
+        function("visible") {
+            args(slot<Int>())
+            returns(slot<Int>())
+        }
+    }
+    assertExports(Derived) {
+        function("own") {
+            args(slot<Int>())
+            returns(slot<Int>())
+        }
+    }
+    assertExports(WithNested()) {
+        function("value") { returns(slot<Int>()) }
+    }
+
     val builder = Class.forName("io.github.expo.modules.v2.modules.ModuleBuilder")
 
     // An export-free module still overrides define, and still names itself.

@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -10,6 +9,9 @@ import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.async.Promise
 import io.github.expo.modules.v2.async.resolve
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 
 /**
  * An export that returns a `Promise<T>` instead of suspending.
@@ -45,6 +47,30 @@ class PromiseShapes : Module() {
 private const val TRAMPOLINE = "__trampoline\$ExpoModulesV2"
 
 fun box(): String {
+    assertExports(PromiseShapes()) {
+        function("scale") {
+            args(slot<Int>())
+            returns(slot<Int>())
+            trampoline()
+            async()
+        }
+        function("greet") {
+            args(buffered<String>())
+            returns(slot<String>())
+            trampoline()
+            async()
+        }
+        function("clear") {
+            trampoline()
+            async()
+        }
+        function("maybe") {
+            returns(slot<String?>())
+            trampoline()
+            async()
+        }
+    }
+
     val clazz = PromiseShapes::class.java
     val int = Int::class.javaPrimitiveType
     val handle = Class.forName("io.github.expo.modules.v2.async.PromiseHandle")

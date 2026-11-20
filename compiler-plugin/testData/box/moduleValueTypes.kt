@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -8,6 +7,9 @@ import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.Module
 
@@ -115,6 +117,80 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
+    assertExports(Values) {
+        function("nullableScalars") {
+            args(buffered<Int?>(), buffered<Long?>(), buffered<Float?>(), buffered<Double?>(), buffered<Boolean?>())
+            returns(buffered<Int?>())
+            trampoline()
+        }
+        function("unboxedScalars") {
+            args(slot<Int>(), slot<Long>(), slot<Float>(), slot<Double>(), slot<Boolean>())
+            returns(slot<Int>())
+        }
+        function("arrays") {
+            args(slot<IntArray>(), slot<DoubleArray?>(), slot<ByteArray>())
+            returns(slot<Int>())
+        }
+        function("containers") {
+            args(buffered<List<String>>(), buffered<Map<String, Int>>(), buffered<Set<String>>(), buffered<Array<String>>())
+            returns(slot<Int>())
+            trampoline()
+        }
+        function("nullableElements") {
+            args(buffered<List<String?>>(), buffered<List<Int>?>())
+            returns(slot<Int>())
+            trampoline()
+        }
+        function("echoPoint") {
+            args(buffered<Point>())
+            returns(buffered<Point>())
+            trampoline()
+        }
+        function("echoHolder") {
+            args(slot<Holder>())
+            returns(slot<Holder>())
+            trampoline()
+        }
+        function("points") {
+            args(buffered<List<Point>>())
+            returns(slot<Int>())
+            trampoline()
+        }
+        function("holders") {
+            args(slot<List<Holder>>())
+            returns(slot<Int>())
+            trampoline()
+        }
+        function("dynamic") {
+            args(slot<Any?>(), slot<JavaScriptValue>())
+            returns(slot<Int>())
+        }
+        function("dynamicOptedIn") {
+            args(buffered<Any?>(), buffered<List<Any?>>(), buffered<Map<String, Any>>(), slot<JavaScriptValue>())
+            returns(buffered<Any?>())
+            trampoline()
+        }
+        function("dynamicResult") {
+            args(slot<Any?>())
+            returns(buffered<List<Any?>>())
+            trampoline()
+        }
+        function("holderOptedIn") {
+            args(slot<Holder>())
+            returns(slot<Int>())
+            trampoline()
+        }
+        function("optedOut") {
+            args(slot<List<String>>())
+            returns(slot<Int>())
+        }
+        function("optedIn") {
+            args(buffered<IntArray>())
+            returns(slot<Int>())
+            trampoline()
+        }
+    }
+
     val suffix = "__trampoline\$ExpoModulesV2"
     val expected = mapOf(
         // all five arguments buffered, plus a buffered Int? result

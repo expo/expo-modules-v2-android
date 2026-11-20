@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -8,6 +7,9 @@ import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 import java.net.URI
 import java.net.URL
 import kotlin.time.Duration
@@ -78,6 +80,55 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
+    assertExports(Converted) {
+        function("total") {
+            args(slot<Duration>(), slot<Duration>())
+            returns(slot<Duration>())
+            trampoline()
+        }
+        function("host") {
+            args(slot<URL>())
+            returns(slot<String>())
+            trampoline()
+        }
+        function("firstHost") {
+            args(slot<List<URL>>())
+            returns(slot<String>())
+            trampoline()
+        }
+    }
+    assertExports(Buffered) {
+        function("greet") {
+            args(buffered<String>())
+            returns(slot<String>())
+            trampoline()
+        }
+        function("sum") {
+            args(buffered<List<Int>>())
+            returns(slot<Int>())
+            trampoline()
+        }
+        function("describe") {
+            args(buffered<String>(), slot<Int>())
+            returns(slot<String>())
+            trampoline()
+        }
+        function("makeNames") {
+            args(slot<Int>())
+            returns(buffered<List<String>>())
+            trampoline()
+        }
+        function("scale") {
+            args(slot<DoubleArray>())
+            returns(slot<Double>())
+        }
+        property("motto", slot<String>()) {
+            trampoline()
+            mutable(buffered<String>())
+        }
+        property("isReady", slot<Boolean>()) { constant() }
+    }
+
     val suffix = "__trampoline\$ExpoModulesV2"
 
     // A converted value in a JNI slot: the trampoline takes and returns the bridge type.

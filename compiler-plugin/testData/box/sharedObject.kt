@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -9,6 +8,9 @@ import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.SharedRef
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 
 /**
  * The other export base. A `@ExpoSharedObject` class declares the same shapes a module does and fills
@@ -97,12 +99,51 @@ private fun descriptorOf(owner: Class<*>, name: String): String {
 }
 
 fun box(): String {
+    assertExports(Players()) {
+        function("create") { returns(slot<Player>()) }
+        function("volumeOf") {
+            args(slot<Player>())
+            returns(slot<Double>())
+        }
+        function("maybe") {
+            args(slot<Player?>())
+            returns(slot<Int>())
+        }
+    }
+    assertExports(Owner()) {
+        sharedClass("Nested", Owner.Nested::class, buffered<String>())
+        sharedClass("Listed", Listed::class, slot<Int>())
+    }
+    assertExports(Player::class) {
+        function("play") { returns(slot<Int>()) }
+        function("rename") {
+            args(buffered<String>())
+            returns(slot<String>())
+            trampoline()
+        }
+        property("volume", slot<Double>()) { mutable() }
+    }
+    assertExports(Speaker::class) {
+        function("mute")
+    }
+    assertExports(TextRef::class) {
+        function("length") { returns(slot<Int>()) }
+    }
+    assertExports(Listed::class) {
+        function("value") { returns(slot<Int>()) }
+    }
+    assertExports(Owner.Nested::class) {
+        function("render") { returns(slot<String>()) }
+    }
+    assertExports(Owner.NotConstructable::class) {
+        function("name") { returns(slot<String>()) }
+    }
+
     val suffix = "__trampoline\$ExpoModulesV2"
     val player = "Lio/github/expo/modules/v2/testdata/Player;"
 
-    // `ModuleBuilder`'s constructor is internal, so what each base puts *into* it is pinned by the
-    // generated-code dump beside this file and by :api's GeneratedSharedObjectTest. What only a real
-    // compilation can show is checked here: that both bases got the hook, and the JVM signatures.
+    // What each base puts into the builder is checked above. What else only a real compilation can
+    // show is checked here: that both bases got the hook, and the JVM signatures.
     for (owner in listOf(Player::class.java, Speaker::class.java, Players::class.java)) {
         if (descriptorOf(owner, "define\$ExpoModulesV2") == "<absent>") {
             return "${owner.simpleName}: no generated define\$ExpoModulesV2"
@@ -143,8 +184,8 @@ fun box(): String {
     }
 
     // Both discovery routes reach `define$ExpoModulesV2`, and a nested class with no constructor
-    // JavaScript can call is left out of it. What each route emits is pinned by the generated-code dump
-    // beside this file; here we only check the classes themselves compiled as shared objects.
+    // JavaScript can call is left out of it (see Owner's exports above); here we only check the
+    // classes themselves compiled as shared objects.
     for (owner in listOf(Listed::class.java, Owner.Nested::class.java, Owner.NotConstructable::class.java)) {
         if (descriptorOf(owner, "define\$ExpoModulesV2") == "<absent>") {
             return "${owner.simpleName}: no generated define\$ExpoModulesV2"

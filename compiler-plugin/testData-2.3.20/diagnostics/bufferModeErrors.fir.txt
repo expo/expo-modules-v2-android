@@ -1,1 +1,0 @@
-../../testData-2.3.0/diagnostics/bufferModeErrors.fir.txt

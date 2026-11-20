@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -12,6 +11,9 @@ import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 
 @Record
 data class Change(val value: Int) : io.github.expo.modules.v2.records.Record
@@ -77,6 +79,27 @@ class Player : SharedObject() {
 }
 
 fun box(): String {
+    assertExports(Watcher()) {
+        function("describe") {
+            args(buffered<Change>())
+            returns(slot<String>())
+            trampoline()
+        }
+        event("changed", buffered<Change>())
+        event("renamed", slot<Int>())
+        event("progress", slot<Double>())
+        event("online", slot<String>())
+        event("batch", buffered<List<Int>>())
+        event("slot", slot<List<Int>>())
+    }
+    assertExports(Singleton) {
+        event("tick", slot<Int>())
+    }
+    assertExports(Player::class) {
+        function("play") { returns(slot<Int>()) }
+        event("stateChange", slot<String>())
+    }
+
     val watcher = Watcher()
 
     // Bound at construction: the name JavaScript subscribes to, derived by the plugin.

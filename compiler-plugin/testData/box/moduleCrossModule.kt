@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 // MODULE: producer
 // FILE: producer.kt
@@ -36,6 +35,9 @@ package io.github.expo.modules.v2.testdata.consumer
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 import io.github.expo.modules.v2.testdata.producer.ProducerModule
 import io.github.expo.modules.v2.testdata.producer.Shared
 
@@ -59,6 +61,27 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
+    assertExports(ProducerModule) {
+        function("bump") {
+            args(buffered<Shared>())
+            returns(buffered<Shared>())
+            trampoline()
+        }
+        function("name") {
+            args(buffered<String>())
+            returns(slot<String>())
+            trampoline()
+        }
+        property("count", slot<Int>()) { mutable() }
+    }
+    assertExports(ConsumerModule) {
+        function("forward") {
+            args(buffered<Shared>())
+            returns(buffered<Shared>())
+            trampoline()
+        }
+    }
+
     val suffix = "__trampoline\$ExpoModulesV2"
 
     // The producer's generated members are ordinary compiled code here.

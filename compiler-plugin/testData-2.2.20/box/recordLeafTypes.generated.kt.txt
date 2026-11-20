@@ -1,1 +1,0 @@
-../../testData/box/recordLeafTypes.generated.kt.txt

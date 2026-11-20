@@ -1,6 +1,8 @@
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
+import org.gradle.api.artifacts.component.ProjectComponentIdentifier
 import org.gradle.api.component.AdhocComponentWithVariants
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   alias(libs.plugins.kotlin.jvm)
@@ -52,7 +54,7 @@ val compatSourceDirs: List<File> =
 val testFixturesCompatSourceDirs: List<File> =
   compatSourceDirsFor(layout.projectDirectory.dir("test-fixtures-compat").asFile, kotlinVersion)
 
-val testDataDir: Directory = testDataDirFor(layout.projectDirectory, kotlinVersion)
+val testDataDir: Directory = layout.projectDirectory.dir("testData")
 val testGenDirectory = layout.buildDirectory.dir("test-gen")
 
 sourceSets {
@@ -68,6 +70,11 @@ sourceSets {
   test {
     java.setSrcDirs(listOf("test", testGenDirectory))
     resources.setSrcDirs(listOf(testDataDir))
+  }
+  // Helpers the box tests call, such as `expectExports`: compiled here against :api and put on the
+  // box tests' classpath beside it (see `recordsRuntime.classpath` below), so no test carries a copy.
+  create("boxSupport") {
+    java.setSrcDirs(listOf("box-support"))
   }
 }
 
@@ -87,6 +94,7 @@ dependencies {
   compileOnly(libs.kotlin.compiler)
 
   recordsRuntime(project(":api"))
+  "boxSupportCompileOnly"(project(":api"))
 
   testFixturesApi(libs.kotlin.test.junit5)
   testFixturesApi(libs.kotlin.test.framework)
@@ -101,6 +109,16 @@ dependencies {
   testArtifacts(libs.kotlin.annotations.jvm)
 }
 
+// `assertExports` reads what a generated `define$ExpoModulesV2` recorded on the `ModuleBuilder`, which
+// keeps it in `internal` definitions: compile the helpers as a friend of :api rather than widen its API.
+tasks.named<KotlinCompile>("compileBoxSupportKotlin") {
+  friendPaths.from(
+    configurations["boxSupportCompileClasspath"].incoming
+      .artifactView { componentFilter { it is ProjectComponentIdentifier } }
+      .files,
+  )
+}
+
 buildConfig {
   useKotlinOutput {
     internalVisibility = true
@@ -111,7 +129,7 @@ buildConfig {
 }
 
 tasks.test {
-  val apiFiles = files(recordsRuntime)
+  val apiFiles = files(recordsRuntime, sourceSets["boxSupport"].output)
 
   dependsOn(testArtifacts)
   inputs.files(testArtifacts).withPropertyName("testArtifacts")
@@ -199,14 +217,6 @@ fun parseKotlinVersion(version: String): KotlinVersion {
   }
   require(parts.size in 2..3) { "Not a Kotlin version: '$version'" }
   return KotlinVersion(parts[0], parts[1], parts.getOrElse(2) { 0 })
-}
-
-/** `testData-<since>/` for the newest `<since>` that [kotlin] satisfies, else the baseline `testData/`. */
-fun testDataDirFor(projectDir: Directory, kotlin: KotlinVersion): Directory {
-  val tiers = projectDir.asFile.listFiles { file -> file.isDirectory && file.name.startsWith("testData-") }.orEmpty()
-    .associateBy { parseKotlinVersion(it.name.removePrefix("testData-")) }
-  val tier = tiers.filterKeys { it <= kotlin }.maxByOrNull { it.key }?.value
-  return projectDir.dir(tier?.name ?: "testData")
 }
 
 /** One directory per concern under [compatRoot]: the newest `<since>` variant that [kotlin] satisfies. */

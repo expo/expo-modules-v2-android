@@ -2,6 +2,8 @@ package io.github.expo.modules.v2.compiler.handlers
 
 import io.github.expo.modules.v2.compiler.EventBindingOrigin
 import io.github.expo.modules.v2.compiler.ModuleDiscoveryOrigin
+import io.github.expo.modules.v2.compiler.services.ExpoTestDirectives
+import io.github.expo.modules.v2.compiler.services.ExpoTestDirectives.DUMP_GENERATED
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclaration
@@ -23,9 +25,7 @@ import org.jetbrains.kotlin.test.backend.handlers.AbstractIrHandler
 import org.jetbrains.kotlin.test.backend.handlers.IrTextDumpHandler.Companion.groupWithTestFiles
 import org.jetbrains.kotlin.test.backend.ir.IrBackendInput
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives
-import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.DUMP_KT_IR
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.EXTERNAL_FILE
-import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.SKIP_KT_DUMP
 import org.jetbrains.kotlin.test.directives.model.DirectivesContainer
 import org.jetbrains.kotlin.test.model.BackendKind
 import org.jetbrains.kotlin.test.model.TestModule
@@ -35,17 +35,18 @@ import org.jetbrains.kotlin.test.utils.MultiModuleInfoDumper
 import org.jetbrains.kotlin.test.utils.withExtension
 
 /**
- * Dumps the plugin-generated IR as Kotlin-like source into `*.generated.kt.txt`.
+ * Dumps the plugin-generated IR as Kotlin-like source into `*.generated.kt.txt`, for a test that asks
+ * for it with `// DUMP_GENERATED` - a tool for looking at one test locally; see [ExpoTestDirectives].
  *
- * It runs beside the stock `IrPrettyKotlinDumpHandler`, which writes the whole file to `*.kt.txt`.
- * That handler is final and hardcodes its dump options, so the narrowed view is a separate handler
- * rather than a flag. Two things differ from the stock dump:
+ * It runs beside the stock `IrPrettyKotlinDumpHandler`, which writes the whole file to `*.kt.txt`
+ * under `// DUMP_KT_IR`. That handler is final and hardcodes its dump options, so the narrowed view
+ * is a separate handler rather than a flag. Two things differ from the stock dump:
  *  - only declarations the plugin generated are printed, so the record's own data-class members
  *    and the test's `box()` stay out;
  *  - the rendered text goes through [tidy], which drops noise the dump options cannot suppress.
  *
- * The box tests are `// FIR_IDENTICAL`, so the stock dumps carry no `fir.` prefix on any supported
- * Kotlin release (2.4.20 dropped the prefix altogether); this dump follows the same naming.
+ * The box tests are `// FIR_IDENTICAL`, so the stock dumps carry no `fir.` prefix (2.4.20 dropped the
+ * prefix altogether); this dump follows the same naming.
  */
 class RecordKotlinLikeDumpHandler(
   testServices: TestServices,
@@ -54,10 +55,10 @@ class RecordKotlinLikeDumpHandler(
   private val dumper = MultiModuleInfoDumper("// MODULE: %s")
 
   override val directiveContainers: List<DirectivesContainer>
-    get() = listOf(CodegenTestDirectives)
+    get() = listOf(CodegenTestDirectives, ExpoTestDirectives)
 
   override fun processModule(module: TestModule, info: IrBackendInput) {
-    if (DUMP_KT_IR !in module.directives || SKIP_KT_DUMP in module.directives) return
+    if (DUMP_GENERATED !in module.directives) return
 
     val irFiles = info.irModuleFragment.files
       .groupWithTestFiles(testServices, ordered = true)
@@ -88,7 +89,7 @@ class RecordKotlinLikeDumpHandler(
 
     if (dumper.isEmpty()) {
       assertions.assertFileDoesntExist(expectedFile) {
-        "Nothing was dumped, but ${expectedFile.name} exists. Remove it or enable $DUMP_KT_IR."
+        "Nothing was dumped, but ${expectedFile.name} exists. Remove it or enable $DUMP_GENERATED."
       }
     } else {
       assertions.assertEqualsToFile(expectedFile, dumper.generateResultingDump())

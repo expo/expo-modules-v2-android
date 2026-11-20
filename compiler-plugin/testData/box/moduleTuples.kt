@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -8,6 +7,9 @@ import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.Module
 
@@ -67,6 +69,39 @@ private fun descriptor(type: Class<*>): String = when {
 }
 
 fun box(): String {
+    assertExports(Tuples) {
+        function("swap") {
+            args(buffered<Pair<Int, String>>())
+            returns(buffered<Pair<String, Int>>())
+            trampoline()
+        }
+        function("triple") {
+            args(buffered<Triple<String, Int?, Boolean>?>())
+            returns(slot<Int>())
+            trampoline()
+        }
+        function("zip") {
+            args(buffered<List<Pair<String, Int>>>())
+            returns(buffered<Pair<List<String>, List<Int>>>())
+            trampoline()
+        }
+        function("echoSegment") {
+            args(buffered<Segment>())
+            returns(buffered<Segment>())
+            trampoline()
+        }
+        function("handles") {
+            args(slot<Pair<String, JavaScriptValue>>())
+            returns(slot<Int>())
+            trampoline()
+        }
+        function("swapDirect") {
+            args(slot<Pair<Int, String>>())
+            returns(slot<Pair<String, Int>>())
+            trampoline()
+        }
+    }
+
     val suffix = "__trampoline\$ExpoModulesV2"
     val expected = mapOf(
         // a buffered tuple both ways

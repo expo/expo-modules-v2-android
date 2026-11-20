@@ -1,5 +1,4 @@
 // FIR_IDENTICAL
-// DUMP_IR
 
 package io.github.expo.modules.v2.testdata
 
@@ -8,6 +7,9 @@ import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.boxsupport.assertExports
+import io.github.expo.modules.v2.boxsupport.buffered
+import io.github.expo.modules.v2.boxsupport.slot
 import kotlinx.coroutines.delay
 
 /**
@@ -46,6 +48,31 @@ class AsyncShapes : Module() {
 private const val TRAMPOLINE = "__trampoline\$ExpoModulesV2"
 
 fun box(): String {
+    assertExports(AsyncShapes()) {
+        function("scale") {
+            args(slot<Int>())
+            returns(slot<Int>())
+            trampoline()
+            async()
+        }
+        function("greet") {
+            args(buffered<String>())
+            returns(slot<String>())
+            trampoline()
+            async()
+        }
+        function("repeat") {
+            args(slot<Int>(), buffered<String>())
+            returns(slot<String>())
+            trampoline()
+            async()
+        }
+        function("clear") {
+            trampoline()
+            async()
+        }
+    }
+
     val clazz = AsyncShapes::class.java
     val int = Int::class.javaPrimitiveType
     val handle = Class.forName("io.github.expo.modules.v2.async.PromiseHandle")

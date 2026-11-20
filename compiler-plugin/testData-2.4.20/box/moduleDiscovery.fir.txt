@@ -1,1 +1,0 @@
-../../testData-2.4.0/box/moduleDiscovery.fir.txt

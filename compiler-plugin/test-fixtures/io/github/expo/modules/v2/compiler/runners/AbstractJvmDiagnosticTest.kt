@@ -6,7 +6,6 @@ import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.test.FirParser
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives
-import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives
 import org.jetbrains.kotlin.test.runners.AbstractFirPhasedDiagnosticTest
 import org.jetbrains.kotlin.test.services.EnvironmentBasedStandardLibrariesPathProvider
@@ -19,8 +18,9 @@ open class AbstractJvmDiagnosticTest : AbstractFirPhasedDiagnosticTest(FirParser
 
   override fun configure(builder: TestConfigurationBuilder) = with(builder) {
     super.configure(builder)
+    // The expected diagnostics are written into the test files themselves, so no FIR dump is kept
+    // beside them: a dump would differ from one Kotlin release to the next while the diagnostics do not.
     defaultDirectives {
-      +FirDiagnosticsDirectives.FIR_DUMP
       +JvmEnvironmentConfigurationDirectives.FULL_JDK
       // :api is compiled with the build's JDK 17 toolchain; its inline functions (codecFor)
       // cannot be inlined into a lower target.
@@ -29,6 +29,7 @@ open class AbstractJvmDiagnosticTest : AbstractFirPhasedDiagnosticTest(FirParser
       +CodegenTestDirectives.IGNORE_DEXING // Avoids loading R8 from the classpath.
     }
 
+    disableGeneratedFirTags()
     configurePlugin()
     configureRecordsRuntime()
   }
