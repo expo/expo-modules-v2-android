@@ -78,6 +78,28 @@ class MapKeysTest {
   }
 
   @Test
+  fun `overlapping key sets of every size around the capacity keep every key`() =
+    withModule { runtime ->
+      runtime.evaluate("globalThis.checkMany = $checkMany")
+      // A fixed pseudo-random walk over a few prefixes and sizes, so hits, evictions and keys
+      // coming back after an eviction interleave in no particular order.
+      assertEquals(
+        "ok",
+        runtime.evaluateAsString(
+          "(() => {" +
+            "  let seed = 7;" +
+            "  const next = (n) => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed % n; };" +
+            "  for (let round = 0; round < 400; round++) {" +
+            "    const result = checkMany('pqrs'[next(4)], 1 + next(400));" +
+            "    if (result !== 'ok') return round + ': ' + result;" +
+            "  }" +
+            "  return 'ok';" +
+            "})()",
+        ),
+      )
+    }
+
+  @Test
   fun `a nested map that evicts every name leaves the key of its parent intact`() =
     withModule { runtime ->
       val check =

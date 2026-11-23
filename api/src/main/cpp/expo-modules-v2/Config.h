@@ -49,7 +49,7 @@ namespace expo::modules::v2::config {
 
   /**
    * How many ASCII property names each runtime keeps as `PropNameID`s, least recently used evicted
-   * first. One slot stays free (see `AsciiKeyCache`), so the cache holds one name fewer.
+   * first. The cache holds one name fewer.
    */
   inline constexpr size_t kPropertyNameCacheSlots = 256;
 
