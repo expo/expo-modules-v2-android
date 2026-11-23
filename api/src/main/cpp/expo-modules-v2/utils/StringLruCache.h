@@ -3,14 +3,13 @@
 #include <array>
 #include <bit>
 #include <cstdint>
+#include <functional>
 #include <optional>
 #include <string>
 #include <string_view>
 #include <type_traits>
 #include <utility>
 #include <vector>
-
-#include <expo-modules-v2/utils/ShortStringHash.h>
 
 namespace expo::modules::v2 {
   /**
@@ -52,7 +51,7 @@ namespace expo::modules::v2 {
      */
     template<class Make>
     [[nodiscard]] Value& getOrInsert(const std::string_view key, Make&& make) {
-      const uint64_t hash = hashShortString(key);
+      const uint64_t hash = std::hash<std::string_view>{}(key);
       if (const auto found = find(key, hash); found != kNone) {
         touch(found);
         return *entries_[found].value;
