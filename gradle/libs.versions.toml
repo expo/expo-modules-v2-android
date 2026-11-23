@@ -14,7 +14,7 @@ kolibri = "0.3.1"
 # https://github.com/JetBrains/kotlin
 # The oldest supported release. Every release in gradle/kotlin-versions.txt is built and tested;
 # `-PkotlinVersion=<version>` overrides this one for the whole build (see settings.gradle.kts).
-kotlin = "2.2.0"
+kotlin = "2.2.10"
 
 # The desktop/no-React-Native Hermes host: it creates the `jsi::Runtime` this project attaches to,
 # and ships the one process-wide copy of JSI everything here links against. Built from the
