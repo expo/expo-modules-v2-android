@@ -16,11 +16,6 @@ namespace expo::modules::v2 {
    * A cache from strings to [Value]s that holds at most [Capacity] of them and evicts the least
    * recently used one to make room.
    *
-   * ```
-   * StringLruCache<Name, 255> names;
-   * const Name& name = names.getOrInsert(key, [&] { return makeName(key); });
-   * ```
-   *
    * Lookups allocate nothing: it is meant for hot paths that look up the same few keys over and
    * over. A value stays at its address until it is evicted or the cache is cleared.
    */
@@ -40,6 +35,7 @@ namespace expo::modules::v2 {
     }
 
     StringLruCache(const StringLruCache&) = delete;
+
     StringLruCache& operator=(const StringLruCache&) = delete;
 
     /**
@@ -103,11 +99,13 @@ namespace expo::modules::v2 {
       if (entries_.size() < Capacity) {
         std::string ownedKey(key); // May throw, before anything changes.
         index = static_cast<Index>(entries_.size());
-        entries_.push_back(Entry{
-          .key = std::move(ownedKey),
-          .hash = hash,
-          .value = std::move(value)
-        });
+        entries_.push_back(
+          Entry{
+            .key = std::move(ownedKey),
+            .hash = hash,
+            .value = std::move(value)
+          }
+        );
       } else {
         // The least recently used entry takes the new key. Its string is grown while the entry is
         // still in place, so the only step that may throw comes before anything changes.
@@ -131,8 +129,6 @@ namespace expo::modules::v2 {
         linkAsNewest(index);
       }
     }
-
-    // --- Hash index ------------------------------------------------------------------------------
 
     [[nodiscard]] size_t homeOf(const Index index) const noexcept {
       return entries_[index].hash & kMask;
@@ -164,8 +160,6 @@ namespace expo::modules::v2 {
         }
       }
     }
-
-    // --- Recency order ---------------------------------------------------------------------------
 
     void unlink(const Index index) noexcept {
       Entry& entry = entries_[index];
