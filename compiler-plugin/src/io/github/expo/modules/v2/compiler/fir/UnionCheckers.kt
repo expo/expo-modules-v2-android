@@ -443,8 +443,9 @@ private fun jsKindOf(
     "kotlin.Int", "kotlin.Long", "kotlin.Float", "kotlin.Double", "kotlin.time.Duration" ->
       JsKind.NUMBER
 
-    "kotlin.String", "java.io.File", "java.net.URL", "java.net.URI", "java.nio.file.Path" ->
-      JsKind.STRING
+    "kotlin.String", "java.io.File", "java.net.URL", "java.net.URI", "java.nio.file.Path",
+    "android.net.Uri",
+      -> JsKind.STRING
 
     "kotlin.collections.List", "kotlin.collections.MutableList",
     "kotlin.collections.Set", "kotlin.collections.MutableSet",
@@ -494,7 +495,12 @@ private fun firstUnreachable(
   return null
 }
 
-private val TOTAL_STRINGS = setOf(StandardClassIds.String, ClassId.topLevel(FqName("java.io.File")))
+/** The string types whose conversion takes every string, so nothing after them is ever picked. */
+private val TOTAL_STRINGS = setOf(
+  StandardClassIds.String,
+  ClassId.topLevel(FqName("java.io.File")),
+  ClassId.topLevel(FqName("android.net.Uri")),
+)
 
 private val NUMBERS = setOf(
   StandardClassIds.Int,
