@@ -15,6 +15,7 @@ import io.github.expo.modules.v2.converters.DynamicConverter
 import io.github.expo.modules.v2.converters.EnumConverter
 import io.github.expo.modules.v2.converters.FileConverter
 import io.github.expo.modules.v2.converters.JsHandleConverter
+import io.github.expo.modules.v2.converters.KotlinUuidConverter
 import io.github.expo.modules.v2.converters.ListConverter
 import io.github.expo.modules.v2.converters.MapConverter
 import io.github.expo.modules.v2.converters.PairConverter
@@ -42,8 +43,13 @@ import java.net.URI
 import java.net.URL
 import java.nio.file.Path
 import kotlin.time.Duration
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 object TypeConverterRegistry {
+  // `Uuid` is still experimental. This opt-in covers only the table: a module that declares a
+  // `Uuid` opts in itself, as any use of the type requires.
+  @OptIn(ExperimentalUuidApi::class)
   private val simpleConvertersCache = classCacheOf {
     +entry(
       Boolean::class.javaObjectType,
@@ -113,6 +119,11 @@ object TypeConverterRegistry {
     +entry(
       URI::class.java,
       ::UriConverter
+    )
+
+    +entry(
+      Uuid::class.java,
+      ::KotlinUuidConverter
     )
 
     // java.nio.file only exists on Android 8+ (API 26). Below that, resolving Path::class throws

@@ -16,6 +16,7 @@ import io.github.expo.modules.v2.converters.DurationConverter
 import io.github.expo.modules.v2.converters.FileConverter
 import io.github.expo.modules.v2.converters.FloatArrayConverter
 import io.github.expo.modules.v2.converters.IntArrayConverter
+import io.github.expo.modules.v2.converters.KotlinUuidConverter
 import io.github.expo.modules.v2.converters.LongArrayConverter
 import io.github.expo.modules.v2.converters.PairConverter
 import io.github.expo.modules.v2.converters.PathConverter
@@ -40,6 +41,8 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 // A codec names the converter of the declaration it reads, nullability included.
 private val urlConverter = UrlConverter(isNullable = false)
@@ -191,6 +194,7 @@ class TypeConverterTest {
     assertContentEquals(nullableString, UriConverter(isNullable = true).typeCodes())
     assertContentEquals(nullableString, FileConverter(isNullable = true).typeCodes())
     assertContentEquals(nullableString, PathConverter(isNullable = true).typeCodes())
+    assertContentEquals(nullableString, KotlinUuidConverter(isNullable = true).typeCodes())
     // ...while a scalar-backed one boxes: an unboxed double slot has no null to hand over, and the
     // native decoder rejects a nullable scalar code.
     assertContentEquals(
@@ -617,5 +621,49 @@ class TypeConverterTest {
     assertFailsWith<IllegalArgumentException> {
       pair.writeToBuffer(buffer.duplicateView(), null)
     }
+  }
+
+  @OptIn(ExperimentalUuidApi::class)
+  @Test
+  fun `a kotlin Uuid crosses as its hex-and-dash string`() {
+    val converter = KotlinUuidConverter(isNullable = false)
+    val uuid = Uuid.parse("550e8400-e29b-41d4-a716-446655440000")
+
+    assertEquals("550e8400-e29b-41d4-a716-446655440000", converter.toJni(uuid))
+    assertEquals(uuid, converter.fromJni("550e8400-e29b-41d4-a716-446655440000"))
+    assertEquals(uuid, roundTrip(converter, uuid))
+    assertContentEquals(intArrayOf(CppType.STRING.code), converter.typeCodes())
+
+    // Uuid.parse also takes upper case and the 32-digit hex form; either comes back hex-and-dash.
+    assertEquals(uuid, converter.fromJni("550E8400-E29B-41D4-A716-446655440000"))
+    assertEquals(uuid, converter.fromJni("550e8400e29b41d4a716446655440000"))
+
+    // A string that is no UUID is refused - what lets a union hand it to the next variant.
+    assertFailsWith<IllegalArgumentException> { converter.fromJni("not-a-uuid") }
+    assertFailsWith<IllegalArgumentException> {
+      val writer = buffer.duplicateView()
+      writer.putString("not-a-uuid")
+      val view = buffer.duplicateView()
+      view.limit = writer.position
+      converter.readFromBuffer(view)
+    }
+    assertFailsWith<IllegalArgumentException> { converter.fromJni(null) }
+  }
+
+  @OptIn(ExperimentalUuidApi::class)
+  @Test
+  fun `a nullable kotlin Uuid carries null both ways`() {
+    val converter = KotlinUuidConverter(isNullable = true)
+    assertNull(converter.fromJni(null))
+    assertNull(converter.toJni(null))
+    // Only the presence byte goes on the wire.
+    val writer = buffer.duplicateView()
+    converter.writeToBuffer(writer, null)
+    assertEquals(1, writer.position)
+    val view = buffer.duplicateView()
+    view.limit = writer.position
+    assertNull(converter.readFromBuffer(view))
+    val uuid = Uuid.random()
+    assertEquals(uuid, roundTrip(converter, uuid))
   }
 }
