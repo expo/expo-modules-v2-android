@@ -266,6 +266,13 @@ private fun variantShapeOf(symbol: FirRegularClassSymbol, session: FirSession): 
   }
 
   val valueType = parameter.resolvedReturnType
+  if (valueType.containsLambdaType()) {
+    return VariantShape(
+      symbol,
+      unsupported = "a class holding a function type - a JavaScript function only crosses as a " +
+        "parameter of a @JS function or constructor",
+    )
+  }
   if (valueType.isMarkedNullable) {
     return VariantShape(symbol, nullableValue = true)
   }

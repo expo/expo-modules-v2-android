@@ -29,6 +29,9 @@ object JSDiagnostics : ExpoDiagnosticsContainer() {
   val JS_RESERVED_EXPORT_NAME by error1<KtDeclaration, String>(
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
+  val JS_PROPERTY_WITH_FUNCTION_TYPE by error0<KtDeclaration>(
+    SourceElementPositioningStrategies.DECLARATION_NAME,
+  )
 
   override fun getRendererFactory(): BaseDiagnosticRendererFactory = JSDiagnosticMessages
 
@@ -66,6 +69,11 @@ object JSDiagnosticMessages : BaseDiagnosticRendererFactory() {
         "addListener, removeListener, removeAllListeners, listenerCount and emit. Rename the " +
         "export, or give it a different name with the annotation's name argument",
       CommonRenderers.STRING,
+    )
+    put(
+      JSDiagnostics.JS_PROPERTY_WITH_FUNCTION_TYPE,
+      "A @JS property cannot hold a function type - a JavaScript function only crosses as a " +
+        "parameter of a @JS function or constructor",
     )
   }
 }

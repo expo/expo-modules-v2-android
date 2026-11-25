@@ -6,9 +6,11 @@
 #include <expo-modules-v2/converter/ByteView.h>
 #include <expo-modules-v2/converter/encoders/EncodeCommon.h>
 #include <expo-modules-v2/converter/encoders/JniEncode.h>
+#include <expo-modules-v2/descriptor/FunctionSignature.h>
 #include <expo-modules-v2/converter/JsiStringCodec.h>
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
 #include <expo-modules-v2/jni/JUnionValue.h>
+#include <expo-modules-v2/jsi/JavaScriptFunction.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectState.h>
@@ -140,8 +142,25 @@ namespace expo::modules::v2 {
       } catch (...) {
         env->PopLocalFrame(nullptr);
         throw;
-      } 
+      }
     });
+  }
+
+  jobject JniEncoder::operator()(const ExpectedType::Function& functionType) const {
+    if (!value.isObject() || !value.getObject(rt).isFunction(rt)) {
+      throwConversionError({
+        "Expected a function for ",
+        functionType.signature->isSuspend ? "a suspend lambda" : "a lambda",
+        ", got a value that is not callable",
+      });
+    }
+
+    return jsi::JavaScriptFunction::create(
+      env,
+      &rt,
+      value.getObject(rt).getFunction(rt),
+      functionType.signature
+    );
   }
 
   jobject JniEncoder::operator()(const ExpectedType::Record& recordType) const {

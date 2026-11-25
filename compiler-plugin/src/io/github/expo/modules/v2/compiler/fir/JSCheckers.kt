@@ -96,7 +96,7 @@ class JSCheckers(session: FirSession) : FirAdditionalCheckersExtension(session) 
           "declare more than ${Identifiers.MAX_ARGUMENTS} arguments (this one declares " +
             "${parameters.size})"
 
-        else -> promiseShape(declaration)
+        else -> promiseShape(declaration) ?: functionTypeShape(declaration, session)
       }
       if (shape != null) {
         reporter.reportOn(
@@ -143,6 +143,10 @@ class JSCheckers(session: FirSession) : FirAdditionalCheckersExtension(session) 
           context,
         )
         return
+      }
+
+      if (declaration.returnTypeRef.coneType.containsLambdaType()) {
+        reporter.reportOn(declaration.source, JSDiagnostics.JS_PROPERTY_WITH_FUNCTION_TYPE, context)
       }
     }
   }

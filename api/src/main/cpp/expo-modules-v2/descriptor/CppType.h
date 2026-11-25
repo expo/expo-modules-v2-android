@@ -33,6 +33,8 @@ namespace expo::modules::v2 {
     // A union the codes are already inside of, by how many unions out it is: 0 is the nearest.
     // Never an ExpectedType kind of its own - the decoder turns it into a UNION.
     UNION_REF = 22,
+
+    FUNCTION = 23,
   };
 
   /**

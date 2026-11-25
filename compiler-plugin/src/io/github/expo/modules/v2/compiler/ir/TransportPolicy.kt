@@ -78,6 +78,12 @@ internal enum class ValueKind {
    * [TransportPolicy.sameBridgeOf]).
    */
   UNION,
+
+  /**
+   * A lambda, `(A) -> R` or `suspend (A) -> R`, whose bridge is the live JavaScript function it
+   * stands for. It only crosses inbound.
+   */
+  FUNCTION,
 }
 
 internal enum class Crossing {
@@ -118,6 +124,14 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
 
   fun plan(type: IrType, choice: BufferChoice, crossing: Crossing): ValuePlan {
     val kind = kindOf(type)
+    if (kind == ValueKind.FUNCTION) {
+      checkFunction(type, crossing)
+    } else {
+      check(elementTypes(type).none(::containsFunction)) {
+        "@JS does not support a function type nested inside another type ($type) - the frontend " +
+          "checker should have caught this"
+      }
+    }
     val buffered = when (choice) {
       BufferChoice.NO -> false
       BufferChoice.YES -> canBuffer(kind, type, allowDynamic = true)
@@ -165,6 +179,9 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       "kotlin.Array" -> ValueKind.ARRAY
       "kotlin.Pair", "kotlin.Triple" -> ValueKind.TUPLE
       else -> {
+        if (FunctionTypes.isFunction(fqName)) {
+          return ValueKind.FUNCTION
+        }
         val owner = type.classOrNull?.owner
         when {
           owner?.hasAnnotation(Identifiers.Classes.UnionAnnotation) == true -> ValueKind.UNION
@@ -199,6 +216,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD, ValueKind.UNION,
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
       ValueKind.TYPED_ARRAY,
+      // The lambda wraps the JavaScript function it is handed.
+      ValueKind.FUNCTION,
         -> false
     }
 
@@ -211,7 +230,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
     when (kind) {
       ValueKind.DYNAMIC -> allowDynamic
       ValueKind.UNBOXED_SCALAR, ValueKind.UNIT, ValueKind.JS_HANDLE,
-      ValueKind.TYPED_ARRAY, ValueKind.SHARED_OBJECT,
+      ValueKind.TYPED_ARRAY, ValueKind.SHARED_OBJECT, ValueKind.FUNCTION,
         -> false
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.INT_ENUM -> type.isMarkedNullable()
       ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.CONVERTED_TO_STRING,
@@ -259,7 +278,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       return allowDynamic
     }
     if (kind == ValueKind.JS_HANDLE ||
-      kind == ValueKind.TYPED_ARRAY || kind == ValueKind.SHARED_OBJECT
+      kind == ValueKind.TYPED_ARRAY || kind == ValueKind.SHARED_OBJECT || kind == ValueKind.FUNCTION
     ) {
       return false
     }
@@ -381,6 +400,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.INT_ENUM ->
         if (type.isMarkedNullable()) irBuiltIns.intType.makeNullable() else irBuiltIns.intType
       ValueKind.TYPED_ARRAY -> symbols.classes.javaScriptObject.owner.defaultType.makeNullable()
+      ValueKind.FUNCTION -> symbols.classes.javaScriptFunction.owner.defaultType.makeNullable()
       ValueKind.LIST, ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE ->
         irBuiltIns.listClass.typeWith(irBuiltIns.anyType.makeNullable()).makeNullable()
 
@@ -416,6 +436,25 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
 
   private fun simpleName(type: IrType): String =
     type.classOrNull?.owner?.name?.asString() ?: unsupported(type)
+
+  /**
+   * A lambda crosses inbound only, and what it takes and returns has to be something that can
+   * cross on its own - not another lambda, and not a value that has to ride the buffer.
+   */
+  private fun checkFunction(type: IrType, crossing: Crossing) {
+    check(crossing == Crossing.INBOUND) {
+      "@JS cannot hand the function type $type to JavaScript - it only works as a parameter"
+    }
+
+    check(elementTypes(type).none(::containsFunction)) {
+      "@JS does not support a function type that takes or returns another one ($type)"
+    }
+  }
+
+  /** Whether [type] is a lambda type, or holds one anywhere among its type arguments. */
+  fun containsFunction(type: IrType): Boolean =
+    type.classOrNull?.owner?.kotlinFqName?.asString()?.let(FunctionTypes::isFunction) == true ||
+      elementTypes(type).any(::containsFunction)
 
   private fun unsupported(type: IrType): Nothing =
     error("@JS does not support the value type $type - the frontend checker should have caught this")

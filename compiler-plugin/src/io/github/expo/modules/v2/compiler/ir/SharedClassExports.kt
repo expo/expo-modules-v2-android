@@ -36,9 +36,11 @@ internal class SharedClassExports(private val policy: TransportPolicy) {
     val singleConstructor = all.singleOrNull()?.takeIf { it.visibility == DescriptorVisibilities.PUBLIC }
       ?: return null
 
+    // A lambda parameter would cross, but a constructor that takes one is most likely built from
+    // Kotlin: it is only exposed when it is marked `@JS`, so taking a lambda never exposes it silently.
     val crossable = singleConstructor.parameters
       .filter { it.kind == IrParameterKind.Regular }
-      .all { policy.supports(it.type) }
+      .all { policy.supports(it.type) && !policy.containsFunction(it.type) }
 
     if (!crossable) {
       return null

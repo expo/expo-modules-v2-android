@@ -27,6 +27,7 @@ object RecordDiagnostics : ExpoDiagnosticsContainer() {
     SourceElementPositioningStrategies.DECLARATION_NAME,
   )
   val RECORD_PARAMETER_IS_NOT_A_PROPERTY by error0<KtParameter>()
+  val RECORD_FIELD_WITH_FUNCTION_TYPE by error0<KtParameter>()
 
   override fun getRendererFactory(): BaseDiagnosticRendererFactory = RecordDiagnosticMessages
 
@@ -62,6 +63,11 @@ object RecordDiagnosticMessages : BaseDiagnosticRendererFactory() {
       RecordDiagnostics.RECORD_PARAMETER_IS_NOT_A_PROPERTY,
       "A primary-constructor parameter of an @Record class must be a `val` or a `var` - `encode` " +
         "has no way to read a plain parameter back",
+    )
+    put(
+      RecordDiagnostics.RECORD_FIELD_WITH_FUNCTION_TYPE,
+      "A record field cannot hold a function type - a record crosses both ways, and a Kotlin " +
+        "lambda cannot be handed to JavaScript. Take the function as a parameter of a @JS function",
     )
   }
 }

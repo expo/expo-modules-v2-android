@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.compiler.fir
 
 import io.github.expo.modules.v2.compiler.Identifiers
+import io.github.expo.modules.v2.compiler.fir.diagnostics.JSDiagnostics
 import io.github.expo.modules.v2.compiler.fir.diagnostics.SharedObjectDiagnostics
 import org.jetbrains.kotlin.descriptors.Visibilities
 import org.jetbrains.kotlin.diagnostics.DiagnosticReporter
@@ -125,6 +126,12 @@ class SharedObjectCheckers(session: FirSession) : FirAdditionalCheckersExtension
           SharedObjectDiagnostics.SHARED_OBJECT_DUPLICATE_CONSTRUCTOR,
           context,
         )
+      }
+
+      // The lambdas it takes follow the rules of a `@JS` function's. An unmarked constructor that
+      // takes a lambda is never exposed, so it stays Kotlin-only and free to take any.
+      functionTypeShape(declaration, session)?.let { shape ->
+        reporter.reportOn(declaration.source, JSDiagnostics.JS_UNSUPPORTED_FUNCTION_SHAPE, shape, context)
       }
     }
   }
