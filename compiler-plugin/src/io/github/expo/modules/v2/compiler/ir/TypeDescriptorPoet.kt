@@ -224,6 +224,7 @@ class TypeDescriptorPoet(
     val containerClass: IrClassSymbol = when (fqName) {
       "kotlin.collections.List", "kotlin.collections.MutableList" -> irBuiltIns.listClass
       "kotlin.collections.Set", "kotlin.collections.MutableSet" -> irBuiltIns.setClass
+      "kotlin.collections.Collection", "kotlin.collections.MutableCollection" -> irBuiltIns.collectionClass
       "kotlin.collections.Map", "kotlin.collections.MutableMap" -> irBuiltIns.mapClass
       "kotlin.Pair", "kotlin.Triple" -> type.classOrNull ?: unsupported(type)
       // Only as what a lambda returns, where the runtime reads the type it resolves with.

@@ -10,6 +10,7 @@ import io.github.expo.modules.v2.converters.BoxedDoubleConverter
 import io.github.expo.modules.v2.converters.BoxedFloatConverter
 import io.github.expo.modules.v2.converters.BoxedIntConverter
 import io.github.expo.modules.v2.converters.BoxedLongConverter
+import io.github.expo.modules.v2.converters.CollectionConverter
 import io.github.expo.modules.v2.converters.DurationConverter
 import io.github.expo.modules.v2.converters.DynamicConverter
 import io.github.expo.modules.v2.converters.EnumConverter
@@ -224,6 +225,12 @@ object TypeConverterRegistry {
       return ArrayConverter<Any>(typeDescriptor)
     }
 
+    // Last of the collections: a declared `Collection` is none of the above, and only the
+    // interface itself reaches here - the compiler plugin accepts no other Collection type.
+    if (jClass == Collection::class.java) {
+      return CollectionConverter(typeDescriptor)
+    }
+
     if (jClass == Pair::class.java) {
       return PairConverter(typeDescriptor)
     }
@@ -233,7 +240,7 @@ object TypeConverterRegistry {
     }
 
     throw IllegalArgumentException(
-      "${jClass.name} has no bridge type - describe it with a leaf class, a List/Map/Pair/Triple, a registered " +
+      "${jClass.name} has no bridge type - describe it with a leaf class, a List/Set/Collection/Map/Pair/Triple, a registered " +
         "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register"
     )
   }
