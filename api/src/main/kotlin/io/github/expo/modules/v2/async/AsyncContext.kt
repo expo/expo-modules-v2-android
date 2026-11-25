@@ -45,15 +45,39 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
   @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
   fun invalidate() {
     runtimePointer = 0
+    val listeners = synchronized(closeListeners) {
+      isClosed = true
+      closeListeners
+        .toList()
+        .also { closeListeners.clear() }
+    }
     scope.cancel(CancellationException("The JavaScript runtime was closed"))
     scheduler.close()
+    listeners.forEach { it.onRuntimeClosed() }
+  }
+
+  private val closeListeners = LinkedHashSet<RuntimeCloseListener>()
+  private var isClosed = false
+
+  internal fun addCloseListener(listener: RuntimeCloseListener): Boolean =
+    synchronized(closeListeners) {
+      if (isClosed) {
+        false
+      } else {
+        closeListeners.add(listener)
+        true
+      }
+    }
+
+  internal fun removeCloseListener(listener: RuntimeCloseListener) {
+    synchronized(closeListeners) { closeListeners.remove(listener) }
   }
 
   /**
    * The settle that belongs to the host function still on the stack, if it has one already.
    *
    * A single slot is enough: one window is one trampoline call is one promise, and a promise
-   * settles once.
+   * settles once. A nested window saves the enclosing one's and puts it back when it closes.
    */
   private var inlineSettle: Runnable? = null
 
@@ -84,19 +108,29 @@ class AsyncContext(val scheduler: JSScheduler = DefaultJSScheduler()) {
    * call back into Kotlin to collect it.
    */
   internal inline fun <T> inlineWindow(body: AsyncContext.() -> T): T {
-    val result = try {
-      inlineThread = Thread.currentThread()
-      body()
-    } catch (throwable: Throwable) {
-      // The trampoline fails and the native caller rejects the promise; a settle held so far must
-      // not leak into the next call.
-      inlineSettle = null
-      throw throwable
+    // A body can call a JavaScript function that starts another async export, so windows nest. Each
+    // has its own held settle: the inner one must neither deliver nor drop the outer one's, which
+    // belongs to a host function still further up the stack. Both are back in place when it closes.
+    val enclosingThread = inlineThread
+    val enclosingSettle = inlineSettle
+    inlineSettle = null
+    try {
+      val result = try {
+        inlineThread = Thread.currentThread()
+        body()
+      } catch (throwable: Throwable) {
+        // The trampoline fails and the native caller rejects the promise; a settle held so far
+        // must not leak into the next call.
+        inlineSettle = null
+        throw throwable
+      } finally {
+        inlineThread = enclosingThread
+      }
+      drainInlineSettle()
+      return result
     } finally {
-      inlineThread = null
+      inlineSettle = enclosingSettle
     }
-    drainInlineSettle()
-    return result
   }
 
   private fun drainInlineSettle() {

@@ -227,6 +227,11 @@ private fun render(descriptor: TypeDescriptor): String = when (descriptor) {
   is TypeDescriptor.Parametrized ->
     descriptor.javaClass.kotlin.simpleName + descriptor.params.joinToString(prefix = "<", postfix = ">") { render(it) } +
       (if (descriptor.isNullable) "?" else "")
+  is TypeDescriptor.Function -> {
+    val function = (if (descriptor.isSuspend) "suspend " else "") +
+      descriptor.params.joinToString(prefix = "(", postfix = ")") { render(it) } + " -> " + render(descriptor.returns)
+    if (descriptor.isNullable) "($function)?" else function
+  }
 }
 
 private fun matches(actual: AnyType, expected: ExpectedType): Boolean =

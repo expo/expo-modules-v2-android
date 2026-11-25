@@ -152,6 +152,14 @@ class RecordCheckers(session: FirSession) : FirAdditionalCheckersExtension(sessi
         )
         return
       }
+
+      if (parameter.resolvedReturnType.containsLambdaType()) {
+        reporter.reportOn(
+          parameter.source,
+          RecordDiagnostics.RECORD_FIELD_WITH_FUNCTION_TYPE,
+          context,
+        )
+      }
     }
   }
 }

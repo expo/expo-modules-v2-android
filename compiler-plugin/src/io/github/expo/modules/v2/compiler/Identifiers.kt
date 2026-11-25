@@ -98,6 +98,7 @@ object Identifiers {
     val TypeDescriptorObjectLike = typeDescriptorNested("ObjectLike")
     val TypeDescriptorSimple = typeDescriptorNested("Simple")
     val TypeDescriptorParametrized = typeDescriptorNested("Parametrized")
+    val TypeDescriptorFunction = typeDescriptorNested("Function")
     val CommonDescriptors = classId(Packages.TYPES, "CommonDescriptors")
     val AnyType = classId(Packages.TYPES, "AnyType")
 
@@ -127,6 +128,7 @@ object Identifiers {
 
     val JavaScriptValue = classId(Packages.JSI, "JavaScriptValue")
     val JavaScriptObject = classId(Packages.JSI, "JavaScriptObject")
+    val JavaScriptFunction = classId(Packages.JSI, "JavaScriptFunction")
 
     fun typeDescriptorNested(simpleName: String): ClassId =
       TypeDescriptor.createNestedClassId(Name.identifier(simpleName))

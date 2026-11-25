@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.modules
 
+import io.github.expo.modules.v2.binary.toBinaryFlag
 import io.github.expo.modules.v2.types.AnyType
 
 internal class ModuleFunctionDefinition(
@@ -10,11 +11,7 @@ internal class ModuleFunctionDefinition(
   val isAsync: Boolean = false,
 ) {
   val flags: Int
-    get() = if (isAsync) {
-      FLAG_ASYNC
-    } else {
-      0
-    }
+    get() = isAsync.toBinaryFlag(FLAG_ASYNC)
 
   internal companion object {
     const val FLAG_ASYNC = 1
@@ -30,11 +27,7 @@ internal class ModulePropertyDefinition(
   val isConstant: Boolean = false,
 ) {
   val flags: Int
-    get() = if (isConstant) {
-      FLAG_CONSTANT
-    } else {
-      0
-    }
+    get() = isConstant.toBinaryFlag(FLAG_CONSTANT)
 
   internal companion object {
     const val FLAG_CONSTANT = 1

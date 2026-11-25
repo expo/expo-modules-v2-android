@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.compiler.ir
 
+import io.github.expo.modules.v2.compiler.Identifiers
 import io.github.expo.modules.v2.compiler.TypeDescriptorNames
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
 import org.jetbrains.kotlin.backend.common.ir.createExtensionReceiver
@@ -171,9 +172,45 @@ class TypeDescriptorPoet(
       )
     }
 
+    functionDescriptor(type, isNullable, fqName)?.let { return it }
+
     containerDescriptor(type, isNullable, fqName)?.let { return it }
 
     return simpleDescriptor(type, isNullable)
+  }
+
+  /**
+   * `TypeDescriptor.Function(params, returns, isSuspend, isNullable)` for a lambda type. Its
+   * arguments are the parameters followed by the return type, all described as boxed values, which
+   * is how a lambda sees them on the JVM.
+   */
+  private fun functionDescriptor(
+    type: IrSimpleType,
+    isNullable: Boolean,
+    fqName: String,
+  ): IrExpression? {
+    if (!FunctionTypes.isFunction(fqName)) {
+      return null
+    }
+
+    val arguments = type.arguments.map { argument ->
+      (argument as? IrTypeProjection)?.type ?: unsupported(type)
+    }
+    val constructor = symbols.constructors.functionDescriptor
+
+    return constructorCall(
+      constructor = constructor,
+      type = constructor.owner.returnType,
+      arguments = listOf(
+        arrayOf(
+          symbols.classes.typeDescriptorObjectLike.owner.defaultType,
+          arguments.dropLast(1).map(::boxedDescriptorFor),
+        ),
+        boxedDescriptorFor(arguments.last()),
+        boolean(FunctionTypes.isSuspendFunction(fqName)),
+        boolean(isNullable),
+      ),
+    )
   }
 
   private fun containerDescriptor(
@@ -189,6 +226,8 @@ class TypeDescriptorPoet(
       "kotlin.collections.Set", "kotlin.collections.MutableSet" -> irBuiltIns.setClass
       "kotlin.collections.Map", "kotlin.collections.MutableMap" -> irBuiltIns.mapClass
       "kotlin.Pair", "kotlin.Triple" -> type.classOrNull ?: unsupported(type)
+      // Only as what a lambda returns, where the runtime reads the type it resolves with.
+      Identifiers.FqNames.PROMISE.asString() -> type.classOrNull ?: unsupported(type)
       "kotlin.Array" -> return arrayDescriptor(type, isNullable)
       else -> return null
     }

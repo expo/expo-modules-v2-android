@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.fir.expressions.FirFunctionCall
 import org.jetbrains.kotlin.fir.references.toResolvedCallableSymbol
 import org.jetbrains.kotlin.fir.types.classId
 import org.jetbrains.kotlin.fir.types.coneType
+import org.jetbrains.kotlin.fir.types.type
 import org.jetbrains.kotlin.fir.types.isMarkedNullable
 import org.jetbrains.kotlin.name.CallableId
 
@@ -84,6 +85,16 @@ class EventCheckers(session: FirSession) : FirAdditionalCheckersExtension(sessio
       val type = declaration.returnTypeRef.coneType
       if (type.classId != Identifiers.Classes.Event || type.isMarkedNullable) {
         reporter.reportOn(declaration.source, EventDiagnostics.EVENT_WRONG_TYPE, context)
+        return
+      }
+
+      if (type.typeArguments.any { it.type?.containsLambdaType() == true }) {
+        reporter.reportOn(
+          declaration.source,
+          EventDiagnostics.EVENT_UNSUPPORTED_SHAPE,
+          "carry a function type - a Kotlin lambda cannot be handed to JavaScript",
+          context,
+        )
         return
       }
 

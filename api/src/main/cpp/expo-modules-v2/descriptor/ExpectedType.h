@@ -34,6 +34,7 @@ namespace expo::modules::v2 {
   }
 
   struct UnionSchema;
+  struct FunctionSignature;
 
   class ExpectedType {
   public:
@@ -65,6 +66,10 @@ namespace expo::modules::v2 {
       const UnionSchema* schema;
     };
 
+    struct Function {
+      std::shared_ptr<const FunctionSignature> signature;
+    };
+
     explicit ExpectedType(LeafType type, bool nullable = false, bool usesBuffer = false);
 
     // clang-format off
@@ -80,6 +85,7 @@ namespace expo::modules::v2 {
     [[nodiscard]] static ExpectedType tuple(std::vector<ExpectedType> elements, bool nullable = false, bool usesBuffer = false);
     [[nodiscard]] static ExpectedType unionOf(std::shared_ptr<const UnionSchema> schema, bool nullable = false, bool usesBuffer = false);
     [[nodiscard]] static ExpectedType unionRef(const UnionSchema* schema, bool nullable = false);
+    [[nodiscard]] static ExpectedType function(FunctionSignature signature, bool nullable = false);
     // clang-format on
 
     [[nodiscard]] ExpectedType clone() const;
@@ -95,7 +101,8 @@ namespace expo::modules::v2 {
         case 3: return invokeWith<R, CppType::RECORD>(v, *std::get_if<Record>(&shape_));
         case 4: return invokeWith<R, CppType::SHARED_OBJECT>(v, *std::get_if<SharedObject>(&shape_));
         case 5: return invokeWith<R, CppType::TUPLE>(v, *std::get_if<Tuple>(&shape_));
-        default: return invokeWith<R, CppType::UNION>(v, *std::get_if<Union>(&shape_));
+        case 6: return invokeWith<R, CppType::UNION>(v, *std::get_if<Union>(&shape_));
+        default: return invokeWith<R, CppType::FUNCTION>(v, *std::get_if<Function>(&shape_));
       }
     }
 
@@ -124,7 +131,7 @@ namespace expo::modules::v2 {
     bool bufferSafe() const;
 
   private:
-    using Shape = std::variant<LeafType, List, Map, Record, SharedObject, Tuple, Union>;
+    using Shape = std::variant<LeafType, List, Map, Record, SharedObject, Tuple, Union, Function>;
 
     explicit ExpectedType(Shape shape, bool nullable, bool usesBuffer);
 
