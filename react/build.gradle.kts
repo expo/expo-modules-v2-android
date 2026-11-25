@@ -96,6 +96,11 @@ android {
     }
   }
 
+  testOptions {
+    // Robolectric's real Android framework, instead of the android.jar stubs that throw.
+    unitTests.isIncludeAndroidResources = true
+  }
+
   packaging {
     jniLibs {
       excludes += listOf(
@@ -127,6 +132,11 @@ dependencies {
   implementation(libs.react.android)
 
   api(libs.kolibri.android)
+
+  // The converters of Android framework classes (Bundle, Uri) only run on the JVM under Robolectric.
+  testImplementation(libs.junit)
+  testImplementation(libs.kotlin.test)
+  testImplementation(libs.robolectric)
 }
 
 val cppSourcesZip by tasks.registering(Zip::class) {
