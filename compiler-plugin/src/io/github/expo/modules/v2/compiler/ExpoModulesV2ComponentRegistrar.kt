@@ -16,6 +16,7 @@ class ExpoModulesV2ComponentRegistrar : ExpoCompilerPluginRegistrar() {
     FirExtensionRegistrarAdapter.registerExtension(ExpoModulesV2FirRegistrar())
 
     val hints = ModuleHintScanner { configuration.jvmClasspathRoots }
-    IrGenerationExtension.registerExtension(ExpoModulesV2IrGenerationExtension(hints))
+    val classpathPackages = configuration.getList(ExpoModulesV2ConfigurationKeys.CLASSPATH_PACKAGES)
+    IrGenerationExtension.registerExtension(ExpoModulesV2IrGenerationExtension(hints, classpathPackages))
   }
 }

@@ -79,6 +79,9 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `class ModuleBuilder` */
     val moduleBuilder: IrClassSymbol by lazy { clazz(Identifiers.Classes.ModuleBuilder) }
 
+    /** `class Pair<out A, out B>(first: A, second: B)` */
+    val pair: IrClassSymbol by lazy { clazz(Identifiers.Classes.Pair) }
+
 
     /** `abstract class SharedObject` */
     val sharedObject: IrClassSymbol by lazy { clazz(Identifiers.Classes.SharedObject) }
@@ -153,6 +156,9 @@ class SymbolFinder(private val context: IrPluginContext) {
 
     /** `AnyType(descriptor, useBuffer)` */
     val anyType: IrConstructorSymbol by lazy { classes.anyType.constructors.single() }
+
+    /** `Pair(first, second)` */
+    val pair: IrConstructorSymbol by lazy { classes.pair.constructors.single() }
 
     /** `TypeDescriptor.IntArray(isNullable)` and its siblings */
     fun descriptor(classId: ClassId): IrConstructorSymbol =

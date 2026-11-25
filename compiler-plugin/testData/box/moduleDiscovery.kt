@@ -37,6 +37,7 @@ import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.boxsupport.assertExports
 import io.github.expo.modules.v2.boxsupport.slot
 import io.github.expo.modules.v2.discoveredExpoModules
+import io.github.expo.modules.v2.discoveredExpoPackages
 import io.github.expo.modules.v2.testdata.producer.First
 import io.github.expo.modules.v2.testdata.producer.Outer
 import io.github.expo.modules.v2.testdata.producer.Second
@@ -74,6 +75,10 @@ fun box(): String {
     if (unexpected.isNotEmpty()) return "unexpected: ${unexpected.map { it.name }}"
 
     if (modules.size != modules.distinct().size) return "duplicates in ${modules.map { it.name }}"
+
+    // No `classpathPackage` option gives a package to any classpath entry, so no module has one.
+    val packages = discoveredExpoPackages()
+    if (packages.isNotEmpty()) return "unexpected packages: ${packages.keys}"
 
     // Each module on the classpath came through one hint interface with one member naming it.
     val hints = modules

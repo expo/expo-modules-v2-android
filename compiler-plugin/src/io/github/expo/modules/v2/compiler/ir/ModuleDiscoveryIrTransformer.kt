@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.compiler.ir
 
+import io.github.expo.modules.v2.compiler.ClasspathPackage
 import io.github.expo.modules.v2.compiler.Identifiers
 import io.github.expo.modules.v2.compiler.ModuleDiscoveryOrigin
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
@@ -12,6 +13,7 @@ import org.jetbrains.kotlin.ir.expressions.IrCall
 import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
 import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
+import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.classOrNull
 import org.jetbrains.kotlin.ir.types.impl.makeTypeProjection
 import org.jetbrains.kotlin.ir.types.typeWith
@@ -25,7 +27,9 @@ import org.jetbrains.kotlin.ir.util.parentClassOrNull
 import org.jetbrains.kotlin.ir.visitors.IrElementTransformerVoid
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
+import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.types.Variance
+import java.io.File
 
 /**
  * Replaces every `discoveredExpoModules()` call with the list it stands for:
@@ -34,10 +38,19 @@ import org.jetbrains.kotlin.types.Variance
  * listOf<Class<out Module>>(First::class.java, Second::class.java, Local::class.java)
  * ```
  *
+ * and every `discoveredExpoPackages()` call with the same modules grouped by package:
+ *
+ * ```
+ * mapOf<String, List<Class<out Module>>>(Pair("expo-font", listOf(First::class.java, ...)), ...)
+ * ```
+ *
  * The consumer half of module discovery. The classes come from two places: the hint interfaces
  * [scanner] finds on compile classpath, each followed back to the module its `module()` member
  * returns, and the `@ExpoModule` classes of this very compilation, which have no hint on the
- * classpath yet. Sorted by name so the list is stable across builds.
+ * classpath yet. A hint's package is the one [classpathPackages] gives the classpath entry the hint
+ * was found in, so the compilation that declares a module needs to know nothing about packages.
+ * The modules of this compilation, and those in an entry without a package, are in no package.
+ * Modules and packages are sorted by name so the result is stable across builds.
  */
 internal class ModuleDiscoveryIrTransformer(
   private val context: IrPluginContext,
@@ -45,61 +58,131 @@ internal class ModuleDiscoveryIrTransformer(
   private val poet: TypeDescriptorPoet,
   private val scanner: ModuleHintScanner,
   private val moduleFragment: IrModuleFragment,
+  classpathPackages: List<ClasspathPackage>,
 ) : IrElementTransformerVoid() {
   private val irBuiltIns = context.irBuiltIns
 
+  /** A discovered module and the package it belongs to, if it has one. */
+  private class DiscoveredModule(val module: IrClassSymbol, val packageName: String?)
+
+  private val discovered: List<DiscoveredModule> by lazy {
+    classpathModules() + localModules().map { DiscoveredModule(it, packageName = null) }
+  }
+
+  /**
+   * The package of each classpath entry, by its canonical path, so two spellings of one entry, such
+   * as one through a symbolic link, still match.
+   */
+  private val packagesByEntry: Map<String, String> by lazy {
+    classpathPackages.associate { it.entry.canonicalPath to it.packageName }
+  }
+
   private val modules: List<IrClassSymbol> by lazy {
-    (classpathModules() + localModules())
-      .distinct()
-      .sortedBy { it.owner.kotlinFqName.asString() }
+    discovered.map { it.module }.sortedDistinct()
+  }
+
+  private val packages: List<Pair<String, List<IrClassSymbol>>> by lazy {
+    discovered
+      .mapNotNull { found -> found.packageName?.let { it to found.module } }
+      .groupBy({ (name, _) -> name }, { (_, module) -> module })
+      .map { (name, modules) -> name to modules.sortedDistinct() }
+      .sortedBy { (name, _) -> name }
   }
 
   /** `listOf(vararg elements: T)` */
-  private val listOf: IrSimpleFunctionSymbol by lazy {
-    context
-      .referenceFunctions(Identifiers.Callables.listOf)
-      .single { candidate ->
-        val regular = candidate.owner.parameters.filter { it.kind == IrParameterKind.Regular }
-        regular.size == 1 && regular[0].varargElementType != null
-      }
+  private val listOf: IrSimpleFunctionSymbol by lazy { varargFunction(Identifiers.Callables.listOf) }
+
+  /** `mapOf(vararg pairs: Pair<K, V>)` */
+  private val mapOf: IrSimpleFunctionSymbol by lazy { varargFunction(Identifiers.Callables.mapOf) }
+
+  /** `Class<out Module>` */
+  private val moduleClassType: IrType by lazy {
+    symbols.classes.javaLangClass.typeWithArguments(
+      listOf(makeTypeProjection(symbols.classes.module.owner.defaultType, Variance.OUT_VARIANCE)),
+    )
   }
+
+  /** `List<Class<out Module>>` */
+  private val moduleListType: IrType by lazy { irBuiltIns.listClass.typeWith(moduleClassType) }
 
   override fun visitCall(expression: IrCall): IrExpression {
     val call = super.visitCall(expression)
-    if (!expression.symbol.owner.isDiscoveredExpoModules()) {
-      return call
+    val function = expression.symbol.owner
+    return when {
+      function.isIntrinsic(Identifiers.Callables.discoveredExpoModules) -> moduleList(modules)
+      function.isIntrinsic(Identifiers.Callables.discoveredExpoPackages) -> packageMap()
+      else -> call
     }
-    return moduleList()
   }
 
-  private fun IrSimpleFunction.isDiscoveredExpoModules(): Boolean =
-    name == Identifiers.Callables.discoveredExpoModules.callableName &&
+  private fun IrSimpleFunction.isIntrinsic(callable: CallableId): Boolean =
+    name == callable.callableName &&
       parentClassOrNull == null &&
-      getPackageFragment().packageFqName == Identifiers.Callables.discoveredExpoModules.packageName
+      getPackageFragment().packageFqName == callable.packageName
 
-  private fun moduleList(): IrExpression {
-    // Class<out Module>
-    val elementType = symbols.classes.javaLangClass.typeWithArguments(
-      listOf(makeTypeProjection(symbols.classes.module.owner.defaultType, Variance.OUT_VARIANCE)),
-    )
+  private fun moduleList(modules: List<IrClassSymbol>): IrExpression {
     val elements = modules.map { poet.javaClass(it.owner.defaultType) }
 
     return IrSyntheticCallImpl(
-      type = irBuiltIns.listClass.typeWith(elementType),
+      type = moduleListType,
       symbol = listOf,
       typeArgumentsCount = 1,
       origin = ModuleDiscoveryOrigin,
     ).apply {
-      typeArguments[0] = elementType
+      typeArguments[0] = moduleClassType
       arguments[0] = IrSyntheticVarargImpl(
-        type = irBuiltIns.arrayClass.typeWith(elementType),
-        varargElementType = elementType,
+        type = irBuiltIns.arrayClass.typeWith(moduleClassType),
+        varargElementType = moduleClassType,
         elements = elements,
       )
     }
   }
 
-  private fun classpathModules(): List<IrClassSymbol> = scanner.hints.map { hint ->
+  private fun packageMap(): IrExpression {
+    val keyType = irBuiltIns.stringType
+    // Pair<String, List<Class<out Module>>>
+    val pairType = symbols.classes.pair.typeWith(keyType, moduleListType)
+    val pairs = packages.map { (name, modules) ->
+      IrSyntheticConstructorCallImpl(
+        type = pairType,
+        symbol = symbols.constructors.pair,
+        typeArgumentsCount = 2,
+      ).apply {
+        typeArguments[0] = keyType
+        typeArguments[1] = moduleListType
+        arguments[0] = poet.string(name)
+        arguments[1] = moduleList(modules)
+      }
+    }
+
+    return IrSyntheticCallImpl(
+      type = irBuiltIns.mapClass.typeWith(keyType, moduleListType),
+      symbol = mapOf,
+      typeArgumentsCount = 2,
+      origin = ModuleDiscoveryOrigin,
+    ).apply {
+      typeArguments[0] = keyType
+      typeArguments[1] = moduleListType
+      arguments[0] = IrSyntheticVarargImpl(
+        type = irBuiltIns.arrayClass.typeWith(pairType),
+        varargElementType = pairType,
+        elements = pairs,
+      )
+    }
+  }
+
+  private fun varargFunction(callable: CallableId): IrSimpleFunctionSymbol =
+    context
+      .referenceFunctions(callable)
+      .single { candidate ->
+        val regular = candidate.owner.parameters.filter { it.kind == IrParameterKind.Regular }
+        regular.size == 1 && regular[0].varargElementType != null
+      }
+
+  private fun List<IrClassSymbol>.sortedDistinct(): List<IrClassSymbol> =
+    distinct().sortedBy { it.owner.kotlinFqName.asString() }
+
+  private fun classpathModules(): List<DiscoveredModule> = scanner.hints.map { hint ->
     val hintClass = context.referenceClass(hint)
       ?: error(
         "Expo Modules v2: the compile classpath holds a module hint, ${hint.asSingleFqName()}, " +
@@ -108,14 +191,18 @@ internal class ModuleDiscoveryIrTransformer(
           "compile dependency (api/implementation), not runtimeOnly.",
       )
     val member = hintClass.owner.functions.firstOrNull { it.name == Identifiers.Hints.MEMBER }
-    member?.returnType?.classOrNull
+    val module = member?.returnType?.classOrNull
       ?: error(
         "Expo Modules v2: ${hint.asSingleFqName()} is not a module hint this compiler plugin " +
           "understands - it has no `${Identifiers.Hints.MEMBER}()` member naming a module. It was " +
           "compiled by a different version of the plugin; align the plugin version across the " +
           "modules of this build.",
       )
+    DiscoveredModule(module, scanner.rootOf(hint)?.let(::packageOf))
   }
+
+  private fun packageOf(entry: File): String? =
+    if (packagesByEntry.isEmpty()) null else packagesByEntry[entry.canonicalPath]
 
   private fun localModules(): List<IrClassSymbol> {
     val found = mutableListOf<IrClassSymbol>()

@@ -58,8 +58,14 @@ object Identifiers {
     /** `fun discoveredExpoModules(): List<Class<out Module>>` - the call the plugin expands. */
     val discoveredExpoModules = CallableId(Packages.API, Name.identifier("discoveredExpoModules"))
 
+    /** `fun discoveredExpoPackages(): Map<String, List<Class<out Module>>>` - expanded the same way. */
+    val discoveredExpoPackages = CallableId(Packages.API, Name.identifier("discoveredExpoPackages"))
+
     /** `kotlin.collections.listOf(vararg elements: T)` - what the expansion builds the list with. */
     val listOf = CallableId(FqName("kotlin.collections"), Name.identifier("listOf"))
+
+    /** `kotlin.collections.mapOf(vararg pairs: Pair<K, V>)` - what the package map is built with. */
+    val mapOf = CallableId(FqName("kotlin.collections"), Name.identifier("mapOf"))
 
     /** `fun noSuchVariant(union, index): Nothing` - what a generated `wrap` throws past its variants. */
     val noSuchVariant = CallableId(Packages.UNIONS, Name.identifier("noSuchVariant"))
@@ -103,6 +109,9 @@ object Identifiers {
 
     val Module = classId(Packages.API, "Module")
     val ModuleBuilder = classId(Packages.MODULES, "ModuleBuilder")
+
+    /** `class Pair<out A, out B>(first, second)` - one entry of the package map. */
+    val Pair = classId(FqName("kotlin"), "Pair")
 
     val SharedObject = classId(Packages.API, "SharedObject")
     val SharedRef = classId(Packages.API, "SharedRef")

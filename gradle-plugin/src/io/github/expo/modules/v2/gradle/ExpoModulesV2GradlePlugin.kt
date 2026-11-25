@@ -51,8 +51,18 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
       (task as? KotlinCompile)?.incremental = false
     }
 
-    // No options yet. The lambda must not capture the Project - KGP serializes this provider into
-    // the compile task's inputs, and a Project reference breaks the configuration cache.
-    return project.provider { emptyList() }
+    // Mapped from the extension's property, so it does not capture the Project - KGP serializes this
+    // provider into the compile task's inputs, and a Project reference breaks the configuration cache.
+    val extension = project.extensions.getByType(ExpoModulesV2GradleExtension::class.java)
+    return extension.classpathPackages.map { packages ->
+      packages.map { (entry, packageName) ->
+        SubpluginOption(key = CLASSPATH_PACKAGE_OPTION, value = "$packageName=$entry")
+      }
+    }
+  }
+
+  private companion object {
+    // MUST stay in sync with `ExpoModulesV2CommandLineProcessor.CLASSPATH_PACKAGE_OPTION`.
+    const val CLASSPATH_PACKAGE_OPTION = "classpathPackage"
   }
 }
