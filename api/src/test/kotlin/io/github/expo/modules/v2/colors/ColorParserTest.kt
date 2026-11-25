@@ -43,6 +43,21 @@ class ColorParserTest {
   }
 
   @Test
+  fun `whitespace CSS allows inside a function`() {
+    assertEquals("#ff000080", hex("rgb(255 0 0 / 50% )"))
+    assertEquals("#ff0000ff", hex("rgb( 255 0 0 )"))
+    assertEquals("#ff000080", hex("rgb(255 0 0/50%)"))
+    assertEquals("#ff000080", hex("rgba( 255 , 0 , 0 , 0.5 )"))
+    assertEquals("#ff0000ff", hex("rgb(\t255\n0 0 )"))
+    assertEquals("#ff000080", hex("hsl(0 100% 50% / 50% )"))
+    assertEquals("#ff0000ff", hex("hsl( 0 , 100% , 50% )"))
+    assertEquals("#ff000080", hex("hwb( 0 0% 0% / 0.5 )"))
+    // But not between the name and the parenthesis, or between a number and its unit.
+    assertFailsWith<IllegalArgumentException> { ColorParser.parse("rgb (255, 0, 0)") }
+    assertFailsWith<IllegalArgumentException> { ColorParser.parse("hsl(0, 100 %, 50%)") }
+  }
+
+  @Test
   fun `rgb components out of range are clamped`() {
     assertEquals("#ff0000ff", hex("rgb(300, -20, 0)"))
     assertEquals("#000000ff", hex("rgba(0, 0, 0, 2)"))
@@ -81,12 +96,27 @@ class ColorParserTest {
     assertEquals("#ff0000ff", hex(4294901760.0))
     assertEquals("#ff0000ff", hex(-65536.0))
     assertEquals("#00000000", hex(0.0))
+    // The ends of the signed and the unsigned range.
+    assertEquals("#00000080", hex(-2147483648.0))
+    assertEquals("#ffffffff", hex(4294967295.0))
+    assertEquals("#ffffffff", hex(-1L))
   }
 
   @Test
-  fun `a non-finite number is refused`() {
-    listOf(Double.NaN, Double.POSITIVE_INFINITY).forEach { value ->
-      assertFailsWith<IllegalArgumentException> { ColorParser.parse(value) }
+  fun `a number that is no 32-bit ARGB value is refused`() {
+    listOf(
+      Double.NaN,
+      Double.POSITIVE_INFINITY,
+      Double.NEGATIVE_INFINITY,
+      0.5,
+      -0.25,
+      4294967296.0, // 2^32
+      -2147483649.0, // -2^31 - 1
+      9.223372036854775807E18, // 2^63
+      1095216726015.0, // 0xFF0000FFFF
+      0x1_0000_0000L,
+    ).forEach { value ->
+      assertFailsWith<IllegalArgumentException>("$value must be refused") { ColorParser.parse(value) }
     }
   }
 
@@ -104,6 +134,17 @@ class ColorParserTest {
     assertFailsWith<IllegalArgumentException> { ColorParser.parse(listOf(1.0, 0.0)) }
     assertFailsWith<IllegalArgumentException> { ColorParser.parse(listOf(1.0, "0", 0.0)) }
     assertFailsWith<IllegalArgumentException> { ColorParser.parse(listOf(1.0, null, 0.0)) }
+  }
+
+  @Test
+  fun `a component that is not finite is refused rather than clamped`() {
+    listOf(
+      listOf(Double.NaN, 0.0, 0.0),
+      listOf(0.0, Double.POSITIVE_INFINITY, 0.0),
+      listOf(0.0, 0.0, 0.0, Double.NEGATIVE_INFINITY),
+    ).forEach { value ->
+      assertFailsWith<IllegalArgumentException>("$value must be refused") { ColorParser.parse(value) }
+    }
   }
 
   @Test

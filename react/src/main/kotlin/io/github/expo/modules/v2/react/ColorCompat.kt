@@ -14,18 +14,12 @@ import androidx.annotation.RequiresApi
  * [blue] and [alpha] here, not through the `Color` methods, which do not exist there. From API 26
  * these forward to those methods.
  *
- * The same API as Expo Modules v1's `ColorCompat`, so a module moves over unchanged.
+ * The same API as Expo Modules v1's `expo.modules.kotlin.types.ColorCompat`, in this package. Below
+ * API 26 each one reads only the colors it made itself, so a module that moves over has to use
+ * this one for every color it hands here.
  */
 class ColorCompat private constructor() {
   companion object {
-    private val defaultLegacyColor = LegacyColor(
-      red = 0f,
-      green = 0f,
-      blue = 0f,
-      alpha = 1f,
-      argb = Color.BLACK,
-    )
-
     @JvmStatic
     fun valueOf(@ColorInt color: Int): Color {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -104,9 +98,18 @@ class ColorCompat private constructor() {
       return legacyColor(color).blue
     }
 
-    /** Below API 26 only this class makes `Color` instances; any other reads as opaque black. */
+    /**
+     * Below API 26 a `Color` holds nothing of its own: only one this class made has components to
+     * read. Any other - one v1's `ColorCompat` made, or a bare `Color()` - is refused rather than
+     * read as some color.
+     */
     private fun legacyColor(color: Color): LegacyColor =
-      color as? LegacyColor ?: defaultLegacyColor
+      color as? LegacyColor
+        ?: throw IllegalArgumentException(
+          "Below API 26 a Color has no components of its own, and this ${color.javaClass.name} " +
+            "was not made by io.github.expo.modules.v2.react.ColorCompat - make it with " +
+            "ColorCompat.valueOf",
+        )
 
     private fun toColorComponent(component: Float): Int = (component * 255f + 0.5f).toInt()
   }
@@ -117,7 +120,25 @@ class ColorCompat private constructor() {
     val blue: Float,
     val alpha: Float,
     @get:ColorInt val argb: Int,
-  ) : Color()
+  ) : Color() {
+    override fun equals(other: Any?): Boolean =
+      other is LegacyColor &&
+        other.red == red &&
+        other.green == green &&
+        other.blue == blue &&
+        other.alpha == alpha
+
+    override fun hashCode(): Int {
+      var result = red.hashCode()
+      result = 31 * result + green.hashCode()
+      result = 31 * result + blue.hashCode()
+      result = 31 * result + alpha.hashCode()
+      return result
+    }
+
+    override fun toString(): String =
+      "Color($red, $green, $blue, $alpha)"
+  }
 
   @RequiresApi(Build.VERSION_CODES.O)
   private object Api26Impl {

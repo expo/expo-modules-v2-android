@@ -374,7 +374,13 @@ private fun covers(earlier: ConeKotlinType, later: ConeKotlinType, session: FirS
   // A nested union, which only the same union covers.
   mine ?: return false
   if (mine == JsKind.ANY) {
-    return true
+    // A Color refuses what it cannot parse, and crosses with `Any`'s type codes, so a value it
+    // refuses goes on to an `Any` of the same nullability. It covers everything else.
+    return !(
+      earlier.classId == COLOR &&
+        later.classId == StandardClassIds.Any &&
+        later.isMarkedNullable == earlier.isMarkedNullable
+      )
   }
   val theirs = jsKindOf(later, theirClass, session) ?: return false
   if (mine == JsKind.ANY_OBJECT) {
@@ -465,8 +471,9 @@ private fun jsKindOf(
     "kotlin.ByteArray" -> JsKind.BINARY
     "kotlin.collections.Map", "kotlin.collections.MutableMap" -> JsKind.OBJECT
     "kotlin.Any" -> JsKind.ANY
-    // Crosses as a dynamic value, so native code offers it every value, as it does `Any`, and
-    // nothing after it is tried when it refuses one: declare a Color variant last.
+    // Crosses as a dynamic value, so native code offers it every value, as it does `Any`. A value
+    // it refuses goes on only to an `Any` (see `covers`): declare a Color variant last, or just
+    // before `Any`.
     "android.graphics.Color" -> JsKind.ANY
     else -> when (type.classId) {
       Identifiers.Classes.JavaScriptValue -> JsKind.ANY
@@ -506,6 +513,8 @@ private fun firstUnreachable(
   }
   return null
 }
+
+private val COLOR = ClassId.topLevel(FqName("android.graphics.Color"))
 
 /** The string types whose conversion takes every string, so nothing after them is ever picked. */
 private val TOTAL_STRINGS = setOf(
@@ -563,6 +572,13 @@ private fun VariantShape.shadows(
   // A value goes to the first variant declared that takes it, so a catch-all takes everything
   // after it that it would: `Any` every value, `JavaScriptObject` every object.
   if (kind == JsKind.ANY) {
+    if (valueClassId == COLOR) {
+      // A Color hands what it refuses on to an `Any`, which crosses with the same type codes.
+      if (later.valueClassId == StandardClassIds.Any) {
+        return null
+      }
+      return "is offered every value, and only an Any takes one it refuses"
+    }
     return "takes every value"
   }
   if (kind == JsKind.ANY_OBJECT && later.kind in OBJECT_KINDS) {

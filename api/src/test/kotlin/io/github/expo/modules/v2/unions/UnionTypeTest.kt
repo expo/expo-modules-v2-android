@@ -70,6 +70,48 @@ private sealed interface Priority {
   value class Custom(val value: Int) : Priority
 }
 
+private enum class Preset { SMALL, LARGE }
+
+/** A string enum, then a dynamic value: a string that is no entry falls through to `Any`. */
+@io.github.expo.modules.v2.Union
+private sealed interface PresetOrAny {
+  @JvmInline
+  value class Named(val preset: Preset) : PresetOrAny
+
+  @JvmInline
+  value class Custom(val value: Any) : PresetOrAny
+}
+
+/** A URL, then a dynamic value. */
+@io.github.expo.modules.v2.Union
+private sealed interface UrlOrAny {
+  @JvmInline
+  value class Address(val url: URL) : UrlOrAny
+
+  @JvmInline
+  value class Other(val value: Any) : UrlOrAny
+}
+
+/** An Int-backed enum, then a dynamic value: a number that is no entry falls through. */
+@io.github.expo.modules.v2.Union
+private sealed interface LevelOrAny {
+  @JvmInline
+  value class Named(val level: Level) : LevelOrAny
+
+  @JvmInline
+  value class Other(val value: Any) : LevelOrAny
+}
+
+/** A list, then a dynamic value: a container's refusal does not fall through. */
+@io.github.expo.modules.v2.Union
+private sealed interface UrlsOrAny {
+  @JvmInline
+  value class Addresses(val urls: List<URL>) : UrlsOrAny
+
+  @JvmInline
+  value class Other(val value: Any) : UrlsOrAny
+}
+
 /** `length, byte...`, as type codes spell a string. */
 private fun utf8(value: String): IntArray {
   val bytes = value.encodeToByteArray()
@@ -213,8 +255,51 @@ class UnionTypeTest {
   @Test
   fun `refs that carry different types fall back to each other`() {
     val refs = UnionRegistry.typeFor(Refs::class.java)!!
-    assertEquals(1, refs.fallbackOf(0), "a ref the first variant refuses goes to the second")
-    assertEquals(-1, refs.fallbackOf(1))
+    for (fromJni in listOf(true, false)) {
+      assertEquals(1, refs.fallbackOf(0, fromJni), "a ref the first variant refuses goes to the second")
+      assertEquals(-1, refs.fallbackOf(1, fromJni))
+    }
+  }
+
+  @Test
+  fun `a string a string enum refuses falls through to a later dynamic variant`() {
+    val union = TypeDescriptor.Simple(PresetOrAny::class.java, false).anyConverter
+
+    assertEquals(PresetOrAny.Named(Preset.LARGE), union.fromJni(UnionValue(0, "LARGE")))
+    assertEquals(PresetOrAny.Custom("#ff0000"), union.fromJni(UnionValue(0, "#ff0000")))
+    // Picked by native code for a non-string value, the dynamic variant takes it directly.
+    assertEquals(PresetOrAny.Custom(2.0), union.fromJni(UnionValue(1, 2.0)))
+  }
+
+  @Test
+  fun `a string a URL refuses falls through to a later dynamic variant`() {
+    val union = TypeDescriptor.Simple(UrlOrAny::class.java, false).anyConverter
+
+    assertEquals(UrlOrAny.Address(URL("https://expo.dev")), union.fromJni(UnionValue(0, "https://expo.dev")))
+    assertEquals(UrlOrAny.Other("not a url"), union.fromJni(UnionValue(0, "not a url")))
+  }
+
+  @Test
+  fun `a number an Int-backed enum refuses falls through, as the enum's bridge Int`() {
+    val union = TypeDescriptor.Simple(LevelOrAny::class.java, false).anyConverter
+
+    assertEquals(LevelOrAny.Named(Level.HIGH), union.fromJni(UnionValue(0, 1)))
+    assertEquals(LevelOrAny.Other(7), union.fromJni(UnionValue(0, 7)))
+  }
+
+  @Test
+  fun `only the JNI path falls through to a dynamic variant, and only from a scalar or a string`() {
+    val presets = UnionRegistry.typeFor(PresetOrAny::class.java)!!
+    assertEquals(1, presets.fallbackOf(0, fromJni = true))
+    // A buffered string carries no tag a dynamic variant could read it by.
+    assertEquals(-1, presets.fallbackOf(0, fromJni = false))
+    assertEquals(-1, presets.fallbackOf(1, fromJni = true))
+
+    // A list may hold what a dynamic value cannot, so its refusal is final.
+    val urls = UnionRegistry.typeFor(UrlsOrAny::class.java)!!
+    assertEquals(-1, urls.fallbackOf(0, fromJni = true))
+    val union = TypeDescriptor.Simple(UrlsOrAny::class.java, false).anyConverter
+    assertFailsWith<Exception> { union.fromJni(UnionValue(0, listOf("not a url"))) }
   }
 
   @Test

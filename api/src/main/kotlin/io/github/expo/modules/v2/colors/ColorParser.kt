@@ -1,5 +1,7 @@
 package io.github.expo.modules.v2.colors
 
+import kotlin.math.floor
+
 /**
  * An sRGB color as four components in `0..1`, alpha last: what [ColorParser] reads a JavaScript
  * color value into. Platform code turns it into its own color type.
@@ -41,15 +43,23 @@ internal object ColorParser {
   }
 
   /**
-   * The ARGB int a JavaScript number names. A JavaScript number is a double, so an ARGB written
-   * as an unsigned literal such as `0xFFFF0000` is above [Int.MAX_VALUE]: it wraps to its low 32
-   * bits instead of saturating.
+   * The ARGB int a JavaScript number names: a whole number that fits 32 bits, signed - what
+   * `processColor` gives - or unsigned, as a literal such as `0xFFFF0000` reads, which is above
+   * [Int.MAX_VALUE] and keeps its low 32 bits. Anything else names no color and is refused.
    */
   fun argbOf(number: Number): Int {
     val double = number.toDouble()
-    require(double.isFinite()) { "A color number must be finite, but got $double" }
+    require(double.isFinite() && double == floor(double) && double >= MIN_ARGB && double < MAX_ARGB) {
+      "A color number must be a whole 32-bit ARGB value, signed or unsigned, but got $number"
+    }
     return double.toLong().toInt()
   }
+
+  /** `-2^31`, the lowest signed 32-bit int. */
+  private const val MIN_ARGB = -2147483648.0
+
+  /** `2^32`, one past the highest unsigned 32-bit int. */
+  private const val MAX_ARGB = 4294967296.0
 
   fun fromArgb(argb: Int): Rgba = rgba8(
     red = (argb shr 16) and 0xFF,
@@ -91,10 +101,13 @@ internal object ColorParser {
         components.size
     }
     val numbers = components.take(4).mapIndexed { index, component ->
-      (component as? Number)?.toFloat()
+      val number = (component as? Number)?.toDouble()
         ?: throw IllegalArgumentException(
           "Color component $index must be a number, but got ${component?.javaClass?.name}",
         )
+      // Before clamping: NaN would pass through it, and an infinity would become a bound.
+      require(number.isFinite()) { "Color component $index must be finite, but got $number" }
+      number.toFloat()
     }
     return Rgba(
       red = numbers[0].coerceIn(0f, 1f),
