@@ -123,6 +123,9 @@ object TypeConverterRegistry {
         ::PathConverter
       )
     }
+
+    // The leaf types of the platform this module is built for, such as `android.net.Uri`.
+    platformConverters()
   }
 
   fun converter(typeDescriptor: TypeDescriptor.Simple): TypeConverter<*> {
