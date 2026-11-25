@@ -3,6 +3,7 @@
 
 package io.github.expo.modules.v2.testdata
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
@@ -87,6 +88,19 @@ fun box(): String {
     if (idOrName.toJni(IdOrName.Id(Uuid.parse(FIRST))) != FIRST) return "Fail: Id did not cross as its string"
     if (idOrName.fromJni(FIRST) != IdOrName.Id(Uuid.parse(FIRST))) return "Fail: a UUID string was not an Id"
     if (idOrName.fromJni("expo") != IdOrName.Name("expo")) return "Fail: a plain string was not a Name"
+
+    // The same through the buffer: a same-bridge union writes only the string, and reading it back
+    // offers that string to Id first. A refused one has to be read again from its start by Name.
+    for (value in listOf(IdOrName.Id(Uuid.parse(FIRST)), IdOrName.Name("expo"), IdOrName.Name(""))) {
+        val buffer = BinaryBuffer.allocate(256)
+        val writer = buffer.duplicateView()
+        idOrName.writeToBuffer(writer, value)
+        val reader = buffer.duplicateView()
+        reader.limit = writer.position
+        val read = idOrName.readFromBuffer(reader)
+        if (read != value) return "Fail: $value came back from the buffer as $read"
+        if (reader.position != writer.position) return "Fail: reading $value stopped at ${reader.position}"
+    }
 
     return "OK"
 }

@@ -47,8 +47,8 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 object TypeConverterRegistry {
-  // `Uuid` is still experimental. This opt-in covers only the table: a module that declares a
-  // `Uuid` opts in itself, as any use of the type requires.
+  // `Uuid` is `@ExperimentalUuidApi` in the Kotlin 2.2 and 2.3 standard libraries this project
+  // still supports, and stable from 2.4, where this opt-in is harmless. It covers only the table.
   @OptIn(ExperimentalUuidApi::class)
   private val simpleConvertersCache = classCacheOf {
     +entry(
