@@ -465,6 +465,9 @@ private fun jsKindOf(
     "kotlin.ByteArray" -> JsKind.BINARY
     "kotlin.collections.Map", "kotlin.collections.MutableMap" -> JsKind.OBJECT
     "kotlin.Any" -> JsKind.ANY
+    // Crosses as a dynamic value, so native code offers it every value, as it does `Any`, and
+    // nothing after it is tried when it refuses one: declare a Color variant last.
+    "android.graphics.Color" -> JsKind.ANY
     else -> when (type.classId) {
       Identifiers.Classes.JavaScriptValue -> JsKind.ANY
       Identifiers.Classes.JavaScriptObject, Identifiers.Classes.TypedArray -> JsKind.ANY_OBJECT
