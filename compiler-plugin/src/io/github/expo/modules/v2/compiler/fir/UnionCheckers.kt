@@ -390,8 +390,7 @@ private fun covers(earlier: ConeKotlinType, later: ConeKotlinType, session: FirS
     // entries, and Kotlin hands the rest to the next variant.
     JsKind.NUMBER -> earlier.classId in NUMBERS
 
-    JsKind.STRING ->
-      earlier.classId in TOTAL_STRINGS || later.classId in STRING_COVERS[earlier.classId].orEmpty()
+    JsKind.STRING -> coversStrings(earlier.classId, later.classId)
     JsKind.ARRAY -> {
       val myElement = elementOf(earlier) ?: return true
       val theirElement = elementOf(later) ?: return true
@@ -510,14 +509,32 @@ private val TOTAL_STRINGS = setOf(
   ClassId.topLevel(FqName("android.net.Uri")),
 )
 
+/** `java.util.UUID` and `kotlin.uuid.Uuid`: every spelling either parses is a relative URI and a path. */
+private val UUID_TYPES: Set<ClassId> =
+  setOf(ClassId.topLevel(FqName("java.util.UUID")), ClassId.topLevel(FqName("kotlin.uuid.Uuid")))
+
 /**
  * String types that refuse some strings, but take every string the types listed for them take, so
  * those are never picked after them. MUST stay in sync with what the converters refuse.
  */
 private val STRING_COVERS: Map<ClassId, Set<ClassId>> = mapOf(
-  ClassId.topLevel(FqName("java.net.URI")) to setOf(ClassId.topLevel(FqName("kotlin.uuid.Uuid"))),
-  ClassId.topLevel(FqName("java.nio.file.Path")) to setOf(ClassId.topLevel(FqName("kotlin.uuid.Uuid"))),
+  ClassId.topLevel(FqName("java.net.URI")) to UUID_TYPES,
+  ClassId.topLevel(FqName("java.nio.file.Path")) to UUID_TYPES,
 )
+
+/**
+ * Whether a string variant of [earlier] takes every string one of [later] would: it takes every
+ * string, or every string [later]'s conversion accepts (see [STRING_COVERS]).
+ */
+private fun coversStrings(earlier: ClassId?, later: ClassId?): Boolean {
+  if (earlier in TOTAL_STRINGS) {
+    return true
+  }
+  if (earlier == null || later == null) {
+    return false
+  }
+  return STRING_COVERS[earlier]?.contains(later) == true
+}
 
 private val NUMBERS = setOf(
   StandardClassIds.Int,
@@ -563,8 +580,7 @@ private fun VariantShape.shadows(
 
     JsKind.LITERAL -> return "is the same string".takeIf { later.kind == kind && later.tag == tag }
 
-    JsKind.STRING ->
-      valueClassId in TOTAL_STRINGS || later.valueClassId in STRING_COVERS[valueClassId].orEmpty()
+    JsKind.STRING -> coversStrings(valueClassId, later.valueClassId)
 
     JsKind.NUMBER -> when (valueClassId) {
       StandardClassIds.Long ->

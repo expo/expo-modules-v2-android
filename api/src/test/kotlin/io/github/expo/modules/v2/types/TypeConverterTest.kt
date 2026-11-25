@@ -219,6 +219,43 @@ class TypeConverterTest {
   }
 
   @Test
+  fun `a UUID takes only the canonical form, on both paths`() {
+    val plain = UuidConverter(isNullable = false)
+    val refused = listOf(
+      "not-a-uuid",
+      // UUID.fromString alone takes these: short groups, a sign, and an over-long group it truncates.
+      "1-2-3-4-5",
+      "a-b-c-d-e",
+      "+1-2-3-4-5",
+      "123456789-1-1-1-1",
+      "2024-1-2-3-4",
+      // Right length, wrong shape.
+      "0f8fad5b-d9cb-469f-a165-70867728950g",
+      "0f8fad5bd-9cb-469f-a165-70867728950e",
+      "0f8fad5b-d9cb-469f-a165-70867728950e0",
+      "",
+    )
+    refused.forEach { value ->
+      assertFailsWith<IllegalArgumentException>("fromJni('$value')") { plain.fromJni(value) }
+
+      val writer = buffer.duplicateView()
+      writer.putString(value)
+      val view = buffer.duplicateView()
+      view.limit = writer.position
+      assertFailsWith<IllegalArgumentException>("readFromBuffer('$value')") { plain.readFromBuffer(view) }
+    }
+
+    // Either case of hex is canonical.
+    val mixed = "0F8fAD5b-D9cb-469F-a165-70867728950E"
+    assertEquals(UUID.fromString(mixed), plain.fromJni(mixed))
+    val writer = buffer.duplicateView()
+    writer.putString(mixed)
+    val view = buffer.duplicateView()
+    view.limit = writer.position
+    assertEquals(UUID.fromString(mixed), plain.readFromBuffer(view))
+  }
+
+  @Test
   fun `a nullable built-in declaration rides a slot that can carry null`() {
     // The string-backed conversions state STRING, which is a JVM object either way...
     val nullableString = intArrayOf(CppType.STRING.code or CppType.NULLABLE)

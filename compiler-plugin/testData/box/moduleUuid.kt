@@ -2,6 +2,7 @@
 
 package io.github.expo.modules.v2.testdata
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
@@ -127,6 +128,33 @@ fun box(): String {
     if (picked != Key.Id(UUID.fromString(id))) return "Fail: a UUID string picked $picked"
     val fallback = key.fromJni("hello")
     if (fallback != Key.Text("hello")) return "Fail: a plain string picked $fallback"
+    // UUID.fromString alone would take this one as a made-up UUID.
+    val loose = key.fromJni("1-2-3-4-5")
+    if (loose != Key.Text("1-2-3-4-5")) return "Fail: a loose UUID string picked $loose"
+
+    // The buffer path: the union shares the string bridge, so the payload is the bare string, and a
+    // refused one is read again by the next variant.
+    val cases = mapOf(
+        id to Key.Id(UUID.fromString(id)),
+        "hello" to Key.Text("hello"),
+        "1-2-3-4-5" to Key.Text("1-2-3-4-5"),
+    )
+    for ((sentString, want) in cases) {
+        val buffer = BinaryBuffer.allocate(256)
+        val writer = buffer.duplicateView()
+        writer.putString(sentString)
+        val view = buffer.duplicateView()
+        view.limit = writer.position
+        val got = key.readFromBuffer(view)
+        if (got != want) return "Fail: '$sentString' on the buffer picked $got"
+    }
+    val buffer = BinaryBuffer.allocate(256)
+    val writer = buffer.duplicateView()
+    key.writeToBuffer(writer, Key.Id(UUID.fromString(id)))
+    val view = buffer.duplicateView()
+    view.limit = writer.position
+    val roundTrip = key.readFromBuffer(view)
+    if (roundTrip != Key.Id(UUID.fromString(id))) return "Fail: Id round trip on the buffer gave $roundTrip"
 
     return "OK"
 }
