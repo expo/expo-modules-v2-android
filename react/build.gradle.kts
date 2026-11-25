@@ -97,7 +97,9 @@ android {
   }
 
   testOptions {
-    // Robolectric's real Android framework, instead of the android.jar stubs that throw.
+    // Merges the manifest and resources into the unit tests, which Robolectric reads to build its
+    // test application. Robolectric itself is what swaps android.jar's throwing stubs for a real
+    // framework; the SDK it runs is pinned in src/test/resources/robolectric.properties.
     unitTests.isIncludeAndroidResources = true
   }
 

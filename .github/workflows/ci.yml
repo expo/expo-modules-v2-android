@@ -76,6 +76,46 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
+  # :react's own unit tests: the converters of Android framework classes (Bundle, ...), run under
+  # Robolectric. They compile no native code, but configuring :react still needs the NDK it pins;
+  # sdkmanager installs it as the publish workflow does, rather than AGP on the fly.
+  # -PskipDesktopNative: :api's desktop library is not needed here.
+  react-unit-tests:
+    name: React unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Install the NDK :react pins
+        run: |
+          NDK_VERSION="$(sed -n 's/^ *ndkVersion *= *"\(.*\)"/\1/p' react/build.gradle.kts)"
+          echo "Installing NDK $NDK_VERSION"
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;$NDK_VERSION"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run :react unit tests
+        run: ./gradlew :react:testDebugUnitTest --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-react
+          path: |
+            react/build/reports/tests/
+            react/build/test-results/
+          retention-days: 7
+          if-no-files-found: ignore
+
   # The JSI-level suites: they drive a real Hermes runtime through :test-support, which needs the
   # desktop Hermes host from expo/hermes-test-environment. It is published only to mavenLocal, so
   # this job builds it from a checkout next to this one and caches what it publishes.

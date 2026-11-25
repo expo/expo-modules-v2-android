@@ -401,7 +401,11 @@ private fun covers(earlier: ConeKotlinType, later: ConeKotlinType, session: FirS
           }
           val myValue = earlier.argument(1) ?: return true
           if (later.classId == BUNDLE) {
-            return jsKindOf(myValue, classSymbolOf(myValue, session), session) == JsKind.ANY
+            // A Bundle's values can be null, which a non-null `Any` refuses natively and passes
+            // on. Only a value that takes null as well takes every object a Bundle would.
+            val takesAnything = jsKindOf(myValue, classSymbolOf(myValue, session), session) == JsKind.ANY
+            return takesAnything &&
+              (myValue.isMarkedNullable || myValue.classId == Identifiers.Classes.JavaScriptValue)
           }
           val theirValue = later.argument(1) ?: return true
           covers(myValue, theirValue, session)
@@ -538,6 +542,12 @@ private fun VariantShape.shadows(
   }
   if (kind == JsKind.ANY_OBJECT && later.kind in OBJECT_KINDS) {
     return "takes every object"
+  }
+  // Native code offers an object variant any object that is not an array or a function, and a
+  // Bundle converts every one of them: an ArrayBuffer to an empty Bundle, a shared object to its
+  // enumerable properties.
+  if (valueClassId == BUNDLE && (later.kind == JsKind.BINARY || later.kind == JsKind.SHARED_OBJECT)) {
+    return "takes every object, ArrayBuffers and shared objects included"
   }
   if (group == null || group != later.group) {
     return null

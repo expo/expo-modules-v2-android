@@ -4,6 +4,8 @@ import android.os.Bundle
 import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeCodesWriter
+import java.util.Collections
+import java.util.IdentityHashMap
 
 /**
  * `android.os.Bundle`, which crosses as a JavaScript object. Its bridge is the one a
@@ -55,6 +57,7 @@ class BundleConverter(
     }
 }
 
+
 /**
  * How a Bundle and the dynamic values of a JavaScript object map onto each other.
  *
@@ -64,11 +67,17 @@ class BundleConverter(
  * |------------------------|-----------------------------------------------------------------|
  * | `null` / `undefined`   | `putString(key, null)` - the key stays, its value is null       |
  * | boolean                | `putBoolean`                                                    |
- * | number                 | `putDouble` (an `Int`/`Long`/`Float` the buffer decoded keeps its type) |
+ * | number                 | `putDouble` - always, see below                                 |
  * | string                 | `putString`                                                     |
  * | object                 | `putBundle`, converted the same way                             |
  * | array                  | `putSerializable` of an `ArrayList`: elements converted the same way, objects as Bundles |
  * | `ArrayBuffer`          | `putByteArray`                                                  |
+ *
+ * A JavaScript number always arrives as a `Double`: native code encodes every dynamic number as
+ * one, on the JNI slot and on the buffer alike. Read it with `getDouble`. `getInt` and `getLong`
+ * find no Int or Long under the key and return their default - so a Bundle that crossed to
+ * JavaScript and back holds Doubles where it held Ints. The `Int`, `Long` and `Float` branches
+ * below only guard a map built in Kotlin; nothing native produces them.
  *
  * Kotlin to JavaScript, whatever a Bundle holds:
  *
@@ -85,76 +94,136 @@ class BundleConverter(
  * | an enum entry                                    | its name                             |
  * | `android.net.Uri`                                | its string form                      |
  *
- * Anything else - most `Parcelable`s and `Serializable`s - has no JavaScript form, and converting
- * it throws, naming the key, instead of dropping the value.
+ * Converting throws an `IllegalArgumentException`, naming where the value sits - `extras.frame`,
+ * `items[2]` - instead of dropping or guessing, when:
+ *
+ * - a value has no JavaScript form: most `Parcelable`s and `Serializable`s
+ * - two keys of a `Map` read the same as strings, such as `1` and `"1"`
+ * - a Bundle, map, list or array contains itself. One held in two places that do not contain each
+ *   other is converted twice and is fine.
  */
 internal object BundleMapping {
-  fun toBundle(map: Map<String, Any?>): Bundle {
-    val bundle = Bundle(map.size)
-    for ((key, value) in map) {
-      put(bundle, key, value)
-    }
-    return bundle
-  }
+  fun toBundle(map: Map<String, Any?>): Bundle =
+    toBundle(map, path = null, converting = identitySet())
 
-  @Suppress("UNCHECKED_CAST")
-  private fun put(bundle: Bundle, key: String, value: Any?) {
+  private fun toBundle(map: Map<*, *>, path: String?, converting: MutableSet<Any>): Bundle =
+    nested(map, path, converting) {
+      val bundle = Bundle(map.size)
+      for ((key, value) in map) {
+        require(key is String) { "A key of the object at ${describe(path)} is not a string: $key" }
+        put(bundle, key, value, keyPath(path, key), converting)
+      }
+      bundle
+    }
+
+  private fun put(bundle: Bundle, key: String, value: Any?, path: String, converting: MutableSet<Any>) {
     when (value) {
       null -> bundle.putString(key, null)
       is Boolean -> bundle.putBoolean(key, value)
       is Double -> bundle.putDouble(key, value)
+      // Defensive: native code hands every number over as a Double.
       is Int -> bundle.putInt(key, value)
       is Long -> bundle.putLong(key, value)
       is Float -> bundle.putFloat(key, value)
       is String -> bundle.putString(key, value)
-      is Map<*, *> -> bundle.putBundle(key, toBundle(value as Map<String, Any?>))
-      is List<*> -> bundle.putSerializable(key, toBundleList(value))
+      is Map<*, *> -> bundle.putBundle(key, toBundle(value, path, converting))
+      is List<*> -> bundle.putSerializable(key, toBundleList(value, path, converting))
       is ByteArray -> bundle.putByteArray(key, value)
       else -> throw IllegalArgumentException(
-        "Cannot store the ${value.javaClass.name} under \"$key\" in a Bundle"
+        "Cannot store the ${value.javaClass.name} at $path in a Bundle"
       )
     }
   }
 
-  @Suppress("UNCHECKED_CAST")
-  private fun toBundleList(list: List<*>): ArrayList<Any?> =
-    list.mapTo(ArrayList(list.size)) { item ->
-      when (item) {
-        is Map<*, *> -> toBundle(item as Map<String, Any?>)
-        is List<*> -> toBundleList(item)
-        else -> item
+  private fun toBundleList(list: List<*>, path: String, converting: MutableSet<Any>): ArrayList<Any?> =
+    nested(list, path, converting) {
+      list.mapIndexedTo(ArrayList(list.size)) { index, item ->
+        val itemPath = "$path[$index]"
+        when (item) {
+          is Map<*, *> -> toBundle(item, itemPath, converting)
+          is List<*> -> toBundleList(item, itemPath, converting)
+          else -> item
+        }
       }
     }
 
-  fun toMap(bundle: Bundle): Map<String, Any?> {
-    val keys = bundle.keySet()
-    val map = HashMap<String, Any?>(keys.size, 1.0f)
-    for (key in keys) {
-      @Suppress("DEPRECATION")
-      map[key] = toJsValue(bundle.get(key), key)
-    }
-    return map
-  }
+  fun toMap(bundle: Bundle): Map<String, Any?> =
+    toMap(bundle, path = null, converting = identitySet())
 
-  private fun toJsValue(value: Any?, key: String): Any? =
+  private fun toMap(bundle: Bundle, path: String?, converting: MutableSet<Any>): Map<String, Any?> =
+    nested(bundle, path, converting) {
+      val keys = bundle.keySet()
+      val map = HashMap<String, Any?>(keys.size, 1.0f)
+      for (key in keys) {
+        @Suppress("DEPRECATION")
+        map[key] = toJsValue(bundle.get(key), keyPath(path, key), converting)
+      }
+      map
+    }
+
+  private fun toJsValue(value: Any?, path: String, converting: MutableSet<Any>): Any? =
     when (value) {
       null, is Boolean, is String, is Int, is Long, is Float, is Double -> value
       is Byte -> value.toInt()
       is Short -> value.toInt()
       is Char -> value.toString()
       is CharSequence -> value.toString()
-      is Bundle -> toMap(value)
-      is Map<*, *> -> value.entries.associate { (k, v) -> k.toString() to toJsValue(v, key) }
+      is Bundle -> toMap(value, path, converting)
+      is Map<*, *> -> mapToJs(value, path, converting)
       // The arrays the bridge carries as they are.
       is IntArray, is LongArray, is FloatArray, is DoubleArray, is BooleanArray, is ByteArray -> value
       is ShortArray -> value.map { it.toInt() }
       is CharArray -> value.map { it.toString() }
-      is Array<*> -> value.map { toJsValue(it, key) }
-      is Collection<*> -> value.map { toJsValue(it, key) }
+      is Array<*> -> nested(value, path, converting) {
+        value.mapIndexed { index, item -> toJsValue(item, "$path[$index]", converting) }
+      }
+      is Collection<*> -> nested(value, path, converting) {
+        value.mapIndexed { index, item -> toJsValue(item, "$path[$index]", converting) }
+      }
       is Enum<*> -> value.name
       is android.net.Uri -> value.toString()
       else -> throw IllegalArgumentException(
-        "The Bundle value under \"$key\" is a ${value.javaClass.name}, which has no JavaScript form"
+        "The Bundle value at $path is a ${value.javaClass.name}, which has no JavaScript form"
       )
     }
+
+  private fun mapToJs(map: Map<*, *>, path: String, converting: MutableSet<Any>): Map<String, Any?> =
+    nested(map, path, converting) {
+      val result = HashMap<String, Any?>(map.size, 1.0f)
+      for ((key, item) in map) {
+        val name = key.toString()
+        require(!result.containsKey(name)) {
+          "Two keys of the map at $path both read \"$name\" as a string, so one would overwrite the other"
+        }
+        result[name] = toJsValue(item, keyPath(path, name), converting)
+      }
+      result
+    }
+
+  /**
+   * Converts the container [value] with [convert], refusing one that is already being converted
+   * further up: it contains itself, and converting it would never end.
+   */
+  private inline fun <T> nested(
+    value: Any,
+    path: String?,
+    converting: MutableSet<Any>,
+    convert: () -> T,
+  ): T {
+    require(converting.add(value)) {
+      "The ${value.javaClass.simpleName} at ${describe(path)} contains itself"
+    }
+    try {
+      return convert()
+    } finally {
+      converting.remove(value)
+    }
+  }
+
+  private fun identitySet(): MutableSet<Any> = Collections.newSetFromMap(IdentityHashMap())
+
+  private fun keyPath(path: String?, key: String): String =
+    if (path == null) key else "$path.$key"
+
+  private fun describe(path: String?): String = path ?: "the top level"
 }
