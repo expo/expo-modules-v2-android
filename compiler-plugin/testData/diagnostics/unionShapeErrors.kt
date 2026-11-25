@@ -9,6 +9,7 @@ import io.github.expo.modules.v2.Tag
 import io.github.expo.modules.v2.Union
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import java.net.URL
+import java.util.UUID
 
 <!UNION_ON_UNSUPPORTED_DECLARATION!>@Union
 interface NotSealed<!>
@@ -75,6 +76,36 @@ sealed interface TextFirst<!> {
 
     @JvmInline
     value class Address(val url: URL) : TextFirst
+}
+
+// A string UUID refuses is a String.
+@Union
+sealed interface IdOrText {
+    @JvmInline
+    value class Id(val id: UUID) : IdOrText
+
+    @JvmInline
+    value class Text(val text: String) : IdOrText
+}
+
+// A String takes every string, so a UUID after it is never picked.
+<!UNION_UNREACHABLE_VARIANT!>@Union
+sealed interface TextBeforeId<!> {
+    @JvmInline
+    value class Text(val text: String) : TextBeforeId
+
+    @JvmInline
+    value class Id(val id: UUID) : TextBeforeId
+}
+
+// Neither a URL nor a UUID takes every string, so both are reachable in either order.
+@Union
+sealed interface AddressOrId {
+    @JvmInline
+    value class Address(val url: URL) : AddressOrId
+
+    @JvmInline
+    value class Id(val id: UUID) : AddressOrId
 }
 
 // Records told apart by the fields they need.

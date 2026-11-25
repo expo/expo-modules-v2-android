@@ -11,11 +11,13 @@ import io.github.expo.modules.v2.converters.StringConverter
 import io.github.expo.modules.v2.converters.TypeConverter
 import io.github.expo.modules.v2.converters.UriConverter
 import io.github.expo.modules.v2.converters.UrlConverter
+import io.github.expo.modules.v2.converters.UuidConverter
 import java.io.File
 import java.net.URI
 import java.net.URL
 import java.net.URLClassLoader
 import java.nio.file.Path
+import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -39,6 +41,7 @@ class TypeConverterRegistryTest {
   fun `resolves the built-in table without registration`() {
     assertTrue(TypeDescriptor.Simple(URL::class.java, false).converter is UrlConverter)
     assertTrue(TypeDescriptor.Simple(URI::class.java, false).converter is UriConverter)
+    assertTrue(TypeDescriptor.Simple(UUID::class.java, false).converter is UuidConverter)
     assertTrue(TypeDescriptor.Simple(Duration::class.java, false).converter is DurationConverter)
     assertTrue(TypeDescriptor.Simple(Path::class.java, false).converter is PathConverter)
     assertTrue(TypeDescriptor.Simple(Uuid::class.java, false).converter is KotlinUuidConverter)

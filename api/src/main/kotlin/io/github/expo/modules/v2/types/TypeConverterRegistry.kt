@@ -32,6 +32,7 @@ import io.github.expo.modules.v2.converters.UnionConverter
 import io.github.expo.modules.v2.converters.UnitConverter
 import io.github.expo.modules.v2.converters.UriConverter
 import io.github.expo.modules.v2.converters.UrlConverter
+import io.github.expo.modules.v2.converters.UuidConverter
 import io.github.expo.modules.v2.converters.selectJsHandleConverter
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
@@ -42,6 +43,7 @@ import java.io.File
 import java.net.URI
 import java.net.URL
 import java.nio.file.Path
+import java.util.UUID
 import kotlin.time.Duration
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
@@ -124,6 +126,11 @@ object TypeConverterRegistry {
     +entry(
       Uuid::class.java,
       ::KotlinUuidConverter
+    )
+
+    +entry(
+      UUID::class.java,
+      ::UuidConverter
     )
 
     // java.nio.file only exists on Android 8+ (API 26). Below that, resolving Path::class throws

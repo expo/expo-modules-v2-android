@@ -451,8 +451,8 @@ private fun jsKindOf(
     "kotlin.Int", "kotlin.Long", "kotlin.Float", "kotlin.Double", "kotlin.time.Duration" ->
       JsKind.NUMBER
 
-    "kotlin.String", "java.io.File", "java.net.URL", "java.net.URI", "java.nio.file.Path",
-    "android.net.Uri", "kotlin.uuid.Uuid",
+    "kotlin.String", "java.io.File", "java.net.URL", "java.net.URI", "java.util.UUID",
+    "java.nio.file.Path", "android.net.Uri", "kotlin.uuid.Uuid",
       -> JsKind.STRING
 
     "kotlin.collections.List", "kotlin.collections.MutableList",
