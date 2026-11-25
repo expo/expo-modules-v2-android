@@ -63,6 +63,13 @@ internal enum class ValueKind {
   INT_ENUM,
   LIST,
   MAP,
+
+  /**
+   * `android.os.Bundle`, whose bridge is a `Map<String, Any?>`: the same bridge as a map of dynamic
+   * values, so a Bundle buffers like `Any` does - only under an explicit `Buffer.YES`. Unlike a
+   * [MAP], it never hands its bridge value through: the Bundle is always rebuilt.
+   */
+  BUNDLE,
   SET,
   ARRAY,
 
@@ -161,6 +168,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
 
       "kotlin.collections.List", "kotlin.collections.MutableList" -> ValueKind.LIST
       "kotlin.collections.Map", "kotlin.collections.MutableMap" -> ValueKind.MAP
+      "android.os.Bundle" -> ValueKind.BUNDLE
       "kotlin.collections.Set", "kotlin.collections.MutableSet" -> ValueKind.SET
       "kotlin.Array" -> ValueKind.ARRAY
       "kotlin.Pair", "kotlin.Triple" -> ValueKind.TUPLE
@@ -198,7 +206,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       // A Set, an Array or a tuple always rebuilds its container, and a record always rebuilds itself.
       ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD, ValueKind.UNION,
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
-      ValueKind.TYPED_ARRAY,
+      ValueKind.TYPED_ARRAY, ValueKind.BUNDLE,
         -> false
     }
 
@@ -209,7 +217,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
    */
   fun canBuffer(kind: ValueKind, type: IrType, allowDynamic: Boolean = false): Boolean =
     when (kind) {
-      ValueKind.DYNAMIC -> allowDynamic
+      // A Bundle's values are dynamic, so it rides the buffer exactly when `Any` would.
+      ValueKind.DYNAMIC, ValueKind.BUNDLE -> allowDynamic
       ValueKind.UNBOXED_SCALAR, ValueKind.UNIT, ValueKind.JS_HANDLE,
       ValueKind.TYPED_ARRAY, ValueKind.SHARED_OBJECT,
         -> false
@@ -255,7 +264,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
     allowDynamic: Boolean = false,
   ): Boolean {
     val kind = kindOf(type)
-    if (kind == ValueKind.DYNAMIC) {
+    if (kind == ValueKind.DYNAMIC || kind == ValueKind.BUNDLE) {
       return allowDynamic
     }
     if (kind == ValueKind.JS_HANDLE ||
@@ -395,7 +404,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
         }
       }
 
-      ValueKind.MAP, ValueKind.RECORD ->
+      ValueKind.MAP, ValueKind.RECORD, ValueKind.BUNDLE ->
         irBuiltIns.mapClass
           .typeWith(irBuiltIns.stringType, irBuiltIns.anyType.makeNullable())
           .makeNullable()

@@ -395,7 +395,18 @@ private fun covers(earlier: ConeKotlinType, later: ConeKotlinType, session: FirS
       val theirMap = later.classId in MAPS
       when {
         myMap && theirMap -> {
+          // A Bundle takes any value under any key, as a `Map<String, Any?>` would.
+          if (earlier.classId == BUNDLE) {
+            return true
+          }
           val myValue = earlier.argument(1) ?: return true
+          if (later.classId == BUNDLE) {
+            // A Bundle's values can be null, which a non-null `Any` refuses natively and passes
+            // on. Only a value that takes null as well takes every object a Bundle would.
+            val takesAnything = jsKindOf(myValue, classSymbolOf(myValue, session), session) == JsKind.ANY
+            return takesAnything &&
+              (myValue.isMarkedNullable || myValue.classId == Identifiers.Classes.JavaScriptValue)
+          }
           val theirValue = later.argument(1) ?: return true
           covers(myValue, theirValue, session)
         }
@@ -454,7 +465,7 @@ private fun jsKindOf(
       -> JsKind.ARRAY
 
     "kotlin.ByteArray" -> JsKind.BINARY
-    "kotlin.collections.Map", "kotlin.collections.MutableMap" -> JsKind.OBJECT
+    "kotlin.collections.Map", "kotlin.collections.MutableMap", "android.os.Bundle" -> JsKind.OBJECT
     "kotlin.Any" -> JsKind.ANY
     else -> when (type.classId) {
       Identifiers.Classes.JavaScriptValue -> JsKind.ANY
@@ -510,7 +521,10 @@ private val NUMBERS = setOf(
   ClassId.topLevel(FqName("kotlin.time.Duration")),
 )
 
-private val MAPS = setOf(StandardClassIds.Map, StandardClassIds.MutableMap)
+private val BUNDLE = ClassId.topLevel(FqName("android.os.Bundle"))
+
+/** The object variants that take every object: a Bundle is a map of dynamic values. */
+private val MAPS = setOf(StandardClassIds.Map, StandardClassIds.MutableMap, BUNDLE)
 
 /**
  * Why [later] is never picked with this variant declared before it, or null when it can be: a value
@@ -528,6 +542,12 @@ private fun VariantShape.shadows(
   }
   if (kind == JsKind.ANY_OBJECT && later.kind in OBJECT_KINDS) {
     return "takes every object"
+  }
+  // Native code offers an object variant any object that is not an array or a function, and a
+  // Bundle converts every one of them: an ArrayBuffer to an empty Bundle, a shared object to its
+  // enumerable properties.
+  if (valueClassId == BUNDLE && (later.kind == JsKind.BINARY || later.kind == JsKind.SHARED_OBJECT)) {
+    return "takes every object, ArrayBuffers and shared objects included"
   }
   if (group == null || group != later.group) {
     return null

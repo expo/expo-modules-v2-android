@@ -1,8 +1,10 @@
 package io.github.expo.modules.v2.types
 
 import android.net.Uri
+import android.os.Bundle
 import io.github.expo.modules.v2.cache.ClassCache
 import io.github.expo.modules.v2.converters.AndroidUriConverter
+import io.github.expo.modules.v2.converters.BundleConverter
 
 /**
  * The converters for the leaf types only this platform has, added to [TypeConverterRegistry]'s
@@ -12,5 +14,10 @@ internal fun ClassCache.ClassCacheBuilder.platformConverters() {
   +entry(
     Uri::class.java,
     ::AndroidUriConverter
+  )
+
+  +entry(
+    Bundle::class.java,
+    ::BundleConverter
   )
 }

@@ -96,6 +96,13 @@ android {
     }
   }
 
+  testOptions {
+    // Merges the manifest and resources into the unit tests, which Robolectric reads to build its
+    // test application. Robolectric itself is what swaps android.jar's throwing stubs for a real
+    // framework; the SDK it runs is pinned in src/test/resources/robolectric.properties.
+    unitTests.isIncludeAndroidResources = true
+  }
+
   packaging {
     jniLibs {
       excludes += listOf(
@@ -127,6 +134,11 @@ dependencies {
   implementation(libs.react.android)
 
   api(libs.kolibri.android)
+
+  // The converters of Android framework classes (Bundle, Uri) only run on the JVM under Robolectric.
+  testImplementation(libs.junit)
+  testImplementation(libs.kotlin.test)
+  testImplementation(libs.robolectric)
 }
 
 val cppSourcesZip by tasks.registering(Zip::class) {
