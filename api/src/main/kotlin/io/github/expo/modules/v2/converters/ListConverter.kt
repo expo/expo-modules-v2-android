@@ -70,11 +70,14 @@ class ListConverter(
     val fastPath = !elementConverter.isNullable && elementConverter is PassthroughConverter<*>
     if (fastPath) {
       val elementKind = elementConverter.kind
+      // `toMutableList`, not `toList`: the latter returns the shared read-only `emptyList()` or
+      // `listOf(x)` for 0 or 1 elements, and a `MutableList`/`MutableCollection` parameter must
+      // always get a fresh list it can grow.
       val converted = when (elementKind) {
-        CppType.DOUBLE -> getDoubles(count).toList()
-        CppType.INT -> getInts(count).toList()
-        CppType.LONG -> getLongs(count).toList()
-        CppType.FLOAT -> getFloats(count).toList()
+        CppType.DOUBLE -> getDoubles(count).toMutableList()
+        CppType.INT -> getInts(count).toMutableList()
+        CppType.LONG -> getLongs(count).toMutableList()
+        CppType.FLOAT -> getFloats(count).toMutableList()
         CppType.BOOLEAN -> {
           val result = ArrayList<Any?>(count)
           repeat(count) {

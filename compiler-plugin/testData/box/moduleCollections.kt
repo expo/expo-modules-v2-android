@@ -8,10 +8,14 @@ import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.Union
 import io.github.expo.modules.v2.boxsupport.assertExports
 import io.github.expo.modules.v2.boxsupport.buffered
 import io.github.expo.modules.v2.boxsupport.slot
 import io.github.expo.modules.v2.records.codecFor
+import io.github.expo.modules.v2.types.TypeDescriptor
+import io.github.expo.modules.v2.types.anyConverter
+import io.github.expo.modules.v2.unions.UnionValue
 import java.net.URL
 
 /**
@@ -42,8 +46,43 @@ object Collections : Module() {
     @JS
     fun buffered(values: Collection<Long>): Collection<Long> = values
 
+    // Nested: each inner collection is converted on its own, so a Set inside reaches the bridge as
+    // a List.
+    @JS
+    @BufferMode(Buffer.NO)
+    fun groups(): List<Collection<Int>> = listOf(linkedSetOf(3, 1), byName.values)
+
+    @JS
+    @BufferMode(Buffer.NO)
+    fun sizes(groups: List<Collection<Int>>): List<Int> = groups.map { it.size }
+
+    @JS
+    @BufferMode(Buffer.NO)
+    fun byKey(): Map<String, Collection<Int>> = linkedMapOf("set" to linkedSetOf(5, 4), "values" to byName.values)
+
+    @JS
+    @BufferMode(Buffer.NO)
+    fun counts(groups: Map<String, Collection<Int>>): Map<String, Int> = groups.mapValues { it.value.size }
+
+    @JS
+    @BufferMode(Buffer.NO)
+    fun shelf(books: Collection<Book>): Collection<Book> = books.toCollection(linkedSetOf())
+
     @JS
     var tags: Collection<String> = linkedSetOf("x", "y")
+}
+
+@Record
+data class Book(val id: Int, val title: String)
+
+// A Collection variant told apart from a String one by the kind of JavaScript value.
+@Union
+sealed interface Tags {
+    @JvmInline
+    value class Many(val values: Collection<String>) : Tags
+
+    @JvmInline
+    value class One(val value: String) : Tags
 }
 
 @Record
@@ -92,6 +131,29 @@ fun box(): String {
             returns(buffered<Collection<Long>>())
             trampoline()
         }
+        function("groups") {
+            returns(slot<List<Collection<Int>>>())
+            trampoline()
+        }
+        function("sizes") {
+            args(slot<List<Collection<Int>>>())
+            returns(slot<List<Int>>())
+            trampoline()
+        }
+        function("byKey") {
+            returns(slot<Map<String, Collection<Int>>>())
+            trampoline()
+        }
+        function("counts") {
+            args(slot<Map<String, Collection<Int>>>())
+            returns(slot<Map<String, Int>>())
+            trampoline()
+        }
+        function("shelf") {
+            args(slot<Collection<Book>>())
+            returns(slot<Collection<Book>>())
+            trampoline()
+        }
         property("tags", buffered<Collection<String>>()) {
             trampoline()
             mutable(buffered<Collection<String>>())
@@ -119,6 +181,42 @@ fun box(): String {
     if (hosts != listOf("expo.dev", "docs.expo.dev")) return "hosts: got $hosts"
     val noHosts = owner.getDeclaredMethod("hosts$suffix", List::class.java).invoke(Collections, null)
     if (noHosts != null) return "hosts(null): got $noHosts"
+
+    // A Set or a map's values nested in a List or a Map still reaches the bridge as a List.
+    val groups = owner.getDeclaredMethod("groups$suffix").invoke(Collections) as List<*>
+    if (groups != listOf(listOf(3, 1), listOf(1, 2)) || !groups.all { it is List<*> }) {
+        return "groups: got $groups (${groups.map { it?.javaClass }})"
+    }
+    val sizes = owner.getDeclaredMethod("sizes$suffix", List::class.java)
+        .invoke(Collections, listOf(listOf(1, 2), listOf<Int>()))
+    if (sizes != listOf(2, 0)) return "sizes: got $sizes"
+
+    val byKey = owner.getDeclaredMethod("byKey$suffix").invoke(Collections) as Map<*, *>
+    if (byKey != mapOf("set" to listOf(5, 4), "values" to listOf(1, 2)) || !byKey.values.all { it is List<*> }) {
+        return "byKey: got $byKey (${byKey.values.map { it?.javaClass }})"
+    }
+    val counts = owner.getDeclaredMethod("counts$suffix", Map::class.java)
+        .invoke(Collections, mapOf("a" to listOf(1, 2, 3)))
+    if (counts != mapOf("a" to 3)) return "counts: got $counts"
+
+    // Records inside a Collection cross as maps, each converted.
+    val books = listOf(mapOf("id" to 1, "title" to "Dune"), mapOf("id" to 2, "title" to "Emma"))
+    val shelved = owner.getDeclaredMethod("shelf$suffix", List::class.java).invoke(Collections, books)
+    if (shelved !is List<*> || shelved != books) return "shelf: got $shelved (${shelved?.javaClass})"
+
+    // A union variant holding a Collection decodes into it and encodes out of any collection.
+    val tags = TypeDescriptor.Simple(Tags::class.java, false).anyConverter
+    val many = tags.toJni(Tags.Many(linkedSetOf("b", "a"))) as UnionValue
+    if (many.index != 0 || many.payload != listOf("b", "a") || many.payload !is List<*>) {
+        return "Fail: Many crossed as ${many.index}/${many.payload} (${many.payload?.javaClass})"
+    }
+    val one = tags.toJni(Tags.One("x")) as UnionValue
+    if (one.index != 1 || one.payload != "x") return "Fail: One crossed as ${one.index}/${one.payload}"
+    val decodedMany = tags.fromJni(UnionValue(0, listOf("c", "d")))
+    if (decodedMany !is Tags.Many || decodedMany.values.toList() != listOf("c", "d")) {
+        return "Fail: Many round trip gave $decodedMany"
+    }
+    if (tags.fromJni(UnionValue(1, "y")) != Tags.One("y")) return "Fail: One round trip"
 
     // Buffered both ways: one payloadLength in, the result's length out.
     val buffered = descriptorOf(owner, "buffered$suffix")
