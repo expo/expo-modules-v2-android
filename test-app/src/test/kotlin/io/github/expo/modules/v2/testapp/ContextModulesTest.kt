@@ -77,6 +77,15 @@ class ContextModulesTest {
   }
 
   @Test
+  fun `registering a module returns the name JavaScript reaches it by`() {
+    HermesRuntime().use { runtime ->
+      val name = runtime.moduleRegistry.register(UnrelatedModule())
+      assertEquals("UnrelatedModule", name)
+      assertEquals("object", runtime.evaluateAsString("typeof expo.modules.$name"))
+    }
+  }
+
+  @Test
   fun `runtimes that share a context serve its modules, and closing them does not destroy the modules`() {
     val context = ExpoContext()
     val owner = ContextOwner()
