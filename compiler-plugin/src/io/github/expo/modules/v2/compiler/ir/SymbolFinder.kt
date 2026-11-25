@@ -79,6 +79,9 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `class ModuleBuilder` */
     val moduleBuilder: IrClassSymbol by lazy { clazz(Identifiers.Classes.ModuleBuilder) }
 
+    /** `class ExpoPackage(modules: List<Class<out Module>>)` */
+    val expoPackage: IrClassSymbol by lazy { clazz(Identifiers.Classes.ExpoPackage) }
+
     /** `class Pair<out A, out B>(first: A, second: B)` */
     val pair: IrClassSymbol by lazy { clazz(Identifiers.Classes.Pair) }
 
@@ -156,6 +159,9 @@ class SymbolFinder(private val context: IrPluginContext) {
 
     /** `AnyType(descriptor, useBuffer)` */
     val anyType: IrConstructorSymbol by lazy { classes.anyType.constructors.single() }
+
+    /** `ExpoPackage(modules)` */
+    val expoPackage: IrConstructorSymbol by lazy { classes.expoPackage.constructors.single() }
 
     /** `Pair(first, second)` */
     val pair: IrConstructorSymbol by lazy { classes.pair.constructors.single() }

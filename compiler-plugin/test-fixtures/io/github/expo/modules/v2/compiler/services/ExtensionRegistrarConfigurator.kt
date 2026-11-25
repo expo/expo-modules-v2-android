@@ -34,8 +34,12 @@ private class ExtensionRegistrarConfigurator(testServices: TestServices) :
       val packageName = dependency.directives[ExpoTestDirectives.EXPO_PACKAGE_NAME].singleOrNull()
         ?: continue
       val output = testServices.compiledClassesManager.getOutputDirForModule(dependency)
-      options.processOption(classpathPackageOption, "$packageName=${output.path}", configuration)
+      options.processOption(classpathPackageOption, "${escape(packageName)}=${escape(output.path)}", configuration)
     }
     with(registrar) { registerExtensions(configuration) }
   }
+
+  /** What the Gradle plugin does to each part: the compiler splits plugin options on `,`. */
+  private fun escape(part: String): String =
+    part.replace("%", "%25").replace(",", "%2C").replace("=", "%3D")
 }

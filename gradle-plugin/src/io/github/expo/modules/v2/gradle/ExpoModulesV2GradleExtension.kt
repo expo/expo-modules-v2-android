@@ -8,10 +8,15 @@ import javax.inject.Inject
 open class ExpoModulesV2GradleExtension @Inject constructor(objectFactory: ObjectFactory) {
   /**
    * The package of the modules in each compile classpath entry, keyed by the entry's absolute path:
-   * a jar or a classes directory that the project's Kotlin compilation gets. For example, an app
+   * a jar or a classes directory that the project's Kotlin compilations get. For example, an app
    * maps the classes jar of each module library to its npm package, such as `expo-font`.
    * `discoveredExpoPackages()` groups the modules by it. A module in an entry that is not here is
    * only in `discoveredExpoModules()`.
+   *
+   * Every Kotlin compilation of the project gets all the entries, and ignores the ones that are not
+   * on its classpath. So give the entries of every compilation that calls `discoveredExpoPackages()`,
+   * for example of each build variant. A compilation that calls it fails when none of the entries is
+   * on its classpath.
    */
   val classpathPackages: MapProperty<String, String> =
     objectFactory.mapProperty(String::class.java, String::class.java).convention(emptyMap())

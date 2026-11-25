@@ -46,6 +46,7 @@ object Unnamed : Module()
 package io.github.expo.modules.v2.testdata.app
 
 import io.github.expo.modules.v2.ExpoModule
+import io.github.expo.modules.v2.ExpoPackage
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.discoveredExpoModules
 import io.github.expo.modules.v2.discoveredExpoPackages
@@ -58,7 +59,7 @@ import io.github.expo.modules.v2.testdata.unnamed.Unnamed
 @ExpoModule
 object Local : Module()
 
-private fun packages(): Map<String, List<Class<out Module>>> = discoveredExpoPackages()
+private fun packages(): Map<String, ExpoPackage> = discoveredExpoPackages()
 
 private fun modules(): List<Class<out Module>> = discoveredExpoModules()
 
@@ -70,7 +71,7 @@ fun box(): String {
         "@expo/ui" to listOf(Ui::class.java),
         "expo-font" to listOf(FontLoader::class.java, FontUtils::class.java),
     )
-    val actual = packages.toList()
+    val actual = packages.map { (name, expoPackage) -> name to expoPackage.modules }
     if (actual != expected) {
         return "packages: ${actual.map { (name, modules) -> name to modules.map { it.simpleName } }}"
     }
@@ -80,7 +81,7 @@ fun box(): String {
     for (module in listOf(Unnamed::class.java, Local::class.java)) {
         if (module !in modules) return "missing ${module.simpleName} in ${modules.map { it.simpleName }}"
     }
-    if (packages.values.flatten().size != modules.size - 2) return "modules out of packages: $modules"
+    if (packages.values.sumOf { it.modules.size } != modules.size - 2) return "modules out of packages: $modules"
 
     return "OK"
 }

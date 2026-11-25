@@ -29,7 +29,6 @@ import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.types.Variance
-import java.io.File
 
 /**
  * Replaces every `discoveredExpoModules()` call with the list it stands for:
@@ -41,7 +40,7 @@ import java.io.File
  * and every `discoveredExpoPackages()` call with the same modules grouped by package:
  *
  * ```
- * mapOf<String, List<Class<out Module>>>(Pair("expo-font", listOf(First::class.java, ...)), ...)
+ * mapOf<String, ExpoPackage>(Pair("expo-font", ExpoPackage(listOf(First::class.java, ...))), ...)
  * ```
  *
  * The consumer half of module discovery. The classes come from two places: the hint interfaces
@@ -69,19 +68,14 @@ internal class ModuleDiscoveryIrTransformer(
     classpathModules() + localModules().map { DiscoveredModule(it, packageName = null) }
   }
 
-  /**
-   * The package of each classpath entry, by its canonical path, so two spellings of one entry, such
-   * as one through a symbolic link, still match.
-   */
-  private val packagesByEntry: Map<String, String> by lazy {
-    classpathPackages.associate { it.entry.canonicalPath to it.packageName }
-  }
+  private val packageIndex = ClasspathPackageIndex(classpathPackages)
 
   private val modules: List<IrClassSymbol> by lazy {
     discovered.map { it.module }.sortedDistinct()
   }
 
   private val packages: List<Pair<String, List<IrClassSymbol>>> by lazy {
+    packageIndex.checkAnyEntryIsOn(scanner.classpath)
     discovered
       .mapNotNull { found -> found.packageName?.let { it to found.module } }
       .groupBy({ (name, _) -> name }, { (_, module) -> module })
@@ -140,8 +134,9 @@ internal class ModuleDiscoveryIrTransformer(
 
   private fun packageMap(): IrExpression {
     val keyType = irBuiltIns.stringType
-    // Pair<String, List<Class<out Module>>>
-    val pairType = symbols.classes.pair.typeWith(keyType, moduleListType)
+    val valueType = symbols.classes.expoPackage.owner.defaultType
+    // Pair<String, ExpoPackage>
+    val pairType = symbols.classes.pair.typeWith(keyType, valueType)
     val pairs = packages.map { (name, modules) ->
       IrSyntheticConstructorCallImpl(
         type = pairType,
@@ -149,20 +144,25 @@ internal class ModuleDiscoveryIrTransformer(
         typeArgumentsCount = 2,
       ).apply {
         typeArguments[0] = keyType
-        typeArguments[1] = moduleListType
+        typeArguments[1] = valueType
         arguments[0] = poet.string(name)
-        arguments[1] = moduleList(modules)
+        arguments[1] = IrSyntheticConstructorCallImpl(
+          type = valueType,
+          symbol = symbols.constructors.expoPackage,
+        ).apply {
+          arguments[0] = moduleList(modules)
+        }
       }
     }
 
     return IrSyntheticCallImpl(
-      type = irBuiltIns.mapClass.typeWith(keyType, moduleListType),
+      type = irBuiltIns.mapClass.typeWith(keyType, valueType),
       symbol = mapOf,
       typeArgumentsCount = 2,
       origin = ModuleDiscoveryOrigin,
     ).apply {
       typeArguments[0] = keyType
-      typeArguments[1] = moduleListType
+      typeArguments[1] = valueType
       arguments[0] = IrSyntheticVarargImpl(
         type = irBuiltIns.arrayClass.typeWith(pairType),
         varargElementType = pairType,
@@ -198,11 +198,8 @@ internal class ModuleDiscoveryIrTransformer(
           "compiled by a different version of the plugin; align the plugin version across the " +
           "modules of this build.",
       )
-    DiscoveredModule(module, scanner.rootOf(hint)?.let(::packageOf))
+    DiscoveredModule(module, scanner.rootOf(hint)?.let(packageIndex::packageOf))
   }
-
-  private fun packageOf(entry: File): String? =
-    if (packagesByEntry.isEmpty()) null else packagesByEntry[entry.canonicalPath]
 
   private fun localModules(): List<IrClassSymbol> {
     val found = mutableListOf<IrClassSymbol>()

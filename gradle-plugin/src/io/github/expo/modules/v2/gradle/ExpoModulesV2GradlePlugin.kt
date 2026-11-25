@@ -2,12 +2,14 @@ package io.github.expo.modules.v2.gradle
 
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
+import org.jetbrains.kotlin.gradle.plugin.CompositeSubpluginOption
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilerPluginSupportPlugin
 import org.jetbrains.kotlin.gradle.plugin.SubpluginArtifact
 import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
 import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.File
 
 /**
  * Registers the Expo Modules v2 Kotlin compiler plugin - the one that turns an
@@ -54,15 +56,54 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
     // Mapped from the extension's property, so it does not capture the Project - KGP serializes this
     // provider into the compile task's inputs, and a Project reference breaks the configuration cache.
     val extension = project.extensions.getByType(ExpoModulesV2GradleExtension::class.java)
+    val rootDir = project.rootDir
+    val gradleUserHome = project.gradle.gradleUserHomeDir
     return extension.classpathPackages.map { packages ->
-      packages.map { (entry, packageName) ->
-        SubpluginOption(key = CLASSPATH_PACKAGE_OPTION, value = "$packageName=$entry")
-      }
+      classpathPackageOptions(packages, rootDir, gradleUserHome)
     }
   }
 
   private companion object {
     // MUST stay in sync with `ExpoModulesV2CommandLineProcessor.CLASSPATH_PACKAGE_OPTION`.
     const val CLASSPATH_PACKAGE_OPTION = "classpathPackage"
+
+    /**
+     * One `classpathPackage` option for each entry. The compiler gets the absolute path, but the
+     * compile task's cache key gets only the inner options: the package and the entry's path
+     * relative to the Gradle user home or to the root project. So the task can come from the build
+     * cache when the project or the Gradle user home is somewhere else. Sorted, so the key does not
+     * depend on the map's order.
+     */
+    fun classpathPackageOptions(
+      packages: Map<String, String>,
+      rootDir: File,
+      gradleUserHome: File,
+    ): List<SubpluginOption> = packages
+      .map { (entry, packageName) -> Triple(entry, packageName, relocatable(File(entry), rootDir, gradleUserHome)) }
+      .sortedWith(compareBy({ it.third }, { it.second }))
+      .map { (entry, packageName, relocatableEntry) ->
+        CompositeSubpluginOption(
+          key = CLASSPATH_PACKAGE_OPTION,
+          value = escapeOptionPart(packageName) + "=" + escapeOptionPart(entry),
+          originalOptions = listOf(
+            SubpluginOption(key = "package", value = packageName),
+            SubpluginOption(key = "entry", value = relocatableEntry),
+          ),
+        )
+      }
+
+    private fun relocatable(entry: File, rootDir: File, gradleUserHome: File): String = when {
+      entry.startsWith(gradleUserHome) -> "gradle-user-home:" + entry.relativeTo(gradleUserHome).invariantSeparatorsPath
+      // A module library usually sits outside the root project, for example in `../node_modules`.
+      else -> runCatching { "root-project:" + entry.relativeTo(rootDir).invariantSeparatorsPath }
+        .getOrDefault(entry.path)
+    }
+
+    /**
+     * Escapes `%`, `,` and `=`: the compiler splits plugin options on `,`, and the option splits on
+     * the first `=`. MUST stay in sync with the unescaping in `ExpoModulesV2CommandLineProcessor`.
+     */
+    fun escapeOptionPart(part: String): String =
+      part.replace("%", "%25").replace(",", "%2C").replace("=", "%3D")
   }
 }

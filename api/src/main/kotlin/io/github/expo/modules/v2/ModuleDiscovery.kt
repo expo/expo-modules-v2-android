@@ -14,7 +14,7 @@ fun discoveredExpoModules(): List<Class<out Module>> = throw IllegalStateExcepti
  * sorted by name, and the modules of a package by class name. The calling project's own modules,
  * and the modules of an entry without a package, are not in any package.
  */
-fun discoveredExpoPackages(): Map<String, List<Class<out Module>>> = throw IllegalStateException(
+fun discoveredExpoPackages(): Map<String, ExpoPackage> = throw IllegalStateException(
   "discoveredExpoPackages() was not expanded at compile time, so this build has no list of Expo " +
     "packages. The Expo Modules v2 Kotlin compiler plugin rewrites this call into the modules it " +
     "finds on the compile classpath, grouped by `expoModulesV2.classpathPackages`; apply the " +

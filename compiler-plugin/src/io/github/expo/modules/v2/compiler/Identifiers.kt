@@ -58,7 +58,7 @@ object Identifiers {
     /** `fun discoveredExpoModules(): List<Class<out Module>>` - the call the plugin expands. */
     val discoveredExpoModules = CallableId(Packages.API, Name.identifier("discoveredExpoModules"))
 
-    /** `fun discoveredExpoPackages(): Map<String, List<Class<out Module>>>` - expanded the same way. */
+    /** `fun discoveredExpoPackages(): Map<String, ExpoPackage>` - expanded the same way. */
     val discoveredExpoPackages = CallableId(Packages.API, Name.identifier("discoveredExpoPackages"))
 
     /** `kotlin.collections.listOf(vararg elements: T)` - what the expansion builds the list with. */
@@ -109,6 +109,9 @@ object Identifiers {
 
     val Module = classId(Packages.API, "Module")
     val ModuleBuilder = classId(Packages.MODULES, "ModuleBuilder")
+
+    /** `class ExpoPackage(modules)` - the value of one entry of the package map. */
+    val ExpoPackage = classId(Packages.API, "ExpoPackage")
 
     /** `class Pair<out A, out B>(first, second)` - one entry of the package map. */
     val Pair = classId(FqName("kotlin"), "Pair")

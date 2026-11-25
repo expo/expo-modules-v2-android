@@ -26,6 +26,9 @@ import java.util.zip.ZipFile
  *    jar without directory entries, or one where the lookup hits, has its names walked.
  */
 class ModuleHintScanner(private val roots: () -> List<File>) {
+  /** The entries of the compile classpath, read once. */
+  val classpath: List<File> by lazy { roots() }
+
   /** The classpath entry of each hint. A hint on more than one entry keeps the first one. */
   private val rootsByHint: Map<ClassId, File> by lazy { scan() }
 
@@ -38,7 +41,7 @@ class ModuleHintScanner(private val roots: () -> List<File>) {
     val prefix = Identifiers.Hints.PACKAGE.asString().replace('.', '/') + "/"
     val rootsByName = sortedMapOf<String, File>()
 
-    for (root in roots()) {
+    for (root in classpath) {
       when {
         root.isToolchainJar() -> continue
 
