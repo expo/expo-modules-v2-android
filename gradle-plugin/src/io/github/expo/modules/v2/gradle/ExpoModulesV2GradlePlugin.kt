@@ -8,7 +8,6 @@ import org.jetbrains.kotlin.gradle.plugin.SubpluginArtifact
 import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
 import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.util.concurrent.Callable
 
 /**
  * Registers the Expo Modules v2 Kotlin compiler plugin - the one that turns an
@@ -48,18 +47,24 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
   ): Provider<List<SubpluginOption>> {
     val project = kotlinCompilation.target.project
 
-    // This plugin generates a nested *classifier*, which incremental compilation's caches cannot
-    // track: a downstream file that only sees `@Record` never learns the codec changed.
+    // The files kotlinc gets: the compile task's own libraries. Not `compileDependencyFiles` - on
+    // Android that is the raw `<variant>CompileClasspath` configuration, which cannot be resolved on
+    // its own (its project dependencies have several artifact variants), and AGP hands the task its
+    // classes jars through `libraries` instead. Filled when the task is configured, so it only
+    // carries the classpath's own build dependencies, not the task itself.
+    val classpath = project.objects.fileCollection()
+
     kotlinCompilation.compileTaskProvider.configure { task ->
+      // This plugin generates a nested *classifier*, which incremental compilation's caches cannot
+      // track: a downstream file that only sees `@Record` never learns the codec changed.
       (task as? KotlinCompile)?.incremental = false
+      (task as? KotlinCompile)?.let { classpath.from(it.libraries) }
     }
 
     // Mapped from the extension's property and the compilation's classpath, so it does not capture
     // the Project - KGP serializes this provider into the compile task's inputs, and a Project
-    // reference breaks the configuration cache. The classpath is read lazily: some compilations,
-    // such as Android's, get their final classpath after this runs.
+    // reference breaks the configuration cache.
     val extension = project.extensions.getByType(ExpoModulesV2GradleExtension::class.java)
-    val classpath = project.files(Callable { kotlinCompilation.compileDependencyFiles })
     val rootDir = project.rootDir
     val gradleUserHome = project.gradle.gradleUserHomeDir
     return extension.classpathPackages.zip(classpath.elements) { packages, elements ->
