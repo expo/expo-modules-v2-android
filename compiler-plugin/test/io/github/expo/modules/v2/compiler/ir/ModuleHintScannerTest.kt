@@ -1,5 +1,7 @@
 package io.github.expo.modules.v2.compiler.ir
 
+import org.jetbrains.org.objectweb.asm.ClassWriter
+import org.jetbrains.org.objectweb.asm.Opcodes
 import java.io.File
 import java.nio.file.Files
 import java.util.zip.ZipEntry
@@ -130,6 +132,44 @@ class ModuleHintScannerTest {
       listOf("a_Module_00000001"),
       ModuleHintScanner { listOf(notAZip, library) }.hints.map { it.shortClassName.asString() },
     )
+  }
+
+  @Test
+  fun `reads the package a hint records, from a jar and from a class directory`() {
+    val jar = root.resolve("lib/font.jar").apply {
+      parentFile.mkdirs()
+      ZipOutputStream(outputStream()).use { zip ->
+        for ((name, packageName) in listOf("a_Module_00000001" to "expo-font", "c_Module_00000003" to null)) {
+          zip.putNextEntry(ZipEntry("$HINTS/$name.class"))
+          zip.write(hintClass(name, packageName))
+          zip.closeEntry()
+        }
+      }
+    }
+    val dir = root.resolve("classes").apply {
+      resolve(HINTS).mkdirs()
+      resolve("$HINTS/b_Module_00000002.class").writeBytes(hintClass("b_Module_00000002", "@expo/ui"))
+    }
+    val scanner = ModuleHintScanner { listOf(jar, dir) }
+
+    assertEquals(
+      mapOf("a_Module_00000001" to "expo-font", "b_Module_00000002" to "@expo/ui", "c_Module_00000003" to null),
+      scanner.hints.associate { it.shortClassName.asString() to scanner.packageOf(it) },
+    )
+  }
+
+  /** The class file of a hint interface, with `@ModuleHintPackage(packageName)` when there is one. */
+  private fun hintClass(name: String, packageName: String?): ByteArray {
+    val writer = ClassWriter(0)
+    writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC or Opcodes.ACC_INTERFACE or Opcodes.ACC_ABSTRACT, "$HINTS/$name", null, "java/lang/Object", null)
+    if (packageName != null) {
+      writer.visitAnnotation("Lio/github/expo/modules/v2/ModuleHintPackage;", false).apply {
+        visit("name", packageName)
+        visitEnd()
+      }
+    }
+    writer.visitEnd()
+    return writer.toByteArray()
   }
 
   private fun jar(relativePath: String, vararg entries: String): File {

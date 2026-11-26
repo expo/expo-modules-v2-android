@@ -82,6 +82,9 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `class ExpoPackage(modules: List<Class<out Module>>)` */
     val expoPackage: IrClassSymbol by lazy { clazz(Identifiers.Classes.ExpoPackage) }
 
+    /** `annotation class ModuleHintPackage(name: String)` */
+    val moduleHintPackage: IrClassSymbol by lazy { clazz(Identifiers.Classes.ModuleHintPackageAnnotation) }
+
     /** `class Pair<out A, out B>(first: A, second: B)` */
     val pair: IrClassSymbol by lazy { clazz(Identifiers.Classes.Pair) }
 

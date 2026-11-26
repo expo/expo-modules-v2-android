@@ -18,7 +18,7 @@ object ExpoTestDirectives : SimpleDirectivesContainer() {
   )
 
   val EXPO_PACKAGE_NAME by stringDirective(
-    "The package of this module's output. A module that depends on it gets a `classpathPackage` " +
-      "option for the output, the way an app's build maps each module library to its npm package",
+    "The package of this module's modules: the module compiles with a `packageName` option, the " +
+      "way a module library's build passes its npm package",
   )
 }

@@ -1,6 +1,5 @@
 package io.github.expo.modules.v2.compiler.ir
 
-import io.github.expo.modules.v2.compiler.ClasspathPackage
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
@@ -10,9 +9,12 @@ import org.jetbrains.kotlin.ir.visitors.transformChildrenVoid
 
 class ExpoModulesV2IrGenerationExtension(
   private val hints: ModuleHintScanner,
-  /** The `classpathPackage` options: the package of the modules in each classpath entry. */
-  private val classpathPackages: List<ClasspathPackage> = emptyList(),
-  /** Where the package warnings and errors of `discoveredExpoPackages()` go. */
+  /**
+   * The `packageName` option: the package of this compilation's modules, recorded on their hints so
+   * a compilation that finds them knows it.
+   */
+  private val packageName: String? = null,
+  /** Where the package warnings of `discoveredExpoPackages()` go. */
   private val messages: MessageCollector = MessageCollector.NONE,
 ) : IrGenerationExtension {
   override fun generate(moduleFragment: IrModuleFragment, pluginContext: IrPluginContext) {
@@ -27,8 +29,12 @@ class ExpoModulesV2IrGenerationExtension(
     )
     visitors.forEach(moduleFragment::acceptChildrenVoid)
 
+    if (packageName != null) {
+      markHintPackages(moduleFragment, symbols, poet, packageName)
+    }
+
     val transformers = listOf(
-      ModuleDiscoveryIrTransformer(pluginContext, symbols, poet, hints, moduleFragment, classpathPackages, messages)
+      ModuleDiscoveryIrTransformer(pluginContext, symbols, poet, hints, moduleFragment, packageName, messages)
     )
     transformers.forEach(moduleFragment::transformChildrenVoid)
   }

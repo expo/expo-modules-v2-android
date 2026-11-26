@@ -9,7 +9,6 @@ import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.services.EnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.TestServices
-import org.jetbrains.kotlin.test.services.jvm.compiledClassesManager
 
 fun TestConfigurationBuilder.configurePlugin() {
   useConfigurators(::ExtensionRegistrarConfigurator)
@@ -22,27 +21,17 @@ private class ExtensionRegistrarConfigurator(testServices: TestServices) :
 
   // Typed as the base class, so the call picks the `processOption` the plugin implements: the
   // overload that takes a `CliOption` is deprecated and does nothing.
-  private val classpathPackageOption: AbstractCliOption = ExpoModulesV2CommandLineProcessor.CLASSPATH_PACKAGE_OPTION
+  private val packageNameOption: AbstractCliOption = ExpoModulesV2CommandLineProcessor.PACKAGE_NAME_OPTION
 
   override fun CompilerPluginRegistrar.ExtensionStorage.registerCompilerExtensions(
     module: TestModule,
     configuration: CompilerConfiguration,
   ) {
-    // Each dependency with a package puts its output on this module's classpath under that package,
-    // through the command line processor, the way `-P plugin:...:classpathPackage=` reaches it.
-    for (dependency in module.allDependencies.map { it.dependencyModule }) {
-      val packageName = dependency.directives[ExpoTestDirectives.EXPO_PACKAGE_NAME].singleOrNull()
-        ?: continue
-      val output = testServices.compiledClassesManager.getOutputDirForModule(dependency)
-      options.processOption(classpathPackageOption, "${escape(packageName)}=${escape(output.path)}", configuration)
+    // A module with a package compiles with it, through the command line processor, the way
+    // `-P plugin:...:packageName=` reaches a library's compilation.
+    module.directives[ExpoTestDirectives.EXPO_PACKAGE_NAME].singleOrNull()?.let { packageName ->
+      options.processOption(packageNameOption, packageName, configuration)
     }
     with(registrar) { registerExtensions(configuration) }
   }
-
-  /**
-   * What the Gradle plugin's `ClasspathPackageOptions.escapeOptionPart` does to each part: the
-   * compiler splits plugin options on `,`. Both sides' unit tests pin the same escaped string.
-   */
-  private fun escape(part: String): String =
-    part.replace("%", "%25").replace(",", "%2C").replace("=", "%3D")
 }

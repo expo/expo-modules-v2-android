@@ -13,8 +13,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * Registers the Expo Modules v2 Kotlin compiler plugin - the one that turns an
  * `@io.github.expo.modules.v2.Record` class into a record with a generated `RecordCodec` and expands
  * `discoveredExpoModules()` and `discoveredExpoPackages()` - with every Kotlin compilation of the
- * project it is applied to, and passes each compilation the `expoModulesV2.classpathPackages` entries
- * on its own compile classpath.
+ * project it is applied to, and passes each compilation the project's `expoModulesV2.packageName`,
+ * which the compiler plugin records on the module hints it generates.
  *
  * The plugin adds no dependency of its own: every module that declares records already depends on
  * `:api`, which is where the annotation and the generated code's supporting types live.
@@ -25,7 +25,13 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
 
   override fun apply(target: Project) {
     project = target
-    target.extensions.create("expoModulesV2", ExpoModulesV2GradleExtension::class.java)
+    val extension = target.extensions.create("expoModulesV2", ExpoModulesV2GradleExtension::class.java)
+    // `node_modules/<package>/android` - the package's own package.json is one directory up.
+    val packageJson = target.layout.projectDirectory.file("../package.json")
+    extension.packageName.convention(
+      // A null name leaves the property without a value.
+      target.providers.fileContents(packageJson).asText.map { text -> packageJsonName(text) },
+    )
   }
 
   override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean = true
@@ -47,28 +53,27 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
   ): Provider<List<SubpluginOption>> {
     val project = kotlinCompilation.target.project
 
-    // The files kotlinc gets: the compile task's own libraries. Not `compileDependencyFiles` - on
-    // Android that is the raw `<variant>CompileClasspath` configuration, which cannot be resolved on
-    // its own (its project dependencies have several artifact variants), and AGP hands the task its
-    // classes jars through `libraries` instead. Filled when the task is configured, so it only
-    // carries the classpath's own build dependencies, not the task itself.
-    val classpath = project.objects.fileCollection()
-
     kotlinCompilation.compileTaskProvider.configure { task ->
       // This plugin generates a nested *classifier*, which incremental compilation's caches cannot
       // track: a downstream file that only sees `@Record` never learns the codec changed.
       (task as? KotlinCompile)?.incremental = false
-      (task as? KotlinCompile)?.let { classpath.from(it.libraries) }
     }
 
-    // Mapped from the extension's property and the compilation's classpath, so it does not capture
-    // the Project - KGP serializes this provider into the compile task's inputs, and a Project
-    // reference breaks the configuration cache.
+    // Mapped from the extension's property, so it does not capture the Project - KGP serializes this
+    // provider into the compile task's inputs, and a Project reference breaks the configuration cache.
     val extension = project.extensions.getByType(ExpoModulesV2GradleExtension::class.java)
-    val rootDir = project.rootDir
-    val gradleUserHome = project.gradle.gradleUserHomeDir
-    return extension.classpathPackages.zip(classpath.elements) { packages, elements ->
-      ClasspathPackageOptions.of(packages, elements.map { it.asFile }, rootDir, gradleUserHome)
-    }
+    return extension.packageName
+      .map { packageName -> listOf(SubpluginOption(key = PACKAGE_NAME_OPTION, value = packageName)) }
+      .orElse(emptyList())
+  }
+
+  private companion object {
+    // MUST stay in sync with `ExpoModulesV2CommandLineProcessor.PACKAGE_NAME_OPTION`.
+    const val PACKAGE_NAME_OPTION = "packageName"
+
+    /** The top-level `"name"` of a package.json: the first key of the object, by npm's convention. */
+    private val PACKAGE_JSON_NAME = Regex("""^\s*\{\s*"name"\s*:\s*"([^"]+)"""")
+
+    fun packageJsonName(text: String): String? = PACKAGE_JSON_NAME.find(text)?.groupValues?.get(1)
   }
 }

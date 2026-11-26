@@ -1,24 +1,20 @@
 package io.github.expo.modules.v2.gradle
 
 import org.gradle.api.model.ObjectFactory
-import org.gradle.api.provider.MapProperty
+import org.gradle.api.provider.Property
 import javax.inject.Inject
 
 /** Configuration entry point for the Expo Modules v2 Gradle plugin, the `expoModulesV2` block. */
 open class ExpoModulesV2GradleExtension @Inject constructor(objectFactory: ObjectFactory) {
   /**
-   * The package of the modules in each compile classpath entry, keyed by the entry's absolute path:
-   * a jar or a classes directory that the project's Kotlin compilations get. For example, an app
-   * maps the classes jar of each module library to its npm package, such as `expo-font`.
-   * `discoveredExpoPackages()` groups the modules by it. A module in an entry that is not here is
-   * only in `discoveredExpoModules()`.
+   * The package of the modules this project declares, such as the npm package `expo-font`. The
+   * compiler plugin records it on their module hints, so `discoveredExpoPackages()` in an app that
+   * depends on this library - from source or as a published artifact - groups them under it, with
+   * nothing to configure in the app.
    *
-   * Each Kotlin compilation of the project gets only the entries on its own compile classpath. So give
-   * the entries of every compilation that calls `discoveredExpoPackages()`, for example of each build
-   * variant. A compilation with none of them gets an empty map; one where some classpath modules
-   * have a package and others do not warns about the latter, since they are most likely missing an
-   * entry. A package whose entries hold no module is not in the map.
+   * By default, the `name` of the `package.json` one directory up, which is where an npm package
+   * keeps its Android library (`node_modules/<package>/android`). Unset when there is none: the
+   * modules are then only in `discoveredExpoModules()`.
    */
-  val classpathPackages: MapProperty<String, String> =
-    objectFactory.mapProperty(String::class.java, String::class.java).convention(emptyMap())
+  val packageName: Property<String> = objectFactory.property(String::class.java)
 }

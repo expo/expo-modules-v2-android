@@ -9,8 +9,8 @@ import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.Module
 
 /**
- * The hints of these modules hold no package. The discovering compilation gets the package of this
- * module's output in a `classpathPackage` option, and groups the modules found there under it.
+ * This compilation gets the package `expo-font` in a `packageName` option and records it on the hints
+ * of these modules; the discovering compilation groups them under it.
  */
 @ExpoModule
 object FontUtils : Module()
@@ -37,7 +37,7 @@ package io.github.expo.modules.v2.testdata.unnamed
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.Module
 
-/** An output that the discovering compilation has no package for, so its modules have none. */
+/** A compilation without a package name, so its hints record none and its modules have none. */
 @ExpoModule
 object Unnamed : Module()
 

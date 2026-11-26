@@ -113,6 +113,9 @@ object Identifiers {
     /** `class ExpoPackage(modules)` - the value of one entry of the package map. */
     val ExpoPackage = classId(Packages.API, "ExpoPackage")
 
+    /** `@ModuleHintPackage(name)` - the package the plugin records on a compilation's module hints. */
+    val ModuleHintPackageAnnotation = classId(Packages.API, "ModuleHintPackage")
+
     /** `class Pair<out A, out B>(first, second)` - one entry of the package map. */
     val Pair = classId(FqName("kotlin"), "Pair")
 

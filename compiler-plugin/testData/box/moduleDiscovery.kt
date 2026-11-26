@@ -76,7 +76,7 @@ fun box(): String {
 
     if (modules.size != modules.distinct().size) return "duplicates in ${modules.map { it.name }}"
 
-    // No `classpathPackage` option gives a package to any classpath entry, so no module has one.
+    // No compilation here was given a package name, so no hint records one and no module has one.
     val packages = discoveredExpoPackages()
     if (packages.isNotEmpty()) return "unexpected packages: ${packages.keys}"
 

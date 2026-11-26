@@ -1,6 +1,5 @@
 package io.github.expo.modules.v2.compiler.ir
 
-import io.github.expo.modules.v2.compiler.ClasspathPackage
 import io.github.expo.modules.v2.compiler.Identifiers
 import io.github.expo.modules.v2.compiler.ModuleDiscoveryOrigin
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
@@ -49,14 +48,14 @@ import java.io.File
  * The consumer half of module discovery. The classes come from two places: the hint interfaces
  * [scanner] finds on compile classpath, each followed back to the module its `module()` member
  * returns, and the `@ExpoModule` classes of this very compilation, which have no hint on the
- * classpath yet. A hint's package is the one [classpathPackages] gives the classpath entry the hint
- * was found in, so the compilation that declares a module needs to know nothing about packages.
- * The modules of this compilation, and those in an entry without a package, are in no package.
- * Modules and packages are sorted by name so the result is stable across builds.
+ * classpath yet. A classpath module's package is the one its hint records in `@ModuleHintPackage`,
+ * put there by the compilation that declared the module when it was given a package name. A module
+ * of this compilation is in [ownPackage], the package this compilation was given, if any. Modules
+ * and packages are sorted by name so the result is stable across builds.
  *
- * When some classpath modules have a package but others come from an entry without one, those are
- * most likely missing from their package - say, the build gave the entries of another build
- * variant - so expanding `discoveredExpoPackages()` warns about them through [messages].
+ * When some classpath modules have a package but others come from hints without one, those were
+ * most likely compiled without a package name - by an older plugin, or a library whose build does
+ * not know its package - so expanding `discoveredExpoPackages()` warns about them through [messages].
  */
 internal class ModuleDiscoveryIrTransformer(
   private val context: IrPluginContext,
@@ -64,7 +63,7 @@ internal class ModuleDiscoveryIrTransformer(
   private val poet: TypeDescriptorPoet,
   private val scanner: ModuleHintScanner,
   private val moduleFragment: IrModuleFragment,
-  classpathPackages: List<ClasspathPackage>,
+  private val ownPackage: String?,
   private val messages: MessageCollector,
 ) : IrElementTransformerVoid() {
   private val irBuiltIns = context.irBuiltIns
@@ -76,10 +75,8 @@ internal class ModuleDiscoveryIrTransformer(
   private class DiscoveredModule(val module: IrClassSymbol, val packageName: String?, val root: File? = null)
 
   private val discovered: List<DiscoveredModule> by lazy {
-    classpathModules() + localModules().map { DiscoveredModule(it, packageName = null) }
+    classpathModules() + localModules().map { DiscoveredModule(it, packageName = ownPackage) }
   }
-
-  private val packageIndex = ClasspathPackageIndex(classpathPackages)
 
   private val modules: List<IrClassSymbol> by lazy {
     discovered.map { it.module }.sortedDistinct()
@@ -183,13 +180,10 @@ internal class ModuleDiscoveryIrTransformer(
   }
 
   private fun reportPackageProblems() {
-    for (conflict in packageIndex.conflicts) {
-      messages.report(CompilerMessageSeverity.ERROR, conflict)
-    }
     val fromClasspath = discovered.filter { it.root != null }
     val unmapped = fromClasspath.filter { it.packageName == null }
-    // Every classpath module has a package, or none does - then none of the given entries is on this
-    // compilation's classpath, and an empty map is the answer.
+    // Every classpath module has a package, or none does - then nothing on this classpath was built
+    // with a package name, and an empty map is the answer.
     if (unmapped.isEmpty() || unmapped.size == fromClasspath.size) {
       return
     }
@@ -199,9 +193,9 @@ internal class ModuleDiscoveryIrTransformer(
     messages.report(
       CompilerMessageSeverity.WARNING,
       "Expo Modules v2: discoveredExpoPackages() leaves ${unmapped.size} classpath module(s) out of " +
-        "every package, because `expoModulesV2.classpathPackages` gives no package to the classpath " +
-        "entry each comes from. If they belong to a package, give the entries this compilation sees " +
-        "(they differ per build variant):\n$listed",
+        "every package, because their hints record none: the library that declares each was compiled " +
+        "without a package name. Set `expoModulesV2.packageName` in that library's build, or give it " +
+        "a package.json one directory up:\n$listed",
     )
   }
 
@@ -232,8 +226,7 @@ internal class ModuleDiscoveryIrTransformer(
           "compiled by a different version of the plugin; align the plugin version across the " +
           "modules of this build.",
       )
-    val root = scanner.rootOf(hint)
-    DiscoveredModule(module, root?.let(packageIndex::packageOf), root)
+    DiscoveredModule(module, scanner.packageOf(hint), scanner.rootOf(hint))
   }
 
   private fun localModules(): List<IrClassSymbol> {

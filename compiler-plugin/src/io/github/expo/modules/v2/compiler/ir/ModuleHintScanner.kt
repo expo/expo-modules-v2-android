@@ -3,6 +3,10 @@ package io.github.expo.modules.v2.compiler.ir
 import io.github.expo.modules.v2.compiler.Identifiers
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.Name
+import org.jetbrains.org.objectweb.asm.AnnotationVisitor
+import org.jetbrains.org.objectweb.asm.ClassReader
+import org.jetbrains.org.objectweb.asm.ClassVisitor
+import org.jetbrains.org.objectweb.asm.Opcodes
 import java.io.File
 import java.io.IOException
 import java.util.zip.ZipFile
@@ -13,9 +17,9 @@ import java.util.zip.ZipFile
  * classpath entry each one sits in.
  *
  * The compiler cannot enumerate a package for us from the backend, so this reads the class files
- * directly, the way Hilt's aggregation task or Anvil's hint lookup do. It only looks at entry names,
- * never at bytecode: which module a hint names is read afterwards through the compiler, from the
- * hint's one member. [roots] is read lazily, at the first call that needs the result, so a
+ * directly, the way Hilt's aggregation task or Anvil's hint lookup do. Finding hints only looks at
+ * entry names, never at bytecode: which module a hint names is read afterwards through the compiler,
+ * from the hint's one member. Only [packageOf] reads a hint's bytes, for its `@ModuleHintPackage`. [roots] is read lazily, at the first call that needs the result, so a
  * compilation that never asks for `discoveredExpoModules()` never pays for the scan.
  *
  * What the scan costs is opening archives, which reads each one's table of contents, and walking
@@ -36,6 +40,43 @@ class ModuleHintScanner(private val roots: () -> List<File>) {
 
   /** The classpath entry, a jar or a classes directory, that [hint] was found in. */
   fun rootOf(hint: ClassId): File? = rootsByHint[hint]
+
+  /**
+   * The package `@ModuleHintPackage` records on [hint], read from its class file, or null for a hint
+   * without one. Read from the bytes rather than through the compiler: the annotation is added after
+   * the hint's metadata is written, so the compiler does not load it.
+   */
+  fun packageOf(hint: ClassId): String? {
+    val root = rootOf(hint) ?: return null
+    val entry = Identifiers.Hints.PACKAGE.asString().replace('.', '/') + "/" + hint.shortClassName.asString() + CLASS_SUFFIX
+    val bytes = try {
+      when {
+        root.isDirectory -> File(root, entry).takeIf { it.isFile }?.readBytes()
+        else -> ZipFile(root).use { zip -> zip.getEntry(entry)?.let { zip.getInputStream(it).use { input -> input.readBytes() } } }
+      }
+    } catch (_: IOException) {
+      null
+    }
+    return bytes?.let(::hintPackageIn)
+  }
+
+  private fun hintPackageIn(classFile: ByteArray): String? {
+    var packageName: String? = null
+    val visitor = object : ClassVisitor(Opcodes.ASM9) {
+      override fun visitAnnotation(descriptor: String, visible: Boolean): AnnotationVisitor? =
+        if (descriptor != HINT_PACKAGE_DESCRIPTOR) {
+          null
+        } else {
+          object : AnnotationVisitor(Opcodes.ASM9) {
+            override fun visit(name: String?, value: Any?) {
+              if (name == HINT_PACKAGE_ARGUMENT) packageName = value as? String
+            }
+          }
+        }
+    }
+    ClassReader(classFile).accept(visitor, ClassReader.SKIP_CODE or ClassReader.SKIP_DEBUG or ClassReader.SKIP_FRAMES)
+    return packageName
+  }
 
   private fun scan(): Map<ClassId, File> {
     val prefix = Identifiers.Hints.PACKAGE.asString().replace('.', '/') + "/"
@@ -128,6 +169,10 @@ class ModuleHintScanner(private val roots: () -> List<File>) {
 
   private companion object {
     const val CLASS_SUFFIX = ".class"
+
+    /** `@ModuleHintPackage(name)`, as a class file names it. */
+    val HINT_PACKAGE_DESCRIPTOR = "L" + Identifiers.Classes.ModuleHintPackageAnnotation.asSingleFqName().asString().replace('.', '/') + ";"
+    const val HINT_PACKAGE_ARGUMENT = "name"
 
     const val ANDROID_PLATFORM_JAR = "android.jar"
     const val ANDROID_PLATFORM_PREFIX = "android-"

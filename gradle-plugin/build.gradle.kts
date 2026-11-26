@@ -44,6 +44,8 @@ dependencies {
   compileOnly(libs.kotlin.gradle.plugin)
 
   testImplementation(libs.kotlin.test.junit5)
+  // A real Kotlin/JVM project in ProjectBuilder, whose compilations the plugin configures.
+  testImplementation(libs.kotlin.gradle.plugin)
 }
 
 tasks.test {
