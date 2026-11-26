@@ -42,6 +42,12 @@ dependencies {
   // compileOnly: KotlinCompile (for the incremental-compilation workaround) lives in the full KGP,
   // which every consumer that triggers applyToCompilation already has on its build classpath.
   compileOnly(libs.kotlin.gradle.plugin)
+
+  testImplementation(libs.kotlin.test.junit5)
+}
+
+tasks.test {
+  useJUnitPlatform()
 }
 
 buildConfig {

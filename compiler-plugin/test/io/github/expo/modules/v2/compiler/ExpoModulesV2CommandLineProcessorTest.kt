@@ -11,23 +11,39 @@ import kotlin.test.assertFailsWith
 class ExpoModulesV2CommandLineProcessorTest {
   private val processor = ExpoModulesV2CommandLineProcessor()
 
+  /** An absolute path on every platform: `/app` is not one on Windows. */
+  private val base: File = File(System.getProperty("java.io.tmpdir")).absoluteFile
+
   @Test
   fun `parses a package and an absolute entry`() {
-    val parsed = processor.parseClasspathPackage("expo-font=/app/font/classes.jar")
+    val jar = base.resolve("font/classes.jar")
+    val parsed = processor.parseClasspathPackage("expo-font=${jar.path}")
 
-    assertEquals("expo-font" to File("/app/font/classes.jar"), parsed.packageName to parsed.entry)
+    assertEquals("expo-font" to jar, parsed.packageName to parsed.entry)
   }
 
   @Test
   fun `unescapes percent, comma and equals in both parts`() {
-    val parsed = processor.parseClasspathPackage("a%3Db%2Cc%25=/Users/a%2Cb/50%25/x%3Dy.jar")
+    val parsed = processor.parseClasspathPackage("a%3Db%2Cc%25=${base.path}/a%2Cb/50%25/x%3Dy.jar")
 
-    assertEquals("a=b,c%" to File("/Users/a,b/50%/x=y.jar"), parsed.packageName to parsed.entry)
+    assertEquals("a=b,c%" to File("${base.path}/a,b/50%/x=y.jar"), parsed.packageName to parsed.entry)
+  }
+
+  /**
+   * The same string `ExpoModulesV2GradlePluginTest` expects the Gradle plugin to write for
+   * `a=b,c%`, so the escaping there and the unescaping here cannot drift apart unnoticed.
+   */
+  @Test
+  fun `reads what the Gradle plugin writes`() {
+    val parsed = processor.parseClasspathPackage("a%3Db%2Cc%25=${base.path}")
+
+    assertEquals("a=b,c%", parsed.packageName)
   }
 
   @Test
   fun `rejects a value without a package or an entry`() {
-    for (value in listOf("expo-font", "=/app/font/classes.jar", "expo-font=", " =/app/font/classes.jar")) {
+    val jar = base.resolve("font/classes.jar").path
+    for (value in listOf("expo-font", "=$jar", "expo-font=", " =$jar")) {
       assertFailsWith<CliOptionProcessingException>(value) { processor.parseClasspathPackage(value) }
     }
   }

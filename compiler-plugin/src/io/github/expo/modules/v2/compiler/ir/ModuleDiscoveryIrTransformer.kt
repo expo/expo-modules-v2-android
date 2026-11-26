@@ -4,6 +4,8 @@ import io.github.expo.modules.v2.compiler.ClasspathPackage
 import io.github.expo.modules.v2.compiler.Identifiers
 import io.github.expo.modules.v2.compiler.ModuleDiscoveryOrigin
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
+import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity
+import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrModuleFragment
@@ -29,6 +31,7 @@ import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.types.Variance
+import java.io.File
 
 /**
  * Replaces every `discoveredExpoModules()` call with the list it stands for:
@@ -50,6 +53,10 @@ import org.jetbrains.kotlin.types.Variance
  * was found in, so the compilation that declares a module needs to know nothing about packages.
  * The modules of this compilation, and those in an entry without a package, are in no package.
  * Modules and packages are sorted by name so the result is stable across builds.
+ *
+ * When some classpath modules have a package but others come from an entry without one, those are
+ * most likely missing from their package - say, the build gave the entries of another build
+ * variant - so expanding `discoveredExpoPackages()` warns about them through [messages].
  */
 internal class ModuleDiscoveryIrTransformer(
   private val context: IrPluginContext,
@@ -58,11 +65,15 @@ internal class ModuleDiscoveryIrTransformer(
   private val scanner: ModuleHintScanner,
   private val moduleFragment: IrModuleFragment,
   classpathPackages: List<ClasspathPackage>,
+  private val messages: MessageCollector,
 ) : IrElementTransformerVoid() {
   private val irBuiltIns = context.irBuiltIns
 
-  /** A discovered module and the package it belongs to, if it has one. */
-  private class DiscoveredModule(val module: IrClassSymbol, val packageName: String?)
+  /**
+   * A discovered module and the package it belongs to, if it has one. [root] is the classpath entry
+   * a classpath module came from; a module of this compilation has none.
+   */
+  private class DiscoveredModule(val module: IrClassSymbol, val packageName: String?, val root: File? = null)
 
   private val discovered: List<DiscoveredModule> by lazy {
     classpathModules() + localModules().map { DiscoveredModule(it, packageName = null) }
@@ -75,7 +86,7 @@ internal class ModuleDiscoveryIrTransformer(
   }
 
   private val packages: List<Pair<String, List<IrClassSymbol>>> by lazy {
-    packageIndex.checkAnyEntryIsOn(scanner.classpath)
+    reportPackageProblems()
     discovered
       .mapNotNull { found -> found.packageName?.let { it to found.module } }
       .groupBy({ (name, _) -> name }, { (_, module) -> module })
@@ -171,6 +182,29 @@ internal class ModuleDiscoveryIrTransformer(
     }
   }
 
+  private fun reportPackageProblems() {
+    for (conflict in packageIndex.conflicts) {
+      messages.report(CompilerMessageSeverity.ERROR, conflict)
+    }
+    val fromClasspath = discovered.filter { it.root != null }
+    val unmapped = fromClasspath.filter { it.packageName == null }
+    // Every classpath module has a package, or none does - then none of the given entries is on this
+    // compilation's classpath, and an empty map is the answer.
+    if (unmapped.isEmpty() || unmapped.size == fromClasspath.size) {
+      return
+    }
+    val listed = unmapped
+      .sortedBy { it.module.owner.kotlinFqName.asString() }
+      .joinToString(separator = "\n") { "  ${it.module.owner.kotlinFqName} (from ${it.root})" }
+    messages.report(
+      CompilerMessageSeverity.WARNING,
+      "Expo Modules v2: discoveredExpoPackages() leaves ${unmapped.size} classpath module(s) out of " +
+        "every package, because `expoModulesV2.classpathPackages` gives no package to the classpath " +
+        "entry each comes from. If they belong to a package, give the entries this compilation sees " +
+        "(they differ per build variant):\n$listed",
+    )
+  }
+
   private fun varargFunction(callable: CallableId): IrSimpleFunctionSymbol =
     context
       .referenceFunctions(callable)
@@ -198,7 +232,8 @@ internal class ModuleDiscoveryIrTransformer(
           "compiled by a different version of the plugin; align the plugin version across the " +
           "modules of this build.",
       )
-    DiscoveredModule(module, scanner.rootOf(hint)?.let(packageIndex::packageOf))
+    val root = scanner.rootOf(hint)
+    DiscoveredModule(module, root?.let(packageIndex::packageOf), root)
   }
 
   private fun localModules(): List<IrClassSymbol> {

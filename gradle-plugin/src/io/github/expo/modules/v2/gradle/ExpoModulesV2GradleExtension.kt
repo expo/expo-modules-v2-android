@@ -13,10 +13,11 @@ open class ExpoModulesV2GradleExtension @Inject constructor(objectFactory: Objec
    * `discoveredExpoPackages()` groups the modules by it. A module in an entry that is not here is
    * only in `discoveredExpoModules()`.
    *
-   * Every Kotlin compilation of the project gets all the entries, and ignores the ones that are not
-   * on its classpath. So give the entries of every compilation that calls `discoveredExpoPackages()`,
-   * for example of each build variant. A compilation that calls it fails when none of the entries is
-   * on its classpath.
+   * Each Kotlin compilation of the project gets only the entries on its own compile classpath. So give
+   * the entries of every compilation that calls `discoveredExpoPackages()`, for example of each build
+   * variant. A compilation with none of them gets an empty map; one where some classpath modules
+   * have a package and others do not warns about the latter, since they are most likely missing an
+   * entry. A package whose entries hold no module is not in the map.
    */
   val classpathPackages: MapProperty<String, String> =
     objectFactory.mapProperty(String::class.java, String::class.java).convention(emptyMap())

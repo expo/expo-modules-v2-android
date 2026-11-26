@@ -39,7 +39,10 @@ private class ExtensionRegistrarConfigurator(testServices: TestServices) :
     with(registrar) { registerExtensions(configuration) }
   }
 
-  /** What the Gradle plugin does to each part: the compiler splits plugin options on `,`. */
+  /**
+   * What the Gradle plugin's `ClasspathPackageOptions.escapeOptionPart` does to each part: the
+   * compiler splits plugin options on `,`. Both sides' unit tests pin the same escaped string.
+   */
   private fun escape(part: String): String =
     part.replace("%", "%25").replace(",", "%2C").replace("=", "%3D")
 }

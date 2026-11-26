@@ -2,19 +2,20 @@ package io.github.expo.modules.v2.gradle
 
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
-import org.jetbrains.kotlin.gradle.plugin.CompositeSubpluginOption
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilerPluginSupportPlugin
 import org.jetbrains.kotlin.gradle.plugin.SubpluginArtifact
 import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
 import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.File
+import java.util.concurrent.Callable
 
 /**
  * Registers the Expo Modules v2 Kotlin compiler plugin - the one that turns an
- * `@io.github.expo.modules.v2.Record` class into a record with a generated `RecordCodec` - with
- * every Kotlin compilation of the project it is applied to.
+ * `@io.github.expo.modules.v2.Record` class into a record with a generated `RecordCodec` and expands
+ * `discoveredExpoModules()` and `discoveredExpoPackages()` - with every Kotlin compilation of the
+ * project it is applied to, and passes each compilation the `expoModulesV2.classpathPackages` entries
+ * on its own compile classpath.
  *
  * The plugin adds no dependency of its own: every module that declares records already depends on
  * `:api`, which is where the annotation and the generated code's supporting types live.
@@ -53,57 +54,16 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
       (task as? KotlinCompile)?.incremental = false
     }
 
-    // Mapped from the extension's property, so it does not capture the Project - KGP serializes this
-    // provider into the compile task's inputs, and a Project reference breaks the configuration cache.
+    // Mapped from the extension's property and the compilation's classpath, so it does not capture
+    // the Project - KGP serializes this provider into the compile task's inputs, and a Project
+    // reference breaks the configuration cache. The classpath is read lazily: some compilations,
+    // such as Android's, get their final classpath after this runs.
     val extension = project.extensions.getByType(ExpoModulesV2GradleExtension::class.java)
+    val classpath = project.files(Callable { kotlinCompilation.compileDependencyFiles })
     val rootDir = project.rootDir
     val gradleUserHome = project.gradle.gradleUserHomeDir
-    return extension.classpathPackages.map { packages ->
-      classpathPackageOptions(packages, rootDir, gradleUserHome)
+    return extension.classpathPackages.zip(classpath.elements) { packages, elements ->
+      ClasspathPackageOptions.of(packages, elements.map { it.asFile }, rootDir, gradleUserHome)
     }
-  }
-
-  private companion object {
-    // MUST stay in sync with `ExpoModulesV2CommandLineProcessor.CLASSPATH_PACKAGE_OPTION`.
-    const val CLASSPATH_PACKAGE_OPTION = "classpathPackage"
-
-    /**
-     * One `classpathPackage` option for each entry. The compiler gets the absolute path, but the
-     * compile task's cache key gets only the inner options: the package and the entry's path
-     * relative to the Gradle user home or to the root project. So the task can come from the build
-     * cache when the project or the Gradle user home is somewhere else. Sorted, so the key does not
-     * depend on the map's order.
-     */
-    fun classpathPackageOptions(
-      packages: Map<String, String>,
-      rootDir: File,
-      gradleUserHome: File,
-    ): List<SubpluginOption> = packages
-      .map { (entry, packageName) -> Triple(entry, packageName, relocatable(File(entry), rootDir, gradleUserHome)) }
-      .sortedWith(compareBy({ it.third }, { it.second }))
-      .map { (entry, packageName, relocatableEntry) ->
-        CompositeSubpluginOption(
-          key = CLASSPATH_PACKAGE_OPTION,
-          value = escapeOptionPart(packageName) + "=" + escapeOptionPart(entry),
-          originalOptions = listOf(
-            SubpluginOption(key = "package", value = packageName),
-            SubpluginOption(key = "entry", value = relocatableEntry),
-          ),
-        )
-      }
-
-    private fun relocatable(entry: File, rootDir: File, gradleUserHome: File): String = when {
-      entry.startsWith(gradleUserHome) -> "gradle-user-home:" + entry.relativeTo(gradleUserHome).invariantSeparatorsPath
-      // A module library usually sits outside the root project, for example in `../node_modules`.
-      else -> runCatching { "root-project:" + entry.relativeTo(rootDir).invariantSeparatorsPath }
-        .getOrDefault(entry.path)
-    }
-
-    /**
-     * Escapes `%`, `,` and `=`: the compiler splits plugin options on `,`, and the option splits on
-     * the first `=`. MUST stay in sync with the unescaping in `ExpoModulesV2CommandLineProcessor`.
-     */
-    fun escapeOptionPart(part: String): String =
-      part.replace("%", "%25").replace(",", "%2C").replace("=", "%3D")
   }
 }

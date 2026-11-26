@@ -160,8 +160,13 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `AnyType(descriptor, useBuffer)` */
     val anyType: IrConstructorSymbol by lazy { classes.anyType.constructors.single() }
 
-    /** `ExpoPackage(modules)` */
-    val expoPackage: IrConstructorSymbol by lazy { classes.expoPackage.constructors.single() }
+    /**
+     * `ExpoPackage(modules)`: the primary constructor, so a secondary one added later for binary
+     * compatibility does not make this ambiguous.
+     */
+    val expoPackage: IrConstructorSymbol by lazy {
+      classes.expoPackage.constructors.single { it.owner.isPrimary }
+    }
 
     /** `Pair(first, second)` */
     val pair: IrConstructorSymbol by lazy { classes.pair.constructors.single() }
