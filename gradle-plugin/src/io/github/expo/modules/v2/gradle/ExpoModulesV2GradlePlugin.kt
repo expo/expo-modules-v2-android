@@ -25,13 +25,7 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
 
   override fun apply(target: Project) {
     project = target
-    val extension = target.extensions.create("expoModulesV2", ExpoModulesV2GradleExtension::class.java)
-    // `node_modules/<package>/android` - the package's own package.json is one directory up.
-    val packageJson = target.layout.projectDirectory.file("../package.json")
-    extension.packageName.convention(
-      // A null name leaves the property without a value.
-      target.providers.fileContents(packageJson).asText.map { text -> packageJsonName(text) },
-    )
+    target.extensions.create("expoModulesV2", ExpoModulesV2GradleExtension::class.java)
   }
 
   override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean = true
@@ -70,10 +64,5 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
   private companion object {
     // MUST stay in sync with `ExpoModulesV2CommandLineProcessor.PACKAGE_NAME_OPTION`.
     const val PACKAGE_NAME_OPTION = "packageName"
-
-    /** The top-level `"name"` of a package.json: the first key of the object, by npm's convention. */
-    private val PACKAGE_JSON_NAME = Regex("""^\s*\{\s*"name"\s*:\s*"([^"]+)"""")
-
-    fun packageJsonName(text: String): String? = PACKAGE_JSON_NAME.find(text)?.groupValues?.get(1)
   }
 }

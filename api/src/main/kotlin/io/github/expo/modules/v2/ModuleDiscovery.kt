@@ -9,9 +9,9 @@ fun discoveredExpoModules(): List<Class<out Module>> = throw IllegalStateExcepti
 
 /**
  * The modules of [discoveredExpoModules], grouped by package. A module's package is the one the
- * library that declares it was built with - `expoModulesV2.packageName`, by default the npm package
- * in the library's `package.json`, such as `expo-font` - which the compiler plugin records on the
- * module's hint. The calling project needs no configuration. Packages are sorted by name, and the
+ * library that declares it was built with - the compiler plugin's `packageName` option, which the
+ * Gradle plugin passes from `expoModulesV2.packageName`, such as `expo-font` - and which the
+ * compiler plugin records on the module's hint. The calling project needs no configuration. Packages are sorted by name, and the
  * modules of a package by class name. The modules of a library built without a package name are
  * not in any package; the calling project's own modules are in its own `packageName`, if it has one.
  *

@@ -194,8 +194,8 @@ internal class ModuleDiscoveryIrTransformer(
       CompilerMessageSeverity.WARNING,
       "Expo Modules v2: discoveredExpoPackages() leaves ${unmapped.size} classpath module(s) out of " +
         "every package, because their hints record none: the library that declares each was compiled " +
-        "without a package name. Set `expoModulesV2.packageName` in that library's build, or give it " +
-        "a package.json one directory up:\n$listed",
+        "without a package name. Set `expoModulesV2.packageName` for that library's project, or pass " +
+        "the compiler plugin's `packageName` option to its compilation:\n$listed",
     )
   }
 

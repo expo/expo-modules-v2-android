@@ -19,44 +19,43 @@ class PackageNameTest {
   }
 
   @Test
-  fun `defaults to the name in the package's package json`() {
-    val android = dir.resolve("node_modules/@expo/ui/android")
-    android.resolveSibling("package.json").apply { parentFile.mkdirs() }.writeText(
-      """
-      {
-        "name": "@expo/ui",
-        "version": "1.0.0",
-        "dependencies": { "nested": { "name": "not-this-one" } }
-      }
-      """.trimIndent(),
-    )
-    val (project, plugin) = library(android)
+  fun `passes the package name to every compilation, also a scoped one`() {
+    val (project, plugin) = library(dir.resolve("ui"))
+    project.expoModulesV2.packageName.set("@expo/ui")
 
-    assertEquals("@expo/ui", project.expoModulesV2.packageName.get())
-    assertEquals(listOf("packageName" to "@expo/ui"), plugin.options(project))
+    assertEquals(listOf("packageName" to "@expo/ui"), plugin.options(project, "main"))
+    assertEquals(listOf("packageName" to "@expo/ui"), plugin.options(project, "test"))
   }
 
   @Test
-  fun `an explicit name wins over package json`() {
+  fun `passes nothing when no package name is set, whatever sits next to the project`() {
+    // The Expo layout, `node_modules/<package>/android`: the plugin does not read package.json.
     val android = dir.resolve("node_modules/expo-font/android")
     android.resolveSibling("package.json").apply { parentFile.mkdirs() }.writeText("""{ "name": "expo-font" }""")
     val (project, plugin) = library(android)
-    project.expoModulesV2.packageName.set("expo-font-next")
 
-    assertEquals(listOf("packageName" to "expo-font-next"), plugin.options(project))
+    assertEquals(false, project.expoModulesV2.packageName.isPresent)
+    assertEquals(emptyList(), plugin.options(project, "main"))
   }
 
   @Test
-  fun `no package json means no package and no option`() {
-    val (project, plugin) = library(dir.resolve("app"))
+  fun `another build script can set it, the way autolinking would`() {
+    val root = ProjectBuilder.builder().withProjectDir(dir).build()
+    val (library, plugin) = library(dir.resolve("font"), parent = root)
 
-    assertEquals(false, project.expoModulesV2.packageName.isPresent)
-    assertEquals(emptyList(), plugin.options(project))
+    // What a settings or root-project plugin does once it knows the library's package.
+    root.subprojects { project ->
+      project.plugins.withType(ExpoModulesV2GradlePlugin::class.java) {
+        project.extensions.getByType(ExpoModulesV2GradleExtension::class.java).packageName.set("expo-font")
+      }
+    }
+
+    assertEquals(listOf("packageName" to "expo-font"), plugin.options(library, "main"))
   }
 
-  private fun library(projectDir: File): Pair<Project, ExpoModulesV2GradlePlugin> {
+  private fun library(projectDir: File, parent: Project? = null): Pair<Project, ExpoModulesV2GradlePlugin> {
     projectDir.mkdirs()
-    val project = ProjectBuilder.builder().withProjectDir(projectDir).build()
+    val project = ProjectBuilder.builder().withProjectDir(projectDir).withParent(parent).withName(projectDir.name).build()
     project.plugins.apply("org.jetbrains.kotlin.jvm")
     return project to project.plugins.apply(ExpoModulesV2GradlePlugin::class.java)
   }
@@ -64,8 +63,8 @@ class PackageNameTest {
   private val Project.expoModulesV2: ExpoModulesV2GradleExtension
     get() = extensions.getByType(ExpoModulesV2GradleExtension::class.java)
 
-  private fun ExpoModulesV2GradlePlugin.options(project: Project): List<Pair<String, String>> {
-    val main = project.extensions.getByType(KotlinJvmProjectExtension::class.java).target.compilations.getByName("main")
-    return applyToCompilation(main).get().map { it.key to it.value }
+  private fun ExpoModulesV2GradlePlugin.options(project: Project, compilation: String): List<Pair<String, String>> {
+    val kotlin = project.extensions.getByType(KotlinJvmProjectExtension::class.java)
+    return applyToCompilation(kotlin.target.compilations.getByName(compilation)).get().map { it.key to it.value }
   }
 }
