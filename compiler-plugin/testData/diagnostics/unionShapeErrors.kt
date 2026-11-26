@@ -8,7 +8,10 @@ import io.github.expo.modules.v2.SharedRef
 import io.github.expo.modules.v2.Tag
 import io.github.expo.modules.v2.Union
 import io.github.expo.modules.v2.jsi.JavaScriptObject
+import java.net.URI
 import java.net.URL
+import java.nio.file.Path
+import java.util.UUID
 
 <!UNION_ON_UNSUPPORTED_DECLARATION!>@Union
 interface NotSealed<!>
@@ -75,6 +78,76 @@ sealed interface TextFirst<!> {
 
     @JvmInline
     value class Address(val url: URL) : TextFirst
+}
+
+// A string UUID refuses is a String.
+@Union
+sealed interface IdOrText {
+    @JvmInline
+    value class Id(val id: UUID) : IdOrText
+
+    @JvmInline
+    value class Text(val text: String) : IdOrText
+}
+
+// A String takes every string, so a UUID after it is never picked.
+<!UNION_UNREACHABLE_VARIANT!>@Union
+sealed interface TextBeforeId<!> {
+    @JvmInline
+    value class Text(val text: String) : TextBeforeId
+
+    @JvmInline
+    value class Id(val id: UUID) : TextBeforeId
+}
+
+// URI.create takes every string UUID does, so a UUID after a URI is never picked.
+<!UNION_UNREACHABLE_VARIANT!>@Union
+sealed interface UriBeforeId<!> {
+    @JvmInline
+    value class Location(val uri: URI) : UriBeforeId
+
+    @JvmInline
+    value class Id(val id: UUID) : UriBeforeId
+}
+
+// So does Paths.get.
+<!UNION_UNREACHABLE_VARIANT!>@Union
+sealed interface PathBeforeId<!> {
+    @JvmInline
+    value class Location(val path: Path) : PathBeforeId
+
+    @JvmInline
+    value class Id(val id: UUID) : PathBeforeId
+}
+
+// The other way round each is picked: a string UUID refuses can still be a URI.
+@Union
+sealed interface IdBeforeUri {
+    @JvmInline
+    value class Id(val id: UUID) : IdBeforeUri
+
+    @JvmInline
+    value class Location(val uri: URI) : IdBeforeUri
+}
+
+// The same inside a list: List<URI> takes every array List<UUID> would.
+<!UNION_UNREACHABLE_VARIANT!>@Union
+sealed interface UriListBeforeIdList<!> {
+    @JvmInline
+    value class Locations(val uris: List<URI>) : UriListBeforeIdList
+
+    @JvmInline
+    value class Ids(val ids: List<UUID>) : UriListBeforeIdList
+}
+
+// Neither a URL nor a UUID takes every string, so both are reachable in either order.
+@Union
+sealed interface AddressOrId {
+    @JvmInline
+    value class Address(val url: URL) : AddressOrId
+
+    @JvmInline
+    value class Id(val id: UUID) : AddressOrId
 }
 
 // Records told apart by the fields they need.

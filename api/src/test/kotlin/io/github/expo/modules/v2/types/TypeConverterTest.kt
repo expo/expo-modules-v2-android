@@ -25,11 +25,13 @@ import io.github.expo.modules.v2.converters.TripleConverter
 import io.github.expo.modules.v2.converters.TypeConverter
 import io.github.expo.modules.v2.converters.UriConverter
 import io.github.expo.modules.v2.converters.UrlConverter
+import io.github.expo.modules.v2.converters.UuidConverter
 import io.github.expo.kolibri.binary.BinaryBuffer
 import java.io.File
 import java.net.URI
 import java.net.URL
 import java.nio.file.Paths
+import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -177,6 +179,10 @@ class TypeConverterTest {
     assertEquals(uri, UriConverter(isNullable = false).fromJni(uri.toString()))
     assertEquals(uri.toString(), UriConverter(isNullable = false).toJni(uri))
 
+    val uuid = UUID.fromString("0f8fad5b-d9cb-469f-a165-70867728950e")
+    assertEquals(uuid, UuidConverter(isNullable = false).fromJni(uuid.toString()))
+    assertEquals("0f8fad5b-d9cb-469f-a165-70867728950e", UuidConverter(isNullable = false).toJni(uuid))
+
     val absoluteFile = File("/tmp/expo/file.txt")
     assertEquals(absoluteFile, FileConverter(isNullable = false).fromJni(absoluteFile.path))
     assertEquals(absoluteFile.absolutePath, FileConverter(isNullable = false).toJni(absoluteFile))
@@ -187,11 +193,75 @@ class TypeConverterTest {
   }
 
   @Test
+  fun `a UUID crosses as its canonical string, on the buffer too`() {
+    val uuid = UUID.fromString("0F8FAD5B-D9CB-469F-A165-70867728950E")
+    val plain = UuidConverter(isNullable = false)
+    val nullable = UuidConverter(isNullable = true)
+
+    // UUID.toString() is always lower case, whatever case JavaScript sent.
+    assertEquals("0f8fad5b-d9cb-469f-a165-70867728950e", plain.toJni(plain.fromJni(uuid.toString().uppercase())))
+
+    val writer = buffer.duplicateView()
+    plain.writeToBuffer(writer, uuid)
+    nullable.writeToBuffer(writer, uuid)
+    nullable.writeToBuffer(writer, null)
+    val view = buffer.duplicateView()
+    view.limit = writer.position
+    assertEquals(uuid, plain.readFromBuffer(view))
+    assertEquals(uuid, nullable.readFromBuffer(view))
+    assertNull(nullable.readFromBuffer(view))
+
+    assertNull(nullable.fromJni(null))
+    assertNull(nullable.toJni(null))
+    assertFailsWith<IllegalArgumentException> { plain.fromJni(null) }
+    // A string that is not a UUID is refused - what lets a union try its next variant.
+    assertFailsWith<IllegalArgumentException> { plain.fromJni("not-a-uuid") }
+  }
+
+  @Test
+  fun `a UUID takes only the canonical form, on both paths`() {
+    val plain = UuidConverter(isNullable = false)
+    val refused = listOf(
+      "not-a-uuid",
+      // UUID.fromString alone takes these: short groups, a sign, and an over-long group it truncates.
+      "1-2-3-4-5",
+      "a-b-c-d-e",
+      "+1-2-3-4-5",
+      "123456789-1-1-1-1",
+      "2024-1-2-3-4",
+      // Right length, wrong shape.
+      "0f8fad5b-d9cb-469f-a165-70867728950g",
+      "0f8fad5bd-9cb-469f-a165-70867728950e",
+      "0f8fad5b-d9cb-469f-a165-70867728950e0",
+      "",
+    )
+    refused.forEach { value ->
+      assertFailsWith<IllegalArgumentException>("fromJni('$value')") { plain.fromJni(value) }
+
+      val writer = buffer.duplicateView()
+      writer.putString(value)
+      val view = buffer.duplicateView()
+      view.limit = writer.position
+      assertFailsWith<IllegalArgumentException>("readFromBuffer('$value')") { plain.readFromBuffer(view) }
+    }
+
+    // Either case of hex is canonical.
+    val mixed = "0F8fAD5b-D9cb-469F-a165-70867728950E"
+    assertEquals(UUID.fromString(mixed), plain.fromJni(mixed))
+    val writer = buffer.duplicateView()
+    writer.putString(mixed)
+    val view = buffer.duplicateView()
+    view.limit = writer.position
+    assertEquals(UUID.fromString(mixed), plain.readFromBuffer(view))
+  }
+
+  @Test
   fun `a nullable built-in declaration rides a slot that can carry null`() {
     // The string-backed conversions state STRING, which is a JVM object either way...
     val nullableString = intArrayOf(CppType.STRING.code or CppType.NULLABLE)
     assertContentEquals(nullableString, UrlConverter(isNullable = true).typeCodes())
     assertContentEquals(nullableString, UriConverter(isNullable = true).typeCodes())
+    assertContentEquals(nullableString, UuidConverter(isNullable = true).typeCodes())
     assertContentEquals(nullableString, FileConverter(isNullable = true).typeCodes())
     assertContentEquals(nullableString, PathConverter(isNullable = true).typeCodes())
     assertContentEquals(nullableString, KotlinUuidConverter(isNullable = true).typeCodes())

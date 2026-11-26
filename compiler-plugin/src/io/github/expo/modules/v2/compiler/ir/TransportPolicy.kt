@@ -53,7 +53,7 @@ internal enum class ValueKind {
   /** `Duration`, whose bridge is a `Double` - unboxed when the declaration is not nullable. */
   CONVERTED_TO_DOUBLE,
 
-  /** `File`/`URL`/`URI`/`Path`/`android.net.Uri`/`Uuid`, whose bridge is a `String`. */
+  /** `File`/`URL`/`URI`/`UUID`/`Path`/`android.net.Uri`/`Uuid`, whose bridge is a `String`. */
   CONVERTED_TO_STRING,
 
   /** An enum class, whose bridge is a `String`: the entry's name, or its one `String` property. */
@@ -170,8 +170,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
         ValueKind.JS_HANDLE
 
       "kotlin.time.Duration" -> ValueKind.CONVERTED_TO_DOUBLE
-      "java.io.File", "java.net.URL", "java.net.URI", "java.nio.file.Path", "android.net.Uri",
-      "kotlin.uuid.Uuid",
+      "java.io.File", "java.net.URL", "java.net.URI", "java.util.UUID", "java.nio.file.Path",
+      "android.net.Uri", "kotlin.uuid.Uuid",
         -> ValueKind.CONVERTED_TO_STRING
 
       "kotlin.collections.List", "kotlin.collections.MutableList" -> ValueKind.LIST
@@ -340,8 +340,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
   /**
    * The bridge value every variant of [unionClass] crosses as, when they all cross as the same one:
    *
-   * - a string: `String`, `File`, `URL`, `URI`, `Path`, `android.net.Uri`, `Uuid` or a string-backed
-   *   enum
+   * - a string: `String`, `File`, `URL`, `URI`, `UUID`, `Path`, `android.net.Uri`, `Uuid` or a
+   *   string-backed enum
    * - an `Int`: `Int` or an `Int`-backed enum
    * - a shared object of one class, such as `SharedRef<Drawable>` and `SharedRef<Bitmap>`
    *
