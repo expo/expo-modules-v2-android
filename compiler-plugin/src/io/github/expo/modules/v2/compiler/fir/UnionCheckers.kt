@@ -390,7 +390,8 @@ private fun covers(earlier: ConeKotlinType, later: ConeKotlinType, session: FirS
     // entries, and Kotlin hands the rest to the next variant.
     JsKind.NUMBER -> earlier.classId in NUMBERS
 
-    JsKind.STRING -> earlier.classId in TOTAL_STRINGS
+    JsKind.STRING ->
+      earlier.classId in TOTAL_STRINGS || later.classId in STRING_COVERS[earlier.classId].orEmpty()
     JsKind.ARRAY -> {
       val myElement = elementOf(earlier) ?: return true
       val theirElement = elementOf(later) ?: return true
@@ -451,7 +452,7 @@ private fun jsKindOf(
       JsKind.NUMBER
 
     "kotlin.String", "java.io.File", "java.net.URL", "java.net.URI", "java.nio.file.Path",
-    "android.net.Uri",
+    "android.net.Uri", "kotlin.uuid.Uuid",
       -> JsKind.STRING
 
     "kotlin.collections.List", "kotlin.collections.MutableList",
@@ -509,6 +510,15 @@ private val TOTAL_STRINGS = setOf(
   ClassId.topLevel(FqName("android.net.Uri")),
 )
 
+/**
+ * String types that refuse some strings, but take every string the types listed for them take, so
+ * those are never picked after them. MUST stay in sync with what the converters refuse.
+ */
+private val STRING_COVERS: Map<ClassId, Set<ClassId>> = mapOf(
+  ClassId.topLevel(FqName("java.net.URI")) to setOf(ClassId.topLevel(FqName("kotlin.uuid.Uuid"))),
+  ClassId.topLevel(FqName("java.nio.file.Path")) to setOf(ClassId.topLevel(FqName("kotlin.uuid.Uuid"))),
+)
+
 private val NUMBERS = setOf(
   StandardClassIds.Int,
   StandardClassIds.Long,
@@ -553,7 +563,8 @@ private fun VariantShape.shadows(
 
     JsKind.LITERAL -> return "is the same string".takeIf { later.kind == kind && later.tag == tag }
 
-    JsKind.STRING -> valueClassId in TOTAL_STRINGS
+    JsKind.STRING ->
+      valueClassId in TOTAL_STRINGS || later.valueClassId in STRING_COVERS[valueClassId].orEmpty()
 
     JsKind.NUMBER -> when (valueClassId) {
       StandardClassIds.Long ->

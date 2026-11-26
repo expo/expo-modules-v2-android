@@ -8,8 +8,8 @@ package io.github.expo.modules.v2
  *
  * A `@JS val` that only holds a value, such as `val version = 3`, is a constant without
  * this annotation: a final `val` with the default getter, of a number, `Boolean`, `String`, enum,
- * `Duration`, `File`, `URL`, `URI` or `Path`. A collection or a record is not, because Kotlin can
- * still change what is inside it; annotate it when its contents never change.
+ * `Duration`, `File`, `URL`, `URI`, `Path` or `Uuid`. A collection or a record is not, because
+ * Kotlin can still change what is inside it; annotate it when its contents never change.
  */
 @Target(AnnotationTarget.PROPERTY)
 @Retention(AnnotationRetention.BINARY)

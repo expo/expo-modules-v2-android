@@ -4,6 +4,7 @@ import io.github.expo.modules.v2.converters.ArrayConverter
 import io.github.expo.modules.v2.converters.typeCodes
 import io.github.expo.modules.v2.converters.DurationConverter
 import io.github.expo.modules.v2.converters.IntArrayConverter
+import io.github.expo.modules.v2.converters.KotlinUuidConverter
 import io.github.expo.modules.v2.converters.PathConverter
 import io.github.expo.modules.v2.converters.SetConverter
 import io.github.expo.modules.v2.converters.StringConverter
@@ -26,17 +27,22 @@ import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 private class Unconverted
 
 /** Pins the converters resolved by simple and parametrized descriptors. */
 class TypeConverterRegistryTest {
+  @OptIn(ExperimentalUuidApi::class)
   @Test
   fun `resolves the built-in table without registration`() {
     assertTrue(TypeDescriptor.Simple(URL::class.java, false).converter is UrlConverter)
     assertTrue(TypeDescriptor.Simple(URI::class.java, false).converter is UriConverter)
     assertTrue(TypeDescriptor.Simple(Duration::class.java, false).converter is DurationConverter)
     assertTrue(TypeDescriptor.Simple(Path::class.java, false).converter is PathConverter)
+    assertTrue(TypeDescriptor.Simple(Uuid::class.java, false).converter is KotlinUuidConverter)
+    assertTrue(TypeDescriptor.Simple(Uuid::class.java, true).converter is KotlinUuidConverter)
   }
 
   @Test
