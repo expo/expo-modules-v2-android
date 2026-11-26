@@ -9,8 +9,8 @@ fun discoveredExpoModules(): List<Class<out Module>> = throw IllegalStateExcepti
 
 /**
  * The modules of [discoveredExpoModules], grouped by package. A module's package is the one that
- * `expoModulesV2.classpathPackages` of the calling project gives to the classpath entry the module
- * comes from, for example the npm package `expo-font` of a library's classes jar. Packages are
+ * `expoModulesV2.componentPackages` of the calling project gives to the library the module comes
+ * from, for example the npm package `expo-font` of the `:expo-font` project. Packages are
  * sorted by name, and the modules of a package by class name. The calling project's own modules,
  * and the modules of an entry without a package, are not in any package. A package none of whose
  * entries holds a module is not in the map.
@@ -21,6 +21,6 @@ fun discoveredExpoModules(): List<Class<out Module>> = throw IllegalStateExcepti
 fun discoveredExpoPackages(): Map<String, ExpoPackage> = throw IllegalStateException(
   "discoveredExpoPackages() was not expanded at compile time, so this build has no list of Expo " +
     "packages. The Expo Modules v2 Kotlin compiler plugin rewrites this call into the modules it " +
-    "finds on the compile classpath, grouped by `expoModulesV2.classpathPackages`; apply the " +
+    "finds on the compile classpath, grouped by `expoModulesV2.componentPackages`; apply the " +
     "`io.github.expo.modules.v2` Gradle plugin to the project that calls it.",
 )

@@ -7,18 +7,20 @@ import javax.inject.Inject
 /** Configuration entry point for the Expo Modules v2 Gradle plugin, the `expoModulesV2` block. */
 open class ExpoModulesV2GradleExtension @Inject constructor(objectFactory: ObjectFactory) {
   /**
-   * The package of the modules in each compile classpath entry, keyed by the entry's absolute path:
-   * a jar or a classes directory that the project's Kotlin compilations get. For example, an app
-   * maps the classes jar of each module library to its npm package, such as `expo-font`.
-   * `discoveredExpoPackages()` groups the modules by it. A module in an entry that is not here is
+   * The package of the modules in each library the project depends on, keyed by the library's
+   * component - the same thing a dependency declaration names, not a file:
+   *  - a project dependency by its path in the build tree, such as `:expo-font`;
+   *  - a module dependency by `group:name`, without its version, such as `host.exp.exponent:expo-font`.
+   *
+   * For example, an app maps each module library to its npm package, such as `expo-font`.
+   * `discoveredExpoPackages()` groups the modules by it. A module of a component that is not here is
    * only in `discoveredExpoModules()`.
    *
-   * Each Kotlin compilation of the project gets only the entries on its own compile classpath. So give
-   * the entries of every compilation that calls `discoveredExpoPackages()`, for example of each build
-   * variant. A compilation with none of them gets an empty map; one where some classpath modules
-   * have a package and others do not warns about the latter, since they are most likely missing an
-   * entry. A package whose entries hold no module is not in the map.
+   * Each Kotlin compilation resolves its own compile classpath and passes the compiler the files of
+   * these components on it, so one map covers every build variant. A compilation with none of these
+   * components gets an empty map; one where some classpath modules have a package and others do not
+   * warns about the latter. A package whose files hold no module is not in the map.
    */
-  val classpathPackages: MapProperty<String, String> =
+  val componentPackages: MapProperty<String, String> =
     objectFactory.mapProperty(String::class.java, String::class.java).convention(emptyMap())
 }

@@ -199,9 +199,9 @@ internal class ModuleDiscoveryIrTransformer(
     messages.report(
       CompilerMessageSeverity.WARNING,
       "Expo Modules v2: discoveredExpoPackages() leaves ${unmapped.size} classpath module(s) out of " +
-        "every package, because `expoModulesV2.classpathPackages` gives no package to the classpath " +
-        "entry each comes from. If they belong to a package, give the entries this compilation sees " +
-        "(they differ per build variant):\n$listed",
+        "every package, because no `classpathPackage` option gives a package to the classpath entry " +
+        "each comes from. If they belong to a package, add their libraries to " +
+        "`expoModulesV2.componentPackages`:\n$listed",
     )
   }
 
