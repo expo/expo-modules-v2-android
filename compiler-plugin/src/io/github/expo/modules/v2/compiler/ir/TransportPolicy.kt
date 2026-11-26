@@ -64,6 +64,12 @@ internal enum class ValueKind {
   LIST,
   MAP,
   SET,
+
+  /**
+   * `Collection`, whose bridge is a `List` like [LIST]'s - but never handed straight through: the
+   * value going out may be a `Set` or a map's `values`, which the JNI `List` slot cannot hold.
+   */
+  COLLECTION,
   ARRAY,
 
   /** `Pair`/`Triple`, whose bridge is a `List` of its elements - a fixed-length array in JavaScript. */
@@ -177,6 +183,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       "kotlin.collections.List", "kotlin.collections.MutableList" -> ValueKind.LIST
       "kotlin.collections.Map", "kotlin.collections.MutableMap" -> ValueKind.MAP
       "kotlin.collections.Set", "kotlin.collections.MutableSet" -> ValueKind.SET
+      "kotlin.collections.Collection", "kotlin.collections.MutableCollection" -> ValueKind.COLLECTION
       "kotlin.Array" -> ValueKind.ARRAY
       "kotlin.Pair", "kotlin.Triple" -> ValueKind.TUPLE
       else -> {
@@ -213,8 +220,9 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       // A List or Map hands its elements straight through when they need no conversion themselves.
       ValueKind.LIST -> elementTypes(type).all { isPassthrough(kindOf(it), it) }
       ValueKind.MAP -> elementTypes(type).drop(1).all { isPassthrough(kindOf(it), it) }
-      // A Set, an Array or a tuple always rebuilds its container, and a record always rebuilds itself.
-      ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD, ValueKind.UNION,
+      // A Set, a Collection, an Array or a tuple always rebuilds its container, and a record always
+      // rebuilds itself.
+      ValueKind.SET, ValueKind.COLLECTION, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD, ValueKind.UNION,
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
       ValueKind.TYPED_ARRAY,
       // The lambda wraps the JavaScript function it is handed.
@@ -244,7 +252,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
         } else {
           isBufferSafe(type, mutableSetOf(), allowDynamic)
         }
-      ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD,
+      ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.COLLECTION, ValueKind.ARRAY, ValueKind.TUPLE,
+      ValueKind.RECORD,
         ->
         isBufferSafe(
           type,
@@ -403,7 +412,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
         if (type.isMarkedNullable()) irBuiltIns.intType.makeNullable() else irBuiltIns.intType
       ValueKind.TYPED_ARRAY -> symbols.classes.javaScriptObject.owner.defaultType.makeNullable()
       ValueKind.FUNCTION -> symbols.classes.javaScriptFunction.owner.defaultType.makeNullable()
-      ValueKind.LIST, ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE ->
+      ValueKind.LIST, ValueKind.SET, ValueKind.COLLECTION, ValueKind.ARRAY, ValueKind.TUPLE ->
         irBuiltIns.listClass.typeWith(irBuiltIns.anyType.makeNullable()).makeNullable()
 
       ValueKind.UNION -> {

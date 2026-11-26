@@ -320,6 +320,7 @@ private fun ConeKotlinType.argument(index: Int): ConeKotlinType? =
 private val LISTS = setOf(
   StandardClassIds.List, StandardClassIds.MutableList,
   StandardClassIds.Set, StandardClassIds.MutableSet,
+  StandardClassIds.Collection, StandardClassIds.MutableCollection,
   StandardClassIds.Array,
 )
 
@@ -456,6 +457,7 @@ private fun jsKindOf(
 
     "kotlin.collections.List", "kotlin.collections.MutableList",
     "kotlin.collections.Set", "kotlin.collections.MutableSet",
+    "kotlin.collections.Collection", "kotlin.collections.MutableCollection",
     "kotlin.Array", "kotlin.IntArray", "kotlin.LongArray", "kotlin.FloatArray",
     "kotlin.DoubleArray", "kotlin.BooleanArray",
       -> JsKind.ARRAY

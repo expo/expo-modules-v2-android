@@ -256,6 +256,22 @@ sealed interface CountsFirst<!> {
     class Fractions(val values: List<Double>) : CountsFirst
 }
 
+// A Collection is a JavaScript array like a List, told apart by what it holds.
+@Union
+sealed interface Bags {
+    class Counts(val values: Collection<Int>) : Bags
+
+    class Words(val values: MutableCollection<String>) : Bags
+}
+
+// A Collection takes every array the List after it would.
+<!UNION_UNREACHABLE_VARIANT!>@Union
+sealed interface CollectionFirst<!> {
+    class Any(val values: Collection<String>) : CollectionFirst
+
+    class Ordered(val values: List<String>) : CollectionFirst
+}
+
 // A map of Any takes every map.
 <!UNION_UNREACHABLE_VARIANT!>@Union
 sealed interface AnyMapFirst<!> {
