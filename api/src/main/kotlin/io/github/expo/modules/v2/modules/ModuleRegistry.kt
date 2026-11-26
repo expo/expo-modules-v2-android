@@ -29,14 +29,17 @@ class ModuleRegistry internal constructor(private val context: ExpoContext) {
   /**
    * Registers a module that declares its exports with [io.github.expo.modules.v2.JS]. The name and
    * every export come from the definition the compiler plugin generated on [module].
+   *
+   * @return the name of the module, under which JavaScript reaches it in `expo.modules`.
    */
-  fun register(module: Module) {
+  fun register(module: Module): String {
     val builder = ModuleBuilder()
     val name = requireNotNull(module.`define$ExpoModulesV2`(builder)) {
       "${module.javaClass.name} is not annotated with @JS, so it declares no exports - annotate it, " +
         "or register it with register(name, module) { ... }"
     }
     add(name, module, builder)
+    return name
   }
 
   /** Every registered module, in the order they were registered. */

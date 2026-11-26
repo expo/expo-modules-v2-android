@@ -1,10 +1,17 @@
 package io.github.expo.modules.v2.gradle
 
 import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Property
 import javax.inject.Inject
 
-/**
- * Configuration entry point for the Expo Modules v2 Gradle plugin. Reserved for future options
- * (e.g. toggling diagnostics); currently intentionally empty.
- */
-open class ExpoModulesV2GradleExtension @Inject constructor(objectFactory: ObjectFactory)
+/** Configuration entry point for the Expo Modules v2 Gradle plugin, the `expoModulesV2` block. */
+open class ExpoModulesV2GradleExtension @Inject constructor(objectFactory: ObjectFactory) {
+  /**
+   * The package of the modules this project declares, such as the npm package `expo-font`. Passed to
+   * the compiler plugin as its `packageName` option, which records it on the modules' hints, so
+   * `discoveredExpoPackages()` in an app that depends on this library.
+   *
+   * Nothing sets it by default. Unset, the modules are only in `discoveredExpoModules()`.
+   */
+  val packageName: Property<String> = objectFactory.property(String::class.java)
+}

@@ -9,14 +9,6 @@ import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
 import org.jetbrains.kotlin.gradle.plugin.getKotlinPluginVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-/**
- * Registers the Expo Modules v2 Kotlin compiler plugin - the one that turns an
- * `@io.github.expo.modules.v2.Record` class into a record with a generated `RecordCodec` - with
- * every Kotlin compilation of the project it is applied to.
- *
- * The plugin adds no dependency of its own: every module that declares records already depends on
- * `:api`, which is where the annotation and the generated code's supporting types live.
- */
 @Suppress("unused") // Used via reflection.
 class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
   private lateinit var project: Project
@@ -45,14 +37,28 @@ class ExpoModulesV2GradlePlugin : KotlinCompilerPluginSupportPlugin {
   ): Provider<List<SubpluginOption>> {
     val project = kotlinCompilation.target.project
 
-    // This plugin generates a nested *classifier*, which incremental compilation's caches cannot
-    // track: a downstream file that only sees `@Record` never learns the codec changed.
-    kotlinCompilation.compileTaskProvider.configure { task ->
-      (task as? KotlinCompile)?.incremental = false
-    }
+    kotlinCompilation
+      .compileTaskProvider
+      .configure { task ->
+        // This plugin generates a nested *classifier*, which incremental compilation's caches cannot
+        // track: a downstream file that only sees `@Record` never learns the codec changed.
+        (task as? KotlinCompile)?.incremental = false
+      }
 
-    // No options yet. The lambda must not capture the Project - KGP serializes this provider into
-    // the compile task's inputs, and a Project reference breaks the configuration cache.
-    return project.provider { emptyList() }
+    // Mapped from the extension's property, so it does not capture the Project - KGP serializes this
+    // provider into the compile task's inputs, and a Project reference breaks the configuration cache.
+    val extension = project
+      .extensions
+      .getByType(ExpoModulesV2GradleExtension::class.java)
+
+    return extension
+      .packageName
+      .map { packageName -> listOf(SubpluginOption(key = PACKAGE_NAME_OPTION, value = packageName)) }
+      .orElse(emptyList())
+  }
+
+  private companion object {
+    // MUST stay in sync with `ExpoModulesV2CommandLineProcessor.PACKAGE_NAME_OPTION`.
+    const val PACKAGE_NAME_OPTION = "packageName"
   }
 }

@@ -1,8 +1,12 @@
 package io.github.expo.modules.v2.compiler.fir
 
+import org.jetbrains.kotlin.fir.extensions.FirDeclarationGenerationExtension
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 
-class ExpoModulesV2FirRegistrar : FirExtensionRegistrar() {
+/** [packageName] is the plugin's `packageName` option, which the module hints record. */
+class ExpoModulesV2FirRegistrar(
+  private val packageName: String? = null
+) : FirExtensionRegistrar() {
   override fun ExtensionRegistrarContext.configurePlugin() {
     +::RecordPredicates
     +::UnionPredicates
@@ -14,7 +18,7 @@ class ExpoModulesV2FirRegistrar : FirExtensionRegistrar() {
     +::RecordCodecGenerator
     +::UnionSupertypeGenerator
     +::UnionCodecGenerator
-    +::ModuleHintGenerator
+    +FirDeclarationGenerationExtension.Factory { session -> ModuleHintGenerator(session, packageName) }
     +::RecordCheckers
     +::UnionCheckers
     +::JSCheckers
@@ -23,5 +27,6 @@ class ExpoModulesV2FirRegistrar : FirExtensionRegistrar() {
     +::SharedObjectCheckers
     +::EventCheckers
     +::ConstantCheckers
+    +::ModuleDiscoveryCheckers
   }
 }

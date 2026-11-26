@@ -177,6 +177,11 @@ kotlin {
     if (kotlinVersion >= KotlinVersion(2, 2, 20) && kotlinVersion < KotlinVersion(2, 4, 0)) {
       freeCompilerArgs.add("-Xcontext-parameters")
     }
+    // From 2.4.20 reading the message collector, which reports the `discoveredExpoPackages()`
+    // warnings, needs this marker. Older releases do not have it and would warn about it.
+    if (kotlinVersion >= KotlinVersion(2, 4, 20)) {
+      optIn.add("org.jetbrains.kotlin.config.MessageCollectorAccess")
+    }
   }
 }
 
