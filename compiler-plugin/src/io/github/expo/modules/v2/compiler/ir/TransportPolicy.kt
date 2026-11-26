@@ -56,6 +56,13 @@ internal enum class ValueKind {
   /** `File`/`URL`/`URI`/`UUID`/`Path`/`android.net.Uri`/`Uuid`, whose bridge is a `String`. */
   CONVERTED_TO_STRING,
 
+  /**
+   * `android.graphics.Color`, whose bridge is a dynamic value like [DYNAMIC]'s - JavaScript passes
+   * a number, a string or an array - that its converter always reads. Like [DYNAMIC], only an
+   * explicit `Buffer.YES` rides the buffer.
+   */
+  CONVERTED_TO_DYNAMIC,
+
   /** An enum class, whose bridge is a `String`: the entry's name, or its one `String` property. */
   ENUM,
 
@@ -180,6 +187,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       "android.net.Uri", "kotlin.uuid.Uuid",
         -> ValueKind.CONVERTED_TO_STRING
 
+      "android.graphics.Color" -> ValueKind.CONVERTED_TO_DYNAMIC
+
       "kotlin.collections.List", "kotlin.collections.MutableList" -> ValueKind.LIST
       "kotlin.collections.Map", "kotlin.collections.MutableMap" -> ValueKind.MAP
       "kotlin.collections.Set", "kotlin.collections.MutableSet" -> ValueKind.SET
@@ -223,8 +232,8 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       // A Set, a Collection, an Array or a tuple always rebuilds its container, and a record always
       // rebuilds itself.
       ValueKind.SET, ValueKind.COLLECTION, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD, ValueKind.UNION,
-      ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
-      ValueKind.TYPED_ARRAY,
+      ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.CONVERTED_TO_DYNAMIC,
+      ValueKind.ENUM, ValueKind.INT_ENUM, ValueKind.TYPED_ARRAY,
       // The lambda wraps the JavaScript function it is handed.
       ValueKind.FUNCTION,
         -> false
@@ -237,7 +246,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
    */
   fun canBuffer(kind: ValueKind, type: IrType, allowDynamic: Boolean = false): Boolean =
     when (kind) {
-      ValueKind.DYNAMIC -> allowDynamic
+      ValueKind.DYNAMIC, ValueKind.CONVERTED_TO_DYNAMIC -> allowDynamic
       ValueKind.UNBOXED_SCALAR, ValueKind.UNIT, ValueKind.JS_HANDLE,
       ValueKind.TYPED_ARRAY, ValueKind.SHARED_OBJECT, ValueKind.FUNCTION,
         -> false
@@ -284,7 +293,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
     allowDynamic: Boolean = false,
   ): Boolean {
     val kind = kindOf(type)
-    if (kind == ValueKind.DYNAMIC) {
+    if (kind == ValueKind.DYNAMIC || kind == ValueKind.CONVERTED_TO_DYNAMIC) {
       return allowDynamic
     }
     if (kind == ValueKind.JS_HANDLE ||
@@ -403,7 +412,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.SHARED_OBJECT,
         -> type.makeNullable()
 
-      ValueKind.DYNAMIC -> irBuiltIns.anyType.makeNullable()
+      ValueKind.DYNAMIC, ValueKind.CONVERTED_TO_DYNAMIC -> irBuiltIns.anyType.makeNullable()
       ValueKind.CONVERTED_TO_DOUBLE ->
         if (type.isMarkedNullable()) irBuiltIns.doubleType.makeNullable() else irBuiltIns.doubleType
 

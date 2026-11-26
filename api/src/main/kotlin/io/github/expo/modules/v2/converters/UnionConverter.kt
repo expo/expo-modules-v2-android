@@ -42,10 +42,12 @@ internal class UnionConverter(
   override fun fromJni(value: Any?): Any? =
     handleNullable(value) {
       if (sameBridge) {
-        return@handleNullable unionType.decode(0) { converter -> converter?.fromJni(it) }
+        return@handleNullable unionType.decode(0, fromJni = true) { converter -> converter?.fromJni(it) }
       }
       val transport = it as UnionValue
-      unionType.decode(transport.index) { converter -> converter?.fromJni(transport.payload) }
+      unionType.decode(transport.index, fromJni = true) { converter ->
+        converter?.fromJni(transport.payload)
+      }
     }
 
   override fun toJni(value: Any?): Any? =
@@ -68,7 +70,7 @@ internal class UnionConverter(
     buf.readPresent {
       val index = if (sameBridge) 0 else getInt()
       val start = position
-      unionType.decode(index) { converter ->
+      unionType.decode(index, fromJni = false) { converter ->
         // A variant that refused the value read some of it: the next one starts over.
         position = start
         converter?.readFromBuffer(buf)
