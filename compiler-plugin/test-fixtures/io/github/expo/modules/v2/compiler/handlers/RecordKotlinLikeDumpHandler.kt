@@ -151,9 +151,10 @@ private fun IrDeclaration.isEventBinding(): Boolean {
 }
 
 /**
- * Whether this declaration's body holds the `listOf(...)` the plugin put where a
- * `discoveredExpoModules()` call was. The call is the user's, so the marked replacement is the only
- * trace of the plugin; the whole declaration prints so the dump shows the list in place.
+ * Whether this declaration's body holds the `listOf(...)` or `mapOf(...)` the plugin put where a
+ * `discoveredExpoModules()` or `discoveredExpoPackages()` call was. The call is the user's, so the
+ * marked replacement is the only trace of the plugin; the whole declaration prints so the dump shows
+ * it in place.
  */
 private fun IrDeclaration.callsDiscoveredModules(): Boolean {
   if (this !is IrDeclarationBase || this is IrClass) {

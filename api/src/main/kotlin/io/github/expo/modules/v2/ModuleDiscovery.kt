@@ -12,7 +12,11 @@ fun discoveredExpoModules(): List<Class<out Module>> = throw IllegalStateExcepti
  * `expoModulesV2.classpathPackages` of the calling project gives to the classpath entry the module
  * comes from, for example the npm package `expo-font` of a library's classes jar. Packages are
  * sorted by name, and the modules of a package by class name. The calling project's own modules,
- * and the modules of an entry without a package, are not in any package.
+ * and the modules of an entry without a package, are not in any package. A package none of whose
+ * entries holds a module is not in the map.
+ *
+ * Call it directly: the compiler plugin replaces the call, so a reference such as
+ * `::discoveredExpoPackages` is a compile error.
  */
 fun discoveredExpoPackages(): Map<String, ExpoPackage> = throw IllegalStateException(
   "discoveredExpoPackages() was not expanded at compile time, so this build has no list of Expo " +
