@@ -31,6 +31,22 @@ class ModuleHintScannerTest {
   }
 
   @Test
+  fun `records the classpath entry of each hint, the first one when a hint is on several`() {
+    val first = jar("lib/module-a.jar", "$HINTS/a_Module_00000001.class")
+    val dir = root.resolve("classes").apply {
+      resolve(HINTS).mkdirs()
+      resolve("$HINTS/b_Module_00000002.class").writeBytes(ByteArray(0))
+    }
+    val copy = jar("lib/module-a-copy.jar", "$HINTS/a_Module_00000001.class")
+    val scanner = ModuleHintScanner { listOf(first, dir, copy) }
+
+    assertEquals(
+      mapOf("a_Module_00000001" to first, "b_Module_00000002" to dir),
+      scanner.hints.associate { it.shortClassName.asString() to scanner.rootOf(it) },
+    )
+  }
+
+  @Test
   fun `ignores nested classes, sub packages and files that are not classes`() {
     val jar = jar(
       "lib/noise.jar",

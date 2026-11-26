@@ -9,12 +9,13 @@ import java.util.zip.ZipFile
 
 /**
  * Lists the hint interfaces on a compile classpath: every top-level class in
- * `io.github.expo.modules.v2.hints`, whether it sits in a jar or in a classes directory.
+ * `io.github.expo.modules.v2.hints`, whether it sits in a jar or in a classes directory, and the
+ * classpath entry each one sits in.
  *
  * The compiler cannot enumerate a package for us from the backend, so this reads the class files
- * directly, the way Hilt's aggregation task or Anvil's hint lookup do. It only looks at entry names,
- * never at bytecode: which module a hint names is read afterwards through the compiler, from the
- * hint's one member. [roots] is read lazily, at the first call that needs the result, so a
+ * directly, the way Hilt's aggregation task or Anvil's hint lookup do. Finding hints only looks at
+ * entry names, never at bytecode: which module a hint names is read afterwards through the compiler,
+ * from the hint's members. [roots] is read lazily, at the first call that needs the result, so a
  * compilation that never asks for `discoveredExpoModules()` never pays for the scan.
  *
  * What the scan costs is opening archives, which reads each one's table of contents, and walking
@@ -25,11 +26,17 @@ import java.util.zip.ZipFile
  *    jar without directory entries, or one where the lookup hits, has its names walked.
  */
 class ModuleHintScanner(private val roots: () -> List<File>) {
-  val hints: List<ClassId> by lazy { scan() }
+  /** The classpath entry of each hint. A hint on more than one entry keeps the first one. */
+  private val rootsByHint: Map<ClassId, File> by lazy { scan() }
 
-  private fun scan(): List<ClassId> {
+  val hints: List<ClassId> by lazy { rootsByHint.keys.toList() }
+
+  /** The classpath entry, a jar or a classes directory, that [hint] was found in. */
+  fun rootOf(hint: ClassId): File? = rootsByHint[hint]
+
+  private fun scan(): Map<ClassId, File> {
     val prefix = Identifiers.Hints.PACKAGE.asString().replace('.', '/') + "/"
-    val names = sortedSetOf<String>()
+    val rootsByName = sortedMapOf<String, File>()
 
     for (root in roots()) {
       when {
@@ -37,15 +44,17 @@ class ModuleHintScanner(private val roots: () -> List<File>) {
 
         root.isDirectory -> File(root, prefix)
           .listFiles()
-          ?.forEach { file -> hintNameOf(file.name)?.let(names::add) }
+          ?.forEach { file -> hintNameOf(file.name)?.let { rootsByName.putIfAbsent(it, root) } }
 
         root.isFile -> forEachHintEntry(root, prefix) { entry ->
-          hintNameOf(entry.removePrefix(prefix))?.let(names::add)
+          hintNameOf(entry.removePrefix(prefix))?.let { rootsByName.putIfAbsent(it, root) }
         }
       }
     }
 
-    return names.map { ClassId(Identifiers.Hints.PACKAGE, Name.identifier(it)) }
+    return rootsByName.entries.associate { (name, root) ->
+      ClassId(Identifiers.Hints.PACKAGE, Name.identifier(name)) to root
+    }
   }
 
   /**

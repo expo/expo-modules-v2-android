@@ -13,7 +13,10 @@ object JSModuleKey : GeneratedDeclarationKey()
 /** Marks the hint interface a compiled `@ExpoModule` leaves in `io.github.expo.modules.v2.hints`. */
 object ModuleHintKey : GeneratedDeclarationKey()
 
-/** Marks the `listOf(...)` the plugin puts where a `discoveredExpoModules()` call was. */
+/**
+ * Marks the `listOf(...)` the plugin puts where a `discoveredExpoModules()` call was, and the
+ * `mapOf(...)` it puts where a `discoveredExpoPackages()` call was.
+ */
 object ModuleDiscoveryOrigin : IrStatementOrigin {
   override val debugName: String
     get() = "MODULE_DISCOVERY"

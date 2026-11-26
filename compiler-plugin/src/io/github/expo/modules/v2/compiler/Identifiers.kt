@@ -37,14 +37,58 @@ object Identifiers {
    * The cross-compilation hand-off that makes `discoveredExpoModules()` work.
    *
    * Compiling `@ExpoModule object Foo` also emits `interface <hint> { fun module(): Foo }` into
-   * [Packages.HINTS]. The hint's name only has to be unique; its one member's return type is what
-   * names the module back, so a reader never has to un-mangle anything.
+   * [Packages.HINTS]. The hint's name only has to be unique; its `module()` member's return type is
+   * what names the module back, so a reader never has to un-mangle anything. A compilation given a
+   * package name adds a second member, [packageMemberFor], whose name holds that package.
    */
   object Hints {
     val PACKAGE: FqName = Packages.HINTS
 
-    /** `fun module(): <the module class>` - the hint's single, abstract member. */
+    /** `fun module(): <the module class>` - the hint's abstract member that names the module. */
     val MEMBER: Name = Name.identifier("module")
+
+    private const val PACKAGE_MEMBER_PREFIX = "package_"
+
+    /**
+     * `fun package_<encoded>()` - the hint member that records [packageName]. Every UTF-8 byte other
+     * than an ASCII letter or digit becomes `_` and two hex digits, so `@expo/ui` gives
+     * `package__40expo_2fui`: a JVM method name cannot hold the `.` and `/` of npm package names.
+     */
+    fun packageMemberFor(packageName: String): Name {
+      val encoded = buildString {
+        for (byte in packageName.encodeToByteArray()) {
+          val char = (byte.toInt() and 0xff).toChar()
+          if (char in 'a'..'z' || char in 'A'..'Z' || char in '0'..'9') {
+            append(char)
+          } else {
+            append('_').append("%02x".format(byte.toInt() and 0xff))
+          }
+        }
+      }
+      return Name.identifier(PACKAGE_MEMBER_PREFIX + encoded)
+    }
+
+    /** The package a [packageMemberFor] member records, or null for any other member name. */
+    fun packageNameOf(member: Name): String? {
+      val name = member.asString()
+      if (member.isSpecial || !name.startsWith(PACKAGE_MEMBER_PREFIX)) {
+        return null
+      }
+      val bytes = mutableListOf<Byte>()
+      var index = PACKAGE_MEMBER_PREFIX.length
+      while (index < name.length) {
+        if (name[index] != '_') {
+          bytes += name[index].code.toByte()
+          index += 1
+          continue
+        }
+        val high = name.getOrNull(index + 1)?.digitToIntOrNull(16) ?: return null
+        val low = name.getOrNull(index + 2)?.digitToIntOrNull(16) ?: return null
+        bytes += (high * 16 + low).toByte()
+        index += 3
+      }
+      return bytes.toByteArray().decodeToString()
+    }
 
     /** The hint for [module]: its dotted name with `_` for `.`, plus a hash of that name. */
     fun classIdFor(module: ClassId): ClassId {
@@ -58,8 +102,14 @@ object Identifiers {
     /** `fun discoveredExpoModules(): List<Class<out Module>>` - the call the plugin expands. */
     val discoveredExpoModules = CallableId(Packages.API, Name.identifier("discoveredExpoModules"))
 
+    /** `fun discoveredExpoPackages(): Map<String, ExpoPackage>` - expanded the same way. */
+    val discoveredExpoPackages = CallableId(Packages.API, Name.identifier("discoveredExpoPackages"))
+
     /** `kotlin.collections.listOf(vararg elements: T)` - what the expansion builds the list with. */
     val listOf = CallableId(FqName("kotlin.collections"), Name.identifier("listOf"))
+
+    /** `kotlin.collections.mapOf(vararg pairs: Pair<K, V>)` - what the package map is built with. */
+    val mapOf = CallableId(FqName("kotlin.collections"), Name.identifier("mapOf"))
 
     /** `fun noSuchVariant(union, index): Nothing` - what a generated `wrap` throws past its variants. */
     val noSuchVariant = CallableId(Packages.UNIONS, Name.identifier("noSuchVariant"))
@@ -104,6 +154,12 @@ object Identifiers {
 
     val Module = classId(Packages.API, "Module")
     val ModuleBuilder = classId(Packages.MODULES, "ModuleBuilder")
+
+    /** `class ExpoPackage(modules)` - the value of one entry of the package map. */
+    val ExpoPackage = classId(Packages.API, "ExpoPackage")
+
+    /** `class Pair<out A, out B>(first, second)` - one entry of the package map. */
+    val Pair = classId(FqName("kotlin"), "Pair")
 
     val SharedObject = classId(Packages.API, "SharedObject")
     val SharedRef = classId(Packages.API, "SharedRef")

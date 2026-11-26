@@ -30,11 +30,20 @@ import org.jetbrains.kotlin.name.Name
  *
  * interface expo_modules_v2demo_ExpoV2Demo_<hash> {     generated, : nothing
  *   fun module(): expo.modules.v2demo.ExpoV2Demo          abstract - the return type is the payload
+ *   fun package_expo_2dfont()                             only with a [packageName] - the name is the payload
  * }
  * ```
+ *
+ * The members are generated here rather than in IR, so they are in the hint's Kotlin metadata and a
+ * compilation that loads the hint from its classpath sees them.
  */
 @OptIn(ExperimentalTopLevelDeclarationsGenerationApi::class)
-class ModuleHintGenerator(session: FirSession) : FirDeclarationGenerationExtension(session) {
+class ModuleHintGenerator(
+  session: FirSession,
+  packageName: String? = null,
+) : FirDeclarationGenerationExtension(session) {
+  private val packageMember: Name? = packageName?.let(Identifiers.Hints::packageMemberFor)
+
   private val hints: Map<ClassId, FirRegularClassSymbol> by lazy {
     session.predicateBasedProvider
       .getSymbolsByPredicate(session.expoModulePredicates.predicate)
@@ -58,7 +67,7 @@ class ModuleHintGenerator(session: FirSession) : FirDeclarationGenerationExtensi
     classSymbol: FirClassSymbol<*>,
     context: MemberGenerationContext,
   ): Set<Name> = if (classSymbol.isHint()) {
-    setOf(Identifiers.Hints.MEMBER)
+    setOfNotNull(Identifiers.Hints.MEMBER, packageMember)
   } else {
     emptySet()
   }
@@ -68,7 +77,21 @@ class ModuleHintGenerator(session: FirSession) : FirDeclarationGenerationExtensi
     context: MemberGenerationContext?,
   ): List<FirNamedFunctionSymbol> {
     val owner = context?.owner ?: return emptyList()
-    if (!owner.isHint() || callableId.callableName != Identifiers.Hints.MEMBER) {
+    if (!owner.isHint()) {
+      return emptyList()
+    }
+    if (callableId.callableName == packageMember) {
+      val function = createMemberFunction(
+        owner = owner,
+        key = ModuleHintKey,
+        name = packageMember,
+        returnType = session.builtinTypes.unitType.coneType
+      ) {
+        modality = Modality.ABSTRACT
+      }
+      return listOf(function.symbol)
+    }
+    if (callableId.callableName != Identifiers.Hints.MEMBER) {
       return emptyList()
     }
     val module = hints[owner.classId]
