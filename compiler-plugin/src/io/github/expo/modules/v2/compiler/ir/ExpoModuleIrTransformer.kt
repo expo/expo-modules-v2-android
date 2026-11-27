@@ -62,9 +62,16 @@ internal class ExpoModuleIrTransformer(
       sharedClasses = sharedClassesOf(declaration, annotation),
     )
     // Lets the registry register the module by name and define it only when JavaScript reads it.
-    symbols.functions.moduleName?.let { moduleName ->
+    symbols
+      .functions
+      .moduleName
+      ?.let { moduleName ->
       definition.fillName(
-        function = inheritedOverride(declaration, Identifiers.Names.NAME_FUNCTION, moduleName),
+        function = inheritedOverride(
+          declaration,
+          Identifiers.Names.NAME_FUNCTION,
+          moduleName
+        ),
         owner = declaration,
         jsName = jsName,
       )

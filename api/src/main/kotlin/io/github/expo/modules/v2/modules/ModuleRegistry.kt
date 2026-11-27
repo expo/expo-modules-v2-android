@@ -2,37 +2,53 @@ package io.github.expo.modules.v2.modules
 
 import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
 import io.github.expo.modules.v2.binary.newSharedView
 import io.github.expo.modules.v2.core.ExpoModulesV2
-import io.github.expo.modules.v2.ExpoContext
 import java.nio.BufferOverflowException
 
 @CalledFromNative(by = "expo-modules-v2/jni/JModuleRegistry.h")
 class ModuleRegistry internal constructor(private val context: ExpoContext) {
-  /**
-   * A registered module and its exports. A module the compiler plugin generated is registered by
-   * the name it reports, and [definition] runs its `define$ExpoModulesV2` the first time JavaScript
-   * reads it: an app registers every module it ships at startup, but touches only a few of them
-   * while it launches, and defining one loads its record codecs and builds its converters.
-   */
   private class Entry(
-    val name: String,
     val module: Module,
-    /** Guarded by this entry. Null until the module is defined. */
-    private var definition: ModuleBuilder?,
+    definition: ModuleBuilder?
   ) {
-    fun definition(): ModuleBuilder = synchronized(this) {
-      definition?.let { return it }
+    lateinit var functions: List<ModuleFunctionDefinition>
+      private set
+    lateinit var properties: List<ModulePropertyDefinition>
+      private set
+    lateinit var sharedClasses: List<ModuleSharedClassDefinition>
+      private set
+    lateinit var events: List<ModuleEventDefinition>
+      private set
 
-      val builder = ModuleBuilder()
-      val defined = module.`define$ExpoModulesV2`(builder)
-      check(defined == name) {
-        "${module.javaClass.name} reported the name '$name' but defined itself as '$defined'"
+    init {
+      definition?.let(::adopt)
+    }
+
+    /** Defines the module, registered as [name], unless it already is. */
+    fun define(name: String) {
+      synchronized(this) {
+        if (::functions.isInitialized) {
+          return
+        }
+
+        val builder = ModuleBuilder()
+        val defined = module.`define$ExpoModulesV2`(builder)
+        check(defined == name) {
+          "${module.javaClass.name} reported the name '$name' but defined itself as '$defined'"
+        }
+        adopt(builder)
       }
-      definition = builder
-      builder
+    }
+
+    private fun adopt(definition: ModuleBuilder) {
+      properties = definition.properties
+      sharedClasses = definition.sharedClasses
+      events = definition.events
+      functions = definition.functions
     }
   }
 
@@ -46,10 +62,6 @@ class ModuleRegistry internal constructor(private val context: ExpoContext) {
   /**
    * Registers a module that declares its exports with [io.github.expo.modules.v2.JS]. The name and
    * every export come from the definition the compiler plugin generated on [module].
-   *
-   * The exports are defined when JavaScript first reads the module, so a module the app ships but
-   * does not use at launch costs next to nothing here. A module compiled by an older plugin, which
-   * cannot report its name on its own, is defined at once.
    *
    * @return the name of the module, under which JavaScript reaches it in `expo.modules`.
    */
@@ -77,13 +89,12 @@ class ModuleRegistry internal constructor(private val context: ExpoContext) {
     return module?.let(type::cast)
   }
 
-  /** [definition] is null for a module defined when JavaScript first reads it. */
   private fun add(name: String, module: Module, definition: ModuleBuilder?) {
     synchronized(modules) {
       require(name !in modules) { "Module '$name' is already registered" }
 
       module.bindContext(context)
-      modules[name] = Entry(name, module, definition)
+      modules[name] = Entry(module, definition)
     }
   }
 
@@ -91,15 +102,14 @@ class ModuleRegistry internal constructor(private val context: ExpoContext) {
   @CalledFromNative(by = "expo-modules-v2/jni/JModuleRegistry.h")
   private fun encodeModule(name: String): Any? {
     val entry = synchronized(modules) { modules[name] } ?: return null
-    // Outside the registry's lock: defining a module can take a while, and blocks only this entry.
-    val definition = entry.definition()
+    entry.define(name)
     try {
       ModuleDescriptorEncoder.encode(
         BinaryBuffer.newSharedView(),
-        definition.functions,
-        definition.properties,
-        definition.sharedClasses,
-        definition.events,
+        entry.functions,
+        entry.properties,
+        entry.sharedClasses,
+        entry.events,
       )
     } catch (overflow: BufferOverflowException) {
       throw IllegalArgumentException(
