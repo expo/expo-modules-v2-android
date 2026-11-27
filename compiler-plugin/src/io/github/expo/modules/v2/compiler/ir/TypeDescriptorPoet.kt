@@ -4,7 +4,9 @@ import io.github.expo.modules.v2.compiler.Identifiers
 import io.github.expo.modules.v2.compiler.TypeDescriptorNames
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
 import org.jetbrains.kotlin.backend.common.ir.createExtensionReceiver
+import org.jetbrains.kotlin.descriptors.ClassKind
 import org.jetbrains.kotlin.descriptors.DescriptorVisibilities
+import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrModuleFragment
 import org.jetbrains.kotlin.ir.declarations.IrParameterKind
@@ -26,6 +28,7 @@ import org.jetbrains.kotlin.ir.types.isMarkedNullable
 import org.jetbrains.kotlin.ir.types.starProjectedType
 import org.jetbrains.kotlin.ir.types.typeWith
 import org.jetbrains.kotlin.ir.util.defaultType
+import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.ir.util.isSubclassOf
 import org.jetbrains.kotlin.ir.util.kotlinFqName
 import org.jetbrains.kotlin.name.FqName
@@ -221,14 +224,20 @@ class TypeDescriptorPoet(
     sharedRefDescriptor(type)?.let { return it }
 
     val arguments = type.arguments
-    val containerClass: IrClassSymbol = when (fqName) {
-      "kotlin.collections.List", "kotlin.collections.MutableList" -> irBuiltIns.listClass
-      "kotlin.collections.Set", "kotlin.collections.MutableSet" -> irBuiltIns.setClass
-      "kotlin.collections.Collection", "kotlin.collections.MutableCollection" -> irBuiltIns.collectionClass
-      "kotlin.collections.Map", "kotlin.collections.MutableMap" -> irBuiltIns.mapClass
-      "kotlin.Pair", "kotlin.Triple" -> type.classOrNull ?: unsupported(type)
+    val (containerClass: IrClassSymbol, factory: String) = when (fqName) {
+      "kotlin.collections.List", "kotlin.collections.MutableList" ->
+        irBuiltIns.listClass to "ListConverterFactory"
+      "kotlin.collections.Set", "kotlin.collections.MutableSet" ->
+        irBuiltIns.setClass to "SetConverterFactory"
+      "kotlin.collections.Collection", "kotlin.collections.MutableCollection" ->
+        irBuiltIns.collectionClass to "CollectionConverterFactory"
+      "kotlin.collections.Map", "kotlin.collections.MutableMap" ->
+        irBuiltIns.mapClass to "MapConverterFactory"
+      "kotlin.Pair" -> (type.classOrNull ?: unsupported(type)) to "PairConverterFactory"
+      "kotlin.Triple" -> (type.classOrNull ?: unsupported(type)) to "TripleConverterFactory"
       // Only as what a lambda returns, where the runtime reads the type it resolves with.
-      Identifiers.FqNames.PROMISE.asString() -> type.classOrNull ?: unsupported(type)
+      Identifiers.FqNames.PROMISE.asString() ->
+        (type.classOrNull ?: unsupported(type)) to "PromiseResultConverterFactory"
       "kotlin.Array" -> return arrayDescriptor(type, isNullable)
       else -> return null
     }
@@ -238,7 +247,7 @@ class TypeDescriptorPoet(
       boxedDescriptorFor(projected)
     }
 
-    return parametrized(javaClass(containerClass.owner.defaultType), isNullable, parameters)
+    return parametrized(javaClass(containerClass.owner.defaultType), isNullable, parameters, factory)
   }
 
   private fun sharedRefDescriptor(type: IrSimpleType): IrExpression? {
@@ -252,6 +261,7 @@ class TypeDescriptorPoet(
       javaClass(owner.defaultType),
       type.isMarkedNullable(),
       listOf(boxedDescriptorFor(argument.type)),
+      "SharedRefConverterFactory",
     )
   }
 
@@ -266,37 +276,101 @@ class TypeDescriptorPoet(
       javaClass(type),
       isNullable,
       listOf(boxedDescriptorFor(element)),
+      "ArrayConverterFactory",
     )
   }
 
+  /**
+   * `TypeDescriptor.Parametrized(javaClass, isNullable, params, <factory>)`. Naming the factory is
+   * what keeps the other container converters unreachable from this app's code. A runtime without
+   * the factory gets the three-argument form, and its registry picks.
+   */
   private fun parametrized(
     javaClassExpression: IrExpression,
     isNullable: Boolean,
     parameters: List<IrExpression>,
+    factoryName: String,
   ): IrExpression {
-    val constructor = symbols.constructors.parametrizedDescriptor
+    val arguments = listOf(
+      javaClassExpression,
+      boolean(isNullable),
+      // `params` is a real array parameter, not a vararg.
+      arrayOf(symbols.classes.typeDescriptorObjectLike.owner.defaultType, parameters),
+    )
+
+    val factory = converterFactory(factoryName)
+    val withFactory = symbols.constructors.parametrizedDescriptorWithFactory
+    val (constructor, allArguments) = if (factory != null && withFactory != null) {
+      withFactory to arguments + factory
+    } else {
+      symbols.constructors.parametrizedDescriptor to arguments
+    }
 
     return constructorCall(
       constructor = constructor,
       type = constructor.owner.returnType,
-      arguments = listOf(
-        javaClassExpression,
-        boolean(isNullable),
-        // `params` is a real array parameter, not a vararg.
-        arrayOf(symbols.classes.typeDescriptorObjectLike.owner.defaultType, parameters),
-      ),
+      arguments = allArguments,
     )
   }
 
+  /**
+   * `TypeDescriptor.Simple` for a class, with the choice `TypeConverterRegistry` would make for it
+   * at runtime made here instead, in the same order. A leaf type gets its converter directly:
+   * `Simple(javaClass, isNullable, urlConverter(isNullable))`. Any other class gets the factory
+   * that builds its converter on first use: `Simple(javaClass, isNullable, EnumConverterFactory)`.
+   * Only a runtime without either gets the two-argument form, and its registry picks.
+   */
   private fun simpleDescriptor(type: IrSimpleType, isNullable: Boolean): IrExpression {
-    val constructor = symbols.constructors.simpleDescriptor
-    val erased = type.classOrNull?.owner?.defaultType ?: unsupported(type)
+    val owner = type.classOrNull?.owner ?: unsupported(type)
+    val classAndNullability = listOf(javaClass(owner.defaultType), boolean(isNullable))
+
+    val leafConverter = LEAF_CONVERTERS[owner.kotlinFqName.asString()]
+    val (constructor, allArguments) = if (leafConverter != null) {
+      val function = symbols.functions.leafConverter(leafConverter)
+      val withConverter = symbols.constructors.simpleDescriptorWithConverter
+      if (function != null && withConverter != null) {
+        val converter = IrSyntheticCallImpl(function.owner.returnType, function).apply {
+          arguments[0] = boolean(isNullable)
+        }
+        withConverter to classAndNullability + converter
+      } else {
+        symbols.constructors.simpleDescriptor to classAndNullability
+      }
+    } else {
+      val factory = converterFactory(simpleFactoryName(owner))
+      val withFactory = symbols.constructors.simpleDescriptorWithFactory
+      if (factory != null && withFactory != null) {
+        withFactory to classAndNullability + factory
+      } else {
+        symbols.constructors.simpleDescriptor to classAndNullability
+      }
+    }
 
     return constructorCall(
       constructor = constructor,
       type = constructor.owner.returnType,
-      arguments = listOf(javaClass(erased), boolean(isNullable)),
+      arguments = allArguments,
     )
+  }
+
+  private fun simpleFactoryName(owner: IrClass): String =
+    when {
+      owner.isSubclassOf(symbols.classes.sharedObject.owner) -> "SharedObjectConverterFactory"
+      owner.isSubclassOf(symbols.classes.typedArray.owner) -> "TypedArrayConverterFactory"
+      owner.kind == ClassKind.ENUM_CLASS -> "EnumConverterFactory"
+      // The annotation, not the `Union` supertype: a union's variants inherit that, and a variant
+      // that is a record converts as the record.
+      owner.hasAnnotation(Identifiers.FqNames.UNION_ANNOTATION) -> "UnionConverterFactory"
+      owner.isSubclassOf(symbols.classes.recordInterface.owner) -> "RecordConverterFactory"
+      // The registry has nothing for it either. Saying so here keeps the registry - and with it
+      // every converter - out of reach of generated code.
+      else -> "UnsupportedConverterFactory"
+    }
+
+  /** `<factory>` - a read of the object, or `null` when the runtime does not have it. */
+  private fun converterFactory(simpleName: String): IrExpression? {
+    val symbol = symbols.classes.converterFactory(simpleName) ?: return null
+    return IrSyntheticGetObjectValueImpl(symbol.owner.defaultType, symbol)
   }
 
   /**
@@ -325,6 +399,26 @@ class TypeDescriptorPoet(
   private fun unsupported(type: IrType): Nothing =
     error("@Record does not support the field type $type - the frontend checker should have caught this")
 }
+
+/**
+ * The leaf classes `TypeConverterRegistry` finds by exact class, and the function in
+ * `LeafConverters.kt` (or next to the converter, for a type a platform may lack) that builds each
+ * one's converter. The boxed primitives, `String` and `Any` are not here: `CommonDescriptors` holds
+ * theirs.
+ */
+private val LEAF_CONVERTERS: Map<String, String> = mapOf(
+  "kotlin.Unit" to "unitConverter",
+  "kotlin.time.Duration" to "durationConverter",
+  "kotlin.uuid.Uuid" to "kotlinUuidConverter",
+  "java.util.UUID" to "uuidConverter",
+  "java.io.File" to "fileConverter",
+  "java.net.URL" to "urlConverter",
+  "java.net.URI" to "uriConverter",
+  "java.nio.file.Path" to "pathConverter",
+  "android.net.Uri" to "androidUriConverter",
+  "io.github.expo.modules.v2.jsi.JavaScriptValue" to "jsValueConverter",
+  "io.github.expo.modules.v2.jsi.JavaScriptObject" to "jsObjectConverter",
+)
 
 private fun IrType.mentionsTypeParameter(): Boolean {
   if (classifierOrNull is IrTypeParameterSymbol) {

@@ -3,6 +3,7 @@ package io.github.expo.modules.v2.converters
 import android.net.Uri
 import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.types.CppType
+import androidx.core.net.toUri
 
 /**
  * `android.net.Uri`, which crosses as its string form. [Uri.parse] takes every string - it never
@@ -16,7 +17,7 @@ class AndroidUriConverter(
   override val isPassthrough: Boolean get() = false
 
   override fun fromJni(value: Any?): Uri? =
-    handleNullable(value) { Uri.parse(it as String) }
+    handleNullable(value) { (it as String).toUri() }
 
   override fun toJni(value: Uri?): Any? =
     value?.toString()
@@ -25,5 +26,8 @@ class AndroidUriConverter(
     buf.writePresent(value) { putString(it.toString()) }
 
   override fun readFromBuffer(buf: BinaryBuffer): Uri? =
-    buf.readPresent { Uri.parse(getString()) }
+    buf.readPresent { getString().toUri() }
 }
+
+/** What the compiler plugin calls for an `android.net.Uri`, as for the types in LeafConverters.kt. */
+fun androidUriConverter(isNullable: Boolean): TypeConverter<*> = AndroidUriConverter(isNullable)

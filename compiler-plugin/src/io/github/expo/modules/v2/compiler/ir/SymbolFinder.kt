@@ -70,6 +70,21 @@ class SymbolFinder(private val context: IrPluginContext) {
       clazz(Identifiers.Classes.TypeDescriptorSimple)
     }
 
+    /** `interface Record`, which the plugin adds to every `@Record` class. */
+    val recordInterface: IrClassSymbol by lazy { clazz(Identifiers.Classes.RecordInterface) }
+
+    private val converterFactories = mutableMapOf<String, IrClassSymbol?>()
+
+    /**
+     * The converter factory object [simpleName], or `null` when the runtime on the classpath has
+     * none - an older one, or a platform without the type, such as `AndroidUriConverterFactory` off
+     * Android.
+     */
+    fun converterFactory(simpleName: String): IrClassSymbol? =
+      converterFactories.getOrPut(simpleName) {
+        context.referenceClass(Identifiers.Classes.converterFactory(simpleName))
+      }
+
     /** `object CommonDescriptors` */
     val commonDescriptors: IrClassSymbol by lazy { clazz(Identifiers.Classes.CommonDescriptors) }
 
@@ -150,15 +165,58 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `UnionVariant(name, tag, type)` */
     val unionVariant: IrConstructorSymbol by lazy { classes.unionVariant.constructors.single() }
 
-    /** `TypeDescriptor.Simple(javaClass, isNullable)` */
+    /** `TypeDescriptor.Simple(javaClass, isNullable)`: the registry picks the converter. */
     val simpleDescriptor: IrConstructorSymbol by lazy {
-      classes.typeDescriptorSimple.constructors.single()
+      classes.typeDescriptorSimple.constructorWith(regularParameters = 2)
     }
 
-    /** `TypeDescriptor.Parametrized(javaClass, isNullable, params)` */
-    val parametrizedDescriptor: IrConstructorSymbol by lazy {
-      descriptor(Identifiers.Classes.TypeDescriptorParametrized)
+    /** `TypeDescriptor.Simple(javaClass, isNullable, factory)`, or `null` on an older runtime. */
+    val simpleDescriptorWithFactory: IrConstructorSymbol? by lazy {
+      classes.typeDescriptorSimple.constructorWithOrNull(
+        regularParameters = 3,
+        lastParameter = "SimpleConverterFactory",
+      )
     }
+
+    /** `TypeDescriptor.Simple(javaClass, isNullable, converter)`, or `null` on an older runtime. */
+    val simpleDescriptorWithConverter: IrConstructorSymbol? by lazy {
+      classes.typeDescriptorSimple.constructorWithOrNull(
+        regularParameters = 3,
+        lastParameter = "TypeConverter",
+      )
+    }
+
+    /** `TypeDescriptor.Parametrized(javaClass, isNullable, params)`: the registry picks. */
+    val parametrizedDescriptor: IrConstructorSymbol by lazy {
+      parametrizedClass.constructorWith(regularParameters = 3)
+    }
+
+    /** `TypeDescriptor.Parametrized(javaClass, isNullable, params, factory)`, or `null`. */
+    val parametrizedDescriptorWithFactory: IrConstructorSymbol? by lazy {
+      parametrizedClass.constructorWithOrNull(regularParameters = 4)
+    }
+
+    private val parametrizedClass: IrClassSymbol by lazy {
+      classes.descriptor(Identifiers.Classes.TypeDescriptorParametrized)
+    }
+
+    private fun IrClassSymbol.constructorWith(regularParameters: Int): IrConstructorSymbol =
+      constructorWithOrNull(regularParameters)
+        ?: error("${owner.name} has no constructor with $regularParameters parameters")
+
+    /**
+     * The constructor with [regularParameters] parameters - and, when given, whose last one is of
+     * the class named [lastParameter], for overloads of the same length.
+     */
+    private fun IrClassSymbol.constructorWithOrNull(
+      regularParameters: Int,
+      lastParameter: String? = null,
+    ): IrConstructorSymbol? =
+      constructors.singleOrNull { constructor ->
+        val regular = constructor.owner.parameters.filter { it.kind == IrParameterKind.Regular }
+        val last = regular.lastOrNull()?.type?.classOrNull?.owner?.name?.asString()
+        regular.size == regularParameters && (lastParameter == null || last == lastParameter)
+      }
 
     /** `TypeDescriptor.Function(params, returns, isSuspend, isNullable)` */
     val functionDescriptor: IrConstructorSymbol by lazy {
@@ -185,6 +243,18 @@ class SymbolFinder(private val context: IrPluginContext) {
   }
 
   inner class Functions internal constructor() {
+    private val leafConverters = mutableMapOf<String, IrSimpleFunctionSymbol?>()
+
+    /**
+     * The leaf converter function [name], such as `urlConverter`, or `null` when the runtime on the
+     * classpath has none - an older one, or a platform without the type, such as
+     * `androidUriConverter` off Android.
+     */
+    fun leafConverter(name: String): IrSimpleFunctionSymbol? =
+      leafConverters.getOrPut(name) {
+        context.referenceFunctions(Identifiers.Callables.leafConverter(name)).singleOrNull()
+      }
+
     /** `SharedObjectRegistry.reserve(sharedClass): Int` */
     val reserveSharedClass: IrSimpleFunctionSymbol by lazy {
       classes.sharedObjectRegistry.functions.single {

@@ -3,42 +3,40 @@ package io.github.expo.modules.v2.types
 import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.SharedRef
 import io.github.expo.modules.v2.TypedArray
-import io.github.expo.modules.v2.cache.classCacheOf
-import io.github.expo.modules.v2.converters.ArrayConverter
-import io.github.expo.modules.v2.converters.BoxedBooleanConverter
-import io.github.expo.modules.v2.converters.BoxedDoubleConverter
-import io.github.expo.modules.v2.converters.BoxedFloatConverter
-import io.github.expo.modules.v2.converters.BoxedIntConverter
-import io.github.expo.modules.v2.converters.BoxedLongConverter
-import io.github.expo.modules.v2.converters.CollectionConverter
-import io.github.expo.modules.v2.converters.DurationConverter
-import io.github.expo.modules.v2.converters.DynamicConverter
-import io.github.expo.modules.v2.converters.EnumConverter
-import io.github.expo.modules.v2.converters.FileConverter
-import io.github.expo.modules.v2.converters.JsHandleConverter
-import io.github.expo.modules.v2.converters.KotlinUuidConverter
-import io.github.expo.modules.v2.converters.ListConverter
-import io.github.expo.modules.v2.converters.MapConverter
-import io.github.expo.modules.v2.converters.PairConverter
-import io.github.expo.modules.v2.converters.PathConverter
-import io.github.expo.modules.v2.converters.RecordConverter
-import io.github.expo.modules.v2.converters.SetConverter
-import io.github.expo.modules.v2.converters.SharedObjectConverter
-import io.github.expo.modules.v2.converters.SharedRefConverter
-import io.github.expo.modules.v2.converters.StringConverter
-import io.github.expo.modules.v2.converters.TripleConverter
+import io.github.expo.modules.v2.converters.ArrayConverterFactory
+import io.github.expo.modules.v2.converters.CollectionConverterFactory
+import io.github.expo.modules.v2.converters.EnumConverterFactory
+import io.github.expo.modules.v2.converters.ListConverterFactory
+import io.github.expo.modules.v2.converters.MapConverterFactory
+import io.github.expo.modules.v2.converters.PairConverterFactory
+import io.github.expo.modules.v2.converters.RecordConverterFactory
+import io.github.expo.modules.v2.converters.SetConverterFactory
+import io.github.expo.modules.v2.converters.SharedObjectConverterFactory
+import io.github.expo.modules.v2.converters.SharedRefConverterFactory
+import io.github.expo.modules.v2.converters.TripleConverterFactory
 import io.github.expo.modules.v2.converters.TypeConverter
-import io.github.expo.modules.v2.converters.TypedArrayConverter
-import io.github.expo.modules.v2.converters.UnionConverter
-import io.github.expo.modules.v2.converters.UnitConverter
-import io.github.expo.modules.v2.converters.UriConverter
-import io.github.expo.modules.v2.converters.UrlConverter
-import io.github.expo.modules.v2.converters.UuidConverter
-import io.github.expo.modules.v2.converters.selectJsHandleConverter
+import io.github.expo.modules.v2.converters.TypedArrayConverterFactory
+import io.github.expo.modules.v2.converters.UnionConverterFactory
+import io.github.expo.modules.v2.converters.boxedBooleanConverter
+import io.github.expo.modules.v2.converters.boxedDoubleConverter
+import io.github.expo.modules.v2.converters.boxedFloatConverter
+import io.github.expo.modules.v2.converters.boxedIntConverter
+import io.github.expo.modules.v2.converters.boxedLongConverter
+import io.github.expo.modules.v2.converters.durationConverter
+import io.github.expo.modules.v2.converters.dynamicConverter
+import io.github.expo.modules.v2.converters.fileConverter
+import io.github.expo.modules.v2.converters.jsObjectConverter
+import io.github.expo.modules.v2.converters.jsValueConverter
+import io.github.expo.modules.v2.converters.kotlinUuidConverter
+import io.github.expo.modules.v2.converters.pathConverter
+import io.github.expo.modules.v2.converters.stringConverter
+import io.github.expo.modules.v2.converters.unitConverter
+import io.github.expo.modules.v2.converters.uriConverter
+import io.github.expo.modules.v2.converters.urlConverter
+import io.github.expo.modules.v2.converters.uuidConverter
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.records.RecordRegistry
-import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
 import io.github.expo.modules.v2.unions.UnionRegistry
 import java.io.File
 import java.net.URI
@@ -49,197 +47,113 @@ import kotlin.time.Duration
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+/**
+ * Picks the converter factory for a descriptor that was built without one: by hand, or by a
+ * compiler plugin from before descriptors named their factories. The plugin makes the same choice
+ * at compile time - keep the two in step.
+ *
+ * Anything that reaches this object keeps every built-in converter reachable, which is why the
+ * descriptors the plugin emits never do.
+ */
 object TypeConverterRegistry {
   // `Uuid` is `@ExperimentalUuidApi` in the Kotlin 2.2 and 2.3 standard libraries this project
   // still supports, and stable from 2.4, where this opt-in is harmless. It covers only the table.
   @OptIn(ExperimentalUuidApi::class)
-  private val simpleConvertersCache = classCacheOf {
-    +entry(
-      Boolean::class.javaObjectType,
-      ::BoxedBooleanConverter
-    )
-
-    +entry(
-      Int::class.javaObjectType,
-      ::BoxedIntConverter
-    )
-
-    +entry(
-      Long::class.javaObjectType,
-      ::BoxedLongConverter
-    )
-
-    +entry(
-      Float::class.javaObjectType,
-      ::BoxedFloatConverter
-    )
-
-    +entry(
-      Double::class.javaObjectType,
-      ::BoxedDoubleConverter
-    )
-
-    +entry(
-      String::class.java,
-      ::StringConverter
-    )
-
-    +entry(
-      Unit::class.java,
-      ::UnitConverter
-    )
-
-    +entry(
-      Any::class.java,
-      ::DynamicConverter
-    )
-
-    +entry(
-      JavaScriptValue::class.java,
-      selectJsHandleConverter(CppType.JS_VALUE, ::JsHandleConverter)
-    )
-
-    +entry(
-      JavaScriptObject::class.java,
-      selectJsHandleConverter(CppType.JS_OBJECT, ::JsHandleConverter)
-    )
-
-    +entry(
-      Duration::class.java,
-      ::DurationConverter
-    )
-
-    +entry(
-      File::class.java,
-      ::FileConverter
-    )
-
-    +entry(
-      URL::class.java,
-      ::UrlConverter
-    )
-
-    +entry(
-      URI::class.java,
-      ::UriConverter
-    )
-
-    +entry(
-      Uuid::class.java,
-      ::KotlinUuidConverter
-    )
-
-    +entry(
-      UUID::class.java,
-      ::UuidConverter
-    )
-
-    // java.nio.file only exists on Android 8+ (API 26). Below that, resolving Path::class throws
-    // NoClassDefFoundError inside this initializer
-    runCatching {
-      +entry(
-        Path::class.java,
-        ::PathConverter
+  private val leafFactories: Map<Class<*>, SimpleConverterFactory> =
+    HashMap<Class<*>, SimpleConverterFactory>().apply {
+      put(
+        Boolean::class.javaObjectType,
+        leaf(boxedBooleanConverter(false), boxedBooleanConverter(true)),
       )
+      put(Int::class.javaObjectType, leaf(boxedIntConverter(false), boxedIntConverter(true)))
+      put(Long::class.javaObjectType, leaf(boxedLongConverter(false), boxedLongConverter(true)))
+      put(Float::class.javaObjectType, leaf(boxedFloatConverter(false), boxedFloatConverter(true)))
+      put(
+        Double::class.javaObjectType,
+        leaf(boxedDoubleConverter(false), boxedDoubleConverter(true)),
+      )
+      put(String::class.java, leaf(stringConverter(false), stringConverter(true)))
+      put(Unit::class.java, leaf(unitConverter(false), unitConverter(true)))
+      put(Any::class.java, leaf(dynamicConverter(false), dynamicConverter(true)))
+      put(JavaScriptValue::class.java, leaf(jsValueConverter(false), jsValueConverter(true)))
+      put(JavaScriptObject::class.java, leaf(jsObjectConverter(false), jsObjectConverter(true)))
+      put(Duration::class.java, leaf(durationConverter(false), durationConverter(true)))
+      put(File::class.java, leaf(fileConverter(false), fileConverter(true)))
+      put(URL::class.java, leaf(urlConverter(false), urlConverter(true)))
+      put(URI::class.java, leaf(uriConverter(false), uriConverter(true)))
+      put(Uuid::class.java, leaf(kotlinUuidConverter(false), kotlinUuidConverter(true)))
+      put(UUID::class.java, leaf(uuidConverter(false), uuidConverter(true)))
+
+      // java.nio.file only exists on Android 8+ (API 26). Below that, resolving Path::class throws
+      // NoClassDefFoundError inside this initializer
+      runCatching {
+        put(Path::class.java, leaf(pathConverter(false), pathConverter(true)))
+      }
+
+      // The leaf types of the platform this module is built for, such as `android.net.Uri`.
+      platformConverters()
     }
 
-    // The leaf types of the platform this module is built for, such as `android.net.Uri`.
-    platformConverters()
+  /**
+   * A leaf type's factory: one converter per nullability, built with the table. The converters, not
+   * a function that builds them - a function reference is a class of its own on Android.
+   */
+  internal fun leaf(nonNull: TypeConverter<*>, nullable: TypeConverter<*>): SimpleConverterFactory =
+    object : SimpleConverterFactory {
+      override fun create(descriptor: TypeDescriptor.Simple): TypeConverter<*> =
+        if (descriptor.isNullable) {
+          nullable
+        } else {
+          nonNull
+        }
+    }
+
+  /** The factory a hand-built [TypeDescriptor.Simple] gets: the one its class calls for. */
+  internal object SimpleLookup : SimpleConverterFactory {
+    override fun create(descriptor: TypeDescriptor.Simple): TypeConverter<*> =
+      simpleFactoryFor(descriptor.javaClass).create(descriptor)
   }
 
-  fun converter(typeDescriptor: TypeDescriptor.Simple): TypeConverter<*> {
-    val (type, isNullable) = typeDescriptor
+  /** The factory a hand-built [TypeDescriptor.Parametrized] gets: the one its class calls for. */
+  internal object ParametrizedLookup : ParametrizedConverterFactory {
+    override fun create(descriptor: TypeDescriptor.Parametrized): TypeConverter<*> =
+      parametrizedFactoryFor(descriptor.javaClass).create(descriptor)
+  }
 
-    return simpleConvertersCache.getOrPut(
-      type,
-      isNullable,
-    ) {
-      if (SharedObject::class.java.isAssignableFrom(type)) {
-        @Suppress("UNCHECKED_CAST")
-        val sharedClass = type as Class<out SharedObject>
-        return@getOrPut SharedObjectConverter(
-          SharedObjectRegistry.classIdFor(sharedClass),
-          sharedClass,
-          isNullable,
-        )
-      }
+  fun converter(typeDescriptor: TypeDescriptor.Simple): TypeConverter<*> =
+    SimpleLookup.create(typeDescriptor)
 
-      if (TypedArray::class.java.isAssignableFrom(type)) {
-        @Suppress("UNCHECKED_CAST")
-        return@getOrPut TypedArrayConverter(type as Class<out TypedArray>, isNullable)
-      }
+  fun converter(typeDescriptor: TypeDescriptor.Parametrized): TypeConverter<*> =
+    ParametrizedLookup.create(typeDescriptor)
 
-      if (type.isEnum) {
-        @Suppress("UNCHECKED_CAST")
-        return@getOrPut EnumConverter(type as Class<out Enum<*>>, isNullable)
-      }
+  private fun simpleFactoryFor(type: Class<*>): SimpleConverterFactory {
+    leafFactories[type]?.let { return it }
 
-      val unionType = UnionRegistry.typeFor(type)
-      if (unionType != null) {
-        return@getOrPut UnionConverter(unionType, isNullable)
-      }
-
-      val recordType = RecordRegistry.typeFor(type)
-      if (recordType != null) {
-        RecordConverter(recordType, isNullable)
-      } else {
-        throw IllegalArgumentException(
-          "${type.name} has no bridge type - describe it with a leaf class, a List/Map, a registered " +
-            "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register"
-        )
-      }
+    return when {
+      SharedObject::class.java.isAssignableFrom(type) -> SharedObjectConverterFactory
+      TypedArray::class.java.isAssignableFrom(type) -> TypedArrayConverterFactory
+      type.isEnum -> EnumConverterFactory
+      UnionRegistry.typeFor(type) != null -> UnionConverterFactory
+      RecordRegistry.typeFor(type) != null -> RecordConverterFactory
+      else -> throw IllegalArgumentException(
+        "${type.name} has no bridge type - describe it with a leaf class, a List/Map, a registered " +
+          "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register"
+      )
     }
   }
 
-  fun converter(typeDescriptor: TypeDescriptor.Parametrized): TypeConverter<*> {
-    val (jClass) = typeDescriptor
-
-    if (SharedRef::class.java.isAssignableFrom(jClass)) {
-      @Suppress("UNCHECKED_CAST")
-      val sharedClass = jClass as Class<out SharedObject>
-      val refClass = (typeDescriptor.params.singleOrNull() as? TypeDescriptor.Simple)?.javaClass
-        ?: throw IllegalArgumentException(
-          "A SharedRef parameter must name the type it carries, as SharedRef<Something>",
-        )
-
-      return SharedRefConverter(
-        SharedObjectRegistry.classIdFor(sharedClass),
-        refClass,
-        typeDescriptor.isNullable,
-      )
-    }
-
-    if (List::class.java.isAssignableFrom(jClass)) {
-      return ListConverter(typeDescriptor)
-    }
-
-    if (Map::class.java.isAssignableFrom(jClass)) {
-      return MapConverter(typeDescriptor)
-    }
-
-    if (Set::class.java.isAssignableFrom(jClass)) {
-      return SetConverter<Any>(typeDescriptor)
-    }
-
-    if (Array::class.java.isAssignableFrom(jClass)) {
-      return ArrayConverter<Any>(typeDescriptor)
-    }
-
+  private fun parametrizedFactoryFor(jClass: Class<*>): ParametrizedConverterFactory = when {
+    SharedRef::class.java.isAssignableFrom(jClass) -> SharedRefConverterFactory
+    List::class.java.isAssignableFrom(jClass) -> ListConverterFactory
+    Map::class.java.isAssignableFrom(jClass) -> MapConverterFactory
+    Set::class.java.isAssignableFrom(jClass) -> SetConverterFactory
+    Array::class.java.isAssignableFrom(jClass) -> ArrayConverterFactory
     // Last of the collections: a declared `Collection` is none of the above, and only the
     // interface itself reaches here - the compiler plugin accepts no other Collection type.
-    if (jClass == Collection::class.java) {
-      return CollectionConverter(typeDescriptor)
-    }
-
-    if (jClass == Pair::class.java) {
-      return PairConverter(typeDescriptor)
-    }
-
-    if (jClass == Triple::class.java) {
-      return TripleConverter(typeDescriptor)
-    }
-
-    throw IllegalArgumentException(
+    jClass == Collection::class.java -> CollectionConverterFactory
+    jClass == Pair::class.java -> PairConverterFactory
+    jClass == Triple::class.java -> TripleConverterFactory
+    else -> throw IllegalArgumentException(
       "${jClass.name} has no bridge type - describe it with a leaf class, a List/Set/Collection/Map/Pair/Triple, a registered " +
         "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register"
     )

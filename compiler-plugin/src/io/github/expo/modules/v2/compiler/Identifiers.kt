@@ -22,6 +22,7 @@ object Identifiers {
     val ASYNC = FqName("io.github.expo.modules.v2.async")
     val SHARED_OBJECTS = FqName("io.github.expo.modules.v2.sharedobjects")
     val EVENTS = FqName("io.github.expo.modules.v2.events")
+    val CONVERTERS = FqName("io.github.expo.modules.v2.converters")
 
     /** Kolibri, the JNI layer under the bridge. */
     val KOLIBRI = FqName("io.github.expo.kolibri")
@@ -113,6 +114,10 @@ object Identifiers {
 
     /** `fun noSuchVariant(union, index): Nothing` - what a generated `wrap` throws past its variants. */
     val noSuchVariant = CallableId(Packages.UNIONS, Name.identifier("noSuchVariant"))
+
+    /** A leaf type's converter function, such as `urlConverter(isNullable)`. */
+    fun leafConverter(name: String): CallableId =
+      CallableId(Packages.CONVERTERS, Name.identifier(name))
   }
 
   object Classes {
@@ -185,6 +190,9 @@ object Identifiers {
     val JavaScriptValue = classId(Packages.JSI, "JavaScriptValue")
     val JavaScriptObject = classId(Packages.JSI, "JavaScriptObject")
     val JavaScriptFunction = classId(Packages.JSI, "JavaScriptFunction")
+
+    /** One of the converter factory objects a descriptor names, such as `UrlConverterFactory`. */
+    fun converterFactory(simpleName: String): ClassId = classId(Packages.CONVERTERS, simpleName)
 
     fun typeDescriptorNested(simpleName: String): ClassId =
       TypeDescriptor.createNestedClassId(Name.identifier(simpleName))
