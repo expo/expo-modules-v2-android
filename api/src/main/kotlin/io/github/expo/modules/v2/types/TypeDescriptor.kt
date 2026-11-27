@@ -135,11 +135,31 @@ sealed interface TypeDescriptor {
     override fun toString(): String = cppType.toString().nullableSuffix(isNullable)
   }
 
-  class Simple(
+  class Simple private constructor(
     val javaClass: Class<*>,
     val isNullable: Boolean,
+    private val factory: SimpleConverterFactory?,
+    converter: TypeConverter<*>?,
   ) : ObjectLike {
-    override val converter: TypeConverter<*> by lazy { TypeConverterRegistry.converter(this) }
+    constructor(javaClass: Class<*>, isNullable: Boolean) :
+      this(javaClass, isNullable, TypeConverterRegistry.SimpleLookup, null)
+
+    /** A class whose converter waits until first use: an enum, a shared object, a record... */
+    constructor(javaClass: Class<*>, isNullable: Boolean, factory: SimpleConverterFactory) :
+      this(javaClass, isNullable, factory, null)
+
+    /** A leaf type, whose converter is ready at once - see `LeafConverters.kt`. */
+    constructor(javaClass: Class<*>, isNullable: Boolean, converter: TypeConverter<*>) :
+      this(javaClass, isNullable, null, converter)
+
+    @Volatile
+    private var resolved: TypeConverter<*>? = converter
+
+    override val converter: TypeConverter<*>
+      get() = resolved ?: resolve()
+
+    private fun resolve(): TypeConverter<*> =
+      checkNotNull(factory).create(this).also { resolved = it }
 
     override fun toString(): String = javaClass.simpleName.nullableSuffix(isNullable)
 
@@ -147,12 +167,23 @@ sealed interface TypeDescriptor {
     operator fun component2(): Boolean = isNullable
   }
 
+  /** A generic class and its type arguments. [factory] works as it does for [Simple]. */
   class Parametrized(
     val javaClass: Class<*>,
     val isNullable: Boolean,
     val params: Array<out ObjectLike>,
+    private val factory: ParametrizedConverterFactory,
   ) : ObjectLike {
-    override val converter: TypeConverter<*> by lazy { TypeConverterRegistry.converter(this) }
+    constructor(javaClass: Class<*>, isNullable: Boolean, params: Array<out ObjectLike>) :
+      this(javaClass, isNullable, params, TypeConverterRegistry.ParametrizedLookup)
+
+    @Volatile
+    private var resolved: TypeConverter<*>? = null
+
+    override val converter: TypeConverter<*>
+      get() = resolved ?: resolve()
+
+    private fun resolve(): TypeConverter<*> = factory.create(this).also { resolved = it }
 
     override fun toString(): String =
       javaClass.simpleName +
@@ -185,7 +216,12 @@ sealed interface TypeDescriptor {
   }
 }
 
-private fun String.nullableSuffix(isNullable: Boolean) = this +  if (isNullable) "?" else ""
+private fun String.nullableSuffix(isNullable: Boolean) =
+  this + if (isNullable) {
+    "?"
+  } else {
+    ""
+  }
 
 val TypeDescriptor.isNullable: Boolean
   get() = when (this) {
@@ -199,3 +235,13 @@ val TypeDescriptor.isNullable: Boolean
 @Suppress("UNCHECKED_CAST")
 inline val TypeDescriptor.anyConverter: TypeConverter<Any>
   get() = converter as TypeConverter<Any>
+
+/** Builds the converter of a [TypeDescriptor.Simple]. */
+interface SimpleConverterFactory {
+  fun create(descriptor: TypeDescriptor.Simple): TypeConverter<*>
+}
+
+/** Builds the converter of a [TypeDescriptor.Parametrized]. */
+interface ParametrizedConverterFactory {
+  fun create(descriptor: TypeDescriptor.Parametrized): TypeConverter<*>
+}

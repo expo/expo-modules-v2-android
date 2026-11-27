@@ -24,3 +24,9 @@ class PathConverter(
   override fun readFromBuffer(buf: BinaryBuffer): Path? =
     buf.readPresent { Paths.get(getString()) }
 }
+
+/**
+ * The `java.nio.file.Path` converter the compiler plugin calls for, as for the types in
+ * LeafConverters.kt. Here rather than there: only an API 26+ device can load the type.
+ */
+fun pathConverter(isNullable: Boolean): TypeConverter<*> = PathConverter(isNullable)
