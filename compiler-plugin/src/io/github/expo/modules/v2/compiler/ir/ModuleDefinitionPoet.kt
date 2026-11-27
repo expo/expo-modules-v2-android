@@ -140,4 +140,16 @@ internal class ModuleDefinitionPoet(
   /** `ModuleBuilder` derives the JVM accessor names from this, including the `is` prefix rule. */
   private fun propertyNameOf(export: ExportedProperty): String =
     export.trampolineBase ?: export.property.name.asString()
+
+  /** `fun name$ExpoModulesV2(): String? = "MathUtils"`: the name, without defining anything. */
+  fun fillName(function: IrSimpleFunction, owner: IrClass, jsName: String) {
+    val body = context.irFactory.createSyntheticBlockBody()
+    body.statements += IrSyntheticReturnImpl(
+      type = irBuiltIns.nothingType,
+      returnTargetSymbol = function.symbol,
+      value = poet.string(jsName),
+    )
+    function.body = body
+    function.patchDeclarationParents(owner)
+  }
 }

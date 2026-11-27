@@ -242,12 +242,17 @@ class EnumTest {
   @Test
   fun `a module with an enum that does not implement Enumerable warns, and still crosses`() {
     HermesRuntime().use { runtime ->
-      val log = capturingStdErr { runtime.moduleRegistry.register(UnmarkedEnums()) }
+      runtime.moduleRegistry.register(UnmarkedEnums())
+      // The module is defined, and its enum converter built, when JavaScript first reads it.
+      var echoed: String? = null
+      val log = capturingStdErr {
+        echoed = runtime.evaluateAsString("expo.modules.UnmarkedEnums.echo('SECOND')")
+      }
       assertTrue(
         "Unmarked does not implement io.github.expo.modules.v2.Enumerable" in log,
         "unexpected log: $log",
       )
-      assertEquals("SECOND", runtime.evaluateAsString("expo.modules.UnmarkedEnums.echo('SECOND')"))
+      assertEquals("SECOND", echoed)
     }
   }
 }
