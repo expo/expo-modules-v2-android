@@ -91,7 +91,7 @@ internal class ExpoModuleIrTransformer(
         "@ExpoModule: ${
           "${moduleClass.kotlinFqName} has no inherited ${Identifiers.Literals.DEFINE_FUNCTION}; " +
             "the frontend should have rejected an @ExpoModule class that is not a Module"
-        }"
+        }",
       )
 
     define.isFakeOverride = false

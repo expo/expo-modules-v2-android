@@ -76,7 +76,7 @@ class EnumConverter(
           getInt()
         } else {
           getString()
-        }
+        },
       )
     }
 

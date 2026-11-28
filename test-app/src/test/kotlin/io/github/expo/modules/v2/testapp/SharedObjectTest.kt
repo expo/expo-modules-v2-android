@@ -5,11 +5,11 @@ import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.ExpoSharedObject
 import io.github.expo.modules.v2.JS
-import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.SharedObject
-import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
 import io.github.expo.modules.v2.SharedRef
+import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
 import io.github.expo.modules.v2.testsupport.TestSupport
@@ -1022,7 +1022,10 @@ class SharedObjectTest {
       )
 
       // Properties read and write the instance in the slot too.
-      assertEquals("spot-39999", runtime.evaluateAsString("const last = spots[39999]; last.label = 'spot-' + last.id(); last.label"))
+      assertEquals(
+        "spot-39999",
+        runtime.evaluateAsString("const last = spots[39999]; last.label = 'spot-' + last.id(); last.label"),
+      )
 
       // An explicit release gives its slot back, and the next object takes it rather than a new
       // chunk - even from a chunk that was full, with every other chunk full too.

@@ -155,11 +155,24 @@ private fun check(owner: String, actual: ModuleBuilder, expected: ExportsSpec) {
       differs("constant", prop.isConstant, spec.isConstant),
       differs("getter", prop.getterName.short(), getter.short()),
       differs("setter", prop.setterName?.short(), setter?.short()),
-      if (setterType != null && expectedSetterType != null) typeDiffers("setter type", setterType, expectedSetterType) else null,
+      if (setterType != null &&
+        expectedSetterType != null
+      ) {
+        typeDiffers("setter type", setterType, expectedSetterType)
+      } else {
+        null
+      },
     )
   }
 
-  compare("shared class", actual.sharedClasses.associateBy { it.jsName }, expected.sharedClasses, problems) { cls, spec ->
+  compare(
+    "shared class",
+    actual.sharedClasses.associateBy {
+      it.jsName
+    },
+    expected.sharedClasses,
+    problems,
+  ) { cls, spec ->
     val expectedId = SharedObjectRegistry.classIdFor(spec.type.java).value
     listOfNotNull(
       if (cls.classId == expectedId) null else "registers another class than ${spec.type.java.simpleName}",
@@ -225,7 +238,9 @@ private fun render(descriptor: TypeDescriptor): String = when (descriptor) {
       (if (descriptor.isNullable) "?" else "")
   is TypeDescriptor.Simple -> descriptor.javaClass.kotlin.simpleName + (if (descriptor.isNullable) "?" else "")
   is TypeDescriptor.Parametrized ->
-    descriptor.javaClass.kotlin.simpleName + descriptor.params.joinToString(prefix = "<", postfix = ">") { render(it) } +
+    descriptor.javaClass.kotlin.simpleName + descriptor.params.joinToString(prefix = "<", postfix = ">") {
+      render(it)
+    } +
       (if (descriptor.isNullable) "?" else "")
 }
 

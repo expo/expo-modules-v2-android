@@ -1,8 +1,8 @@
 package io.github.expo.modules.v2.records
 
 import io.github.expo.modules.v2.records.readers.MapRecordReader
-import io.github.expo.modules.v2.records.writers.MapRecordWriter
 import io.github.expo.modules.v2.records.readers.RecordReader
+import io.github.expo.modules.v2.records.writers.MapRecordWriter
 import io.github.expo.modules.v2.records.writers.RecordWriter
 
 interface RecordCodec<T : Record> {

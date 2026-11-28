@@ -261,6 +261,7 @@ private fun FirDeclaration.symbolOrNull() = when (this) {
 }
 
 // TODO(@lukmccall): consider forcing them to be public
+
 /** `internal` members are name-mangled on the JVM, so the bridge's method lookup cannot find them. */
 internal fun checkVisibility(
   declaration: FirCallableDeclaration,

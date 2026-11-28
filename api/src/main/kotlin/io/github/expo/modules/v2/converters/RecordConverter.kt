@@ -1,5 +1,6 @@
 package io.github.expo.modules.v2.converters
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.records.Record
 import io.github.expo.modules.v2.records.RecordType
 import io.github.expo.modules.v2.records.readers.BufferRecordReader
@@ -8,7 +9,6 @@ import io.github.expo.modules.v2.records.writers.BufferRecordWriter
 import io.github.expo.modules.v2.records.writers.MapRecordWriter
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeCodesWriter
-import io.github.expo.kolibri.binary.BinaryBuffer
 
 internal class RecordConverter(
   private val recordType: RecordType<*>,

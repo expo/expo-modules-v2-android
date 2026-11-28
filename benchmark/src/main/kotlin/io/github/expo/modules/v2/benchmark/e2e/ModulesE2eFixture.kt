@@ -2,8 +2,8 @@ package io.github.expo.modules.v2.benchmark.e2e
 
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
-import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.testsupport.HermesRuntime
 
 const val E2E_FIRST_WORKFLOW_RESULT = 688.52

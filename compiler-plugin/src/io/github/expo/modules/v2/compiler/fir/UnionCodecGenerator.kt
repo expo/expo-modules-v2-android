@@ -145,7 +145,7 @@ class UnionCodecGenerator(session: FirSession) : FirDeclarationGenerationExtensi
             owner,
             UnionKey,
             name = Identifiers.Names.UNION_CLASS,
-            returnType = javaClassType(union)
+            returnType = javaClassType(union),
           ) {
             status { isOverride = true }
           }.symbol,
@@ -156,7 +156,7 @@ class UnionCodecGenerator(session: FirSession) : FirDeclarationGenerationExtensi
             owner,
             UnionKey,
             name = Identifiers.Names.SCHEMA,
-            returnType = coneType(Identifiers.Classes.UnionSchema)
+            returnType = coneType(Identifiers.Classes.UnionSchema),
           ) {
             status { isOverride = true }
           }.symbol,
@@ -173,7 +173,7 @@ class UnionCodecGenerator(session: FirSession) : FirDeclarationGenerationExtensi
           owner,
           UnionKey,
           name = Identifiers.Names.UNION_CODEC_PROPERTY,
-          returnType = codecTypeFor(union)
+          returnType = codecTypeFor(union),
         ).symbol,
       )
     }
@@ -256,7 +256,7 @@ class UnionCodecGenerator(session: FirSession) : FirDeclarationGenerationExtensi
   private fun codecTypeFor(union: FirClassSymbol<*>): ConeKotlinType =
     coneType(
       Identifiers.Classes.UnionCodec,
-      union.constructType(emptyArray(), isMarkedNullable = false)
+      union.constructType(emptyArray(), isMarkedNullable = false),
     )
 
   private fun javaClassType(union: FirClassSymbol<*>): ConeKotlinType =

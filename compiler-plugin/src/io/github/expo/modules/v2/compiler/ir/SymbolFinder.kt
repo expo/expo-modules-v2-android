@@ -79,7 +79,6 @@ class SymbolFinder(private val context: IrPluginContext) {
     /** `class ModuleBuilder` */
     val moduleBuilder: IrClassSymbol by lazy { clazz(Identifiers.Classes.ModuleBuilder) }
 
-
     /** `abstract class SharedObject` */
     val sharedObject: IrClassSymbol by lazy { clazz(Identifiers.Classes.SharedObject) }
 
@@ -171,7 +170,7 @@ class SymbolFinder(private val context: IrPluginContext) {
     val registerSharedClass: IrSimpleFunctionSymbol by lazy {
       classes.sharedObjectRegistry.functions.single {
         it.owner.name == Identifiers.Names.REGISTER_SHARED_CLASS &&
-            it.owner.parameters.any { parameter -> parameter.type.classOrNull == classes.moduleBuilder }
+          it.owner.parameters.any { parameter -> parameter.type.classOrNull == classes.moduleBuilder }
       }
     }
 

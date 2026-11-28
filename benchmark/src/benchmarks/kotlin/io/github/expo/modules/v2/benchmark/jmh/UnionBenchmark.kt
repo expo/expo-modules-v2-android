@@ -24,9 +24,9 @@ import kotlinx.benchmark.Scope
 import kotlinx.benchmark.Setup
 import kotlinx.benchmark.State
 import kotlinx.benchmark.TearDown
+import org.openjdk.jmh.annotations.OperationsPerInvocation
 import java.net.URL
 import java.util.concurrent.atomic.AtomicInteger
-import org.openjdk.jmh.annotations.OperationsPerInvocation
 
 @Union
 sealed interface BenchDimension {

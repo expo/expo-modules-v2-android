@@ -49,7 +49,7 @@ class Promise<T>() {
     try {
       executor(
         { value -> resolve(value) },
-        { throwable -> reject(throwable) }
+        { throwable -> reject(throwable) },
       )
     } catch (throwable: Throwable) {
       reject(throwable)

@@ -80,7 +80,7 @@ class ModuleHintGenerator(session: FirSession) : FirDeclarationGenerationExtensi
       Identifiers.Hints.MEMBER,
       returnType = module.constructType(
         emptyArray(),
-        isMarkedNullable = false
+        isMarkedNullable = false,
       ),
     ) {
       modality = Modality.ABSTRACT

@@ -1,12 +1,12 @@
 package io.github.expo.modules.v2.binary
 
+import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.kolibri.binary.BinaryTag
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
-import io.github.expo.kolibri.binary.BinaryBuffer
-import io.github.expo.kolibri.binary.BinaryTag
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -65,9 +65,12 @@ class BinaryValueRoundTripTest {
   }
 
   /** A declared ANY slot: the tagged format, entered from the schema-directed side. */
-  private fun roundTripDynamic(value: Any?): Any? = roundTrip(value, AnyType(
-    TypeDescriptor.Simple(Any::class.java, false),
-  ))
+  private fun roundTripDynamic(value: Any?): Any? = roundTrip(
+    value,
+    AnyType(
+      TypeDescriptor.Simple(Any::class.java, false),
+    ),
+  )
 
   /** The schema for one leaf kind, boxed kinds included (they intern through their boxed class). */
   private fun schemaOf(kind: CppType): AnyType = AnyType(
@@ -92,7 +95,6 @@ class BinaryValueRoundTripTest {
       )
     },
   )
-
 
   @Test
   fun `every scalar list kind round-trips as both run and nullable forms`() {
@@ -126,25 +128,38 @@ class BinaryValueRoundTripTest {
     // Non-scalar element runs take the per-element path.
     assertEquals(
       listOf("a", "żółć"),
-      roundTrip(listOf("a", "żółć"), AnyType(
-        TypeDescriptor.Parametrized(List::class.java, false, arrayOf(TypeDescriptor.Simple(String::class.java, false))),
-      )),
+      roundTrip(
+        listOf("a", "żółć"),
+        AnyType(
+          TypeDescriptor.Parametrized(
+            List::class.java,
+            false,
+            arrayOf(TypeDescriptor.Simple(String::class.java, false)),
+          ),
+        ),
+      ),
     )
   }
 
   @Test
   fun `containers, records and nullable heads round-trip`() {
     val map = mapOf("a" to 1, "b" to 2)
-    assertEquals(map, roundTrip(map, AnyType(
-      TypeDescriptor.Parametrized(
-        Map::class.java,
-        false,
-        arrayOf(
-          TypeDescriptor.Simple(String::class.java, false),
-          TypeDescriptor.Simple(Int::class.javaObjectType, false),
+    assertEquals(
+      map,
+      roundTrip(
+        map,
+        AnyType(
+          TypeDescriptor.Parametrized(
+            Map::class.java,
+            false,
+            arrayOf(
+              TypeDescriptor.Simple(String::class.java, false),
+              TypeDescriptor.Simple(Int::class.javaObjectType, false),
+            ),
+          ),
         ),
       ),
-    )))
+    )
 
     val point = RoundTripPoint(1.5, "hello")
     assertEquals(point, roundTrip(point, AnyType(TypeDescriptor.Simple(RoundTripPoint::class.java, false))))

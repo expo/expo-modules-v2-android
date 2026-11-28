@@ -1,11 +1,11 @@
 package io.github.expo.modules.v2.converters
 
-import io.github.expo.modules.v2.types.CppType
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.types.CppType
 import java.net.URI
 
 class UriConverter(
-  isNullable: Boolean
+  isNullable: Boolean,
 ) : TypeConverter<URI>(isNullable) {
   override val kind: CppType get() = CppType.STRING
 
@@ -18,7 +18,7 @@ class UriConverter(
     value?.toString()
 
   override fun writeToBuffer(buf: BinaryBuffer, value: URI?) =
-    buf.writePresent(value) { putString(it.toString())}
+    buf.writePresent(value) { putString(it.toString()) }
 
   override fun readFromBuffer(buf: BinaryBuffer): URI? =
     buf.readPresent { URI.create(getString()) }

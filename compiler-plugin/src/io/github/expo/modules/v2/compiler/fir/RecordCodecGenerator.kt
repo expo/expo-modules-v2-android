@@ -137,7 +137,7 @@ class RecordCodecGenerator(session: FirSession) : FirDeclarationGenerationExtens
             owner,
             RecordKey,
             name = Identifiers.Names.RECORD_CLASS,
-            returnType = javaClassType(record)
+            returnType = javaClassType(record),
           ) {
             status { isOverride = true }
           }.symbol,
@@ -148,7 +148,7 @@ class RecordCodecGenerator(session: FirSession) : FirDeclarationGenerationExtens
             owner,
             RecordKey,
             name = Identifiers.Names.SCHEMA,
-            returnType = recordSchemaType()
+            returnType = recordSchemaType(),
           ) {
             status { isOverride = true }
           }.symbol,
@@ -165,7 +165,7 @@ class RecordCodecGenerator(session: FirSession) : FirDeclarationGenerationExtens
           owner,
           RecordKey,
           name = Identifiers.Names.CODEC_PROPERTY,
-          returnType = codecTypeFor(record)
+          returnType = codecTypeFor(record),
         ).symbol,
       )
     }
@@ -191,7 +191,7 @@ class RecordCodecGenerator(session: FirSession) : FirDeclarationGenerationExtens
           owner,
           RecordKey,
           name = Identifiers.Names.ENCODE,
-          returnType = session.builtinTypes.unitType.coneType
+          returnType = session.builtinTypes.unitType.coneType,
         ) {
           status { isOverride = true }
           valueParameter(Name.identifier("value"), recordType)
@@ -204,7 +204,7 @@ class RecordCodecGenerator(session: FirSession) : FirDeclarationGenerationExtens
           owner,
           RecordKey,
           name = Identifiers.Names.DECODE,
-          returnType = recordType
+          returnType = recordType,
         ) {
           status { isOverride = true }
           valueParameter(Name.identifier("reader"), coneType(Identifiers.Classes.RecordReader))
@@ -248,7 +248,7 @@ class RecordCodecGenerator(session: FirSession) : FirDeclarationGenerationExtens
   private fun codecTypeFor(record: FirClassSymbol<*>): ConeKotlinType =
     coneType(
       Identifiers.Classes.RecordCodec,
-      record.constructType(emptyArray(), isMarkedNullable = false)
+      record.constructType(emptyArray(), isMarkedNullable = false),
     )
 
   private fun javaClassType(record: FirClassSymbol<*>): ConeKotlinType =

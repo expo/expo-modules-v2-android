@@ -1,8 +1,8 @@
 package io.github.expo.modules.v2.converters
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeCodesWriter
-import io.github.expo.kolibri.binary.BinaryBuffer
 
 abstract class TypeConverter<T>(val isNullable: Boolean) {
   /** The kind this converter crosses as, without flags: the first code [writeTypeCodes] writes. */

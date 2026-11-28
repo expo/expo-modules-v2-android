@@ -1,6 +1,7 @@
 package io.github.expo.modules.v2.types
 
 import io.github.expo.modules.v2.converters.UrlConverter
+import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.records.RecordField
 import io.github.expo.modules.v2.records.RecordSchema
 import java.net.URL
@@ -11,7 +12,6 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
-import io.github.expo.modules.v2.jsi.JavaScriptObject
 
 /**
  * Pins the code stream a descriptor emits. Every expectation is the literal type-codes sequence

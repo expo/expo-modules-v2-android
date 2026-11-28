@@ -18,7 +18,7 @@ internal data class RecordType<T : Record>(
       jniDescriptor = codec.recordClass.jniDescriptor,
       bufferSafe = schema.bufferSafe,
       fieldNames = schema.fields.map { it.name }.toTypedArray(),
-      fieldTypes =  marshallCodes(),
+      fieldTypes = marshallCodes(),
       fieldOptional = BooleanArray(schema.fields.size) { schema.fields[it].isOptional },
     )
   }

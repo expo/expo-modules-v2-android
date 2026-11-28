@@ -6,5 +6,4 @@ internal value class SchemaId(val value: Int) {
 
   operator fun inc(): SchemaId =
     SchemaId(value.inc())
-
 }

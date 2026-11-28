@@ -32,4 +32,3 @@ val FirSession.sharedObjectPredicates: SharedObjectPredicates by
 fun FirClassSymbol<*>.hasExpoSharedObjectAnnotation(session: FirSession): Boolean =
   session.predicateBasedProvider.matches(session.sharedObjectPredicates.predicate, this) ||
     getAnnotationByClassId(Identifiers.Classes.ExpoSharedObjectAnnotation, session) != null
-

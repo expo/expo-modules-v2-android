@@ -6,7 +6,9 @@ import io.github.expo.kolibri.NativeObject
 import io.github.expo.kolibri.NativePointer
 
 @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptValue.h")
-class JavaScriptValue @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptValue.h") private constructor(
+class JavaScriptValue
+@CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptValue.h")
+private constructor(
   pointer: Long,
 ) : NativeObject(NativePointer(pointer)) {
 
@@ -18,7 +20,8 @@ class JavaScriptValue @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptValu
     NUMBER(4),
     STRING(5),
     SYMBOL(6),
-    OBJECT(7);
+    OBJECT(7),
+    ;
 
     internal companion object {
       fun fromCode(code: Int): Kind =
@@ -30,25 +33,37 @@ class JavaScriptValue @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptValu
 
   fun kind(): Kind = Kind.fromCode(kindCode())
 
-  //@formatter:off
+  // @formatter:off
   @NativeMethod private external fun kindCode(): Int
 
   @NativeMethod external fun isNull(): Boolean
+
   @NativeMethod external fun isUndefined(): Boolean
+
   @NativeMethod external fun isBool(): Boolean
+
   @NativeMethod external fun isNumber(): Boolean
+
   @NativeMethod external fun isString(): Boolean
+
   @NativeMethod external fun isSymbol(): Boolean
+
   @NativeMethod external fun isFunction(): Boolean
+
   @NativeMethod external fun isArray(): Boolean
+
   @NativeMethod external fun isObject(): Boolean
 
   @NativeMethod external fun getBool(): Boolean
+
   @NativeMethod external fun getDouble(): Double
+
   @NativeMethod external fun getString(): String
+
   @NativeMethod external fun getObject(): JavaScriptObject
+
   @NativeMethod external fun getArray(): Array<JavaScriptValue>
-  //@formatter:on
+  // @formatter:on
 
   fun getInt(): Int = getDouble().toInt()
   fun getLong(): Long = getDouble().toLong()

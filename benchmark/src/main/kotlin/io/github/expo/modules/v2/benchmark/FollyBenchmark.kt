@@ -153,7 +153,9 @@ fun main() {
     if (!available) {
       println("__follyBench is not compiled in.")
       println("Configure the native build with -DEXPO_FOLLY_BENCHMARK=ON (requires `brew install folly`):")
-      println("  cmake -S test-support/src/main/cpp -B test-support/build/native -DEXPO_FOLLY_BENCHMARK=ON && ./gradlew :benchmark:runFollyBenchmark")
+      println(
+        "  cmake -S test-support/src/main/cpp -B test-support/build/native -DEXPO_FOLLY_BENCHMARK=ON && ./gradlew :benchmark:runFollyBenchmark",
+      )
       return
     }
 
@@ -169,12 +171,19 @@ fun main() {
     println("=== dynamic value crossings on realistic Expo payloads (ns/op, lower is better) ===")
     println()
     println("-- C++ representation round trip (jsi::Value -> repr -> jsi::Value) --")
-    println("%-22s %12s %14s %12s %11s %14s".format("case", "folly", "folly+JSON", "binary", "vs folly", "vs folly+JSON"))
+    println(
+      "%-22s %12s %14s %12s %11s %14s".format("case", "folly", "folly+JSON", "binary", "vs folly", "vs folly+JSON"),
+    )
     for ((name, r) in results) {
       val (folly, follyJson, binary) = r
       println(
         "%-22s %12.0f %14.0f %12.0f %10.2fx %13.2fx".format(
-          name, folly, follyJson, binary, folly / binary, follyJson / binary,
+          name,
+          folly,
+          follyJson,
+          binary,
+          folly / binary,
+          follyJson / binary,
         ),
       )
     }

@@ -1,4 +1,4 @@
 package io.github.expo.modules.v2.jni
 
-val <T : Any>  Class<T>.jniDescriptor: String
+val <T : Any> Class<T>.jniDescriptor: String
   get() = "L" + name.replace('.', '/') + ";"

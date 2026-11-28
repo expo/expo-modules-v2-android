@@ -1,9 +1,9 @@
 package io.github.expo.modules.v2.types
 
+import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.records.RecordRegistry
-import io.github.expo.kolibri.CalledFromNative
 
 @CalledFromNative(by = "expo-modules-v2/jni/JDynamicTypes.h")
 object DynamicTypes {

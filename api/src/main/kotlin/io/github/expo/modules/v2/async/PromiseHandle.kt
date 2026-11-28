@@ -4,10 +4,10 @@ import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.modules.v2.async.PromiseHandle.Companion.SETTLED
 import io.github.expo.modules.v2.errors.ThrowableHelper
 import io.github.expo.modules.v2.types.TypeDescriptor
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater
 
 @CalledFromNative(by = "expo-modules-v2/jni/JAsyncContext.h")
 class PromiseHandle internal constructor(
@@ -53,7 +53,7 @@ class PromiseHandle internal constructor(
   fun launch(
     type: TypeDescriptor,
     buffered: Boolean,
-    block: suspend () -> Any?
+    block: suspend () -> Any?,
   ): Job {
     return context.inlineWindow {
       exportScope.launch {

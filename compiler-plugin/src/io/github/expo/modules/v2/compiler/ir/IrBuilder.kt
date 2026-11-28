@@ -3,22 +3,22 @@
 package io.github.expo.modules.v2.compiler.ir
 
 import org.jetbrains.kotlin.ir.IrStatement
+import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrFactory
 import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.declarations.IrProperty
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.declarations.IrValueDeclaration
+import org.jetbrains.kotlin.ir.expressions.IrClassReference
 import org.jetbrains.kotlin.ir.expressions.IrConst
 import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
 import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.expressions.IrStatementOrigin
 import org.jetbrains.kotlin.ir.expressions.IrTypeOperator
+import org.jetbrains.kotlin.ir.expressions.IrVararg
 import org.jetbrains.kotlin.ir.expressions.impl.IrBlockImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrBranchImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrCallImpl
-import org.jetbrains.kotlin.ir.declarations.IrClass
-import org.jetbrains.kotlin.ir.expressions.IrClassReference
-import org.jetbrains.kotlin.ir.expressions.IrVararg
 import org.jetbrains.kotlin.ir.expressions.impl.IrClassReferenceImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrConstImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrConstructorCallImpl
@@ -59,7 +59,7 @@ fun IrSyntheticGetFieldImpl(
   type = type,
   receiver = receiver,
   origin = origin,
-  superQualifierSymbol = superQualifierSymbol
+  superQualifierSymbol = superQualifierSymbol,
 )
 
 fun IrSyntheticGetValueImpl(
@@ -309,7 +309,8 @@ private fun buildCall(
   returnType: IrType,
   typeArguments: List<IrType>,
 ): IrExpression = IrSyntheticCallImpl(
-  returnType, function,
+  returnType,
+  function,
   typeArgumentsCount = typeArguments.size,
 ).apply {
   typeArguments.forEachIndexed { index, type -> this.typeArguments[index] = type }
@@ -387,9 +388,9 @@ fun IrProperty.generateDefaultPropertyGetter(factory: IrFactory) {
         receiver = receiver?.let {
           IrSyntheticGetValueImpl(
             type = it.type,
-            symbol = it.symbol
+            symbol = it.symbol,
           )
-        }
+        },
       )
 
       statements += IrSyntheticReturnImpl(

@@ -1,13 +1,14 @@
 package io.github.expo.modules.v2.benchmark.jmh
 
 import io.github.expo.modules.v2.core.ExpoModulesV2
-import io.github.expo.modules.v2.records.RecordCodec
 import io.github.expo.modules.v2.records.Record
+import io.github.expo.modules.v2.records.RecordCodec
 import io.github.expo.modules.v2.records.RecordField
-import io.github.expo.modules.v2.records.readers.RecordReader
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.RecordSchema
+import io.github.expo.modules.v2.records.readers.RecordReader
 import io.github.expo.modules.v2.records.writers.RecordWriter
+import io.github.expo.modules.v2.types.TypeDescriptor
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.BenchmarkMode
 import kotlinx.benchmark.BenchmarkTimeUnit
@@ -18,7 +19,6 @@ import kotlinx.benchmark.Scope
 import kotlinx.benchmark.Setup
 import kotlinx.benchmark.State
 import org.openjdk.jmh.annotations.OperationsPerInvocation
-import io.github.expo.modules.v2.types.TypeDescriptor
 
 /**
  * The Kotlin half of record schema registration: what `RecordRegistry.fetchSchema` costs to build
@@ -67,7 +67,9 @@ private class BenchCodec<T : Record>(
     *Array(fieldCount) { RecordField("field$it", FIELD_TYPES[it % FIELD_TYPES.size]) },
   )
 
-  init { RecordRegistry.register(this) }
+  init {
+    RecordRegistry.register(this)
+  }
 
   override fun encode(value: T, writer: RecordWriter): Unit = throw UnsupportedOperationException()
 
@@ -113,11 +115,9 @@ class RecordRegistrationSingleBenchmark {
   @Setup
   fun setUp() = state.setUp(fieldCount)
 
-
   @Benchmark
   @OperationsPerInvocation(BATCH_ONE)
   fun marshal() = state.marshal()
-
 }
 
 private const val BATCH_SMALL = 10
@@ -134,11 +134,9 @@ class RecordRegistrationSmallBatchBenchmark {
   @Setup
   fun setUp() = state.setUp(fieldCount)
 
-
   @Benchmark
   @OperationsPerInvocation(BATCH_SMALL)
   fun marshal() = state.marshal()
-
 }
 
 // expo-ui, the largest single module in the expo repo, declares 96 records.
@@ -156,9 +154,7 @@ class RecordRegistrationModuleBatchBenchmark {
   @Setup
   fun setUp() = state.setUp(fieldCount)
 
-
   @Benchmark
   @OperationsPerInvocation(BATCH_MODULE)
   fun marshal() = state.marshal()
-
 }

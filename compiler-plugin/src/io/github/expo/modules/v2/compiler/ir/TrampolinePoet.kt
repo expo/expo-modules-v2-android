@@ -19,9 +19,9 @@ import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.expressions.IrStatementOrigin
 import org.jetbrains.kotlin.ir.expressions.IrTypeOperator
 import org.jetbrains.kotlin.ir.types.IrType
-import org.jetbrains.kotlin.ir.types.typeWith
 import org.jetbrains.kotlin.ir.types.classOrNull
 import org.jetbrains.kotlin.ir.types.isMarkedNullable
+import org.jetbrains.kotlin.ir.types.typeWith
 import org.jetbrains.kotlin.ir.util.createDispatchReceiverParameter
 import org.jetbrains.kotlin.ir.util.defaultType
 import org.jetbrains.kotlin.ir.util.patchDeclarationParents
@@ -217,7 +217,11 @@ internal class TrampolinePoet(
 
     val statements = mutableListOf<IrStatement>()
     val locals = readBufferedArguments(
-      sharedClass, trampoline, arguments, payloadLength, statements,
+      sharedClass,
+      trampoline,
+      arguments,
+      payloadLength,
+      statements,
     )
 
     // Rebuild the declared order: a buffered argument comes from its local, the rest from their slots.
@@ -281,7 +285,11 @@ internal class TrampolinePoet(
     val statements = mutableListOf<IrStatement>()
     val value = if (plan.buffered) {
       val locals = readBufferedArguments(
-        moduleClass, setter, listOf(plan), parameter, statements,
+        moduleClass,
+        setter,
+        listOf(plan),
+        parameter,
+        statements,
       )
       locals.getValue(plan).get()
     } else {
@@ -376,7 +384,8 @@ internal class TrampolinePoet(
       locals[plan] = local
       statements += local
       reads += IrSyntheticSetValueImpl(
-        irBuiltIns.unitType, local.symbol,
+        irBuiltIns.unitType,
+        local.symbol,
         readFromBuffer(moduleClass, args, plan),
       )
     }

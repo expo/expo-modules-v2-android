@@ -5,8 +5,8 @@ import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
-import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
@@ -14,11 +14,11 @@ import io.github.expo.modules.v2.testsupport.TestSupport
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeDescriptor
+import kotlinx.coroutines.delay
 import java.net.URL
 import kotlin.system.exitProcess
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
-import kotlinx.coroutines.delay
 
 // Interning a record is eager and native-free: this initializer runs before main() loads the
 // native library, and the schema is pushed to native when ensureLoaded() flushes the queue.
@@ -246,7 +246,11 @@ private fun run() {
     check(config.hasProperty("version") && !config.hasProperty("missing")) {
       "hasProperty(unowned_java_ref<jstring>) round trip failed"
     }
-    println("hasProperty(\"version\")=${config.hasProperty("version")}, hasProperty(\"missing\")=${config.hasProperty("missing")}")
+    println(
+      "hasProperty(\"version\")=${config.hasProperty(
+        "version",
+      )}, hasProperty(\"missing\")=${config.hasProperty("missing")}",
+    )
     val names = config.getPropertyNames().toSet()
     check(names == setOf("name", "version", "enabled", "ratio")) { "property names: $names" }
     check(config.getProperty("version").getInt() == 2)

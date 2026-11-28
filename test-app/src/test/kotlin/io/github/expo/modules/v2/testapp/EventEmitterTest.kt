@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.testapp
 
-import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.Event
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.ExpoSharedObject
 import io.github.expo.modules.v2.JS
@@ -406,7 +406,9 @@ class EventEmitterTest {
       assertEquals(1 to 1, watcher.starts to watcher.stops)
       assertFalse(watcher.onChanged.isObserved)
 
-      runtime.evaluate("expo.modules.Watcher.addListener('changed', fn); expo.modules.Watcher.removeAllListeners('changed');")
+      runtime.evaluate(
+        "expo.modules.Watcher.addListener('changed', fn); expo.modules.Watcher.removeAllListeners('changed');",
+      )
       assertEquals(2 to 2, watcher.starts to watcher.stops)
 
       // Other events do not count.
@@ -442,7 +444,9 @@ class EventEmitterTest {
         second.recordSeen()
 
         first.evaluate("globalThis.fn = (n) => seen.push('first:' + n); expo.modules.Watcher.addListener('count', fn);")
-        second.evaluate("globalThis.fn = (n) => seen.push('second:' + n); expo.modules.Watcher.addListener('count', fn);")
+        second.evaluate(
+          "globalThis.fn = (n) => seen.push('second:' + n); expo.modules.Watcher.addListener('count', fn);",
+        )
         assertTrue(watcher.onCount.isObserved)
 
         // Both runtimes live on this thread, so both deliveries are inline.

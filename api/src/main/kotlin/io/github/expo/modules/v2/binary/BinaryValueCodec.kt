@@ -1,5 +1,7 @@
 package io.github.expo.modules.v2.binary
 
+import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.kolibri.binary.BinaryTag
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.records.Record
@@ -7,8 +9,6 @@ import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.SchemaId
 import io.github.expo.modules.v2.records.readers.BufferRecordReader
 import io.github.expo.modules.v2.records.writers.BufferRecordWriter
-import io.github.expo.kolibri.binary.BinaryBuffer
-import io.github.expo.kolibri.binary.BinaryTag
 
 /**
  * The schema-directed codec a [io.github.expo.modules.v2.converters.TypeConverter]'s buffer pass writes and reads

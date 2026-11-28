@@ -4,8 +4,8 @@ import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
-import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.Module
+import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.testsupport.HermesRuntime
 
 /**
@@ -112,7 +112,12 @@ data class WideRecord(
 ) : io.github.expo.modules.v2.records.Record
 
 @Record
-data class BenchRecord(val id: Int, val name: String, val x: Double, val flag: Boolean) : io.github.expo.modules.v2.records.Record
+data class BenchRecord(
+  val id: Int,
+  val name: String,
+  val x: Double,
+  val flag: Boolean,
+) : io.github.expo.modules.v2.records.Record
 
 /**
  * Registers the module as `globalThis.Bench` and pre-materializes it, so descriptor exchange does

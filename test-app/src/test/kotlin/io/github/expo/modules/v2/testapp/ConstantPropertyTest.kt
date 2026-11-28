@@ -156,7 +156,10 @@ class ConstantPropertyTest {
   }
 
   @Test
-  fun `after its first read, a shared object's constant is the instance's own hidden value`() = withSettings { runtime, _ ->
+  fun `after its first read, a shared object's constant is the instance's own hidden value`() = withSettings {
+      runtime,
+      _,
+    ->
     assertEquals(
       "false|A|undefined,true,false,false|false|",
       runtime.evaluateAsString(

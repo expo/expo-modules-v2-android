@@ -45,7 +45,7 @@ run {
 
   val checkout = File(
     rootDir,
-    providers.gradleProperty("hermesEnvDir").getOrElse("../hermes-tests-environment")
+    providers.gradleProperty("hermesEnvDir").getOrElse("../hermes-tests-environment"),
   )
   val launcher = File(checkout, "gradlew")
   if (!launcher.canExecute()) {
@@ -55,7 +55,7 @@ run {
 
   val published = File(
     System.getProperty("user.home"),
-    ".m2/repository/io/github/expo/hermes-test-environment"
+    ".m2/repository/io/github/expo/hermes-test-environment",
   ).walkTopDown()
     .filter { it.isFile && it.name.endsWith("-native-libs.zip") }
     .maxOfOrNull { it.lastModified() }
@@ -84,7 +84,6 @@ run {
       "-PskipHermesEnvBuild to build against whatever mavenLocal already holds."
   }
 }
-
 
 include("api")
 // -PskipReact leaves :react out. Configuring it makes AGP install the NDK its `ndkVersion` pins,

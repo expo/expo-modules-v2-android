@@ -1,19 +1,19 @@
 package io.github.expo.modules.v2.binary
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.Record
-import io.github.expo.modules.v2.types.codes
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.codecFor
 import io.github.expo.modules.v2.types.AnyType
+import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
-import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.types.codes
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import io.github.expo.modules.v2.types.TypeDescriptor
 
 /**
  * No optional field on purpose: this fixture is round-tripped with Kotlin on both ends, and the
@@ -237,8 +237,10 @@ class BinaryValueFormatTest {
       TypedOpts(1.5, 9, "hi"),
       decodeInboundOpts {
         putDouble(1.5)
-        putBoolean(true); putInt(9)
-        putBoolean(true); nullableString.anyConverter.writeToBuffer(this, "hi")
+        putBoolean(true)
+        putInt(9)
+        putBoolean(true)
+        nullableString.anyConverter.writeToBuffer(this, "hi")
       },
     )
 
@@ -259,7 +261,8 @@ class BinaryValueFormatTest {
       decodeInboundOpts {
         putDouble(3.5)
         putBoolean(false)
-        putBoolean(true); nullableString.anyConverter.writeToBuffer(this, null)
+        putBoolean(true)
+        nullableString.anyConverter.writeToBuffer(this, null)
       },
     )
   }
@@ -338,7 +341,6 @@ class BinaryValueFormatTest {
     assertTrue(a.codes.contentEquals(b.codes))
     assertTrue(!a.codes.contentEquals(c.codes))
   }
-
 
   @Test
   fun `a mismatched runtime class fails fast on the slot's own cast`() {

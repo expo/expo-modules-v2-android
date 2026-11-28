@@ -1,10 +1,10 @@
 package io.github.expo.modules.v2.converters
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
-import io.github.expo.kolibri.binary.BinaryBuffer
 
 class MapConverter(
   typeDescriptor: TypeDescriptor.Parametrized,

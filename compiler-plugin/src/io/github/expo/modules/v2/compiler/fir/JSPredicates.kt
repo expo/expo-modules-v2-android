@@ -8,7 +8,7 @@ import org.jetbrains.kotlin.fir.extensions.predicate.DeclarationPredicate
 import org.jetbrains.kotlin.fir.extensions.predicateBasedProvider
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 
-class JSPredicates(session: FirSession): FirExtensionSessionComponent(session) {
+class JSPredicates(session: FirSession) : FirExtensionSessionComponent(session) {
   val predicate: DeclarationPredicate = DeclarationPredicate.create {
     annotated(Identifiers.FqNames.JS_ANNOTATION)
   }

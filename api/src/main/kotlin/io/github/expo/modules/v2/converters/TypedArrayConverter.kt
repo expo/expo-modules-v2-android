@@ -31,12 +31,14 @@ class TypedArrayConverter(
       val kind = jsObject.arrayBufferViewKind()
       val bytes = kind?.let { jsObject.getArrayBufferViewBytes() } ?: throw IllegalArgumentException(
         "Expected $expected, but got " +
-          (if (jsObject.isArrayBuffer()) {
-            "an ArrayBuffer. Pass a view of the buffer, for example `new " +
-              (if (type == TypedArray::class.java) "Uint8Array" else type.simpleName) + "(buffer)`"
-          } else {
-            "another object"
-          }),
+          (
+            if (jsObject.isArrayBuffer()) {
+              "an ArrayBuffer. Pass a view of the buffer, for example `new " +
+                (if (type == TypedArray::class.java) "Uint8Array" else type.simpleName) + "(buffer)`"
+            } else {
+              "another object"
+            }
+            ),
       )
       val array = kind.create(jsObject, bytes)
       if (!type.isInstance(array)) {

@@ -3,8 +3,8 @@ package io.github.expo.modules.v2.unions
 import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.SharedRef
-import io.github.expo.modules.v2.converters.typeCodes
 import io.github.expo.modules.v2.Tag
+import io.github.expo.modules.v2.converters.typeCodes
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
@@ -123,9 +123,12 @@ class UnionTypeTest {
     val percentCodes = TypeDescriptor.Simple(Dimension.Percent::class.java, false).converter.typeCodes()
     assertContentEquals(
       intArrayOf(
-        CppType.UNION.code, 3, *utf8("Dimension"),
+        CppType.UNION.code,
+        3,
+        *utf8("Dimension"),
         CppType.DOUBLE.code,
-        CppType.UNIT.code, *utf8("auto"),
+        CppType.UNIT.code,
+        *utf8("auto"),
         *percentCodes,
       ),
       dimension.typeCodes(),
@@ -136,9 +139,13 @@ class UnionTypeTest {
   fun `a union met again inside itself is a reference back to it`() {
     val tree = TypeDescriptor.Simple(Tree::class.java, false).anyConverter
     val treeCodes = intArrayOf(
-      CppType.UNION.code, 2, *utf8("Tree"),
+      CppType.UNION.code,
+      2,
+      *utf8("Tree"),
       CppType.INT.code,
-      CppType.LIST.code, CppType.UNION_REF.code, 0,
+      CppType.LIST.code,
+      CppType.UNION_REF.code,
+      0,
     )
     assertContentEquals(treeCodes, tree.typeCodes())
 

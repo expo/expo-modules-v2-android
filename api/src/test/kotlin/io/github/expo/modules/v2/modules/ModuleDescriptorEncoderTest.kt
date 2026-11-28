@@ -3,8 +3,8 @@ package io.github.expo.modules.v2.modules
 import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.ExpoSharedObject
 import io.github.expo.modules.v2.Record
-import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
 import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
 import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.CppType

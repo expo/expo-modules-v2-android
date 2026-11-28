@@ -1,8 +1,8 @@
 package io.github.expo.modules.v2.converters
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.binary.BinaryValueCodec
 import io.github.expo.modules.v2.types.CppType
-import io.github.expo.kolibri.binary.BinaryBuffer
 
 /**
  * A leaf whose Kotlin type is its own bridge type: [T] crosses unchanged, so both passes are the
@@ -155,7 +155,7 @@ internal class DynamicConverter(
 
 internal class JsHandleConverter(
   kind: CppType,
-  isNullable: Boolean
+  isNullable: Boolean,
 ) : PassthroughConverter<Any>(kind, isNullable) {
   override fun writeValue(buf: BinaryBuffer, value: Any) {
     error("No typed encoding for $kind")

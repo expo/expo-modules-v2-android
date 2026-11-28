@@ -1,8 +1,8 @@
 package io.github.expo.modules.v2.records.readers
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
-import io.github.expo.kolibri.binary.BinaryBuffer
 
 internal class BufferRecordReader(
   private val buffer: BinaryBuffer,

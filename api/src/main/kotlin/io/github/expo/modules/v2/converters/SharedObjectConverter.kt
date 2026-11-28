@@ -1,10 +1,10 @@
 package io.github.expo.modules.v2.converters
 
-import io.github.expo.modules.v2.sharedobjects.SharedClassId
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.sharedobjects.SharedClassId
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeCodesWriter
-import io.github.expo.kolibri.binary.BinaryBuffer
 
 internal class SharedObjectConverter(
   private val classId: SharedClassId,

@@ -9,7 +9,7 @@ class ClassCache {
   fun put(
     clazz: Class<*>,
     isNullable: Boolean,
-    value: TypeConverter<*>
+    value: TypeConverter<*>,
   ) {
     cache(isNullable).put(clazz, value)
   }
@@ -20,7 +20,7 @@ class ClassCache {
   fun getOrPut(
     clazz: Class<*>,
     isNullable: Boolean,
-    defaultValue: () -> TypeConverter<*>
+    defaultValue: () -> TypeConverter<*>,
   ): TypeConverter<*> {
     return cache(isNullable).getOrPut(clazz, defaultValue)
   }

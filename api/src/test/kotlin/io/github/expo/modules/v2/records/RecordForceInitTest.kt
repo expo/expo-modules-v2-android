@@ -3,7 +3,6 @@ package io.github.expo.modules.v2.records
 // An explicit import beats a same-package declaration, so inside this package the annotation's
 // simple name shadows the marker interface. [NeverRegistered] needs the marker.
 import io.github.expo.modules.v2.Record
-import io.github.expo.modules.v2.records.Record as RecordMarker
 import io.github.expo.modules.v2.converters.RecordConverter
 import io.github.expo.modules.v2.types.TypeDescriptor
 import kotlin.test.Test
@@ -11,6 +10,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import io.github.expo.modules.v2.records.Record as RecordMarker
 
 /**
  * Registration happens in the record's `<clinit>`, and generated code names another record with a

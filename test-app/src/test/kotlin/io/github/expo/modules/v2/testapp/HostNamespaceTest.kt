@@ -1,6 +1,5 @@
 package io.github.expo.modules.v2.testapp
 
-import io.github.expo.hermes.HermesRuntime as HermesEngine
 import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
@@ -9,6 +8,7 @@ import io.github.expo.modules.v2.jsi.AttachedRuntime
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import io.github.expo.hermes.HermesRuntime as HermesEngine
 
 @ExpoModule(name = "Joined")
 private class JoinedModule : Module() {

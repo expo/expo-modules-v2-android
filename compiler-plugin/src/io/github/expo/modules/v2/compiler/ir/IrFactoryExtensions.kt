@@ -104,7 +104,7 @@ fun IrFactory.createSyntheticExpressionBody(expression: IrExpression) =
   createExpressionBody(
     SYNTHETIC_OFFSET,
     SYNTHETIC_OFFSET,
-    expression
+    expression,
   )
 
 fun IrFactory.createSyntheticBlockBody() =

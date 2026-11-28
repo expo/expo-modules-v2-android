@@ -2,7 +2,6 @@ package io.github.expo.modules.v2.args
 
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
-import io.github.expo.modules.v2.types.anyConverter
 
 internal class OverflowTrampolineArguments(
   private val slots: Array<Any?>,

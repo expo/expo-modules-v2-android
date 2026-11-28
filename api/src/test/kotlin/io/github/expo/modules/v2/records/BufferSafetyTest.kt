@@ -1,12 +1,12 @@
 package io.github.expo.modules.v2.records
 
 import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.jsi.JavaScriptObject
+import io.github.expo.modules.v2.jsi.JavaScriptValue
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import io.github.expo.modules.v2.jsi.JavaScriptObject
-import io.github.expo.modules.v2.jsi.JavaScriptValue
 
 @Record
 private data class SafePlain(val n: Int, val label: String?) : io.github.expo.modules.v2.records.Record

@@ -2,24 +2,24 @@ package io.github.expo.modules.v2.records
 
 // An explicit import beats a same-package declaration, so inside this package the annotation's
 // simple name shadows the marker interface. The two hand-written codecs below need the marker.
+import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.kolibri.binary.BinaryTag
 import io.github.expo.modules.v2.Record
-import io.github.expo.modules.v2.types.codes
-import io.github.expo.modules.v2.records.Record as RecordMarker
 import io.github.expo.modules.v2.records.readers.BufferRecordReader
 import io.github.expo.modules.v2.records.readers.RecordReader
 import io.github.expo.modules.v2.records.writers.RecordWriter
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.CppType
+import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
-import kotlin.test.assertContentEquals
-import io.github.expo.kolibri.binary.BinaryBuffer
-import io.github.expo.kolibri.binary.BinaryTag
+import io.github.expo.modules.v2.types.codes
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
-import io.github.expo.modules.v2.types.TypeDescriptor
+import io.github.expo.modules.v2.records.Record as RecordMarker
 
 /**
  * `label` carries no Kotlin default on purpose. A default makes the field optional, and the

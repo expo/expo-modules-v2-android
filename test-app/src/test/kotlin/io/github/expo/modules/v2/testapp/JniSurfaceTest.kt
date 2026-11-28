@@ -22,14 +22,14 @@ class JniSurfaceTest {
 
   private val lookups: Collection<Lookup> by lazy {
     val root = File(
-      requireNotNull(System.getProperty(CPP_DIR_PROPERTY)) { "$CPP_DIR_PROPERTY is not set" }
+      requireNotNull(System.getProperty(CPP_DIR_PROPERTY)) { "$CPP_DIR_PROPERTY is not set" },
     )
     val token = Regex(
       listOf(
         """descriptor\s*=\s*"([^"]+)"""",
         """\b(Method|StaticMethod|Field|StaticField)\s*<\s*"([^"]+)"""",
         """\bConstructor\s*<""",
-      ).joinToString("|")
+      ).joinToString("|"),
     )
     val byName = sortedMapOf<String, Lookup>()
     root.walkTopDown().filter { it.isFile && it.extension in setOf("h", "cpp") }.forEach { file ->

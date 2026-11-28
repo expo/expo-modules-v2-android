@@ -3,7 +3,8 @@ package io.github.expo.modules.v2.compiler
 enum class BufferChoice {
   AUTO,
   YES,
-  NO;
+  NO,
+  ;
 
   fun orElse(wider: BufferChoice): BufferChoice = if (this == AUTO) {
     wider

@@ -55,7 +55,11 @@ class RecordCodecIrTransformer(
   private val irBuiltIns = context.irBuiltIns
 
   private val descriptors = DescriptorFields(
-    context, symbols, poet, RecordKey, isStatic = false,
+    context,
+    symbols,
+    poet,
+    RecordKey,
+    isStatic = false,
   )
 
   override fun visitElement(element: IrElement) {
@@ -190,7 +194,7 @@ class RecordCodecIrTransformer(
         callOn(
           function = symbols.functions.writePrimitive(
             field.type.classOrNull!!,
-            field.type.isMarkedNullable()
+            field.type.isMarkedNullable(),
           ),
           receiver = writerParameter.get(),
           arguments = listOf(read),
@@ -288,7 +292,7 @@ class RecordCodecIrTransformer(
               IrSyntheticElseBranchImpl(
                 condition = IrSyntheticConstImpl.boolean(irBuiltIns.booleanType, true),
                 result = default,
-              )
+              ),
             )
             branches += irBranches
           }
@@ -387,7 +391,7 @@ class RecordCodecIrTransformer(
     backingField.initializer = context.irFactory.createSyntheticExpressionBody(
       IrSyntheticConstructorCallImpl(
         type = codecClass.defaultType,
-        symbol = codecConstructor.symbol
+        symbol = codecConstructor.symbol,
       ),
     )
     property.generateDefaultPropertyGetter(context.irFactory)

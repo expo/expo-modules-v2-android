@@ -71,7 +71,9 @@ class OptionalArgumentsTest {
 
   @Test
   fun `a suspend export's trailing nullable arguments can be left out`() = withOptionals { runtime ->
-    runtime.evaluate("globalThis.out = null; expo.modules.Optionals.greetLater('Expo').then((v) => { globalThis.out = v; });")
+    runtime.evaluate(
+      "globalThis.out = null; expo.modules.Optionals.greetLater('Expo').then((v) => { globalThis.out = v; });",
+    )
     assertEquals("Hi Expo", runtime.awaitSettled("globalThis.out"))
   }
 

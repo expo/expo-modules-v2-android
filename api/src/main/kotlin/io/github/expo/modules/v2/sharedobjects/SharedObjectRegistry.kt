@@ -128,7 +128,7 @@ object SharedObjectRegistry {
     if (SharedRef::class.java.isAssignableFrom(sharedClass)) {
       property(
         "nativeRefType",
-        AnyType(TypeDescriptor.Simple(String::class.java, false))
+        AnyType(TypeDescriptor.Simple(String::class.java, false)),
       )
     }
   }

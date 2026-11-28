@@ -1,13 +1,14 @@
 package io.github.expo.modules.v2.modules
 
 import io.github.expo.modules.v2.Record
-import io.github.expo.modules.v2.types.codes
+import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.codecFor
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.buffered
+import io.github.expo.modules.v2.types.codes
 import java.net.URL
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -15,7 +16,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import io.github.expo.modules.v2.jsi.JavaScriptObject
 
 @Record
 private data class PlainRec(val n: Int) : io.github.expo.modules.v2.records.Record
@@ -335,13 +335,16 @@ class ModuleBuilderTest {
     // A plain typed container is a direct JList-slot property, so its accessors are the Kotlin
     // property's own.
     val plain = builder()
-    plain.property("items", AnyType(
-      TypeDescriptor.Parametrized(
-        List::class.java,
-        false,
-        arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, false)),
+    plain.property(
+      "items",
+      AnyType(
+        TypeDescriptor.Parametrized(
+          List::class.java,
+          false,
+          arrayOf(TypeDescriptor.Simple(Int::class.javaObjectType, false)),
+        ),
       ),
-    ))
+    )
     assertEquals("getItems", plain.properties.single().getterName)
 
     val builder = builder()

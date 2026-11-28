@@ -228,7 +228,7 @@ fun compatSourceDirsFor(compatRoot: File, kotlin: KotlinVersion): List<File> {
     variants.filterKeys { it <= kotlin }.maxByOrNull { it.key }?.value
       ?: error(
         "compiler-plugin/${compatRoot.name}/${concern.name}: no variant supports Kotlin $kotlin " +
-          "(oldest is ${variants.keys.minOrNull()})."
+          "(oldest is ${variants.keys.minOrNull()}).",
       )
   }
 }

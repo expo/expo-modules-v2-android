@@ -21,14 +21,23 @@ import io.github.expo.modules.v2.testsupport.HermesRuntime
  * carries a `@BufferMode` and the measurement is of the generated trampolines themselves.
  */
 @Record
-data class Item(val id: Int, val name: String, val x: Double, val flag: Boolean) : io.github.expo.modules.v2.records.Record
+data class Item(
+  val id: Int,
+  val name: String,
+  val x: Double,
+  val flag: Boolean,
+) : io.github.expo.modules.v2.records.Record
 
 @Record
 data class Order(val item: Item, val tags: List<String>) : io.github.expo.modules.v2.records.Record
 
 /** A record whose schema contains a dynamic field: not buffer-safe, crosses as a Map slot. */
 @Record(bufferSafe = false)
-data class FlaggedItem(val id: Int, val name: String, val meta: Map<String, Any>) : io.github.expo.modules.v2.records.Record
+data class FlaggedItem(
+  val id: Int,
+  val name: String,
+  val meta: Map<String, Any>,
+) : io.github.expo.modules.v2.records.Record
 
 @ExpoModule(name = "Rec")
 class RecordOps : Module() {

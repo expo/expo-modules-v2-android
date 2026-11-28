@@ -2,11 +2,11 @@ package io.github.expo.modules.v2.modules
 
 import io.github.expo.kolibri.CalledFromNative
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.binary.ModuleDescriptorEncoder
 import io.github.expo.modules.v2.binary.newSharedView
 import io.github.expo.modules.v2.core.ExpoModulesV2
-import io.github.expo.modules.v2.ExpoContext
 import java.nio.BufferOverflowException
 
 @CalledFromNative(by = "expo-modules-v2/jni/JModuleRegistry.h")

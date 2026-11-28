@@ -163,7 +163,7 @@ sealed interface TypeDescriptor {
   }
 }
 
-private fun String.nullableSuffix(isNullable: Boolean) = this +  if (isNullable) "?" else ""
+private fun String.nullableSuffix(isNullable: Boolean) = this + if (isNullable) "?" else ""
 
 val TypeDescriptor.isNullable: Boolean
   get() = when (this) {

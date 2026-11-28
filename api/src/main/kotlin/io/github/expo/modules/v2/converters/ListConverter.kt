@@ -1,10 +1,10 @@
 package io.github.expo.modules.v2.converters
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
-import io.github.expo.kolibri.binary.BinaryBuffer
 
 class ListConverter(
   typeDescriptor: TypeDescriptor.Parametrized,
@@ -101,7 +101,7 @@ class ListConverter(
 
   private inline fun <T> iterateOver(
     values: List<*>,
-    putElement: (element: T) -> Unit
+    putElement: (element: T) -> Unit,
   ) {
     @Suppress("UNCHECKED_CAST")
     values as List<T>

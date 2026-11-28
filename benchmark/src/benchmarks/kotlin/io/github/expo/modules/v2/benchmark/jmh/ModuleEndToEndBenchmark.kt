@@ -4,8 +4,8 @@ import io.github.expo.modules.v2.benchmark.e2e.E2E_WORKFLOW_PRELUDE
 import io.github.expo.modules.v2.benchmark.e2e.checkFirstE2eWorkflow
 import io.github.expo.modules.v2.benchmark.e2e.registerE2eModules
 import io.github.expo.modules.v2.benchmark.e2e.runFirstE2eWorkflow
-import io.github.expo.modules.v2.testsupport.HermesRuntime
 import io.github.expo.modules.v2.jsi.JavaScriptValue
+import io.github.expo.modules.v2.testsupport.HermesRuntime
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.BenchmarkMode
 import kotlinx.benchmark.BenchmarkTimeUnit

@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.converters
 
-import io.github.expo.modules.v2.types.CppType
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.types.CppType
 
 class IntArrayConverter(isNullable: Boolean) : TypeConverter<IntArray>(isNullable) {
   override val kind: CppType get() = CppType.INT_ARRAY

@@ -1,7 +1,6 @@
 package io.github.expo.modules.v2.modules
 
 import io.github.expo.modules.v2.Buffer
-import io.github.expo.modules.v2.types.codes
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.Event
 import io.github.expo.modules.v2.ExpoModule
@@ -10,6 +9,7 @@ import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.jsi.JavaScriptValue
 import io.github.expo.modules.v2.types.CppType
+import io.github.expo.modules.v2.types.codes
 import java.net.URL
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -39,27 +39,53 @@ class GeneratedModuleTest {
   @ExpoModule(name = "Shapes")
   private class Shapes : Module() {
     @JS fun unboxed(a: Int, b: Long, c: Float, d: Double, e: Boolean): Int = a
+
     @JS fun boxed(a: Int?, b: Double?, c: Boolean?): Int? = a
+
     @JS fun strings(a: String, b: String?): String = a
+
     @JS fun arrays(a: IntArray, b: DoubleArray?): Int = a.size
+
     @JS fun dynamic(a: Any?, b: JavaScriptValue): Int = a.hashCode()
+
     @JS fun unit(a: Int) = Unit
+
     @JS fun lists(a: List<Int>, b: List<String?>): Int = a.size
+
     @JS fun maps(a: Map<String, Int>): Int = a.size
+
     @JS fun sets(a: Set<String>): Int = a.size
+
     @JS fun objectArrays(a: Array<String>): Int = a.size
+
     @JS fun converted(a: URL, b: Duration, c: Duration?): String = a.host
+
     @JS fun records(a: Pt, b: Tainted): Int = 0
+
     @JS fun recordLists(a: List<Pt>, b: List<Tainted>): Int = a.size
-    @JS @BufferMode(Buffer.NO) fun optedOut(a: String, b: List<Int>): Int = a.length
+
+    @JS
+    @BufferMode(Buffer.NO)
+    fun optedOut(a: String, b: List<Int>): Int = a.length
+
     @JS fun optedIn(@BufferMode(Buffer.YES) a: IntArray): Int = a.size
-    @JS @BufferMode(returns = Buffer.NO) fun plainReturn(a: Int): String = "$a"
+
+    @JS
+    @BufferMode(returns = Buffer.NO)
+    fun plainReturn(a: Int): String = "$a"
 
     @Event val onChanged = event<Pt>()
-    @Event(name = "renamed") val onSomething = event<Int>()
+
+    @Event(name = "renamed")
+    val onSomething = event<Int>()
+
     @Event val progress = event<Double>()
+
     @Event val onBatch = event<List<Int>>()
-    @Event @BufferMode(Buffer.NO) val onSlot = event<List<Int>>()
+
+    @Event
+    @BufferMode(Buffer.NO)
+    val onSlot = event<List<Int>>()
   }
 
   private val shapes = Shapes()
@@ -233,9 +259,13 @@ class GeneratedModuleTest {
   @ExpoModule(name = "Props")
   private class Props : Module() {
     @JS val version: String = "1.0"
+
     @JS var label: String = "expo"
+
     @JS var count: Int = 1
+
     @JS val isReady: Boolean = true
+
     @JS var homepage: URL = URL("https://expo.dev")
   }
 

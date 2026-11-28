@@ -100,7 +100,7 @@ object EventSupport {
           pointer,
           owner.objectId,
           event.index,
-          Bridge.toJni(payload, descriptor)
+          Bridge.toJni(payload, descriptor),
         )
       }
     } catch (throwable: Throwable) {

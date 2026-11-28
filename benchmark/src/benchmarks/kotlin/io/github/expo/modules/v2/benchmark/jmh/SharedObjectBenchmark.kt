@@ -1,11 +1,11 @@
 package io.github.expo.modules.v2.benchmark.jmh
 
 import io.github.expo.modules.v2.ExpoModule
-import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.ExpoSharedObject
-import io.github.expo.modules.v2.jsi.JavaScriptValue
+import io.github.expo.modules.v2.JS
 import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.jsi.JavaScriptValue
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.BenchmarkMode
 import kotlinx.benchmark.BenchmarkTimeUnit

@@ -32,7 +32,6 @@ object Trampoline {
   private val overflowArguments
     get() = _overflowArguments.get()
 
-
   private val _overflowResult = ThreadLocal.withInitial {
     object {
       var value: Any? = null

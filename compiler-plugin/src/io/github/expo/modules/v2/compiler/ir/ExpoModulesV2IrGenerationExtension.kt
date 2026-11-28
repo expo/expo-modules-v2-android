@@ -17,12 +17,12 @@ class ExpoModulesV2IrGenerationExtension(
       RecordCodecIrTransformer(pluginContext, symbols, poet),
       UnionCodecIrTransformer(pluginContext, symbols, poet),
       ExpoModuleIrTransformer(symbols, pluginContext, poet),
-      ExpoSharedObjectIrTransformer(pluginContext, symbols, poet)
+      ExpoSharedObjectIrTransformer(pluginContext, symbols, poet),
     )
     visitors.forEach(moduleFragment::acceptChildrenVoid)
 
     val transformers = listOf(
-      ModuleDiscoveryIrTransformer(pluginContext, symbols, poet, hints, moduleFragment)
+      ModuleDiscoveryIrTransformer(pluginContext, symbols, poet, hints, moduleFragment),
     )
     transformers.forEach(moduleFragment::transformChildrenVoid)
   }

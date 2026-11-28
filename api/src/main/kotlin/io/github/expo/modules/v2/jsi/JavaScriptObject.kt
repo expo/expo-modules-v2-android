@@ -10,12 +10,15 @@ import io.github.expo.modules.v2.ExpoObject
 import java.nio.ByteBuffer
 
 @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObject.h")
-class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObject.h") private constructor(
+class JavaScriptObject
+@CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObject.h")
+private constructor(
   pointer: Long,
 ) : NativeObject(NativePointer(pointer)) {
 
-  //@formatter:off
+  // @formatter:off
   @NativeMethod external fun isArray(): Boolean
+
   @NativeMethod external fun isArrayBuffer(): Boolean
 
   @NativeMethod external fun getArrayBufferViewBytes(): ByteBuffer?
@@ -35,9 +38,13 @@ class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObj
   @NativeMethod external fun getArray(): Array<JavaScriptValue>
 
   @NativeMethod private external fun setBoolProperty(name: String, value: Boolean)
+
   @NativeMethod private external fun setDoubleProperty(name: String, value: Double)
+
   @NativeMethod private external fun setStringProperty(name: String, value: String?)
+
   @NativeMethod private external fun setJSValueProperty(name: String, @AsNativePointer value: JavaScriptValue?)
+
   @NativeMethod private external fun setObjectProperty(name: String, @AsNativePointer value: JavaScriptObject?)
 
   @NativeMethod external fun unsetProperty(name: String)
@@ -47,7 +54,7 @@ class JavaScriptObject @CalledFromNative(by = "expo-modules-v2/jsi/JavaScriptObj
    * object and for a released shared object.
    */
   @NativeMethod external fun nativeInstance(): ExpoObject?
-  //@formatter:on
+  // @formatter:on
 
   /** The kind of typed array or `DataView` this object is, or null when it is neither. */
   internal fun arrayBufferViewKind(): ArrayBufferViewKind? =

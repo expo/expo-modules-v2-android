@@ -1,12 +1,12 @@
 package io.github.expo.modules.v2.binary
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.modules.ModuleEventDefinition
 import io.github.expo.modules.v2.modules.ModuleFunctionDefinition
 import io.github.expo.modules.v2.modules.ModulePropertyDefinition
 import io.github.expo.modules.v2.modules.ModuleSharedClassDefinition
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.TypeCodesWriter
-import io.github.expo.kolibri.binary.BinaryBuffer
 
 /**
  * Encodes a module descriptor into the bridge buffer:

@@ -5,10 +5,6 @@ import io.github.expo.modules.v2.benchmark.datatype.installDataTypeBatch
 import io.github.expo.modules.v2.benchmark.datatype.registerDataTypeBenchModule
 import io.github.expo.modules.v2.testsupport.ExpoHermes
 import io.github.expo.modules.v2.testsupport.HermesRuntime
-import java.lang.management.ManagementFactory
-import java.nio.file.Files
-import java.nio.file.Path
-import java.time.Duration
 import jdk.jfr.Category
 import jdk.jfr.Configuration
 import jdk.jfr.Event
@@ -16,6 +12,10 @@ import jdk.jfr.Label
 import jdk.jfr.Name
 import jdk.jfr.Recording
 import jdk.jfr.StackTrace
+import java.lang.management.ManagementFactory
+import java.nio.file.Files
+import java.nio.file.Path
+import java.time.Duration
 import kotlin.system.exitProcess
 
 private const val PROFILE_FUNCTION = "__profileModulesBatch"

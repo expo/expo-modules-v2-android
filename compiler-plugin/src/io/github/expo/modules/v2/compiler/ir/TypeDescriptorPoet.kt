@@ -96,7 +96,7 @@ class TypeDescriptorPoet(
     return IrSyntheticCallImpl(
       type = arrayType,
       symbol = irBuiltIns.arrayOf,
-      typeArgumentsCount = 1
+      typeArgumentsCount = 1,
     ).apply {
       typeArguments[0] = elementType
       arguments[0] = IrSyntheticVarargImpl(arrayType, elementType, elements)
@@ -278,7 +278,7 @@ class TypeDescriptorPoet(
     return IrSyntheticGetFieldImpl(
       symbol = field.symbol,
       type = fieldType,
-      receiver = null
+      receiver = null,
     )
   }
 

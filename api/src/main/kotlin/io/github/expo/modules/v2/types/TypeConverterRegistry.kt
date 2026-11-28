@@ -47,72 +47,72 @@ object TypeConverterRegistry {
   private val simpleConvertersCache = classCacheOf {
     +entry(
       Boolean::class.javaObjectType,
-      ::BoxedBooleanConverter
+      ::BoxedBooleanConverter,
     )
 
     +entry(
       Int::class.javaObjectType,
-      ::BoxedIntConverter
+      ::BoxedIntConverter,
     )
 
     +entry(
       Long::class.javaObjectType,
-      ::BoxedLongConverter
+      ::BoxedLongConverter,
     )
 
     +entry(
       Float::class.javaObjectType,
-      ::BoxedFloatConverter
+      ::BoxedFloatConverter,
     )
 
     +entry(
       Double::class.javaObjectType,
-      ::BoxedDoubleConverter
+      ::BoxedDoubleConverter,
     )
 
     +entry(
       String::class.java,
-      ::StringConverter
+      ::StringConverter,
     )
 
     +entry(
       Unit::class.java,
-      ::UnitConverter
+      ::UnitConverter,
     )
 
     +entry(
       Any::class.java,
-      ::DynamicConverter
+      ::DynamicConverter,
     )
 
     +entry(
       JavaScriptValue::class.java,
-      selectJsHandleConverter(CppType.JS_VALUE, ::JsHandleConverter)
+      selectJsHandleConverter(CppType.JS_VALUE, ::JsHandleConverter),
     )
 
     +entry(
       JavaScriptObject::class.java,
-      selectJsHandleConverter(CppType.JS_OBJECT, ::JsHandleConverter)
+      selectJsHandleConverter(CppType.JS_OBJECT, ::JsHandleConverter),
     )
 
     +entry(
       Duration::class.java,
-      ::DurationConverter
+      ::DurationConverter,
     )
 
     +entry(
       File::class.java,
-      ::FileConverter
+      ::FileConverter,
     )
 
     +entry(
       URL::class.java,
-      ::UrlConverter
+      ::UrlConverter,
     )
 
     +entry(
       URI::class.java,
-      ::UriConverter
+      ::UriConverter,
     )
 
     // java.nio.file only exists on Android 8+ (API 26). Below that, resolving Path::class throws
@@ -120,7 +120,7 @@ object TypeConverterRegistry {
     runCatching {
       +entry(
         Path::class.java,
-        ::PathConverter
+        ::PathConverter,
       )
     }
   }
@@ -163,7 +163,7 @@ object TypeConverterRegistry {
       } else {
         throw IllegalArgumentException(
           "${type.name} has no bridge type - describe it with a leaf class, a List/Map, a registered " +
-            "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register"
+            "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register",
         )
       }
     }
@@ -213,7 +213,7 @@ object TypeConverterRegistry {
 
     throw IllegalArgumentException(
       "${jClass.name} has no bridge type - describe it with a leaf class, a List/Map/Pair/Triple, a registered " +
-        "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register"
+        "RecordCodec, or register a TypeConverter for it with TypeConverterRegistry.register",
     )
   }
 }

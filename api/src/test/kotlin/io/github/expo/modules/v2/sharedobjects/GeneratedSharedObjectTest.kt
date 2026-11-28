@@ -1,7 +1,6 @@
 package io.github.expo.modules.v2.sharedobjects
 
 import io.github.expo.modules.v2.Buffer
-import io.github.expo.modules.v2.types.codes
 import io.github.expo.modules.v2.BufferMode
 import io.github.expo.modules.v2.Event
 import io.github.expo.modules.v2.ExpoModule
@@ -11,6 +10,7 @@ import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.SharedObject
 import io.github.expo.modules.v2.modules.ModuleBuilder
 import io.github.expo.modules.v2.types.CppType
+import io.github.expo.modules.v2.types.codes
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
@@ -49,7 +49,9 @@ class GeneratedSharedObjectTest {
 
     @JS fun maybe(player: Player?): Int = if (player == null) 0 else 1
 
-    @JS @BufferMode(Buffer.YES) fun optedIn(player: Player): Int = 0
+    @JS
+    @BufferMode(Buffer.YES)
+    fun optedIn(player: Player): Int = 0
   }
 
   private fun describe(sharedClass: Class<out SharedObject>) =

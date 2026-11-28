@@ -30,8 +30,8 @@ mavenPublishing {
     AndroidSingleVariantLibrary(
       javadocJar = JavadocJar.Empty(),
       sourcesJar = SourcesJar.Sources(),
-      variant = "release"
-    )
+      variant = "release",
+    ),
   )
 
   pom {

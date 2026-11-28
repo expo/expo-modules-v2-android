@@ -1,18 +1,18 @@
 package io.github.expo.modules.v2.testapp
 
 import io.github.expo.kolibri.CalledFromNative
-import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.Buffer
 import io.github.expo.modules.v2.BufferMode
+import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.ExpoModule
 import io.github.expo.modules.v2.JS
+import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.Record
 import io.github.expo.modules.v2.args.Trampoline
 import io.github.expo.modules.v2.converters.UrlConverter
 import io.github.expo.modules.v2.jsi.JavaScriptObject
 import io.github.expo.modules.v2.jsi.JavaScriptRuntime
 import io.github.expo.modules.v2.jsi.JavaScriptValue
-import io.github.expo.modules.v2.Module
 import io.github.expo.modules.v2.modules.ModuleRegistry
 import io.github.expo.modules.v2.records.RecordRegistry
 import io.github.expo.modules.v2.records.codecFor
@@ -23,6 +23,7 @@ import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.buffered
+import kotlinx.coroutines.delay
 import java.net.URI
 import java.net.URL
 import kotlin.test.Test
@@ -34,7 +35,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 import kotlin.time.Duration
-import kotlinx.coroutines.delay
 
 /**
  * List/Map fixture. Buffer-safe complex signatures dispatch through trampolines - hand-written
@@ -243,7 +243,6 @@ private class DefaultsModule : Module() {
   fun describeMapped(value: Defaults): String = describe(value)
 }
 
-
 private const val WIDE_FIELDS = 42
 
 /**
@@ -300,7 +299,16 @@ private data class Wide(
 @ExpoModule(name = "Wide")
 private class WideModule : Module() {
   @JS
-  fun echo(value: Wide): Wide = Wide(value.field0 + 1, value.field1 + 1, value.field2 + 1, value.field3 + 1, value.field4 + 1, value.field5 + 1, value.field6 + 1, value.field7 + 1, value.field8 + 1, value.field9 + 1, value.field10 + 1, value.field11 + 1, value.field12 + 1, value.field13 + 1, value.field14 + 1, value.field15 + 1, value.field16 + 1, value.field17 + 1, value.field18 + 1, value.field19 + 1, value.field20 + 1, value.field21 + 1, value.field22 + 1, value.field23 + 1, value.field24 + 1, value.field25 + 1, value.field26 + 1, value.field27 + 1, value.field28 + 1, value.field29 + 1, value.field30 + 1, value.field31 + 1, value.field32 + 1, value.field33 + 1, value.field34 + 1, value.field35 + 1, value.field36 + 1, value.field37 + 1, value.field38 + 1, value.field39 + 1, value.field40 + 1, value.field41 + 1)
+  fun echo(value: Wide): Wide = Wide(
+    value.field0 + 1, value.field1 + 1, value.field2 + 1, value.field3 + 1,
+    value.field4 + 1, value.field5 + 1, value.field6 + 1, value.field7 + 1, value.field8 + 1, value.field9 + 1,
+    value.field10 + 1, value.field11 + 1, value.field12 + 1, value.field13 + 1, value.field14 + 1, value.field15 + 1,
+    value.field16 + 1, value.field17 + 1, value.field18 + 1, value.field19 + 1, value.field20 + 1, value.field21 + 1,
+    value.field22 + 1, value.field23 + 1, value.field24 + 1, value.field25 + 1, value.field26 + 1,
+    value.field27 + 1, value.field28 + 1, value.field29 + 1, value.field30 + 1, value.field31 + 1,
+    value.field32 + 1, value.field33 + 1, value.field34 + 1, value.field35 + 1, value.field36 + 1,
+    value.field37 + 1, value.field38 + 1, value.field39 + 1, value.field40 + 1, value.field41 + 1,
+  )
 }
 
 @Record
@@ -632,6 +640,7 @@ private val urlDescriptor = TypeDescriptor.Simple(URL::class.java, false)
 private val nullableDurationDescriptor = TypeDescriptor.Simple(Duration::class.java, true)
 private val urlType = AnyType(urlDescriptor)
 private val nullableDurationType = AnyType(nullableDurationDescriptor)
+
 /**
  * Built-in converted-type fixture: user methods take/return `URL` and `Duration`, while JS and the
  * JNI signatures only ever see their bridge types.
@@ -662,7 +671,6 @@ private class ConvertedModule : Module() {
   fun extend(bookmark: Bookmark, extra: Duration): Bookmark =
     bookmark.copy(ttl = (bookmark.ttl ?: Duration.ZERO) + extra)
 }
-
 
 /**
  * Leaf fixtures: String, boxed scalars and primitive arrays declared buffered() ride the
@@ -972,9 +980,11 @@ private class PropertyModule : Module() {
 
   @get:CalledFromNative
   val version = "1.0"
+
   @get:CalledFromNative
   @set:CalledFromNative
   var count = 1
+
   @get:CalledFromNative
   val isReady = true
 
@@ -1083,12 +1093,16 @@ private class NullableScalarModule : Module() {
 
   @JS
   fun echoBoolean(value: Boolean?): Boolean? = value
+
   @JS
   fun echoInt(value: Int?): Int? = value
+
   @JS
   fun echoLong(value: Long?): Long? = value
+
   @JS
   fun echoFloat(value: Float?): Float? = value
+
   @JS
   fun echoDouble(value: Double?): Double? = value
 }
@@ -1540,13 +1554,18 @@ class HermesRuntimeTest {
           returns = AnyType(nullableStringMap).buffered(),
           methodName = "labels__trampoline",
         )
-        function("sum", AnyType(
-          TypeDescriptor.Parametrized(
-            List::class.java,
-            false,
-            arrayOf(TypeDescriptor.Simple(Double::class.javaObjectType, false)),
-          ),
-        ).buffered(), returns = AnyType(TypeDescriptor.Double), methodName = "sum__trampoline")
+        function(
+          "sum",
+          AnyType(
+            TypeDescriptor.Parametrized(
+              List::class.java,
+              false,
+              arrayOf(TypeDescriptor.Simple(Double::class.javaObjectType, false)),
+            ),
+          ).buffered(),
+          returns = AnyType(TypeDescriptor.Double),
+          methodName = "sum__trampoline",
+        )
       }
 
       fun runAll(): List<String> = listOf(
@@ -1578,23 +1597,33 @@ class HermesRuntimeTest {
           TypeDescriptor.Parametrized(List::class.java, false, arrayOf(TypeDescriptor.Simple(Any::class.java, true))),
         )
         function("identity", dynamicList, returns = dynamicList)
-        function("sum", AnyType(
-          TypeDescriptor.Parametrized(
-            List::class.java,
-            false,
-            arrayOf(TypeDescriptor.Simple(Double::class.javaObjectType, false)),
-          ),
-        ).buffered(), returns = AnyType(TypeDescriptor.Double), methodName = "sum__trampoline")
-        function("total", AnyType(
-          TypeDescriptor.Parametrized(
-            Map::class.java,
-            false,
-            arrayOf(
-              TypeDescriptor.Simple(String::class.java, false),
-              TypeDescriptor.Simple(Int::class.javaObjectType, false),
+        function(
+          "sum",
+          AnyType(
+            TypeDescriptor.Parametrized(
+              List::class.java,
+              false,
+              arrayOf(TypeDescriptor.Simple(Double::class.javaObjectType, false)),
             ),
-          ),
-        ).buffered(), returns = AnyType(TypeDescriptor.Int), methodName = "total__trampoline")
+          ).buffered(),
+          returns = AnyType(TypeDescriptor.Double),
+          methodName = "sum__trampoline",
+        )
+        function(
+          "total",
+          AnyType(
+            TypeDescriptor.Parametrized(
+              Map::class.java,
+              false,
+              arrayOf(
+                TypeDescriptor.Simple(String::class.java, false),
+                TypeDescriptor.Simple(Int::class.javaObjectType, false),
+              ),
+            ),
+          ).buffered(),
+          returns = AnyType(TypeDescriptor.Int),
+          methodName = "total__trampoline",
+        )
       }
 
       fun runAll(): List<String> = listOf(
@@ -1723,9 +1752,12 @@ class HermesRuntimeTest {
     // One [codeCount, codes...] group per field: INT, STRING, then nullable STRING.
     assertEquals(
       listOf(
-        1, CppType.INT.code,
-        1, CppType.STRING.code,
-        1, CppType.STRING.nullableCode(),
+        1,
+        CppType.INT.code,
+        1,
+        CppType.STRING.code,
+        1,
+        CppType.STRING.nullableCode(),
       ),
       data.fieldTypes.toList(),
     )
@@ -1844,13 +1876,18 @@ class HermesRuntimeTest {
           ).buffered(),
           methodName = "spread__trampoline",
         )
-        function("explode", AnyType(TypeDescriptor.Int), returns = AnyType(
-          TypeDescriptor.Parametrized(
-            List::class.java,
-            false,
-            arrayOf(TypeDescriptor.Simple(Point::class.java, false)),
-          ),
-        ).buffered(), methodName = "explode__trampoline")
+        function(
+          "explode",
+          AnyType(TypeDescriptor.Int),
+          returns = AnyType(
+            TypeDescriptor.Parametrized(
+              List::class.java,
+              false,
+              arrayOf(TypeDescriptor.Simple(Point::class.java, false)),
+            ),
+          ).buffered(),
+          methodName = "explode__trampoline",
+        )
       }
       runtime.moduleRegistry.register("BigEcho", sharedEcho) {
         function(
@@ -1906,7 +1943,6 @@ class HermesRuntimeTest {
       )
       // Small results still ride the buffer.
       assertEquals("true", runtime.evaluateAsString("expo.modules.Big.explode(2).length === 2"))
-
     }
   }
 
@@ -2513,8 +2549,12 @@ class HermesRuntimeTest {
   fun `a buffer-safe record without buffered() Map-rides through its trampoline`() {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register("MapRide", sharedTrampoline) {
-        function("mapRide", AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)),
-          returns = AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)), methodName = "mapRide__trampoline")
+        function(
+          "mapRide",
+          AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)),
+          returns = AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)),
+          methodName = "mapRide__trampoline",
+        )
       }
 
       assertEquals(
@@ -2564,10 +2604,14 @@ class HermesRuntimeTest {
   fun `records cross via hardcoded trampolines`() {
     HermesRuntime().use { runtime ->
       runtime.moduleRegistry.register("Tramp", sharedTrampoline) {
-        function("record",
-          AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)).buffered(), returns = AnyType(
+        function(
+          "record",
+          AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)).buffered(),
+          returns = AnyType(
             TypeDescriptor.Simple(MyRecord::class.java, false),
-          ).buffered(), methodName = "record__trampoline")
+          ).buffered(),
+          methodName = "record__trampoline",
+        )
         function(
           "tag",
           AnyType(TypeDescriptor.Simple(String::class.java, false)),
@@ -2576,18 +2620,31 @@ class HermesRuntimeTest {
           returns = AnyType(TypeDescriptor.Simple(String::class.java, false)),
           methodName = "tag__trampoline",
         )
-        function("combine",
+        function(
+          "combine",
           AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)).buffered(),
-          AnyType(TypeDescriptor.Simple(Tagged::class.java, false)).buffered(), returns = AnyType(
+          AnyType(TypeDescriptor.Simple(Tagged::class.java, false)).buffered(),
+          returns = AnyType(
             TypeDescriptor.Simple(MyRecord::class.java, false),
-          ).buffered(), methodName = "combine__trampoline")
-        function("make", AnyType(TypeDescriptor.Int), returns = AnyType(
-          TypeDescriptor.Simple(MyRecord::class.java, false),
-        ).buffered(), methodName = "make__trampoline")
-        function("boom",
-          AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)).buffered(), returns = AnyType(
+          ).buffered(),
+          methodName = "combine__trampoline",
+        )
+        function(
+          "make",
+          AnyType(TypeDescriptor.Int),
+          returns = AnyType(
             TypeDescriptor.Simple(MyRecord::class.java, false),
-          ).buffered(), methodName = "boom__trampoline")
+          ).buffered(),
+          methodName = "make__trampoline",
+        )
+        function(
+          "boom",
+          AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)).buffered(),
+          returns = AnyType(
+            TypeDescriptor.Simple(MyRecord::class.java, false),
+          ).buffered(),
+          methodName = "boom__trampoline",
+        )
       }
 
       fun runAll(): List<String> = listOf(
@@ -2630,10 +2687,14 @@ class HermesRuntimeTest {
 
       // A declared-but-missing trampoline fails that function's first call, naming the method.
       runtime.moduleRegistry.register("Broken", sharedTrampoline) {
-        function("record",
-          AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)).buffered(), returns = AnyType(
+        function(
+          "record",
+          AnyType(TypeDescriptor.Simple(MyRecord::class.java, false)).buffered(),
+          returns = AnyType(
             TypeDescriptor.Simple(MyRecord::class.java, false),
-          ).buffered(), methodName = "missing__trampoline")
+          ).buffered(),
+          methodName = "missing__trampoline",
+        )
       }
       val missingTrampoline = runtime.evaluateAsString(
         "try { expo.modules.Broken.record({x: 1, b: 'a'}); 'no error'; } catch (e) { String(e); }",
@@ -2978,9 +3039,14 @@ class HermesRuntimeTest {
         function("add", AnyType(TypeDescriptor.Int), AnyType(TypeDescriptor.Int), returns = AnyType(TypeDescriptor.Int))
       }
       runtime.moduleRegistry.register("Other", sharedMath) {
-        function("multiply", AnyType(TypeDescriptor.Int), AnyType(TypeDescriptor.Int), returns = AnyType(
-          TypeDescriptor.Int,
-        ))
+        function(
+          "multiply",
+          AnyType(TypeDescriptor.Int),
+          AnyType(TypeDescriptor.Int),
+          returns = AnyType(
+            TypeDescriptor.Int,
+          ),
+        )
       }
 
       // Repeated reads return the same cached object.
@@ -3027,9 +3093,14 @@ class HermesRuntimeTest {
     HermesRuntime().use { first ->
       HermesRuntime().use { second ->
         first.moduleRegistry.register("OnlyFirst", sharedMath) {
-          function("add", AnyType(TypeDescriptor.Int), AnyType(TypeDescriptor.Int), returns = AnyType(
-            TypeDescriptor.Int,
-          ))
+          function(
+            "add",
+            AnyType(TypeDescriptor.Int),
+            AnyType(TypeDescriptor.Int),
+            returns = AnyType(
+              TypeDescriptor.Int,
+            ),
+          )
         }
         assertEquals("42", first.evaluateAsString("expo.modules.OnlyFirst.add(40, 2)"))
         assertEquals("undefined", second.evaluateAsString("typeof expo.modules.OnlyFirst"))
@@ -3170,9 +3241,14 @@ class HermesRuntimeTest {
       // The duplicate check is pure Kotlin - it fails before anything crosses JNI.
       assertFailsWith<IllegalArgumentException> {
         runtime.moduleRegistry.register("Dup", sharedMath) {
-          function("multiply", AnyType(TypeDescriptor.Int), AnyType(TypeDescriptor.Int), returns = AnyType(
-            TypeDescriptor.Int,
-          ))
+          function(
+            "multiply",
+            AnyType(TypeDescriptor.Int),
+            AnyType(TypeDescriptor.Int),
+            returns = AnyType(
+              TypeDescriptor.Int,
+            ),
+          )
         }
       }
       // The original registration is untouched.

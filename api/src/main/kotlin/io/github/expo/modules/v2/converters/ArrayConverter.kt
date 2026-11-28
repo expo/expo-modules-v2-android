@@ -1,13 +1,13 @@
 package io.github.expo.modules.v2.converters
 
+import io.github.expo.kolibri.binary.BinaryBuffer
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeCodesWriter
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.anyConverter
-import io.github.expo.kolibri.binary.BinaryBuffer
 
 class ArrayConverter<T>(
-  typeDescriptor: TypeDescriptor.Parametrized
+  typeDescriptor: TypeDescriptor.Parametrized,
 ) : TypeConverter<Array<T>>(typeDescriptor.isNullable) {
   private val elementConverter: TypeConverter<Any> =
     typeDescriptor.params[0].anyConverter

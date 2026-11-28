@@ -1,7 +1,6 @@
 package io.github.expo.modules.v2.types
 
 import io.github.expo.modules.v2.converters.ArrayConverter
-import io.github.expo.modules.v2.converters.typeCodes
 import io.github.expo.modules.v2.converters.DurationConverter
 import io.github.expo.modules.v2.converters.IntArrayConverter
 import io.github.expo.modules.v2.converters.PathConverter
@@ -10,6 +9,7 @@ import io.github.expo.modules.v2.converters.StringConverter
 import io.github.expo.modules.v2.converters.TypeConverter
 import io.github.expo.modules.v2.converters.UriConverter
 import io.github.expo.modules.v2.converters.UrlConverter
+import io.github.expo.modules.v2.converters.typeCodes
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -53,7 +53,7 @@ class TypeConverterRegistryTest {
   @Test
   fun `a class no convention covers is rejected`() {
     listOf(Unconverted::class.java, StringBuilder::class.java).forEach { type ->
-     assertFails {
+      assertFails {
         TypeDescriptor.Simple(type, false).converter
       }
     }

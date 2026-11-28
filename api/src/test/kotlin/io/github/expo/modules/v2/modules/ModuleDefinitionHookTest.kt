@@ -1,11 +1,11 @@
 package io.github.expo.modules.v2.modules
 
 import io.github.expo.modules.v2.Module
-import io.github.expo.modules.v2.types.codes
 import io.github.expo.modules.v2.types.AnyType
 import io.github.expo.modules.v2.types.CppType
 import io.github.expo.modules.v2.types.TypeDescriptor
 import io.github.expo.modules.v2.types.buffered
+import io.github.expo.modules.v2.types.codes
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull

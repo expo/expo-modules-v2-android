@@ -22,4 +22,3 @@ val FirSession.recordPredicates: RecordPredicates by FirSession.sessionComponent
 
 fun FirClassSymbol<*>.isRecord(session: FirSession): Boolean =
   session.predicateBasedProvider.matches(session.recordPredicates.predicate, this)
-

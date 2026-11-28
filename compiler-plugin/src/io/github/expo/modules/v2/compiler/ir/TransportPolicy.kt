@@ -102,7 +102,11 @@ internal class ValuePlan(
 )
 
 /** What every variant of a union crosses as, when they share it - see [TransportPolicy.sameBridgeOf]. */
-internal class UnionBridge(val kind: Kind, /** The first variant's value type. */ val type: IrType) {
+internal class UnionBridge(
+  val kind: Kind,
+  /** The first variant's value type. */
+  val type: IrType,
+) {
   enum class Kind { STRING, INT, SHARED_OBJECT }
 }
 
@@ -150,7 +154,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       "kotlin.Unit" -> ValueKind.UNIT
       "kotlin.IntArray", "kotlin.LongArray", "kotlin.FloatArray", "kotlin.DoubleArray",
       "kotlin.BooleanArray", "kotlin.ByteArray",
-        -> ValueKind.PRIMITIVE_ARRAY
+      -> ValueKind.PRIMITIVE_ARRAY
 
       "io.github.expo.modules.v2.jsi.JavaScriptValue", "io.github.expo.modules.v2.jsi.JavaScriptObject" ->
         ValueKind.JS_HANDLE
@@ -187,7 +191,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
     when (kind) {
       ValueKind.UNBOXED_SCALAR, ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.DYNAMIC,
       ValueKind.UNIT, ValueKind.PRIMITIVE_ARRAY, ValueKind.JS_HANDLE,
-        -> true
+      -> true
       // A shared object is its own bridge value, so nothing has to happen on the way through -
       // except for a `SharedRef<T>` named by its type argument, where only Kotlin can see whether
       // the ref carries a T. The JNI boundary sees every SharedRef as the same erased class.
@@ -199,7 +203,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD, ValueKind.UNION,
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.CONVERTED_TO_STRING, ValueKind.ENUM, ValueKind.INT_ENUM,
       ValueKind.TYPED_ARRAY,
-        -> false
+      -> false
     }
 
   /**
@@ -212,11 +216,11 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.DYNAMIC -> allowDynamic
       ValueKind.UNBOXED_SCALAR, ValueKind.UNIT, ValueKind.JS_HANDLE,
       ValueKind.TYPED_ARRAY, ValueKind.SHARED_OBJECT,
-        -> false
+      -> false
       ValueKind.CONVERTED_TO_DOUBLE, ValueKind.INT_ENUM -> type.isMarkedNullable()
       ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.CONVERTED_TO_STRING,
       ValueKind.ENUM,
-        -> true
+      -> true
       // An Int bridge rides a register-width slot unless it is nullable, like an Int-backed enum.
       ValueKind.UNION ->
         if (unionBridgeOf(type)?.kind == UnionBridge.Kind.INT && !type.isMarkedNullable()) {
@@ -225,7 +229,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
           isBufferSafe(type, mutableSetOf(), allowDynamic)
         }
       ValueKind.LIST, ValueKind.MAP, ValueKind.SET, ValueKind.ARRAY, ValueKind.TUPLE, ValueKind.RECORD,
-        ->
+      ->
         isBufferSafe(
           type,
           mutableSetOf(),
@@ -371,7 +375,7 @@ internal class TransportPolicy(context: IrPluginContext, private val symbols: Sy
       ValueKind.UNBOXED_SCALAR, ValueKind.UNIT -> type
       ValueKind.BOXED_SCALAR, ValueKind.STRING, ValueKind.PRIMITIVE_ARRAY, ValueKind.JS_HANDLE,
       ValueKind.SHARED_OBJECT,
-        -> type.makeNullable()
+      -> type.makeNullable()
 
       ValueKind.DYNAMIC -> irBuiltIns.anyType.makeNullable()
       ValueKind.CONVERTED_TO_DOUBLE ->

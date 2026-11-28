@@ -40,7 +40,8 @@ enum class CppType(val code: Int) {
   UNION(21),
 
   /** A union the codes are already inside of, followed by how many unions out it is. */
-  UNION_REF(22);
+  UNION_REF(22),
+  ;
 
   /** [code], with the [NULLABLE] flag when [isNullable]: the head code of a value of this kind. */
   fun nullableCode(isNullable: Boolean = true): Int =

@@ -1,16 +1,20 @@
 package io.github.expo.modules.v2.records
 
 import io.github.expo.modules.v2.Record
+import io.github.expo.modules.v2.jsi.JavaScriptObject
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
-import io.github.expo.modules.v2.jsi.JavaScriptObject
 
 @Record
-private data class MapPoint(val x: Double, val y: Double, val label: String? = null) : io.github.expo.modules.v2.records.Record
+private data class MapPoint(
+  val x: Double,
+  val y: Double,
+  val label: String? = null,
+) : io.github.expo.modules.v2.records.Record
 
 /**
  * Optional fields whose defaults are NOT null, so absent, `null` and a value are three visibly
@@ -73,7 +77,10 @@ class RecordMapCodecTest {
     val map = codecFor<MapPoint>().toMap(MapPoint(1.5, -2.5, "origin"))
     assertEquals(mapOf("x" to 1.5, "y" to -2.5, "label" to "origin"), map)
     assertEquals(MapPoint(1.5, -2.5, "origin"), codecFor<MapPoint>().fromMap(map))
-    assertEquals(MapPoint(1.0, 2.0, label = null), codecFor<MapPoint>().fromMap(codecFor<MapPoint>().toMap(MapPoint(1.0, 2.0))))
+    assertEquals(
+      MapPoint(1.0, 2.0, label = null),
+      codecFor<MapPoint>().fromMap(codecFor<MapPoint>().toMap(MapPoint(1.0, 2.0))),
+    )
   }
 
   @Test
@@ -85,6 +92,7 @@ class RecordMapCodecTest {
       listOf(MapPoint(2.0, 3.0, "a"), MapPoint(4.0, 5.0)),
     )
     val map = codecFor<Envelope>().toMap(envelope)
+
     @Suppress("UNCHECKED_CAST")
     val point = map["point"] as Map<String, Any?>
     assertEquals(0.0, point["x"])

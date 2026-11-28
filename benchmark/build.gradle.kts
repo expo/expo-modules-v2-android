@@ -193,7 +193,7 @@ tasks.withType<JavaExec>().configureEach {
   systemProperty(
     "java.library.path",
     listOf(hermesEnvLibsDir, apiNativeLibsDir, testSupportNativeLibsDir, nativeLibsDir)
-      .joinToString(File.pathSeparator) { it.get().asFile.path }
+      .joinToString(File.pathSeparator) { it.get().asFile.path },
   )
 }
 

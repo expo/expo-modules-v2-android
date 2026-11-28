@@ -1,11 +1,11 @@
 package io.github.expo.modules.v2.jsi
 
 import io.github.expo.kolibri.CalledFromNative
+import io.github.expo.kolibri.NativePointer
 import io.github.expo.modules.v2.ExpoContext
 import io.github.expo.modules.v2.async.AsyncContext
 import io.github.expo.modules.v2.core.ExpoModulesV2
 import io.github.expo.modules.v2.modules.ModuleRegistry
-import io.github.expo.kolibri.NativePointer
 
 /**
  * A [JavaScriptRuntime] attached to a `jsi::Runtime` somebody else created. It serves the modules
@@ -27,8 +27,8 @@ open class AttachedRuntime private constructor(
       registry = context.moduleRegistry,
       asyncContext = asyncContext,
       engineName = engineName,
-      globalName = globalName
-    )
+      globalName = globalName,
+    ),
   ),
   context,
   ownsContext,

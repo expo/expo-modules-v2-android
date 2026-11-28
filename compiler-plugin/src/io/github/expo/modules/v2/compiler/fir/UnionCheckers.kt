@@ -311,8 +311,10 @@ private fun ConeKotlinType.argument(index: Int): ConeKotlinType? =
   (typeArguments.getOrNull(index) as? ConeKotlinTypeProjection)?.type
 
 private val LISTS = setOf(
-  StandardClassIds.List, StandardClassIds.MutableList,
-  StandardClassIds.Set, StandardClassIds.MutableSet,
+  StandardClassIds.List,
+  StandardClassIds.MutableList,
+  StandardClassIds.Set,
+  StandardClassIds.MutableSet,
   StandardClassIds.Array,
 )
 
@@ -345,7 +347,11 @@ private fun sameType(a: ConeKotlinType, b: ConeKotlinType): Boolean {
 }
 
 private val OBJECT_KINDS = setOf(
-  JsKind.ARRAY, JsKind.BINARY, JsKind.OBJECT, JsKind.SHARED_OBJECT, JsKind.ANY_OBJECT,
+  JsKind.ARRAY,
+  JsKind.BINARY,
+  JsKind.OBJECT,
+  JsKind.SHARED_OBJECT,
+  JsKind.ANY_OBJECT,
 )
 
 /**
@@ -450,7 +456,7 @@ private fun jsKindOf(
     "kotlin.collections.Set", "kotlin.collections.MutableSet",
     "kotlin.Array", "kotlin.IntArray", "kotlin.LongArray", "kotlin.FloatArray",
     "kotlin.DoubleArray", "kotlin.BooleanArray",
-      -> JsKind.ARRAY
+    -> JsKind.ARRAY
 
     "kotlin.ByteArray" -> JsKind.BINARY
     "kotlin.collections.Map", "kotlin.collections.MutableMap" -> JsKind.OBJECT

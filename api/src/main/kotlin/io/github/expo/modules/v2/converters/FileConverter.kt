@@ -1,11 +1,11 @@
 package io.github.expo.modules.v2.converters
 
-import io.github.expo.modules.v2.types.CppType
 import io.github.expo.kolibri.binary.BinaryBuffer
+import io.github.expo.modules.v2.types.CppType
 import java.io.File
 
 class FileConverter(
-  isNullable: Boolean
+  isNullable: Boolean,
 ) : TypeConverter<File>(isNullable) {
   override val kind: CppType get() = CppType.STRING
 

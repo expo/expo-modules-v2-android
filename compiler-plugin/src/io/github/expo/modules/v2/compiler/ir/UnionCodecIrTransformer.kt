@@ -41,7 +41,11 @@ class UnionCodecIrTransformer(
   private val policy = TransportPolicy(context, symbols)
 
   private val descriptors = DescriptorFields(
-    context, symbols, poet, UnionKey, isStatic = false,
+    context,
+    symbols,
+    poet,
+    UnionKey,
+    isStatic = false,
   )
 
   override fun visitElement(element: IrElement) {
@@ -280,7 +284,7 @@ class UnionCodecIrTransformer(
     backingField.initializer = context.irFactory.createSyntheticExpressionBody(
       IrSyntheticConstructorCallImpl(
         type = codecClass.defaultType,
-        symbol = codecConstructor.symbol
+        symbol = codecConstructor.symbol,
       ),
     )
     property.generateDefaultPropertyGetter(context.irFactory)

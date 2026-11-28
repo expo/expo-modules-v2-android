@@ -19,7 +19,6 @@ internal class MapRecordWriter(
 
   private val nextFieldName get() = nextField.name
 
-
   override fun write(value: Boolean) {
     out[nextFieldName] = value
   }

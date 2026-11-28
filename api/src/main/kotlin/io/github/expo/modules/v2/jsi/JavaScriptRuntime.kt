@@ -48,9 +48,11 @@ abstract class JavaScriptRuntime protected constructor(
   val moduleRegistry: ModuleRegistry
     get() = context.moduleRegistry
 
-  //@formatter:off
+  // @formatter:off
   @NativeMethod external fun evaluate(script: String, sourceURL: String = "<eval>"): JavaScriptValue
+
   @NativeMethod external fun global(): JavaScriptObject
+
   @NativeMethod external fun createObject(): JavaScriptObject
 
   /**
@@ -59,7 +61,7 @@ abstract class JavaScriptRuntime protected constructor(
    * has returned to it. Once it exists, it is the very object JavaScript holds.
    */
   @NativeMethod external fun jsObjectOf(instance: ExpoObject): JavaScriptObject?
-  //@formatter:on
+  // @formatter:on
 
   /**
    * Runs the engine's microtask queue until it is empty, so `.then` callbacks fire. Returns
