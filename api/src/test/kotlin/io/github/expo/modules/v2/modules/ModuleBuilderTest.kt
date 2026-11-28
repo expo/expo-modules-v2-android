@@ -331,6 +331,32 @@ class ModuleBuilderTest {
   }
 
   @Test
+  fun `accessor names follow Kotlin's ASCII-only rules`() {
+    // JvmAbi.getterName upper-cases only an ASCII first letter, and an `is` prefix counts unless
+    // an ASCII lower-case letter follows it - so `isärger` is its own getter, as `isReady` is.
+    val builder = builder()
+    builder.property("ärger", int, mutable = true)
+    builder.property("isÄrger", AnyType(TypeDescriptor.Bool), mutable = true)
+    builder.property("isärger", AnyType(TypeDescriptor.Bool), mutable = true)
+    builder.property("island", int, mutable = true)
+    builder.property("_count", int, mutable = true)
+    builder.property("x", int)
+
+    val names = builder.properties.map { it.getterName to it.setterName }
+    assertEquals(
+      listOf(
+        "getärger" to "setärger",
+        "isÄrger" to "setÄrger",
+        "isärger" to "setärger",
+        "getIsland" to "setIsland",
+        "get_count" to "set_count",
+        "getX" to null,
+      ),
+      names,
+    )
+  }
+
+  @Test
   fun `propertyName selects the accessor pair the bridge resolves`() {
     // A plain typed container is a direct JList-slot property, so its accessors are the Kotlin
     // property's own.

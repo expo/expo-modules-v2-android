@@ -36,7 +36,7 @@ internal class ExpoModuleIrTransformer(
   private val descriptors = DescriptorFields(context, symbols, poet, JSModuleKey, isStatic = true)
   private val trampolines = ExportedTrampolines(context, symbols, poet, descriptors)
   private val events = EventBinder(symbols, poet, descriptors)
-  private val definition = ModuleDefinitionPoet(context, symbols, poet)
+  private val definition = ModuleDefinitionPoet(context, symbols, poet, descriptors)
 
   override fun visitElement(element: IrElement) {
     element.acceptChildrenVoid(this)

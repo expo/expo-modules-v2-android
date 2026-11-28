@@ -169,8 +169,11 @@ internal object ModuleDescriptorEncoder {
       putString(property.getterName)
       putInt(property.flags)
       putTypeCodes(property.getterType, codes)
-      putBoolean(property.setterName != null)
-      property.setterName?.let { setterName ->
+
+      val setterName = property.setterName
+      val hasSetter = setterName != null
+      putBoolean(hasSetter)
+      if (hasSetter) {
         putString(setterName)
         putTypeCodes(requireNotNull(property.setterType), codes)
       }
