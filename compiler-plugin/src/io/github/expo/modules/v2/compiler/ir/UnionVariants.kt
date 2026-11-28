@@ -1,3 +1,6 @@
+// Named for `unionVariants()`, which the UnionVariant class exists to return.
+@file:Suppress("ktlint:standard:filename")
+
 package io.github.expo.modules.v2.compiler.ir
 
 import io.github.expo.modules.v2.compiler.Identifiers

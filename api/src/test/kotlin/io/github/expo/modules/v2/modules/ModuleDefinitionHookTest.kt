@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 /**
- * Pins the seam the compiler plugin generates into: [Module.define$ExpoModulesV2] fills a
+ * Pins the seam the compiler plugin generates into: [Module.`define$ExpoModulesV2`] fills a
  * [ModuleBuilder] and names the module.
  *
  * The override here is written by hand in exactly the shape the plugin emits, so this test says what

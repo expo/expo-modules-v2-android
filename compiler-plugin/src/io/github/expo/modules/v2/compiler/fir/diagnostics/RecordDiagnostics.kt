@@ -36,6 +36,7 @@ object RecordDiagnostics : ExpoDiagnosticsContainer() {
 }
 
 object RecordDiagnosticMessages : BaseDiagnosticRendererFactory() {
+  @Suppress("ktlint:standard:property-naming") // Overrides the compiler's own `MAP`.
   override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       RecordDiagnostics.RECORD_ON_UNSUPPORTED_DECLARATION,

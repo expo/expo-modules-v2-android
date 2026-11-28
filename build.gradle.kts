@@ -2,6 +2,7 @@ import com.vanniktech.maven.publish.Checksum
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
   alias(libs.plugins.kotlin.jvm) apply false
@@ -10,14 +11,17 @@ plugins {
   // with the publish plugin, which detects the AGP version.
   alias(libs.plugins.android.library) apply false
   alias(libs.plugins.vanniktech.mavenPublish) apply false
+  alias(libs.plugins.ktlint)
   base
 }
 
 val expoModulesV2Version: String = libs.versions.expo.modules.v2.get()
+val ktlintVersion: String = libs.versions.ktlint.get()
 
 allprojects {
   group = "io.github.expo"
   version = expoModulesV2Version
+  configureKtlint()
 }
 
 subprojects {
@@ -36,6 +40,28 @@ val publishToolchainToMavenCentral by tasks.registering {
   group = "publishing"
   description = "Publishes :compiler-plugin and :gradle-plugin to Maven Central."
   dependsOn(":compiler-plugin:publishToMavenCentral", ":gradle-plugin:publishToMavenCentral")
+}
+
+// ktlint over every source set and every *.gradle.kts in the project's own directory. The rules and
+// their settings live in .editorconfig, which IntelliJ's formatter reads as well.
+//
+//   ./gradlew ktlintCheck     fails on anything ktlint would change or cannot fix (`check` runs it)
+//   ./gradlew ktlintFormat    rewrites the files in place
+//
+// :compiler-plugin only sees the compat/<version> variants the current Kotlin release selects, so
+// CI also runs its check once per release in gradle/kotlin-versions.txt. To format a variant the
+// default release does not pick, pass that release: `-PkotlinVersion=<version>`.
+fun Project.configureKtlint() {
+  apply(plugin = "org.jlleitschuh.gradle.ktlint")
+  val buildDir = layout.buildDirectory.get().asFile
+  extensions.configure<KtlintExtension> {
+    version = ktlintVersion
+    // Generated sources (BuildConfig, the generated compiler tests) are added to source sets from
+    // build/. testData needs nothing here: it is a resources directory, which ktlint never reads.
+    filter {
+      exclude { element -> element.file.startsWith(buildDir) }
+    }
+  }
 }
 
 fun Project.configureJavaCompatibility() {

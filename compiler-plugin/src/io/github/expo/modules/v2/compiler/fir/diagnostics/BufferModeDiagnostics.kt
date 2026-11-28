@@ -26,6 +26,7 @@ object BufferModeDiagnostics : ExpoDiagnosticsContainer() {
 }
 
 object BufferModeDiagnosticMessages : BaseDiagnosticRendererFactory() {
+  @Suppress("ktlint:standard:property-naming") // Overrides the compiler's own `MAP`.
   override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       BufferModeDiagnostics.BUFFER_MODE_ON_NON_EXPORTED_DECLARATION,

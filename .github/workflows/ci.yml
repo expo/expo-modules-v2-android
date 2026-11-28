@@ -16,6 +16,37 @@ env:
   GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false -Dkotlin.incremental=false"
 
 jobs:
+  # ktlint over every project. The rules live in .editorconfig; `./gradlew ktlintFormat` fixes what
+  # it can. :compiler-plugin's compat/<version> variants that the default Kotlin release does not
+  # select are checked by the test-kotlin job for the release that selects them.
+  lint:
+    name: ktlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      # :react's sources are checked too, and configuring it needs the NDK it pins.
+      - name: Install the NDK :react pins
+        run: |
+          NDK_VERSION="$(sed -n 's/^ *ndkVersion *= *"\(.*\)"/\1/p' react/build.gradle.kts)"
+          echo "Installing NDK $NDK_VERSION"
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;$NDK_VERSION"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # -PskipHermesEnvBuild -PskipDesktopNative: ktlint reads sources only, so neither the Hermes
+      # host nor the native build is needed.
+      - name: Run ktlint
+        run: ./gradlew ktlintCheck --continue --stacktrace -PskipHermesEnvBuild -PskipDesktopNative
+
   # The compiler plugin links against compiler internals, so every Kotlin release it is published
   # for gets its own build and test run. gradle/kotlin-versions.txt is the single list of those
   # releases (the publish workflow and scripts/test-all-versions.sh read the same file).
@@ -59,8 +90,10 @@ jobs:
       # otherwise pull in the desktop native build and the Hermes host it needs. The test-app job
       # is the one that builds and exercises that side.
       # -PskipReact: nothing here builds :react, and configuring it downloads the NDK it pins.
+      # :compiler-plugin:ktlintCheck: each release selects its own compat/<version> variants, so
+      # this is what gets every variant checked, not only the ones the lint job's default selects.
       - name: Run checks against Kotlin ${{ matrix.kotlin-version }}
-        run: ./gradlew :compiler-plugin:test :gradle-plugin:build :api:test -PkotlinVersion=${{ matrix.kotlin-version }} --stacktrace -PskipHermesEnvBuild -PskipDesktopNative -PskipReact
+        run: ./gradlew :compiler-plugin:test :compiler-plugin:ktlintCheck :gradle-plugin:build :api:test -PkotlinVersion=${{ matrix.kotlin-version }} --stacktrace -PskipHermesEnvBuild -PskipDesktopNative -PskipReact
 
       # always(), not failure(): the reports are the only record of how many tests actually ran.
       - name: Upload test reports

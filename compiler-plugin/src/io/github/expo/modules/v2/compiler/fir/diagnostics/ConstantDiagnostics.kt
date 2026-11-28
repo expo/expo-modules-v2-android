@@ -26,6 +26,7 @@ object ConstantDiagnostics : ExpoDiagnosticsContainer() {
 }
 
 object ConstantDiagnosticMessages : BaseDiagnosticRendererFactory() {
+  @Suppress("ktlint:standard:property-naming") // Overrides the compiler's own `MAP`.
   override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       ConstantDiagnostics.CONSTANT_ON_NON_EXPORTED_PROPERTY,

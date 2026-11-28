@@ -665,12 +665,6 @@ private class ConvertedModule : Module() {
 
 
 /**
- * Native-property fixture. The `__trampoline` accessors are intentionally hardcoded functions in
- * exactly the function-trampoline shape a compiler plugin can generate later: a getter is a 0-arg
- * trampoline and a setter a 1-arg Unit trampoline, so scalar conversions expose their bridge type
- * while buffer-riding values ride the payload.
- */
-/**
  * Leaf fixtures: String, boxed scalars and primitive arrays declared buffered() ride the
  * trampoline payload instead of their usual JNI slots.
  */
@@ -961,6 +955,12 @@ private class GeneratedNullableRecordModule : Module() {
   fun makeOrNull(present: Boolean): Sticker? = if (present) Sticker(7, "seven") else null
 }
 
+/**
+ * Native-property fixture. The `__trampoline` accessors are intentionally hardcoded functions in
+ * exactly the function-trampoline shape a compiler plugin can generate later: a getter is a 0-arg
+ * trampoline and a setter a 1-arg Unit trampoline, so scalar conversions expose their bridge type
+ * while buffer-riding values ride the payload.
+ */
 private class PropertyModule : Module() {
   private val intList = AnyType(
     TypeDescriptor.Parametrized(
@@ -1289,7 +1289,8 @@ class HermesRuntimeTest {
       assertEquals(
         "threw:non-nullable",
         runtime.evaluateAsString(
-          "try { ExpoTestSupport.__convertRoundTrip([1.5, null], [${CppType.LIST.code}, ${CppType.DOUBLE.code}]); 'no'; } " +
+          "try { ExpoTestSupport.__convertRoundTrip([1.5, null], " +
+            "[${CppType.LIST.code}, ${CppType.DOUBLE.code}]); 'no'; } " +
             "catch (e) { 'threw:' + (e.message.includes('non-nullable') ? 'non-nullable' : e.message); }",
         ),
       )

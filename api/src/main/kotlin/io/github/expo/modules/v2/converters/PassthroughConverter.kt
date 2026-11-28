@@ -166,6 +166,9 @@ internal class JsHandleConverter(
   }
 }
 
-inline fun <T> selectJsHandleConverter(kind: CppType, crossinline selector: (CppType, Boolean) -> TypeConverter<T>): (Boolean) -> TypeConverter<T> {
+inline fun <T> selectJsHandleConverter(
+  kind: CppType,
+  crossinline selector: (CppType, Boolean) -> TypeConverter<T>,
+): (Boolean) -> TypeConverter<T> {
   return { isNullable -> selector(kind, isNullable) }
 }

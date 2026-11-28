@@ -16,8 +16,6 @@ import kotlinx.benchmark.Scope
 import kotlinx.benchmark.Setup
 import kotlinx.benchmark.State
 import kotlinx.benchmark.TearDown
-// kotlinx.benchmark's JVM annotations are typealiases for the JMH ones, so JMH-only annotations
-// like this can be used alongside them.
 import org.openjdk.jmh.annotations.OperationsPerInvocation
 
 /**
@@ -102,6 +100,8 @@ class BinderCallBenchmark {
   fun tearDown() = js.close()
 
   @Benchmark
+  // JMH's own annotation: kotlinx.benchmark's JVM annotations are typealiases for the JMH ones, so
+  // JMH-only annotations like this one can be used alongside them.
   @OperationsPerInvocation(OPS)
   fun call(): JavaScriptValue = js.run("__binder")
 }

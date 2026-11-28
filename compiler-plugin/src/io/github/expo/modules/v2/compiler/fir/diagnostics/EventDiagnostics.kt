@@ -38,6 +38,7 @@ object EventDiagnostics : ExpoDiagnosticsContainer() {
 }
 
 object EventDiagnosticMessages : BaseDiagnosticRendererFactory() {
+  @Suppress("ktlint:standard:property-naming") // Overrides the compiler's own `MAP`.
   override val MAP by expoRendererMap("ExpoModulesV2") {
     put(
       EventDiagnostics.EVENT_OUTSIDE_MODULE,

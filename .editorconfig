@@ -11,8 +11,22 @@ indent_size = 2
 [*.{kt,kts}]
 indent_size = 2
 max_line_length = 120
-ij_kotlin_allow_trailing_comma = false
-ij_kotlin_allow_trailing_comma_on_call_site = false
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+# ktlint (./gradlew ktlintCheck / ktlintFormat). intellij_idea is the style IntelliJ's own Kotlin
+# formatter produces, so the IDE and the check agree.
+ktlint_code_style = intellij_idea
+# These would rewrite layouts the code uses on purpose: function-signature and class-signature join
+# any signature that fits on one line (or split every one, with a parameter-count threshold),
+# function-expression-body turns single-return block bodies into `=` bodies, and
+# blank-line-between-when-conditions puts a blank line between every branch of a multi-line `when`.
+ktlint_standard_class-signature = disabled
+ktlint_standard_function-signature = disabled
+ktlint_standard_function-expression-body = disabled
+ktlint_standard_blank-line-between-when-conditions = disabled
+# Private `_x` backing a private `x` is used on purpose (atomic field updaters name some of them);
+# this rule only accepts it when `x` is public.
+ktlint_standard_backing-property-naming = disabled
 
 [*.{c,cc,cpp,h,hpp}]
 indent_size = 2

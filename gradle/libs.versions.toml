@@ -36,6 +36,13 @@ buildconfig = "5.5.1"
 # https://github.com/vanniktech/gradle-maven-publish-plugin
 vanniktech-mavenPublish = "0.37.0"
 
+# https://github.com/JLLeitschuh/ktlint-gradle
+ktlintGradle = "14.2.0"
+
+# https://github.com/pinterest/ktlint
+# Run by ktlint-gradle (see the root build.gradle.kts); the rules it applies are set in .editorconfig.
+ktlint = "1.8.0"
+
 # https://developer.android.com/jetpack/androidx/releases/annotation
 androidx-annotation = "1.9.1"
 
@@ -83,6 +90,7 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version.ref = "vanniktech-mavenPublish" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle" }
 kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
 kotlinx-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlinx-benchmark" }
 
