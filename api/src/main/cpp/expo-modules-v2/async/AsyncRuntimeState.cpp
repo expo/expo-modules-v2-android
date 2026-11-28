@@ -187,7 +187,8 @@ namespace expo::modules::v2::async {
     const Deferred deferred = std::move(*pending.deferred);
     facebook::jsi::Runtime& rt = *runtime_;
     pending_.erase(found);
-    (rejected ? deferred.rejectFn : deferred.resolveFn).call(rt, value);
+    // Moved: `call` clones a named `jsi::Value`, even one passed in as `Value&&`.
+    (rejected ? deferred.rejectFn : deferred.resolveFn).call(rt, std::move(value));
   }
 
   AsyncRuntimeState::JSPromise AsyncRuntimeState::createJSPromise(
