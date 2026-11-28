@@ -66,5 +66,8 @@ fun box(): String {
     }
 
     val name = Info.`define$ExpoModulesV2`(ModuleBuilder())
-    return if (name == "Info") "OK" else "unexpected module name: $name"
+    if (name != "Info") return "unexpected module name: $name"
+    // The registry registers the module by this name and defines it only when JavaScript reads it.
+    val reported = Info.`name$ExpoModulesV2`()
+    return if (reported == name) "OK" else "name\$ExpoModulesV2 reported $reported, define named $name"
 }

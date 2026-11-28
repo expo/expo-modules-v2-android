@@ -157,6 +157,9 @@ fun box(): String {
     val derived = Derived::class.java.getDeclaredMethod("define\$ExpoModulesV2", builder)
     if (derived.returnType != String::class.java) return "derived define: ${derived.returnType}"
     if (Derived.own(1) != 2) return "derived own() is broken"
+    // So is `name$ExpoModulesV2`, which reports the name without defining the module.
+    val derivedName = Derived::class.java.getDeclaredMethod("name\$ExpoModulesV2")
+    if (derivedName.invoke(Derived) != "Derived") return "derived name: ${derivedName.invoke(Derived)}"
 
     // A companion object and a nested class contribute no exports.
     WithNested::class.java.getDeclaredMethod("define\$ExpoModulesV2", builder)

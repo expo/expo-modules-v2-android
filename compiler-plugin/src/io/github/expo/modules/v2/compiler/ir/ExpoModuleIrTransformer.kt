@@ -10,6 +10,7 @@ import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrParameterKind
 import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.expressions.IrConstructorCall
+import org.jetbrains.kotlin.ir.symbols.IrSimpleFunctionSymbol
 import org.jetbrains.kotlin.ir.util.defaultType
 import org.jetbrains.kotlin.ir.util.getAnnotation
 import org.jetbrains.kotlin.ir.util.hasAnnotation
@@ -17,6 +18,7 @@ import org.jetbrains.kotlin.ir.util.isSubclassOf
 import org.jetbrains.kotlin.ir.util.kotlinFqName
 import org.jetbrains.kotlin.ir.visitors.IrVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
+import org.jetbrains.kotlin.name.Name
 
 /**
  * Describes every `@ExpoModule` class into the `define$ExpoModulesV2` it inherits from `Module`.
@@ -51,13 +53,29 @@ internal class ExpoModuleIrTransformer(
     val exported = members.of(declaration)
     trampolines.generate(declaration, exported)
     events.bind(declaration, exported.filterIsInstance<ExportedEvent>())
+    val jsName = jsNameOf(declaration, annotation)
     definition.fill(
-      define = inheritedDefine(declaration),
+      define = inheritedOverride(declaration, Identifiers.Names.DEFINE_FUNCTION, symbols.functions.define),
       owner = declaration,
-      jsName = jsNameOf(declaration, annotation),
+      jsName = jsName,
       exported = exported,
       sharedClasses = sharedClassesOf(declaration, annotation),
     )
+    // Lets the registry register the module by name and define it only when JavaScript reads it.
+    symbols
+      .functions
+      .moduleName
+      ?.let { moduleName ->
+      definition.fillName(
+        function = inheritedOverride(
+          declaration,
+          Identifiers.Names.NAME_FUNCTION,
+          moduleName
+        ),
+        owner = declaration,
+        jsName = jsName,
+      )
+    }
   }
 
   private fun jsNameOf(moduleClass: IrClass, annotation: IrConstructorCall): String =
@@ -81,26 +99,33 @@ internal class ExpoModuleIrTransformer(
       .mapNotNull(sharedClasses::describe)
   }
 
-  /** Turns the fake override of `Module.define$ExpoModulesV2` into this module's own. */
-  private fun inheritedDefine(moduleClass: IrClass): IrSimpleFunction {
-    val define = moduleClass
+  /**
+   * Turns the fake override of the `Module` member [name] - `define$ExpoModulesV2` or
+   * `name$ExpoModulesV2` - into this module's own.
+   */
+  private fun inheritedOverride(
+    moduleClass: IrClass,
+    name: Name,
+    overridden: IrSimpleFunctionSymbol,
+  ): IrSimpleFunction {
+    val function = moduleClass
       .declarations
       .filterIsInstance<IrSimpleFunction>()
-      .firstOrNull { it.name == Identifiers.Names.DEFINE_FUNCTION }
+      .firstOrNull { it.name == name }
       ?: error(
         "@ExpoModule: ${
-          "${moduleClass.kotlinFqName} has no inherited ${Identifiers.Literals.DEFINE_FUNCTION}; " +
+          "${moduleClass.kotlinFqName} has no inherited $name; " +
             "the frontend should have rejected an @ExpoModule class that is not a Module"
         }"
       )
 
-    define.isFakeOverride = false
-    define.origin = IrDeclarationOrigin.GeneratedByPlugin(JSModuleKey)
-    define.modality = Modality.FINAL
-    define.overriddenSymbols = listOf(symbols.functions.define)
-    define.parameters
+    function.isFakeOverride = false
+    function.origin = IrDeclarationOrigin.GeneratedByPlugin(JSModuleKey)
+    function.modality = Modality.FINAL
+    function.overriddenSymbols = listOf(overridden)
+    function.parameters
       .single { it.kind == IrParameterKind.DispatchReceiver }
       .type = moduleClass.defaultType
-    return define
+    return function
   }
 }

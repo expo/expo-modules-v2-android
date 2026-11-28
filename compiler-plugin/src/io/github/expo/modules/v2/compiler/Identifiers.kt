@@ -236,6 +236,7 @@ object Identifiers {
 
     // Module members.
     val DEFINE_FUNCTION = Name.identifier(Literals.DEFINE_FUNCTION)
+    val NAME_FUNCTION = Name.identifier(Literals.NAME_FUNCTION)
     val REGISTER_SHARED_CLASS = Name.identifier("register")
     val RESERVE_SHARED_CLASS = Name.identifier("reserve")
     val GET_ADDITIONAL_MEMORY_PRESSURE = Name.identifier("getAdditionalMemoryPressure")
@@ -267,6 +268,7 @@ object Identifiers {
     const val CODEC_PROPERTY = "recordCodec\$ExpoModulesV2"
     const val UNION_CODEC_PROPERTY = "unionCodec\$ExpoModulesV2"
     const val DEFINE_FUNCTION = "define\$ExpoModulesV2"
+    const val NAME_FUNCTION = "name\$ExpoModulesV2"
     const val DESCRIPTOR_FIELD_PREFIX = "type\$"
     const val TRAMPOLINE_SUFFIX = "__trampoline\$ExpoModulesV2"
 

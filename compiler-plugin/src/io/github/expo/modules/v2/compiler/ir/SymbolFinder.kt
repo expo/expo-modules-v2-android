@@ -324,6 +324,14 @@ class SymbolFinder(private val context: IrPluginContext) {
       classes.module.functions.single { it.owner.name == Identifiers.Names.DEFINE_FUNCTION }
     }
 
+    /**
+     * `Module.name$ExpoModulesV2(): String?`, or `null` on an older runtime, whose registry defines
+     * every module as it registers it.
+     */
+    val moduleName: IrSimpleFunctionSymbol? by lazy {
+      classes.module.functions.singleOrNull { it.owner.name == Identifiers.Names.NAME_FUNCTION }
+    }
+
     /** `ModuleBuilder.function(jsName, vararg argTypes, returns, methodName, isAsync)` */
     val builderFunction: IrSimpleFunctionSymbol by lazy {
       classes.moduleBuilder.functions.single { it.owner.name == Identifiers.Names.FUNCTION }
