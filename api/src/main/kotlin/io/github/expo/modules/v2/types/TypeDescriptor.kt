@@ -208,7 +208,11 @@ sealed interface TypeDescriptor {
     val isSuspend: Boolean,
     val isNullable: Boolean,
   ) : ObjectLike {
-    override val converter: TypeConverter<*> by lazy { FunctionConverter(this) }
+    @Volatile
+    private var resolved: TypeConverter<*>? = null
+
+    override val converter: TypeConverter<*>
+      get() = resolved ?: FunctionConverter(this).also { resolved = it }
 
     override fun toString(): String =
       (if (isSuspend) "suspend " else "") +

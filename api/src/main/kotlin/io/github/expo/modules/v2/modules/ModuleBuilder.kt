@@ -1,7 +1,7 @@
 package io.github.expo.modules.v2.modules
 
-import io.github.expo.modules.v2.args.Trampoline
 import io.github.expo.modules.v2.SharedObject
+import io.github.expo.modules.v2.args.Trampoline
 import io.github.expo.modules.v2.sharedobjects.SharedObjectRegistry
 import io.github.expo.modules.v2.types.AnyType
 
@@ -45,29 +45,12 @@ class ModuleBuilder {
   ) {
     requireAvailableExportName(jsName)
 
-    val getterName = if (hasIsPrefix(propertyName)) {
-      propertyName
-    } else {
-      "get${propertyName.accessorSuffix()}"
-    }
-
-    val setterName = if (mutable) {
-      if (hasIsPrefix(propertyName)) {
-        "set${propertyName.substring(2)}"
-      } else {
-        "set${propertyName.accessorSuffix()}"
-      }
-    } else {
-      null
-    }
-
     properties.add(
       ModulePropertyDefinition(
         jsName = jsName,
-        getterName = getterName,
-        setterName = setterName,
+        propertyName = propertyName,
         getterType = resolved(type),
-        setterType = if (setterName != null) {
+        setterType = if (mutable) {
           resolved(setterType)
         } else {
           null
@@ -130,24 +113,22 @@ class ModuleBuilder {
         "members ${RESERVED_EXPORT_NAMES.joinToString()}"
     }
     require(
-      functions.none { it.jsName == name } &&
-        properties.none { it.jsName == name } &&
-        sharedClasses.none { it.jsName == name } &&
-        events.none { it.jsName == name },
+      functions.noneNamed(name) { it.jsName } &&
+        properties.noneNamed(name) { it.jsName } &&
+        sharedClasses.noneNamed(name) { it.jsName } &&
+        events.noneNamed(name) { it.jsName },
     ) {
       "Export '$name' is already declared in this module or shared-object class"
     }
   }
 
-  private fun hasIsPrefix(propertyName: String): Boolean =
-    propertyName.length > 2 && propertyName.startsWith("is") && !propertyName[2].isLowerCase()
-
-  private fun String.accessorSuffix(): String = replaceFirstChar { character ->
-    if (character.isLowerCase()) {
-      character.titlecase()
-    } else {
-      character.toString()
+  private inline fun <T> List<T>.noneNamed(name: String, jsName: (T) -> String): Boolean {
+    for (index in indices) {
+      if (jsName(this[index]) == name) {
+        return false
+      }
     }
+    return true
   }
 
   companion object {

@@ -17,7 +17,7 @@ import org.jetbrains.kotlin.utils.addToStdlib.ifTrue
  * fun define$ExpoModulesV2(builder: ModuleBuilder): String? {
  *   builder.function("add", AnyType(TypeDescriptor.Int, false), ..., returns = ..., methodName = "add")
  *   builder.property("count", AnyType(CommonDescriptors.INT_BOXED_NULL, false), true, "count")
- *   builder.event("changed", AnyType(TypeDescriptor.Int, false))
+ *   builder.event("changed", AnyType(type$0, false))
  *   return "MathUtils"
  * }
  * ```
@@ -26,6 +26,7 @@ internal class ModuleDefinitionPoet(
   private val context: IrPluginContext,
   private val symbols: SymbolFinder,
   private val poet: TypeDescriptorPoet,
+  private val descriptors: DescriptorFields,
 ) {
   private val irBuiltIns = context.irBuiltIns
 
@@ -41,13 +42,13 @@ internal class ModuleDefinitionPoet(
     val body = context.irFactory.createSyntheticBlockBody()
     for (export in exported) {
       body.statements += when (export) {
-        is ExportedFunction -> declareFunction(export, builder.get())
-        is ExportedProperty -> declareProperty(export, builder.get())
-        is ExportedEvent -> declareEvent(export, builder.get())
+        is ExportedFunction -> declareFunction(export, builder.get(), owner)
+        is ExportedProperty -> declareProperty(export, builder.get(), owner)
+        is ExportedEvent -> declareEvent(export, builder.get(), owner)
       }
     }
     for (sharedClass in sharedClasses) {
-      body.statements += declareSharedClass(sharedClass, builder.get())
+      body.statements += declareSharedClass(sharedClass, builder.get(), owner)
     }
     body.statements += IrSyntheticReturnImpl(
       type = irBuiltIns.nothingType,
@@ -58,16 +59,16 @@ internal class ModuleDefinitionPoet(
     define.patchDeclarationParents(owner)
   }
 
-  private fun declareFunction(export: ExportedFunction, builder: IrExpression): IrExpression {
+  private fun declareFunction(export: ExportedFunction, builder: IrExpression, owner: IrClass): IrExpression {
     val anyTypeType = symbols.classes.anyType.owner.defaultType
     val arguments = mutableListOf(
       poet.string(export.jsName),
       IrSyntheticVarargImpl(
         type = irBuiltIns.arrayClass.typeWith(anyTypeType),
         varargElementType = anyTypeType,
-        elements = export.arguments.map(::anyTypeOf),
+        elements = export.arguments.map { anyTypeOf(it, owner) },
       ),
-      anyTypeOf(export.result),
+      anyTypeOf(export.result, owner),
       poet.string(methodNameOf(export)),
     )
 
@@ -87,6 +88,7 @@ internal class ModuleDefinitionPoet(
   private fun declareSharedClass(
     export: ExportedSharedClass,
     builder: IrExpression,
+    owner: IrClass,
   ): IrExpression {
     val anyTypeType = symbols.classes.anyType.owner.defaultType
     return callOn(
@@ -98,7 +100,7 @@ internal class ModuleDefinitionPoet(
         IrSyntheticVarargImpl(
           type = irBuiltIns.arrayClass.typeWith(anyTypeType),
           varargElementType = anyTypeType,
-          elements = export.arguments.map(::anyTypeOf),
+          elements = export.arguments.map { anyTypeOf(it, owner) },
         ),
         poet.string(export.trampolineName),
       ),
@@ -106,32 +108,37 @@ internal class ModuleDefinitionPoet(
     )
   }
 
-  private fun declareProperty(export: ExportedProperty, builder: IrExpression): IrExpression =
+  private fun declareProperty(export: ExportedProperty, builder: IrExpression, owner: IrClass): IrExpression =
     callOn(
       function = symbols.functions.builderProperty,
       receiver = builder,
       arguments = listOfNotNull(
         poet.string(export.jsName),
-        anyTypeOf(export.getterPlan),
+        anyTypeOf(export.getterPlan, owner),
         poet.boolean(export.property.isVar),
         poet.string(propertyNameOf(export)),
-        anyTypeOf(export.setterPlan ?: export.getterPlan),
+        anyTypeOf(export.setterPlan ?: export.getterPlan, owner),
         export.isConstant.ifTrue { poet.boolean(true) },
       ),
       returnType = irBuiltIns.unitType,
     )
 
   /** `builder.event("changed", AnyType(...))` */
-  private fun declareEvent(export: ExportedEvent, builder: IrExpression): IrExpression =
+  private fun declareEvent(export: ExportedEvent, builder: IrExpression, owner: IrClass): IrExpression =
     callOn(
       function = symbols.functions.builderEvent,
       receiver = builder,
-      arguments = listOf(poet.string(export.jsName), anyTypeOf(export.payload)),
+      arguments = listOf(poet.string(export.jsName), anyTypeOf(export.payload, owner)),
       returnType = irBuiltIns.unitType,
     )
 
-  /** `AnyType(descriptor, useBuffer)` */
-  private fun anyTypeOf(plan: ValuePlan): IrExpression = poet.anyTypeOf(plan)
+  /** `AnyType(descriptor, useBuffer)`, the descriptor shared with [owner]'s trampolines. */
+  private fun anyTypeOf(plan: ValuePlan, owner: IrClass): IrExpression =
+    poet.constructorCall(
+      constructor = symbols.constructors.anyType,
+      type = symbols.classes.anyType.owner.defaultType,
+      arguments = listOf(descriptors.read(owner, plan.type), poet.boolean(plan.buffered)),
+    )
 
   /** The JVM method the bridge resolves: the user's own when no trampoline stands in front of it. */
   private fun methodNameOf(export: ExportedFunction): String =

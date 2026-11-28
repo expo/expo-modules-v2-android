@@ -18,10 +18,18 @@ import io.github.expo.modules.v2.unions.UnionRegistry
 abstract class ClassConverterFactory : SimpleConverterFactory {
   protected abstract fun newConverter(type: Class<*>, isNullable: Boolean): TypeConverter<*>
 
-  final override fun create(descriptor: TypeDescriptor.Simple): TypeConverter<*> =
-    sharedCache.getOrPut(descriptor.javaClass, descriptor.isNullable) {
-      newConverter(descriptor.javaClass, descriptor.isNullable)
+  final override fun create(descriptor: TypeDescriptor.Simple): TypeConverter<*> {
+    val type = descriptor.javaClass
+    val isNullable = descriptor.isNullable
+    val cachedConverter = sharedCache.get(type, isNullable)
+    if (cachedConverter != null) {
+      return cachedConverter
     }
+
+    val converter = newConverter(type, isNullable)
+    sharedCache.put(type, isNullable, converter)
+    return converter
+  }
 
   private companion object {
     val sharedCache = ClassCache()

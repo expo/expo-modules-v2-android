@@ -20,17 +20,49 @@ internal class ModuleFunctionDefinition(
 
 internal class ModulePropertyDefinition(
   val jsName: String,
-  val getterName: String,
-  val setterName: String?,
+  private val propertyName: String,
   val getterType: AnyType,
   val setterType: AnyType?,
   val isConstant: Boolean = false,
 ) {
+  val getterName: String
+    get() = if (hasIsPrefix(propertyName)) {
+      propertyName
+    } else {
+      accessorName("get", propertyName)
+    }
+
+  val setterName: String?
+    get() = when {
+      setterType == null -> null
+      hasIsPrefix(propertyName) -> accessorName("set", propertyName, from = 2)
+      else -> accessorName("set", propertyName)
+    }
+
   val flags: Int
     get() = isConstant.toBinaryFlag(FLAG_CONSTANT)
 
   internal companion object {
     const val FLAG_CONSTANT = 1
+
+    private fun hasIsPrefix(name: String): Boolean =
+      name.length > 2 && name.startsWith("is") && !isAsciiLowerCase(name[2])
+
+    private fun accessorName(prefix: String, name: String, from: Int = 0): String {
+      val builder = StringBuilder(
+        prefix.length + name.length - from
+      ).append(prefix)
+
+      if (from < name.length && isAsciiLowerCase(name[from])) {
+        builder.append(name[from] - ('a' - 'A')).append(name, from + 1, name.length)
+      } else {
+        builder.append(name, from, name.length)
+      }
+
+      return builder.toString()
+    }
+
+    private fun isAsciiLowerCase(char: Char): Boolean = char in 'a'..'z'
   }
 }
 
