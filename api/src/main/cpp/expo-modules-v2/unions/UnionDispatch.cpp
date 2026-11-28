@@ -8,6 +8,7 @@
 #include <kolibri/env.h>
 
 #include <expo-modules-v2/converter/RecordPropertyCache.h>
+#include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/objects/InstanceRef.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectClassRegistry.h>
 #include <expo-modules-v2/sharedobjects/SharedObjectState.h>
@@ -138,14 +139,15 @@ namespace expo::modules::v2 {
       return elementMightTake(mapType.mapValue(), value);
     }
 
-    bool isBinary(facebook::jsi::Runtime& rt, const facebook::jsi::Object& object) {
-      if (object.isArrayBuffer(rt)) {
+    /** Whether [value] is an `ArrayBuffer` or a view on one, the bytes `byteViewOf` takes. */
+    bool isBinary(facebook::jsi::Runtime& rt, const facebook::jsi::Value& value) {
+      if (value.getObject(rt).isArrayBuffer(rt)) {
         return true;
       }
-      return rt.global()
-        .getPropertyAsObject(rt, "ArrayBuffer")
-        .getPropertyAsFunction(rt, "isView")
-        .call(rt, object)
+      return RuntimeGlobals::get(rt)
+        .arrayBufferIsView()
+        // Reads `value` in place. A plain `1` would pick the overload that clones it.
+        .call(rt, &value, size_t{1})
         .getBool();
     }
 
@@ -182,7 +184,7 @@ namespace expo::modules::v2 {
           : mapMightTake(rt, variant.type, object);
       }
       case UnionVariantKind::BINARY:
-        return isBinary(rt, value.getObject(rt));
+        return isBinary(rt, value);
       case UnionVariantKind::SHARED_OBJECT:
         return isSharedObjectOf(rt, value.getObject(rt), variant.type.sharedClassId());
       default:
