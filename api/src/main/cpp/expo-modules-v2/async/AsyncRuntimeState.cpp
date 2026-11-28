@@ -278,7 +278,7 @@ namespace expo::modules::v2::async {
       return;
     }
 
-    const facebook::jsi::Object error = createNativeError(rt, code, message, stack);
-    settle(id, facebook::jsi::Value(rt, error), true);
+    facebook::jsi::Object error = createNativeError(rt, code, message, stack);
+    settle(id, facebook::jsi::Value(std::move(error)), true);
   }
 } // namespace expo::modules::v2::async

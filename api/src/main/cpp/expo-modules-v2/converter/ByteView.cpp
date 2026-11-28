@@ -1,20 +1,23 @@
 #include <expo-modules-v2/converter/ByteView.h>
 
+#include <utility>
+
 #include <expo-modules-v2/jsi/RuntimeGlobals.h>
 #include <expo-modules-v2/utils/Throw.h>
 
 namespace expo::modules::v2 {
   ByteView byteViewOf(facebook::jsi::Runtime& rt, const facebook::jsi::Value& value) {
     if (value.isObject()) {
-      const facebook::jsi::Object object = value.getObject(rt);
+      facebook::jsi::Object object = value.getObject(rt);
       if (object.isArrayBuffer(rt)) {
-        const facebook::jsi::ArrayBuffer buffer = object.getArrayBuffer(rt);
+        const facebook::jsi::ArrayBuffer buffer = std::move(object).getArrayBuffer(rt);
         return {.data = buffer.data(rt), .size = buffer.size(rt)};
       }
 
       const bool isView = RuntimeGlobals::get(rt)
         .arrayBufferIsView()
-        .call(rt, value)
+        // Reads `value` in place. A plain `1` would pick the overload that clones it.
+        .call(rt, &value, size_t{1})
         .getBool();
 
       if (isView) {

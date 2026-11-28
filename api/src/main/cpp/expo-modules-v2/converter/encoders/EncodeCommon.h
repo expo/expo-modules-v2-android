@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 
 #include <jni.h>
 #include <jsi/jsi.h>
@@ -31,12 +32,14 @@ namespace expo::modules::v2 {
       throwTypeMismatch(value, "an array");
     }
 
-    const facebook::jsi::Object object = value.getObject(rt);
+    // Not const: `std::move(object).getArray` hands the handle over, where the `const&` overload
+    // would clone it a second time. The same holds for every `jsi::Object` and `jsi::Value` getter.
+    facebook::jsi::Object object = value.getObject(rt);
     if (!object.isArray(rt)) [[unlikely]] {
       throwTypeMismatch(value, "an array");
     }
 
-    return object.getArray(rt);
+    return std::move(object).getArray(rt);
   }
 
   [[nodiscard]] ALWAYS_INLINE facebook::jsi::String stringOf(
@@ -94,12 +97,12 @@ namespace expo::modules::v2 {
       throwTypeMismatch(value, "an array");
     }
 
-    const facebook::jsi::Object object = value.getObject(rt);
+    facebook::jsi::Object object = value.getObject(rt);
     if (!object.isArray(rt)) [[unlikely]] {
       throwTypeMismatch(value, "an array");
     }
 
-    facebook::jsi::Array array = object.getArray(rt);
+    facebook::jsi::Array array = std::move(object).getArray(rt);
     const size_t size = array.size(rt);
     if (size != tupleType.elements.size()) [[unlikely]] {
       throwConversionError(
