@@ -86,9 +86,10 @@ namespace expo::modules::v2::sharedobjects {
       const bool enumerable = true
     ) {
       facebook::jsi::Object descriptor(rt);
-      descriptor.setProperty(rt, "get", std::move(getter));
+      // Wrapped: `setProperty` passes a `jsi::Value&&` through but clones a moved `Function`.
+      descriptor.setProperty(rt, "get", facebook::jsi::Value(std::move(getter)));
       if (setter.has_value()) {
-        descriptor.setProperty(rt, "set", std::move(*setter));
+        descriptor.setProperty(rt, "set", facebook::jsi::Value(std::move(*setter)));
       }
       descriptor.setProperty(rt, "enumerable", enumerable);
       descriptor.setProperty(rt, "configurable", false);

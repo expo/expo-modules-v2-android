@@ -53,7 +53,7 @@ namespace expo::modules::v2 {
         return std::nullopt;
       }
 
-      facebook::jsi::Object object = target.getObject(rt);
+      facebook::jsi::Object object = std::move(target).getObject(rt);
       const objects::ObjectNativeState* node = objects::ObjectNativeState::borrow(rt, object);
       if (node == nullptr || !node->holdsInstance()) {
         return std::nullopt;

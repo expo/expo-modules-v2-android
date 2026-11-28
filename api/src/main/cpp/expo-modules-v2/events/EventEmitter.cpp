@@ -191,7 +191,7 @@ namespace expo::modules::v2::events {
           }
         )
       );
-      return facebook::jsi::Value(rt, result);
+      return result;
     }
 
     facebook::jsi::Object thisObjectOf(

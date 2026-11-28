@@ -89,11 +89,11 @@ namespace expo::modules::v2::jsi {
     }
     facebook::jsi::Runtime& rt = *runtime_;
 
-    const facebook::jsi::Value existing = objects_->lookup(rt, objects::ObjectId::of(env, instance));
+    facebook::jsi::Value existing = objects_->lookup(rt, objects::ObjectId::of(env, instance));
     if (existing.isUndefined()) {
       return nullptr;
     }
-    return JavaScriptObject::create(env, runtime_, existing.getObject(rt));
+    return JavaScriptObject::create(env, runtime_, std::move(existing).getObject(rt));
   }
 
   facebook::jsi::Runtime& JavaScriptRuntime::runtime() const {
@@ -135,7 +135,7 @@ namespace expo::modules::v2::jsi {
       1,
       &logFromJavaScript
     );
-    core.setProperty(rt, "nativeLog", std::move(nativeLog));
+    core.setProperty(rt, "nativeLog", facebook::jsi::Value(std::move(nativeLog)));
     return core;
   }
 
@@ -178,7 +178,11 @@ namespace expo::modules::v2::jsi {
         "modules",
         facebook::jsi::Object::createFromHostObject(rt, modules_)
       );
-      rt.global().setProperty(rt, nameSpace.c_str(), std::move(expoNamespace));
+      rt.global().setProperty(
+        rt,
+        nameSpace.c_str(),
+        facebook::jsi::Value(std::move(expoNamespace))
+      );
     }
 
     rt.global().setProperty(

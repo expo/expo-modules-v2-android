@@ -75,6 +75,15 @@ internal val TRANSPORT_CASES: Map<String, TransportCase> = buildMap {
       ),
     )
   }
+  // ByteArray from an ArrayBuffer, and from a view on one (which costs an `ArrayBuffer.isView` call).
+  put(
+    "bytes[64]/arraybuffer",
+    TransportCase("new ArrayBuffer(64)", "Bench.byteLengthBuffered(p)", "Bench.byteLength(p)"),
+  )
+  put(
+    "bytes[64]/uint8array",
+    TransportCase("new Uint8Array(64)", "Bench.byteLengthBuffered(p)", "Bench.byteLength(p)"),
+  )
   // Boxed nullable Int: payload vs a JInteger slot.
   put("boxed-int", TransportCase("42", "Bench.echoBoxedBuffered(p)", "Bench.echoBoxed(p)"))
   // List<String>: buffered payload vs the dynamic List<Any?> object slot.
@@ -164,6 +173,8 @@ private const val OPS_FAST = 50_000
 class ConversionTransportFastBenchmark {
   @Param(
     "doubles[10]/array",
+    "bytes[64]/arraybuffer",
+    "bytes[64]/uint8array",
     "string[8]",
     "string[64]",
     "string[512]",

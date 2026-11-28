@@ -179,7 +179,7 @@ namespace expo::modules::v2::jsi {
       value
         ? facebook::jsi::Value(rt, value->value())
         : facebook::jsi::Value::null();
-    object().setProperty(rt, propertyName(env, rt, name), jsValue);
+    object().setProperty(rt, propertyName(env, rt, name), std::move(jsValue));
   }
 
   void JavaScriptObject::setObjectProperty(
@@ -233,14 +233,14 @@ namespace expo::modules::v2::jsi {
     facebook::jsi::Runtime& rt = runtime();
     const facebook::jsi::Object& view = object();
 
-    const facebook::jsi::Value tag = RuntimeGlobals::get(rt)
+    facebook::jsi::Value tag = RuntimeGlobals::get(rt)
       .typedArrayToStringTag()
       .callWithThis(rt, view);
     if (!tag.isString()) {
       return isArrayBufferView(rt, view) ? static_cast<jint>(kDataViewKind) : -1;
     }
 
-    const std::string name = tag.getString(rt).utf8(rt);
+    const std::string name = std::move(tag).getString(rt).utf8(rt);
     for (size_t i = 0; i < kDataViewKind; ++i) {
       if (kArrayBufferViewTags[i] == name) {
         return static_cast<jint>(i);

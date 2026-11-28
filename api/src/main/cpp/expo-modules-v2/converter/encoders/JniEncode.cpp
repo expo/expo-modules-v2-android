@@ -94,9 +94,9 @@ namespace expo::modules::v2 {
     }
 
     if (value.isObject()) {
-      const facebook::jsi::Object object = value.getObject(rt);
+      facebook::jsi::Object object = value.getObject(rt);
       if (object.isArray(rt)) {
-        const facebook::jsi::Array array = object.getArray(rt);
+        const facebook::jsi::Array array = std::move(object).getArray(rt);
         const size_t size = array.size(rt);
         const jobject list = kolibri::JArrayList::constructor.createRaw(env, static_cast<jint>(size));
 
@@ -113,7 +113,7 @@ namespace expo::modules::v2 {
       }
 
       if (object.isArrayBuffer(rt)) {
-        const facebook::jsi::ArrayBuffer arrayBuffer = object.getArrayBuffer(rt);
+        const facebook::jsi::ArrayBuffer arrayBuffer = std::move(object).getArrayBuffer(rt);
         return kolibri::JByteArray::create(env, {
           reinterpret_cast<const jbyte*>(arrayBuffer.data(rt)),
           arrayBuffer.size(rt)
