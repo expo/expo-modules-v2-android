@@ -96,12 +96,21 @@ android {
     }
   }
 
+  // PROTOTYPE (views): Robolectric runs React Native's Java mounting layer against the real views.
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
+    }
+  }
+
   packaging {
     jniLibs {
       excludes += listOf(
         "**/libjsi.so",
         "**/libc++_shared.so",
         "**/libexpo-modules-v2.so",
+        "**/libreactnative.so",
+        "**/libfbjni.so",
       )
     }
   }
@@ -127,6 +136,11 @@ dependencies {
   implementation(libs.react.android)
 
   api(libs.kolibri.android)
+
+  testImplementation(libs.junit)
+  testImplementation(libs.kotlin.test)
+  testImplementation(libs.robolectric)
+  testImplementation(libs.mockito.kotlin)
 }
 
 val cppSourcesZip by tasks.registering(Zip::class) {
