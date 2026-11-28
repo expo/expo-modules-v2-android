@@ -57,6 +57,15 @@ class ConversionOps : Module() {
   @BufferMode(Buffer.YES)
   fun echoArrayBuffered(values: DoubleArray): DoubleArray = values
 
+  /** Bytes in: an `ArrayBuffer`, or a view on one such as a `Uint8Array`. */
+  @JS(name = "byteLength")
+  @BufferMode(Buffer.NO)
+  fun byteLengthDirect(value: ByteArray): Int = value.size
+
+  @JS(name = "byteLengthBuffered")
+  @BufferMode(Buffer.YES)
+  fun byteLengthBuffered(value: ByteArray): Int = value.size
+
   @JS(name = "echoString")
   @BufferMode(Buffer.NO)
   fun echoStringDirect(value: String): String = value
