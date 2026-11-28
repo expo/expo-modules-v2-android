@@ -9,6 +9,8 @@
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
+#include <expo-modules-v2/views/ViewPropsNatives.h>
+#include <expo-modules-v2/views/baseline/StateViewPropsBaseline.h>
 #include <kolibri/NativeObject.h>
 #include <kolibri/binary/BinaryBuffer.h>
 #include <kolibri/env.h>
@@ -25,5 +27,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
   expo::modules::v2::jsi::AttachedRuntime::registerNatives(env);
   expo::modules::v2::JAsyncContext::registerNatives(env);
   expo::modules::v2::JEventNatives::registerNatives(env);
+  expo::modules::v2::views::ViewPropsNatives::registerNatives(env);
+  expo::modules::v2::views::baseline::StateViewPropsBaselineNatives::registerNatives(env);
   return JNI_VERSION_1_6;
 }

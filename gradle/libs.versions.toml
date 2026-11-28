@@ -30,6 +30,14 @@ kotlinx-coroutines = "1.10.2"
 # https://github.com/junit-team/junit4
 junit = "4.13.2"
 
+# https://github.com/robolectric/robolectric
+# :react's unit tests run React Native's Java mounting layer on the JVM.
+robolectric = "4.16.1"
+
+# https://github.com/mockito/mockito-kotlin
+# The React context of :react's unit tests mocks the CatalystInstance, as React Native's own do.
+mockito-kotlin = "5.4.0"
+
 # https://github.com/gmazzo/gradle-buildconfig-plugin
 buildconfig = "5.5.1"
 
@@ -70,6 +78,8 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
 
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
 react-android = { module = "com.facebook.react:react-android", version.ref = "react-native" }

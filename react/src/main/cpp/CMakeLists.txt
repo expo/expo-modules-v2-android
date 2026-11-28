@@ -29,6 +29,23 @@ add_library(jsi ALIAS ReactAndroid::jsi)
 
 find_package(kolibri-android REQUIRED CONFIG)
 
+# PROTOTYPE (views): the Fabric component descriptor compiles against React Native's renderer and
+# fbjni, and has to agree with how React Native built them. `RN_SERIALIZABLE_STATE` changes the
+# layout of `Props` and `State`, and folly's flags change its headers, so these mirror
+# ReactAndroid/cmake-utils (folly-flags.cmake, ReactNative-application.cmake).
+find_package(fbjni REQUIRED CONFIG)
+set(EXPO_MODULES_V2_REACT_NATIVE_FLAGS
+        -DRN_SERIALIZABLE_STATE=1
+        -DFOLLY_NO_CONFIG=1
+        -DFOLLY_HAVE_CLOCK_GETTIME=1
+        -DFOLLY_USE_LIBCPP=1
+        -DFOLLY_CFG_NO_COROUTINES=1
+        -DFOLLY_MOBILE=1
+        -DFOLLY_HAVE_RECVMMSG=1
+        -DFOLLY_HAVE_PTHREAD=1
+        -DFOLLY_HAVE_XSI_STRERROR_R=1
+)
+
 add_subdirectory(${EXPO_API_CPP_DIR}/expo-jsi expo-jsi-build)
 
 file(GLOB_RECURSE EXPO_MODULES_V2_SOURCES CONFIGURE_DEPENDS
@@ -50,7 +67,7 @@ target_include_directories(expo-modules-v2 PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_compile_options(expo-modules-v2 PRIVATE ${EXPO_MODULES_V2_WARNINGS})
+target_compile_options(expo-modules-v2 PRIVATE ${EXPO_MODULES_V2_WARNINGS} ${EXPO_MODULES_V2_REACT_NATIVE_FLAGS})
 
 # Hidden visibility cannot reach template parameter objects of a default-visibility type, such as
 # the std::array JNI signatures kolibri passes as template arguments, and their mangled names spell
@@ -76,5 +93,8 @@ target_link_options(expo-modules-v2 PRIVATE
 target_link_libraries(expo-modules-v2 PRIVATE
         kolibri-android::kolibri
         expo-jsi
+        # PROTOTYPE (views): the renderer (libreactnative.so) and fbjni, both already in every app.
+        ReactAndroid::reactnative
+        fbjni::fbjni
         log
 )

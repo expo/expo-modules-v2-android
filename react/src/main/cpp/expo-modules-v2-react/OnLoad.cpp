@@ -1,6 +1,7 @@
 #include <jni.h>
 
 #include "ReactRuntime.h"
+#include "views/ExpoViewRegistry.h"
 
 #include <expo-modules-v2/jni/JAsyncContext.h>
 #include <expo-modules-v2/jni/JEventSupport.h>
@@ -10,6 +11,7 @@
 #include <expo-modules-v2/jsi/JavaScriptObject.h>
 #include <expo-modules-v2/jsi/JavaScriptRuntime.h>
 #include <expo-modules-v2/jsi/JavaScriptValue.h>
+#include <expo-modules-v2/views/ViewPropsNatives.h>
 #include <kolibri/NativeObject.h>
 #include <kolibri/binary/BinaryBuffer.h>
 #include <kolibri/env.h>
@@ -32,5 +34,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
   expo::modules::v2::JSharedObjectRegistry::registerNatives(env);
   expo::modules::v2::JModuleRegistry::registerNatives(env);
   expo::modules::v2::react::ReactRuntime::registerNatives(env);
+  expo::modules::v2::views::ViewPropsNatives::registerNatives(env);
+  expo::modules::v2::react::views::ExpoViewRegistry::registerNatives(env);
   return JNI_VERSION_1_6;
 }
